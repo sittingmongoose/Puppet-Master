@@ -1,0 +1,410 @@
+<<< CONTEXT_BEFORE canonical_document_lines=20218-20229 >>>
+L00020218	- re-run until resolved
+L00020219	- max retries
+L00020220	- escalate to parent-tier
+L00020221	negative_constraints: []
+L00020222	compatibility_only_notes: []
+L00020223	stale_retired_dispositions: []
+L00020224	owner_boundary_notes: []
+L00020225	owner_hints:
+L00020226	- Plans/orchestrator-subagent-integration.md
+L00020227	preserved_contractrefs: []
+L00020228	```
+L00020229	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=20230-20610 >>>
+L00020230	### OSI-232 - Continuity And Active Subagent Runtime Projection
+L00020231	
+L00020232	```yaml
+L00020233	plan_unit_id: OSI-232
+L00020234	unit_type: requirement
+L00020235	status: accepted
+L00020236	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020237	canonical_text: >-
+L00020238	  Cross-run continuity persists architectural decisions, patterns, and tech choices as canonical outputs/projections at Phase
+L00020239	  completion, reloads them at run start through handoff/context assembly rather than child-memory files, and tracks
+L00020240	  active_subagent: Option<String> in ExecutionUnitContext through canonical runtime storage and projections.
+L00020241	gui_related: false
+L00020242	gui_classification_reason: >-
+L00020243	  This unit covers backend continuity and runtime projection behavior rather than GUI presentation.
+L00020244	split_recommended: false
+L00020245	depends_on:
+L00020246	- OSI-173
+L00020247	- OSI-174
+L00020248	- OSI-189
+L00020249	- OSI-196
+L00020250	- OSI-201
+L00020251	unblocks: []
+L00020252	acceptance_criteria:
+L00020253	- Covered source spans remain losslessly available for exact-text audit.
+L00020254	- Continuity loads through run-start handoff/context assembly rather than child-memory files.
+L00020255	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00020256	validation_surfaces:
+L00020257	- >-
+L00020258	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020259	- python3 scripts/pm-plan-index.py validate
+L00020260	reasoning_tier: standard
+L00020261	context_scope: orchestrator_subagent_standardization
+L00020262	implementation_surfaces:
+L00020263	- Plans/orchestrator-subagent-integration.md
+L00020264	risk_class: continuity_active_subagent_runtime_projection
+L00020265	node_compile_hint:
+L00020266	  mode: continuity_active_subagent_runtime_projection
+L00020267	  create_worknodes: false
+L00020268	source_lineage:
+L00020269	- >-
+L00020270	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0135
+L00020271	preserved_exact_tokens:
+L00020272	- architectural decisions
+L00020273	- patterns
+L00020274	- tech choices
+L00020275	- Phase completion
+L00020276	- run start
+L00020277	- handoff/context assembly
+L00020278	- child-memory files
+L00020279	- "active_subagent: Option<String>"
+L00020280	- ExecutionUnitContext
+L00020281	negative_constraints:
+L00020282	- Continuity must not depend on child-memory files as the canonical reload path.
+L00020283	compatibility_only_notes: []
+L00020284	stale_retired_dispositions: []
+L00020285	owner_boundary_notes: []
+L00020286	owner_hints:
+L00020287	- Plans/orchestrator-subagent-integration.md
+L00020288	preserved_contractrefs: []
+L00020289	```
+L00020290	
+L00020291	### OSI-233 - Safe Hook Error Handling And Lazy Verification State
+L00020292	
+L00020293	```yaml
+L00020294	plan_unit_id: OSI-233
+L00020295	unit_type: requirement
+L00020296	status: accepted
+L00020297	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020298	canonical_text: >-
+L00020299	  Hook and verification error handling wraps execution in safe_hook_main() that guarantees structured output even on failure,
+L00020300	  creates verification state on first write, and prunes stale state older than 2 hours in the BeforeUnit hook.
+L00020301	gui_related: false
+L00020302	gui_classification_reason: >-
+L00020303	  This unit covers backend hook error handling and verification-state lifecycle behavior rather than GUI presentation.
+L00020304	split_recommended: false
+L00020305	depends_on:
+L00020306	- OSI-147
+L00020307	- OSI-186
+L00020308	- OSI-199
+L00020309	unblocks: []
+L00020310	acceptance_criteria:
+L00020311	- Covered source spans remain losslessly available for exact-text audit.
+L00020312	- Hook failure still emits structured output and does not corrupt lifecycle state.
+L00020313	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00020314	validation_surfaces:
+L00020315	- >-
+L00020316	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020317	- python3 scripts/pm-plan-index.py validate
+L00020318	reasoning_tier: standard
+L00020319	context_scope: orchestrator_subagent_standardization
+L00020320	implementation_surfaces:
+L00020321	- Plans/orchestrator-subagent-integration.md
+L00020322	risk_class: safe_hook_error_handling_lazy_verification_state
+L00020323	node_compile_hint:
+L00020324	  mode: safe_hook_error_handling_lazy_verification_state
+L00020325	  create_worknodes: false
+L00020326	source_lineage:
+L00020327	- >-
+L00020328	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0135
+L00020329	preserved_exact_tokens:
+L00020330	- safe_hook_main()
+L00020331	- structured output even on failure
+L00020332	- Create verification state on first write
+L00020333	- prune stale state (>2 hours)
+L00020334	- BeforeUnit hook
+L00020335	negative_constraints: []
+L00020336	compatibility_only_notes: []
+L00020337	stale_retired_dispositions: []
+L00020338	owner_boundary_notes: []
+L00020339	owner_hints:
+L00020340	- Plans/orchestrator-subagent-integration.md
+L00020341	preserved_contractrefs: []
+L00020342	```
+L00020343	
+L00020344	### OSI-234 - Subagent Availability File-Existence Optional V1
+L00020345	
+L00020346	```yaml
+L00020347	plan_unit_id: OSI-234
+L00020348	unit_type: requirement
+L00020349	status: accepted
+L00020350	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020351	canonical_text: >-
+L00020352	  Checking whether subagent files exist before selection is optional for v1: platforms such as Cursor may resolve subagent
+L00020353	  names internally from built-in or workspace config, future custom agent files such as .cursor/agents/ can add checks later,
+L00020354	  and for now the canonical list is treated as valid while unsupported names may fail in the platform CLI.
+L00020355	gui_related: false
+L00020356	gui_classification_reason: >-
+L00020357	  This unit covers backend selector availability guardrails and platform compatibility rather than GUI presentation.
+L00020358	split_recommended: false
+L00020359	depends_on:
+L00020360	- OSI-205
+L00020361	- OSI-212
+L00020362	unblocks: []
+L00020363	acceptance_criteria:
+L00020364	- Covered source spans remain losslessly available for exact-text audit.
+L00020365	- File-existence checks remain optional v1 guardrails, not a hard platform-native agent-file contract.
+L00020366	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00020367	validation_surfaces:
+L00020368	- >-
+L00020369	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020370	- python3 scripts/pm-plan-index.py validate
+L00020371	reasoning_tier: standard
+L00020372	context_scope: orchestrator_subagent_standardization
+L00020373	implementation_surfaces:
+L00020374	- Plans/orchestrator-subagent-integration.md
+L00020375	risk_class: subagent_availability_file_existence_optional_v1
+L00020376	node_compile_hint:
+L00020377	  mode: subagent_availability_file_existence_optional_v1
+L00020378	  create_worknodes: false
+L00020379	source_lineage:
+L00020380	- >-
+L00020381	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0136
+L00020382	preserved_exact_tokens:
+L00020383	- Check if subagent files exist before selection
+L00020384	- optional for v1
+L00020385	- Cursor
+L00020386	- built-in or workspace config
+L00020387	- .cursor/agents/
+L00020388	- canonical list as valid
+L00020389	- platform CLI fail
+L00020390	negative_constraints:
+L00020391	- Do not make file existence a hard platform-native agent-file contract for v1.
+L00020392	compatibility_only_notes:
+L00020393	- File-existence validation can be added later for custom agent files.
+L00020394	stale_retired_dispositions: []
+L00020395	owner_boundary_notes: []
+L00020396	owner_hints:
+L00020397	- Plans/orchestrator-subagent-integration.md
+L00020398	preserved_contractrefs: []
+L00020399	```
+L00020400	
+L00020401	### OSI-235 - Parallel Execution Capability Baseline
+L00020402	
+L00020403	```yaml
+L00020404	plan_unit_id: OSI-235
+L00020405	unit_type: requirement
+L00020406	status: accepted
+L00020407	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020408	canonical_text: >-
+L00020409	  The orchestrator baseline supports dependency-level parallel execution of subtasks using DependencyAnalyzer with Kahn's
+L00020410	  topological sort, ParallelExecutor, git worktree isolation, and TierNode.dependencies to form ordered execution levels.
+L00020411	gui_related: false
+L00020412	gui_classification_reason: >-
+L00020413	  This unit covers backend orchestration and scheduling capability rather than GUI presentation.
+L00020414	split_recommended: false
+L00020415	depends_on:
+L00020416	- OSI-206
+L00020417	unblocks: []
+L00020418	acceptance_criteria:
+L00020419	- Covered source spans remain losslessly available for exact-text audit.
+L00020420	- Execution-flow examples remain plan evidence and do not create executable work.
+L00020421	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+L00020422	validation_surfaces:
+L00020423	- >-
+L00020424	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020425	- python3 scripts/pm-plan-index.py validate
+L00020426	reasoning_tier: standard
+L00020427	context_scope: orchestrator_subagent_standardization
+L00020428	implementation_surfaces:
+L00020429	- Plans/orchestrator-subagent-integration.md
+L00020430	risk_class: parallel_execution_capability_baseline
+L00020431	node_compile_hint:
+L00020432	  mode: parallel_execution_capability_baseline
+L00020433	  create_worknodes: false
+L00020434	source_lineage:
+L00020435	- >-
+L00020436	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0137
+L00020437	- >-
+L00020438	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0138
+L00020439	preserved_exact_tokens:
+L00020440	- DependencyAnalyzer
+L00020441	- Kahn's topological sort
+L00020442	- ParallelExecutor
+L00020443	- TierNode.dependencies
+L00020444	- Level 0
+L00020445	negative_constraints: []
+L00020446	compatibility_only_notes:
+L00020447	- Execution-flow block is preserved as plan evidence.
+L00020448	stale_retired_dispositions: []
+L00020449	owner_boundary_notes: []
+L00020450	owner_hints:
+L00020451	- Plans/orchestrator-subagent-integration.md
+L00020452	preserved_contractrefs: []
+L00020453	```
+L00020454	
+L00020455	### OSI-236 - Dependency-Level Worktree Group Execution
+L00020456	
+L00020457	```yaml
+L00020458	plan_unit_id: OSI-236
+L00020459	unit_type: requirement
+L00020460	status: accepted
+L00020461	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020462	canonical_text: >-
+L00020463	  Parallel subtasks are grouped by dependency level, each group creates worktrees for its subtasks, and group members run
+L00020464	  concurrently through join_all while groups themselves execute sequentially by dependency order.
+L00020465	gui_related: false
+L00020466	gui_classification_reason: >-
+L00020467	  This unit covers backend dependency-level orchestration and worktree execution rather than GUI presentation.
+L00020468	split_recommended: false
+L00020469	depends_on:
+L00020470	- OSI-235
+L00020471	- OSI-206
+L00020472	- OSI-216
+L00020473	unblocks: []
+L00020474	acceptance_criteria:
+L00020475	- Covered source spans remain losslessly available for exact-text audit.
+L00020476	- Rust snippets are preserved as plan examples unless a surrounding contract states a normative rule.
+L00020477	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+L00020478	validation_surfaces:
+L00020479	- >-
+L00020480	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020481	- python3 scripts/pm-plan-index.py validate
+L00020482	reasoning_tier: standard
+L00020483	context_scope: orchestrator_subagent_standardization
+L00020484	implementation_surfaces:
+L00020485	- Plans/orchestrator-subagent-integration.md
+L00020486	risk_class: dependency_level_worktree_group_execution
+L00020487	node_compile_hint:
+L00020488	  mode: dependency_level_worktree_group_execution
+L00020489	  create_worknodes: false
+L00020490	source_lineage:
+L00020491	- >-
+L00020492	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0139
+L00020493	preserved_exact_tokens:
+L00020494	- execute_subtasks_parallel
+L00020495	- get_parallelizable_groups
+L00020496	- create_subtask_worktree
+L00020497	- join_all
+L00020498	negative_constraints: []
+L00020499	compatibility_only_notes:
+L00020500	- Rust implementation block is plan evidence, not direct source-code output.
+L00020501	stale_retired_dispositions: []
+L00020502	owner_boundary_notes: []
+L00020503	owner_hints:
+L00020504	- Plans/orchestrator-subagent-integration.md
+L00020505	preserved_contractrefs: []
+L00020506	```
+L00020507	
+L00020508	### OSI-237 - Independent Per-Subtask Selection Context
+L00020509	
+L00020510	```yaml
+L00020511	plan_unit_id: OSI-237
+L00020512	unit_type: requirement
+L00020513	status: accepted
+L00020514	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020515	canonical_text: >-
+L00020516	  Each parallel subtask builds its own tier context and selects subagents independently, so concurrent subtasks can carry
+L00020517	  different selected subagent sets.
+L00020518	gui_related: false
+L00020519	gui_classification_reason: >-
+L00020520	  This unit covers backend selector context behavior rather than GUI presentation.
+L00020521	split_recommended: false
+L00020522	depends_on:
+L00020523	- OSI-213
+L00020524	- OSI-236
+L00020525	unblocks: []
+L00020526	acceptance_criteria:
+L00020527	- Covered source spans remain losslessly available for exact-text audit.
+L00020528	- Per-subtask context selection is represented separately from GUI/frontend example evidence.
+L00020529	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+L00020530	validation_surfaces:
+L00020531	- >-
+L00020532	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020533	- python3 scripts/pm-plan-index.py validate
+L00020534	reasoning_tier: standard
+L00020535	context_scope: orchestrator_subagent_standardization
+L00020536	implementation_surfaces:
+L00020537	- Plans/orchestrator-subagent-integration.md
+L00020538	risk_class: independent_per_subtask_selection_context
+L00020539	node_compile_hint:
+L00020540	  mode: independent_per_subtask_selection_context
+L00020541	  create_worknodes: false
+L00020542	source_lineage:
+L00020543	- >-
+L00020544	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0139
+L00020545	preserved_exact_tokens:
+L00020546	- Build context for this specific subtask
+L00020547	- select_for_tier
+L00020548	- TierType::Subtask
+L00020549	- different subagents
+L00020550	negative_constraints: []
+L00020551	compatibility_only_notes: []
+L00020552	stale_retired_dispositions: []
+L00020553	owner_boundary_notes: []
+L00020554	owner_hints:
+L00020555	- Plans/orchestrator-subagent-integration.md
+L00020556	preserved_contractrefs: []
+L00020557	```
+L00020558	
+L00020559	### OSI-238 - Frontend/UI Selection Example Evidence
+L00020560	
+L00020561	```yaml
+L00020562	plan_unit_id: OSI-238
+L00020563	unit_type: requirement
+L00020564	status: accepted
+L00020565	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020566	canonical_text: >-
+L00020567	  The React frontend UI example is preserved as evidence that GUI/frontend subtasks can select specialized subagents
+L00020568	  independently while parallel backend/frontend subtasks run in the same dependency level.
+L00020569	gui_related: true
+L00020570	gui_classification_reason: >-
+L00020571	  This unit preserves a user-visible frontend UI example and associated frontend-specialist subagent selection evidence.
+L00020572	split_recommended: false
+L00020573	depends_on:
+L00020574	- OSI-237
+L00020575	unblocks: []
+L00020576	acceptance_criteria:
+L00020577	- Covered source spans remain losslessly available for exact-text audit.
+L00020578	- GUI/frontend example evidence does not become GUI owner canon in this document.
+L00020579	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+L00020580	validation_surfaces:
+L00020581	- >-
+L00020582	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020583	- python3 scripts/pm-plan-index.py validate
+L00020584	reasoning_tier: standard
+L00020585	context_scope: orchestrator_subagent_standardization
+L00020586	implementation_surfaces:
+L00020587	- Plans/orchestrator-subagent-integration.md
+L00020588	risk_class: frontend_ui_selection_example_evidence
+L00020589	node_compile_hint:
+L00020590	  mode: frontend_ui_selection_example_evidence
+L00020591	  create_worknodes: false
+L00020592	source_lineage:
+L00020593	- >-
+L00020594	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0139
+L00020595	preserved_exact_tokens:
+L00020596	- React frontend UI
+L00020597	- react-specialist
+L00020598	- frontend-developer
+L00020599	negative_constraints:
+L00020600	- This illustrative example does not transfer GUI implementation ownership to this document.
+L00020601	compatibility_only_notes:
+L00020602	- Frontend/UI selection is example evidence only.
+L00020603	stale_retired_dispositions: []
+L00020604	owner_boundary_notes:
+L00020605	- GUI implementation owner docs remain authoritative for GUI requirements.
+L00020606	owner_hints:
+L00020607	- Plans/orchestrator-subagent-integration.md
+L00020608	preserved_contractrefs: []
+L00020609	```
+L00020610	
+
+<<< CONTEXT_AFTER canonical_document_lines=20611-20622 >>>
+L00020611	### OSI-239 - Registry-Backed Selector Validation
+L00020612	
+L00020613	```yaml
+L00020614	plan_unit_id: OSI-239
+L00020615	unit_type: requirement
+L00020616	status: accepted
+L00020617	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020618	canonical_text: >-
+L00020619	  Subagent selection in parallel subtasks must use subagent_selector backed by subagent_registry and validate selected names
+L00020620	  with subagent_registry::is_valid_subagent_name(), never hardcoding subagent names.
+L00020621	gui_related: false
+L00020622	gui_classification_reason: >-

@@ -1,0 +1,23 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "counts": {
+    "accepted": 0,
+    "assignments": 1,
+    "pending": 1,
+    "quarantined": 0
+  },
+  "credited_assignment_ids": [],
+  "results": [
+    {
+      "assignment_id": "A005-000998-ADVERSARIAL-WIN-7414C6C901F8-0001",
+      "errors": [
+        "missing_result"
+      ],
+      "status": "pending",
+      "task_thread_id": "/root/a005_000998_attempt_0005_sol_xhigh_linebound_terminal"
+    }
+  ],
+  "status": "in_progress",
+  "validator": "wave_primary_v1",
+  "wave_id": "pilot-retry-wave-0005"
+}

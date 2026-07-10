@@ -1,0 +1,252 @@
+<<< CONTEXT_BEFORE canonical_document_lines=386-397 >>>
+L00000386	
+L00000387	| Code | Meaning |
+L00000388	|------|---------|
+L00000389	| `validation_error` | Invalid path or malformed `view_range`. |
+L00000390	| `permission_denied` | `read` / `view` denied by tool policy. |
+L00000391	| `filesafe_blocked` | Sensitive-path or read guard rejected the request. |
+L00000392	| `path_not_found` | Target path does not exist. |
+L00000393	| `binary_unsupported` | File is binary and cannot be rendered as numbered text. |
+L00000394	| `too_large` | File exceeds the read cap without an allowed ranged request. |
+L00000395	| `timeout` | Read did not complete before the runner ceiling. |
+L00000396	
+L00000397	**Timeout behavior**
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=398-620 >>>
+L00000398	
+L00000399	- Recommended default timeout: `10s` per read request.
+L00000400	- On timeout, return `{ path, status: "timed_out", error: { code: "timeout" } }`; do not fabricate missing lines.
+L00000401	
+L00000402	#### 3.5.4 `grep` contract
+L00000403	
+L00000404	**Input parameters**
+L00000405	
+L00000406	| Parameter | Type | Required | Description |
+L00000407	|-----------|------|----------|-------------|
+L00000408	| `pattern` | string | yes | Regex or literal search expression. |
+L00000409	| `path` | string | no | Root directory or file to search within. Default = current workspace root. |
+L00000410	| `glob` | string | no | Optional file-pattern filter such as `*.rs` or `src/**/*.ts`. |
+L00000411	| `output_mode` | enum (`"content"` \| `"files_with_matches"` \| `"count"`) | no | Result shape selector. Default `files_with_matches`. |
+L00000412	| `flags` | object | no | Search modifiers such as `case_insensitive`, `multiline`, `line_numbers`, `before_context`, `after_context`, or `head_limit`. |
+L00000413	
+L00000414	**Successful output**
+L00000415	
+L00000416	`{ pattern, path, output_mode, matches }`
+L00000417	
+L00000418	Where `matches` is:
+L00000419	- `content`: array of `{ path, line_number?, line_text, context_before?, context_after? }`
+L00000420	- `files_with_matches`: array of `{ path }`
+L00000421	- `count`: array of `{ path, count }`
+L00000422	
+L00000423	**Error cases**
+L00000424	
+L00000425	| Code | Meaning |
+L00000426	|------|---------|
+L00000427	| `validation_error` | Invalid regex, incompatible flags, or malformed glob. |
+L00000428	| `permission_denied` | `grep` denied by tool policy. |
+L00000429	| `filesafe_blocked` | Search scope includes blocked or sensitive paths. |
+L00000430	| `path_not_found` | Requested search root does not exist. |
+L00000431	| `backend_unavailable` | Search backend (indexed or raw) could not be initialized. |
+L00000432	| `result_limit_exceeded` | Match set exceeded the capped response window and was truncated. |
+L00000433	| `timeout` | Search did not complete before the query ceiling. |
+L00000434	
+L00000435	**Timeout behavior**
+L00000436	
+L00000437	- Default timeout: `30s`.
+L00000438	- On timeout, return `{ pattern, path, status: "timed_out", error: { code: "timeout" } }`. Implementations may include `partial: true` only when the runtime can prove returned hits were fully verified.
+L00000439	
+L00000440	#### 3.5.5 `glob` contract
+L00000441	
+L00000442	**Input parameters**
+L00000443	
+L00000444	| Parameter | Type | Required | Description |
+L00000445	|-----------|------|----------|-------------|
+L00000446	| `pattern` | string | yes | Glob expression such as `**/*.md`. |
+L00000447	| `path` | string | no | Search root. Default = current workspace root. |
+L00000448	
+L00000449	**Successful output**
+L00000450	
+L00000451	`{ pattern, path, paths: string[] }`
+L00000452	
+L00000453	The returned `paths` array contains normalized file paths in deterministic order after ignore-rule filtering.
+L00000454	
+L00000455	**Error cases**
+L00000456	
+L00000457	| Code | Meaning |
+L00000458	|------|---------|
+L00000459	| `validation_error` | Malformed glob expression or invalid root path. |
+L00000460	| `permission_denied` | `glob` denied by tool policy. |
+L00000461	| `filesafe_blocked` | Requested scope includes blocked paths. |
+L00000462	| `path_not_found` | Root path does not exist. |
+L00000463	| `timeout` | Enumeration exceeded the runtime ceiling. |
+L00000464	
+L00000465	**Timeout behavior**
+L00000466	
+L00000467	- Recommended default timeout: `10s`.
+L00000468	- On timeout, return `{ pattern, path, status: "timed_out", error: { code: "timeout" } }`.
+L00000469	
+L00000470	#### 3.5.6 `create` contract (canonical `write`)
+L00000471	
+L00000472	Provider-native `create` maps to the canonical registry tool `write`.
+L00000473	
+L00000474	**Input parameters**
+L00000475	
+L00000476	| Parameter | Type | Required | Description |
+L00000477	|-----------|------|----------|-------------|
+L00000478	| `path` | string | yes | Target file path to create or overwrite, subject to write-scope policy. |
+L00000479	| `file_text` | string | yes | Full text payload to persist. |
+L00000480	
+L00000481	**Successful output**
+L00000482	
+L00000483	`{ status: "success", path, created: boolean, bytes_written, line_count }`
+L00000484	
+L00000485	`created = true` when the path did not previously exist; `false` when the tool overwrote an existing file under an allowed policy.
+L00000486	
+L00000487	**Error cases**
+L00000488	
+L00000489	| Code | Meaning |
+L00000490	|------|---------|
+L00000491	| `validation_error` | Missing parameters, invalid path, or disallowed text encoding. |
+L00000492	| `permission_denied` | `write` / `create` denied by tool policy. |
+L00000493	| `filesafe_blocked` | Write path rejected by FileSafe or out of allowed scope. |
+L00000494	| `parent_missing` | Parent directory does not exist and auto-create is disabled. |
+L00000495	| `already_exists` | Policy forbids overwriting an existing file. |
+L00000496	| `io_error` | Underlying filesystem write failed. |
+L00000497	| `timeout` | File write did not complete before the runner ceiling. |
+L00000498	
+L00000499	**Timeout behavior**
+L00000500	
+L00000501	- Recommended default timeout: `10s`.
+L00000502	- On timeout, the write must fail atomically and return `{ status: "timed_out", path, error: { code: "timeout" } }`.
+L00000503	
+L00000504	### 3.5A `skill` tool runtime contract
+L00000505	
+L00000506	Canonical skill-runtime boundary: the tool registry may expose `skill-runtime` metadata only as a consumer-facing pointer back to `Plans/Skills_System.md`; richer runtime resource refs stay resolved through the shared tool-contract boundary rather than ad hoc skill-local schemas.
+L00000507	
+L00000508	
+L00000509	This section consumes the linked owner contract and stays aligned with it.
+L00000510	
+L00000511	Core rules:
+L00000512	- Skill runtime and permission behavior is locked to a structured skill tool envelope, discovery versus auto-invoke readiness rules, dynamic runtime tool descriptions, FileSafe-constrained resource access, and Agent Config ownership.
+L00000513	
+L00000514	Fields:
+L00000515	- skill_id
+L00000516	- arguments?
+L00000517	- context?
+L00000518	- content
+L00000519	- source_type
+L00000520	- resource_base_dir?
+L00000521	- resource_entries_sample?
+L00000522	- metadata?
+L00000523	- ready_with_warnings
+L00000524	### 3.5B `question` tool runtime contract
+L00000525	
+L00000526	This section consumes the linked owner contract and stays aligned with it.
+L00000527	
+L00000528	Core rules:
+L00000529	- Non-persona tool cleanup is owned by this runtime-contract surface: question, todowrite, and todoread gaps are product tool contracts, not persona behavior.
+L00000530	- Question schema canonical names and enums are locked, including QuestionItem fields, canonical freeform and multi-select field names, and answer source metadata.
+L00000531	- The question tool contract is locked to a multi-question envelope, normalized output statuses, object-array options, included answer source, and top-level orchestrator ownership of user questioning.
+L00000532	- The answer `source?` field is LOCKED and INCLUDED as an optional field with enum values `"option"`, `"other"`, and `"freeform"`.
+L00000533	- `questionnaire` and `/questionnaire` mode use `options?: Array<{id, label, description?}>` for selectable answers; `string[]` options are backwards-compatible only for legacy `single_question` callers and must be normalized to object-array options before storage or multi-question rendering.
+L00000534	- Question and questionnaire flows preserve bounded draft `/answer` state, submitted answer state, and answer-source metadata as tool payloads that storage persists; Tools owns the tool envelope while `Plans/storage-plan.md` owns the durable `chat.plan_todo_updated` and questionnaire projections.
+L00000535	- Implementation-readiness for the shared question-flow / multi-question-flow requires question-card behavior to stay aligned across Assistant, Interviewer, and document-builder / visual-module flows: required-by-default items keep the flow incomplete until answered, dismiss-to-pause returns an explicit dismissed/paused status, and `Other` remains the freeform path rather than a fabricated option answer.
+L00000536	- The v1 input envelope accepts `mode?: "single_question" | "questionnaire"`, `header?`, `prompt?`, `placeholder?`, `questions: Array<QuestionItem>`, `allow_other?: boolean` as a legacy alias for `allow_freeform`, and `allow_multi_select?: boolean` as a legacy alias for `multi_select`; each `QuestionItem` carries at minimum `question_id`, canonical display `question`, legacy alias `text: string`, optional `description?: string`, `options?: Array<{ id, label, description? }>`, `required?` default true, `multi_select?` default false, `allow_freeform?` default true, `allow_other?` as the freeform legacy alias, `placeholder?`, `default_values?`, and response constraints. Legacy `answer: string` output is normalized into the canonical answer array.
+L00000537	- Legacy `string-answer` and `answer: string` callers are compatibility-only; the already-decided canonical path is the multi-question envelope. Source shorthand `questions: [...]` is normalized to `questions: Array<QuestionItem>` before validation or question-card rendering.
+L00000538	- Compatibility shorthand for source and adapter callers is `mode|header|prompt|questions[]`; the canonical item shape is `QuestionItem{question_id, question, options[], required, multi_select, allow_freeform, default_values}`.
+L00000539	- `prompt` is envelope/header-only compatibility text; it is not the per-question field name, and each `QuestionItem` uses canonical `question` for the displayed prompt.
+L00000540	- For question cards, the fields are cross-referenced: `default_values` are caller-supplied initial seed values for pre-defined option IDs, while `draft_value` is the runtime-side PM-managed in-progress freeform or draft answer text.
+L00000541	- Clarification-request and question-resolution surfaces, including chain-wizard and progression gates, use the same question-flow rather than a parallel prompt format. Legacy single-question callers remain single-item syntactic sugar over `mode: "single_question" | "questionnaire"` with `header?`, `prompt?`, `placeholder?`, `questions: Array<QuestionItem>`, and output `status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"` plus `answers: Array<{ question_id, values: string[], source?: "option" | "other" | "freeform" }>` and optional backward-compat `answer_text?`.
+L00000542	
+L00000543	Fields:
+L00000544	- mode: "single_question" | "questionnaire"
+L00000545	- questions: Array<QuestionItem>
+L00000546	- status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"
+L00000547	- answered|submitted|dismissed|timed_out|unavailable
+L00000548	- answers: Array<{question_id, values: string[]}>
+L00000549	- answer_text?
+L00000550	- source?: "option" | "other" | "freeform"
+L00000551	- Headless/HITL-unavailable returns `headless_unavailable` with `status: "unavailable", reason: "headless"` and no GUI-only recovery action.
+L00000552	- headless_unavailable
+L00000553	- Subagent question tool access is DENIED by default
+L00000554	
+L00000555	Labels and values:
+L00000556	- questionnaire
+L00000557	- single_question
+L00000558	- unavailable
+L00000559	- dismissed
+L00000560	
+L00000561	Rules:
+L00000562	- question_id
+L00000563	- question
+L00000564	- allow_freeform
+L00000565	- multi_select
+L00000566	- default_values?: string[]
+L00000567	- draft_value?: string
+L00000568	- response_kind
+L00000569	- validation_state
+L00000570	- `options?: Array<{id, label, description?}>`
+L00000571	- `string[]` backwards-compatible
+L00000572	### 3.5C `todowrite` and `todoread` runtime contract
+L00000573	
+L00000574	This section defines the canonical contract for this surface.
+L00000575	
+L00000576	Core rules:
+L00000577	- Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.
+L00000578	- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.
+L00000579	- TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.
+L00000580	- Ask/Plan presets must not carry inherited blanket-denies or a blanket-deny rule for `question`, `todowrite`, `todoread`, or the six web operation tools; the mode-dependent access matrix for plan-mode web tool access and Deep Plan mode availability must show these tools as available unless stricter explicit presets such as read-only or no-network deny them by policy.
+L00000581	- `todowrite` auto-use on-trigger behavior is explicit: when the auto-use heuristic fires, the agent emits a `todowrite` tool call with proposed TODO items. If auto-approved by the resolved permission preset, the tool creates items silently; if ask-mode, the tool is held behind an approval prompt that lists the proposed TODO items before creation.
+L00000582	- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.
+L00000583	- TODO is the SSOT for plan execution state across single-agent, crew, and subagent runs. `/revise` creates an explicit new draft/revision instead of mutating approved history invisibly; sticky-panel-vs-inline-progress is a UI division, not a second TODO state model. The sticky-card / execution-tracker surface owns the full TODO list, status badges, focused item behavior, delegated owner display, and post-approval edit restrictions, while inline-progress chat messages stay compact and link back to the sticky panel.
+L00000584	
+L00000585	Fields:
+L00000586	- Q&A loop
+L00000587	- todo_id
+L00000588	- title
+L00000589	- summary
+L00000590	- status
+L00000591	- dependencies[]
+L00000592	- owner_hint
+L00000593	- verification_hint
+L00000594	- order_index?
+L00000595	- notes?
+L00000596	- pending | in_progress | completed | blocked | skipped
+L00000597	- superseded
+L00000598	- draft
+L00000599	- approved
+L00000600	- executing
+L00000601	- completed
+L00000602	- blocked
+L00000603	- Structural edits = adding / removing / reordering TODO items
+L00000604	- chat.plan_todo_updated
+L00000605	- todowrite
+L00000606	- todoread
+L00000607	- todowrite can create, reorder, update statuses/notes
+L00000608	- todoread returns current normalized list for active thread/run
+L00000609	- `todowrite` / `todoread` use the same normalized TODO schema as planning outputs.
+L00000610	- Crew/subagent execution consumes the same TODO contract without translation.
+L00000611	- Remove `todowrite` from blanket `ask/plan` mode auto-deny
+L00000612	- editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
+L00000613	ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
+L00000614	
+L00000615	Labels and values:
+L00000616	- Plan
+L00000617	- Deep Plan
+L00000618	### 3.5D Web operation family runtime contract
+L00000619	
+L00000620	This section defines the canonical contract for this surface.
+
+<<< CONTEXT_AFTER canonical_document_lines=621-632 >>>
+L00000621	
+L00000622	Core rules:
+L00000623	- WebAction is a locked typed interface with an exact action enum, required and optional fields, hard timing limits, sequential execution, and invalid_input on unknown action types.
+L00000624	- The web operation family is provider-pluggable and PM-owned above individual providers. The PM-native layer provides native page read/extract (`/extract`), optional site crawl, optional site map extraction (`/crawl/map`), and research/synthesis (`/synthesis`) orchestration; providers plug into that layer for discovery and optional backend-native retrieval. This keeps the operation family future-proof instead of treating providers as the only place web capability can live. Stored support-tier canon is the normalized enum `native`, `model_native`, `native_ish`, `near_native`, `pm_composed`, `partial`, `fallback_only`, `unsupported`, or `unavailable`; GUI/help surfaces may display aliases such as `native (model)`, `native-ish`, `near-native`, `PM-composed`, and `fallback-only`, but adapter kind, backend-native retrieval, and routing posture remain separate qualifiers.
+L00000625	- The WebProviderAdapterRegistry is the PM-owned single source of truth for web provider and adapter capability. Registry rows bind provider ID, adapter ID, adapter kind (`pm_native`, `direct_api`, `mcp_server`, `model_native`, `cli_bridge`, or `server_bridge`), operation capability, support tier, effective cost/cache policy, fallback rank, health state, robots behavior, egress policy, SSRF/private-host policy, credential reference, and projection state. Provider config files, MCP projections, model-native provider projections, coding-agent projections, and GUI settings rows are consumers of this registry, not competing sources of provider truth, and they must serialize credential references only, never raw secrets.
+L00000626	- The web dispatcher maps each invocation to one canonical operation (`search`, `extract`, `research`, `deep_research`, `crawl`, `map`, or `fetch`/`read`), validates parameters against that operation's contract before adapter routing, and rejects malformed or unsupported inputs with `invalid_input` instead of handing them to a provider.
+L00000627	- Slash commands, command palette entries, natural-language user requests, assistant-initiated needs, subagent needs, Goal Runtime work, PRD Builder work, and Planning Wizard work all converge on the same WebOperation / BrowserAction dispatcher. Slash commands are optional entrypoints; slash help must not be treated as the capability boundary. Retired Chain Wizard references remain compatibility/source-lineage only and normalize to Planning Wizard rather than becoming a live product dependency. Every invocation persists `invocation_source`, optional `agent_reason`, and source IDs such as `source_user_message_id`, `source_goal_id`, `source_subagent_id`, `source_prd_id`, or `source_planning_run_id` when present.
+L00000628	- Minimal canonical input shapes are stable across adapters: `websearch` accepts `query: string`, `max_results?: number`, compatibility `limit?: number` for source-specific search-result caps, `adapter_hint?: string`, `sources?: ("web" | "news" | "images" | "code" | "academic")[]`, `categories?: ("github" | "research" | "pdf")[]`, `include_domains?: string[]`, `exclude_domains?: string[]`, and `time_range?: string`; source-lineage shorthand `/news/images/code/academic` maps to the `sources` enum, category shorthand `/research/pdf` maps to the `categories` enum, and the default `sources` value is `["web"]`. The `categories` filter is applied during search when the effective provider supports it, otherwise post-search before PM chooses candidate sources. A requested source or category unsupported by the effective provider returns `unsupported_operation` for that source or category. `webfetch` is the PM-native site read via Site Reader / native fallback fetch and its PDF handling is specified by `pdf_mode?: "fast" | "auto" | "ocr"` (`/auto/ocr` lineage), default `"auto"`, applied when the URL serves PDF content; `webextract` accepts `url: string`, `adapter_hint?: string`, `detail_hint?: "fast" | "balanced" | "deep"` for provider/API-side (`/API-side`) extraction or PM-composed extraction, `schema?: object` (JSON Schema defining expected output structure), and `prompt?: string` (natural-language extraction guidance, max 2000 chars) when schema alone is insufficient or no schema is supplied; `webresearch` accepts `task: string`, `max_sources?: number`, `adapter_hint?: string`, `depth_hint?: "fast" | "balanced" | "deep"`, `autonomous?: boolean`, `auto_read_cap?: number`, `schema?: object`, and `schema_mode?: "strict" | "lenient"`; `webcrawl` accepts `root_url: string`, `max_pages?: number`, `max_depth?: number`, `same_origin_only?: boolean`, `adapter_hint?: string`, `include_paths?: string[]`, `exclude_paths?: string[]`, `dedup?: boolean`, `respect_robots?: boolean`, and `search?: string`; `webmap` accepts `root_url: string`, `max_pages?: number`, `max_depth?: number`, `same_origin_only?: boolean`, `adapter_hint?: string`, `include_paths?: string[]`, `exclude_paths?: string[]`, and `search?: string`.
+L00000629	- `webresearch` may also accept `starting_urls?: string[]` as optional seed URLs to begin research from, capped at five URLs; each URL follows the same normalization and validation rules as `webfetch`, and malformed or non-HTTP(S) URLs return `invalid_input`.
+L00000630	- `deep_research` is an operation-level research mode over the same `webresearch` tool ID and dispatcher, not a seventh slash family. It records a deep-research run with subquestion coverage, read receipts, extract receipts, citations from read/extract artifacts, subagent or closure refs when used, and explicit `closure_state` / `failure_reason_code`. PM-composed research is the default path; provider-autonomous research is optional and bounded by the provider adapter capability contract.
+L00000631	- When `autonomous: true` is set on `webresearch`, PM may use provider-native autonomous research when available; Firecrawl delegates to `/v2/agent`, Tavily uses its advanced search + extract chain, and other providers use the PM-composed enhanced recipe: search, read top pages through Site Reader, refine and repeat only when evidence is insufficient, then synthesize with citations. Autonomous research remains bounded to at most three search iterations, at most `max_sources` page reads, and a 120s total runtime unless a narrower provider or run limit applies; each step surfaces activity such as `Searching Web: <refined query>` and `Reading Site: <url>`.
+L00000632	- When `autonomous: false` or omitted on `webresearch`, the default PM-composed research recipe is deterministic and bounded: search with the highest-priority provider, select top candidate URLs up to `max_sources`, read/extract up to `auto_read_cap` pages via Site Reader as the auto-read cap, then synthesize an answer with citations from read content. In this branch the agent does NOT navigate or interact with pages; interaction-capable browser work must route through the explicit WebAction or browser/session contracts.

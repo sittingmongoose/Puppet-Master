@@ -1,0 +1,399 @@
+<<< CONTEXT_BEFORE 3418-3429 >>>
+negative_constraints:
+- "Entries added during the build must survive so a long-running build cannot lose files dirtied during that build."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md"
+- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/Architecture_Invariants.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 3430-3799 >>>
+### SP-019 - Local And Remote Regex Index Layouts And Windows Path Compatibility
+
+```yaml
+plan_unit_id: SP-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Local, remote Git, and remote non-Git regex-index layouts preserve generation snapshot paths, remote cache roots, manifest mappings, hash8 short paths, and Windows longPathAware mitigation."
+gui_related: false
+gui_classification_reason: "This unit preserves backend cache layout and platform compatibility requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+- "GI-001"
+- "BS-001"
+- "T-001"
+unblocks: []
+acceptance_criteria:
+- "SP-019 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: local_remote_regex_layout_windows_path_compatibility
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0034"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0035"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0036"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0037"
+preserved_exact_tokens:
+- ".puppet-master/project/state/regex_index/"
+- "frequency_table.bin"
+- "gen-{N}/postings.bin"
+- "gen-{N}/lookup.bin"
+- "gen-{N}/file_map.bin"
+- "gen-{N}/index_meta.json"
+- ".puppet-master/cache/r/{hash8}/"
+- "git/m/{sub_hash8}/"
+- "dirty/"
+- "manifest.json"
+- "hash8 -> project_id/submodule_path"
+- "MAX_PATH"
+- "/cache/r/{hash8}/git/m/{hash8}/"
+- "xxh3(full_id)"
+- "longPathAware"
+negative_constraints: []
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Tools.md, Invariant:INV-002, ContractName:Plans/Architecture_Invariants.md"
+- "ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/BinaryLocator_Spec.md"
+- "ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/BinaryLocator_Spec.md, ContractName:Plans/Tools.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/GitHub_Integration.md"
+- "Plans/BinaryLocator_Spec.md"
+- "Plans/Tools.md"
+```
+
+### SP-020 - Remote Cache Settings And Eviction Policy
+
+```yaml
+plan_unit_id: SP-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Remote cache settings persist per-project with global defaults, keep shallow and partial clone toggles independent and off by default, and evict remote caches only by idle age, cache size pressure, or explicit user action."
+gui_related: false
+gui_classification_reason: "This unit preserves backend remote cache policy and permission-adjacent configuration requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+- "PS-001"
+unblocks: []
+acceptance_criteria:
+- "SP-020 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: remote_cache_settings_eviction_policy
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0038"
+preserved_exact_tokens:
+- "Shallow clone is OFF by default"
+- "--depth=1"
+- "Partial clone is OFF by default"
+- "--filter=blob:none"
+- "30 days"
+- "50 GB"
+- "10% of free disk"
+- "LRU project caches"
+- "Clear All Remote Caches"
+- "grep remains read-only"
+- "/Permissions_System.md"
+- "/plan-mode"
+negative_constraints:
+- "Remote cache settings do not introduce a new grep permission key or /plan-mode exception."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/Permissions_System.md"
+- "Plans/Run_Modes.md"
+```
+
+### SP-021 - Remote Cache Disk Usage Display
+
+```yaml
+plan_unit_id: SP-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Disk-usage reporting shows local and remote project cache sizes, including separate remote index and Git portions."
+gui_related: true
+gui_classification_reason: "This unit preserves user-visible disk-usage reporting text."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-021 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: remote_cache_disk_usage_display
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0038"
+preserved_exact_tokens:
+- "Disk-usage reporting"
+- "BOTH local and remote project caches"
+- "Index: {size}"
+- "Remote cache: {total} - Index: {idx_size}, Git: {git_size}"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+```
+
+### SP-022 - Binary Index File Contracts
+
+```yaml
+plan_unit_id: SP-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Binary index files use little-endian no-padding formats for file_map.bin, lookup.bin, postings.bin, and index_meta.json with explicit headers, offsets, portable Roaring bytes, and dirty-layer non-persistence."
+gui_related: false
+gui_classification_reason: "This unit preserves backend binary file format requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+- "T-001"
+- "AI-001"
+unblocks: []
+acceptance_criteria:
+- "SP-022 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: binary_index_file_contracts
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0039"
+preserved_exact_tokens:
+- "little-endian"
+- "no inter-field padding"
+- "file_map.bin"
+- "PMFM"
+- "schema_version:u32"
+- "entry_count:u32"
+- "path_byte_length:u32"
+- "forward-slash (/) normalized"
+- "lookup.bin"
+- "PMLK"
+- "xxh3_hash:u64"
+- "postings_offset:u64"
+- "64 KB-aligned"
+- "MapViewOfFile"
+- "postings.bin"
+- "PMPL"
+- "bitmap_byte_length:u32"
+- "RoaringBitmap::serialize_into"
+- "index_meta.json"
+- "dirty-layer state is NOT persisted"
+negative_constraints:
+- "File IDs are generation-local only and MUST NOT be treated as stable across builds or across snapshot generations."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md"
+- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Architecture_Invariants.md"
+- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md, Invariant:INV-002"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/Tools.md"
+- "Plans/GitHub_Integration.md"
+- "Plans/Architecture_Invariants.md"
+```
+
+### SP-023 - Frequency Table Path Compatibility And Startup Validation
+
+```yaml
+plan_unit_id: SP-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Frequency-table, path compatibility, and validation rules preserve The Stack Smol base matrix, static binary embedding, project blend rule, fixed 3-gram fallback, path normalization, case sensitivity, startup validation, Windows MAX_PATH mitigation, and OS indexer exclusions."
+gui_related: false
+gui_classification_reason: "This unit preserves backend indexing, compatibility, and validation requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+- "T-001"
+- "GI-001"
+- "AI-001"
+unblocks: []
+acceptance_criteria:
+- "SP-023 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: frequency_table_path_compatibility_startup_validation
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0040"
+preserved_exact_tokens:
+- "The Stack Smol"
+- "bigcode/the-stack-smol"
+- "256x256 matrix"
+- "CRLF-stripped ASCII-lowercased bytes"
+- "static const [u16; 65536]"
+- "[u16; 65536]"
+- "effective[a][b] = 0.5 * base[a][b] + 0.5 * project[a][b]"
+- "fixed-width 3-gram extraction"
+- "file_map.bin stores forward-slash relative paths"
+- "case_sensitive_fs"
+- "anchor_sha"
+- "FILE_ATTRIBUTE_NOT_CONTENT_INDEXED"
+- "SetFileAttributesW"
+- ".metadata_never_index"
+negative_constraints: []
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md"
+- "ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Tools.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/Tools.md"
+- "Plans/GitHub_Integration.md"
+- "Plans/Architecture_Invariants.md"
+```
+
+### SP-024 - Index Sizing Guidance And Seglog Boundary Anchor
+
+```yaml
+plan_unit_id: SP-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Sparse n-gram index sizing guidance remains explicit, and the 2.2 seglog heading is retained as the source boundary for the next storage-plan batch."
+gui_related: false
+gui_classification_reason: "This unit preserves backend sizing guidance and the next storage section anchor."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+- "T-001"
+- "GI-001"
+unblocks: []
+acceptance_criteria:
+- "SP-024 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: index_sizing_guidance_seglog_boundary_anchor
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0041"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0042"
+preserved_exact_tokens:
+- "1-10% of source code size"
+- "50 MB"
+- "500 MB"
+- "1 GB"
+- "50 GB"
+- "2-5 GB"
+- "<500 MB"
+- "2.2 seglog: format, writer, rotation"
+negative_constraints: []
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/Tools.md"
+- "Plans/GitHub_Integration.md"
+```
+
+
+<<< CONTEXT_AFTER 3800-3811 >>>
+### SP-025 - Mandatory Seglog CRC32 Integrity
+
+```yaml
+plan_unit_id: SP-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Seglog records must include CRC32 over the stored payload, validate before processing, skip corrupt records, emit recovery/integrity events, and resume projectors from the last known-good checkpoint."
+gui_related: false
+gui_classification_reason: "This unit preserves backend seglog integrity and recovery behavior."
+split_recommended: false
+depends_on:

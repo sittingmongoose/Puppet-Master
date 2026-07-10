@@ -1,0 +1,146 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000042-ADVERSARIAL-WIN-183F03A77755-0001",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0007_c_parallel_dispatcher_epoch_0013/leaf_0042_adversarial_attempt_0013",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/runtime_artifact_restore_point.schema.json",
+    "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4",
+    "core_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4",
+    "core_range": [1, 1]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-000042-NG-001",
+      "item_type": "explicit_non_gap",
+      "title": "Closed top-level shape and minimum routing identity are explicit",
+      "statement": "The schema explicitly closes the top-level object, fixes both schema_id and artifact_type, requires core project/run/attempt identity, requires at least one non-empty routing_ref, and requires a non-empty type_payload. These are concrete structural guarantees rather than inferred behavior.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"pm.runtime_artifact.restore_point.schema.v1\",\"title\":\"Runtime Artifact restore_point\",\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"schema_id\",\"artifact_id\",\"artifact_type\",\"project_id\",\"run_id\",\"attempt_id\",\"created_at_utc\",\"projection_freshness\",\"projection_health\",\"retention_class\",\"routing_refs\",\"type_payload\"],\"properties\":{\"schema_id\":{\"type\":\"string\",\"const\":\"pm.runtime_artifact.restore_point.schema.v1\"},\"artifact_id\":{\"type\":\"string\",\"minLength\":1},\"artifact_type\":{\"type\":\"string\",\"const\":\"restore_point\"},\"project_id\":{\"type\":\"string\",\"minLength\":1},\"run_id\":{\"type\":\"string\",\"minLength\":1},\"attempt_id\":{\"type\":\"string\",\"minLength\":1},\"thread_id\":{\"type\":\"string\"},\"node_id\":{\"type\":\"string\"},\"provider_attempt_ref\":{\"type\":\"string\"},\"usage_event_ref\":{\"type\":\"string\"},\"receipt_refs\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1}},\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"},\"created_at_utc\":{\"type\":\"string\",\"minLength\":1},\"summary\":{\"type\":\"string\"},\"detail_ref\":{\"type\":\"string\"},\"content_ref\":{\"type\":\"string\"},\"source_surface\":{\"type\":\"string\"},\"projection_freshness\":{\"type\":\"string\"},\"projection_health\":{\"type\":\"string\"},\"retention_class\":{\"type\":\"string\"},\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}},\"type_payload\":{\"type\":\"object\",\"minProperties\":1}}}",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000042-GAP-001",
+      "item_type": "gap",
+      "title": "Restore integrity and lifecycle state are structurally unauditable",
+      "statement": "The required freshness, health, retention, and creation-time fields are unconstrained strings, while type_payload is only a non-empty object. No completeness flag, content digest, restore-readiness state, version/generation, idempotency key, ordering rule, atomicity marker, partial-write state, network-availability state, rollback target, or destructive-restore safeguard is defined. A syntactically valid artifact can therefore represent stale, racing, partial, corrupt, offline-unavailable, non-rollbackable, or unsafe restore data without being rejected.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "state_integrity_and_recovery_contract_missing",
+      "impact": "Consumers cannot safely decide whether a restore point is complete, current, mutually consistent, recoverable, or safe to apply, and concurrent or interrupted production can silently publish unusable restore points.",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"pm.runtime_artifact.restore_point.schema.v1\",\"title\":\"Runtime Artifact restore_point\",\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"schema_id\",\"artifact_id\",\"artifact_type\",\"project_id\",\"run_id\",\"attempt_id\",\"created_at_utc\",\"projection_freshness\",\"projection_health\",\"retention_class\",\"routing_refs\",\"type_payload\"],\"properties\":{\"schema_id\":{\"type\":\"string\",\"const\":\"pm.runtime_artifact.restore_point.schema.v1\"},\"artifact_id\":{\"type\":\"string\",\"minLength\":1},\"artifact_type\":{\"type\":\"string\",\"const\":\"restore_point\"},\"project_id\":{\"type\":\"string\",\"minLength\":1},\"run_id\":{\"type\":\"string\",\"minLength\":1},\"attempt_id\":{\"type\":\"string\",\"minLength\":1},\"thread_id\":{\"type\":\"string\"},\"node_id\":{\"type\":\"string\"},\"provider_attempt_ref\":{\"type\":\"string\"},\"usage_event_ref\":{\"type\":\"string\"},\"receipt_refs\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1}},\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"},\"created_at_utc\":{\"type\":\"string\",\"minLength\":1},\"summary\":{\"type\":\"string\"},\"detail_ref\":{\"type\":\"string\"},\"content_ref\":{\"type\":\"string\"},\"source_surface\":{\"type\":\"string\"},\"projection_freshness\":{\"type\":\"string\"},\"projection_health\":{\"type\":\"string\"},\"retention_class\":{\"type\":\"string\"},\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}},\"type_payload\":{\"type\":\"object\",\"minProperties\":1}}}",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000042-GAP-002",
+      "item_type": "gap",
+      "title": "Authority, privacy, provenance, and reference boundaries are opaque",
+      "statement": "Actor, producer, provider-attempt, usage-event, receipt, detail, content, and routing references are optional or minimally constrained strings with no namespace, tenant, ownership, authorization, URI/path safety, referential-integrity, or trust-domain rule. Retention has no expiry, deletion, legal-hold, redaction, or sensitivity semantics, and observability lacks a required producer/actor, trace or correlation identity, immutable receipt chain, and failure provenance. Untrusted or cross-tenant references can pass structural validation and cross-document consumers cannot prove what authority or lifecycle applies.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authority_privacy_and_reference_contract_missing",
+      "impact": "Restore metadata or content may be disclosed, routed, retained, or acted on across the wrong authority boundary, while support tooling cannot establish a complete provenance chain.",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"pm.runtime_artifact.restore_point.schema.v1\",\"title\":\"Runtime Artifact restore_point\",\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"schema_id\",\"artifact_id\",\"artifact_type\",\"project_id\",\"run_id\",\"attempt_id\",\"created_at_utc\",\"projection_freshness\",\"projection_health\",\"retention_class\",\"routing_refs\",\"type_payload\"],\"properties\":{\"schema_id\":{\"type\":\"string\",\"const\":\"pm.runtime_artifact.restore_point.schema.v1\"},\"artifact_id\":{\"type\":\"string\",\"minLength\":1},\"artifact_type\":{\"type\":\"string\",\"const\":\"restore_point\"},\"project_id\":{\"type\":\"string\",\"minLength\":1},\"run_id\":{\"type\":\"string\",\"minLength\":1},\"attempt_id\":{\"type\":\"string\",\"minLength\":1},\"thread_id\":{\"type\":\"string\"},\"node_id\":{\"type\":\"string\"},\"provider_attempt_ref\":{\"type\":\"string\"},\"usage_event_ref\":{\"type\":\"string\"},\"receipt_refs\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1}},\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"},\"created_at_utc\":{\"type\":\"string\",\"minLength\":1},\"summary\":{\"type\":\"string\"},\"detail_ref\":{\"type\":\"string\"},\"content_ref\":{\"type\":\"string\"},\"source_surface\":{\"type\":\"string\"},\"projection_freshness\":{\"type\":\"string\"},\"projection_health\":{\"type\":\"string\"},\"retention_class\":{\"type\":\"string\"},\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}},\"type_payload\":{\"type\":\"object\",\"minProperties\":1}}}",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000042-GAP-003",
+      "item_type": "gap",
+      "title": "Consumer, presentation, scale, migration, and semantic test contracts are absent",
+      "statement": "The schema names no required callers or consumers and defines no restore command/result seam. Arbitrary freshness/health strings and an unconstrained summary can drive misleading GUI states; no stable status vocabulary, reason code, user-safe/localizable message key, locale, accessible presentation semantics, or timestamp format exists. Arrays and payloads have no maximum sizes or uniqueness rules. The v1 envelope has no payload discriminator/version or migration compatibility rule. Consequently only shallow shape tests are falsifiable; semantic tests for restorable content, GUI truth, accessibility, localization, scale, consumer propagation, and forward/backward compatibility have no oracle, leaving unknown payload-specific hazards unbounded.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "consumer_and_semantic_oracles_missing",
+      "impact": "Different consumers can interpret the same valid artifact incompatibly, UI and support surfaces can overstate restore safety, large artifacts can exhaust resources, and migrations cannot be validated reliably.",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_restore_point.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\",\"$id\":\"pm.runtime_artifact.restore_point.schema.v1\",\"title\":\"Runtime Artifact restore_point\",\"type\":\"object\",\"additionalProperties\":false,\"required\":[\"schema_id\",\"artifact_id\",\"artifact_type\",\"project_id\",\"run_id\",\"attempt_id\",\"created_at_utc\",\"projection_freshness\",\"projection_health\",\"retention_class\",\"routing_refs\",\"type_payload\"],\"properties\":{\"schema_id\":{\"type\":\"string\",\"const\":\"pm.runtime_artifact.restore_point.schema.v1\"},\"artifact_id\":{\"type\":\"string\",\"minLength\":1},\"artifact_type\":{\"type\":\"string\",\"const\":\"restore_point\"},\"project_id\":{\"type\":\"string\",\"minLength\":1},\"run_id\":{\"type\":\"string\",\"minLength\":1},\"attempt_id\":{\"type\":\"string\",\"minLength\":1},\"thread_id\":{\"type\":\"string\"},\"node_id\":{\"type\":\"string\"},\"provider_attempt_ref\":{\"type\":\"string\"},\"usage_event_ref\":{\"type\":\"string\"},\"receipt_refs\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1}},\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"},\"created_at_utc\":{\"type\":\"string\",\"minLength\":1},\"summary\":{\"type\":\"string\"},\"detail_ref\":{\"type\":\"string\"},\"content_ref\":{\"type\":\"string\"},\"source_surface\":{\"type\":\"string\"},\"projection_freshness\":{\"type\":\"string\"},\"projection_health\":{\"type\":\"string\"},\"retention_class\":{\"type\":\"string\"},\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}},\"type_payload\":{\"type\":\"object\",\"minProperties\":1}}}",
+          "source_sha256": "d83250d7a90e70a26ee922c8841732b6d7c9d33268981001c9dac9a7840a67b4"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension":"missing_callers_consumers","status":"gap_found","summary":"No caller, consumer, restore-command, or result-propagation contract is named.","evidence_item_ids":["A005-000042-GAP-003"]},
+    {"dimension":"invalid_states_transitions","status":"gap_found","summary":"Freshness, health, retention, time, and payload admit semantically invalid states with no transition vocabulary.","evidence_item_ids":["A005-000042-GAP-001"]},
+    {"dimension":"concurrency_races","status":"gap_found","summary":"No generation, compare-and-swap token, idempotency identity, or ordering rule protects concurrent production or use.","evidence_item_ids":["A005-000042-GAP-001"]},
+    {"dimension":"partial_failure","status":"gap_found","summary":"No completeness, atomicity, checksum, or partial-write marker distinguishes a complete restore point from an interrupted one.","evidence_item_ids":["A005-000042-GAP-001"]},
+    {"dimension":"recovery_rollback","status":"gap_found","summary":"Restore readiness, rollback target, verification, and post-failure recovery semantics are absent.","evidence_item_ids":["A005-000042-GAP-001"]},
+    {"dimension":"authority_boundaries","status":"gap_found","summary":"Opaque optional actor and producer references do not establish tenant, ownership, or authorization boundaries.","evidence_item_ids":["A005-000042-GAP-002"]},
+    {"dimension":"privacy_data_lifecycle","status":"gap_found","summary":"Retention is an arbitrary string and there are no sensitivity, expiry, deletion, redaction, or legal-hold rules for referenced content.","evidence_item_ids":["A005-000042-GAP-002"]},
+    {"dimension":"untrusted_inputs","status":"gap_found","summary":"Reference strings and type_payload have no path, URI, namespace, trust-domain, or payload-shape constraints.","evidence_item_ids":["A005-000042-GAP-002"]},
+    {"dimension":"gui_misleading_states","status":"gap_found","summary":"Arbitrary freshness, health, summary, and timestamp values can be rendered as trustworthy despite lacking validated meaning.","evidence_item_ids":["A005-000042-GAP-003"]},
+    {"dimension":"offline_network_loss","status":"gap_found","summary":"No local availability, materialization, synchronization, retry, or network-loss state is represented.","evidence_item_ids":["A005-000042-GAP-001"]},
+    {"dimension":"scale_limits","status":"gap_found","summary":"Reference arrays, summary text, and type_payload have no upper bounds; arrays also lack uniqueness constraints.","evidence_item_ids":["A005-000042-GAP-003"]},
+    {"dimension":"accessibility","status":"gap_found","summary":"Potentially user-visible summary and status semantics provide no accessible presentation contract or stable machine-readable reason vocabulary.","evidence_item_ids":["A005-000042-GAP-003"]},
+    {"dimension":"localization","status":"gap_found","summary":"No locale, localized-message key, structured parameters, or normative date-time format is defined.","evidence_item_ids":["A005-000042-GAP-003"]},
+    {"dimension":"compatibility_migration","status":"gap_found","summary":"The fixed v1 envelope provides no type_payload version, discriminator, capability negotiation, or migration rule.","evidence_item_ids":["A005-000042-GAP-003"]},
+    {"dimension":"observability_support","status":"gap_found","summary":"Producer, actor, receipts, and usage references are optional and no trace, correlation, failure, or immutable provenance chain is required.","evidence_item_ids":["A005-000042-GAP-002"]},
+    {"dimension":"destructive_actions","status":"gap_found","summary":"No restore target, overwrite scope, dry-run, confirmation, authorization, or rollback safeguard is represented.","evidence_item_ids":["A005-000042-GAP-001"]},
+    {"dimension":"cross_document_seams","status":"gap_found","summary":"Identifiers and refs lack namespaces and referential-integrity rules, leaving external producer and consumer seams ambiguous.","evidence_item_ids":["A005-000042-GAP-002"]},
+    {"dimension":"test_falsifiability","status":"gap_found","summary":"Structural validation is testable, but semantic validity, restoration success, consumer propagation, and UI truth lack acceptance oracles.","evidence_item_ids":["A005-000042-NG-001","A005-000042-GAP-003"]},
+    {"dimension":"unknown_unknowns","status":"gap_found","summary":"The unconstrained type_payload and opaque reference ecosystem leave payload-specific hazards and consumer assumptions intentionally unbounded.","evidence_item_ids":["A005-000042-GAP-003"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

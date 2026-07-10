@@ -1,0 +1,418 @@
+<<< CONTEXT_BEFORE canonical_document_lines=569-580 >>>
+L00000569	        "schema_contract_validation": {
+L00000570	          "type": "string"
+L00000571	        },
+L00000572	        "status": {
+L00000573	          "enum": [
+L00000574	            "design_only",
+L00000575	            "validated",
+L00000576	            "blocked"
+L00000577	          ]
+L00000578	        }
+L00000579	      }
+L00000580	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=581-969 >>>
+L00000581	    "plan_compile_run": {
+L00000582	      "type": "object",
+L00000583	      "additionalProperties": false,
+L00000584	      "required": [
+L00000585	        "compile_id",
+L00000586	        "source_plan_set_id",
+L00000587	        "source_plan_index_hash",
+L00000588	        "launch_source",
+L00000589	        "contract_mode",
+L00000590	        "launch_policy",
+L00000591	        "runtime_adapter",
+L00000592	        "runtime_enablement_ref",
+L00000593	        "runtime_policy_snapshot_ref",
+L00000594	        "status",
+L00000595	        "current_stage",
+L00000596	        "cursor",
+L00000597	        "last_green_stage",
+L00000598	        "last_green_hashes",
+L00000599	        "blockers",
+L00000600	        "next_required_stage",
+L00000601	        "resume_command_or_action",
+L00000602	        "automatic_launch_enabled",
+L00000603	        "planning_wizard_launch_enabled",
+L00000604	        "codex_bootstrap_launch_enabled",
+L00000605	        "current_state",
+L00000606	        "receipts",
+L00000607	        "compile_wave_contracts"
+L00000608	      ],
+L00000609	      "properties": {
+L00000610	        "compile_id": {
+L00000611	          "type": "string"
+L00000612	        },
+L00000613	        "source_plan_set_id": {
+L00000614	          "type": "string"
+L00000615	        },
+L00000616	        "source_plan_index_hash": {
+L00000617	          "type": "string"
+L00000618	        },
+L00000619	        "launch_source": {
+L00000620	          "enum": [
+L00000621	            "codex_bootstrap",
+L00000622	            "native_planning_wizard"
+L00000623	          ]
+L00000624	        },
+L00000625	        "contract_mode": {
+L00000626	          "enum": [
+L00000627	            "design_only",
+L00000628	            "native_runtime"
+L00000629	          ]
+L00000630	        },
+L00000631	        "launch_policy": {
+L00000632	          "enum": [
+L00000633	            "disabled",
+L00000634	            "automatic_after_approval"
+L00000635	          ]
+L00000636	        },
+L00000637	        "runtime_adapter": {
+L00000638	          "enum": [
+L00000639	            "codex_bootstrap_adapter",
+L00000640	            "native_puppet_master_adapter"
+L00000641	          ]
+L00000642	        },
+L00000643	        "runtime_enablement_ref": {
+L00000644	          "anyOf": [
+L00000645	            {
+L00000646	              "$ref": "#/$defs/ref"
+L00000647	            },
+L00000648	            {
+L00000649	              "type": "null"
+L00000650	            }
+L00000651	          ]
+L00000652	        },
+L00000653	        "runtime_policy_snapshot_ref": {
+L00000654	          "anyOf": [
+L00000655	            {
+L00000656	              "$ref": "#/$defs/ref"
+L00000657	            },
+L00000658	            {
+L00000659	              "type": "null"
+L00000660	            }
+L00000661	          ]
+L00000662	        },
+L00000663	        "status": {
+L00000664	          "enum": [
+L00000665	            "design_only_disabled",
+L00000666	            "preflight",
+L00000667	            "running",
+L00000668	            "blocked",
+L00000669	            "ready_for_executor_intake",
+L00000670	            "cancelled",
+L00000671	            "complete"
+L00000672	          ]
+L00000673	        },
+L00000674	        "current_stage": {
+L00000675	          "$ref": "#/$defs/stage_name"
+L00000676	        },
+L00000677	        "cursor": {
+L00000678	          "$ref": "#/$defs/cursor"
+L00000679	        },
+L00000680	        "last_green_stage": {
+L00000681	          "anyOf": [
+L00000682	            {
+L00000683	              "$ref": "#/$defs/stage_name"
+L00000684	            },
+L00000685	            {
+L00000686	              "type": "null"
+L00000687	            }
+L00000688	          ]
+L00000689	        },
+L00000690	        "last_green_hashes": {
+L00000691	          "$ref": "#/$defs/hash_snapshot"
+L00000692	        },
+L00000693	        "blockers": {
+L00000694	          "type": "array",
+L00000695	          "items": {
+L00000696	            "$ref": "#/$defs/blocker"
+L00000697	          }
+L00000698	        },
+L00000699	        "next_required_stage": {
+L00000700	          "anyOf": [
+L00000701	            {
+L00000702	              "$ref": "#/$defs/stage_name"
+L00000703	            },
+L00000704	            {
+L00000705	              "type": "null"
+L00000706	            }
+L00000707	          ]
+L00000708	        },
+L00000709	        "resume_command_or_action": {
+L00000710	          "type": [
+L00000711	            "string",
+L00000712	            "null"
+L00000713	          ]
+L00000714	        },
+L00000715	        "automatic_launch_enabled": {
+L00000716	          "type": "boolean"
+L00000717	        },
+L00000718	        "planning_wizard_launch_enabled": {
+L00000719	          "type": "boolean"
+L00000720	        },
+L00000721	        "codex_bootstrap_launch_enabled": {
+L00000722	          "const": false
+L00000723	        },
+L00000724	        "current_state": {
+L00000725	          "type": "string",
+L00000726	          "enum": [
+L00000727	            "initialized",
+L00000728	            "preflight",
+L00000729	            "stage_running",
+L00000730	            "stage_blocked",
+L00000731	            "stage_complete",
+L00000732	            "ready_for_executor_intake",
+L00000733	            "cancelled",
+L00000734	            "complete"
+L00000735	          ]
+L00000736	        },
+L00000737	        "receipts": {
+L00000738	          "$ref": "#/$defs/ref_list"
+L00000739	        },
+L00000740	        "compile_wave_contracts": {
+L00000741	          "type": "array",
+L00000742	          "items": {
+L00000743	            "$ref": "#/$defs/compile_wave_contract"
+L00000744	          }
+L00000745	        }
+L00000746	      },
+L00000747	      "allOf": [
+L00000748	        {
+L00000749	          "if": {
+L00000750	            "properties": {
+L00000751	              "contract_mode": {
+L00000752	                "const": "design_only"
+L00000753	              }
+L00000754	            },
+L00000755	            "required": [
+L00000756	              "contract_mode"
+L00000757	            ]
+L00000758	          },
+L00000759	          "then": {
+L00000760	            "properties": {
+L00000761	              "launch_policy": {
+L00000762	                "const": "disabled"
+L00000763	              },
+L00000764	              "launch_source": {
+L00000765	                "const": "codex_bootstrap"
+L00000766	              },
+L00000767	              "runtime_adapter": {
+L00000768	                "const": "codex_bootstrap_adapter"
+L00000769	              },
+L00000770	              "runtime_enablement_ref": {
+L00000771	                "type": "null"
+L00000772	              },
+L00000773	              "runtime_policy_snapshot_ref": {
+L00000774	                "type": "null"
+L00000775	              },
+L00000776	              "status": {
+L00000777	                "const": "design_only_disabled"
+L00000778	              },
+L00000779	              "automatic_launch_enabled": {
+L00000780	                "const": false
+L00000781	              },
+L00000782	              "planning_wizard_launch_enabled": {
+L00000783	                "const": false
+L00000784	              },
+L00000785	              "codex_bootstrap_launch_enabled": {
+L00000786	                "const": false
+L00000787	              }
+L00000788	            }
+L00000789	          }
+L00000790	        },
+L00000791	        {
+L00000792	          "if": {
+L00000793	            "properties": {
+L00000794	              "contract_mode": {
+L00000795	                "const": "native_runtime"
+L00000796	              }
+L00000797	            },
+L00000798	            "required": [
+L00000799	              "contract_mode"
+L00000800	            ]
+L00000801	          },
+L00000802	          "then": {
+L00000803	            "properties": {
+L00000804	              "launch_policy": {
+L00000805	                "const": "automatic_after_approval"
+L00000806	              },
+L00000807	              "launch_source": {
+L00000808	                "const": "native_planning_wizard"
+L00000809	              },
+L00000810	              "runtime_adapter": {
+L00000811	                "const": "native_puppet_master_adapter"
+L00000812	              },
+L00000813	              "runtime_enablement_ref": {
+L00000814	                "$ref": "#/$defs/ref"
+L00000815	              },
+L00000816	              "runtime_policy_snapshot_ref": {
+L00000817	                "$ref": "#/$defs/ref"
+L00000818	              },
+L00000819	              "status": {
+L00000820	                "enum": [
+L00000821	                  "preflight",
+L00000822	                  "running",
+L00000823	                  "blocked",
+L00000824	                  "ready_for_executor_intake",
+L00000825	                  "cancelled",
+L00000826	                  "complete"
+L00000827	                ]
+L00000828	              },
+L00000829	              "automatic_launch_enabled": {
+L00000830	                "const": true
+L00000831	              },
+L00000832	              "planning_wizard_launch_enabled": {
+L00000833	                "const": true
+L00000834	              },
+L00000835	              "codex_bootstrap_launch_enabled": {
+L00000836	                "const": false
+L00000837	              }
+L00000838	            }
+L00000839	          }
+L00000840	        },
+L00000841	        {
+L00000842	          "if": {
+L00000843	            "properties": {
+L00000844	              "status": {
+L00000845	                "const": "complete"
+L00000846	              }
+L00000847	            },
+L00000848	            "required": [
+L00000849	              "status"
+L00000850	            ]
+L00000851	          },
+L00000852	          "then": {
+L00000853	            "properties": {
+L00000854	              "current_state": {
+L00000855	                "const": "complete"
+L00000856	              },
+L00000857	              "current_stage": {
+L00000858	                "const": "orchestrator_projection"
+L00000859	              },
+L00000860	              "cursor": {
+L00000861	                "properties": {
+L00000862	                  "stage": {
+L00000863	                    "const": "orchestrator_projection"
+L00000864	                  }
+L00000865	                }
+L00000866	              },
+L00000867	              "next_required_stage": {
+L00000868	                "type": "null"
+L00000869	              },
+L00000870	              "resume_command_or_action": {
+L00000871	                "type": "null"
+L00000872	              },
+L00000873	              "receipts": {
+L00000874	                "$ref": "#/$defs/non_empty_ref_list"
+L00000875	              },
+L00000876	              "compile_wave_contracts": {
+L00000877	                "type": "array",
+L00000878	                "minItems": 1,
+L00000879	                "items": {
+L00000880	                  "$ref": "#/$defs/compile_wave_contract"
+L00000881	                }
+L00000882	              }
+L00000883	            }
+L00000884	          }
+L00000885	        },
+L00000886	        {
+L00000887	          "if": {
+L00000888	            "properties": {
+L00000889	              "status": {
+L00000890	                "const": "blocked"
+L00000891	              }
+L00000892	            },
+L00000893	            "required": [
+L00000894	              "status"
+L00000895	            ]
+L00000896	          },
+L00000897	          "then": {
+L00000898	            "properties": {
+L00000899	              "current_state": {
+L00000900	                "const": "stage_blocked"
+L00000901	              },
+L00000902	              "blockers": {
+L00000903	                "type": "array",
+L00000904	                "minItems": 1,
+L00000905	                "items": {
+L00000906	                  "$ref": "#/$defs/blocker"
+L00000907	                }
+L00000908	              }
+L00000909	            }
+L00000910	          }
+L00000911	        }
+L00000912	      ]
+L00000913	    },
+L00000914	    "stage_card": {
+L00000915	      "type": "object",
+L00000916	      "additionalProperties": false,
+L00000917	      "required": [
+L00000918	        "stage_id",
+L00000919	        "purpose",
+L00000920	        "read_files",
+L00000921	        "write_files",
+L00000922	        "forbidden_writes",
+L00000923	        "entry_gate",
+L00000924	        "item_boundaries",
+L00000925	        "exit_gate",
+L00000926	        "success_route",
+L00000927	        "blocked_route",
+L00000928	        "assignment_contract",
+L00000929	        "parent_writeback_policy"
+L00000930	      ],
+L00000931	      "properties": {
+L00000932	        "stage_id": {
+L00000933	          "$ref": "#/$defs/stage_name"
+L00000934	        },
+L00000935	        "purpose": {
+L00000936	          "type": "string"
+L00000937	        },
+L00000938	        "read_files": {
+L00000939	          "$ref": "#/$defs/ref_list"
+L00000940	        },
+L00000941	        "write_files": {
+L00000942	          "$ref": "#/$defs/ref_list"
+L00000943	        },
+L00000944	        "forbidden_writes": {
+L00000945	          "$ref": "#/$defs/ref_list"
+L00000946	        },
+L00000947	        "entry_gate": {
+L00000948	          "type": "string"
+L00000949	        },
+L00000950	        "item_boundaries": {
+L00000951	          "$ref": "#/$defs/item_boundaries"
+L00000952	        },
+L00000953	        "exit_gate": {
+L00000954	          "type": "string"
+L00000955	        },
+L00000956	        "success_route": {
+L00000957	          "$ref": "#/$defs/stage_success_route"
+L00000958	        },
+L00000959	        "blocked_route": {
+L00000960	          "$ref": "#/$defs/stage_blocked_route"
+L00000961	        },
+L00000962	        "assignment_contract": {
+L00000963	          "$ref": "#/$defs/compile_wave_contract"
+L00000964	        },
+L00000965	        "parent_writeback_policy": {
+L00000966	          "$ref": "#/$defs/parent_writeback_policy"
+L00000967	        }
+L00000968	      }
+L00000969	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=970-981 >>>
+L00000970	    "node_seed_candidate": {
+L00000971	      "type": "object",
+L00000972	      "additionalProperties": false,
+L00000973	      "required": [
+L00000974	        "source_plan_unit_ids",
+L00000975	        "source_acceptance_unit_ids",
+L00000976	        "objective",
+L00000977	        "owner_area",
+L00000978	        "implementation_surfaces",
+L00000979	        "read_set",
+L00000980	        "write_set_candidates",
+L00000981	        "acceptance_criteria",

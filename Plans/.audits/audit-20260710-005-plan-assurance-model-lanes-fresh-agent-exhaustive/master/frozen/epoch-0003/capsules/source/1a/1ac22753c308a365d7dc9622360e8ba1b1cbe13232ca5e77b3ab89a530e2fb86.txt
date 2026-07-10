@@ -1,0 +1,422 @@
+<<< CONTEXT_BEFORE 5298-5309 >>>
+    }
+
+    async fn migrate_schema(&self, old_state: AgentCoordinationState) -> Result<AgentCoordinationState> {
+        // Migrate old schema versions to current
+        // ...
+    }
+}
+```
+
+### Handling Concurrent Subagent Execution
+
+When multiple subagents run in parallel:
+
+<<< AUTHORITATIVE_CORE 5310-5702 >>>
+
+1. **Worktree Isolation**: Each subtask has its own worktree, so subagents don't interfere
+2. **Independent Selection**: Each subtask selects subagents independently based on its own context
+3. **Resource Management**: Platform runners handle concurrent invocations
+4. **Context Sharing**: Completed subtasks share results via dependency chain, not direct subagent communication
+5. **Coordination**: Agents coordinate through canonical seglog/redb coordination records and projections; optional shared state files are debug/export mirrors only (see "Agent Coordination and Communication" above)
+
+**Example:**
+```rust
+// Parallel execution with different subagents
+Level 0:
+  - Subtask A (rust-engineer) → Worktree: .puppet-master/worktrees/A
+  - Subtask B (react-specialist) → Worktree: .puppet-master/worktrees/B
+  - Subtask C (python-pro) → Worktree: .puppet-master/worktrees/C
+
+// All run concurrently, each with appropriate subagent
+// Results merged back to main branch after completion
+```
+
+### Subagent Conflict Prevention
+
+**Potential Conflicts:**
+1. **File Conflicts**: Multiple subagents modifying same files
+2. **Resource Conflicts**: Platform quota limits
+3. **Context Conflicts**: Conflicting architectural decisions
+
+**Mitigation Strategies:**
+
+**Coordination-based prevention (primary):** Use agent coordination (see "Agent Coordination and Communication" above) to prevent conflicts:
+- Agents append `coordination.agent_file_ownership_updated` for files they are editing or claiming for coordination.
+- Before starting work, agents check `coordination_file_projection.v1` and `coordination_snapshot_projection.v1` for file conflicts.
+- If conflict detected, agent waits or selects alternative files
+- Coordination context injected into prompts warns agents about active files
+
+**Conflict detection (secondary):** Detect conflicts before execution:
+
+```rust
+// src/core/subagent_selector.rs (additions)
+
+pub struct SubagentConflictDetector;
+
+impl SubagentConflictDetector {
+    /// Check for potential conflicts between parallel subagents using coordination state
+    pub async fn detect_conflicts(
+        &self,
+        subagent_groups: &[Vec<String>],
+        contexts: &[ExecutionUnitContext],
+        coordinator: &AgentCoordinator,
+    ) -> Vec<Conflict> {
+        let mut conflicts = Vec::new();
+        let projection = coordinator.read_coordination_snapshot(CoordinationScope::current_run()).await.ok();
+
+        // Check for overlapping file modifications using the redb coordination projection
+        for (i, context_a) in contexts.iter().enumerate() {
+            for (j, context_b) in contexts.iter().enumerate().skip(i + 1) {
+                if let Some(snapshot) = &projection {
+                    let overlapping = snapshot.overlapping_file_claims(&context_a.node_id, &context_b.node_id);
+
+                    if !overlapping.is_empty() {
+                        conflicts.push(Conflict {
+                            type_: ConflictType::FileOverlap,
+                            subtask_a: i,
+                            subtask_b: j,
+                            files: overlapping,
+                        });
+                    }
+                }
+            }
+        }
+
+        // Check for architectural conflicts
+        for (i, subagents_a) in subagent_groups.iter().enumerate() {
+            for (j, subagents_b) in subagent_groups.iter().enumerate().skip(i + 1) {
+                if self.has_architectural_conflict(subagents_a, subagents_b) {
+                    conflicts.push(Conflict {
+                        type_: ConflictType::Architectural,
+                        subtask_a: i,
+                        subtask_b: j,
+                        files: Vec::new(),
+                    });
+                }
+            }
+        }
+
+        conflicts
+    }
+
+    fn has_architectural_conflict(
+        &self,
+        subagents_a: &[String],
+        subagents_b: &[String],
+    ) -> bool {
+        // Check if subagents might make conflicting decisions
+        // e.g., architect-reviewer vs different language engineers
+        subagents_a.contains(&"architect-reviewer".to_string()) &&
+        subagents_b.contains(&"architect-reviewer".to_string())
+    }
+}
+
+pub enum ConflictType {
+    FileOverlap,
+    Architectural,
+    ResourceLimit,
+}
+
+pub struct Conflict {
+    pub type_: ConflictType,
+    pub subtask_a: usize,
+    pub subtask_b: usize,
+    pub files: Vec<String>,
+}
+```
+### Parallel Execution Configuration
+
+**Concurrency caps rationale:** Per-platform concurrency limits exist for two reasons:
+
+1. **Provider rate limits:** Each platform (Cursor, Codex, Claude Code, Gemini, Copilot) enforces rate limits on concurrent requests. Exceeding them causes throttling, errors, or temporary bans.
+2. **Dev-machine load:** Agent processes consume CPU, disk I/O, and memory on the machine hosting the project folder. Running too many concurrent processes degrades the user's development environment.
+
+**Source of caps:** The canonical concurrency limits are defined in the `Canonical crew-cap and availability rules` `executionLimits` anchor above. The plan graph defines only dependency structure (`depends_on`, plus blocking edges such as `blockers`/`unblocks` where applicable); max concurrent is an execution/config concern. See `Plans/Crosswalk.md` §3.7 for the ownership table.
+
+**Crew limits vs agent limits:** These are separate concepts:
+- **Per-platform agent cap:** limits individual concurrent agent/subagent processes per platform. This is what hits rate limits and machine load.
+- **Crew cap** (`maxConcurrentCrewsPerPlatform`): limits concurrent crew groups per platform. A crew is a logical group of subagents working together.
+
+Both limits apply: a crew spawn must not exceed either the crew cap or the per-platform agent cap. See the `Canonical crew-cap and availability rules` `executionLimits` anchor for canonical values.
+
+### Benefits of Parallel Subagent Execution
+
+1. **Faster Execution**: Multiple specialized subagents work simultaneously
+2. **Better Specialization**: Each subtask gets the right subagent for its domain
+3. **Resource Efficiency**: Worktrees isolate changes, preventing conflicts
+4. **Scalability**: Can handle complex projects with many parallel subtasks
+
+### Example: Multi-Language Project
+
+**Scenario:** Full-stack project with Rust backend and React frontend
+
+**Phase 1: Setup**
+- `overseer` coordinates
+
+**Task 1: Backend API**
+- Subtask 1.1: Database schema (parallelizable)
+  - `rust-engineer` + `database-administrator`
+- Subtask 1.2: API endpoints (parallelizable)
+  - `rust-engineer` + `api-designer`
+- Subtask 1.3: Authentication (depends on 1.1, 1.2)
+  - `rust-engineer` + `security-engineer`
+
+**Task 2: Frontend UI**
+- Subtask 2.1: Component library (parallelizable)
+  - `react-specialist` + `frontend-developer`
+- Subtask 2.2: API integration (depends on Task 1)
+  - `react-specialist` + `frontend-developer`
+
+**Execution Flow:**
+```
+Level 0 (Parallel):
+  - 1.1: rust-engineer + database-administrator
+  - 1.2: rust-engineer + api-designer
+  - 2.1: react-specialist + frontend-developer
+
+Level 1 (After Level 0):
+  - 1.3: rust-engineer + security-engineer (inherits context from 1.1, 1.2)
+
+Level 2 (After Task 1):
+  - 2.2: react-specialist + frontend-developer (inherits API context from Task 1)
+```
+
+### Implementation Considerations
+
+1. **Subagent Selection Timing**: Select subagents **before** building dependency groups, so each subtask knows its subagents
+2. **Context Caching**: Cache project context detection to avoid repeated filesystem scans
+3. **Worktree Management**: Ensure worktrees are created before subagent execution
+4. **Result Aggregation**: Merge subagent outputs correctly when dependencies complete
+5. **Error Handling**: If one parallel subtask fails, handle gracefully based on `continue_on_failure` config
+
+### Updated Orchestrator Flow
+
+```rust
+// High-level flow with subagents and parallel execution
+
+1. Detect project context (language, framework, domain) - CACHED
+2. For each tier level:
+   a. Build dependency graph
+   b. Get parallelizable groups
+   c. For each group:
+      - Select subagents for each subtask (independent)
+      - Create worktrees
+      - Execute subtasks in parallel with their subagents
+      - Merge results
+      - Cleanup worktrees
+3. Advance to next dependency level
+```
+
+
+## Platform-Specific Capabilities & Extensions
+### Platform capability overview
+
+Platform capability handling is provider-first, is limited to PM-supported runtime surfaces, and uses three execution classes:
+- direct providers
+- CLI-bridged providers
+- server-bridged providers
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Prompt_Pipeline.md
+
+### Capability surface by platform
+
+**Cursor CLI**
+- `cursor-agent` is the execution runtime.
+- PM-managed account roots and PM-derived MCP/instruction projections define the CLI boundary.
+
+**Claude Code CLI**
+- CLI-backed execution with subscriber, console/API, and SSO setup families.
+- PM-native skill and MCP handling remains canonical.
+
+**Gemini direct**
+- direct API-key provider.
+- runtime invocation is not a CLI subprocess.
+
+**Antigravity CLI**
+- active Google-owned CLI-runtime provider entry replacing Gemini CLI.
+- may expose routing behavior that differs from the originally requested model; PM must record requested/effective model evidence from `agy` probes.
+
+**Gemini CLI (retired/source-lineage only)**
+- not an active provider entry.
+- retained only to preserve stale source tokens and prevent accidental resurrection.
+
+**Codex**
+- direct provider with `ChatGPT` and `API key` account rows.
+- no Codex CLI runtime requirement in this plan.
+
+**GitHub Copilot**
+- direct provider with billing/entity semantics beneath the auth-backed account row.
+- no Copilot CLI runtime requirement in this plan.
+
+**Direct coding-plan providers**
+- `Alibaba coding-plan direct`, `Z.AI coding-plan direct`, and `MiniMax coding-plan direct` are day-one direct surfaces for orchestrator selection; PM consumes their requested/effective runtime and API-family facts from `Plans/Models_System.md` rather than treating them as OpenCode-only server entries.
+
+**OpenCode**
+- server-bridged provider via managed or attached server profiles.
+
+ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
+## Leveraging Platform Capabilities for Subagent Integration
+
+### Strategy 1: Platform-Specific Subagent Packages
+
+Create platform-native packages (skills/plugins/extensions/agent files) that define subagent context and lifecycle hooks. Installation and discovery must route through `platform_specs` and provider-aware helpers.
+
+### Strategy 2: Hook-Based Lifecycle Management
+
+Use platform hooks to enrich lifecycle events (context injection, validation, quality checks) while keeping orchestrator policy and verification gates as the enforcement authority.
+
+### Strategy 3: MCP Server Integration
+
+Use MCP for tool exposure and interoperability where supported. Tool permissions, evidence, and run policy remain centralized in orchestrator/runtime.
+
+### Strategy 4: CLI Invocation as Execution Truth
+
+All subagent work executes through provider CLI commands. Determinism comes from explicit args/env plus normalized event parsing from CLI output.
+
+## Updated Implementation Architecture
+
+### Platform Capability Manager
+
+```rust
+// src/core/platform_capability_manager.rs
+
+pub struct PlatformCapabilityManager {
+    cursor_skills: Vec<SkillInfo>,
+    claude_plugins: Vec<PluginInfo>,
+    gemini_extensions: Vec<ExtensionInfo>,
+    codex_mcp_available: bool,
+    copilot_skills_available: bool,
+}
+
+impl PlatformCapabilityManager {
+    // DRY:FN:discover_capabilities — Discover platform-specific capabilities using platform_specs
+    pub fn discover_capabilities(&self, platform: Platform) -> Result<Capabilities> {
+        platform_specs::discover_platform_capabilities(platform)
+    }
+}
+```
+
+Capability snapshot rules:
+- Capability evaluation happens at run start and produces a frozen snapshot for the run/tier.
+- Precedence is: live runtime discovery -> provider policy snapshot -> static model/platform baseline.
+- `platform.capability_evaluated` is the canonical persistence event for that snapshot and any gated features.
+- This manager complements provider `capabilities.get`; it does not replace the provider-facing capability API.
+
+### Enhanced Subagent Invoker
+
+```rust
+// src/core/subagent_invoker.rs (enhanced)
+
+impl SubagentInvoker {
+    // DRY:FN:invoke_with_capabilities — Invoke subagent using platform-specific capabilities
+    pub async fn invoke_with_capabilities(
+        &self,
+        platform: Platform,
+        subagent_name: &str,
+        task: &str,
+        capabilities: &PlatformCapabilities,
+    ) -> Result<String> {
+        if !subagent_registry::is_valid_subagent_name(subagent_name) {
+            return Err(anyhow!("Invalid subagent name: {}", subagent_name));
+        }
+
+        let invocation_method =
+            platform_specs::get_subagent_invocation_method(platform, capabilities)?;
+
+        match invocation_method {
+            InvocationMethod::Mcp => self.invoke_via_mcp(platform, subagent_name, task).await,
+            InvocationMethod::Cli => self.invoke_via_cli(platform, subagent_name, task).await,
+        }
+    }
+}
+```
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
+## Benefits of Platform Capabilities
+
+1. **Rich Context:** Hooks and skills inject domain context into subagents.
+2. **Validation:** Hook + orchestrator checks can reject unsafe actions.
+3. **Quality Gates:** Lifecycle hooks and gates enforce completion quality.
+4. **Deterministic Runtime:** Provider execution is explicit and replayable (transport-aware: CLI-bridged, direct-provider, or server-bridged per ProviderTransport taxonomy).
+5. **Packaging:** Plugins/extensions keep subagent assets reusable.
+6. **Tool Integration:** MCP extends tool access without changing orchestrator core.
+
+## Implementation Considerations
+
+1. **Platform Detection:** Detect available capabilities per provider CLI/runtime.
+2. **Capability Caching:** Cache detection results to reduce startup overhead.
+3. **Version Compatibility:** Guard capability use by known version constraints.
+4. **Configuration Management:** Keep platform-specific config paths explicit.
+5. **Error Handling:** Capability misses degrade gracefully to base CLI flow.
+6. **Documentation:** Keep capability docs aligned with provider contracts.
+
+## Next Steps
+
+1. **Track release notes:** Keep `platform_specs` and runner flags current.
+2. **Expand capability detection:** Add structured detection for hooks/skills/MCP support.
+3. **Package templates:** Provide reusable platform package templates.
+4. **Hook coverage:** Add hook-driven evidence points where useful.
+5. **Integration tests:** Verify capability-driven invocation remains deterministic.
+
+## Autonomous QA Loop Pattern Integration
+
+### Overview
+
+The [autonomous QA loop pattern](https://gist.github.com/gsemet/1ef024fc426cfc75f946302033a69812) provides a proven orchestrator pattern for autonomous task execution with quality gates. While designed for VS Code Copilot, its concepts can enhance our orchestrator subagent integration.
+
+### Key Concepts from Autonomous QA Loop
+
+1. **Orchestrator/Subagent Separation**: Orchestrator manages loop, subagents implement tasks
+2. **Three-Tier QA System**: Preflight → Task Inspector → Phase Inspector
+3. **Progress Tracking**: Visual status symbols (⬜ 🔄 ✅ 🔴) with detailed tracking
+4. **Task Prioritization**: Incomplete tasks (🔴) prioritized over new tasks
+5. **Phase-Aware Execution**: Only work on current phase, don't jump ahead
+6. **Pause Mechanism**: `PAUSE.md` file to safely halt execution
+7. **Commit Strategy**: Amend commits for rework, conventional commits for new work
+
+### Integration Opportunities
+
+#### 1. Enhanced Progress Tracking
+
+**Current State**: Orchestrator tracks tier state in state machines
+**Enhancement**: Add visual progress tracking similar to an autonomous QA loop
+
+```rust
+// src/core/progress_tracker.rs (new)
+
+pub struct TaskProgress {
+    pub task_id: String,
+    pub status: TaskStatus,
+    pub phase: String,
+    pub inspector_notes: Option<String>,
+    pub last_inspector_feedback: Option<String>,
+}
+
+pub enum TaskStatus {
+    NotStarted,      // ⬜
+    InProgress,      // 🔄
+    Completed,       // ✅ (verified by inspector)
+    Incomplete,      // 🔴 (requires rework)
+    Skipped,         // ⏸️
+}
+
+pub struct ProgressTracker {
+    tasks: Vec<TaskProgress>,
+    current_phase: String,
+}
+
+<<< CONTEXT_AFTER 5703-5714 >>>
+
+impl ProgressTracker {
+    /// Prioritize incomplete tasks
+    pub fn get_next_task(&self) -> Option<&TaskProgress> {
+        // First: incomplete tasks in current phase
+        self.tasks.iter()
+            .filter(|t| t.phase == self.current_phase)
+            .find(|t| matches!(t.status, TaskStatus::Incomplete))
+            // Then: not started tasks in current phase
+            .or_else(|| {
+                self.tasks.iter()
+                    .filter(|t| t.phase == self.current_phase)

@@ -1,0 +1,1147 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000665-EXACT-WIN-510B3DE676A3-0001",
+  "attempt_id": "attempt-0002",
+  "task_thread_id": "019f4d38-64ad-7312-a36f-906f024e890d",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/storage-plan.md",
+    "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1",
+    "core_sha256": "a53f2ecac86c76b9baf3cf70664f012f8a54dd2822ee6e21fb3448f86a5a7ecd",
+    "core_range": [
+      1,
+      157
+    ]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-000665-E001",
+      "item_type": "authority",
+      "title": "Seglog is runtime source of truth and redb is projection storage",
+      "statement": "Replayable runtime coordination and audit authority is event-sourced in seglog; redb owns projected current/read-optimized state, while requested JSON/JSONL inspection views and loose JSON files are non-canonical.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "storage.authority",
+        "storage.seglog",
+        "storage.redb"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 75,
+          "line_end": 75,
+          "exact_quote": "Storage treats file-based canon as export/inspection mirror material and event-sourced canon as the seglog/source-of-truth path for replayable runtime coordination/audit.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 145,
+          "line_end": 145,
+          "exact_quote": "`event/source-of-truth` (`/source-of-truth`) aspects live in seglog, `projected/current-state/read-optimized` (`/current-state/read-optimized`) aspects live in redb, and `/inspection` export views are JSON/JSONL (`/JSONL`) only when the user requests them from UI surfaces such as Orchestrator. Loose JSON files are never the canonical source for these artifacts.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E002",
+      "item_type": "contract",
+      "title": "Attempt and permission snapshots preserve requested and effective identity",
+      "statement": "Attempt and permission snapshot storage must preserve invocation data, result and requirements references, requested/effective provider, model, account and persona values, permission identity, account-switch context, pressure episode linkage, and GUI/chat disclosure.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "runtime.snapshot",
+        "permission.snapshot",
+        "identity.requested_effective"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 49,
+          "line_end": 49,
+          "exact_quote": "payloads must preserve `{ tool_name`, `invocation_summary`, and `options }`, plus `result_id`, requested/effective provider, requested/effective model, requested/effective account, requested_persona, effective_persona, permission_snapshot_id, account_switch_reason, account_pressure_episode, requirements_quality_report_ref, and the /chat/GUI disclosure",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 119,
+          "line_end": 119,
+          "exact_quote": "permission snapshots preserve requested state and identity context, not just runtime event records, so rewrite-era requested/effective disclosure remains auditable.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E003",
+      "item_type": "behavior",
+      "title": "Commands normalize into a shared route-target identity",
+      "statement": "Command families persist enough context to restore page, tab, run, thread and inspector focus without implying edit/open behavior, and wrapper-local payloads normalize into route-derived target/subject identity before storage.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "command.routing",
+        "navigation.restore",
+        "route_target"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 53,
+          "line_end": 53,
+          "exact_quote": "persist enough route data to restore page/tab/run/thread/inspector context without implying editing/opening.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 97,
+          "line_end": 97,
+          "exact_quote": "Feature-specific local identity is allowed only as a resolver input that normalizes into route-target or subject/object refs before storage writes.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E004",
+      "item_type": "contract",
+      "title": "Runtime object families use a shared record envelope",
+      "statement": "Storage owns the canonical runtime record-family bundle and its shared identity, source, artifact, evidence, actor, lineage, kind and record identifiers; the compact tuple is shorthand rather than a second schema.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "runtime.object_family",
+        "record.envelope"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 115,
+          "line_end": 115,
+          "exact_quote": "The canonical family bundle includes `{project`, `run`, `seam`, `package`, `node`, `attempt`, `lane`, `promotion`, `review`, `resolution_thread}`, plus `project_id`, `run_id`, `seam_id`, `package_id`, `node_id`, `attempt_id`, `lane_id`, `worktree_id`, `safe_point_id`, `wizard_id`, `thread_id`, `document_id`, `artifact_id`, `concern_id`, `promotion_id`, `detail_ref`, `source_refs`, `source_refs[]`, `artifact_refs`, `artifact_refs[]`, `evidence_refs`, `evidence_refs[]`, `created_at_utc`, `created_by_kind`, `created_by_ref`, `superseded_by_record_id`, `record_kind`, and `record_id`.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 117,
+          "line_end": 117,
+          "exact_quote": "is a shorthand for the same record family set, not a separate schema.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E005",
+      "item_type": "contract",
+      "title": "Receipts bridge surfaces but do not own lifecycle truth",
+      "statement": "Receipts are cross-surface pivots across attempts, usage, evidence, artifacts and UI, while lifecycle truth remains in the named durable record families; historical/cross-project receipts require project, actor, time and usage linkage, and usage/provider references retain distinct join meanings.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "receipt.storage",
+        "receipt.join",
+        "lifecycle.authority"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 109,
+          "line_end": 109,
+          "exact_quote": "Receipts are useful cross-surface pivots, but `orchestrator.receipt` is not enough to replace durable worktree/lane lifecycle records or `/lane` ownership state.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 109,
+          "line_end": 109,
+          "exact_quote": "Cross-surface receipt records require `project_id`, actor refs, `created_at_utc`, and `usage_event_ref` whenever a surface may pivot historically or across projects.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 109,
+          "line_end": 109,
+          "exact_quote": "`usage_event_ref` and `usage_event_id` are receipt and Usage/docs join fields, while `provider_attempt_ref` joins provider traces; downstream surfaces must join them coherently instead of substituting one for the other.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E006",
+      "item_type": "contract",
+      "title": "Non-trivial exports require a canonical manifest",
+      "statement": "Record/artifact bundles and non-trivial exports share a manifest carrying family, scope, canonical IDs and references, included content, artifact path rules, historical/superseded disclosure, trust state, and re-query or canonical-revalidation status; CSV and JSON are serializations rather than authority.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "export.manifest",
+        "export.trust_state"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 83,
+          "line_end": 83,
+          "exact_quote": "The canonical manifest records export family, scope, canonical IDs/refs, included records/artifacts/references, artifact path rules, superseded/removed/historical backing-object disclosure, trust-state, and whether view re-query or canonical revalidation happened; CSV and JSON are serializations, not source-of-truth.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E007",
+      "item_type": "failure_recovery",
+      "title": "Projection degradation preserves record-backed inspection and gates actions",
+      "statement": "Projection health spans current, refreshing, stale, degraded and unavailable. Record-backed selected slices remain inspectable under degraded projection state, but sensitive actions require direct canonical revalidation and direct-record deep links replace projection-heavy rollups.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "projection.trust",
+        "projection.fallback",
+        "mutation.gating"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 91,
+          "line_end": 91,
+          "exact_quote": "Projection states include current, refreshing, stale, degraded, and unavailable; when projections are stale/degraded/unavailable or `/degraded/unavailable`, record-backed fallback views stay available for selected canonical slices, and sensitive actions require direct canonical revalidation before execution.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 137,
+          "line_end": 137,
+          "exact_quote": "a deep link to a concern during projection degradation routes to the exact record view instead of the normal rollup tab presentation.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E008",
+      "item_type": "state_transition",
+      "title": "Concern history and family boundaries are durable",
+      "statement": "Review findings, concerns, blocked episodes and annotations are separate families. Concern records preserve acknowledgement, resolution, dismissal and lineage-changing history; findings, corroboration, patches, recovery and blocked episodes may affect or reference concerns but do not replace them.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "concern.lifecycle",
+        "concern.lineage",
+        "record.family_split"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 70,
+          "line_end": 70,
+          "exact_quote": "review finding is produced by a review/corroboration/validation flow, concern is a durable tracked issue/observation (`/observation`), blocked episode is a runtime execution stop with canonical recovery metadata, and annotation is a document-review instruction/comment object.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 101,
+          "line_end": 101,
+          "exact_quote": "none of those flows replace the concern record.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 139,
+          "line_end": 139,
+          "exact_quote": "A concern undo is a compensating follow-up record, not history erasure.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E009",
+      "item_type": "contract",
+      "title": "Blocked and recovery actions bind to canonical runtime identity",
+      "statement": "Blocked projections use run, node and blocked-sequence identity; permitted direct actions come from allowed action IDs, and attempt records carry scheduler, safe-point, remediation and runtime identity so recovery does not infer identity from UI state.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "blocked_projection",
+        "recovery.actionability"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 62,
+          "line_end": 62,
+          "exact_quote": "`blocked_sequence` is the identity component for `object_kind = blocked_episode` inside `{ run_id, node_id }` scope",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 143,
+          "line_end": 143,
+          "exact_quote": "`allowed_action_ids` and `allowed_action_ids[]` identify permitted direct actions; `attempt_record` carries scheduler/safe-point/remediation/runtime identity fields for `/safe-point/remediation/runtime` so recovery context can reopen without inferring identity from live UI state.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E010",
+      "item_type": "authority",
+      "title": "Worktree and lane state is storage-owned while operations are externally owned",
+      "statement": "Storage owns durable worktree/lane identity, lifecycle and projection joins, while WorktreeGitImprovement owns operational cleanup/archive/remove behavior and Source Control/Orchestrator UI expectations.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "worktree.lifecycle",
+        "lane.lifecycle",
+        "source_control.ownership"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 129,
+          "line_end": 129,
+          "exact_quote": "`WorktreeGitImprovement.md` owns operational behavior, cleanup/archive/remove rules including `/archive/remove`, and UI expectations for Source Control and Orchestrator; storage owns persisted lifecycle/history state and projection joins.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E011",
+      "item_type": "contract",
+      "title": "Artifacts and records remain separate but identity-linked",
+      "statement": "Artifact indexes and runtime artifacts normalize canonical runtime and operational identity, lineage references resolve to the strongest openable target, and file/blob/renderable artifacts remain distinct from canonical structured records and views.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "artifact.identity",
+        "artifact.lineage",
+        "record_artifact.split"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 157,
+          "line_end": 157,
+          "exact_quote": "Records and artifacts stay separate: a record is the canonical structured object in Ledger/export/search/routing (`/export/search/routing`), while an artifact is the file/blob/renderable (`/blob/renderable`) output linked from that record.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 157,
+          "line_end": 157,
+          "exact_quote": "Runtime lineage refs include `attempt:<attempt_id>`, `safe_point:<safe_point_id>`, `remediation:<remediation_root_id>`, and `scheduler_pass:<scheduler_pass_id>`; these resolve through projections `/indexes` to the strongest openable target",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E012",
+      "item_type": "contract",
+      "title": "Operational identity is distinct from provider account identity",
+      "statement": "Side-effectful or externally scoped runtime actions record requested/effective operational references, kind, selection reason, partial capability, target authority and surface scope separately from the provider account that executed them.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "operational_identity",
+        "provider_account_identity",
+        "external_action.audit"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 86,
+          "line_end": 86,
+          "exact_quote": "The block records requested and effective operational refs, kind, selection reason, partial capability, target authority, and surface-specific scope so GitHub, registry, Kubernetes, remote-mode, and other externally scoped actions remain auditable.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 119,
+          "line_end": 119,
+          "exact_quote": "`operational_identity` records which operational identity the action was actually aimed at, distinct from the provider account used to execute it.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E013",
+      "item_type": "behavior",
+      "title": "Project attention stays object-first and separately linked",
+      "statement": "Project cards and badges roll up the highest-severity active item plus a count, while the attention center retains each active item as a separately linked canonical object and next-action route rather than copied notification text or a synthetic project-blocked object.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "project.attention",
+        "project.summary",
+        "notification.routing"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 95,
+          "line_end": 95,
+          "exact_quote": "the attention center points to the canonical owning object and next action path rather than copied banner text.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 96,
+          "line_end": 96,
+          "exact_quote": "Project `/card` and badge rollups show the highest-severity active item plus a count, while the attention center keeps each active item separately object-linked; rows must not collapse into one synthetic \"project blocked\" blob.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E014",
+      "item_type": "behavior",
+      "title": "Compatibility vocabulary remains subordinate to canonical runtime identity",
+      "statement": "Tier/event and older UI vocabulary may be ingested or searched as migration aliases, but canonical storage persists node/attempt/package/seam/lane identity and uses blocked-runtime overlays and explicit mode overrides rather than restoring legacy authority.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "migration.aliases",
+        "runtime.identity"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 123,
+          "line_end": 123,
+          "exact_quote": "Storage may ingest `run.tier_started`, `run.tier_completed`, `run.persona_stage_changed`, `tier_runtime_record`, `tier_id`, `tier_type`, `tier-era`, `tier-start`, `tier-boundary`, `PuppetMasterEvent`, `PuppetMasterEvent::*`, `PuppetMasterEvent::Output`, `PuppetMasterEvent::TierChanged`, `PuppetMasterEvent::IterationStart`, `PuppetMasterEvent::EvidenceStored`, `PuppetMasterEvent::UserInteractionRequired`, `TierChanged`, `IterationStart`, `EvidenceStored`, and `UserInteractionRequired` as migration inputs, but canonical runtime-core records persist node/attempt/package/seam/lane identity.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 151,
+          "line_end": 151,
+          "exact_quote": "storage treats them as explicit mode overrides rather than the baseline.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E015",
+      "item_type": "gui_truth",
+      "title": "Mutation controls require explicit currentness and actionability",
+      "statement": "Action-capable direct-record views must show currentness, generation match, supersession and actionability before mutation controls. Cross-object search belongs in Orchestrator/command-palette flows, while degraded concern links open exact records.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "gui.mutation_gating",
+        "gui.search",
+        "gui.deep_link"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 141,
+          "line_end": 141,
+          "exact_quote": "Any direct record view that allows action must display currentness, generation match, superseded yes/no, and actionable yes/no before surfacing mutation controls",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 81,
+          "line_end": 81,
+          "exact_quote": "A narrow Source Control panel should not own richer cross-object search; those flows belong in Orchestrator / command-palette flows rather than side-panel SCM UI",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E016",
+      "item_type": "failure_recovery",
+      "title": "Recovery records carry trigger, scope, preconditions and resulting lineage",
+      "statement": "Recovery records cover safe-point restore, restart reconciliation, blocked prerequisite resolution and lane/worktree restore, and persist target scope, trigger, preconditions, result, resulting attempt/run lineage and affected concerns.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "recovery.record",
+        "recovery.lineage"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 82,
+          "line_end": 82,
+          "exact_quote": "Recovery records include `recovery kind`, `safe-point restore`, `restart reconciliation`, `blocked prerequisite resolution`, `lane/worktree restore`, `target scope refs`, `trigger reason`, `preconditions`, `result`, `resulting attempt/run linkage`, and `affected concern refs`.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E017",
+      "item_type": "state_transition",
+      "title": "Account pressure episodes are durable and preserve cooled-down state",
+      "statement": "Account pressure is stored as a durable, project/provider/account-attributed episode with confidence, pressure, remaining/reset estimates, timestamps and an active/cooled_down/resolved/invalidated status; cooled_down remains independently queryable.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "account_pressure_episode",
+        "account.attribution"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 149,
+          "line_end": 149,
+          "exact_quote": "status values are `active | cooled_down | resolved | invalidated`, with `cooled_down` preserved as a queryable state rather than flattened into resolved.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-E018",
+      "item_type": "consumer",
+      "title": "Owner and contract stability precede mirror and gate propagation",
+      "statement": "Storage defines owner-boundary record families and projection keys before consumer-native labels; runtime actions require versioned storage/contract verification and routing coverage before matrix/gate authority, and mirrors/checklists update only after owner/consumer canon and evidence stabilize.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "governance.propagation",
+        "consumer.contract",
+        "verification.routing"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 88,
+          "line_end": 88,
+          "exact_quote": "`/verification/routing` coverage is required for runtime-era actions and records before `/matrix/gate` decisions can claim complete authority.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 105,
+          "line_end": 105,
+          "exact_quote": "Mirrors and `/checklists` update only after owner/consumer canon is stable; checklist or mirror propagation is a downstream `/consumer` step after owner storage and contract evidence has passed.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G001",
+      "item_type": "gap",
+      "title": "Owner-first canonicalization order has no defined order",
+      "statement": "The core declares an owner-first canonicalization-order section but supplies no ordered steps, precedence rules, conflict-resolution behavior or completion condition for that order.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_behavior_contract",
+      "impact": "Builders can canonicalize owners, contracts, projections and consumers in different sequences and produce different accepted storage models.",
+      "builder_discretion": "Choose the ordering, precedence and conflict behavior without a source-bound oracle.",
+      "feature_keys": [
+        "canonicalization.order"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 8,
+          "line_end": 8,
+          "exact_quote": "### Owner-first canonicalization order",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G002",
+      "item_type": "gap",
+      "title": "Projection trust operationalization is explicitly missing",
+      "statement": "The specification names projection health states and fallback destinations but explicitly leaves the decision contract for inspectability, canonical revalidation, and withheld mutation/export authority unresolved; it also gives no freshness thresholds or failure-time behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_gating_policy",
+      "impact": "Different consumers can enable actions or authoritative exports under the same stale/degraded condition, creating unsafe or contradictory behavior.",
+      "builder_discretion": "Define thresholds, revalidation procedure, timeout/failure behavior and per-action/export gating.",
+      "feature_keys": [
+        "projection.trust",
+        "projection.gating"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 137,
+          "line_end": 137,
+          "exact_quote": "the missing requirement is `trust-state` operationalization, where storage decides when stale or degraded projections can be inspected, when canonical revalidation is required, and when mutation or export authority is withheld.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G003",
+      "item_type": "gap",
+      "title": "Worktree row posture and lifecycle vocabularies lack a mapping",
+      "statement": "The core defines both a concrete Source Control row-posture vocabulary and a different compact lifecycle vocabulary, then calls the latter an alias for individually queryable states without defining one-to-one or many-to-one mappings, transition legality, precedence, or simultaneous-state representation.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "ambiguous_state_model",
+      "impact": "Persisted lifecycle, row rendering, cleanup eligibility and recovery can disagree across Source Control and Orchestrator.",
+      "builder_discretion": "Invent the mapping between live/dirty/conflict/orphaned/recovering and baseline/active/suspect/restoring/cleanup states and decide whether they are orthogonal dimensions.",
+      "feature_keys": [
+        "worktree.state",
+        "lane.state",
+        "source_control.row"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 129,
+          "line_end": 129,
+          "exact_quote": "Source Control uses a concrete worktree-first row posture: `live`, `dirty`, `conflict`, `orphaned`, `recovering`, `retained`, `archived`, and `removed`. The compact lifecycle vocabulary `baseline/active/suspect/restoring/retained/cleanup_eligible/archived/removed/historical` is a migration alias for those individually queryable states, not a collapsed generic worktree state.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G004",
+      "item_type": "gap",
+      "title": "Concern lifecycle arrow conflicts with described dismissal semantics",
+      "statement": "The literal chain presents dismissed after resolved, while dismissal is separately defined as hiding/rejecting actionable framing and can disagree with live corroborated evidence. The core does not state allowed source states for dismissal, reopening rules by terminal state, or whether resolved-to-dismissed is required or merely illustrative.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "ambiguous_transition_graph",
+      "impact": "Concern history, UI actions and project-attention rollups can implement incompatible transition graphs and audit trails.",
+      "builder_discretion": "Choose legal transitions and guards for acknowledge, resolve, dismiss, reopen, revoke and supersede.",
+      "feature_keys": [
+        "concern.lifecycle",
+        "concern.dismissal"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 139,
+          "line_end": 139,
+          "exact_quote": "Concern lifecycle remains `active -> acknowledged -> resolved -> dismissed`;",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 139,
+          "line_end": 139,
+          "exact_quote": "`dismissed` means the presentation was intentionally hidden or `/rejected` as actionable framing and requires rationale when it disagrees with corroborated or `/high-severity` evidence;",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G005",
+      "item_type": "gap",
+      "title": "Attention escalation lacks severity and elapsed-time thresholds",
+      "statement": "The specification makes escalation depend on severity and elapsed time but defines neither threshold values, timing origin, reset/suppression behavior, retry/deduplication semantics nor authority for emitting system notifications.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_operational_policy",
+      "impact": "Equivalent seam-blocking concerns can notify at different times, spam users, or fail to escalate.",
+      "builder_discretion": "Choose severity mapping, clocks, quiet-window interaction, deduplication and system-notification thresholds.",
+      "feature_keys": [
+        "attention.escalation",
+        "notification.policy"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 100,
+          "line_end": 100,
+          "exact_quote": "seam-blocking concerns with no progress can escalate to blocked surfaces and system notification according to severity and elapsed time.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G006",
+      "item_type": "gap",
+      "title": "Requested-account asymmetry remains unresolved",
+      "statement": "The core explicitly states that the manual preferred-account hint does not supply the missing requested account field or establish complete requested/effective account and upstream identity ownership.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "known_identity_schema_gap",
+      "impact": "Attempt, receipt and usage records may be unable to explain account selection or distinguish requested from effective account identity.",
+      "builder_discretion": "Choose where requested_account_id is required, how it propagates, and how old records are migrated or represented when absent.",
+      "feature_keys": [
+        "account.requested_effective",
+        "runtime.identity"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 72,
+          "line_end": 72,
+          "exact_quote": "`manual_preferred_account_id` as a preference hint only; it does not solve the broader missing `requested_account_id` asymmetry in runtime records, nor replace requested/effective auth/account and upstream provider identity ownership.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G007",
+      "item_type": "gap",
+      "title": "Dashboard layout persistence scopes are constrained but not contracted",
+      "statement": "The document rejects silently sharing one dashboard layout contract across app-default, project override and project-scoped persistence, yet does not define the three payloads, precedence, inheritance, reset behavior, migration keys or owning write authority.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_gui_persistence_contract",
+      "impact": "UI layout behavior and persisted settings can vary by surface or overwrite the wrong scope.",
+      "builder_discretion": "Design layout schemas, precedence and migration behavior for each persistence scope.",
+      "feature_keys": [
+        "dashboard_layout",
+        "gui.persistence"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 71,
+          "line_end": 71,
+          "exact_quote": "app-default, project override, and project-scoped persistence must not silently reuse one layout contract for every surface.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G008",
+      "item_type": "gap",
+      "title": "Artifact-index optional-reference applicability is undefined",
+      "statement": "Attempt and node references are required as first-class indexes only where relevant, but the core provides no artifact-type applicability table, null/absence semantics, cardinality, index uniqueness or backfill rule.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "ambiguous_index_contract",
+      "impact": "Producers can omit different identity indexes, making artifact retrieval and cross-surface joins incomplete or inconsistent.",
+      "builder_discretion": "Decide relevance by artifact type and choose indexing, uniqueness and migration rules.",
+      "feature_keys": [
+        "artifact.index",
+        "artifact.identity"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 59,
+          "line_end": 59,
+          "exact_quote": "Artifact indexes treat `attempt_id?` and `node_id?` as first-class indexed refs where relevant.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G009",
+      "item_type": "gap",
+      "title": "Enumerated record fields lack executable field-shape contracts",
+      "statement": "The core names broad object, attempt, receipt, governance, recovery and artifact field sets but generally does not define types, requiredness by record kind, cardinality, enum closure, defaults, versioning or validation errors. Duplicate spellings such as actor-role/actor_role and allowed_action_ids/allowed_action_ids[] make normalization consequential.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_schema_contract",
+      "impact": "Independent producers and consumers can serialize structurally incompatible records while appearing vocabulary-compliant.",
+      "builder_discretion": "Create schemas, choose canonical spellings and requiredness, and define validation/versioning behavior.",
+      "feature_keys": [
+        "record.schema",
+        "attempt.schema",
+        "storage.validation"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 119,
+          "line_end": 119,
+          "exact_quote": "They include execution_unit_context, optional decomposition_context and view_context for legacy prompt or UI help, action-family, execution_role, operational_identity, actor-aware /actor-snapshot, actor-role, actor_role, run-level, feature_seam, feature_seam_id, work_package, work_package_id, package-governance, seam-promotion, execution-context, selected_worktree_id, selected_repo_id, workspace_ref, mutation_capable, side-effect, and provider_attempt_ref.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 143,
+          "line_end": 143,
+          "exact_quote": "`allowed_action_ids` and `allowed_action_ids[]` identify permitted direct actions;",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G010",
+      "item_type": "gap",
+      "title": "Migration aliases lack deterministic mappings and retirement criteria",
+      "statement": "Large sets of tier-, request-, wrapper- and surface-local names are declared aliases or migration evidence, but the core does not define per-alias transforms, collision handling, round-trip behavior, rejection rules, version bounds, telemetry or retirement/cutover criteria.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_migration_contract",
+      "impact": "Legacy ingestion can silently create divergent identities or persist permanent parallel canon despite the stated prohibition.",
+      "builder_discretion": "Invent alias maps, precedence, validation errors, compatibility duration and cutover gates.",
+      "feature_keys": [
+        "compatibility.migration",
+        "alias.normalization"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 55,
+          "line_end": 55,
+          "exact_quote": "Command compatibility terms that remain migration-only include self-contradictory command tables, graph-patch event routes, remediation_parent_attempt_id, usage_sequence, hitl.approval_requested, hitl.approved, request_id, /scope, execution-unit, display-only identity labels, /switch panels, cost_usage joins, still-structural blockers, node-graph consumers, promotion_class rollups, switch-history, artifact-event records, /completed filters, /failure filters, nice-to-have display fields, /open-subject/bridge-field aliases, project-summary aliases, blocked-owner labels, event-driven transition prose, cross-cutting consumers, operational-identity spelling, /pressure panels, rewrite-era tab pressure, flat-command-only gates, and actor_run_kind route filters.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 123,
+          "line_end": 123,
+          "exact_quote": "Legacy tier and event names are compatibility aliases only.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G011",
+      "item_type": "gap",
+      "title": "P5 special recovery register is heading-only",
+      "statement": "A P5 runtime-storage special recovery register is named, but the authoritative core provides no P5-specific record identity, trigger, entries, state model, ownership split, recovery procedure, validation oracle or relation to the general recovery record family.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_recovery_contract",
+      "impact": "A builder cannot implement or verify the named special register without inventing its semantics or treating generic recovery records as sufficient.",
+      "builder_discretion": "Decide whether the register exists as a separate record family and define all P5-specific behavior.",
+      "feature_keys": [
+        "p5.recovery_register",
+        "runtime.recovery"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 47,
+          "line_end": 47,
+          "exact_quote": "### P5 runtime storage special recovery register",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 82,
+          "line_end": 82,
+          "exact_quote": "Recovery records include `recovery kind`, `safe-point restore`, `restart reconciliation`, `blocked prerequisite resolution`, `lane/worktree restore`, `target scope refs`, `trigger reason`, `preconditions`, `result`, `resulting attempt/run linkage`, and `affected concern refs`.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G012",
+      "item_type": "gap",
+      "title": "Durable identity and export records lack privacy and access rules",
+      "statement": "The core persists provider/account/execution-role, actor, operational target, usage and artifact identity and exports canonical record bundles, but defines no redaction, access control, encryption, retention/deletion, secret-material exclusion or cross-project disclosure policy.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_security_privacy_contract",
+      "impact": "Sensitive provider, account, operational-target or artifact metadata can be overexposed through storage, history, search or export surfaces.",
+      "builder_discretion": "Choose field classification, authorization boundaries, redaction, retention, encryption and export disclosure rules.",
+      "feature_keys": [
+        "storage.security",
+        "storage.privacy",
+        "export.redaction"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 86,
+          "line_end": 86,
+          "exact_quote": "Runtime records for side-effectful or externally-scoped actions include an `operational-identity` block distinct from provider account identity.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 83,
+          "line_end": 83,
+          "exact_quote": "The canonical manifest records export family, scope, canonical IDs/refs, included records/artifacts/references, artifact path rules, superseded/removed/historical backing-object disclosure, trust-state, and whether view re-query or canonical revalidation happened",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G013",
+      "item_type": "gap",
+      "title": "Large-run queryability has no scale or performance oracle",
+      "statement": "The core identifies large-run density and separate queryability as a real-world requirement but supplies no cardinality envelope, latency/throughput target, pagination/index contract, retention horizon, compaction behavior, load profile or degraded-mode performance expectation.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_scale_performance_contract",
+      "impact": "An implementation can be functionally queryable yet unusable at expected active/historical concern, record, lane or worktree volumes.",
+      "builder_discretion": "Set capacity, latency, throughput, indexing, pagination, retention and compaction targets.",
+      "feature_keys": [
+        "storage.scale",
+        "storage.performance",
+        "large_run"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 92,
+          "line_end": 92,
+          "exact_quote": "Large-run density is a real-world storage concern: many active and historical concerns, corroboration `/review/promotion/recovery` records, retained lanes, and cleanup-eligible lanes/worktrees (`/worktrees`) must remain separately queryable instead of collapsing into one graph-only summary.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000665-G014",
+      "item_type": "gap",
+      "title": "Acceptance language lacks source-local executable oracles",
+      "statement": "The core gates authority on verification/routing coverage, owner storage and contract evidence, generation match and canonical revalidation, but does not define how any of those are computed, what exact pass/fail evidence is required, how failures are reported, or which invariant tests prove record replay, migration, action gating and export correctness.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_acceptance_oracle",
+      "impact": "Builders and auditors can claim the same prose requirements passed using incompatible evidence and without proving cross-record or recovery behavior.",
+      "builder_discretion": "Define validation commands/tests, fixtures, pass criteria, evidence schema and failure diagnostics.",
+      "feature_keys": [
+        "storage.acceptance",
+        "verification.routing",
+        "canonical.revalidation"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 88,
+          "line_end": 88,
+          "exact_quote": "`/verification/routing` coverage is required for runtime-era actions and records before `/matrix/gate` decisions can claim complete authority.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        },
+        {
+          "path": "Plans/storage-plan.md",
+          "line_start": 105,
+          "line_end": 105,
+          "exact_quote": "after owner storage and contract evidence has passed.",
+          "source_sha256": "66d19f8d241e488ca19a0f824c24ad28d6bdd89a72abd83bb949b77c234775a1"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "addressed",
+      "summary": "The core specifies routing normalization, projection fallback, object-first attention, compatibility behavior and record/artifact separation.",
+      "evidence_item_ids": [
+        "A005-000665-E003",
+        "A005-000665-E007",
+        "A005-000665-E013",
+        "A005-000665-E014"
+      ]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "addressed",
+      "summary": "Capabilities include replayable runtime storage, cross-surface receipts, record-backed degraded inspection, canonical exports, recovery and identity-open routing.",
+      "evidence_item_ids": [
+        "A005-000665-E001",
+        "A005-000665-E005",
+        "A005-000665-E006",
+        "A005-000665-E007",
+        "A005-000665-E016"
+      ]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "gap_found",
+      "summary": "Many inputs, output references and manifest fields are enumerated, but field shapes, requiredness and validation behavior remain incomplete.",
+      "evidence_item_ids": [
+        "A005-000665-E002",
+        "A005-000665-E004",
+        "A005-000665-E006",
+        "A005-000665-G008",
+        "A005-000665-G009"
+      ]
+    },
+    {
+      "dimension": "contracts",
+      "status": "gap_found",
+      "summary": "The core defines envelope, receipt, export, identity and artifact contracts, but lacks executable schemas and deterministic migration contracts.",
+      "evidence_item_ids": [
+        "A005-000665-E004",
+        "A005-000665-E005",
+        "A005-000665-E006",
+        "A005-000665-E011",
+        "A005-000665-G009",
+        "A005-000665-G010"
+      ]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "gap_found",
+      "summary": "Concern, worktree/lane, projection, historical and pressure states are named, but key mappings and legal transition graphs are under-specified.",
+      "evidence_item_ids": [
+        "A005-000665-E008",
+        "A005-000665-E010",
+        "A005-000665-E017",
+        "A005-000665-G003",
+        "A005-000665-G004"
+      ]
+    },
+    {
+      "dimension": "authority",
+      "status": "addressed",
+      "summary": "Authority boundaries distinguish seglog, redb, JSON inspection, receipts, storage records, consumer UI and worktree operational ownership.",
+      "evidence_item_ids": [
+        "A005-000665-E001",
+        "A005-000665-E005",
+        "A005-000665-E010",
+        "A005-000665-E018"
+      ]
+    },
+    {
+      "dimension": "ownership",
+      "status": "addressed",
+      "summary": "Storage ownership is explicit for record-shaped state, projection keys, lifecycle/history joins and persisted artifact references, with operational and route-contract ownership separated.",
+      "evidence_item_ids": [
+        "A005-000665-E004",
+        "A005-000665-E010",
+        "A005-000665-E011",
+        "A005-000665-E018"
+      ]
+    },
+    {
+      "dimension": "consumers",
+      "status": "addressed",
+      "summary": "Orchestrator, Usage, Source Control, Ledger, History, Evidence, search, exports and direct-record inspectors are identified as consumers with route and propagation constraints.",
+      "evidence_item_ids": [
+        "A005-000665-E003",
+        "A005-000665-E005",
+        "A005-000665-E007",
+        "A005-000665-E015",
+        "A005-000665-E018"
+      ]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "gap_found",
+      "summary": "The core constrains action controls, degraded deep links, attention rollups and search placement, but dashboard persistence and notification timing remain under-specified.",
+      "evidence_item_ids": [
+        "A005-000665-E013",
+        "A005-000665-E015",
+        "A005-000665-G005",
+        "A005-000665-G007"
+      ]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "Projection degradation and general recovery records are specified, but trust-state operationalization and the named P5 special recovery register are incomplete.",
+      "evidence_item_ids": [
+        "A005-000665-E007",
+        "A005-000665-E009",
+        "A005-000665-E016",
+        "A005-000665-G002",
+        "A005-000665-G011"
+      ]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "gap_found",
+      "summary": "Operational identity is auditable and distinct from provider identity, but no source-local privacy, authorization, retention or export-redaction contract is defined.",
+      "evidence_item_ids": [
+        "A005-000665-E002",
+        "A005-000665-E012",
+        "A005-000665-G012"
+      ]
+    },
+    {
+      "dimension": "propagation",
+      "status": "addressed",
+      "summary": "Owner-boundary stabilization, contract evidence, verification/routing coverage and downstream mirror/checklist sequencing are explicitly ordered at a high level.",
+      "evidence_item_ids": [
+        "A005-000665-E018"
+      ]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Operational identity, recovery, projection fallback and action gating are covered, but thresholds, revalidation failure behavior and escalation controls remain open.",
+      "evidence_item_ids": [
+        "A005-000665-E007",
+        "A005-000665-E009",
+        "A005-000665-E012",
+        "A005-000665-E016",
+        "A005-000665-G002",
+        "A005-000665-G005"
+      ]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "gap_found",
+      "summary": "Separate large-run queryability is required, but no measurable capacity, latency, throughput, pagination, retention or compaction target is provided.",
+      "evidence_item_ids": [
+        "A005-000665-G013"
+      ]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Compatibility vocabulary is subordinate and searchable, but per-alias transformations, collisions and retirement/cutover criteria are absent.",
+      "evidence_item_ids": [
+        "A005-000665-E014",
+        "A005-000665-G003",
+        "A005-000665-G006",
+        "A005-000665-G010"
+      ]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "The core names gating conditions and evidence concepts but does not define source-local executable verification or exact pass/fail artifacts.",
+      "evidence_item_ids": [
+        "A005-000665-E007",
+        "A005-000665-E015",
+        "A005-000665-E018",
+        "A005-000665-G014"
+      ]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Consequential discretion remains in canonicalization order, schemas, transition mappings, projection gates, notification timing, migration, privacy, performance and validation.",
+      "evidence_item_ids": [
+        "A005-000665-G001",
+        "A005-000665-G002",
+        "A005-000665-G003",
+        "A005-000665-G004",
+        "A005-000665-G005",
+        "A005-000665-G009",
+        "A005-000665-G010",
+        "A005-000665-G012",
+        "A005-000665-G013",
+        "A005-000665-G014"
+      ]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "Open ambiguities include state-vocabulary mappings, concern transition legality, optional-reference relevance, P5 recovery semantics and the meaning of successful trust revalidation.",
+      "evidence_item_ids": [
+        "A005-000665-G002",
+        "A005-000665-G003",
+        "A005-000665-G004",
+        "A005-000665-G008",
+        "A005-000665-G011",
+        "A005-000665-G014"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

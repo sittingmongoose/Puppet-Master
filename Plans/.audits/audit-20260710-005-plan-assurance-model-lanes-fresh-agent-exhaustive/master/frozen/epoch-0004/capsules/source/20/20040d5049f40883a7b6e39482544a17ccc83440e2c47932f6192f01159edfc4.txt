@@ -1,0 +1,426 @@
+<<< CONTEXT_BEFORE 4685-4696 >>>
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+
+Phase 2B batch `phase2b-100-multi-account-lines-1-400` atomized `Multi-Account-S0002` through `Multi-Account-S0018` into `MA-002` through `MA-017`, dispositioned `Multi-Account-S0001` as the structural title anchor, and left `Multi-Account-S0019` as the next residual source-preserving cursor because that span crossed the line-400 window. Phase 2B batch `phase2b-101-multi-account-lines-354-740` atomized `Multi-Account-S0019` through `Multi-Account-S0034` into `MA-018` through `MA-053` and left `Multi-Account-S0035` as the next residual source-preserving cursor because that span crossed the line-740 window. Phase 2B batch `phase2b-102-multi-account-lines-740-952` atomized `Multi-Account-S0035` through `Multi-Account-S0037` into `MA-054` through `MA-059`, dispositioned `Multi-Account-S0038`, `Multi-Account-S0039`, and `Multi-Account-S0041` as structural rows, and retired `MA-001` to `source_preserving_bridge_retired` migration-lineage compatibility for `Multi-Account-S0040`. `Plans/Multi-Account.md` now has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+
+<<< AUTHORITATIVE_CORE 4697-5093 >>>
+### MA-061 - Testing Capability Policy Inheritance Consumer
+
+```yaml
+plan_unit_id: MA-061
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: 'Testing capability policy is configurable globally and per project, with project settings inheriting or overriding global values and the effective policy snapshot carried into Planning Wizard, Plan Compile, Executor, and Orchestrator.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: standard
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Multi-Account.md
+- Plans/Automated_Testing_System.md
+- Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0089
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+source_atom_ids:
+- atom-0089
+decision_refs:
+- dec-0018
+correction_refs:
+- corr-0015
+preserved_exact_tokens:
+- global settings
+- per-project settings
+- effective policy snapshot
+negative_constraints: []
+owner_hints:
+- Plans/Automated_Testing_System.md
+- Plans/FinalGUISpec.md
+- Plans/Multi-Account.md
+```
+
+## Ledger Compile Addendum - pldg-20260629-001-feature-name
+
+This addendum compiles Free Models account/switching behavior into Multi-Account ownership. It keeps Free Models as a wrapper over underlying provider/account identity and does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+
+### MA-064 - Free Models Underlying Account Identity And Setup Delegation
+
+```yaml
+plan_unit_id: MA-064
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Free Models entries use the underlying PM provider/account/profile credential owner for setup, auth, reconnect, billing, entitlement, org-policy, and pressure identity. Free Models must not collect, store, or own underlying provider credentials; setup launches the exact underlying provider/account setup surface and returns to the originating Free Models row/list with eligibility refreshed.
+gui_related: true
+gui_classification_reason: Includes user-visible setup entry points and return behavior from Free Models rows to provider/account setup.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Free Models setup delegates to the underlying provider/account setup flow instead of collecting credentials in the Free Models wrapper.
+  - Setup rows show the underlying provider name and account state before launch.
+  - Returning from setup refreshes affected Free Models eligibility/catalog state and keeps saved top-10 order unchanged.
+  - "`Sign in`, `Set up provider`, and `Reconnect` labels map to existing account/auth state."
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Free Models setup delegation fixtures
+  - Multi-Account credential custody fixtures
+risk_class: credential_ownership_drift
+reasoning_tier: high
+context_scope: free_models_account_setup
+implementation_surfaces:
+  - Plans/Multi-Account.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: free_models_account_setup_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+source_atom_ids: [atom-0068, atom-0072, atom-0084, atom-0088, atom-0228, atom-0232, atom-0235, atom-0236, atom-0239, atom-0240, atom-0243, atom-0244, atom-0247, atom-0248, atom-0251, atom-0255, atom-0259, atom-0263, atom-0267, atom-0271, atom-0293, atom-0294]
+preserved_exact_tokens:
+  - "underlying PM provider/account setup flow"
+  - "Set up provider"
+  - "Sign in"
+  - "Reconnect"
+  - "return target"
+  - "originating Free Models row/list"
+  - "Ready"
+  - "Needs setup"
+negative_constraints:
+  - Do not collect or store underlying provider credentials inside the Free Models provider.
+  - Do not strand users away from the originating Free Models row/list after setup.
+  - Do not change saved top-10 order after provider setup refresh.
+owner_hints:
+  - Plans/Multi-Account.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
+  - Plans/FinalGUISpec.md
+```
+
+### MA-065 - Free Models Shared Pressure Cooldown And Bounded Switching
+
+```yaml
+plan_unit_id: MA-065
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Free Models quota, rate-limit, exhaustion, cooldown, retry, and switch state is keyed by the underlying provider/account/model and counted in shared Usage/Multi-Account pressure. PM must not create a separate Free Models quota switcher. Unknown quota/reset signals use coarse pressure from failures/successes and conservative cooldowns without fabricated percentages or reset times. Automatic fallback is bounded by configurable global/section limits and defaults to the initial attempt plus `2` automatic fallback attempts per request.
+gui_related: true
+gui_classification_reason: Shared pressure affects user-visible cooldown, Retry now, skipped reason, and switch-state rows.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Pressure and cooldown state is shared with Multi-Account switching and keyed by underlying provider/account/model.
+  - Attempt accounting counts the initial selected/requested model plus every automatic switch attempt.
+  - Skipped-without-call entries may appear in receipts but do not consume quota or count as a provider call.
+  - Cooldowned entries stay skipped until provider reset/cooldown expiry or explicit `Retry now`; successful manual retry clears cooldown and failed manual retry extends pressure conservatively.
+  - Unknown quota providers never display fabricated percentages or reset times.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Shared pressure and cooldown fixtures
+  - Free Models bounded fallback attempt fixtures
+risk_class: pressure_switching_drift
+reasoning_tier: high
+context_scope: free_models_pressure_and_switching
+implementation_surfaces:
+  - Plans/Multi-Account.md
+  - Plans/Models_System.md
+  - Plans/usage-feature.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: free_models_shared_pressure_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+source_atom_ids: [atom-0021, atom-0024, atom-0030, atom-0031, atom-0032, atom-0074, atom-0078, atom-0114, atom-0119, atom-0209, atom-0210, atom-0211, atom-0213, atom-0214, atom-0215, atom-0217, atom-0218, atom-0219, atom-0221, atom-0222, atom-0223, atom-0266, atom-0270, atom-0285, atom-0286]
+preserved_exact_tokens:
+  - "quota and usage"
+  - "multi account"
+  - "auto switch"
+  - "initial attempt plus 2 automatic fallback attempts"
+  - "Retry now"
+  - "no fabricated percentages/reset times"
+negative_constraints:
+  - Do not keep Free Models pressure separate from the underlying provider/account/model pressure state.
+  - Do not fabricate quota percentages or reset times for providers without explicit signals.
+  - Do not fan out one request across unlimited fallback providers.
+  - Do not clear cooldown after a failed manual retry.
+owner_hints:
+  - Plans/Multi-Account.md
+  - Plans/usage-feature.md
+  - Plans/Models_System.md
+```
+
+## Ledger Compile Addendum - pldg-20260701-001-feature-intake
+
+This addendum compiles first-run provider account setup behavior from bootstrap ledger `pldg-20260701-001-feature-intake` into Multi-Account ownership. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+
+### MA-066 - First-Run Provider Account Setup Rows And Return Context
+
+```yaml
+plan_unit_id: MA-066
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  First-run provider setup rows consume the existing Multi-Account account/profile readiness state machine. The row
+  actions `Sign in`, `Set up provider`, and `Reconnect` map to existing account/auth/configuration states, and the
+  friendly statuses `Connected`, `Needs sign-in`, and `Could not connect` are GUI projections over canonical account
+  and provider readiness rather than new readiness states. Provider setup launched from first-run onboarding carries a
+  return context back to the onboarding wizard, Planning Wizard limited-state reminder, or originating Free Models
+  row/list as appropriate. Returning from setup refreshes provider/account eligibility without changing saved Free
+  Models top-10 order, without collecting credentials inside Free Models, and without flattening provider-specific
+  setup failures into a generic provider error.
+gui_related: true
+gui_classification_reason: Defines user-visible account setup row labels, actions, statuses, and return behavior.
+depends_on: [MA-040, MA-043, MA-044, MA-064, MS-121]
+unblocks: [F3-411, UCC-106, WM-041, ATS-020]
+acceptance_criteria:
+  - First-run setup rows preserve the logged-in versus Ready distinction from MA-040.
+  - "`Connected` is displayed only when the backing readiness projection is safe for that label and never replaces canonical readiness state."
+  - Setup cancel, failed auth, or failed validation returns to the originating onboarding or Free Models context with a refreshed state when possible.
+  - Free Models setup continues to delegate to the underlying provider/account setup flow and keeps saved top-10 order unchanged.
+  - Provider-specific setup failures remain distinguishable for support/detail surfaces while normal onboarding shows friendly copy.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future first-run provider setup return-context fixtures
+  - future account readiness label mapping fixtures
+risk_class: account_setup_ready_state_drift
+reasoning_tier: high
+context_scope: first_run_provider_account_setup
+implementation_surfaces:
+  - Plans/Multi-Account.md
+  - Plans/FinalGUISpec.md
+  - Plans/Models_System.md
+node_compile_hint:
+  mode: first_run_account_setup_rows_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0010
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0016
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0034
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0044
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
+source_atom_ids: [atom-0010, atom-0016, atom-0033, atom-0034, atom-0040, atom-0041, atom-0042, atom-0044, atom-0047]
+decision_refs: [dec-0004, dec-0005, dec-0008]
+preserved_exact_tokens:
+  - "Logged in is not ready"
+  - "Sign in"
+  - "Set up provider"
+  - "Reconnect"
+  - "Connected"
+  - "Needs sign-in"
+  - "Could not connect"
+  - "Use this provider"
+  - "originating Free Models row/list"
+  - "Provider setup is not finished"
+  - "Doctor remains as a health summary"
+negative_constraints:
+  - Do not collapse logged-in, entitlement, billing, partial setup, workspace trust, route proof, or validation states into Ready.
+  - Do not collect or store underlying provider credentials inside the Free Models provider.
+  - Do not strand users away from the originating onboarding wizard, Planning Wizard limited-state reminder, or Free Models row/list after setup.
+  - Do not silently reorder or mutate saved top-10 order after provider setup refresh.
+  - Do not flatten provider setup failures into a generic provider error.
+owner_hints:
+  - Plans/Multi-Account.md
+  - Plans/Models_System.md
+  - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+```
+
+## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+
+### MA-067 - P0-CREDENTIAL-ROUTE-EPOCH
+
+```yaml
+plan_unit_id: MA-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  P0-CREDENTIAL-ROUTE-EPOCH (P0) is compiled as canonical Puppet Master intent for Credential/account/entitlement route epoch: Imported external-repo finding extrepo-20260703-0091 / P0-CREDENTIAL-ROUTE-EPOCH (P0). The preserved PM gap/delta is: ProviderCapabilityEpoch needs a separate CredentialRouteEpoch for auth, route, proxy, quota, entitlement, refresh, and failure class. The observed external-repo signal remains source-lineage evidence: Credentialed route/proxy/config PRs; account entitlement mismatch issues; OAuth/provider/credits failures.
+gui_related: false
+gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Provider model capable but route denied is surfaced accurately
+- Plan/quota mismatch does not masquerade as model unsupported
+- Credential refresh changes epoch and invalidates cached route claims
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Provider model capable but route denied is surfaced accurately
+- Plan/quota mismatch does not masquerade as model unsupported
+- Credential refresh changes epoch and invalidates cached route claims
+risk_class: p0_provider_capability_and_metadata_hardening
+reasoning_tier: high
+context_scope: provider_capability_and_metadata
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: p0_credential_route_epoch
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0095
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0095
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0091/P0-CREDENTIAL-ROUTE-EPOCH@line=91
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0091/P0-CREDENTIAL-ROUTE-EPOCH
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:4
+source_atom_ids:
+- atom-0095
+external_atom_id: extrepo-20260703-0091
+source_row_id: P0-CREDENTIAL-ROUTE-EPOCH
+priority: P0
+finding_family: Credential/account/entitlement route epoch
+source_repos:
+- OpenAI Codex
+- Cline
+- Agent Zero
+preserved_exact_tokens:
+- extrepo-20260703-0091
+- P0-CREDENTIAL-ROUTE-EPOCH
+- P0
+- Credential/account/entitlement route epoch
+- OpenAI Codex
+- Cline
+- Agent Zero
+negative_constraints: []
+observed_signal: Credentialed route/proxy/config PRs; account entitlement mismatch issues; OAuth/provider/credits failures.
+pm_gap_or_delta: ProviderCapabilityEpoch needs a separate CredentialRouteEpoch for auth, route, proxy, quota, entitlement, refresh, and failure class.
+compile_disposition: create_new_planunit
+```
+
+## FABLE Residual Multi-Account Contract Cleanup Addendum - 2026-07-07
+
+This addendum closes only residual FABLE Critical/High Multi-Account schema/default rows for retry budgets, credential-route epoch ownership, and token-store locking. It intentionally excludes GUI behavior rows outside the named FABLE gaps.
+
+### MA-068 - Retry Budget, Credential Route Epoch, And Token Store Defaults
+
+```yaml
+plan_unit_id: MA-068
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Multi-Account owns retry budget defaults, token-store structure, and CredentialRouteEpoch boundaries for account
+  and provider routing. Retry budgets are counted attempts per route epoch, token stores are locked encrypted records
+  with atomic replacement, and MA-057 remains scoped to account/provider selection while MA-067 owns credential route,
+  proxy, quota, entitlement, refresh, and failure-class epochs.
+gui_related: false
+gui_classification_reason: Account routing, retry budget, and token-store fields are backend credential and provider-routing contracts.
+depends_on: [MA-054, MA-057, MA-067, PS-131]
+unblocks: []
+acceptance_criteria:
+  - retry_budget defaults to max_attempts = 3 per credential_route_epoch_id per request_family, decrements on retryable provider_error, transport_error, timeout, and rate_limited, and never decrements on auth_required or permission_scope_denied.
+  - Retry refill occurs on new credential_route_epoch_id, explicit user retry, or refill_after_ms elapsed; refill_after_ms defaults to 600000.
+  - TokenStoreRecord includes account_id, provider_id, credential_ref, credential_kind, encrypted_blob_ref, keyring_service, created_at_ms, updated_at_ms, expires_at_ms?, refresh_state, lock_owner?, lock_expires_at_ms?, and credential_route_epoch_id.
+  - Token-store writes use an exclusive lock, write temp encrypted blob, fsync, atomic rename, epoch increment, and stale-lock recovery after lock_expires_at_ms.
+  - MA-057 selection records reference credential_route_epoch_id but do not redefine MA-067 route, quota, entitlement, refresh, or failure-class fields.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl
+risk_class: fable_residual_multi_account_contract_drift
+reasoning_tier: high
+context_scope: residual_feature_contract_cleanup
+implementation_surfaces:
+  - Plans/Multi-Account.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: residual_multi_account_schema_defaults
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md:892
+  - fablereport.md:894
+  - fablereport.md:895
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "retry_budget"
+  - "MA-057"
+  - "MA-067"
+  - "CredentialRouteEpoch"
+  - "TokenStoreRecord"
+  - "token store"
+negative_constraints:
+  - Do not close GUI row behavior outside the named schema/default gaps.
+  - Do not store raw tokens in Plans, logs, receipts, or generated audit artifacts.
+  - Do not create provider adapter implementation, runtime certification evidence, WorkNodes, NodeSeeds, executable queues, implementation files, or production build tasks.
+owner_hints:
+  - Plans/Multi-Account.md
+  - Plans/Models_System.md
+  - Plans/Permissions_System.md
+```
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime multi-account rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-d6c43e2aa2b0e8de032cbe43`: account/profile rows support click and keyboard activation through `cmd.account.select_profile`. Empty state copy id is `accounts.empty.no_profiles`. Per-action disabled reasons are `auth_missing`, `auth_expired`, `profile_locked`, `provider_unavailable`, and `policy_denied`.
+
+## Usage GUI Propagation Addendum - 2026-07-09
+
+This addendum binds account/provider settings usage displays to the canonical UsageRecord projection. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+
+<<< CONTEXT_AFTER 5094-5105 >>>
+### MA-069 - Provider Usage State Settings Display Contract
+
+```yaml
+plan_unit_id: MA-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Multi-Account provider and account rows display usage, quota, credits, billing visibility, and provider pressure only from normalized UsageRecord, CredentialRouteEpoch, and ProviderCapabilityEpoch projections. Rows expose source_class, source_confidence, source_authority, quota_state, credits_state, cost_status, pricing snapshot/custom price row refs when relevant, and stale/degraded/unknown reasons. Antigravity CLI remains a separate provider route with provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, and `/credits` render stats unavailable, usage unknown, quota not exposed, and credits not exposed. Disabled Models & Quota buckets render disabled, and G1 credits remain credits only. BYOK and subscription/provider-plan cost display suppression preserves usage identity while avoiding fake token-cost display.
+gui_related: true
+gui_classification_reason: Provider/account settings rows and readiness displays are user-visible GUI.
+depends_on: [MA-067, MA-068, UF-087, UF-088, CBP-027]

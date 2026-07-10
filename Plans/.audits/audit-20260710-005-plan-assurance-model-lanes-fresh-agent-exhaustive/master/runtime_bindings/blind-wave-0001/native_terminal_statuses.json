@@ -1,0 +1,71 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "blind-wave-0001",
+  "capture_basis": "codex_app_read_thread_after_all_children_terminal",
+  "statuses": [
+    {
+      "native_child_thread_id": "019f4db4-98f9-7e13-9ddf-7049e31abbff",
+      "native_child_turn_id": "019f4db4-996c-7072-9794-415b7c4c90cd",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4db5-0d63-7682-b095-0eabce49fff9",
+      "native_child_turn_id": "019f4db5-0dc5-7581-977d-23c82996e5fb",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4db5-8793-7922-a6df-8b6c4fde1ca9",
+      "native_child_turn_id": "019f4db5-87f0-7b21-b519-b398e7fb9cc5",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4db6-053d-78f3-a04b-e039bda1a4f4",
+      "native_child_turn_id": "019f4db6-059f-77b3-843b-3ad9c22bae1d",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4db6-8ea0-7740-8d76-5bc8e256e5bb",
+      "native_child_turn_id": "019f4db6-8f06-7480-aff3-4706e2ab1069",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4db7-090d-7a50-96e6-45bac5fb6781",
+      "native_child_turn_id": "019f4db7-0970-7781-80ea-bc04d6cb0201",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4db7-870a-7a22-8fbc-a666d3123782",
+      "native_child_turn_id": "019f4db7-8793-7a51-af44-18c41cdf51a0",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4db8-03d4-7872-b071-e2292b742f41",
+      "native_child_turn_id": "019f4db8-0436-7b12-8031-684e7c63fa7f",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    }
+  ]
+}

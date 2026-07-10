@@ -1,0 +1,396 @@
+<<< CONTEXT_BEFORE canonical_document_lines=5152-5163 >>>
+L00005152	- "Run & Debug"
+L00005153	- "Assistant Debug Mode"
+L00005154	- "SSH remote editing"
+L00005155	negative_constraints: []
+L00005156	compatibility_only_notes: []
+L00005157	stale_retired_dispositions: []
+L00005158	owner_boundary_notes:
+L00005159	- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md"
+L00005160	owner_hints:
+L00005161	- "Plans/FinalGUISpec.md"
+L00005162	```
+L00005163	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=5164-5530 >>>
+L00005164	### F3-029 - Core Stack Technologies
+L00005165	
+L00005166	```yaml
+L00005167	plan_unit_id: F3-029
+L00005168	unit_type: requirement
+L00005169	status: accepted
+L00005170	owner_doc: Plans/FinalGUISpec.md
+L00005171	canonical_text: >-
+L00005172	  The core GUI stack uses Rust, Slint markup compiled by slint_build, winit plus Skia with
+L00005173	  FemtoVG-wgpu and software fallbacks, redb for layout persistence, seglog for events, and Tantivy
+L00005174	  for search.
+L00005175	gui_related: true
+L00005176	gui_classification_reason: >-
+L00005177	  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+L00005178	split_recommended: false
+L00005179	depends_on: []
+L00005180	unblocks: []
+L00005181	acceptance_criteria:
+L00005182	- "The covered source span remains losslessly available for exact-text audit."
+L00005183	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00005184	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00005185	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00005186	validation_surfaces:
+L00005187	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00005188	- "python3 scripts/pm-plan-index.py validate"
+L00005189	risk_class: finalgui_drift
+L00005190	reasoning_tier: standard
+L00005191	context_scope: finalgui_standardization
+L00005192	implementation_surfaces:
+L00005193	- "Plans/FinalGUISpec.md"
+L00005194	node_compile_hint:
+L00005195	  mode: core_stack_technologies
+L00005196	  create_worknodes: false
+L00005197	source_lineage:
+L00005198	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0024"
+L00005199	preserved_exact_tokens:
+L00005200	- "Rust"
+L00005201	- "Slint 1.17.1"
+L00005202	- "slint_build"
+L00005203	- "winit + Skia"
+L00005204	- "winit + FemtoVG-wgpu"
+L00005205	- "Software renderer"
+L00005206	- "redb"
+L00005207	- "seglog"
+L00005208	- "Tantivy"
+L00005209	negative_constraints: []
+L00005210	compatibility_only_notes: []
+L00005211	stale_retired_dispositions: []
+L00005212	owner_boundary_notes: []
+L00005213	owner_hints:
+L00005214	- "Plans/FinalGUISpec.md"
+L00005215	```
+L00005216	
+L00005217	### F3-030 - GUI Technology Exclusion
+L00005218	
+L00005219	```yaml
+L00005220	plan_unit_id: F3-030
+L00005221	unit_type: requirement
+L00005222	status: accepted
+L00005223	owner_doc: Plans/FinalGUISpec.md
+L00005224	canonical_text: >-
+L00005225	  The native desktop GUI does not use React, Tauri, JavaScript/TypeScript, HTML/CSS, or DOM-rendered
+L00005226	  product UI; it is Rust + Slint `.slint` markup. The Slint/WASM web target may use only minimal
+L00005227	  HTML/canvas bootstrap and generated/minimal JavaScript glue to load the Slint WASM canvas client,
+L00005228	  attach assets and canvas, and connect to approved local services; it must not become an HTML/CSS/JS
+L00005229	  product shell.
+L00005230	gui_related: true
+L00005231	gui_classification_reason: >-
+L00005232	  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+L00005233	split_recommended: false
+L00005234	depends_on: []
+L00005235	unblocks: []
+L00005236	acceptance_criteria:
+L00005237	- "Native desktop GUI source remains Rust + Slint `.slint` markup and does not use React, Tauri, JavaScript/TypeScript, HTML/CSS, or DOM-rendered product UI."
+L00005238	- "Slint/WASM web GUI source uses only minimal HTML/canvas bootstrap and generated/minimal JavaScript glue needed to load the WASM canvas client, attach assets and canvas, and connect to approved local services."
+L00005239	- "HTML/CSS/JS product shell, React product UI, Tauri product UI, and DOM-rendered product UI remain forbidden for both native desktop and web product surfaces."
+L00005240	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00005241	validation_surfaces:
+L00005242	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00005243	- "python3 scripts/pm-plan-index.py validate"
+L00005244	- "python3 scripts/pm-plans-verify.py validate-gui-asset-policy"
+L00005245	risk_class: finalgui_drift
+L00005246	reasoning_tier: standard
+L00005247	context_scope: finalgui_standardization
+L00005248	implementation_surfaces:
+L00005249	- "Plans/FinalGUISpec.md"
+L00005250	node_compile_hint:
+L00005251	  mode: gui_technology_exclusion
+L00005252	  create_worknodes: false
+L00005253	source_lineage:
+L00005254	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0025"
+L00005255	preserved_exact_tokens:
+L00005256	- "No React/Tauri/DOM-rendered product UI"
+L00005257	- "minimal HTML/canvas bootstrap"
+L00005258	- "generated/minimal JavaScript glue"
+L00005259	- "HTML/CSS/JS product shell"
+L00005260	- "Rust + Slint `.slint` markup"
+L00005261	negative_constraints:
+L00005262	- "React, Tauri, DOM-rendered product UI, and HTML/CSS/JS product shells are not used for the GUI implementation."
+L00005263	- "The Slint/WASM web target may not expand its bootstrap HTML/canvas and generated/minimal JavaScript glue into a product UI shell."
+L00005264	compatibility_only_notes: []
+L00005265	stale_retired_dispositions: []
+L00005266	owner_boundary_notes: []
+L00005267	owner_hints:
+L00005268	- "Plans/FinalGUISpec.md"
+L00005269	```
+L00005270	
+L00005271	### F3-031 - Slint Build Integration
+L00005272	
+L00005273	```yaml
+L00005274	plan_unit_id: F3-031
+L00005275	unit_type: requirement
+L00005276	status: accepted
+L00005277	owner_doc: Plans/FinalGUISpec.md
+L00005278	canonical_text: >-
+L00005279	  Slint build integration compiles ui/app.slint via build.rs using CompilerConfiguration with
+L00005280	  cosmic style, while visual differences come from a Theme global rather than base style changes.
+L00005281	gui_related: true
+L00005282	gui_classification_reason: >-
+L00005283	  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+L00005284	split_recommended: false
+L00005285	depends_on: []
+L00005286	unblocks: []
+L00005287	acceptance_criteria:
+L00005288	- "The covered source span remains losslessly available for exact-text audit."
+L00005289	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00005290	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00005291	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00005292	validation_surfaces:
+L00005293	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00005294	- "python3 scripts/pm-plan-index.py validate"
+L00005295	risk_class: finalgui_drift
+L00005296	reasoning_tier: standard
+L00005297	context_scope: finalgui_standardization
+L00005298	implementation_surfaces:
+L00005299	- "Plans/FinalGUISpec.md"
+L00005300	node_compile_hint:
+L00005301	  mode: slint_build_integration
+L00005302	  create_worknodes: false
+L00005303	source_lineage:
+L00005304	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0026"
+L00005305	preserved_exact_tokens:
+L00005306	- "build.rs"
+L00005307	- "CompilerConfiguration"
+L00005308	- "cosmic"
+L00005309	- "ui/app.slint"
+L00005310	- "slint_build::compile_with_config"
+L00005311	- "Theme global"
+L00005312	negative_constraints: []
+L00005313	compatibility_only_notes: []
+L00005314	stale_retired_dispositions: []
+L00005315	owner_boundary_notes: []
+L00005316	owner_hints:
+L00005317	- "Plans/FinalGUISpec.md"
+L00005318	```
+L00005319	
+L00005320	### F3-032 - Provider Backend Eligibility Boundary
+L00005321	
+L00005322	```yaml
+L00005323	plan_unit_id: F3-032
+L00005324	unit_type: requirement
+L00005325	status: accepted
+L00005326	owner_doc: Plans/FinalGUISpec.md
+L00005327	canonical_text: >-
+L00005328	  Provider CLI backend eligibility remains separate from Slint renderer selection, and Cursor CLI
+L00005329	  must be re-evaluated as an ACP-capable first-class CLI backend before GUI diagnostics classify
+L00005330	  it as legacy stream transport.
+L00005331	gui_related: false
+L00005332	gui_classification_reason: >-
+L00005333	  This unit defines terminology, owner-boundary, runtime, storage, or governance behavior rather
+L00005334	  than visual presentation.
+L00005335	split_recommended: true
+L00005336	depends_on: []
+L00005337	unblocks: []
+L00005338	acceptance_criteria:
+L00005339	- "The covered source span remains losslessly available for exact-text audit."
+L00005340	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00005341	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00005342	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00005343	validation_surfaces:
+L00005344	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00005345	- "python3 scripts/pm-plan-index.py validate"
+L00005346	risk_class: finalgui_drift
+L00005347	reasoning_tier: standard
+L00005348	context_scope: finalgui_standardization
+L00005349	implementation_surfaces:
+L00005350	- "Plans/FinalGUISpec.md"
+L00005351	node_compile_hint:
+L00005352	  mode: provider_backend_eligibility_boundary
+L00005353	  create_worknodes: false
+L00005354	source_lineage:
+L00005355	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0027"
+L00005356	preserved_exact_tokens:
+L00005357	- "Provider CLI backend eligibility"
+L00005358	- "Slint renderer selection"
+L00005359	- "Cursor CLI"
+L00005360	- "ACP-capable"
+L00005361	- "first-class CLI backend"
+L00005362	- "legacy stream transport"
+L00005363	negative_constraints: []
+L00005364	compatibility_only_notes:
+L00005365	- "Cursor CLI legacy stream classification is deferred until ACP-capable backend eligibility is re-evaluated."
+L00005366	stale_retired_dispositions: []
+L00005367	owner_boundary_notes: []
+L00005368	owner_hints:
+L00005369	- "Plans/FinalGUISpec.md"
+L00005370	```
+L00005371	
+L00005372	### F3-033 - Slint Backend Selection Diagnostics
+L00005373	
+L00005374	```yaml
+L00005375	plan_unit_id: F3-033
+L00005376	unit_type: requirement
+L00005377	status: accepted
+L00005378	owner_doc: Plans/FinalGUISpec.md
+L00005379	canonical_text: >-
+L00005380	  Slint backend selection uses SLINT_BACKEND, persisted app preference, compiled default order,
+L00005381	  deterministic fallback, startup diagnostics, and setup surfaces that show the selected backend.
+L00005382	gui_related: true
+L00005383	gui_classification_reason: >-
+L00005384	  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+L00005385	split_recommended: true
+L00005386	depends_on: []
+L00005387	unblocks: []
+L00005388	acceptance_criteria:
+L00005389	- "The covered source span remains losslessly available for exact-text audit."
+L00005390	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00005391	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00005392	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00005393	validation_surfaces:
+L00005394	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00005395	- "python3 scripts/pm-plan-index.py validate"
+L00005396	risk_class: finalgui_drift
+L00005397	reasoning_tier: standard
+L00005398	context_scope: finalgui_standardization
+L00005399	implementation_surfaces:
+L00005400	- "Plans/FinalGUISpec.md"
+L00005401	node_compile_hint:
+L00005402	  mode: slint_backend_selection_diagnostics
+L00005403	  create_worknodes: false
+L00005404	source_lineage:
+L00005405	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0027"
+L00005406	preserved_exact_tokens:
+L00005407	- "SLINT_BACKEND"
+L00005408	- "slint::BackendSelector"
+L00005409	- "winit + Skia"
+L00005410	- "winit + FemtoVG-wgpu"
+L00005411	- "emergency software renderer"
+L00005412	- "startup diagnostic"
+L00005413	- "selected backend"
+L00005414	negative_constraints: []
+L00005415	compatibility_only_notes: []
+L00005416	stale_retired_dispositions: []
+L00005417	owner_boundary_notes: []
+L00005418	owner_hints:
+L00005419	- "Plans/FinalGUISpec.md"
+L00005420	```
+L00005421	
+L00005422	### F3-034 - IDE Shell Structure Diagram
+L00005423	
+L00005424	```yaml
+L00005425	plan_unit_id: F3-034
+L00005426	unit_type: requirement
+L00005427	status: accepted
+L00005428	owner_doc: Plans/FinalGUISpec.md
+L00005429	canonical_text: >-
+L00005430	  The master layout uses a fixed title bar, activity bar, primary content area, right side panel,
+L00005431	  collapsible bottom panel, and status bar with the dimensions and roles shown by the IDE shell
+L00005432	  diagram.
+L00005433	gui_related: true
+L00005434	gui_classification_reason: >-
+L00005435	  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+L00005436	split_recommended: false
+L00005437	depends_on: []
+L00005438	unblocks: []
+L00005439	acceptance_criteria:
+L00005440	- "The covered source span remains losslessly available for exact-text audit."
+L00005441	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00005442	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00005443	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00005444	validation_surfaces:
+L00005445	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00005446	- "python3 scripts/pm-plan-index.py validate"
+L00005447	risk_class: finalgui_drift
+L00005448	reasoning_tier: standard
+L00005449	context_scope: finalgui_standardization
+L00005450	implementation_surfaces:
+L00005451	- "Plans/FinalGUISpec.md"
+L00005452	node_compile_hint:
+L00005453	  mode: ide_shell_structure_diagram
+L00005454	  create_worknodes: false
+L00005455	source_lineage:
+L00005456	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0029"
+L00005457	preserved_exact_tokens:
+L00005458	- "TITLE BAR"
+L00005459	- "ACT BAR"
+L00005460	- "PRIMARY CONTENT AREA"
+L00005461	- "SIDE PANEL"
+L00005462	- "BOTTOM PANEL"
+L00005463	- "STATUS BAR"
+L00005464	- "48px"
+L00005465	- "240-480px"
+L00005466	- "120-300px"
+L00005467	negative_constraints: []
+L00005468	compatibility_only_notes: []
+L00005469	stale_retired_dispositions: []
+L00005470	owner_boundary_notes: []
+L00005471	owner_hints:
+L00005472	- "Plans/FinalGUISpec.md"
+L00005473	```
+L00005474	
+L00005475	### F3-035 - Structural Zones And Side Panel Rule
+L00005476	
+L00005477	```yaml
+L00005478	plan_unit_id: F3-035
+L00005479	unit_type: requirement
+L00005480	status: accepted
+L00005481	owner_doc: Plans/FinalGUISpec.md
+L00005482	canonical_text: >-
+L00005483	  FinalGUISpec structural zones use Slint layouts with fixed title/activity/status bars, flexible
+L00005484	  primary content, a 240-480px side panel, collapsible bottom panel, and right-hand side-panel
+L00005485	  occupants rather than separate page surfaces.
+L00005486	gui_related: true
+L00005487	gui_classification_reason: >-
+L00005488	  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+L00005489	split_recommended: true
+L00005490	depends_on: []
+L00005491	unblocks: []
+L00005492	acceptance_criteria:
+L00005493	- "The covered source span remains losslessly available for exact-text audit."
+L00005494	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00005495	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00005496	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00005497	validation_surfaces:
+L00005498	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00005499	- "python3 scripts/pm-plan-index.py validate"
+L00005500	risk_class: finalgui_drift
+L00005501	reasoning_tier: standard
+L00005502	context_scope: finalgui_standardization
+L00005503	implementation_surfaces:
+L00005504	- "Plans/FinalGUISpec.md"
+L00005505	node_compile_hint:
+L00005506	  mode: structural_zones_and_side_panel_rule
+L00005507	  create_worknodes: false
+L00005508	source_lineage:
+L00005509	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0030"
+L00005510	preserved_exact_tokens:
+L00005511	- "HorizontalLayout"
+L00005512	- "VerticalLayout"
+L00005513	- "240-480px"
+L00005514	- "Activity Bar surface slot"
+L00005515	- "/File"
+L00005516	- "/Source"
+L00005517	- "/GitHub"
+L00005518	- "/etc"
+L00005519	- "migration labels"
+L00005520	negative_constraints:
+L00005521	- "Legacy labels such as /File, /Source, /GitHub, and /etc must not bypass the right-hand side-panel model."
+L00005522	compatibility_only_notes:
+L00005523	- "Legacy labels /File, /Source, /GitHub, and /etc are migration labels for occupants or groups."
+L00005524	stale_retired_dispositions: []
+L00005525	owner_boundary_notes:
+L00005526	- "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md"
+L00005527	owner_hints:
+L00005528	- "Plans/FinalGUISpec.md"
+L00005529	```
+L00005530	
+
+<<< CONTEXT_AFTER canonical_document_lines=5531-5542 >>>
+L00005531	### F3-036 - Status Bar Indexing Indicator
+L00005532	
+L00005533	```yaml
+L00005534	plan_unit_id: F3-036
+L00005535	unit_type: requirement
+L00005536	status: accepted
+L00005537	owner_doc: Plans/FinalGUISpec.md
+L00005538	canonical_text: >-
+L00005539	  The status bar shows project-sensitive sparse n-gram index build or refresh progress only when
+L00005540	  useful, while Search results own the unindexed annotation for true raw-ripgrep fallback.
+L00005541	gui_related: true
+L00005542	gui_classification_reason: >-

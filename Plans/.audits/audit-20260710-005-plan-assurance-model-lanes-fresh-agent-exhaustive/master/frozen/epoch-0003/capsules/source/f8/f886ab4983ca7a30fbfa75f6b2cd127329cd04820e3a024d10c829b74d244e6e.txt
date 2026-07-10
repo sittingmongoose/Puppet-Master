@@ -1,0 +1,418 @@
+<<< CONTEXT_BEFORE 11610-11621 >>>
+  - "`OpenSubject`"
+  - "`subject_id`"
+  - "`open_intent`"
+  - "`open_source`"
+  - "`open_preview`"
+  - "`open_review`"
+negative_constraints: []
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/FileManager.md
+```
+
+
+<<< AUTHORITATIVE_CORE 11622-12010 >>>
+### CV-176 - OpenSubject Resolution And Route Boundary
+
+```yaml
+plan_unit_id: CV-176
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  OpenSubject resolves canonical identity to OpenFile or to a transient
+  generated://<artifact_id> buffer, while terminal, dev-session, and
+  browser-session reveals normalize through route_target instead of overloading
+  OpenSubject.
+gui_related: false
+gui_classification_reason: This unit defines route/open identity boundaries rather than visual presentation.
+split_recommended: false
+depends_on: [CV-163, CV-168, CV-175]
+unblocks: [CV-177, CV-179]
+acceptance_criteria:
+  - "Transport details do not belong in OpenSubject."
+  - "Generated or artifact-backed source results use OpenSubject."
+  - "Real workspace source results use OpenFile."
+  - "Thread, browser, terminal, and dev-session reveals remain route targets."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: open_subject_route_boundary_drift
+reasoning_tier: high
+context_scope: open_subject_route_boundary
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FileManager.md
+  - Plans/storage-plan.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: open_subject_route_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0062
+preserved_exact_tokens:
+  - "`generated://<artifact_id>`"
+  - "`route_target`"
+  - "`OpenFile`"
+  - "`/artifact-backed`"
+  - "ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
+negative_constraints:
+  - "OpenSubject must not be overloaded for terminal, dev-session, or browser-session reveals."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/FileManager.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### CV-177 - OpenSubject Subject Terms And Bounds
+
+```yaml
+plan_unit_id: CV-177
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  OpenSubject subject_id is bounded to canonical renderable/openable document
+  and artifact content identities using doc:<document_id> and
+  artifact:<artifact_id>; everything else routes by object_kind + object_id.
+gui_related: false
+gui_classification_reason: This unit defines canonical source-open identifiers rather than visual presentation.
+split_recommended: false
+depends_on: [CV-164, CV-175]
+unblocks: []
+acceptance_criteria:
+  - "subject_id accepts canonical document and artifact content identities."
+  - "Labels open subject and subject identity are preserved."
+  - "Non-document and non-artifact subjects route by object_kind + object_id."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: open_subject_identity_bounds_drift
+reasoning_tier: high
+context_scope: open_subject_identity_terms
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FileManager.md
+node_compile_hint:
+  mode: open_subject_identity_bounds
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0062
+preserved_exact_tokens:
+  - "`doc:<document_id>`"
+  - "`artifact:<artifact_id>`"
+  - "`object_kind + object_id`"
+  - "open subject"
+  - "subject identity"
+negative_constraints:
+  - "subject_id must not claim non-renderable or non-openable content identity."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/FileManager.md
+```
+
+### CV-178 - Durable Panel Settings Ownership
+
+```yaml
+plan_unit_id: CV-178
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Settings-page organization owns durable panel-specific persistence and
+  visibility controls when they affect reusable app or project preferences,
+  while storage owns persistence keys/write cadence and FinalGUISpec owns
+  grouping and visible placement.
+gui_related: true
+gui_classification_reason: This unit defines visible Settings organization and panel preference placement.
+split_recommended: false
+depends_on: []
+unblocks: [CV-179]
+acceptance_criteria:
+  - "Panel preferences appear under their owning Settings tab."
+  - "Cross-cutting visibility, shortcut, security, and health controls stay under General, Shortcuts, Advanced, or Health."
+  - "Storage-plan owns persistence keys and write cadence."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: settings_ownership_drift
+reasoning_tier: standard
+context_scope: panel_settings_ownership
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: settings_panel_ownership
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0063
+preserved_exact_tokens:
+  - "Source Control / Branching"
+  - "GitHub Actions"
+  - "Docker Manager / Kubernetes"
+  - "Models / Providers"
+  - "General"
+  - "Shortcuts"
+  - "Advanced"
+  - "Health"
+negative_constraints:
+  - "Cross-cutting settings must not be duplicated by each panel."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+```
+
+### CV-179 - Live Panel State Is Not Settings Canon
+
+```yaml
+plan_unit_id: CV-179
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Live run actions, selected runtime objects, current inspector focus, and
+  transient filter focus stay in the owning panel or route_target/OpenSubject
+  payloads and are not promoted into settings-page canon merely because a panel
+  can display them.
+gui_related: true
+gui_classification_reason: This unit constrains visible panel state and Settings behavior.
+split_recommended: false
+depends_on: [CV-176, CV-178]
+unblocks: []
+acceptance_criteria:
+  - "Transient panel state stays in the owning panel or route/open payload."
+  - "Settings canon contains durable preferences, not live run actions."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: transient_state_settings_drift
+reasoning_tier: standard
+context_scope: live_panel_state_settings_boundary
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: settings_transient_state_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0063
+preserved_exact_tokens:
+  - "`route_target`"
+  - "`OpenSubject`"
+  - "transient filter focus"
+negative_constraints:
+  - "Live run actions and transient focus must not be promoted into settings-page canon."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+```
+
+### CV-180 - Account-Sensitive UI Cache Partitioning
+
+```yaml
+plan_unit_id: CV-180
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  GitHub Actions, Docker registry state, Kubernetes selections, and SSH remote
+  selections either store account-sensitive UI/cache state per effective account
+  identity or invalidate that state on account switch.
+gui_related: true
+gui_classification_reason: This unit includes user-visible panel cache, focus, and selection state.
+split_recommended: true
+depends_on: [CV-145, CV-148]
+unblocks: [CV-181, CV-182]
+acceptance_criteria:
+  - "Pinned workflows and last-opened run/job/log focus are partitioned or invalidated by effective account identity."
+  - "Namespace selections and admin-readiness snapshots are partitioned or invalidated by effective account identity."
+  - "Account-sensitive UI/cache state does not survive an account switch under the wrong identity."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: account_sensitive_cache_leak
+reasoning_tier: high
+context_scope: account_sensitive_panel_cache
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: account_sensitive_ui_cache_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0064
+preserved_exact_tokens:
+  - "effective account identity"
+  - "`/job/log`"
+  - "admin-readiness snapshots"
+  - "GitHub Actions"
+  - "Docker registry state"
+  - "Kubernetes selections"
+  - "SSH remote selections"
+negative_constraints:
+  - "Account-sensitive UI/cache state must not be reused after account switch without partitioning or invalidation."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+```
+
+### CV-181 - Requested Identity Binding For Blocked Hosted Work
+
+```yaml
+plan_unit_id: CV-181
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Queued or blocked work that depends on hosted auth or admin capability
+  persists requested_account_identity or an equivalent auth-handle reference,
+  and on resume revalidates if the active account changed.
+gui_related: false
+gui_classification_reason: This unit defines hosted-auth work identity binding rather than visual presentation.
+split_recommended: false
+depends_on: [CV-145, CV-180]
+unblocks: [CV-182]
+acceptance_criteria:
+  - "Blocked hosted work persists requested_account_identity or an equivalent auth handle."
+  - "Account changes require an explicitly accepted new identity or the work remains identity_changed."
+  - "The rule applies to Actions admin CRUD, workflow dispatch, image push or repository creation, and cluster mutations."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: blocked_work_identity_drift
+reasoning_tier: high
+context_scope: hosted_auth_blocked_work_identity
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: requested_identity_binding
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0064
+preserved_exact_tokens:
+  - "`requested_account_identity`"
+  - "`identity_changed`"
+  - "Actions admin CRUD"
+  - "workflow dispatch"
+  - "image push"
+  - "cluster mutations"
+negative_constraints:
+  - "Hosted-auth work must not resume silently under a changed active account."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+```
+
+### CV-182 - Runtime Admin Capability Disclosure
+
+```yaml
+plan_unit_id: CV-182
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Runtime identity and admin identity are distinct capability sets; receipts,
+  disabled states, requested views, and disclosure views show which identity and
+  capability set was evaluated for the attempted action.
+gui_related: true
+gui_classification_reason: This unit defines user-visible receipts, disabled states, and disclosure views.
+split_recommended: false
+depends_on: [CV-181]
+unblocks: []
+acceptance_criteria:
+  - "Read capability does not imply secrets or environments admin capability."
+  - "Receipts and disabled states disclose which identity and capability set were evaluated."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: admin_capability_disclosure_drift
+reasoning_tier: high
+context_scope: runtime_admin_capability_disclosure
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: runtime_admin_capability_disclosure
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0064
+preserved_exact_tokens:
+  - "`/requested`"
+  - "`/disclosure`"
+  - "`/environments`"
+  - "runtime identity"
+  - "admin identity"
+negative_constraints:
+  - "A GitHub identity that can read runs must not be treated as administering secrets or environments."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+```
+
+### CV-183 - Quota Pressure Evidence Semantics
+
+```yaml
+plan_unit_id: CV-183
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Usage or quota pressure becomes exhausted or failover-required only when the
+  provider, runtime, or selected plan refuses more usage; provider responses,
+  rate-limit signals, and reset hints outrank local token statistics.
+gui_related: false
+gui_classification_reason: This unit defines provider quota semantics rather than visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: [CV-184]
+acceptance_criteria:
+  - "Warnings and approaching-threshold signals remain pressure evidence."
+  - "ChatGPT-backed Codex plan-included limits stay separate from API-key usage."
+  - "Claude Code subscription stats remain softer evidence than API cost unless exhaustion is explicitly reported."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: quota_pressure_semantics_drift
+reasoning_tier: high
+context_scope: provider_quota_pressure
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: quota_pressure_semantics
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0064
+preserved_exact_tokens:
+  - "`exhausted`"
+  - "ChatGPT-backed Codex"
+  - "API-key"
+  - "`/reset`"
+  - "`/cost`"
+  - "`/stats`"
+negative_constraints:
+  - "Warnings and estimates must not automatically trigger failover-required behavior."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+```
+
+
+<<< CONTEXT_AFTER 12011-12022 >>>
+### CV-184 - Provider Recovery Labels And Entitlement Copy
+
+```yaml
+plan_unit_id: CV-184
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Account recovery projections expose Retry Sign-In, Choose Billing Entity, and
+  Refresh Entitlements, use product-language provider labels, preserve
+  skip/cooldown machine reasons, and display policy_blocked as Blocked by plan
+  or policy.

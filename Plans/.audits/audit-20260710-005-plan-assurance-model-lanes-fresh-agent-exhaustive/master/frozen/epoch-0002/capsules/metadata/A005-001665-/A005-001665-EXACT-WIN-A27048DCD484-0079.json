@@ -1,0 +1,56 @@
+{
+  "assignment_id": "A005-001665-EXACT-WIN-A27048DCD484-0079",
+  "attempt_id": "attempt-0002",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      29766,
+      29777
+    ],
+    [
+      30160,
+      30171
+    ]
+  ],
+  "core_range": [
+    29778,
+    30159
+  ],
+  "core_sha256": "b82f6b3c2d51d9b9aa5e8d7d6a60883efab1112d0c4f3ae7df35f978abbc7ebc",
+  "document_path": "Plans/PMConcept_Control_Reconciliation.json",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/52/52437375a787fc986e61e5548a700a3ce9fa314611425c2873f4a8b064e91de0.txt",
+  "source_excerpt_sha256": "52437375a787fc986e61e5548a700a3ce9fa314611425c2873f4a8b064e91de0",
+  "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2",
+  "window_id": "WIN-A27048DCD484-0079"
+}

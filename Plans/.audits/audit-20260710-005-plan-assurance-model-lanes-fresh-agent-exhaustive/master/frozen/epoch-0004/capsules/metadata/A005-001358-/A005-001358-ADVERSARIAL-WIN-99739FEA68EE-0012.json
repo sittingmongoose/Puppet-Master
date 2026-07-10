@@ -1,0 +1,57 @@
+{
+  "assignment_id": "A005-001358-ADVERSARIAL-WIN-99739FEA68EE-0012",
+  "attempt_id": "attempt-0004",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      4238,
+      4249
+    ],
+    [
+      4644,
+      4655
+    ]
+  ],
+  "core_range": [
+    4250,
+    4643
+  ],
+  "core_sha256": "954cc8da4cb0e28c21202f585f0b4de225bd06b43e0ae41fe4121e70eac5d13b",
+  "document_path": "Plans/FileSafe.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/a8/a858d29eafeb1eb9f678ba7cc321a26652e5c401caaf192b2591e1701f06a479.txt",
+  "source_excerpt_sha256": "a858d29eafeb1eb9f678ba7cc321a26652e5c401caaf192b2591e1701f06a479",
+  "source_sha256": "d5e5bac279f215379f79b061d0273bfdc217fe608cd0c264913f441cf8518113",
+  "window_id": "WIN-99739FEA68EE-0012"
+}

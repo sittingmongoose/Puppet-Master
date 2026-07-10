@@ -1,0 +1,418 @@
+<<< CONTEXT_BEFORE 1518-1529 >>>
+  - "System default (`regular`)"
+negative_constraints:
+  - "Do not forward Assistant memory to child runs."
+  - "Do not make a lossy child copy the only truth."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md"
+  - "ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Permissions_System.md"
+  - "ContractRef: ContractName:Plans/Run_Modes.md"
+owner_hints:
+  - Plans/Personas.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1530-1918 >>>
+### P-020 - Cross Subsystem Owner Boundaries
+
+```yaml
+plan_unit_id: P-020
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  Persona integrations with permissions, skills, plugins, models/runtime controls, behavior controls, prompt observability, and tool guidance are owned by their subsystem SSOTs rather than restated in Personas.md.
+gui_related: false
+gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Permission profile behavior routes to Permissions_System.
+  - Skills, Plugins, Models/runtime controls, Prompt Pipeline, and tool enforcement remain under their owner docs.
+  - Persona tool preference fields remain guidance while hard enforcement stays in Permissions.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: persona_subsystem_owner_boundary_drift
+reasoning_tier: standard
+context_scope: personas
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0030
+preserved_exact_tokens:
+  - "Permissions"
+  - "Skills"
+  - "Plugins"
+  - "Models/runtime controls"
+  - "Behavior controls"
+  - "Prompt/runtime observability"
+  - "Tool guidance"
+negative_constraints:
+  - "The listed subsystem integrations MUST NOT be restated here."
+owner_hints:
+  - Plans/Personas.md
+```
+
+### P-021 - Reserved Personas And Display Normalization
+
+```yaml
+plan_unit_id: P-021
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  Protected core Persona IDs, eligibility, mutability, enforcement, collision handling, display normalization, and stale runtime alias dispositions are canonical in the Reserved Personas section.
+gui_related: false
+gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Protected Persona IDs remain reserved and cannot be used or shadowed by user-created Personas.
+  - Eligibility and mutability table values remain preserved.
+  - Natural-language display forms normalize to canonical IDs.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: reserved_persona_collision_drift
+reasoning_tier: standard
+context_scope: personas
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0031
+preserved_exact_tokens:
+  - "assistant"
+  - "general-purpose"
+  - "overseer"
+  - "bash"
+  - "teacher"
+  - "collaborator"
+  - "researcher"
+  - "deep-researcher"
+  - "explorer"
+  - "Document Writer"
+  - "requested_persona"
+  - "effective_persona"
+negative_constraints:
+  - "User Personas MUST NOT use or shadow protected IDs."
+  - "Document Writer is legacy/source-lineage wording unless a later owner decision reopens it."
+  - "`_id` runtime field names remain stale aliases."
+preserved_contractrefs:
+  - "ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#PERSONA-VALIDATION"
+  - "ContractRef: ContractName:Plans/Personas.md#PERSONA-VALIDATION, ContractName:Plans/orchestrator-subagent-integration.md"
+owner_hints:
+  - Plans/Personas.md
+```
+
+### P-022 - Persona Registry Boundary
+
+```yaml
+plan_unit_id: P-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  The split between persona_registry and subagent_registry is mandatory, and persona_registry owns runtime Persona definitions and Persona IDs used for selection, storage, GUI management, and prompt injection.
+gui_related: true
+gui_classification_reason: This unit defines GUI-visible Persona management behavior or UI-facing metadata.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - persona_registry and subagent_registry remain distinct.
+  - persona_registry owns runtime Persona definitions and IDs.
+  - Persona IDs are used for selection, storage, GUI management, and prompt injection.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: persona_registry_boundary_drift
+reasoning_tier: standard
+context_scope: personas
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0032
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0033
+preserved_exact_tokens:
+  - "persona_registry"
+  - "subagent_registry"
+  - "runtime Persona definitions"
+  - "GUI management"
+  - "prompt injection"
+negative_constraints:
+  - "No additional negative constraints beyond the canonical text."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Tools.md"
+owner_hints:
+  - Plans/Personas.md
+```
+
+### P-023 - Subagent Registry And Relationship Rules
+
+```yaml
+plan_unit_id: P-023
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  subagent_registry owns launchable delegated child-run types and the relationship rules that allow launchable subagent types to resolve to Personas without merging the registries.
+gui_related: false
+gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - subagent_registry owns launchable child-run types.
+  - Launchable subagent type may resolve to a Persona while preserving separate structures.
+  - Interview stage fields use canonical Persona-oriented field names.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: subagent_registry_persona_registry_conflation
+reasoning_tier: standard
+context_scope: personas
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0034
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0035
+preserved_exact_tokens:
+  - "subagent_registry"
+  - "phase_subagents"
+  - "phase_secondary_subagents"
+  - "/subagent"
+  - "/agent"
+  - "/fleet"
+  - "/delegate"
+  - "/replace"
+  - "*_persona_id"
+negative_constraints:
+  - "Provider-native command names are not registry IDs."
+  - "Legacy phase_subagents and phase_secondary_subagents are migration aliases only."
+  - "Stale *_persona_id drift should be normalized during reconciliation."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Contracts_V0.md"
+owner_hints:
+  - Plans/Personas.md
+```
+
+### P-024 - OpenCode Baseline
+
+```yaml
+plan_unit_id: P-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  The OpenCode baseline for comparison is Agent.Info schema/config override behavior, task-tool subagent invocation, and read-only explore-agent evidence.
+gui_related: false
+gui_classification_reason: This unit defines Persona runtime, storage, schema, governance, or owner-boundary behavior rather than visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - OpenCode Agent.Info fields remain preserved as baseline evidence.
+  - User-defined agents override via config in the baseline.
+  - The explore agent remains read-only baseline evidence.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: opencode_baseline_loss
+reasoning_tier: standard
+context_scope: personas
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0036
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0037
+preserved_exact_tokens:
+  - "OpenCode baseline"
+  - "Agent.Info"
+  - "name"
+  - "description"
+  - "mode"
+  - "prompt"
+  - "permission"
+  - "model"
+  - "steps"
+  - "task tool"
+  - "explore agent"
+negative_constraints:
+  - "No additional negative constraints beyond the canonical text."
+owner_hints:
+  - Plans/Personas.md
+```
+
+### P-025 - Puppet Master Deltas From OpenCode
+
+```yaml
+plan_unit_id: P-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  Puppet Master Personas are disk-backed PERSONA.md files, provider-agnostic, not hardcoded in source, reserved-ID enforced, and may project to native reusable-agent paths where applicable.
+gui_related: true
+gui_classification_reason: This unit defines GUI-visible Persona management behavior or UI-facing metadata.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Persona content lives in PERSONA.md files resolved at runtime.
+  - Personas remain provider-agnostic and translated by the Provider facade.
+  - Native reusable-agent support is treated as a projection path when applicable.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: puppet_master_persona_delta_drift
+reasoning_tier: standard
+context_scope: personas
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0038
+preserved_exact_tokens:
+  - "PERSONA.md"
+  - "provider-agnostic"
+  - "reserved-ID enforcement"
+  - "Claude Code CLI"
+  - "--agent"
+  - "--agents"
+  - "agents command"
+  - "native-specialized-agent projection path"
+negative_constraints:
+  - "Provider-native reusable agents are not plain prompt stuffing and not the same primitive as the PM Persona registry."
+  - "Puppet Master does not hardcode Persona descriptions/prompts in source code."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md"
+owner_hints:
+  - Plans/Personas.md
+```
+### P-026 - Persona Validation Acceptance Criteria
+
+```yaml
+plan_unit_id: P-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  Persona validation acceptance criteria require every loaded PERSONA.md file to pass schema validation, skip invalid files with a warning log entry, reject Reserved Persona IDs, and treat folder-name/id mismatches as validation errors.
+gui_related: false
+gui_classification_reason: This unit defines schema/runtime validation behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+  - P-010
+  - P-011
+  - P-021
+unblocks: []
+acceptance_criteria:
+  - AC-P01, AC-P03, and AC-P06 remain testable validation requirements.
+  - Invalid Persona files are not loaded as active runtime Personas.
+  - Reserved IDs and folder/frontmatter mismatches fail validation.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: persona_validation_acceptance_drift
+reasoning_tier: standard
+context_scope: personas
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0039
+preserved_exact_tokens:
+  - "AC-P01"
+  - "AC-P03"
+  - "AC-P06"
+  - "PERSONA.md"
+  - "frontmatter"
+  - "Reserved Persona IDs"
+negative_constraints:
+  - "Invalid or mismatched Personas are not loaded as valid runtime Personas."
+owner_hints:
+  - Plans/Personas.md
+```
+
+### P-027 - Persona Resolution And Instruction Injection Criteria
+
+```yaml
+plan_unit_id: P-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  Persona resolution acceptance criteria require project-local Personas to deterministically override global Personas with the same id, and require the context compiler to inject the resolved Persona Markdown body into the Instruction Bundle for every assigned Agent run.
+gui_related: false
+gui_classification_reason: This unit defines runtime resolution and prompt compilation behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - P-008
+  - P-012
+  - P-018
+unblocks: []
+acceptance_criteria:
+  - AC-P02 and AC-P05 remain testable runtime requirements.
+  - Project-local override behavior is deterministic.
+  - Persona Markdown body injection occurs whenever a Persona is assigned.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: persona_resolution_injection_drift
+reasoning_tier: standard
+context_scope: personas
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0039
+preserved_exact_tokens:
+  - "AC-P02"
+  - "AC-P05"
+  - "Project-local Personas"
+  - "global Personas"
+  - "Instruction Bundle"
+negative_constraints:
+  - "No additional negative constraints beyond the canonical text."
+owner_hints:
+  - Plans/Personas.md
+```
+
+
+<<< CONTEXT_AFTER 1919-1930 >>>
+### P-028 - GUI Persona Save Isolation Criteria
+
+```yaml
+plan_unit_id: P-028
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  GUI Persona edits must never create, modify, or delete provider-native agent files, and the GUI Personas management card must validate the schema on save and block saves with validation errors.
+gui_related: true
+gui_classification_reason: This unit defines GUI save behavior and user-visible validation handling.
+split_recommended: false

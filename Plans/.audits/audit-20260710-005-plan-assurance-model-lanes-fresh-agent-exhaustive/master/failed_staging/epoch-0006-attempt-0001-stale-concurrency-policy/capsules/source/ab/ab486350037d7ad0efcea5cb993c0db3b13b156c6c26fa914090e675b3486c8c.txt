@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE canonical_document_lines=6200-6211 >>>
+L00006200	  - "needs_recompile"
+L00006201	  - "invalidated"
+L00006202	  - "currentness gate"
+L00006203	negative_constraints:
+L00006204	  - Do not jump to user decision because a low-quality agent got stuck.
+L00006205	  - Do not create replan WorkNodes in this design-only phase.
+L00006206	owner_hints:
+L00006207	  - Plans/Executor_Protocol.md
+L00006208	  - Plans/Goal_Runtime_System.md
+L00006209	  - Plans/Planning_Ledger_System.md
+L00006210	```
+L00006211	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=6212-6610 >>>
+L00006212	### EP-103 - Plans-To-Code Execution Receipt Chain
+L00006213	
+L00006214	```yaml
+L00006215	plan_unit_id: EP-103
+L00006216	unit_type: requirement
+L00006217	status: accepted
+L00006218	owner_doc: Plans/Executor_Protocol.md
+L00006219	canonical_text: >-
+L00006220	  Executor contributes the execution side of the Plans-to-Code Handoff Matrix. A complete WorkNode execution flow emits worknode_dispatch_receipt, source_control_preflight_receipt, safe_point_receipt, worknode_change_receipt, test_run_receipt, auditor_verification_receipt, repair_attempt_receipt when needed, merge_or_promotion_receipt when applicable, worknode_completion_receipt, and finalization evidence. Each transition records source artifact, destination artifact, owner, validator, receipt, retry route, rollback route, and user escalation condition. Worker claims are never enough to certify code complete.
+L00006221	  The receipt chain preserves source_artifact, destination_artifact, retry_route, rollback_route, all WorkNodes terminal, all automated tests passed or dispositioned, and artifact-backed handoff evidence before code completion is certified. The source-control chain must preserve the same repo_id, worktree_id, worktree_path, branch_ref, branch_head_state, baseline_commit_oid, head_commit_oid, safe_point_id, changed_files, conflict_refs, rollback_available, rollback_ref, and restore_command_or_action through preflight, safe point creation, mutation/change, optional promotion, finalization, and completion certification.
+L00006222	gui_related: false
+L00006223	gui_classification_reason: Execution receipts and certification handoffs are runtime/evidence contracts.
+L00006224	depends_on: [EP-099, EP-100, EP-101, EP-102, PNC-014]
+L00006225	unblocks: [GRS-030, POA-048, RAP-029, CV-289]
+L00006226	acceptance_criteria:
+L00006227	  - Every Executor handoff has artifact, owner, validator, receipt, retry, rollback, and escalation fields.
+L00006228	  - WorkNode execution receipts distinguish dispatch, preflight, safe point, change, test, audit, repair, promotion, and completion.
+L00006229	  - Code completion is certified from receipts, tests, source-control state, Auditor result, blockers, and final evidence, not worker prose.
+L00006230	validation_surfaces:
+L00006231	  - python3 scripts/pm-plans-verify.py run-gates
+L00006232	  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+L00006233	risk_class: false_completion
+L00006234	reasoning_tier: high
+L00006235	context_scope: plans_to_code_execution_receipts
+L00006236	implementation_surfaces: [Plans/Executor_Protocol.md, Plans/Project_Output_Artifacts.md, Plans/Runtime_Artifacts_Panel.md, Plans/Contracts_V0.md, Plans/plans_to_code_handoff.schema.json]
+L00006237	node_compile_hint: {mode: execution_receipt_chain, create_worknodes: false}
+L00006238	source_lineage:
+L00006239	  - pldg-20260617-001-plans-to-code-handoff:atom-0039
+L00006240	  - pldg-20260617-001-plans-to-code-handoff:atom-0040
+L00006241	  - pldg-20260617-001-plans-to-code-handoff:atom-0041
+L00006242	  - pldg-20260617-001-plans-to-code-handoff:atom-0043
+L00006243	  - pldg-20260617-001-plans-to-code-handoff:dec-0016
+L00006244	  - pldg-20260617-001-plans-to-code-handoff:dec-0017
+L00006245	  - pldg-20260617-001-plans-to-code-handoff:dec-0018
+L00006246	preserved_exact_tokens:
+L00006247	  - "worknode_dispatch_receipt"
+L00006248	  - "source_control_preflight_receipt"
+L00006249	  - "safe_point_receipt"
+L00006250	  - "worknode_change_receipt"
+L00006251	  - "test_run_receipt"
+L00006252	  - "auditor_verification_receipt"
+L00006253	  - "repair_attempt_receipt"
+L00006254	  - "worknode_completion_receipt"
+L00006255	  - "Plans-to-Code Handoff Matrix"
+L00006256	  - "artifact-backed handoff"
+L00006257	  - "worker says done is insufficient"
+L00006258	  - "branch_head_state"
+L00006259	  - "baseline_commit_oid"
+L00006260	  - "head_commit_oid"
+L00006261	  - "safe_point_id"
+L00006262	  - "changed_files"
+L00006263	  - "conflict_refs"
+L00006264	  - "rollback_ref"
+L00006265	negative_constraints:
+L00006266	  - Do not accept worker says done as code completion.
+L00006267	owner_hints:
+L00006268	  - Plans/Executor_Protocol.md
+L00006269	  - Plans/Project_Output_Artifacts.md
+L00006270	  - Plans/Runtime_Artifacts_Panel.md
+L00006271	```
+L00006272	
+L00006273	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00006274	
+L00006275	
+L00006276	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00006277	
+L00006278	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00006279	
+L00006280	### EP-104 - Three-Stage Executor Intake And Required Graph Acceptance
+L00006281	
+L00006282	```yaml
+L00006283	plan_unit_id: EP-104
+L00006284	unit_type: requirement
+L00006285	status: accepted
+L00006286	owner_doc: Plans/Executor_Protocol.md
+L00006287	canonical_text: 'Downstream intake is Executor Structural Intake, Provisioning Preflight, and Executor Activation Decision so graph/request validation occurs before repository, worktree, safe-point, test-harness, model, permissions, and credential provisioning. Activation requires all required active-scope WorkNodeRequests to be accepted together; optional work must be explicitly excluded or deferred before activation, and a mixed result cannot silently start a partial build. Plan Compile and Executor provisioning must compare live repository and environment state against the approved snapshot and route stale facts through bounded re-analysis or recompile rather than executing against invalid assumptions. Provisioning Preflight confirms that selected test capabilities, installations, services, browsers, devices, simulators, credentials, and commands remain current and runnable immediately before WorkNode execution.'
+L00006288	gui_related: false
+L00006289	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00006290	depends_on: []
+L00006291	unblocks: []
+L00006292	acceptance_criteria:
+L00006293	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00006294	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00006295	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00006296	validation_surfaces:
+L00006297	- python3 scripts/pm-plan-index.py validate
+L00006298	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00006299	risk_class: execution_boundary
+L00006300	reasoning_tier: high
+L00006301	context_scope: ledger_to_plans_compile
+L00006302	implementation_surfaces:
+L00006303	- Plans/Executor_Protocol.md
+L00006304	- Plans/Plan_To_Node_Compilation.md
+L00006305	- Plans/Goal_Runtime_System.md
+L00006306	- Plans/FileSafe.md
+L00006307	- Plans/Automated_Testing_System.md
+L00006308	node_compile_hint:
+L00006309	  mode: canonical_planunit_from_bootstrap_ledger
+L00006310	  create_worknodes: false
+L00006311	  create_nodeseeds: false
+L00006312	source_lineage:
+L00006313	- pldg-20260618-001-prd-planning-wizard:atom-0119
+L00006314	- pldg-20260618-001-prd-planning-wizard:atom-0120
+L00006315	- pldg-20260618-001-prd-planning-wizard:atom-0078
+L00006316	- pldg-20260618-001-prd-planning-wizard:atom-0100
+L00006317	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
+L00006318	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md#SRC-PROJECT
+L00006319	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+L00006320	source_atom_ids:
+L00006321	- atom-0119
+L00006322	- atom-0120
+L00006323	- atom-0078
+L00006324	- atom-0100
+L00006325	decision_refs:
+L00006326	- dec-0024
+L00006327	- dec-0025
+L00006328	correction_refs: []
+L00006329	preserved_exact_tokens:
+L00006330	- Executor Structural Intake
+L00006331	- Provisioning Preflight
+L00006332	- Executor Activation Decision
+L00006333	- all required active-scope
+L00006334	- mixed
+L00006335	- revalidate
+L00006336	- stale facts
+L00006337	- harness revalidation
+L00006338	negative_constraints:
+L00006339	- Do not start a partially accepted required WorkGraph.
+L00006340	owner_hints:
+L00006341	- Plans/Executor_Protocol.md
+L00006342	- Plans/Plan_To_Node_Compilation.md
+L00006343	- Plans/Goal_Runtime_System.md
+L00006344	- Plans/FileSafe.md
+L00006345	- Plans/Automated_Testing_System.md
+L00006346	```
+L00006347	
+L00006348	## Ledger Compile Addendum - pldg-20260622-001-fff
+L00006349	
+L00006350	### EP-106 - Executor Discovery Orientation And Verification Handoff
+L00006351	
+L00006352	```yaml
+L00006353	plan_unit_id: EP-106
+L00006354	unit_type: requirement
+L00006355	status: accepted
+L00006356	owner_doc: Plans/Executor_Protocol.md
+L00006357	canonical_text: >-
+L00006358	  Executor Builder and Verifier actors may use discover_paths for file orientation when implementation or verification requires locating files without exact path evidence. Builder uses ranked discovery candidates for read orientation only, while Verifier may use discovery to locate verification-relevant files. Ranking never substitutes for exact evidence, tests, AST/LSP, grep/codesearch/Instant Grep, domain checks, or verifier pass criteria; discovery receipts feed attempt evidence only when linked to exact verification receipts before edits, test claims, completion, or verifier pass.
+L00006359	gui_related: false
+L00006360	gui_classification_reason: This is Executor protocol and verification handoff behavior, not GUI presentation.
+L00006361	depends_on: [T-161, T-162, OSI-429, CV-291]
+L00006362	unblocks: [ATS-011]
+L00006363	acceptance_criteria:
+L00006364	  - Builder uses discovery only for orientation when exact paths are absent.
+L00006365	  - Verifier may use discovery to find evidence targets but still requires exact evidence.
+L00006366	  - Discovery output cannot satisfy verifier pass criteria without exact verification.
+L00006367	validation_surfaces:
+L00006368	  - python3 scripts/pm-plan-index.py validate
+L00006369	  - Future Builder no-path orientation test.
+L00006370	  - Future Verifier exact evidence follow-up test.
+L00006371	  - Future SSH no-local-checkout Executor task test.
+L00006372	risk_class: executor_evidence_drift
+L00006373	reasoning_tier: standard
+L00006374	context_scope: executor_discovery_handoff
+L00006375	implementation_surfaces: [Plans/Executor_Protocol.md, future Executor Builder/Verifier routes]
+L00006376	node_compile_hint: {mode: executor_discovery_orientation, create_worknodes: false, create_nodeseeds: false}
+L00006377	source_lineage:
+L00006378	  - pldg-20260622-001-fff:atom-0041
+L00006379	  - pldg-20260622-001-fff:atom-0027
+L00006380	  - pldg-20260622-001-fff:atom-0030
+L00006381	  - pldg-20260622-001-fff:atom-0037
+L00006382	  - pldg-20260622-001-fff:atom-0043
+L00006383	  - pldg-20260622-001-fff:atom-0058
+L00006384	  - pldg-20260622-001-fff:atom-0059
+L00006385	  - pldg-20260622-001-fff:atom-0092
+L00006386	  - pldg-20260622-001-fff:atom-0094
+L00006387	  - pldg-20260622-001-fff:state/consumer_conformance_matrix.json#executor_builder_verifier
+L00006388	source_atom_ids: [atom-0027, atom-0030, atom-0037, atom-0041, atom-0043, atom-0058, atom-0059, atom-0092, atom-0094]
+L00006389	preserved_exact_tokens: ["Builder", "Verifier", "orientation only", "ranking never substitutes", "exact evidence", "AST/LSP", "grep/codesearch/Instant Grep", "verifier pass"]
+L00006390	negative_constraints:
+L00006391	  - Do not let ranking substitute for verifier evidence.
+L00006392	  - Do not claim root cause, completion, or verifier pass from discovery candidates alone.
+L00006393	owner_hints: [Plans/Executor_Protocol.md, Plans/Tools.md, Plans/Automated_Testing_System.md]
+L00006394	```
+L00006395	
+L00006396	### EP-105 - Runtime WorkNodeRecord Identity, Receipts, And Activation Consumers
+L00006397	
+L00006398	```yaml
+L00006399	plan_unit_id: EP-105
+L00006400	unit_type: requirement
+L00006401	status: accepted
+L00006402	owner_doc: Plans/Executor_Protocol.md
+L00006403	canonical_text: 'After Activation Decision accepts the certified graph, Executor materializes canonical WorkNodeRecord objects from accepted WorkNodeRequests and emits materialization receipts. WorkNodeRecord includes worknode_id, goal_run_id, workgraph_id and revision, source_request_id, source PlanUnit and acceptance refs, objective, surfaces, typed readiness predicates, lifecycle, attempts and retries, authority, model, tests, repository/worktree/safe-point refs, evidence, currentness, cancellation, invalidation, and replan generation. Existing project_plan_node schema remains an import or compatibility contract with an explicit adapter and must not silently become the canonical runtime WorkNodeRecord. Work dispatch, change, test, retry, and completion receipts use worknode_id and attempt_id plus source_request_id and graph revision; a WorkNodeRequest reference alone is not sufficient runtime identity. A context-aware incomplete-content
+L00006404	  validator runs at Planning Wizard approval, Plan Compile certification, WorkNode completion, and Goal completion across active Plans, compile artifacts, first-party code, tests, generated outputs, and delivery artifacts. Implementation readiness of the complete pipeline requires a clean-room fixture proving Approve And Build creates exactly one PlanCompileRun, executes mandatory parallel stages, certifies a complete WorkGraph and WorkNodeRequests, passes Executor intake/provisioning, atomically creates GoalRun and WorkNodes, queues an entrypoint, and appears in Orchestrator. The fixture suite covers duplicate PlanApproved delivery, restart during every activation step, greenfield Git, non-Git FileSafe, dirty repository, remote SSH, optional GitHub or PR, missing harness, testing override, plan revision during compile and execution, cancellation before and after mutation, missing parallel receipts, and a deliberately introduced incomplete item.'
+L00006405	gui_related: false
+L00006406	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00006407	depends_on: []
+L00006408	unblocks: []
+L00006409	acceptance_criteria:
+L00006410	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00006411	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00006412	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00006413	validation_surfaces:
+L00006414	- python3 scripts/pm-plan-index.py validate
+L00006415	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00006416	risk_class: execution_boundary
+L00006417	reasoning_tier: high
+L00006418	context_scope: ledger_to_plans_compile
+L00006419	implementation_surfaces:
+L00006420	- Plans/Executor_Protocol.md
+L00006421	- Plans/Contracts_V0.md
+L00006422	- Plans/storage-plan.md
+L00006423	- Plans/Planning_Wizard.md
+L00006424	- Plans/Plan_To_Node_Compilation.md
+L00006425	- Plans/Progression_Gates.md
+L00006426	- Plans/Orchestrator_Page.md
+L00006427	- Plans/Automated_Testing_System.md
+L00006428	node_compile_hint:
+L00006429	  mode: canonical_planunit_from_bootstrap_ledger
+L00006430	  create_worknodes: false
+L00006431	  create_nodeseeds: false
+L00006432	source_lineage:
+L00006433	- pldg-20260618-001-prd-planning-wizard:atom-0121
+L00006434	- pldg-20260618-001-prd-planning-wizard:atom-0122
+L00006435	- pldg-20260618-001-prd-planning-wizard:atom-0123
+L00006436	- pldg-20260618-001-prd-planning-wizard:atom-0124
+L00006437	- pldg-20260618-001-prd-planning-wizard:atom-0137
+L00006438	- pldg-20260618-001-prd-planning-wizard:atom-0145
+L00006439	- pldg-20260618-001-prd-planning-wizard:atom-0146
+L00006440	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
+L00006441	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md#SRC-AUDIT
+L00006442	source_atom_ids:
+L00006443	- atom-0121
+L00006444	- atom-0122
+L00006445	- atom-0123
+L00006446	- atom-0124
+L00006447	- atom-0137
+L00006448	- atom-0145
+L00006449	- atom-0146
+L00006450	decision_refs:
+L00006451	- dec-0025
+L00006452	- dec-0027
+L00006453	- dec-0028
+L00006454	correction_refs: []
+L00006455	preserved_exact_tokens:
+L00006456	- WorkNodeRecord
+L00006457	- WorkNodeMaterializationReceipt
+L00006458	- worknode_id
+L00006459	- goal_run_id
+L00006460	- workgraph_revision
+L00006461	- attempt_id
+L00006462	- replan generation
+L00006463	- project_plan_node
+L00006464	- compatibility adapter
+L00006465	- Planning Wizard approval
+L00006466	- Plan Compile certification
+L00006467	- WorkNode completion
+L00006468	- Goal completion
+L00006469	- clean-room fixture
+L00006470	- exactly one PlanCompileRun
+L00006471	- entrypoint queued
+L00006472	- duplicate PlanApproved
+L00006473	- dirty repository
+L00006474	- missing parallel receipts
+L00006475	- deliberately introduced incomplete item
+L00006476	negative_constraints:
+L00006477	- Do not overload a legacy plan-node shape as runtime execution truth.
+L00006478	owner_hints:
+L00006479	- Plans/Executor_Protocol.md
+L00006480	- Plans/Contracts_V0.md
+L00006481	- Plans/storage-plan.md
+L00006482	- Plans/Planning_Wizard.md
+L00006483	- Plans/Plan_To_Node_Compilation.md
+L00006484	- Plans/Progression_Gates.md
+L00006485	- Plans/Orchestrator_Page.md
+L00006486	- Plans/Automated_Testing_System.md
+L00006487	```
+L00006488	
+L00006489	## Ledger Compile Addendum - pldg-20260629-001-feature-name
+L00006490	
+L00006491	This addendum compiles Free Models executor dispatch and adapter activation behavior. It does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+L00006492	
+L00006493	### EP-107 - Free Models Dispatch Fallback Attempt Bounds And In-Flight Isolation
+L00006494	
+L00006495	```yaml
+L00006496	plan_unit_id: EP-107
+L00006497	unit_type: requirement
+L00006498	status: accepted
+L00006499	owner_doc: Plans/Executor_Protocol.md
+L00006500	canonical_text: >-
+L00006501	  Executor consumes Models_System precedence, Multi-Account pressure, Usage budget gates, and Prompt Pipeline requested/effective route snapshots when dispatching Free Models routes. Automatic fallback is bounded by configurable global/section limits and defaults to the initial selected/requested attempt plus `2` automatic fallback attempts. Auto Apply/model refresh changes never alter in-flight requests and apply only to new routing decisions after completion.
+L00006502	gui_related: false
+L00006503	gui_classification_reason: Defines runtime dispatch and in-flight request semantics, not GUI presentation.
+L00006504	depends_on: []
+L00006505	unblocks: []
+L00006506	acceptance_criteria:
+L00006507	  - Attempt limit counts the initial selected/requested model plus every automatic switch attempt.
+L00006508	  - Partial streaming failures are surfaced as partial/failure state with retry/switch action and are never silently retried/spliced.
+L00006509	  - Auto Apply/model refresh completion does not change in-flight model/provider/account/source snapshots.
+L00006510	  - Executor emits receipt inputs for attempted models, skipped entries, reasons, and final selected/stopped result.
+L00006511	validation_surfaces:
+L00006512	  - python3 scripts/pm-plan-index.py validate
+L00006513	  - Free Models fallback attempt limit fixtures
+L00006514	  - In-flight update isolation fixtures
+L00006515	  - Partial-stream failure routing fixtures
+L00006516	risk_class: fallback_dispatch_drift
+L00006517	reasoning_tier: high
+L00006518	context_scope: free_models_executor_dispatch
+L00006519	implementation_surfaces:
+L00006520	  - Plans/Executor_Protocol.md
+L00006521	  - Plans/Models_System.md
+L00006522	  - Plans/Multi-Account.md
+L00006523	  - Plans/usage-feature.md
+L00006524	  - Plans/Prompt_Pipeline.md
+L00006525	node_compile_hint:
+L00006526	  mode: free_models_executor_dispatch_planunit
+L00006527	  create_worknodes: false
+L00006528	  create_nodeseeds: false
+L00006529	source_lineage:
+L00006530	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00006531	source_atom_ids: [atom-0023, atom-0029, atom-0039, atom-0043, atom-0074, atom-0078, atom-0211, atom-0212, atom-0215, atom-0216, atom-0217, atom-0218, atom-0221, atom-0222, atom-0226, atom-0230, atom-0234, atom-0238, atom-0283, atom-0284, atom-0285, atom-0286]
+L00006532	preserved_exact_tokens:
+L00006533	  - "initial attempt plus 2 automatic fallbacks"
+L00006534	  - "attempt limit"
+L00006535	  - "partial streaming failures"
+L00006536	  - "Auto Apply/model refresh changes never alter in-flight requests"
+L00006537	  - "new routing decisions"
+L00006538	negative_constraints:
+L00006539	  - Do not make fallback unbounded by default.
+L00006540	  - Do not let automatic fallback retries bypass the configured attempt limit.
+L00006541	  - Do not silently retry/splice a different model after partial streaming output.
+L00006542	  - Do not break, cancel, or rewrite in-flight requests because Auto Apply or model refresh completes.
+L00006543	owner_hints:
+L00006544	  - Plans/Executor_Protocol.md
+L00006545	  - Plans/Models_System.md
+L00006546	  - Plans/Multi-Account.md
+L00006547	  - Plans/usage-feature.md
+L00006548	```
+L00006549	
+L00006550	### EP-108 - Free Models PM-Owned Runtime Adapter Activation Boundary
+L00006551	
+L00006552	```yaml
+L00006553	plan_unit_id: EP-108
+L00006554	unit_type: requirement
+L00006555	status: accepted
+L00006556	owner_doc: Plans/Executor_Protocol.md
+L00006557	canonical_text: >-
+L00006558	  Executor may consume Free Models runtime behavior changes only after PM-owned adapter validation has produced safe declarative router/probe/normalizer/fallback configuration, test evidence, source hashes, activation receipts, quarantine state, and rollback refs. Executor must not run upstream daemons, Docker workflows, command scripts, local proxies, telemetry hooks, credential writers, endpoint installers, self-update logic, or arbitrary config writers as part of Free Models routing.
+L00006559	gui_related: false
+L00006560	gui_classification_reason: Defines executor/runtime activation boundary, not GUI presentation.
+L00006561	depends_on: []
+L00006562	unblocks: []
+L00006563	acceptance_criteria:
+L00006564	  - Runtime behavior changes are limited to Free Models and apply only after PM-owned adapter validation.
+L00006565	  - Unsafe upstream runtime behavior produces blocked/quarantined evidence rather than execution.
+L00006566	  - Activation receipts and rollback refs are available to diagnostics and storage.
+L00006567	validation_surfaces:
+L00006568	  - python3 scripts/pm-plan-index.py validate
+L00006569	  - Free Models adapter activation fixtures
+L00006570	  - Unsafe runtime behavior quarantine fixtures
+L00006571	risk_class: unsafe_runtime_activation
+L00006572	reasoning_tier: high
+L00006573	context_scope: free_models_runtime_adapter_activation
+L00006574	implementation_surfaces:
+L00006575	  - Plans/Executor_Protocol.md
+L00006576	  - Plans/Contracts_V0.md
+L00006577	  - Plans/FileSafe.md
+L00006578	  - Plans/Permissions_System.md
+L00006579	  - Plans/storage-plan.md
+L00006580	node_compile_hint:
+L00006581	  mode: free_models_runtime_adapter_activation_planunit
+L00006582	  create_worknodes: false
+L00006583	  create_nodeseeds: false
+L00006584	source_lineage:
+L00006585	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00006586	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_temp_checkout_inspection_20260629.json
+L00006587	source_atom_ids: [atom-0012, atom-0026, atom-0028, atom-0033, atom-0060, atom-0061, atom-0063, atom-0064, atom-0066, atom-0070, atom-0076, atom-0080, atom-0106, atom-0110, atom-0196, atom-0200, atom-0277, atom-0278]
+L00006588	preserved_exact_tokens:
+L00006589	  - "no Docker"
+L00006590	  - "native"
+L00006591	  - "Runtime behavior changes should be automatic too, but only for the free model provider."
+L00006592	  - "PM-owned declarative router/probe/normalizer/fallback configuration"
+L00006593	  - "activation receipts"
+L00006594	  - "quarantine"
+L00006595	  - "rollback"
+L00006596	negative_constraints:
+L00006597	  - Do not inherit the upstream local daemon as PM's execution model without PM-native adaptation.
+L00006598	  - Do not execute arbitrary upstream commands/scripts, local proxies, telemetry hooks, credential writers, endpoint installers, self-update logic, or arbitrary config writers.
+L00006599	  - Do not auto-apply runtime behavior for non-Free-Models providers during manual all-provider refresh.
+L00006600	owner_hints:
+L00006601	  - Plans/Executor_Protocol.md
+L00006602	  - Plans/Contracts_V0.md
+L00006603	  - Plans/FileSafe.md
+L00006604	  - Plans/Permissions_System.md
+L00006605	```
+L00006606	
+L00006607	## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+L00006608	
+L00006609	This addendum compiles containerized-host Executor intake and execution-lane boundaries. It does not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, generated governance artifacts, or production build tasks.
+L00006610	
+
+<<< CONTEXT_AFTER canonical_document_lines=6611-6622 >>>
+L00006611	### EP-109 - HostCapabilityCommand Executor Intake Boundary
+L00006612	
+L00006613	```yaml
+L00006614	plan_unit_id: EP-109
+L00006615	unit_type: requirement
+L00006616	status: accepted
+L00006617	owner_doc: Plans/Executor_Protocol.md
+L00006618	canonical_text: >-
+L00006619	  Executor consumes HostCapabilityCommand and HostOperationRequest through ExecutorIntakeReport or equivalent intake,
+L00006620	  not through Coasts local API, terminal, file controls, or container-local endpoints. Accepted lanes include
+L00006621	  apps/services under test, PM work, provider tools, agent harnesses, shells, and integration commands only where
+L00006622	  runtime execution is later enabled and authority allows it. Intake records host_capability_ref, host_profile_id,

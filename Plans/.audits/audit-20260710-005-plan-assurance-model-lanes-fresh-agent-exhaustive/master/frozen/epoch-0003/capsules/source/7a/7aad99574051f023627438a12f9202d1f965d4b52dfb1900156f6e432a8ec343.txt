@@ -1,0 +1,382 @@
+<<< CONTEXT_BEFORE 8486-8497 >>>
+- webcrawl -> POST /v2/crawl
+- webmap -> POST /v2/map
+- webfetch -> POST /v2/scrape
+- batch_webfetch -> POST /v2/batch/scrape
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 8498-8850 >>>
+### T-117 - Firecrawl Provider Capability Exclusion
+
+```yaml
+plan_unit_id: T-117
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Provider-side capability names are adapter-lineage only unless future provider contracts map them; PM does
+  not add them to `WebAction` or expose arbitrary provider code execution as a first-class user tool.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-116
+unblocks: []
+acceptance_criteria:
+- Provider capability labels do not expand the PM WebAction enum.
+- Arbitrary provider code execution is not exposed as a first-class user tool.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: firecrawl_provider_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_185
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: firecrawl_provider_capability_exclusion
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0096
+preserved_exact_tokens:
+- executeJavascript
+- scrape
+- pdf
+- adapter-lineage only
+- WebAction
+- arbitrary provider code execution
+- first-class user tool
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-118 - Firecrawl Webextract Adapter Mapping
+
+```yaml
+plan_unit_id: T-118
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: '`webextract` maps PM `url` to provider `urls: [url]`, maps JSON Schema to provider `schema`, keeps PM one-URL
+  validation, and keeps provider options typed/audit-boundary only.'
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-116
+unblocks: []
+acceptance_criteria:
+- No unconfirmed PM parameter is exposed.
+- PM validates scope before adapter dispatch.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: firecrawl_provider_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_185
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: firecrawl_webextract_adapter_mapping
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0097
+preserved_exact_tokens:
+- webextract
+- url
+- 'urls: [url]'
+- JSON Schema
+- schema
+- enableWebSearch
+- urlTrace
+- showSources
+- strictConstrainToURLs
+- URL wildcards
+- domain-wide extraction
+- one-URL constraint
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-119 - Firecrawl Webresearch Agent Mapping
+
+```yaml
+plan_unit_id: T-119
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: '`webresearch` accepts `task: string`, maps PM `task` to provider `prompt`, returns `multi-source result +
+  sources/provenance`, and treats `max_sources` only as approximate `maxCredits` for credit-limited provider routing.'
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-116
+unblocks: []
+acceptance_criteria:
+- Mapping does not imply chaining, autonomous behavior, or a full behavioral spec beyond the web operation runtime contract.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: firecrawl_provider_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_185
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: firecrawl_webresearch_agent_mapping
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0097
+preserved_exact_tokens:
+- webresearch
+- 'task: string'
+- prompt
+- multi-source result + sources/provenance
+- max_sources
+- maxCredits
+- provider_firecrawl_agent
+- pm_research_composed
+- depth_hint
+- spark-1-mini
+- spark-1-pro
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-120 - Firecrawl Websearch Transform And Filters
+
+```yaml
+plan_unit_id: T-120
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: '`websearch` preserves supported source/category filters, flattens source-partitioned `{ web, images, news
+  }` responses into PM `results`, tags each item with `source_type`, and keeps fixed merge order.'
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-116
+unblocks: []
+acceptance_criteria:
+- Domain and time filter mappings remain exact.
+- If Firecrawl cannot enforce include/exclude domains natively, PM applies filtering post-search.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: firecrawl_provider_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_185
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: firecrawl_websearch_transform_filter_mapping
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0097
+preserved_exact_tokens:
+- '["web", "news", "images"]'
+- '["github", "research", "pdf"]'
+- '{ web: [...], images: [...], news: [...] }'
+- results
+- source_type
+- web results first, then news, then images
+- include_domains
+- exclude_domains
+- scrapeOptions.includeTags
+- time_range
+- tbs
+- 'formats: ["markdown"]'
+- 'onlyMainContent: true'
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/storage-plan.md#4.4
+  Activity transparency payloads'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Firecrawl search does not map PM `include_domains` to `scrapeOptions.includeTags`; that source mapping is retired as unconfirmed.
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-121 - Firecrawl Crawl Map Cache Change Tracking
+
+```yaml
+plan_unit_id: T-121
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: '`webmap`, `webcrawl`, cache policy, and `changeTracking` preserve PM-owned limits, sitemap errors, cache
+  defaults, adapter cache mapping, and PM-owned crawl diff persistence.'
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-116
+unblocks: []
+acceptance_criteria:
+- '`changeTracking` cannot disappear silently.'
+- Firecrawl provider `changeTracking` output is subordinate to PM persistence, comparison, and audit semantics.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: firecrawl_provider_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_185
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: firecrawl_crawl_map_cache_change_tracking
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0097
+preserved_exact_tokens:
+- map_timeout
+- map_no_sitemap
+- 'use_sitemap?: "include" | "only" | "skip"'
+- include|only|skip
+- ignoreRobotsTxt
+- delay
+- webhook callback
+- max_pages = 25
+- limit of 10000
+- 'cache_policy?: { max_age_seconds?: number, store?: boolean }'
+- cache_ttl
+- maxAge
+- minAge
+- storeInCache
+- changeTracking
+- change_status
+- new
+- same
+- changed
+- removed
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-122 - Firecrawl Browser Capability Endpoint Boundary
+
+```yaml
+plan_unit_id: T-122
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Firecrawl interact/browser capabilities are sub-features through `/v2/scrape` `actions` or the interact-session
+  flow, not standalone PM core endpoints or separate `/v2` endpoint families.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, activity,
+  or browser/provider disclosure surfaces.
+split_recommended: false
+depends_on:
+- T-116
+unblocks: []
+acceptance_criteria:
+- No separate `/v2` endpoint family is invented for PM core web operations.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: firecrawl_provider_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_185
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: firecrawl_browser_capability_endpoint_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0097
+preserved_exact_tokens:
+- /v2/scrape
+- actions
+- interact-session flow
+- not standalone PM core endpoints
+- separate `/v2` endpoint families
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-123 - Firecrawl Batch Operation Row Coverage
+
+```yaml
+plan_unit_id: T-123
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Firecrawl mapping coverage preserves all PM operation rows, including exact batch extraction and scrape rows.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-116
+unblocks: []
+acceptance_criteria:
+- Batch webfetch and batch webextract mapping rows remain preserved.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: firecrawl_provider_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_185
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: firecrawl_batch_operation_mapping_coverage
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0097
+preserved_exact_tokens:
+- batch_webfetch
+- batch_webextract
+- POST /v2/extract
+- urls[]
+- POST /v2/batch/scrape
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 8851-8862 >>>
+### T-124 - Firecrawl Async Polling And Timeout
+
+```yaml
+plan_unit_id: T-124
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Async Firecrawl operations use POST job creation, polling, terminal status mapping, provider `timeout_ms`,
+  and partial-result survival on timeout.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false

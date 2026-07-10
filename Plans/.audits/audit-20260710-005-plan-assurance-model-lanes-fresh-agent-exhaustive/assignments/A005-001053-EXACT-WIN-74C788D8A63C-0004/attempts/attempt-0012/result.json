@@ -1,0 +1,455 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001053-EXACT-WIN-74C788D8A63C-0004",
+  "attempt_id": "attempt-0012",
+  "task_thread_id": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001053_attempt_0012",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Tools.md",
+    "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca",
+    "core_sha256": "d95e33386f1c26b7defe000281039395a6f82bd6eda2daed82a5833bc357b5c8",
+    "core_range": [803, 1119]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001053-I001",
+      "item_type": "capability",
+      "title": "codesearch uses three distinct search lanes",
+      "statement": "codesearch combines Tantivy full-text indexing, LSP symbol search when active, and grep fallback, while the direct lsp surface retains definition, reference, hover, and related symbol operations.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [{"path": "Plans/Tools.md", "line_start": 808, "line_end": 808, "exact_quote": "- **Tool split:** `codesearch` is a multi-tier workspace search tool (Tantivy full-text index, LSP symbol search, and grep fallback), while `lsp` is the direct language-server operation surface for go-to-definition, references, hover, and related symbol calls.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}]
+    },
+    {
+      "item_id": "A005-001053-I002",
+      "item_type": "contract",
+      "title": "codesearch results and sensitive-content guards are fixed",
+      "statement": "codesearch returns stable best-effort path/range/snippet results, respects ignore defaults, excludes environment-secret paths except examples, and scrubs indexed snippets before persistence.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 810, "line_end": 810, "exact_quote": "- **Output:** Return best-effort results with stable `{ path, line_or_range, snippet, kind? }`.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 812, "line_end": 812, "exact_quote": "- **Secrets policy:** Any indexed/stored snippet text MUST be secrets-scrubbed before persistence to Tantivy.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I003",
+      "item_type": "contract",
+      "title": "grep preserves compatibility and authoritative verification",
+      "statement": "The accelerated grep path preserves the existing signature, result limit, timeout, project scope, permission posture, and content result shape; its index only narrows candidates and ripgrep verifies authoritative content.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 826, "line_end": 826, "exact_quote": "- **External contract:** Same compatibility signature `{ pattern: string, path?: string, glob?: string }`, same `matches: Array<{ path, line_number, line }>` result shape for content-mode callers, same project scoping, same result limit (1000), same timeout (30s), and same read-only permission posture as today's `grep`. The richer canonical contract above may expose output-mode variants, but Search-panel regex mode uses the same backend; there is no new user-facing or agent-facing tool name.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 827, "line_end": 827, "exact_quote": "- **Correctness model:** The index is only a candidate reducer. Final results always come from ripgrep verification on authoritative file content. Hash collisions, stale base snapshots, and broad dirty-layer candidate inclusion may increase candidate count, but MUST NOT change final correctness.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I004",
+      "item_type": "behavior",
+      "title": "sparse n-gram extraction is asymmetric and byte-normalized",
+      "statement": "Build extracts all sparse n-grams, query extracts a minimal-covering set, both operate on raw bytes with CRLF removal and ASCII-only lowercasing, and boundary failure falls back to fixed-width 3-grams.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 830, "line_end": 830, "exact_quote": "- **Sparse-n-gram model:** This is not a summary-level algorithm and not a classic fixed-trigram index. Build time extracts **all** sparse n-grams from normalized file content via `build_all`. Query time extracts only a **minimal-covering** set from normalized literals. That asymmetric build/query contract is the core selectivity/performance property.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 833, "line_end": 833, "exact_quote": "- **Byte-level operation rule:** N-gram extraction and frequency counting operate on raw bytes. Implementers MUST NOT decode content to Unicode at any point in the indexing or query pipeline. ASCII-only lowercasing (`u8::to_ascii_lowercase()`, loop shorthand `u8::to_ascii_lowercase();`) is the only transformation; non-ASCII bytes pass through unchanged.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I005",
+      "item_type": "behavior",
+      "title": "regex query flow and skip conditions are deterministic",
+      "statement": "Regex HIR literal extraction, lowercasing, covering-set construction, xxh3 lookup, bitmap intersection/union, path filtering, dirty inclusion, and ripgrep verification are ordered; nonselective, oversized, or unsupported non-ASCII-insensitive queries bypass the index.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 838, "line_end": 838, "exact_quote": "- **Query flow:** Parse regex with `regex-syntax` / `regex_syntax` into HIR, extract literals through `regex_syntax::literal`, classify `regex_syntax::literal::Seq` conjunctions versus alternations, strip CRLF `\\r` bytes, ASCII-lowercase with `u8::to_ascii_lowercase()`, compute a minimal-covering n-gram set, hash with xxh3, binary-search `lookup.bin`, load Roaring Bitmap postings, intersect within required-literal groups, union across alternations, resolve file IDs / `file_id` entries via `file_map.bin`, apply path/glob filters, add dirty-layer paths, then run ripgrep only on candidate files from the local filesystem, local Git cache via `git show`-materialized content, or dirty staging; index-build bulk reads for bare Git content use `git cat-file --batch`. Git repositories without a public clone URL follow the same non-Git fallback path.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 840, "line_end": 840, "exact_quote": "- **Query skip rules:** Skip the index and run raw ripgrep when no literals can be extracted, for example `.*`, `[a-z]+`, or `\\d{3}`; this is the same behavior as the index-missing path. Also skip when a case-insensitive query contains non-ASCII literals or when the covering set exceeds 64 n-grams.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I006",
+      "item_type": "failure_recovery",
+      "title": "dirty-layer freshness and watcher recovery preserve searchability",
+      "statement": "PM-mediated writes synchronously update generation-aware dirty records; watcher overflow marks indexed files dirty and triggers re-anchoring; a valid snapshot remains queryable during refresh; individual verification races are skipped without aborting the whole query.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 843, "line_end": 843, "exact_quote": "- **Freshness model:** PM-mediated writes update the dirty layer synchronously before returning success. Dirty entries are generation-aware path records, not a second canonical search index. All dirty paths are unconditionally included in candidate verification, and deleted dirty paths suppress stale base-index hits.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 846, "line_end": 846, "exact_quote": "- **Verification fault tolerance:** Per-file verification races (`ENOENT`, permission denied, deleted-between-candidate-and-verify, transient I/O errors) are skip-and-continue conditions, not whole-query failures.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I007",
+      "item_type": "contract",
+      "title": "search indexing enforces path and symlink containment",
+      "statement": "Indexing applies ignore, binary, secret, size, and generated-file filters; canonicalizes external path sources; rejects traversal; and defaults to no-follow with post-resolution project-root containment when symlink following is enabled.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 850, "line_end": 850, "exact_quote": "- **Path traversal prevention:** Paths derived from `.gitmodules`, dirty staging notifications, or remote file-change events MUST be canonicalized before use and then validated with `starts_with(project_root)` / `starts_with(cache_root)`. Submodule paths containing `..` are rejected with a logged warning before they can affect the project tree or remote `cache_root`.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 851, "line_end": 851, "exact_quote": "- **Symlink policy:** Index build filesystem walks and ripgrep verification default to `--no-follow` / `no-follow`; symlinks are not followed into directories outside the project root. The Indexing settings section may expose a \"Follow symlinks\" toggle, but it is OFF by default. When enabled, PM still canonicalizes each resolved path and applies `starts_with(project_root)` validation after canonicalization before indexing or verifying a symlink target.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I008",
+      "item_type": "acceptance_oracle",
+      "title": "search performance and publication targets are enumerated",
+      "statement": "The contract specifies query, build, memory, dirty-insert, index-size, scheduling, publication, sync, cancellation, and incremental-rebuild targets or mechanics.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 855, "line_end": 855, "exact_quote": "- **Performance / acceptance targets:** Indexed query latency target is <20 ms across repository sizes. Full-build targets are <2 minutes for <=500 MB, <10 minutes for <=5 GB, and <30 minutes for <=50 GB on SSD-class storage. Incremental rebuilds may temporarily use roughly 1.5x index size in RAM because extraction is incremental but serialization is full-snapshot rewrite. SSD storage is the supported baseline for repositories above 5 GB. Steady-state memory: peak RSS contribution typically <500 MB (only the lookup table is mmap'd; postings are streamed via offset). Dirty-layer insert: <1 ms per path (synchronous HashMap update). Typical index size: 1-10% of source code size. Build-thread dependencies, also reflected by `storage-plan.md ### 2.4`, include `thread-priority` alongside `regex-syntax`, `roaring`, `memmap2`, `xxhash-rust`, and `arc-swap`; `thread-priority` runs build threads at `ThreadPriority::Min`, wraps `setpriority/pthread_setschedparam` on Unix and `SetThreadPriority` on Windows, and on macOS Apple Silicon additionally calls `pthread_set_qos_class_self_np(QOS_CLASS_UTILITY)` for energy-efficient scheduling so indexing does not starve the editor.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 856, "line_end": 856, "exact_quote": "- **Build publication and cancellation handoff:** Storage owns the detailed snapshot lifecycle, while this tool contract depends on the same guarantees: builders write the next generation under `gen-{N+1}/`, flush generation files with `File::sync_all();` / `sync_all` before publication, check `CancellationToken` between file-processing iterations, and document incremental rebuild cost as O(index_size) RAM.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I009",
+      "item_type": "contract",
+      "title": "logsearch and logread separate indexed summaries from payload retrieval",
+      "statement": "logsearch accepts query, filters, and k and returns summary hits with event/blob references; logread resolves one of those references to capped content; only summaries/snippets are indexed and all persisted text is secrets-scrubbed.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 861, "line_end": 861, "exact_quote": "- **logsearch input:** `query: string`, optional `filters: { time_range?, run_id?, thread_id?, tool_name?, level? }`, `k?: number`.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 865, "line_end": 865, "exact_quote": "- **Index rule:** Tantivy logs index stores summaries/snippets only; full payload remains out-of-index and is fetched via logread.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I010",
+      "item_type": "contract",
+      "title": "repo.import has explicit modes, outputs, guards, and atomic failure posture",
+      "statement": "Repository import accepts a source, optional destination, and one of three modes; temporary mounts remain bounded and non-durable; structured failures must not leave half-registered identities.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 872, "line_end": 872, "exact_quote": "- **Input:** `{ source: string (URL or owner/repo), dest_path?, mode?: \"new_project\"|\"add_workspace_root\"|\"temporary_mount\" }`.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 875, "line_end": 875, "exact_quote": "- **Errors:** structured failures include `invalid_source`, `permission_denied`, `filesafe_blocked`, `repo_too_large`, `clone_failed`, `auth_required`, `destination_exists`, and `network_unavailable`; failed imports must not leave a half-registered project/workspace root.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I011",
+      "item_type": "contract",
+      "title": "task request and result envelopes are explicit",
+      "statement": "The task input defines goal, context, owner hint, registry-validated subagent type, resume token, and timeout; the result exposes stable delegated identity, lifecycle status, optional summary/artifacts, and structured failure detail.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 890, "line_end": 890, "exact_quote": "| `subagent_type?` | `string` | no | Optional child role selector; when present, validate it against the `subagent_registry` enum of 42 subagent types before launch. |", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 901, "line_end": 901, "exact_quote": "| `status` | `pending | running | completed | failed | cancelled | timed_out` | Child lifecycle. |", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I012",
+      "item_type": "behavior",
+      "title": "task resume, visibility, and nested delegation rules are fixed",
+      "statement": "Resume reuses delegated identity; hidden or denied subagents remain undiscoverable; child permissions inherit with overrides; TODO tools and nested task are default-denied; use is recorded in GUI/chat history.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 908, "line_end": 908, "exact_quote": "- resume reuses the same `delegated_session_id`; it does not mint a fresh child identity", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 910, "line_end": 910, "exact_quote": "- hidden, inaccessible, or denied subagents are not advertised as selectable, subagents inherit parent permissions with enforced overrides, `todowrite` / `todoread` remain denied by default for subagents unless explicitly re-enabled by run config, and nested `task` stays denied unless the target subagent/run config explicitly permits it", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 912, "line_end": 912, "exact_quote": "- User-asked subagent usage is honored when feasible. Without explicit instruction, PM may be aggressive-by-default about read-heavy `task` delegation when specialist-fit and task-fit evidence is strong; GUI/chat transparency records which subagent or `/persona` was used, why when meaningful, what task it owned, TODO linkage, `/blocked` or failure state, and lifecycle in thread history/storage after registry validation.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I013",
+      "item_type": "authority",
+      "title": "child launch authority is bounded by parent state",
+      "statement": "Child permissions, write scope, runtime/account restrictions, and remaining budget are hard inherited ceilings; requested timeouts are defaulted or clamped to the remaining parent budget with diagnostics.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 930, "line_end": 930, "exact_quote": "- inherit the parent permission ceiling, write scope, requested/effective runtime and account restrictions, and remaining budget as hard upper bounds; the child MAY narrow them further but MUST NOT widen them.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 932, "line_end": 932, "exact_quote": "- when the caller omits an explicit child timeout, default to the inherited parent remaining budget; when the caller requests a broader timeout, clamp it to the parent's remaining budget and emit a structured diagnostic.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I014",
+      "item_type": "failure_recovery",
+      "title": "runtime fallback and Copilot routing distinguish allowed and denied cases",
+      "statement": "Explicit unavailable runtime requests fail or require a new choice; implicit orchestrator selections may fall back with metadata; Copilot-native routing is permitted only from Copilot-rooted parents and otherwise strictly denied.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 935, "line_end": 935, "exact_quote": "- explicit user or command requests for child runtime surface must fail clearly or ask for a new choice if unavailable.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 944, "line_end": 944, "exact_quote": "- the correct outcome is strict deny, not silent downgrade.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I015",
+      "item_type": "state_transition",
+      "title": "retry, reroute, replacement, cancellation, and resume identities are distinguished",
+      "statement": "Retry creates a new attempt for the same logical child, reroute changes effective runtime for the same task, replacement creates a new run after material role/task change, cancellation is explicit and parent-controlled, and resume is limited to non-terminal interrupted or waiting children.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 949, "line_end": 949, "exact_quote": "- retry = same logical child with a new attempt.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 953, "line_end": 953, "exact_quote": "- resume applies only to non-terminal interrupted or waiting children.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I016",
+      "item_type": "authority",
+      "title": "delegated investigations inherit identity and avoid concurrent mutation",
+      "statement": "Investigation children inherit the investigation identity and a narrowed-or-equal permission snapshot, contribute only through canonical contracts, cannot create a second mutation-capable investigation without explicit isolation, and own cleanup for instrumentation they mutate.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 963, "line_end": 963, "exact_quote": "- a delegated run launched inside an investigation inherits `investigation_id` plus a narrowed-or-equal permission snapshot", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 965, "line_end": 965, "exact_quote": "- delegated runs must not create a second mutation-capable investigation against the same project/worktree unless a higher-level owner flow explicitly isolates the work in another worktree or host context", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I017",
+      "item_type": "authority",
+      "title": "GitHub HTTPS operations have one exclusive tool authority",
+      "statement": "All GitHub repository, fork, PR, issue, and status HTTPS API operations must route through GitHubApiTool; gh is forbidden for those operations and auth remains owned by the GitHub auth plan.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 974, "line_end": 974, "exact_quote": "**Purpose:** The sole permitted interface for GitHub HTTPS API calls. All GitHub operations (repository, fork, PR, issue, status) MUST route through this tool.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 977, "line_end": 977, "exact_quote": "- GitHub CLI (`gh`) is forbidden for auth/status/repo/fork/PR operations (see Spec_Lock.json#github_operations).", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I018",
+      "item_type": "contract",
+      "title": "custom tools join the central schema, policy, and event model",
+      "statement": "Custom tools register names, descriptions, and input schemas, use the shared allow/deny/ask policy, emit normalized invocation/result events, require explicit enablement for discovery, and execute in a timeout/output-capped subprocess in MVP.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 995, "line_end": 995, "exact_quote": "- **Registration:** Name, description, and input schema (parameters, types) so the model knows when and how to call the tool.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 1006, "line_end": 1006, "exact_quote": "- **Execution:** Custom tools run arbitrary code. **MVP:** Execute in a **subprocess** with a configurable timeout (e.g. 60s default) and optional output size cap (e.g. 1 MiB). No network or filesystem sandbox for MVP; document in implementation plan. Future: optional resource limits or allowlist-based sandbox.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I019",
+      "item_type": "consumer",
+      "title": "MCP integration is a consumer of owner-defined availability, auth, and schemas",
+      "statement": "Tools does not redefine MCP canon; requested/effective availability and credential semantics come from the MCP owner, underscore-only names are canonical, and registry/policy resolution precedes provider or skill projection.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 1019, "line_end": 1019, "exact_quote": "MCP canon is owned by `Plans/MCP_Integration.md`. This section is a consumer cross-reference for tool-registry and permission integration only.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 1028, "line_end": 1028, "exact_quote": "- MCP-specific skill metadata is a consumer of the central registry, not a competing tool model: requested/effective `tool-resolution` is resolved through the registry and policy engine before provider-specific projection or skill metadata is interpreted", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I020",
+      "item_type": "gui_truth",
+      "title": "GUI search, MCP settings, and tool permission persistence are explicit",
+      "statement": "Search regex mode shares grep acceleration and freshness, MCP configuration is exposed under Advanced settings, and tool permissions persist at app and project scopes but are snapshotted immutably per run.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 852, "line_end": 852, "exact_quote": "- **User-facing search:** When the Search panel regex toggle is ON, the same sparse-n-gram path accelerates find-in-files. Search inherits the same dirty-layer freshness guarantee and the same fallback causes as agent `grep`.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 1097, "line_end": 1097, "exact_quote": "- **Mid-run:** Run config is an immutable snapshot at start (FinalGUISpec §9.7). Changing Settings (including tool permissions) mid-run does **not** affect the active run; next run picks up the new config.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I021",
+      "item_type": "contract",
+      "title": "blocked tool events preserve escalation and acceleration disclosure",
+      "statement": "Blocked/denied packets carry blocked identity, approval scope, action availability, and escalation level; tool.invoked optionally discloses whether sparse-n-gram narrowing served grep/Search.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 1070, "line_end": 1070, "exact_quote": "Blocked and denied tool packets expose the shared runtime-facing blocked payload.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 1092, "line_end": 1092, "exact_quote": "- `tool.invoked` events for grep/Search acceleration include optional `index_used`; `tool.invoked.index_used = true` means sparse-n-gram candidate narrowing served the query, while `false` means raw ripgrep fallback or another unindexed path served it.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I022",
+      "item_type": "contract",
+      "title": "tool dispatch has one inherited pre-dispatch pipeline",
+      "statement": "Child and background tool work inherits policy, deadline, and effective MCP availability; registry resolution precedes policy filtering; no implementation bypasses policy, schema validation, or timeout propagation.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 1101, "line_end": 1101, "exact_quote": "Tool dispatch follows one canonical order. No tool implementation is invoked directly outside this flow.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 1105, "line_end": 1105, "exact_quote": "Child-run tool dispatch inherits the parent run's tool policy, deadline, and MCP effective-availability snapshot unless the run envelope carries an explicit narrower override. The child tool set is resolved from the central tool registry plus effective MCP-discovered tools before policy filtering, so built-in, custom, provider-exposed, and MCP tools follow one readiness and permission path. `/helper/background` work uses the same policy application order as foreground tool calls and must not bypass per-tool policy, schema validation, or timeout propagation.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-I023",
+      "item_type": "failure_recovery",
+      "title": "OAuth and malformed MCP schemas fail safely without widening authority",
+      "statement": "OAuth-required calls fail fast on owner-reported auth/listener/deadline faults without hidden flows or timeout extension; loopback binding cannot widen; schema cycles break at the revisited branch; malformed tool schemas are isolated per server/tool.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 1109, "line_end": 1109, "exact_quote": "Tool dispatch consumes MCP-owned schema/OAuth facts without re-owning them. The `/OAuth/timeout` contract is: OAuth-required tool calls must fail fast with structured auth or timeout evidence when the MCP owner reports expired auth, missing client registration, callback/listener failure, or exhausted parent deadline; the tool layer must not retry by minting a hidden OAuth flow or extending the run timeout.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 1117, "line_end": 1117, "exact_quote": "Malformed MCP tool data is isolated per-server and per-tool: schema violations emit a structured `mcp_schema_mismatch` envelope plus diagnostic evidence, do not crash the host, and do not poison other servers' availability or tool records.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-G001",
+      "item_type": "gap",
+      "title": "codesearch has no input schema or backend-selection contract",
+      "statement": "The authoritative window defines codesearch backends and output but not its request fields, query modes, limits, timeout, scoring, pagination, or deterministic rules for choosing and merging backend results.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_input_and_selection_contract",
+      "impact": "Independent implementations can expose incompatible inputs and return materially different ordering, coverage, and failure behavior for the same query.",
+      "builder_discretion": "Builders must invent codesearch request validation, backend arbitration, result merging, limits, timeout, and ranking semantics.",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 805, "line_end": 805, "exact_quote": "- **Primary backend:** Tantivy code index (filesystem watcher + chunked documents; see Plans/storage-plan.md).", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 810, "line_end": 810, "exact_quote": "- **Output:** Return best-effort results with stable `{ path, line_or_range, snippet, kind? }`.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-G002",
+      "item_type": "gap",
+      "title": "repo.import limits are named but not quantified",
+      "statement": "The import contract requires a maximum repository size and clone timeout but supplies neither values nor configuration keys, measurement rules, or the status/cleanup behavior when cancellation or timeout occurs.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "unbound_operational_limits",
+      "impact": "Providers can accept different repository sizes and wait indefinitely or terminate at incompatible times, undermining predictable safety and tests.",
+      "builder_discretion": "Builders must choose size and duration ceilings and timeout cleanup semantics.",
+      "evidence": [{"path": "Plans/Tools.md", "line_start": 874, "line_end": 874, "exact_quote": "- **Limits:** import must honor FileSafe write scope, project-root/path traversal guards, maximum repository size and clone timeout, and network/provider permissions; `temporary_mount` data is lifecycle-bound and excluded from durable project identity until promoted.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}]
+    },
+    {
+      "item_id": "A005-001053-G003",
+      "item_type": "gap",
+      "title": "task statuses lack a valid transition and terminality table",
+      "statement": "The result enumerates lifecycle statuses and separately describes retry/reroute/replacement/resume, but it does not define allowed status-to-status transitions, which statuses are terminal beyond resume wording, or concurrency/idempotency behavior for cancellation versus completion.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "incomplete_state_machine",
+      "impact": "Clients and runtimes can disagree about legal resumption, repeated cancellation, late completion, and stable lifecycle rendering.",
+      "builder_discretion": "Builders must invent the transition graph, race resolution, and idempotency rules.",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 901, "line_end": 901, "exact_quote": "| `status` | `pending | running | completed | failed | cancelled | timed_out` | Child lifecycle. |", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 953, "line_end": 953, "exact_quote": "- resume applies only to non-terminal interrupted or waiting children.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-G004",
+      "item_type": "gap",
+      "title": "custom-tool FileSafe enforcement is conditional on classification",
+      "statement": "MVP custom tools execute arbitrary code without network or filesystem sandboxing, while FileSafe is applied only where an invocation can be classified; no deny/default behavior is specified for opaque or misclassified tools.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "unclassified_arbitrary_code_authority",
+      "impact": "An opaque custom subprocess may access files, shell, or network outside the intended write scope, sensitive-path, command, and host-policy protections.",
+      "builder_discretion": "Builders must decide whether unclassifiable invocations run, deny, prompt, or receive a restricted execution envelope.",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 1006, "line_end": 1006, "exact_quote": "- **Execution:** Custom tools run arbitrary code. **MVP:** Execute in a **subprocess** with a configurable timeout (e.g. 60s default) and optional output size cap (e.g. 1 MiB). No network or filesystem sandbox for MVP; document in implementation plan. Future: optional resource limits or allowlist-based sandbox.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 1007, "line_end": 1007, "exact_quote": "- **FileSafe:** Custom tools that read/write files or run shell commands are subject to the same FileSafe guards (write scope, sensitive paths, command blocklist) where the invocation can be classified (e.g. if the tool forwards to bash or edit, apply FileSafe).", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-G005",
+      "item_type": "gap",
+      "title": "search performance targets lack reproducible oracle conditions",
+      "statement": "The targets do not define hardware profiles beyond SSD class, corpus composition, warm/cold cache state, query suite, percentile, concurrency, measurement boundary, or pass/fail sampling, and several values are qualified as target, typically, or roughly.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "non_reproducible_acceptance_oracle",
+      "impact": "The listed latency, build, memory, and size claims cannot produce consistent certification across machines or implementations.",
+      "builder_discretion": "Builders and auditors must invent benchmark fixtures, environment, statistics, and thresholds for normative acceptance.",
+      "evidence": [{"path": "Plans/Tools.md", "line_start": 855, "line_end": 855, "exact_quote": "- **Performance / acceptance targets:** Indexed query latency target is <20 ms across repository sizes. Full-build targets are <2 minutes for <=500 MB, <10 minutes for <=5 GB, and <30 minutes for <=50 GB on SSD-class storage. Incremental rebuilds may temporarily use roughly 1.5x index size in RAM because extraction is incremental but serialization is full-snapshot rewrite. SSD storage is the supported baseline for repositories above 5 GB. Steady-state memory: peak RSS contribution typically <500 MB (only the lookup table is mmap'd; postings are streamed via offset). Dirty-layer insert: <1 ms per path (synchronous HashMap update). Typical index size: 1-10% of source code size. Build-thread dependencies, also reflected by `storage-plan.md ### 2.4`, include `thread-priority` alongside `regex-syntax`, `roaring`, `memmap2`, `xxhash-rust`, and `arc-swap`; `thread-priority` runs build threads at `ThreadPriority::Min`, wraps `setpriority/pthread_setschedparam` on Unix and `SetThreadPriority` on Windows, and on macOS Apple Silicon additionally calls `pthread_set_qos_class_self_np(QOS_CLASS_UTILITY)` for energy-efficient scheduling so indexing does not starve the editor.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}]
+    },
+    {
+      "item_id": "A005-001053-G006",
+      "item_type": "gap",
+      "title": "custom-tool timeout and output cap are examples rather than fixed defaults",
+      "statement": "The subprocess timeout and output cap are configurable examples and the cap is optional, with no configuration keys, minimum/maximum values, timeout result envelope, termination escalation, truncation marker, or default when the cap is omitted.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "incomplete_resource_limit_contract",
+      "impact": "Custom tools can consume unbounded output or terminate inconsistently, and callers cannot reliably interpret timeout or truncation.",
+      "builder_discretion": "Builders must set defaults, bounds, kill behavior, output accounting, and structured failure semantics.",
+      "evidence": [{"path": "Plans/Tools.md", "line_start": 1006, "line_end": 1006, "exact_quote": "- **Execution:** Custom tools run arbitrary code. **MVP:** Execute in a **subprocess** with a configurable timeout (e.g. 60s default) and optional output size cap (e.g. 1 MiB). No network or filesystem sandbox for MVP; document in implementation plan. Future: optional resource limits or allowlist-based sandbox.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}]
+    },
+    {
+      "item_id": "A005-001053-G007",
+      "item_type": "gap",
+      "title": "grep skip-and-continue has no partial-result disclosure",
+      "statement": "Per-file verification errors are silently converted to skip-and-continue, but the stable result contract has no warnings, skipped-path count, partial flag, or diagnostic reference to tell consumers that authoritative candidates were omitted.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "silent_partial_results",
+      "impact": "Agents and Search-panel users can mistake incomplete results for exhaustive absence, especially under permission or transient I/O failures.",
+      "builder_discretion": "Builders must decide whether and how to report skipped candidates without breaking the compatibility result shape.",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 826, "line_end": 826, "exact_quote": "- **External contract:** Same compatibility signature `{ pattern: string, path?: string, glob?: string }`, same `matches: Array<{ path, line_number, line }>` result shape for content-mode callers, same project scoping, same result limit (1000), same timeout (30s), and same read-only permission posture as today's `grep`. The richer canonical contract above may expose output-mode variants, but Search-panel regex mode uses the same backend; there is no new user-facing or agent-facing tool name.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 846, "line_end": 846, "exact_quote": "- **Verification fault tolerance:** Per-file verification races (`ENOENT`, permission denied, deleted-between-candidate-and-verify, transient I/O errors) are skip-and-continue conditions, not whole-query failures.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "A005-001053-G008",
+      "item_type": "gap",
+      "title": "logread union input and bounded output are under-specified",
+      "statement": "The input notation does not state whether exactly one reference is required or how both/neither are handled, and bounded output names neither a cap nor the required truncation reason vocabulary or missing-reference errors.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "ambiguous_union_and_bounds",
+      "impact": "Clients and servers can disagree on request validity, payload size, and structured error/truncation handling.",
+      "builder_discretion": "Builders must choose union validation, size limits, truncation reasons, and lookup failure envelopes.",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 863, "line_end": 863, "exact_quote": "- **logread input:** `{ event_id? | blob_ref? }`.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 864, "line_end": 864, "exact_quote": "- **logread output:** `{ content, truncated?: boolean, truncation_reason? }` (bounded by size caps).", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension": "behavior", "status": "addressed", "summary": "Search, delegation, registry, dispatch, OAuth, and schema-isolation behaviors are substantially explicit.", "evidence_item_ids": ["A005-001053-I001", "A005-001053-I004", "A005-001053-I005", "A005-001053-I012", "A005-001053-I022", "A005-001053-I023"]},
+    {"dimension": "capabilities", "status": "addressed", "summary": "The window specifies codesearch, accelerated grep, log retrieval, repo import, task delegation, GitHub API, custom tools, and MCP integration capabilities.", "evidence_item_ids": ["A005-001053-I001", "A005-001053-I003", "A005-001053-I009", "A005-001053-I010", "A005-001053-I011", "A005-001053-I017", "A005-001053-I018", "A005-001053-I019"]},
+    {"dimension": "inputs_outputs", "status": "gap_found", "summary": "Most envelopes are defined, but codesearch lacks an input contract and logread's union and bounds are ambiguous.", "evidence_item_ids": ["A005-001053-I002", "A005-001053-I009", "A005-001053-I010", "A005-001053-I011", "A005-001053-G001", "A005-001053-G008"]},
+    {"dimension": "contracts", "status": "gap_found", "summary": "Detailed search, task, custom-tool, MCP, and dispatch contracts exist, but several operational limits and result-completeness contracts remain open.", "evidence_item_ids": ["A005-001053-I003", "A005-001053-I018", "A005-001053-I019", "A005-001053-I022", "A005-001053-G002", "A005-001053-G006", "A005-001053-G007"]},
+    {"dimension": "states_transitions", "status": "gap_found", "summary": "Task identity-changing actions are defined, but the legal status transition graph and races are not.", "evidence_item_ids": ["A005-001053-I015", "A005-001053-G003"]},
+    {"dimension": "authority", "status": "addressed", "summary": "Parent ceilings, explicit/implicit fallback authority, Copilot routing, investigation mutation, and exclusive GitHub API authority are explicit.", "evidence_item_ids": ["A005-001053-I013", "A005-001053-I014", "A005-001053-I016", "A005-001053-I017"]},
+    {"dimension": "ownership", "status": "addressed", "summary": "Storage owns snapshot lifecycle, MCP owns schema/auth facts, GitHub auth owns auth flows, and Tools owns the enumerated grep surface.", "evidence_item_ids": ["A005-001053-I008", "A005-001053-I017", "A005-001053-I019", "A005-001053-I023"]},
+    {"dimension": "consumers", "status": "addressed", "summary": "Agent grep, Search-panel regex, GUI/chat history, MCP/provider adapters, skill metadata, and runtime dispatch consumers are identified.", "evidence_item_ids": ["A005-001053-I012", "A005-001053-I019", "A005-001053-I020", "A005-001053-I021", "A005-001053-I022"]},
+    {"dimension": "gui_truth", "status": "addressed", "summary": "Search regex acceleration, Indexing symlink control, MCP settings, permission persistence, and child transparency are stated.", "evidence_item_ids": ["A005-001053-I007", "A005-001053-I012", "A005-001053-I020", "A005-001053-I021"]},
+    {"dimension": "failures_recovery", "status": "gap_found", "summary": "Watcher, fallback, OAuth, and schema failure behaviors are strong, but grep can return undisclosed partial results and several timeout/resource failures lack envelopes.", "evidence_item_ids": ["A005-001053-I006", "A005-001053-I014", "A005-001053-I023", "A005-001053-G002", "A005-001053-G006", "A005-001053-G007", "A005-001053-G008"]},
+    {"dimension": "security_privacy", "status": "gap_found", "summary": "Secrets, containment, permission inheritance, host policy, and OAuth listener restrictions are addressed, but unsandboxed unclassifiable custom tools retain critical unspecified authority.", "evidence_item_ids": ["A005-001053-I002", "A005-001053-I007", "A005-001053-I013", "A005-001053-I016", "A005-001053-I023", "A005-001053-G004"]},
+    {"dimension": "propagation", "status": "addressed", "summary": "Project switching, next-run config snapshots, child inheritance, deadline propagation, and effective MCP availability propagation are explicit.", "evidence_item_ids": ["A005-001053-I013", "A005-001053-I020", "A005-001053-I022", "A005-001053-I023"]},
+    {"dimension": "operations", "status": "gap_found", "summary": "Index build/re-anchor/publication, import, subprocess, event, and dispatch operations are described, but import and custom-tool operational limits are incomplete.", "evidence_item_ids": ["A005-001053-I006", "A005-001053-I008", "A005-001053-I010", "A005-001053-I018", "A005-001053-I021", "A005-001053-I022", "A005-001053-G002", "A005-001053-G006"]},
+    {"dimension": "scale_performance", "status": "gap_found", "summary": "Targets and implementation mechanics are detailed, but benchmark conditions and enforceable resource-limit defaults are missing.", "evidence_item_ids": ["A005-001053-I004", "A005-001053-I005", "A005-001053-I008", "A005-001053-G005", "A005-001053-G006"]},
+    {"dimension": "compatibility_migration", "status": "addressed", "summary": "grep retains its public compatibility surface, provider-facing task data normalizes to canonical identity, MCP aliases are rejected, and platform differences are projected through the central registry.", "evidence_item_ids": ["A005-001053-I003", "A005-001053-I012", "A005-001053-I019"]},
+    {"dimension": "acceptance_oracles", "status": "gap_found", "summary": "Correctness and performance targets exist, but performance certification is not reproducible and partial grep verification is not observable.", "evidence_item_ids": ["A005-001053-I003", "A005-001053-I008", "A005-001053-G005", "A005-001053-G007"]},
+    {"dimension": "builder_discretion", "status": "gap_found", "summary": "Explicit discretion includes SIMD, optional symlink UI, and generated-pattern customization; consequential implicit discretion remains in codesearch arbitration, state transitions, import limits, custom-tool isolation/resources, and partial-result disclosure.", "evidence_item_ids": ["A005-001053-I007", "A005-001053-I008", "A005-001053-G001", "A005-001053-G002", "A005-001053-G003", "A005-001053-G004", "A005-001053-G005", "A005-001053-G006", "A005-001053-G007", "A005-001053-G008"]},
+    {"dimension": "ambiguity_unknowns", "status": "gap_found", "summary": "Material unknowns remain in codesearch inputs/selection, import limits, task transitions, custom-tool authority/resources, performance oracles, grep partiality, and logread validation.", "evidence_item_ids": ["A005-001053-G001", "A005-001053-G002", "A005-001053-G003", "A005-001053-G004", "A005-001053-G005", "A005-001053-G006", "A005-001053-G007", "A005-001053-G008"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

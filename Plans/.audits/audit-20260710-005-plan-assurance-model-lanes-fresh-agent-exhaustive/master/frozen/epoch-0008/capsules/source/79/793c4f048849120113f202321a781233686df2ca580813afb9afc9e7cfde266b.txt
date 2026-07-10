@@ -1,0 +1,399 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1097-1108 >>>
+L00001097	
+L00001098	Add the following entry to the §7 defaults table:
+L00001099	
+L00001100	| Key | Default | Rationale |
+L00001101	|---|---|---|
+L00001102	| `external_publish_side_effect` | `ask` | Remote publication and repo creation can change privacy/distribution state and require explicit approval |
+L00001103	
+L00001104	## Runtime blocked-Outcome Integration Addendum (2026-03-08)
+L00001105	
+L00001106	### 1. Policy-denied outcomes are blocked outcomes
+L00001107	
+L00001108	When the permission layer prevents execution, the runtime must treat the result as blocked/denied rather than generic failure.
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1109-1478 >>>
+L00001109	
+L00001110	This includes:
+L00001111	- deny rules
+L00001112	- user rejection of `ask`
+L00001113	- headless `ask -> deny`
+L00001114	- `external_publish_side_effect` blocks
+L00001115	
+L00001116	### 2. Recovery-option payloads
+L00001117	
+L00001118	Permission outcomes that surface to runtime/UI must include canonical blocked-state actions and family identity.
+L00001119	
+L00001120	Minimum fields:
+L00001121	- `blocked_family` (`blocked_policy` | `blocked_approval` | `blocked_preflight` | `blocked_governance`)
+L00001122	- `blocked_reason_code`
+L00001123	- `guard_name?`
+L00001124	- `allowed_action_ids[]`
+L00001125	- `approval_scope_key?`
+L00001126	- `approval_target_ref?`
+L00001127	- `permission_snapshot_id?`
+L00001128	- `runtime_identity_context?`
+L00001129	- `revalidation_required?`
+L00001130	- `executed: false`
+L00001131	
+L00001132	Rules:
+L00001133	- `allowed_action_ids[]` is canonical; prose-only recovery hints are non-conforming
+L00001134	- Runtime payload field names are closed: legacy `recovery_options[]` and `allowed_actions[]` are compatibility aliases only and MUST NOT replace `allowed_action_ids[]` in new blocked or recovery payloads.
+L00001135	- approval surfaces in chat/dialogs/cards must summarize the exact target, scope, and drift boundary for the request
+L00001136	- UI labels may vary, but the exposed actions must map to the canonical semantics: one-shot approval, reusable scope/session approval when policy allows, and deny/decline
+L00001137	- `blocked_preflight` is used for stale target, undeclared host, drift, or capability/preflight failures discovered before dispatch; these outcomes do not masquerade as `failure_class`
+L00001138	- payload consumers must render blocked family + action ids without inventing local enum families or alias field names
+L00001139	- Domain-sensitive operational sessions use permission classes instead of one generic run-command approval. Read-only inspection, interactive shell `/exec`, and network tunnel exposure are separate classes for `docker exec`, `docker attach`, `kubectl exec`, and `kubectl port-forward`; approvals for one class do not imply approval for another.
+L00001140	- Tool permission and domain approval are separate: generic tool allow, `/session/YOLO`, or headless defaults never approve domain-sensitive Git push/force-push/prune/destructive discard (`/force-push/prune/destructive`), workflow `/cancel/rerun/admin` CRUD, image push/repo create/template push, or Kubernetes `/delete/exec/port-forward` operations. Protection-rule changes, `/namespace/workload` mutations, SCM destructive actions, `docker exec`, `docker attach`, `kubectl exec`, and `kubectl port-forward` require their own domain approval class.
+L00001141	- `/queued` and background approval requests bind to the exact queued attempt, target, guard, and preflight snapshot. Approval may pause one node, block the whole run, or block only a follow-on step according to the blocked payload, but resumption always re-runs preflight when the target, policy, or permission snapshot may have changed.
+L00001142	- Policy-denied, approval-missing, and preflight-failed outcomes remain distinct: `blocked_policy`, `blocked_approval`, and `blocked_preflight` choose different copy, recovery actions, and retry paths instead of collapsing into a generic blocked reason.
+L00001143	- Mutating actions use a per-target in-flight operation key for `/dedupe` across the main window, detached windows, Dashboard, and Orchestrator shortcuts. Identical operations coalesce, while conflicting operations surface `operation_in_progress` with the owning target/action context.
+L00001144	- Every mutating action revalidates stable target identity immediately before execution, including stale table rows, stale cards, and stale `/selections`. If the selected target has materially changed, the action aborts with `state_changed_refresh_required` and requires refresh or reselection.
+L00001145	- Remote-side-effect transports may end as `indeterminate_remote_outcome` when the server-side action might have succeeded but the client lost confirmation. The receipt preserves `requested`, `transport_lost`, and later `reconciled` states, and the UI exposes a `Refresh remote state` recovery CTA rather than labeling the action simply failed.
+L00001146	
+L00001147	Policy-field defaults and closed enums:
+L00001148	
+L00001149	| Field | Default | Allowed values |
+L00001150	| --- | --- | --- |
+L00001151	| `network_access_policy` | `ask` | `deny`, `ask`, `allow_project_declared`, `allow_session`, `allow_all` |
+L00001152	| `secret_access_policy` | `ask` | `deny`, `ask`, `allow_named_secret`, `allow_session_named_secret` |
+L00001153	| `destructive_command_policy` | `ask` | `deny`, `ask`, `allow_once`, `allow_session_for_target` |
+L00001154	| `filesystem_write_policy` | `ask_project` | `deny`, `ask_project`, `allow_project`, `allow_declared_paths` |
+L00001155	| `database_test_data_policy` | `deny_real` | `deny_real`, `ask_sandbox`, `allow_sandbox` |
+L00001156	
+L00001157	Recovery reason-code minima: `blocked_policy`, `blocked_approval`, `blocked_preflight`, `state_changed_refresh_required`, `operation_in_progress`, `indeterminate_remote_outcome`, `budget_exhausted`, and `permission_snapshot_stale`.
+L00001158	
+L00001159	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md
+L00001160	
+L00001161	A permission snapshot captures the resolved permission state at attempt start for auditability, immutability, and replay-safe approval logic.
+L00001162	
+L00001163	After any approval, policy, mode, or project change, a retry creates a new permission snapshot; the prior snapshot stays frozen for historical audit and never mutates in place.
+L00001164	
+L00001165	**Schema:**
+L00001166	```json
+L00001167	{
+L00001168	  "snapshot_id": "uuid",
+L00001169	  "attempt_id": "uuid",
+L00001170	  "node_id": "uuid",
+L00001171	  "captured_at": "ISO-8601 timestamp",
+L00001172	  "approval_scope_key": "string?",
+L00001173	  "approval_target_ref": "string?",
+L00001174	  "requested_account_binding": "string?",
+L00001175	  "effective_account_binding": "string?",
+L00001176	  "account_switch_event_ref": "string?",
+L00001177	  "permission_decision_context": {
+L00001178	    "decision_context_ref": "string?",
+L00001179	    "mode_override": "string?",
+L00001180	    "preflight_snapshot_ref": "string?",
+L00001181	    "policy_source_ref": "string?"
+L00001182	  },
+L00001183	  "actor_surface_context": {
+L00001184	    "actor_kind": "assistant | interviewer | builder | orchestrator | subagent | user | system",
+L00001185	    "execution_role": "string?",
+L00001186	    "surface_id": "string?",
+L00001187	    "surface_route": "string?",
+L00001188	    "project_id": "string?",
+L00001189	    "thread_id": "string?",
+L00001190	    "run_id": "string?"
+L00001191	  },
+L00001192	  "runtime_identity_context": {
+L00001193	    "requested_platform": "string",
+L00001194	    "effective_platform": "string",
+L00001195	    "provider_family_id": "string?",
+L00001196	    "requested_runtime_identity": "string?",
+L00001197	    "effective_runtime_identity": "string?",
+L00001198	    "host_ref": "string?",
+L00001199	    "transport_host_ref": "string?",
+L00001200	    "upstream_provider_ref": "string?",
+L00001201	    "repo_id": "string?",
+L00001202	    "worktree_id": "string?"
+L00001203	  },
+L00001204	  "resolved_permissions": {
+L00001205	    "<permission_key>": {
+L00001206	      "requested_permission_state": "allow | deny | ask | unset",
+L00001207	      "effective_permission_state": "allow | deny | ask",
+L00001208	      "downgrade_reason": "string?",
+L00001209	      "resolution": "allow | deny | ask",
+L00001210	      "source": "preset | project | user_override | session",
+L00001211	      "effective_value": true
+L00001212	    }
+L00001213	  }
+L00001214	}
+L00001215	```
+L00001216	
+L00001217	`stop_reason_code` values consumed by permission-adjacent blocked receipts are `user_stopped`, `policy_denied`, `budget_exhausted`, `safe_point_required`, `permission_snapshot_stale`, and `indeterminate_remote_outcome`. `blocked_reason_code` values are `approval_required`, `policy_denied`, `preflight_failed`, `state_changed`, `domain_sensitive_action`, `secret_required`, `network_forbidden`, `external_side_effect`, and `operation_in_progress`. `budget_kind` values are `turns`, `tokens`, `wall_time_seconds`, `parallel_agents`, and `cost`.
+L00001218	
+L00001219	**Rules:**
+L00001220	1. The snapshot is created before `attempt.started` becomes durable; when a run has no narrower attempt record yet, the effective permission snapshot is frozen before run start becomes durable.
+L00001221	2. The snapshot is immutable after creation; later approval, policy, mode, project, account, target, or runtime-identity changes create a new snapshot and a new attempt/run lineage entry before retry or resume.
+L00001222	3. Approval reuse is valid only while `approval_scope_key`, `approval_target_ref`, and the relevant runtime identity context still match. Drift invalidates the prior approval instead of silently reusing it.
+L00001223	4. Historical run, attempt, chat, and audit views show the frozen permission snapshot that governed that execution; current Settings state must not be presented as historical effective permission state.
+L00001224	5. Requested and effective permission states are both preserved per permission key. `requested_permission_state` records the state before clamping by mode, role, account, FileSafe, headless posture, or runtime capability; `effective_permission_state` records the state actually enforced. When the effective state is narrower than requested, `downgrade_reason` records the canonical reason code or policy source that caused the clamp.
+L00001225	6. `actor_surface_context` identifies the actor and surface that requested the snapshot so approval, blocked, and audit surfaces can distinguish Assistant, Interviewer, builder, Orchestrator, subagent, user, and system requests without inferring that context from prose.
+L00001226	7. `permission_decision_context` records the target, mode, preflight, and policy context used to make the permission decision; consumers may index those refs but must not collapse them into the runtime identity block.
+L00001227	8. `transport_host_ref` names the host or transport boundary that carried the operation, while `upstream_provider_ref` names the provider or adapter whose policy/account state influenced execution. They may match for local providers but remain separate when a bridge, proxy, tunnel, or hosted provider is involved.
+L00001228	9. `Plans/storage-plan.md` owns the durable key family and joins for this record, but this document owns the payload schema, enum sets (`/enums`), and interpretation rules.
+L00001229	10. Chat, provider, and storage surfaces may reference these fields, but they MUST NOT redefine the nested snapshot schema locally.
+L00001230	
+L00001231	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00001232	
+L00001233	ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor
+L00001234	
+L00001235	Required fields:
+L00001236	- blocked_sequence
+L00001237	- execution_entity_id
+L00001238	- lane_id
+L00001239	- package_id
+L00001240	- account_id
+L00001241	- allowed_action_ids
+L00001242	
+L00001243	Canonical terms and values:
+L00001244	- blocked_sequence
+L00001245	- execution_entity_id
+L00001246	- lane_id
+L00001247	- package_id
+L00001248	- account_id
+L00001249	- allowed_action_ids
+L00001250	
+L00001251	Behavioral rules:
+L00001252	- Permission snapshots must preserve blocked-episode identity and scoped approval dimensions together.
+L00001253	
+L00001254	Permission carry-through:
+L00001255	- lane/package/account scope
+L00001256	- ordered `allowed_action_ids[]`
+L00001257	### External side-effect wakeup chain
+L00001258	
+L00001259	When HITL approval resolves an `external_side_effect_blocked` state:
+L00001260	
+L00001261	1. The approval handler MUST emit a `prerequisite_resolved` event with `wake_reason: approval_resolved` and the `node_id` / `attempt_id` of the blocked node.
+L00001262	2. The event bus delivers this to the scheduler.
+L00001263	3. The scheduler runs a wakeup pass and transitions the node from blocked to runnable.
+L00001264	
+L00001265	This is an immediate event-driven wakeup, not polling-based.
+L00001266	
+L00001267	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+L00001268	
+L00001269	### Target-bound domain approvals and preflight revalidation
+L00001270	
+L00001271	Domain approval and preflight decisions close the historical blind-spot where an action name was approved without the exact mutable target. SCM approvals carry `project_id`, `repo_id`, optional `worktree_id`, `/worktree/context`, `branch`, and `commit`; GitHub Actions approvals carry `repo_remote`, optional `workflow_id`, `run_id`, and `/environment`; Docker approvals carry `runtime`, `registry_host`, `namespace`, `/repository`, and optional `image_ref`; Kubernetes approvals carry `kube_context`, `namespace`, optional `workload_ref`, and optional `resource_ref`. Permission evaluation runs static policy, cheap capability or `/precondition` preflight, approval request only while still actionable, and full execution-time `/revalidate` immediately before mutation. Each approval records a `preflight_revision`; any stale-preflight evidence or changed target identity invalidates reuse and returns the action to blocked state.
+L00001272	
+L00001273	## Source Control, GitHub Actions, and Docker Manager Permission Addendum (2026-03-12)
+L00001274	
+L00001275	
+L00001276	External-side-effect and admin-gated behavior for this packet uses canonical permission and blocked-state rules.
+L00001277	
+L00001278	Required mappings:
+L00001279	- GitHub Actions rerun/cancel/dispatch and admin CRUD operations may require explicit capability and may surface blocked outcomes when approval or auth prerequisites are missing
+L00001280	- Docker Hub repository creation, image push, managed template-repo create/push, and Kubernetes mutating actions use the external-side-effect guard model when they produce hosted or remote side effects
+L00001281	- requested vs effective capability disclosure must remain visible whenever a surface control is disabled by partial auth or policy state
+L00001282	
+L00001283	ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Decision_Policy.md
+L00001284	
+L00001285	### Provider exposure, remote-side-effect provenance, and privileged sessions
+L00001286	
+L00001287	Provider/LLM exposure rules apply before any diff, conflict hunk, workflow log, container log, manifest snippet, inspect output, workflow YAML preview, manifest diff, discovered URL, or screenshot is sent to provider-backed features. Such exposure requires explicit permission, `/data-class` labeling, per-feature opt-in, local-only fallback, and `secret-scrub` before provider transmission. Secret scrubbing only before local persistence is insufficient for `LLM` or other provider features.
+L00001288	
+L00001289	Review, diff, export, `/evidence/history`, and provider features distinguish ephemeral in-memory view, scrubbed persisted blob, and user-exported file. Anything persisted, indexed, screenshotted through `/screenshots`, exported, or included in evidence/history records the redaction profile, whether mandatory scrub ran, and whether display may hide details.
+L00001290	
+L00001291	Remote-side-effect receipts include `approval_source`, `executing_subsystem`, and effective account / credential handle. `approval_source` values include `explicit confirm`, `cached permission`, `policy auto-allow`, and `browser fallback`. `executing_subsystem` values include `git`, `GitHub API`, `docker CLI`, `kubectl`, and `SSH remote`. This applies to push, dispatch, admin changes, publish, repo creation, apply, rollout, and equivalent remote-side-effect actions.
+L00001292	
+L00001293	Sensitive metadata minimization covers remote URLs, private repo names, registry namespaces, Docker Hub account identity, kube context names, namespace/workload names, discovered service URLs, port-forward endpoints, screenshots, and downloaded scrubbed artifacts. Exports and screenshots mask sensitive metadata by default unless the user explicitly chooses a fuller export profile.
+L00001294	
+L00001295	`/logout/project-delete`, unlink, and project-delete cleanup clear or invalidate non-secret residue that can still identify the user or project: validation snapshots, last-used account identity, workflow admin receipts, registry capability snapshots, kube context selections, discovered endpoints, and downloaded scrubbed artifacts.
+L00001296	
+L00001297	Session-style privileged operations include `docker exec/attach`, `kubectl exec`, `kubectl port-forward`, remote SCM-over-SSH mutation sessions, and browser/device auth handoffs. Persist bounded metadata only: actor, target, started/ended timestamps, credential realm, transport, local bind address/port when relevant, and requested vs effective state. Do not persist interactive transcript or `stdin` by default.
+L00001298	
+L00001299	Build/deploy secret-handling uses no-persist/no-echo rules for docker build secrets, build args, compose env files, registry auth helpers, kube Secret manifests, and generated deployment YAML containing sensitive values. Secret resources are never rendered back in full, indexed, or included in receipts/evidence beyond kind/name/namespace and redacted status. ConfigMap rendering follows a separate configurable redaction policy because it may contain sensitive plaintext.
+L00001300	
+L00001301	## Owner / Consumer Map
+L00001302	
+L00001303	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Permissions_System.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00001304	
+L00001305	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00001306	
+L00001307	## PlanUnits
+L00001308	
+L00001309	### PS-002 - Permission SSOT Authority And Compatibility Header
+L00001310	
+L00001311	```yaml
+L00001312	plan_unit_id: PS-002
+L00001313	unit_type: requirement
+L00001314	status: accepted
+L00001315	owner_doc: Plans/Permissions_System.md
+L00001316	canonical_text: "Plans/Permissions_System.md owns the canonical permission system SSOT, owner-section live specification framing, compatibility-only source vocabulary handling, and the requirement that other docs reference permission anchors rather than restating action definitions, precedence, granular syntax, or defaults."
+L00001317	gui_related: true
+L00001318	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+L00001319	split_recommended: false
+L00001320	depends_on: []
+L00001321	unblocks: []
+L00001322	acceptance_criteria:
+L00001323	- "PS-002 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00001324	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00001325	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00001326	validation_surfaces:
+L00001327	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001328	- python3 scripts/pm-plan-index.py validate
+L00001329	risk_class: permission_system_drift
+L00001330	reasoning_tier: standard
+L00001331	context_scope: permissions_system_batch_205
+L00001332	implementation_surfaces:
+L00001333	- Plans/Permissions_System.md
+L00001334	node_compile_hint:
+L00001335	  mode: permission_ssot_authority
+L00001336	  create_worknodes: false
+L00001337	source_lineage:
+L00001338	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0001
+L00001339	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0002
+L00001340	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0003
+L00001341	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0004
+L00001342	preserved_exact_tokens:
+L00001343	- "Permissions System (Canonical SSOT)"
+L00001344	- "Canonical owner-section requirements"
+L00001345	- "Requested/effective account identity contract"
+L00001346	- "Compatibility-only source vocabulary is noncanonical"
+L00001347	- "single canonical source of truth"
+L00001348	- "Plans/Permissions_System.md#PERM-ACTIONS"
+L00001349	- "Puppet Master"
+L00001350	negative_constraints:
+L00001351	- "Other plan documents must reference permission anchors rather than restating permission action definitions, precedence rules, granular syntax, or default tables."
+L00001352	preserved_contractrefs:
+L00001353	- "ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md"
+L00001354	compatibility_only_notes:
+L00001355	- "Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below."
+L00001356	stale_retired_dispositions: []
+L00001357	owner_hints:
+L00001358	- "Plans/Permissions_System.md"
+L00001359	- "Plans/DRY_Rules.md"
+L00001360	- "Plans/Contracts_V0.md"
+L00001361	- "Plans/Decision_Policy.md"
+L00001362	```
+L00001363	
+L00001364	### PS-003 - Permission SSOT Reference Catalog
+L00001365	
+L00001366	```yaml
+L00001367	plan_unit_id: PS-003
+L00001368	unit_type: reference
+L00001369	status: accepted
+L00001370	owner_doc: Plans/Permissions_System.md
+L00001371	canonical_text: "The Permissions SSOT reference catalog preserves the governing references for Spec Lock, Contracts, DRY, Glossary, Decision Policy, Tools, FileSafe, Run Modes, Personas, OpenCode baseline permissions, GUI specification, and CLI-bridged providers."
+L00001372	gui_related: true
+L00001373	gui_classification_reason: "This unit is GUI-related only because the reference catalog preserves the GUI specification reference; it does not itself define a GUI implementation."
+L00001374	split_recommended: false
+L00001375	depends_on:
+L00001376	- PS-002
+L00001377	unblocks: []
+L00001378	acceptance_criteria:
+L00001379	- "PS-003 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00001380	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00001381	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00001382	validation_surfaces:
+L00001383	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001384	- python3 scripts/pm-plan-index.py validate
+L00001385	risk_class: permission_system_drift
+L00001386	reasoning_tier: standard
+L00001387	context_scope: permissions_system_batch_205
+L00001388	implementation_surfaces:
+L00001389	- Plans/Permissions_System.md
+L00001390	node_compile_hint:
+L00001391	  mode: permission_reference_catalog
+L00001392	  create_worknodes: false
+L00001393	source_lineage:
+L00001394	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0005
+L00001395	preserved_exact_tokens:
+L00001396	- "SSOT references (DRY)"
+L00001397	- "Plans/Spec_Lock.json"
+L00001398	- "Plans/Contracts_V0.md"
+L00001399	- "Plans/DRY_Rules.md"
+L00001400	- "Plans/Glossary.md"
+L00001401	- "Plans/Decision_Policy.md"
+L00001402	- "Plans/auto_decisions.jsonl"
+L00001403	- "Plans/Tools.md"
+L00001404	- "Plans/FileSafe.md"
+L00001405	- "Plans/Run_Modes.md"
+L00001406	- "Plans/Personas.md"
+L00001407	- "Plans/OpenCode_Deep_Extraction.md"
+L00001408	- "Plans/FinalGUISpec.md"
+L00001409	- "Plans/CLI_Bridged_Providers.md"
+L00001410	negative_constraints:
+L00001411	- "The reference catalog must not be read as permission behavior that supersedes the owner sections."
+L00001412	preserved_contractrefs: []
+L00001413	compatibility_only_notes: []
+L00001414	stale_retired_dispositions: []
+L00001415	owner_hints:
+L00001416	- "Plans/Permissions_System.md"
+L00001417	- "Plans/FinalGUISpec.md"
+L00001418	- "Plans/Tools.md"
+L00001419	- "Plans/FileSafe.md"
+L00001420	```
+L00001421	
+L00001422	### PS-004 - Requested Account Binding And Approval Scope Data Shape
+L00001423	
+L00001424	```yaml
+L00001425	plan_unit_id: PS-004
+L00001426	unit_type: requirement
+L00001427	status: accepted
+L00001428	owner_doc: Plans/Permissions_System.md
+L00001429	canonical_text: "Permission data shape requires requested_account_id beside requested_account_policy, requested_account_binding, subordinate provider_account_id metadata, provider-native OpenCode session IDs instead of canonical thread_id, and approval_scope_key across actor, lane, run, and account context."
+L00001430	gui_related: false
+L00001431	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00001432	split_recommended: false
+L00001433	depends_on:
+L00001434	- PS-002
+L00001435	unblocks: []
+L00001436	acceptance_criteria:
+L00001437	- "PS-004 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00001438	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00001439	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00001440	validation_surfaces:
+L00001441	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001442	- python3 scripts/pm-plan-index.py validate
+L00001443	risk_class: permission_system_drift
+L00001444	reasoning_tier: standard
+L00001445	context_scope: permissions_system_batch_205
+L00001446	implementation_surfaces:
+L00001447	- Plans/Permissions_System.md
+L00001448	node_compile_hint:
+L00001449	  mode: permission_account_identity_shape
+L00001450	  create_worknodes: false
+L00001451	source_lineage:
+L00001452	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0006
+L00001453	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0007
+L00001454	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0008
+L00001455	preserved_exact_tokens:
+L00001456	- "Canonical data-shape reconciliation"
+L00001457	- "Required data shape"
+L00001458	- "Acceptance carry-through"
+L00001459	- "requested_account_id"
+L00001460	- "requested_account_policy"
+L00001461	- "requested_account_binding"
+L00001462	- "provider_account_id"
+L00001463	- "thread_id"
+L00001464	- "approval_scope_key"
+L00001465	- "HITL"
+L00001466	- "doom-loop"
+L00001467	negative_constraints:
+L00001468	- "provider_account_id is subordinate provider-native metadata, not canonical account identity."
+L00001469	- "OpenCode session IDs must move to provider-native correlation fields instead of canonical thread_id."
+L00001470	preserved_contractrefs: []
+L00001471	compatibility_only_notes: []
+L00001472	stale_retired_dispositions: []
+L00001473	owner_hints:
+L00001474	- "Plans/Permissions_System.md"
+L00001475	- "Plans/Contracts_V0.md"
+L00001476	- "Plans/CLI_Bridged_Providers.md"
+L00001477	```
+L00001478	
+
+<<< CONTEXT_AFTER canonical_document_lines=1479-1490 >>>
+L00001479	### PS-005 - Actor Lane Approval Scope Key Boundary
+L00001480	
+L00001481	```yaml
+L00001482	plan_unit_id: PS-005
+L00001483	unit_type: constraint
+L00001484	status: accepted
+L00001485	owner_doc: Plans/Permissions_System.md
+L00001486	canonical_text: "Approval scope is actor/lane-aware across actor, run, lane, account, package/seam context, shared runtime identity, HITL, and blocked-overlay flow; session-centric and tier-boundary approval language is compatibility-only."
+L00001487	gui_related: false
+L00001488	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00001489	split_recommended: false
+L00001490	depends_on:

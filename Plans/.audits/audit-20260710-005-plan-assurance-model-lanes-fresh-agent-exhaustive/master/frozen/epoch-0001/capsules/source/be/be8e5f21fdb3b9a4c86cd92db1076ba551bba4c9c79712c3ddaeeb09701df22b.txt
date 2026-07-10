@@ -1,0 +1,373 @@
+<<< CONTEXT_BEFORE 5780-5791 >>>
+- "local_path.exists()"
+- "patterns.extend(local_patterns)"
+negative_constraints:
+- "Local project patterns extend the bundled baseline and must not replace or disable bundled patterns."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Aligns with F2-034 and F2-038 additive custom pattern behavior."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 5792-6135 >>>
+### F2-055 - FileSafe Event Stream Authority
+
+```yaml
+plan_unit_id: F2-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe emits a structured event for every block or approved override into the canonical
+  seglog EventRecord stream; filesafe-events.jsonl is only a derived projector or diagnostic
+  mirror and not an authoritative append log.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines canonical event-stream authority.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: filesafe_event_stream_authority
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0028"
+preserved_exact_tokens:
+- "Contract:"
+- "structured event"
+- "block or approved override"
+- "command blocklist"
+- "write scope"
+- "security filter"
+- "compiled-prompt safety check"
+- "canonical event stream"
+- "seglog"
+- "EventRecord"
+- "filesafe-events.jsonl"
+- "derived projector or diagnostic mirror"
+negative_constraints:
+- "PM MUST NOT maintain a second authoritative FileSafe append log alongside seglog, and recovery logic MUST NOT prefer a FileSafe-only mirror over the canonical event stream."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md"
+- "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-056 - FileSafeEvent Minimum Payload
+
+```yaml
+plan_unit_id: F2-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The minimum FileSafeEvent payload preserves event_type, guard_type, pattern_matched,
+  command_preview, optional agent, timestamp, and allowed fields for canonical event records.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend event payload fields.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: filesafeevent_minimum_payload
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0028"
+preserved_exact_tokens:
+- "FileSafeEvent payload (minimum canonical fields)"
+- "pub struct FileSafeEvent"
+- "event_type"
+- "guard_type"
+- "pattern_matched"
+- "command_preview"
+- "agent: Option<String>"
+- "timestamp: DateTime<Utc>"
+- "allowed: bool"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md"
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-057 - Logging Call Semantics And History Consumers
+
+```yaml
+plan_unit_id: F2-057
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Guard blocks and approved overrides are emitted on the main execution path before the user-
+  facing result; event-write failure surfaces as a structured diagnostic, while analytics,
+  dashboards, and gate reports consume FileSafe history from the canonical event stream or
+  derived projections.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines event emission and consumer semantics rather than UI rendering.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: logging_call_semantics_and_history_consumers
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0028"
+preserved_exact_tokens:
+- "guard blocks"
+- "approved overrides"
+- "main execution path"
+- "before the user-facing result is returned"
+- "event-write failure"
+- "structured diagnostic"
+- "not silently ignored"
+- "analytics, dashboards, and gate reports"
+- "canonical event stream"
+- "derived projections"
+negative_constraints:
+- "Event-write failure is not silently ignored."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Decision_Policy.md"
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-058 - User Friendly Guard Error Message Templates
+
+```yaml
+plan_unit_id: F2-058
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe guard errors produce user-friendly blocked-command and parse-error messages,
+  including destructive-command pattern, command preview capped at 100 characters, authenticated
+  scoped override request guidance, manual-run guidance, and the blocklist reference.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines user-facing error text templates, not visual layout or GUI controls.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "User-facing hint text must not say PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 is sufficient authority."
+- "Override guidance points to authenticated operator grant, reason, scope, expiry, event, and receipt."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: user_friendly_guard_error_message_templates
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0029"
+preserved_exact_tokens:
+- "User-friendly error messages"
+- "GuardError::DestructiveCommand"
+- "GuardError::ParseError"
+- "Blocked: destructive command detected"
+- "Command:"
+- "authenticated, scoped destructive override"
+- "override receipt"
+- "config/destructive-commands.txt"
+- "command.chars().take(100)"
+- "Blocked: cannot validate command"
+negative_constraints:
+- "Do not present environment variable presence as a sufficient destructive override."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-059 - FileSafe Unit Test Coverage Matrix
+
+```yaml
+plan_unit_id: F2-059
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe unit tests cover destructive command blocking, safe migrate and safe command
+  allowance, env-var-alone override rejection, scoped override receipt behavior, diverse
+  destructive framework patterns, prompt extraction, and exact approved-command matching.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines unit-test coverage for guard behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "Tests reject PUPPET_MASTER_ALLOW_DESTRUCTIVE=1 without an authenticated override grant."
+- "Tests reject approved-command prefix/chained bypasses."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: filesafe_unit_test_coverage_matrix
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0031"
+preserved_exact_tokens:
+- "test_blocks_migrate_fresh"
+- "test_allows_safe_migrate"
+- "test_env_var_alone_does_not_override"
+- "test_explicit_config_off_requires_current_override_receipt"
+- "test_approved_command_rejects_prefix_bypass"
+- "test_allows_safe_commands"
+- "test_blocks_various_destructive_patterns"
+- "test_prompt_extraction"
+- "php artisan migrate:fresh --seed"
+- "php artisan migrate"
+- "npm install"
+- "cargo build"
+- "git status"
+- "ls -la"
+- "rails db:drop"
+- "django-admin flush"
+- "prisma migrate reset"
+- "diesel database reset"
+- "mix ecto.drop"
+- "BashGuard::explicit_config_off"
+negative_constraints:
+- "Do not preserve disabled-guard-allows-all as an active test expectation."
+compatibility_only_notes:
+- "The old test_disabled_guard_allows_all expectation is retired source-lineage only."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+### F2-060 - Platform Runner Destructive Command Integration Test
+
+```yaml
+plan_unit_id: F2-060
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The platform-runner integration test constructs a Cursor BaseRunner, sends a request prompting
+  php artisan migrate:fresh, and requires the result to error with a message containing Blocked.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines integration-test behavior for platform runner blocking.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: filesafe_drift
+reasoning_tier: standard
+context_scope: filesafe_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: platform_runner_destructive_command_integration_test
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0032"
+preserved_exact_tokens:
+- "test_runner_blocks_destructive"
+- "BaseRunner::new(\"php\".to_string(), Platform::Cursor)"
+- "ExecutionRequest"
+- "Run php artisan migrate:fresh"
+- "runner.execute(&request).await"
+- "result.is_err()"
+- "contains(\"Blocked\")"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< CONTEXT_AFTER 6136-6147 >>>
+### F2-061 - Checklist Authority And Locked Fidelity Blockers
+
+```yaml
+plan_unit_id: F2-061
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  The implementation checklist tracks already-locked FileSafe canon, must not reopen Sections
+  11.1.1 through 11.1.2a as design questions, treats LF-002 and LF-005 as mutation-integrity
+  obligations, preserves /alias as retired legacy vocabulary, and maps rewrite-conflict
+  presentation to error.concurrent_edit_conflict.

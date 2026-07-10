@@ -1,0 +1,557 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001038-ADVERSARIAL-WIN-749F06E4B796-0002",
+  "attempt_id": "attempt-0012",
+  "task_thread_id": "/root/a005_blind_wave_0005_b_dispatcher_epoch_0012/bw5b_a1038",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Automated_Testing_System.md",
+    "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
+    "core_sha256": "e1345ba59cc729b0cd70bd4970b36634bca29adef174599c0ff8e4c021efa265",
+    "core_range": [386, 727]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001038-GAP-001",
+      "item_type": "gap",
+      "title": "Testing override precedence and lifecycle are undefined",
+      "statement": "ATS-005 names exact override scopes plus expiration or reopen conditions, but does not define precedence when project, PlanUnit, WorkNode, and capability-class scopes overlap, nor the valid create, activate, expire, revoke, reopen, and supersede transitions. An executor therefore cannot deterministically decide which policy is effective or whether an old exception remains usable.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "Conflicting or stale overrides can silently suppress required testing or strand work in an exception state.",
+      "builder_discretion": "Define a versioned precedence table and explicit override state machine, including evaluation time and fail-closed behavior for ambiguity.",
+      "feature_keys": ["ATS-005"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 393,
+          "line_end": 393,
+          "exact_quote": "canonical_text: 'Automated testing and evidence collection are platform defaults for planned and executed work; Planning Wizard conversations refine requirements and constraints but do not casually disable the automated testing system. Disabling or restricting automated testing requires a durable testing_policy_override explicitly approved by the user for exact projects, PlanUnits, WorkNodes, capability classes, reasons, risks, approver_ref, approved_at_utc, evidence_refs, redaction_profile_ref, and expiration or reopen conditions. Affected work remains truthfully marked with an approved verification exception, such as completed_with_approved_verification_exception, and must never be represented as an automated test pass or full certification. Visible or headed-session verification cannot pass without interaction evidence, artifact evidence, and redaction disposition.'",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-GAP-002",
+      "item_type": "authority",
+      "title": "Override approver identity is recorded but not authorized",
+      "statement": "The requirement records approver_ref and says the user explicitly approves, yet it does not specify authentication, delegated approval, revocation authority, tenant or project ownership checks, or how replayed approvals are rejected.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authority_boundaries",
+      "impact": "A forged, replayed, or cross-project approval could disable testing without valid authority.",
+      "builder_discretion": "Bind approvals to an authenticated principal, policy revision, exact resource scope, nonce or immutable receipt, and revocation rules.",
+      "feature_keys": ["ATS-005"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 402,
+          "line_end": 402,
+          "exact_quote": "- Testing Off or restricted testing records approver, scope, risk, evidence, redaction profile, expiration or reopen condition, and truthful exception result.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-NONGAP-003",
+      "item_type": "explicit_non_gap",
+      "title": "Approved exceptions cannot masquerade as passes",
+      "statement": "ATS-005 explicitly closes the misleading-result path in which an approved exception is converted into test_passed or certified.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-005"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 442,
+          "line_end": 442,
+          "exact_quote": "- Do not convert an approved testing exception into test_passed or certified.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-GAP-004",
+      "item_type": "gap",
+      "title": "Capability research lacks trust, offline, and bounded-search rules",
+      "statement": "ATS-006 requires current official and primary-source research and rich provenance, but does not define source-authenticity checks, conflict resolution, a freshness threshold, offline or provider-failure behavior, cache use, rate limits, query budgets, or a terminal condition for discovery.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "untrusted_inputs_offline_scale",
+      "impact": "Research can ingest spoofed guidance, hang or explode in cost, or produce nondeterministic bindings during network loss.",
+      "builder_discretion": "Specify an allowlisted trust hierarchy, freshness and conflict policy, bounded budgets, cache provenance, and typed unavailable or inconclusive outcomes.",
+      "feature_keys": ["ATS-006"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 459,
+          "line_end": 459,
+          "exact_quote": "canonical_text: 'Plan Compile performs project-level discovery of existing runners, commands, harnesses, frameworks, environments, services, emulators, browsers, devices, credentials, and evidence surfaces before finalizing WorkNode-specific test bindings. Test Capability Discovery searches current official and primary sources for appropriate live testing, hot reload, live preview, browser automation, GUI automation, simulator, emulator, device, cloud, accessibility, performance, security, and project-native testing methods relevant to the technology stack. Online capability research records source URL or provider reference, publication or update time when available, retrieval time, tool and version, supported platform, license, cost, credential needs, installation scope, freshness, confidence, and selection rationale.'",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 508,
+          "line_end": 508,
+          "exact_quote": "- Do not rely solely on stale internal model knowledge for current tools, versions, setup methods, or platform availability.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-GAP-005",
+      "item_type": "failure_recovery",
+      "title": "Installation rollback is not transactional across external effects",
+      "statement": "ATS-007 requires safe points, receipts, revalidation, and rollback, but does not define atomicity, compensation order, rollback-failure state, idempotency, concurrent installer locking, crash recovery, or how account creation, paid services, licenses, credentials, and enrolled devices are unwound.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "partial_failure_recovery_concurrency",
+      "impact": "A crash or competing run can leave paid, privileged, credentialed, or project-mutating effects partially applied and falsely reported as recovered.",
+      "builder_discretion": "Use a durable per-scope installation transaction with leases, idempotency keys, ordered compensations, explicit irreversible effects, and a rollback_failed blocker state.",
+      "feature_keys": ["ATS-007"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 524,
+          "line_end": 524,
+          "exact_quote": "canonical_text: 'When an appropriate test, live-preview, hot-reload, browser, simulator, emulator, or support method is missing, the system may install or configure it within project-local or pre-authorized policy and must record commands, changes, receipts, rollback, and currentness. Global or privileged installation, paid services, license acceptance, account creation, credential use, device enrollment, or material external effects require applicable authority and may become a typed blocker rather than an unsafe silent install. Testing-tool installation and configuration writes use FileSafe/source-control safe points, bounded write surfaces, receipts, revalidation, and rollback so discovery cannot damage the user''s project or environment.'",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 571,
+          "line_end": 571,
+          "exact_quote": "negative_constraints: []",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-NONGAP-006",
+      "item_type": "explicit_non_gap",
+      "title": "Material installation effects require authority",
+      "statement": "ATS-007 expressly prevents silent global, privileged, paid, licensed, account, credential, device, or materially external installation effects by requiring applicable authority or a typed blocker.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-007"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 524,
+          "line_end": 524,
+          "exact_quote": "canonical_text: 'When an appropriate test, live-preview, hot-reload, browser, simulator, emulator, or support method is missing, the system may install or configure it within project-local or pre-authorized policy and must record commands, changes, receipts, rollback, and currentness. Global or privileged installation, paid services, license acceptance, account creation, credential use, device enrollment, or material external effects require applicable authority and may become a typed blocker rather than an unsafe silent install. Testing-tool installation and configuration writes use FileSafe/source-control safe points, bounded write surfaces, receipts, revalidation, and rollback so discovery cannot damage the user''s project or environment.'",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-GAP-007",
+      "item_type": "state_transition",
+      "title": "Effective policy snapshots have no revision or propagation contract",
+      "statement": "ATS-008 says project settings inherit or override global settings and that the effective snapshot is carried into four consumers, but omits precedence for concurrent edits, snapshot version and provenance, staleness detection, when each consumer freezes or refreshes policy, and what happens if policy changes during planning or execution.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_callers_consumers_cross_document_seams",
+      "impact": "Planning Wizard, Plan Compile, Executor, and Orchestrator can act under different policies while each appears compliant.",
+      "builder_discretion": "Define a versioned effective-policy envelope, consumer acknowledgement receipts, freeze points, invalidation rules, and change-during-run transitions.",
+      "feature_keys": ["ATS-008"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 588,
+          "line_end": 588,
+          "exact_quote": "canonical_text: 'Testing capability policy is configurable globally and per project, with project settings inheriting or overriding global values and the effective policy snapshot carried into Planning Wizard, Plan Compile, Executor, and Orchestrator. Each testing capability family supports Auto, On, and Off: Auto discovers and selects or installs within authority; On is required and blocks or asks for authority when unavailable; Off prohibits use and installation for that capability without implying a pass. Settings cover online capability research, automated installation, built-in browser, headed browser, visible browser automation, hot reload, live preview, desktop GUI testing, simulator or emulator, physical device, screenshot or visual comparison, accessibility, API or contract, database, console or network, performance, and security testing.'",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-GAP-008",
+      "item_type": "gui_truth",
+      "title": "Settings UI can misstate desired policy as effective capability",
+      "statement": "ATS-008 is GUI-related and defines Auto, On, and Off semantics, but does not require the UI to distinguish configured, inherited, effective, unavailable, awaiting-authority, blocked, stale, or changed-during-run states. It also does not define accessible names, keyboard operation, announcements, or localized labels and explanations for these safety-relevant states.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "gui_misleading_accessibility_localization",
+      "impact": "Users may believe required testing is active when it is unavailable or blocked, and assistive-technology or non-English users may be unable to interpret or control the policy safely.",
+      "builder_discretion": "Specify a state-to-presentation matrix with source and effective badges, blocking reasons, revision freshness, accessible semantics, and locale-safe labels while preserving machine tokens separately.",
+      "feature_keys": ["ATS-008"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 589,
+          "line_end": 589,
+          "exact_quote": "gui_related: true",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 640,
+          "line_end": 640,
+          "exact_quote": "- Do not treat Off as successful verification.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-GAP-009",
+      "item_type": "gap",
+      "title": "Visible browser automation lacks a destructive-action boundary",
+      "statement": "ATS-009 visibly performs navigation, clicks, and form input, but never requires a test environment, origin allowlist, non-production account, mutation classification, confirmation, spend limit, or irreversible-action interlock. Visibility is not authority and does not prevent an automated session from submitting a destructive or externally consequential action.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "destructive_actions_untrusted_inputs_authority",
+      "impact": "A test can alter production data, send messages, purchase services, or submit secrets while still satisfying the visible-session requirement.",
+      "builder_discretion": "Bind sessions to approved origins and identities, classify mutations, sandbox by default, and gate irreversible or materially external actions with explicit authority and receipts.",
+      "feature_keys": ["ATS-009"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 655,
+          "line_end": 655,
+          "exact_quote": "canonical_text: 'The default testing visibility policy is show_when_possible: when a meaningful headed or visual surface exists, expose the active test session rather than hiding all verification in background logs. For web work, open the built-in browser or headed browser view and visibly show navigation, clicks, form input, assertions, screenshots, console and network evidence, and pass/fail progression when supported. For Swift and other native work, show the appropriate live preview, hot-reload surface, simulator, emulator, device stream, application window, interaction trace, screenshots, and relevant logs when available and permitted. Users may collapse, detach, background, or leave a visible test session while automation continues; the system preserves session state and does not require the user to watch every action. When a live surface cannot be embedded, expose an Open or Watch action, snapshots, screenshot sequence, video",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-GAP-010",
+      "item_type": "failure_recovery",
+      "title": "Detached visible sessions lack lease, reconnect, and terminal-state semantics",
+      "statement": "ATS-009 promises preserved state while users collapse, detach, background, or leave, but omits controller ownership, competing viewers, pause and cancel races, network loss, reconnect and replay, process restart, evidence ordering, stale snapshots, cleanup, and terminal-state reconciliation.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_races_offline_network_loss_observability",
+      "impact": "A user may watch stale pass progression, issue a command to the wrong session generation, or lose evidence and cleanup after disconnection.",
+      "builder_discretion": "Give each session a generation and lease, monotonic event sequence, reconnect cursor, authoritative connection and freshness status, idempotent controls, and explicit interrupted or orphaned outcomes.",
+      "feature_keys": ["ATS-009"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 655,
+          "line_end": 655,
+          "exact_quote": "canonical_text: 'The default testing visibility policy is show_when_possible: when a meaningful headed or visual surface exists, expose the active test session rather than hiding all verification in background logs. For web work, open the built-in browser or headed browser view and visibly show navigation, clicks, form input, assertions, screenshots, console and network evidence, and pass/fail progression when supported. For Swift and other native work, show the appropriate live preview, hot-reload surface, simulator, emulator, device stream, application window, interaction trace, screenshots, and relevant logs when available and permitted. Users may collapse, detach, background, or leave a visible test session while automation continues; the system preserves session state and does not require the user to watch every action. When a live surface cannot be embedded, expose an Open or Watch action, snapshots, screenshot sequence, video",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 656,
+          "line_end": 656,
+          "exact_quote": "  or stream where supported, structured interaction timeline, logs, console and network traces, and evidence links. Visible testing, screenshots, video, logs, console, network traces, and artifacts apply secret and sensitive-data redaction before display or persistence.'",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-GAP-011",
+      "item_type": "gap",
+      "title": "Redaction has no fail-closed or data-lifecycle contract",
+      "statement": "ATS-009 requires redaction before display or persistence, yet does not define detection failure behavior, redaction verification, originals in transient buffers, screenshot or video frame coverage, console and network payload parsing, retention, deletion, encryption, export, access, audit, or cleanup after session completion.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Secrets and protected content can leak through an unsupported channel or remain indefinitely even when displayed artifacts appear redacted.",
+      "builder_discretion": "Define a fail-closed channel matrix, redaction disposition receipts, encrypted transient handling, retention and deletion policy, access controls, and tests with seeded secrets in every artifact type.",
+      "feature_keys": ["ATS-009"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 656,
+          "line_end": 656,
+          "exact_quote": "  or stream where supported, structured interaction timeline, logs, console and network traces, and evidence links. Visible testing, screenshots, video, logs, console, network traces, and artifacts apply secret and sensitive-data redaction before display or persistence.'",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 719,
+          "line_end": 719,
+          "exact_quote": "- Do not expose credentials, tokens, personal data, or protected project content through visible testing.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-GAP-012",
+      "item_type": "gap",
+      "title": "Visible evidence has no accessibility or localization requirements",
+      "statement": "ATS-009 exposes visual sessions, screenshots, video or stream, timelines, logs, and Open or Watch controls, but provides no keyboard, screen-reader, caption, transcript, contrast, reduced-motion, focus, zoom, reading-order, locale, time-zone, number-format, or bidirectional-text contract.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "accessibility_localization",
+      "impact": "Users who cannot perceive or operate the visual surface, or whose locale differs from raw log formatting, cannot independently observe or control verification.",
+      "builder_discretion": "Require equivalent structured nonvisual evidence and controls, captions or transcripts for time-based media, accessible live announcements, and locale-aware presentation without localizing stable machine tokens.",
+      "feature_keys": ["ATS-009"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 656,
+          "line_end": 656,
+          "exact_quote": "  or stream where supported, structured interaction timeline, logs, console and network traces, and evidence links. Visible testing, screenshots, video, logs, console, network traces, and artifacts apply secret and sensitive-data redaction before display or persistence.'",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-GAP-013",
+      "item_type": "acceptance_oracle",
+      "title": "Acceptance criteria validate compilation, not runtime behavior",
+      "statement": "Each PlanUnit's acceptance criteria and validation surfaces in this window primarily preserve lineage and run plan or ledger validators. They do not provide falsifiable runtime oracles for override enforcement, research freshness, transactional rollback, policy propagation, destructive-action blocking, session recovery, redaction leakage, or accessible visible verification.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "The plan can pass its named validators while every safety-critical behavior in ATS-005 through ATS-009 remains unimplemented or incorrect.",
+      "builder_discretion": "Add executable contract and adversarial fixtures for each state transition and negative constraint, with seeded failures, concurrency, disconnects, stale revisions, destructive actions, and secret canaries.",
+      "feature_keys": ["ATS-005", "ATS-006", "ATS-007", "ATS-008", "ATS-009"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 594,
+          "line_end": 594,
+          "exact_quote": "- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 598,
+          "line_end": 598,
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 599,
+          "line_end": 599,
+          "exact_quote": "- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-GAP-014",
+      "item_type": "contract",
+      "title": "Compatibility and migration of persisted policies and sessions are unspecified",
+      "statement": "The window defines durable overrides, effective policy snapshots, installation receipts, and preserved visible-session state but supplies no schema version, migration rule, downgrade behavior, capability rename or removal handling, legacy value mapping, or compatibility policy across application versions.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "compatibility_migration",
+      "impact": "An upgrade can reinterpret Off, lose an approval boundary, invalidate rollback receipts, or resume a session under incompatible semantics.",
+      "builder_discretion": "Version every durable envelope and define forward, backward, downgrade, unknown-field, capability-removal, and interrupted-migration behavior with migration receipts.",
+      "feature_keys": ["ATS-005", "ATS-007", "ATS-008", "ATS-009"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 588,
+          "line_end": 588,
+          "exact_quote": "canonical_text: 'Testing capability policy is configurable globally and per project, with project settings inheriting or overriding global values and the effective policy snapshot carried into Planning Wizard, Plan Compile, Executor, and Orchestrator. Each testing capability family supports Auto, On, and Off: Auto discovers and selects or installs within authority; On is required and blocks or asks for authority when unavailable; Off prohibits use and installation for that capability without implying a pass. Settings cover online capability research, automated installation, built-in browser, headed browser, visible browser automation, hot reload, live preview, desktop GUI testing, simulator or emulator, physical device, screenshot or visual comparison, accessibility, API or contract, database, console or network, performance, and security testing.'",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-UNKNOWN-015",
+      "item_type": "unknown",
+      "title": "Unknown ownership of safety-critical cross-document contracts",
+      "statement": "Implementation and owner hints enumerate several consumer documents, but this core does not assign one normative owner for policy resolution, session authority, redaction disposition, rollback compensation, or migration. It is therefore unknown whether another contract owns these seams, and this window cannot rely on unreviewed documents.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "cross_document_seams_unknown_unknowns",
+      "impact": "Each consumer may assume another component enforces the same safety rule, leaving a gap at integration time.",
+      "builder_discretion": "Designate one owner contract per seam and require conformance receipts from every named producer and consumer.",
+      "feature_keys": ["ATS-005", "ATS-006", "ATS-007", "ATS-008", "ATS-009"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 671,
+          "line_end": 671,
+          "exact_quote": "implementation_surfaces:",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 672,
+          "line_end": 672,
+          "exact_quote": "- Plans/Automated_Testing_System.md",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 676,
+          "line_end": 676,
+          "exact_quote": "- Plans/Permissions_System.md",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001038-NONGAP-016",
+      "item_type": "explicit_non_gap",
+      "title": "Visible testing does not require continuous user attention",
+      "statement": "ATS-009 explicitly allows users to collapse, detach, background, or leave a visible test session while automation continues and requires session state preservation.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-009"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 655,
+          "line_end": 655,
+          "exact_quote": "canonical_text: 'The default testing visibility policy is show_when_possible: when a meaningful headed or visual surface exists, expose the active test session rather than hiding all verification in background logs. For web work, open the built-in browser or headed browser view and visibly show navigation, clicks, form input, assertions, screenshots, console and network evidence, and pass/fail progression when supported. For Swift and other native work, show the appropriate live preview, hot-reload surface, simulator, emulator, device stream, application window, interaction trace, screenshots, and relevant logs when available and permitted. Users may collapse, detach, background, or leave a visible test session while automation continues; the system preserves session state and does not require the user to watch every action. When a live surface cannot be embedded, expose an Open or Watch action, snapshots, screenshot sequence, video",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Named policy consumers have no acknowledgement, freeze, refresh, or invalidation contract.",
+      "evidence_item_ids": ["A005-001038-GAP-007", "A005-001038-UNKNOWN-015"]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Override, effective-policy, installation, and visible-session lifecycles omit decisive transitions and invalid-state handling.",
+      "evidence_item_ids": ["A005-001038-GAP-001", "A005-001038-GAP-005", "A005-001038-GAP-007", "A005-001038-GAP-010"]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Concurrent settings edits, installers, controllers, and viewers lack locks, generations, or leases.",
+      "evidence_item_ids": ["A005-001038-GAP-005", "A005-001038-GAP-007", "A005-001038-GAP-010"]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Partially applied tool installation and interrupted sessions have no durable reconciliation state.",
+      "evidence_item_ids": ["A005-001038-GAP-005", "A005-001038-GAP-010"]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "Rollback is required but compensation, rollback failure, crash recovery, and irreversible external effects are unspecified.",
+      "evidence_item_ids": ["A005-001038-GAP-005", "A005-001038-GAP-010"]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "Material installations require authority, but override approval and visible destructive actions lack authenticated, replay-safe authority binding.",
+      "evidence_item_ids": ["A005-001038-GAP-002", "A005-001038-NONGAP-006", "A005-001038-GAP-009"]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Redaction is mandated, but transient originals, retention, deletion, access, export, and cleanup are undefined.",
+      "evidence_item_ids": ["A005-001038-GAP-011"]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Online research and browser-driven form interactions lack authenticity and environment boundaries.",
+      "evidence_item_ids": ["A005-001038-GAP-004", "A005-001038-GAP-009"]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Configured policy and visible progress can be shown without effective, freshness, connectivity, or authoritative-state distinctions.",
+      "evidence_item_ids": ["A005-001038-NONGAP-003", "A005-001038-GAP-008", "A005-001038-GAP-010"]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "Research and visible sessions lack offline, disconnect, cache, reconnect, and replay semantics.",
+      "evidence_item_ids": ["A005-001038-GAP-004", "A005-001038-GAP-010"]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Capability research and retained multimedia evidence have no budgets, limits, backpressure, or eviction rules.",
+      "evidence_item_ids": ["A005-001038-GAP-004", "A005-001038-GAP-011"]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "Testing accessibility as a capability does not specify accessible operation and perception of the policy and visible-session GUI itself.",
+      "evidence_item_ids": ["A005-001038-GAP-008", "A005-001038-GAP-012"]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "Safety-relevant settings, timestamps, timelines, logs, and controls have no locale or stable-token presentation contract.",
+      "evidence_item_ids": ["A005-001038-GAP-008", "A005-001038-GAP-012"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Durable policy, override, receipt, and session state lacks schema and migration semantics.",
+      "evidence_item_ids": ["A005-001038-GAP-014"]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Many evidence channels are exposed, but connection freshness, generations, reconciliation, redaction disposition, and support-safe export are absent.",
+      "evidence_item_ids": ["A005-001038-GAP-010", "A005-001038-GAP-011"]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "Installation safeguards are explicit, while browser clicks and form submissions lack a production or irreversible-effect interlock.",
+      "evidence_item_ids": ["A005-001038-NONGAP-006", "A005-001038-GAP-009"]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "unknown",
+      "summary": "Multiple owner and implementation surfaces are named, but no normative seam owner or conformance handshake appears inside this window.",
+      "evidence_item_ids": ["A005-001038-GAP-007", "A005-001038-UNKNOWN-015"]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Named validations establish plan and ledger shape rather than falsifying runtime safety behavior.",
+      "evidence_item_ids": ["A005-001038-GAP-013"]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "unknown",
+      "summary": "Unreviewed consumer documents may contain seam contracts, but this blind window provides no evidence that they exist or agree.",
+      "evidence_item_ids": ["A005-001038-UNKNOWN-015"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

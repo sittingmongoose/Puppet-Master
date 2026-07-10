@@ -1,0 +1,441 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000007-EXACT-WIN-0A77977E441D-0001",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0006_a_capacity_dispatcher_epoch_0013/a005_000007_exact_win_0a77977e441d_0001",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/storage_value_registry.json",
+    "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
+    "core_sha256": "48bbda34604cc9535cabc201074394d68200094d100e35d7372feed79afb76b0",
+    "core_range": [1, 355]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "EXACT-001",
+      "item_type": "authority",
+      "title": "Tier 0C-2 gate remains closed",
+      "statement": "The registry explicitly keeps buildability false and disallows ordinary product WorkNodes and NodeSeeds; its authority is limited to Tier 0C-2 storage value contracts.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 8, "line_end": 8, "exact_quote": "    \"buildability_gate_passed_must_remain_false\": true,", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 9, "line_end": 9, "exact_quote": "    \"ordinary_product_worknodes_allowed\": false,", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 10, "line_end": 10, "exact_quote": "    \"ordinary_product_nodeseeds_allowed\": false,", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 11, "line_end": 11, "exact_quote": "    \"scope\": \"tier_0c_2_storage_value_contracts_only\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["storage_registry", "buildability_gate"]
+    },
+    {
+      "item_id": "EXACT-002",
+      "item_type": "capability",
+      "title": "Launch-critical storage families are enumerated",
+      "statement": "The registry names ten critical storage families, including approved plan packs, approval outbox rows, compile runs, compiler-wave contracts, drafts, requests, intake reports, attempt receipts, event indexes, blocked projections, and goal receipts.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 13, "line_end": 13, "exact_quote": "  \"critical_family_ids\": [", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 24, "line_end": 24, "exact_quote": "    \"goal_receipt\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["storage_registry"]
+    },
+    {
+      "item_id": "EXACT-003",
+      "item_type": "contract",
+      "title": "ApprovedPlanPack persistence identity",
+      "statement": "ApprovedPlanPack is a materialized Tier-0 launch-critical redb family keyed by project and pack identifiers, canonically MessagePack encoded, and owned by Planning Wizard PWIZ-014.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 28, "line_end": 28, "exact_quote": "      \"family_id\": \"approved_plan_pack\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 29, "line_end": 29, "exact_quote": "      \"storage_kind\": \"redb\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 32, "line_end": 32, "exact_quote": "      \"key_shape\": \"approved_plan_pack.v1:{project_id}:{approved_plan_pack_id}\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 35, "line_end": 35, "exact_quote": "      \"owner_doc\": \"Plans/Planning_Wizard.md#PWIZ-014\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 45, "line_end": 45, "exact_quote": "      \"encoding\": \"messagepack_canonical\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["approved_plan_pack"]
+    },
+    {
+      "item_id": "EXACT-004",
+      "item_type": "authority",
+      "title": "ApprovedPlanPack production and consumers",
+      "statement": "The Planning Wizard final-review approval CAS produces the pack, while compilation bootstrap, implementation-readiness, and audit projection consume it.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 37, "line_end": 37, "exact_quote": "        \"Planning Wizard final-review approval CAS\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 40, "line_end": 40, "exact_quote": "        \"PlanCompileRun bootstrap reader\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 41, "line_end": 41, "exact_quote": "        \"implementation-readiness gate\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 42, "line_end": 42, "exact_quote": "        \"audit evidence projector\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["approved_plan_pack", "planning_wizard", "plan_compile_run"]
+    },
+    {
+      "item_id": "EXACT-005",
+      "item_type": "contract",
+      "title": "ApprovedPlanPack closed value schema",
+      "statement": "The pack value is a closed object with identity, version, lineage, index, context, policy, audit, creation, source-reference, and redaction fields required; optional PRD, amendment, closure, readiness, ledger, and supersession references are recognized.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 46, "line_end": 46, "exact_quote": "      \"required_fields\": [", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 64, "line_end": 64, "exact_quote": "        \"redaction_profile\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 66, "line_end": 66, "exact_quote": "      \"optional_fields\": [", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 72, "line_end": 72, "exact_quote": "        \"supersedes_pack_id\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 84, "line_end": 84, "exact_quote": "        \"additionalProperties\": false,", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["approved_plan_pack"]
+    },
+    {
+      "item_id": "EXACT-006",
+      "item_type": "contract",
+      "title": "ApprovedPlanPack validation constraints",
+      "statement": "The schema fixes schema identity and version, requires nonempty string identifiers and hashes, positive versions and revisions, RFC date-time creation timestamps, arrays of nonempty source references, and one of two redaction profiles.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 107, "line_end": 107, "exact_quote": "            \"const\": \"pm.storage_value.approved_plan_pack.v1\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 122, "line_end": 122, "exact_quote": "            \"minimum\": 1", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 162, "line_end": 162, "exact_quote": "            \"format\": \"date-time\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 172, "line_end": 172, "exact_quote": "              \"minLength\": 1", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 178, "line_end": 178, "exact_quote": "              \"no_secrets\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["approved_plan_pack", "schema_validation"]
+    },
+    {
+      "item_id": "EXACT-007",
+      "item_type": "failure_recovery",
+      "title": "Pack recovery blocks stale hashes",
+      "statement": "Recovery reads the pack by exact key, and stale hashes block launch and route the flow to Planning Wizard refresh.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 77, "line_end": 77, "exact_quote": "      \"replay_behavior\": \"Read by exact key during PlanApproved/PlanCompileRun recovery; stale hashes block launch and route back to Planning Wizard refresh.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["approved_plan_pack", "recovery"]
+    },
+    {
+      "item_id": "EXACT-008",
+      "item_type": "contract",
+      "title": "Pack migration and retention preserve lineage",
+      "statement": "No legacy writer is canonical; future value changes require a new family version and preserved source-pack hash, and retained packs remain reachable through planning, audit, and GoalRun receipt lineage.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 78, "line_end": 78, "exact_quote": "      \"migration\": \"No legacy writer is canonical; future value changes require a new family version and source-pack hash preservation.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 79, "line_end": 79, "exact_quote": "      \"retention_compaction\": \"Retain with planning-run lineage, audit closure, and any GoalRun receipt that references the pack; never compact below retained receipt reachability.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["approved_plan_pack", "migration", "retention"]
+    },
+    {
+      "item_id": "EXACT-009",
+      "item_type": "contract",
+      "title": "Pack storage excludes secret-bearing bodies",
+      "statement": "Only non-secret references and hashes may persist; project-context and policy bodies must remain referenced rather than embedded.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 80, "line_end": 80, "exact_quote": "      \"redaction_no_secret_rule\": \"Only non-secret refs and hashes may be persisted; project context and policy bodies are stored by ref, not inline secret-bearing content.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["approved_plan_pack", "security_privacy"]
+    },
+    {
+      "item_id": "EXACT-010",
+      "item_type": "authority",
+      "title": "ApprovedPlanPack canonical crosswalk",
+      "statement": "This value schema is canonical for Tier 0C-2 ApprovedPlanPack storage, while ledger and source-lineage pack prose is explicitly non-authoritative.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 81, "line_end": 81, "exact_quote": "      \"legacy_canonical_crosswalk_status\": \"Canonical Tier 0C-2 value schema for ApprovedPlanPack; ledger/source-lineage pack prose is non-authoritative.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["approved_plan_pack", "authority"]
+    },
+    {
+      "item_id": "EXACT-011",
+      "item_type": "contract",
+      "title": "PlanApproved outbox persistence identity",
+      "statement": "The PlanApproved outbox is a materialized Tier-0 launch-critical dual redb/seglog family keyed by project and idempotency key, canonically MessagePack encoded, and owned by Planning Wizard PWIZ-014.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 216, "line_end": 216, "exact_quote": "      \"family_id\": \"plan_approved_outbox\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 217, "line_end": 217, "exact_quote": "      \"storage_kind\": \"redb_and_seglog\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 220, "line_end": 220, "exact_quote": "      \"key_shape\": \"plan_approved_outbox.v1:{project_id}:{idempotency_key}\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 223, "line_end": 223, "exact_quote": "      \"owner_doc\": \"Plans/Planning_Wizard.md#PWIZ-014\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 233, "line_end": 233, "exact_quote": "      \"encoding\": \"messagepack_canonical\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["plan_approved_outbox"]
+    },
+    {
+      "item_id": "EXACT-012",
+      "item_type": "consumer",
+      "title": "Approval boundary feeds publication, compilation, and replay",
+      "statement": "The Planning Wizard Approve And Build command boundary produces the row; EventRecord writing, PlanCompileRun binding, and idempotency replay consume it.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 225, "line_end": 225, "exact_quote": "        \"Planning Wizard Approve And Build command boundary\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 228, "line_end": 228, "exact_quote": "        \"EventRecord writer\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 229, "line_end": 229, "exact_quote": "        \"PlanCompileRun binder\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 230, "line_end": 230, "exact_quote": "        \"idempotency replay\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["plan_approved_outbox", "event_record", "plan_compile_run"]
+    },
+    {
+      "item_id": "EXACT-013",
+      "item_type": "contract",
+      "title": "PlanApproved outbox closed value schema",
+      "statement": "The closed outbox object requires schema identity, project, approval receipt, approved pack, idempotency, compile-run, status, sequence, creation, and redaction fields; publication ids, retry count, and last-error reference are optional and selected fields may be null.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 234, "line_end": 234, "exact_quote": "      \"required_fields\": [", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 245, "line_end": 245, "exact_quote": "        \"redaction_profile\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 247, "line_end": 247, "exact_quote": "      \"optional_fields\": [", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 256, "line_end": 256, "exact_quote": "        \"last_error_ref\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 265, "line_end": 265, "exact_quote": "        \"additionalProperties\": false,", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["plan_approved_outbox", "schema_validation"]
+    },
+    {
+      "item_id": "EXACT-014",
+      "item_type": "state_transition",
+      "title": "Outbox state vocabulary",
+      "statement": "The outbox status may be pending, published, acked, or failed.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 309, "line_end": 309, "exact_quote": "              \"pending\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 310, "line_end": 310, "exact_quote": "              \"published\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 311, "line_end": 311, "exact_quote": "              \"acked\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 312, "line_end": 312, "exact_quote": "              \"failed\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["plan_approved_outbox", "outbox_status"]
+    },
+    {
+      "item_id": "EXACT-015",
+      "item_type": "behavior",
+      "title": "Duplicate approval replay is idempotent",
+      "statement": "A duplicate approval delivery returns the existing PlanApproved append/projection result for the same idempotency key.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 258, "line_end": 258, "exact_quote": "      \"replay_behavior\": \"Duplicate approval delivery returns the existing PlanApproved append/projection result for the same idempotency key.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["plan_approved_outbox", "idempotency"]
+    },
+    {
+      "item_id": "EXACT-016",
+      "item_type": "contract",
+      "title": "Outbox migration and retention",
+      "statement": "Legacy unkeyed approval notes are source lineage only and migration first creates a keyed row; rows survive at least through compile-run and audit-closure retention, while failed rows keep retry lineage until superseded.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 259, "line_end": 259, "exact_quote": "      \"migration\": \"Legacy unkeyed approval notes are source-lineage only; migration creates an idempotency-keyed outbox row before publishing.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 260, "line_end": 260, "exact_quote": "      \"retention_compaction\": \"Retain at least as long as the referenced PlanCompileRun and audit closure; failed rows retain retry lineage until superseded.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["plan_approved_outbox", "migration", "retention"]
+    },
+    {
+      "item_id": "EXACT-017",
+      "item_type": "contract",
+      "title": "Outbox excludes approval and environment bodies",
+      "statement": "The outbox stores only receipt identifiers, references, hashes, and status enums, not approval bodies or environment data.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 261, "line_end": 261, "exact_quote": "      \"redaction_no_secret_rule\": \"No approval body or environment data is stored here; only receipt ids, refs, hashes, and status enums.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["plan_approved_outbox", "security_privacy"]
+    },
+    {
+      "item_id": "EXACT-018",
+      "item_type": "authority",
+      "title": "Outbox and EventRecord authority split",
+      "statement": "The transactional outbox row is canonical for PlanApproved staging, while the append-only PlanApproved EventRecord remains the publication authority.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 262, "line_end": 262, "exact_quote": "      \"legacy_canonical_crosswalk_status\": \"Canonical PlanApproved transactional outbox row; PlanApproved EventRecord remains the append-only publication.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["plan_approved_outbox", "event_record", "authority"]
+    },
+    {
+      "item_id": "GAP-001",
+      "item_type": "gap",
+      "title": "Hash syntax and verification algorithm are unspecified",
+      "statement": "Pack and index hash properties accept any nonempty string; the contract does not select a digest algorithm, byte encoding, canonicalization input, or comparison oracle, leaving stale-hash enforcement interoperably under-specified.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 124, "line_end": 124, "exact_quote": "          \"pack_hash\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 126, "line_end": 126, "exact_quote": "            \"minLength\": 1", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 140, "line_end": 140, "exact_quote": "          \"plan_unit_index_hash\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 142, "line_end": 142, "exact_quote": "            \"minLength\": 1", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "gap_kind": "underspecified_contract",
+      "impact": "Independent writers and readers can hash different bytes or accept malformed hashes, causing false stale-hash blocks or missed stale data.",
+      "builder_discretion": "Builders must choose digest algorithms, canonical byte inputs, textual encoding, and validation behavior.",
+      "feature_keys": ["approved_plan_pack", "hash_validation", "acceptance_oracle"]
+    },
+    {
+      "item_id": "GAP-002",
+      "item_type": "gap",
+      "title": "Outbox transition graph and commit boundaries are absent",
+      "statement": "The schema enumerates four status values but does not define legal transitions, transition authorities, redb/seglog atomicity, when publication becomes visible, acknowledgement meaning, or crash recovery at each boundary.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 217, "line_end": 217, "exact_quote": "      \"storage_kind\": \"redb_and_seglog\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 306, "line_end": 306, "exact_quote": "          \"outbox_status\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 309, "line_end": 309, "exact_quote": "              \"pending\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 312, "line_end": 312, "exact_quote": "              \"failed\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "gap_kind": "missing_state_machine",
+      "impact": "Implementations can diverge on retry safety, duplicate publication, acknowledgement, and recovery after partial writes.",
+      "builder_discretion": "Builders must invent the state machine, atomic transaction boundaries, actor permissions, and recovery checkpoints.",
+      "feature_keys": ["plan_approved_outbox", "state_machine", "failure_recovery"]
+    },
+    {
+      "item_id": "GAP-003",
+      "item_type": "gap",
+      "title": "Idempotency-key contract is too weak for replay authority",
+      "statement": "The key is only constrained to a nonempty string even though it determines duplicate replay; derivation inputs, canonical form, collision scope, persistence duration, and mismatch handling are not specified.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 220, "line_end": 220, "exact_quote": "      \"key_shape\": \"plan_approved_outbox.v1:{project_id}:{idempotency_key}\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 298, "line_end": 298, "exact_quote": "          \"idempotency_key\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 300, "line_end": 300, "exact_quote": "            \"minLength\": 1", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 258, "line_end": 258, "exact_quote": "      \"replay_behavior\": \"Duplicate approval delivery returns the existing PlanApproved append/projection result for the same idempotency key.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "gap_kind": "underspecified_idempotency",
+      "impact": "Semantically different approvals can collide or equivalent approvals can miss replay, threatening exactly-once observable behavior.",
+      "builder_discretion": "Builders must choose key derivation, normalization, namespace, collision detection, and request-mismatch responses.",
+      "feature_keys": ["plan_approved_outbox", "idempotency"]
+    },
+    {
+      "item_id": "GAP-004",
+      "item_type": "gap",
+      "title": "Retry mechanics and terminal failure policy are unspecified",
+      "statement": "The row can record an unbounded nonnegative retry count and a nullable error reference, but there is no retry trigger, scheduling/backoff, attempt ceiling, poison-row handling, supersession procedure, or operator recovery oracle.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 343, "line_end": 343, "exact_quote": "          \"retry_count\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 345, "line_end": 345, "exact_quote": "            \"minimum\": 0", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 347, "line_end": 347, "exact_quote": "          \"last_error_ref\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 260, "line_end": 260, "exact_quote": "      \"retention_compaction\": \"Retain at least as long as the referenced PlanCompileRun and audit closure; failed rows retain retry lineage until superseded.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "gap_kind": "missing_recovery_policy",
+      "impact": "Deployments can retry at incompatible rates, loop indefinitely, or strand failed approvals without a deterministic recovery path.",
+      "builder_discretion": "Builders must define retry classification, backoff and limits, supersession authority, and operator-facing recovery actions.",
+      "feature_keys": ["plan_approved_outbox", "retry", "operations"]
+    },
+    {
+      "item_id": "GAP-005",
+      "item_type": "gap",
+      "title": "Reference fields and collections lack scale and locator constraints",
+      "statement": "Several optional reference strings may be empty and reference arrays have no minimum, maximum, uniqueness, ordering, or URI/identifier syntax; source_refs require nonempty members but likewise have no collection bounds or uniqueness.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 168, "line_end": 168, "exact_quote": "          \"source_refs\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 182, "line_end": 182, "exact_quote": "          \"prd_pack_ref\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 183, "line_end": 183, "exact_quote": "            \"type\": \"string\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 185, "line_end": 185, "exact_quote": "          \"amendment_refs\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 188, "line_end": 188, "exact_quote": "              \"type\": \"string\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "gap_kind": "weak_validation_and_scale_bounds",
+      "impact": "Malformed or ambiguous references can pass validation, and unbounded arrays can create divergent serialization, lookup, and memory behavior.",
+      "builder_discretion": "Builders must define reference grammar, empty-value handling, de-duplication, stable ordering, and size limits.",
+      "feature_keys": ["approved_plan_pack", "references", "scale_performance"]
+    },
+    {
+      "item_id": "GAP-006",
+      "item_type": "gap",
+      "title": "Outbox sequence allocation and concurrency semantics are missing",
+      "statement": "outbox_sequence must be a positive integer, but allocation scope, monotonicity, uniqueness, gap behavior, concurrency serialization, and replay preservation are not defined.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 315, "line_end": 315, "exact_quote": "          \"outbox_sequence\": {", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 317, "line_end": 317, "exact_quote": "            \"minimum\": 1", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "gap_kind": "underspecified_ordering_contract",
+      "impact": "Concurrent writers can disagree on ordering or create duplicate sequences, affecting deterministic publication and replay.",
+      "builder_discretion": "Builders must choose the sequence namespace, allocator, transaction boundary, uniqueness enforcement, and gap/replay rules.",
+      "feature_keys": ["plan_approved_outbox", "ordering", "concurrency"]
+    },
+    {
+      "item_id": "EXACT-019",
+      "item_type": "explicit_non_gap",
+      "title": "No GUI contract belongs to this window",
+      "statement": "The authoritative core defines storage families, producers, and consumers without any GUI-facing presentation, interaction, or user-visible state contract; GUI truth is not applicable to this storage-value window.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 29, "line_end": 29, "exact_quote": "      \"storage_kind\": \"redb\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 217, "line_end": 217, "exact_quote": "      \"storage_kind\": \"redb_and_seglog\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ],
+      "feature_keys": ["storage_registry", "gui_truth"]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension": "behavior", "status": "addressed", "summary": "Exact-key recovery, stale-hash launch blocking, duplicate replay, and storage behaviors are specified.", "evidence_item_ids": ["EXACT-001", "EXACT-007", "EXACT-015"]},
+    {"dimension": "capabilities", "status": "addressed", "summary": "The registry enumerates critical families and materializes pack and outbox capabilities.", "evidence_item_ids": ["EXACT-002", "EXACT-003", "EXACT-011"]},
+    {"dimension": "inputs_outputs", "status": "addressed", "summary": "Required and optional pack/outbox value fields define persisted inputs and outputs, subject to reference-validation gaps.", "evidence_item_ids": ["EXACT-005", "EXACT-013", "GAP-005"]},
+    {"dimension": "contracts", "status": "gap_found", "summary": "Closed schemas and identities are strong, but hash, reference, idempotency, ordering, and dual-store transaction contracts remain incomplete.", "evidence_item_ids": ["EXACT-006", "EXACT-013", "GAP-001", "GAP-003", "GAP-005", "GAP-006"]},
+    {"dimension": "states_transitions", "status": "gap_found", "summary": "Status vocabulary exists without a legal transition graph or authoritative commit boundaries.", "evidence_item_ids": ["EXACT-014", "GAP-002"]},
+    {"dimension": "authority", "status": "addressed", "summary": "Planning Wizard production authority, canonical crosswalks, and EventRecord publication authority are explicitly assigned.", "evidence_item_ids": ["EXACT-001", "EXACT-004", "EXACT-010", "EXACT-012", "EXACT-018"]},
+    {"dimension": "ownership", "status": "addressed", "summary": "Both materialized families point to Planning Wizard PWIZ-014 as owner documentation and name their producers.", "evidence_item_ids": ["EXACT-003", "EXACT-004", "EXACT-011", "EXACT-012"]},
+    {"dimension": "consumers", "status": "addressed", "summary": "Pack and outbox consumers span compilation, readiness, audit, publication, and replay.", "evidence_item_ids": ["EXACT-004", "EXACT-012"]},
+    {"dimension": "gui_truth", "status": "not_applicable", "summary": "This core is a storage-value registry and contains no GUI-facing contract.", "evidence_item_ids": ["EXACT-019"]},
+    {"dimension": "failures_recovery", "status": "gap_found", "summary": "Stale-pack routing and duplicate replay are specified, but outbox crash boundaries, retry policy, and failed-row recovery are not.", "evidence_item_ids": ["EXACT-007", "EXACT-015", "GAP-002", "GAP-004"]},
+    {"dimension": "security_privacy", "status": "addressed", "summary": "Both families forbid inline secret-bearing bodies and constrain redaction profiles, though hash syntax remains weak.", "evidence_item_ids": ["EXACT-009", "EXACT-017", "GAP-001"]},
+    {"dimension": "propagation", "status": "addressed", "summary": "Pack propagation to compilation/readiness/audit and outbox propagation to EventRecord/compile binding/replay are explicit.", "evidence_item_ids": ["EXACT-004", "EXACT-012", "EXACT-018"]},
+    {"dimension": "operations", "status": "gap_found", "summary": "Retention lineage is stated, but retry scheduling, operator intervention, supersession, and dual-store recovery procedures remain unspecified.", "evidence_item_ids": ["EXACT-008", "EXACT-016", "GAP-002", "GAP-004"]},
+    {"dimension": "scale_performance", "status": "gap_found", "summary": "No collection bounds, sequence allocation concurrency contract, or retry load controls are defined.", "evidence_item_ids": ["GAP-004", "GAP-005", "GAP-006"]},
+    {"dimension": "compatibility_migration", "status": "addressed", "summary": "New family versions preserve source-pack hashes, legacy writers are noncanonical, and legacy approval notes migrate through keyed outbox rows.", "evidence_item_ids": ["EXACT-008", "EXACT-010", "EXACT-016", "EXACT-018"]},
+    {"dimension": "acceptance_oracles", "status": "gap_found", "summary": "Closed JSON-schema constraints and stale-hash blocking provide partial oracles, but no executable hash or state-transition oracle is specified.", "evidence_item_ids": ["EXACT-006", "EXACT-007", "EXACT-013", "GAP-001", "GAP-002"]},
+    {"dimension": "builder_discretion", "status": "gap_found", "summary": "Builders must choose hash semantics, outbox state/atomicity, idempotency derivation, retry policy, reference bounds, and sequence allocation.", "evidence_item_ids": ["GAP-001", "GAP-002", "GAP-003", "GAP-004", "GAP-005", "GAP-006"]},
+    {"dimension": "ambiguity_unknowns", "status": "gap_found", "summary": "The consequential unknowns are bounded to hash verification, dual-store transitions, idempotency, retry/supersession, reference grammar, and ordering concurrency.", "evidence_item_ids": ["GAP-001", "GAP-002", "GAP-003", "GAP-004", "GAP-005", "GAP-006"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

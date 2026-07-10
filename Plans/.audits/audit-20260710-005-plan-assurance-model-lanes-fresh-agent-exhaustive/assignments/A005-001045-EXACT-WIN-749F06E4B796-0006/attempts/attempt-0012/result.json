@@ -1,0 +1,493 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001045-EXACT-WIN-749F06E4B796-0006",
+  "attempt_id": "attempt-0012",
+  "task_thread_id": "/root/a005_blind_wave_0005_b_dispatcher_epoch_0012/bw5b_a1045",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Automated_Testing_System.md",
+    "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
+    "core_sha256": "d66fe137218256b0da16a3ce734ec5ef1ec32a8e6d2ab766cff205f08ba17ba0",
+    "core_range": [1723, 1890]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "I-001",
+      "item_type": "behavior",
+      "title": "Transport soak coverage set",
+      "statement": "ATS-021 requires soak coverage for sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-021", "P2-TRANSPORT-SOAK-TESTS"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1739,
+        "line_end": 1739,
+        "exact_quote": "- Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-002",
+      "item_type": "gap",
+      "title": "Transport soak oracles are unspecified",
+      "statement": "The coverage assertion does not define soak duration, connection/load profile, first-event timeout threshold, snapshot frequency, output size, observable metrics, expected fallback path, or pass/fail criteria, so independent builders cannot implement or certify the same soak suite.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "acceptance_oracle_under_specified",
+      "impact": "Transport regressions can pass or fail according to builder-selected thresholds and workloads.",
+      "builder_discretion": "Select every quantitative workload, threshold, observation, and oracle for ATS-021.",
+      "feature_keys": ["ATS-021", "P2-TRANSPORT-SOAK-TESTS"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1744,
+        "line_end": 1744,
+        "exact_quote": "- Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-003",
+      "item_type": "capability",
+      "title": "Permanent minimized terminal replay corpus",
+      "statement": "ATS-022 requires minimized replay fixtures spanning parser bugs, shell markers, giant output, Unicode/graphemes, bracketed paste, OSC, multiplexed and SSH panes, and CLI agents.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-022", "P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1798,
+        "line_end": 1798,
+        "exact_quote": "- PM stores minimized terminal replay fixtures for parser bugs, shell markers, giant outputs, unicode/graphemes, bracketed paste, OSC, tmux/zellij/ssh panes, and CLI agents.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-004",
+      "item_type": "acceptance_oracle",
+      "title": "Terminal replay comparison surfaces",
+      "statement": "Terminal fuzzing, chunk splitting, and replay snapshots must compare the parse tree, accessible mirror, scrollback, and painted viewport.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-022", "P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1799,
+        "line_end": 1799,
+        "exact_quote": "- Terminal parser has fuzz tests, chunk-splitting tests, and replay snapshots that compare parse tree, accessible mirror, scrollback, and painted viewport.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-005",
+      "item_type": "failure_recovery",
+      "title": "Oversized recording graceful degradation",
+      "statement": "Oversized terminal recordings must degrade with receipts rather than freezing the UI.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-022", "P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1800,
+        "line_end": 1800,
+        "exact_quote": "- Renderer/scrollback locks are budgeted; oversized recordings degrade with receipts instead of freezing UI.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-006",
+      "item_type": "gap",
+      "title": "Terminal performance and degradation budgets are absent",
+      "statement": "The requirement says locks are budgeted and oversized recordings degrade, but supplies no lock budget, oversized threshold, degradation mode, progress or cancellation behavior, receipt fields, or responsiveness oracle.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "performance_and_recovery_under_specified",
+      "impact": "Implementations may freeze, truncate, drop fidelity, or emit incompatible receipts while still claiming compliance.",
+      "builder_discretion": "Choose all quantitative budgets and the user-visible degradation/recovery policy.",
+      "feature_keys": ["ATS-022", "P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1800,
+        "line_end": 1800,
+        "exact_quote": "- Renderer/scrollback locks are budgeted; oversized recordings degrade with receipts instead of freezing UI.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-007",
+      "item_type": "contract",
+      "title": "TestAdapterInvocation field contract",
+      "statement": "TestAdapterInvocation names identity, adapter, test kind, target, optional command, input artifacts, timeout, optional permission snapshot, and creation time fields.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["TestAdapterInvocation", "sfk-fa0b68afddc10ec875a0b183"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1861,
+        "line_end": 1861,
+        "exact_quote": "`TestAdapterInvocation` fields are `invocation_id`, `adapter_id`, `test_kind`, `target_ref`, `command_ref?`, `input_artifact_refs[]`, `timeout_ms`, `permission_snapshot_id?`, and `created_at_utc`.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-008",
+      "item_type": "contract",
+      "title": "TestRunReceipt field contract",
+      "statement": "TestRunReceipt names run identity, adapter/test/target, timing, status, result counts, artifact references, optional coverage, failure references, and schema version fields.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["TestRunReceipt", "sfk-fa0b68afddc10ec875a0b183"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1863,
+        "line_end": 1863,
+        "exact_quote": "`TestRunReceipt` fields are `test_run_id`, `adapter_id`, `test_kind`, `target_ref`, `started_at_utc`, `ended_at_utc`, `status`, `passed_count`, `failed_count`, `skipped_count`, `error_count`, `log_artifact_refs[]`, `visual_artifact_refs[]`, `coverage_ref?`, `failure_refs[]`, and `schema_version`.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-009",
+      "item_type": "state_transition",
+      "title": "Test run status vocabulary",
+      "statement": "The run state vocabulary is queued, running, passed, failed, cancelled, blocked, and inconclusive.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["TestRunReceipt.status"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1865,
+        "line_end": 1865,
+        "exact_quote": "`status` values are `queued`, `running`, `passed`, `failed`, `cancelled`, `blocked`, and `inconclusive`.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-010",
+      "item_type": "gui_truth",
+      "title": "Testing GUI commands, layout, and button derivation",
+      "statement": "The GUI exposes six named testing commands, five named panel regions, and receipt-status/artifact-derived watch, cancel, open-receipt, and export enablement rules.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["GUI Result Surfacing", "sfk-bd4e3c4facbc54e0a68a60c8"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1871,
+          "line_end": 1871,
+          "exact_quote": "Testing GUI commands are `cmd.testing.open_panel`, `cmd.testing.watch_run`, `cmd.testing.cancel_run`, `cmd.testing.open_receipt`, `cmd.testing.open_failure`, and `cmd.testing.export_bundle`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1873,
+          "line_end": 1873,
+          "exact_quote": "Panel layout contains `run_list`, `active_run_detail`, `failure_list`, `artifact_preview`, and `redaction_notice`. Button states derive from `TestRunReceipt.status`: watch enabled for `queued|running`; cancel enabled for `queued|running`; open receipt enabled for any terminal state; export bundle enabled when `log_artifact_refs[]` or `visual_artifact_refs[]` is non-empty.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "I-011",
+      "item_type": "gap",
+      "title": "Terminal-state and command lifecycle semantics are incomplete",
+      "statement": "The GUI rule enables receipt opening for any terminal state, but the contract never explicitly classifies terminal states or defines allowed status transitions, cancellation races, idempotency, command results, or error behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "state_machine_under_specified",
+      "impact": "GUI and runtime implementations can disagree about when commands are legal and what happens under races or failures.",
+      "builder_discretion": "Infer terminal statuses and invent the run transition graph and command protocol.",
+      "feature_keys": ["TestRunReceipt.status", "GUI Result Surfacing"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1865,
+          "line_end": 1865,
+          "exact_quote": "`status` values are `queued`, `running`, `passed`, `failed`, `cancelled`, `blocked`, and `inconclusive`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1873,
+          "line_end": 1873,
+          "exact_quote": "Panel layout contains `run_list`, `active_run_detail`, `failure_list`, `artifact_preview`, and `redaction_notice`. Button states derive from `TestRunReceipt.status`: watch enabled for `queued|running`; cancel enabled for `queued|running`; open receipt enabled for any terminal state; export bundle enabled when `log_artifact_refs[]` or `visual_artifact_refs[]` is non-empty.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "I-012",
+      "item_type": "state_transition",
+      "title": "Runtime disabled-to-enabled gate and event",
+      "statement": "Testing enables per adapter only after adapter configuration, an available capability probe, current permissions, required fixtures, and receipt producibility; the enabling event has six named fields.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["testing.runtime_enabled_for_adapter", "sfk-a86063e06fec52acf396acb6"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1879,
+        "line_end": 1879,
+        "exact_quote": "Testing remains runtime-disabled until all of the following are true: a target adapter is configured, the target capability probe returns `available`, permission snapshot is current, required fixtures exist, and the test invocation can produce a `TestRunReceipt` without claiming PNC-019 lifecycle certification. The transition event is `testing.runtime_enabled_for_adapter` with fields `adapter_id`, `project_id`, `capability_probe_ref`, `permission_snapshot_id`, `enabled_at_utc`, and `reason_code`.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-013",
+      "item_type": "gap",
+      "title": "No enabled-to-disabled or revocation behavior",
+      "statement": "The spec defines only runtime_disabled-to-enabled; it does not define revocation when an adapter disappears, the capability probe changes, permissions expire, fixtures are removed, or receipt production fails, nor an event or in-flight-run policy for that transition.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "recovery_transition_missing",
+      "impact": "Testing can remain erroneously enabled after prerequisites cease to hold, with no interoperable cleanup or user-facing recovery behavior.",
+      "builder_discretion": "Invent invalidation detection, disable events, in-flight cancellation, and recovery semantics.",
+      "feature_keys": ["testing.runtime_enabled_for_adapter"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1879,
+        "line_end": 1879,
+        "exact_quote": "Testing remains runtime-disabled until all of the following are true: a target adapter is configured, the target capability probe returns `available`, permission snapshot is current, required fixtures exist, and the test invocation can produce a `TestRunReceipt` without claiming PNC-019 lifecycle certification. The transition event is `testing.runtime_enabled_for_adapter` with fields `adapter_id`, `project_id`, `capability_probe_ref`, `permission_snapshot_id`, `enabled_at_utc`, and `reason_code`.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-014",
+      "item_type": "gap",
+      "title": "Testing command authority and artifact privacy are undefined",
+      "statement": "The command and panel contract defines cancellation, failure opening, artifact preview, export, and a redaction notice, but does not assign authorization checks, project or tenant scope, secret/PII redaction rules, artifact access control, or export policy.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "authority_security_privacy_missing",
+      "impact": "Logs, screenshots, terminal output, or failure artifacts may expose secrets or cross project boundaries, and unauthorized users may cancel runs or export bundles.",
+      "builder_discretion": "Define all authorization, scoping, redaction, and export controls.",
+      "feature_keys": ["GUI Result Surfacing", "cmd.testing.cancel_run", "cmd.testing.export_bundle"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1871,
+          "line_end": 1871,
+          "exact_quote": "Testing GUI commands are `cmd.testing.open_panel`, `cmd.testing.watch_run`, `cmd.testing.cancel_run`, `cmd.testing.open_receipt`, `cmd.testing.open_failure`, and `cmd.testing.export_bundle`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1873,
+          "line_end": 1873,
+          "exact_quote": "Panel layout contains `run_list`, `active_run_detail`, `failure_list`, `artifact_preview`, and `redaction_notice`. Button states derive from `TestRunReceipt.status`: watch enabled for `queued|running`; cancel enabled for `queued|running`; open receipt enabled for any terminal state; export bundle enabled when `log_artifact_refs[]` or `visual_artifact_refs[]` is non-empty.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "I-015",
+      "item_type": "gap",
+      "title": "Repair claims conflict with deferred dispositions",
+      "statement": "The addendum says each identified row is repaired with concrete contracts, GUI wiring, and an enable trigger, while the later owner notes label the same row IDs explicitly deferred and say a dedicated detail lane is still required. The authoritative core does not state which disposition governs.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "internal_canonical_contradiction",
+      "impact": "Readers and automation cannot determine whether these critical/high gaps are closed or intentionally open.",
+      "builder_discretion": "Choose whether to treat the same rows as repaired or deferred.",
+      "feature_keys": ["sfk-fa0b68afddc10ec875a0b183", "sfk-bd4e3c4facbc54e0a68a60c8", "sfk-a86063e06fec52acf396acb6"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1859,
+          "line_end": 1859,
+          "exact_quote": "Repairs row `sfk-fa0b68afddc10ec875a0b183`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1886,
+          "line_end": 1886,
+          "exact_quote": "- `registry_line 331` (explicitly_deferred; source line 1126; `sfk-fa0b68afddc10ec875a0b183`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: every ATS PlanUnit is prose pointing at generic validators no concrete IPC schema, adapter interface, or `TestRunReceipt` file format anywhere.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "I-016",
+      "item_type": "explicit_non_gap",
+      "title": "Non-runtime compile boundary is explicit",
+      "statement": "The addendum explicitly disclaims WorkNode, queue, runtime artifact, implementation, production-build, final-manifest, PNC-019 receipt, and buildability effects.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["FABLE Deferred Action Concrete Repair Addendum"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1855,
+        "line_end": 1855,
+        "exact_quote": "This addendum is canonical automated-testing spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, executable queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-017",
+      "item_type": "gap",
+      "title": "Adapter and receipt wire contracts lack types and compatibility rules",
+      "statement": "The interfaces are field lists only: they do not define field types beyond optional/array notation, required/default/null rules, ID and timestamp formats, count invariants, serialization/schema location, invocation-to-receipt correlation, version value, compatibility policy, or migration behavior.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "wire_contract_and_migration_missing",
+      "impact": "Independent adapters, persistence, GUI, and exporters can produce mutually incompatible messages and cannot safely evolve them.",
+      "builder_discretion": "Invent the wire schema, invariants, correlation model, versioning, and migrations.",
+      "feature_keys": ["TestAdapterInvocation", "TestRunReceipt"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1861,
+          "line_end": 1861,
+          "exact_quote": "`TestAdapterInvocation` fields are `invocation_id`, `adapter_id`, `test_kind`, `target_ref`, `command_ref?`, `input_artifact_refs[]`, `timeout_ms`, `permission_snapshot_id?`, and `created_at_utc`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1863,
+          "line_end": 1863,
+          "exact_quote": "`TestRunReceipt` fields are `test_run_id`, `adapter_id`, `test_kind`, `target_ref`, `started_at_utc`, `ended_at_utc`, `status`, `passed_count`, `failed_count`, `skipped_count`, `error_count`, `log_artifact_refs[]`, `visual_artifact_refs[]`, `coverage_ref?`, `failure_refs[]`, and `schema_version`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "I-018",
+      "item_type": "gap",
+      "title": "Runtime producers, owners, persistence, and consumers are not assigned",
+      "statement": "The contract blocks name fields but do not assign which component creates an invocation, executes it, owns status transitions, persists a receipt, resolves artifact/failure references, or consumes the event and receipt. Document owner and implementation-surface metadata do not close runtime ownership.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "runtime_ownership_and_consumers_missing",
+      "impact": "Implementation boundaries and delivery responsibilities remain consequential builder discretion.",
+      "builder_discretion": "Select producers, state authority, storage owner, reference resolver, and downstream consumers.",
+      "feature_keys": ["TestAdapterInvocation", "TestRunReceipt", "testing.runtime_enabled_for_adapter"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1861,
+          "line_end": 1861,
+          "exact_quote": "`TestAdapterInvocation` fields are `invocation_id`, `adapter_id`, `test_kind`, `target_ref`, `command_ref?`, `input_artifact_refs[]`, `timeout_ms`, `permission_snapshot_id?`, and `created_at_utc`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1879,
+          "line_end": 1879,
+          "exact_quote": "Testing remains runtime-disabled until all of the following are true: a target adapter is configured, the target capability probe returns `available`, permission snapshot is current, required fixtures exist, and the test invocation can produce a `TestRunReceipt` without claiming PNC-019 lifecycle certification. The transition event is `testing.runtime_enabled_for_adapter` with fields `adapter_id`, `project_id`, `capability_probe_ref`, `permission_snapshot_id`, `enabled_at_utc`, and `reason_code`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "I-019",
+      "item_type": "gap",
+      "title": "Artifact preview and export operations lack operational contracts",
+      "statement": "Export enablement is based only on non-empty artifact reference arrays; bundle format, completeness, size limits, progress, cancellation, naming, destination, overwrite, retention, redaction application, partial failure, and export receipt behavior are not specified.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "operations_contract_missing",
+      "impact": "The same GUI command may export incompatible, unsafe, or incomplete bundles with no testable operational behavior.",
+      "builder_discretion": "Define the entire preview/export lifecycle and bundle contract.",
+      "feature_keys": ["cmd.testing.export_bundle", "artifact_preview", "redaction_notice"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1873,
+        "line_end": 1873,
+        "exact_quote": "Panel layout contains `run_list`, `active_run_detail`, `failure_list`, `artifact_preview`, and `redaction_notice`. Button states derive from `TestRunReceipt.status`: watch enabled for `queued|running`; cancel enabled for `queued|running`; open receipt enabled for any terminal state; export bundle enabled when `log_artifact_refs[]` or `visual_artifact_refs[]` is non-empty.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-020",
+      "item_type": "gap",
+      "title": "Runtime prerequisite predicates lack validation oracles",
+      "statement": "The enable gate names configured, available, current, exists, and can-produce predicates, but does not define their authorities, freshness windows, fixture sufficiency checks, receipt probe procedure, atomic evaluation, reason-code vocabulary, or proof retained for the decision.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "enablement_oracle_under_specified",
+      "impact": "Different implementations can enable testing under materially different conditions and cannot audit the decision consistently.",
+      "builder_discretion": "Define every prerequisite predicate, evaluator, freshness threshold, reason code, and retained proof.",
+      "feature_keys": ["testing.runtime_enabled_for_adapter"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1879,
+        "line_end": 1879,
+        "exact_quote": "Testing remains runtime-disabled until all of the following are true: a target adapter is configured, the target capability probe returns `available`, permission snapshot is current, required fixtures exist, and the test invocation can produce a `TestRunReceipt` without claiming PNC-019 lifecycle certification. The transition event is `testing.runtime_enabled_for_adapter` with fields `adapter_id`, `project_id`, `capability_probe_ref`, `permission_snapshot_id`, `enabled_at_utc`, and `reason_code`.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    },
+    {
+      "item_id": "I-021",
+      "item_type": "gap",
+      "title": "Runtime-enable event propagation is unspecified",
+      "statement": "The transition event has a name and fields but no emitter, durable/ephemeral semantics, ordering, deduplication identity, delivery guarantees, subscriber list, replay behavior, or projection effects.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "event_propagation_missing",
+      "impact": "GUI, scheduler, adapter, and persistence consumers cannot converge reliably on enabled state.",
+      "builder_discretion": "Invent event ownership, transport, delivery semantics, subscriptions, and downstream projections.",
+      "feature_keys": ["testing.runtime_enabled_for_adapter"],
+      "evidence": [{
+        "path": "Plans/Automated_Testing_System.md",
+        "line_start": 1879,
+        "line_end": 1879,
+        "exact_quote": "Testing remains runtime-disabled until all of the following are true: a target adapter is configured, the target capability probe returns `available`, permission snapshot is current, required fixtures exist, and the test invocation can produce a `TestRunReceipt` without claiming PNC-019 lifecycle certification. The transition event is `testing.runtime_enabled_for_adapter` with fields `adapter_id`, `project_id`, `capability_probe_ref`, `permission_snapshot_id`, `enabled_at_utc`, and `reason_code`.",
+        "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+      }]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension": "behavior", "status": "addressed", "summary": "Soak scenarios, terminal replay comparisons, UI enablement, and runtime enabling behavior are stated.", "evidence_item_ids": ["I-001", "I-004", "I-010", "I-012"]},
+    {"dimension": "capabilities", "status": "addressed", "summary": "Transport soak, terminal corpus/fuzz/replay, GUI surfacing, and adapter enablement capabilities are named.", "evidence_item_ids": ["I-001", "I-003", "I-010", "I-012"]},
+    {"dimension": "inputs_outputs", "status": "gap_found", "summary": "Invocation and receipt fields are listed, but wire types, invariants, correlation, and reference resolution are missing.", "evidence_item_ids": ["I-007", "I-008", "I-017", "I-018"]},
+    {"dimension": "contracts", "status": "gap_found", "summary": "Named field contracts exist but are not implementable interoperable schemas and conflict with later deferred status.", "evidence_item_ids": ["I-007", "I-008", "I-015", "I-017"]},
+    {"dimension": "states_transitions", "status": "gap_found", "summary": "Status values and one enabling transition exist; the run graph and disable/revocation transition do not.", "evidence_item_ids": ["I-009", "I-011", "I-012", "I-013"]},
+    {"dimension": "authority", "status": "gap_found", "summary": "No authority is assigned for state changes, cancellation, artifact access/export, or prerequisite decisions.", "evidence_item_ids": ["I-014", "I-018", "I-020"]},
+    {"dimension": "ownership", "status": "gap_found", "summary": "Document placement is present, but runtime producer, executor, state, persistence, and reference ownership are absent.", "evidence_item_ids": ["I-018"]},
+    {"dimension": "consumers", "status": "gap_found", "summary": "GUI use is implied, but receipt, reference, and enable-event consumers are not enumerated or bound.", "evidence_item_ids": ["I-010", "I-018", "I-021"]},
+    {"dimension": "gui_truth", "status": "gap_found", "summary": "Commands, regions, and several button rules are concrete; terminal-state, command lifecycle, preview/export, and redaction behavior remain incomplete.", "evidence_item_ids": ["I-010", "I-011", "I-014", "I-019"]},
+    {"dimension": "failures_recovery", "status": "gap_found", "summary": "Graceful oversized-recording degradation is required, but quantitative behavior and prerequisite-loss recovery are absent.", "evidence_item_ids": ["I-005", "I-006", "I-013"]},
+    {"dimension": "security_privacy", "status": "gap_found", "summary": "Permission freshness and a redaction notice are mentioned without authorization, scoping, or redaction/export policy.", "evidence_item_ids": ["I-014", "I-019", "I-020"]},
+    {"dimension": "propagation", "status": "gap_found", "summary": "An enable event is named, but its emitter, delivery, replay, subscribers, and projections are not.", "evidence_item_ids": ["I-012", "I-021"]},
+    {"dimension": "operations", "status": "gap_found", "summary": "Corpus storage, degradation, watching, cancellation, preview, and export are named without full lifecycle or operational contracts.", "evidence_item_ids": ["I-003", "I-005", "I-011", "I-019"]},
+    {"dimension": "scale_performance", "status": "gap_found", "summary": "Large/giant output and high-frequency snapshots are in scope, but all thresholds, budgets, and performance oracles are missing.", "evidence_item_ids": ["I-002", "I-006"]},
+    {"dimension": "compatibility_migration", "status": "gap_found", "summary": "A schema_version field is named without a version value, compatibility rules, or migration behavior.", "evidence_item_ids": ["I-017"]},
+    {"dimension": "acceptance_oracles", "status": "gap_found", "summary": "Replay comparison surfaces and prerequisite categories exist, but soak thresholds, performance budgets, and enablement predicates are not testably defined.", "evidence_item_ids": ["I-002", "I-004", "I-006", "I-020"]},
+    {"dimension": "builder_discretion", "status": "gap_found", "summary": "Consequential discretion remains across protocols, state machines, authorities, security, ownership, operations, performance, and event delivery.", "evidence_item_ids": ["I-002", "I-006", "I-011", "I-013", "I-014", "I-017", "I-018", "I-019", "I-020", "I-021"]},
+    {"dimension": "ambiguity_unknowns", "status": "gap_found", "summary": "Terminal-state meaning is implicit and the same FABLE rows are simultaneously presented as repaired and explicitly deferred.", "evidence_item_ids": ["I-011", "I-015"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

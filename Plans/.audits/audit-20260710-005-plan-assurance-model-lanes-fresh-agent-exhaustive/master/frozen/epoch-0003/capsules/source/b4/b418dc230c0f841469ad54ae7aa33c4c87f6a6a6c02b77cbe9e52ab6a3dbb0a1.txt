@@ -1,0 +1,417 @@
+<<< CONTEXT_BEFORE 1866-1877 >>>
+  - "GATE-004"
+  - "TBD"
+  - "Open Questions"
+  - "ask later"
+  - "forbidden deps"
+negative_constraints:
+  - "No build-governing doc may introduce forbidden dependencies or drift phrases."
+preserved_contractrefs:
+  - "ContractRef: SchemaID:Spec_Lock.json#forbidden_deps, ContractName:Plans/DRY_Rules.md#4-forbidden-patterns-drift-accelerators"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+
+<<< AUTHORITATIVE_CORE 1878-2265 >>>
+### PG-028 - GATE-005 Completion Evidence
+
+```yaml
+plan_unit_id: PG-028
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  GATE-005 prevents node completion unless its evidence bundle exists and validates.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-016"
+unblocks: []
+acceptance_criteria:
+  - "GATE-005 Completion Evidence remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0022
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0023
+preserved_exact_tokens:
+  - "GATE-005"
+  - "node cannot be marked complete"
+  - "evidence bundle"
+  - "non-example nodes"
+negative_constraints:
+  - "A node cannot be marked complete unless its evidence bundle exists and validates."
+preserved_contractrefs:
+  - "ContractRef: SchemaID:evidence.schema.json, SchemaID:plan_graph.schema.json"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-029 - GATE-006 Change Budget
+
+```yaml
+plan_unit_id: PG-029
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  GATE-006 requires actual changes to stay within declared node change budgets.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-016"
+unblocks: []
+acceptance_criteria:
+  - "GATE-006 Change Budget remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0023
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0024
+preserved_exact_tokens:
+  - "GATE-006"
+  - "max files"
+  - "LOC delta"
+  - "allowed/forbidden paths/files"
+  - "bounded change fields"
+negative_constraints:
+  - "Actual changes must stay within the node declared change budget."
+preserved_contractrefs:
+  - "ContractRef: SchemaID:change_budget.schema.json, SchemaID:plan_graph.schema.json"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-030 - GATE-009 ContractRef Coverage
+
+```yaml
+plan_unit_id: PG-030
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  GATE-009 requires operational requirement lines to carry ContractRef coverage and emits an empty missing-line report on pass.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-016"
+unblocks: []
+acceptance_criteria:
+  - "GATE-009 ContractRef Coverage remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0024
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0025
+preserved_exact_tokens:
+  - "GATE-009"
+  - "ContractRef:"
+  - "MUST"
+  - "MUST NOT"
+  - "SHALL"
+  - "REQUIRED"
+  - "NEVER"
+negative_constraints:
+  - "The missing ContractRef report must be empty on pass."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/DRY_Rules.md#9"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-031 - GATE-010 Route Command Failure Rules
+
+```yaml
+plan_unit_id: PG-031
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  GATE-010 fails invalid wrapper, alias, routed-command, owner-defect, layout/runtime mismatch, stale identity, and reserved namespace cases.
+gui_related: true
+gui_classification_reason: >-
+  This unit includes GUI/UI/user-visible presentation or interactive control gate expectations.
+split_recommended: false
+depends_on:
+  - "PG-007"
+  - "PG-013"
+unblocks: []
+acceptance_criteria:
+  - "GATE-010 Route Command Failure Rules remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0025
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0026
+preserved_exact_tokens:
+  - "GATE-010"
+  - "public wrapper command"
+  - "deprecated alias"
+  - "route_target"
+  - "OpenSubject"
+  - "request_id"
+  - "tier_id"
+  - "git*"
+  - "actions*"
+negative_constraints:
+  - "Deprecated aliases must not be treated as independent canonical commands."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Crosswalk.md"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-032 - GATE-010 Evidence Payload
+
+```yaml
+plan_unit_id: PG-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  GATE-010 evidence captures command identity, kind, metadata, binding, emitted contract or action family, and invalid-row reason.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-031"
+unblocks: []
+acceptance_criteria:
+  - "GATE-010 Evidence Payload remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0026
+preserved_exact_tokens:
+  - "command ID"
+  - "command kind"
+  - "normalization metadata"
+  - "handler binding"
+  - "failure reason"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/UI_Wiring_Rules.md, ContractName:Plans/evidence.schema.json, ContractName:Plans/Wiring_Matrix.schema.json"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-033 - GATE-011 Traceability Pass/Fail Conditions
+
+```yaml
+plan_unit_id: PG-033
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  GATE-011 requires requirements coverage JSON/Markdown sync, schema validity, zero uncovered or orphaned coverage, and per-requirement node plus acceptance mappings.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-016"
+unblocks: []
+acceptance_criteria:
+  - "GATE-011 Traceability Pass/Fail Conditions remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0027
+preserved_exact_tokens:
+  - "GATE-011"
+  - "requirements_coverage.json"
+  - "requirements_coverage.md"
+  - "uncovered_requirements[]"
+  - "orphaned_node_requirement_refs[]"
+  - "uncovered_acceptance[]"
+negative_constraints:
+  - "All uncovered, orphaned, and missing mapping lists must be empty."
+preserved_contractrefs:
+  - "ContractRef: SchemaID:pm.requirements_coverage.schema.v1, Gate:GATE-011"
+  - "ContractRef: SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, ContractName:Plans/Project_Output_Artifacts.md§11.4, Gate:GATE-011"
+  - "ContractRef: Gate:GATE-011"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-034 - GATE-011 Evidence And Enforcement Status
+
+```yaml
+plan_unit_id: PG-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  GATE-011 evidence must include machine-readable check entries and failure-detail arrays; script enforcement is manual_pending_traceability_tooling with named owner docs until a validator checks live requirements coverage artifacts.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-033"
+unblocks: []
+acceptance_criteria:
+  - "GATE-011 Evidence And Enforcement Status remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "GATE-011 has owners for its manual-pending status and cannot be reported as PASS from run-gates alone."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0027
+preserved_exact_tokens:
+  - "requirements_coverage_json_validates"
+  - "requirements_coverage_md_sync"
+  - "per_requirement_minimum_mappings"
+  - "integrity_checks_pass"
+  - "missing_in_md_ids[]"
+negative_constraints:
+  - "All failure-detail arrays must be empty on PASS."
+preserved_contractrefs:
+  - "ContractRef: SchemaID:evidence.schema.json, Gate:GATE-011"
+  - "ContractRef: SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:evidence.schema.json, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+### PG-035 - GATE-012 Requirements Quality Boundary
+
+```yaml
+plan_unit_id: PG-035
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  GATE-012 evaluates the latest requirements quality report and blocks executable plan-node progression unless the report exists, validates, passes, and has no clarification items.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines verification, runtime, governance, or evidence behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PG-016"
+  - "PG-018"
+unblocks: []
+acceptance_criteria:
+  - "GATE-012 Requirements Quality Boundary remains addressable as a fine-grained Progression Gates PlanUnit."
+  - "ContractRefs, anchors, exact tokens, and negative constraints from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: progression_gate_drift
+reasoning_tier: standard
+context_scope: progression_gates
+implementation_surfaces:
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0027
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0028
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Progression_Gates-S0029
+preserved_exact_tokens:
+  - "GATE-012"
+  - "requirements_quality_report.json"
+  - "pm.requirements_quality_report.schema.v1"
+  - "verdict == \"PASS\""
+  - "needs_user_clarification[]"
+  - "BLOCKED"
+  - "FAIL"
+negative_constraints:
+  - "Puppet Master MUST NOT start or resume executable plan-node progression while GATE-012 is BLOCKED or FAIL."
+preserved_contractrefs:
+  - "ContractRef: Gate:GATE-012, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/Decision_Policy.md#6.4-requirements-quality-report-boundary-severity-and-persistence"
+  - "ContractRef: Gate:GATE-012, SchemaID:pm.requirements_quality_report.schema.v1"
+owner_hints:
+  - Plans/Progression_Gates.md
+```
+
+<<< CONTEXT_AFTER 2266-2277 >>>
+### PG-036 - GATE-012 Clarification Escalation
+
+```yaml
+plan_unit_id: PG-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Progression_Gates.md
+canonical_text: >-
+  Non-empty needs_user_clarification[] puts GATE-012 in BLOCKED and must surface every clarification item through the UI escalation path until explicit user input resolves it.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible blocked clarification escalation through thread and dashboard UI surfaces.

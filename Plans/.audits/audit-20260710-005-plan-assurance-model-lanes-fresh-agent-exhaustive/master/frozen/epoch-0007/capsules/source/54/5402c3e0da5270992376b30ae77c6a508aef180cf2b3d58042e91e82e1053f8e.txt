@@ -1,0 +1,378 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4863-4874 >>>
+L00004863	- MUST NOT change final correctness
+L00004864	- ripgrep
+L00004865	- no cross-project index merging
+L00004866	negative_constraints: []
+L00004867	preserved_contractrefs:
+L00004868	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md'
+L00004869	compatibility_only_notes: []
+L00004870	stale_retired_dispositions: []
+L00004871	owner_hints:
+L00004872	- Plans/Tools.md
+L00004873	```
+L00004874	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4875-5223 >>>
+L00004875	### T-047 - Grep Sparse N-Gram Extraction And Frequency Table
+L00004876	
+L00004877	```yaml
+L00004878	plan_unit_id: T-047
+L00004879	unit_type: requirement
+L00004880	status: accepted
+L00004881	owner_doc: Plans/Tools.md
+L00004882	canonical_text: Grep index build extracts all sparse n-grams through `build_all`; query time extracts a `minimal-covering`
+L00004883	  set; boundary weighting uses the shipped 256x256 `u16` table and `effective[a][b] = α × base[a][b] + (1-α) × project[a][b]`;
+L00004884	  extraction stays byte-level.
+L00004885	gui_related: false
+L00004886	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00004887	split_recommended: false
+L00004888	depends_on:
+L00004889	- T-046
+L00004890	unblocks: []
+L00004891	acceptance_criteria:
+L00004892	- Fixed-width 3-gram fallback remains available when boundary weighting cannot place sparse boundaries.
+L00004893	- CRLF stripping and ASCII-only lowercase normalization are preserved.
+L00004894	- Non-ASCII bytes pass through unchanged.
+L00004895	validation_surfaces:
+L00004896	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004897	- python3 scripts/pm-plan-index.py validate
+L00004898	risk_class: tool_contract_drift
+L00004899	reasoning_tier: standard
+L00004900	context_scope: tools_phase2b_batch_183
+L00004901	implementation_surfaces:
+L00004902	- Plans/Tools.md
+L00004903	node_compile_hint:
+L00004904	  mode: grep_sparse_ngram_algorithm_contract
+L00004905	  create_worknodes: false
+L00004906	source_lineage:
+L00004907	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+L00004908	preserved_exact_tokens:
+L00004909	- build_all
+L00004910	- minimal-covering
+L00004911	- 256x256
+L00004912	- u16
+L00004913	- The Stack Smol
+L00004914	- effective[a][b] = α × base[a][b] + (1-α) × project[a][b]
+L00004915	- frequency_table.bin
+L00004916	- fixed-width 3-gram
+L00004917	- raw bytes
+L00004918	- u8::to_ascii_lowercase()
+L00004919	- "CRLF `\r`"
+L00004920	- hash("fo")
+L00004921	- hash("Fo")
+L00004922	negative_constraints: []
+L00004923	preserved_contractrefs:
+L00004924	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md'
+L00004925	compatibility_only_notes: []
+L00004926	stale_retired_dispositions: []
+L00004927	owner_hints:
+L00004928	- Plans/Tools.md
+L00004929	```
+L00004930	
+L00004931	### T-048 - Grep Query Planning Alternation And Skip Rules
+L00004932	
+L00004933	```yaml
+L00004934	plan_unit_id: T-048
+L00004935	unit_type: requirement
+L00004936	status: accepted
+L00004937	owner_doc: Plans/Tools.md
+L00004938	canonical_text: Regex HIR/literal extraction feeds xxh3 lookup, Roaring postings, branch intersection/union, file-map resolution,
+L00004939	  path/glob filtering, dirty paths, and ripgrep verification.
+L00004940	gui_related: false
+L00004941	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00004942	split_recommended: false
+L00004943	depends_on:
+L00004944	- T-047
+L00004945	unblocks: []
+L00004946	acceptance_criteria:
+L00004947	- Alternation uses union-of-intersections, not pure intersection.
+L00004948	- Index is skipped for no-literal queries, non-ASCII case-insensitive literals, and covering sets above 64 n-grams.
+L00004949	validation_surfaces:
+L00004950	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004951	- python3 scripts/pm-plan-index.py validate
+L00004952	risk_class: tool_contract_drift
+L00004953	reasoning_tier: standard
+L00004954	context_scope: tools_phase2b_batch_183
+L00004955	implementation_surfaces:
+L00004956	- Plans/Tools.md
+L00004957	node_compile_hint:
+L00004958	  mode: grep_query_planner_contract
+L00004959	  create_worknodes: false
+L00004960	source_lineage:
+L00004961	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+L00004962	preserved_exact_tokens:
+L00004963	- regex-syntax
+L00004964	- regex_syntax
+L00004965	- HIR
+L00004966	- regex_syntax::literal
+L00004967	- regex_syntax::literal::Seq
+L00004968	- xxh3
+L00004969	- lookup.bin
+L00004970	- Roaring Bitmap
+L00004971	- file_map.bin
+L00004972	- git cat-file --batch
+L00004973	- foo|bar
+L00004974	- .*
+L00004975	- '[a-z]+'
+L00004976	- \d{3}
+L00004977	- '>64 n-grams'
+L00004978	negative_constraints: []
+L00004979	preserved_contractrefs:
+L00004980	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md'
+L00004981	compatibility_only_notes: []
+L00004982	stale_retired_dispositions: []
+L00004983	owner_hints:
+L00004984	- Plans/Tools.md
+L00004985	```
+L00004986	
+L00004987	### T-049 - Grep Freshness Dirty Layer And Watcher Recovery
+L00004988	
+L00004989	```yaml
+L00004990	plan_unit_id: T-049
+L00004991	unit_type: requirement
+L00004992	status: accepted
+L00004993	owner_doc: Plans/Tools.md
+L00004994	canonical_text: PM-mediated writes update the dirty layer synchronously; watcher overflow marks indexed files dirty and re-anchors;
+L00004995	  stale snapshots remain queryable while refresh or re-anchor work runs.
+L00004996	gui_related: false
+L00004997	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00004998	split_recommended: false
+L00004999	depends_on:
+L00005000	- T-046
+L00005001	- T-047
+L00005002	unblocks: []
+L00005003	acceptance_criteria:
+L00005004	- Deleted dirty paths suppress stale base-index hits.
+L00005005	- Raw fallback remains reserved for missing, corrupted/building, disabled, or query-skip paths.
+L00005006	- Per-file verification races do not fail the whole query.
+L00005007	validation_surfaces:
+L00005008	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005009	- python3 scripts/pm-plan-index.py validate
+L00005010	risk_class: tool_contract_drift
+L00005011	reasoning_tier: standard
+L00005012	context_scope: tools_phase2b_batch_183
+L00005013	implementation_surfaces:
+L00005014	- Plans/Tools.md
+L00005015	node_compile_hint:
+L00005016	  mode: grep_freshness_recovery_contract
+L00005017	  create_worknodes: false
+L00005018	source_lineage:
+L00005019	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+L00005020	preserved_exact_tokens:
+L00005021	- dirty layer
+L00005022	- generation-aware path records
+L00005023	- IN_Q_OVERFLOW
+L00005024	- FSEvents "must scan"
+L00005025	- Windows RDCW
+L00005026	- 64 KB
+L00005027	- no stale-threshold cutoff
+L00005028	- no commit-count-based fallback threshold
+L00005029	- /corrupted/building
+L00005030	- ENOENT
+L00005031	- skip-and-continue
+L00005032	negative_constraints: []
+L00005033	preserved_contractrefs:
+L00005034	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md'
+L00005035	compatibility_only_notes: []
+L00005036	stale_retired_dispositions: []
+L00005037	owner_hints:
+L00005038	- Plans/Tools.md
+L00005039	```
+L00005040	
+L00005041	### T-050 - Grep Filtering And Path Safety
+L00005042	
+L00005043	```yaml
+L00005044	plan_unit_id: T-050
+L00005045	unit_type: requirement
+L00005046	status: accepted
+L00005047	owner_doc: Plans/Tools.md
+L00005048	canonical_text: Grep indexing respects ignore baselines, mandatory secret-path exclusions, binary detection, large-file thresholds,
+L00005049	  generated-file exclusions, path canonicalization, and project/cache containment.
+L00005050	gui_related: false
+L00005051	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00005052	split_recommended: false
+L00005053	depends_on:
+L00005054	- T-046
+L00005055	unblocks: []
+L00005056	acceptance_criteria:
+L00005057	- The generated-file exclusion default list is preserved.
+L00005058	- Paths from `.gitmodules`, dirty staging, and remote events are canonicalized and contained.
+L00005059	- Submodule paths containing `..` are rejected with a logged warning.
+L00005060	validation_surfaces:
+L00005061	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005062	- python3 scripts/pm-plan-index.py validate
+L00005063	risk_class: tool_contract_drift
+L00005064	reasoning_tier: standard
+L00005065	context_scope: tools_phase2b_batch_183
+L00005066	implementation_surfaces:
+L00005067	- Plans/Tools.md
+L00005068	node_compile_hint:
+L00005069	  mode: grep_filtering_path_safety
+L00005070	  create_worknodes: false
+L00005071	source_lineage:
+L00005072	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+L00005073	preserved_exact_tokens:
+L00005074	- .gitignore
+L00005075	- .ignore
+L00005076	- secret-path exclusions
+L00005077	- null-byte
+L00005078	- default 10 MB
+L00005079	- package-lock.json
+L00005080	- yarn.lock
+L00005081	- pnpm-lock.yaml
+L00005082	- '*.min.js'
+L00005083	- '*.min.css'
+L00005084	- '*.map'
+L00005085	- '*.generated.*'
+L00005086	- '*.g.dart'
+L00005087	- '*.pb.go'
+L00005088	- starts_with(project_root)
+L00005089	- starts_with(cache_root)
+L00005090	- .gitmodules
+L00005091	- ..
+L00005092	negative_constraints: []
+L00005093	preserved_contractrefs: []
+L00005094	compatibility_only_notes: []
+L00005095	stale_retired_dispositions: []
+L00005096	owner_hints:
+L00005097	- Plans/Tools.md
+L00005098	```
+L00005099	
+L00005100	### T-051 - Grep Indexing And Search GUI Consumers
+L00005101	
+L00005102	```yaml
+L00005103	plan_unit_id: T-051
+L00005104	unit_type: requirement
+L00005105	status: accepted
+L00005106	owner_doc: Plans/Tools.md
+L00005107	canonical_text: The user-facing Search regex mode and optional Indexing setting consume the same sparse-n-gram path without
+L00005108	  weakening backend safeguards.
+L00005109	gui_related: true
+L00005110	gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+L00005111	  visual tool surfaces.
+L00005112	split_recommended: false
+L00005113	depends_on:
+L00005114	- T-046
+L00005115	- T-050
+L00005116	unblocks: []
+L00005117	acceptance_criteria:
+L00005118	- '`Follow symlinks` remains off by default.'
+L00005119	- Enabled symlink targets are still canonicalized and project-root-contained.
+L00005120	- Search panel regex mode inherits dirty-layer guarantees and fallback causes.
+L00005121	validation_surfaces:
+L00005122	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005123	- python3 scripts/pm-plan-index.py validate
+L00005124	risk_class: tool_contract_drift
+L00005125	reasoning_tier: standard
+L00005126	context_scope: tools_phase2b_batch_183
+L00005127	implementation_surfaces:
+L00005128	- Plans/Tools.md
+L00005129	node_compile_hint:
+L00005130	  mode: grep_search_panel_gui_consumer
+L00005131	  create_worknodes: false
+L00005132	source_lineage:
+L00005133	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+L00005134	preserved_exact_tokens:
+L00005135	- Search panel regex toggle is ON
+L00005136	- Indexing settings
+L00005137	- Follow symlinks
+L00005138	- OFF by default
+L00005139	- --no-follow
+L00005140	- no-follow
+L00005141	- starts_with(project_root)
+L00005142	- dirty-layer freshness guarantee
+L00005143	negative_constraints: []
+L00005144	preserved_contractrefs:
+L00005145	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md'
+L00005146	compatibility_only_notes: []
+L00005147	stale_retired_dispositions: []
+L00005148	owner_hints:
+L00005149	- Plans/Tools.md
+L00005150	```
+L00005151	
+L00005152	### T-052 - Grep Performance Publication And Rust Foundation
+L00005153	
+L00005154	```yaml
+L00005155	plan_unit_id: T-052
+L00005156	unit_type: requirement
+L00005157	status: accepted
+L00005158	owner_doc: Plans/Tools.md
+L00005159	canonical_text: Grep index targets <20 ms queries, bounded build and storage envelopes, generation publication with flush,
+L00005160	  cancellation checks, and Rust crate foundations without treating study references as dependencies.
+L00005161	gui_related: false
+L00005162	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00005163	split_recommended: false
+L00005164	depends_on:
+L00005165	- T-047
+L00005166	- T-048
+L00005167	- T-049
+L00005168	unblocks: []
+L00005169	acceptance_criteria:
+L00005170	- Generation publication and cancellation handoff are preserved.
+L00005171	- Rust crate list and scheduling notes are preserved.
+L00005172	- '`trigrep` and `fast-grep-rust` remain study references only.'
+L00005173	validation_surfaces:
+L00005174	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005175	- python3 scripts/pm-plan-index.py validate
+L00005176	risk_class: tool_contract_drift
+L00005177	reasoning_tier: standard
+L00005178	context_scope: tools_phase2b_batch_183
+L00005179	implementation_surfaces:
+L00005180	- Plans/Tools.md
+L00005181	node_compile_hint:
+L00005182	  mode: grep_performance_publication_contract
+L00005183	  create_worknodes: false
+L00005184	source_lineage:
+L00005185	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0034
+L00005186	preserved_exact_tokens:
+L00005187	- <20 ms
+L00005188	- <2 minutes
+L00005189	- <=500 MB
+L00005190	- <10 minutes
+L00005191	- <=5 GB
+L00005192	- <30 minutes
+L00005193	- <=50 GB
+L00005194	- 1.5x index size
+L00005195	- RSS contribution typically <500 MB
+L00005196	- 1-10%
+L00005197	- thread-priority
+L00005198	- regex-syntax
+L00005199	- roaring
+L00005200	- memmap2
+L00005201	- xxhash-rust
+L00005202	- arc-swap
+L00005203	- ThreadPriority::Min
+L00005204	- pthread_set_qos_class_self_np(QOS_CLASS_UTILITY)
+L00005205	- gen-{N+1}/
+L00005206	- File::sync_all();
+L00005207	- sync_all
+L00005208	- CancellationToken
+L00005209	- O(index_size)
+L00005210	- trigrep
+L00005211	- fast-grep-rust
+L00005212	- Cursor
+L00005213	- ClickHouse
+L00005214	- GitHub Code Search
+L00005215	negative_constraints: []
+L00005216	preserved_contractrefs:
+L00005217	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md'
+L00005218	compatibility_only_notes: []
+L00005219	stale_retired_dispositions: []
+L00005220	owner_hints:
+L00005221	- Plans/Tools.md
+L00005222	```
+L00005223	
+
+<<< CONTEXT_AFTER canonical_document_lines=5224-5235 >>>
+L00005224	### T-053 - Logsearch Logread Project Logs Contract
+L00005225	
+L00005226	```yaml
+L00005227	plan_unit_id: T-053
+L00005228	unit_type: requirement
+L00005229	status: accepted
+L00005230	owner_doc: Plans/Tools.md
+L00005231	canonical_text: '`logsearch` indexes summaries and snippets; `logread` fetches bounded full payloads by `event_id` or `blob_ref`;
+L00005232	  full payload remains out of the index and all persisted or returned log material is strictly scrubbed.'
+L00005233	gui_related: false
+L00005234	gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+L00005235	split_recommended: false

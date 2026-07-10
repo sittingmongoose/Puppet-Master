@@ -1,0 +1,382 @@
+<<< CONTEXT_BEFORE 4689-4700 >>>
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0069
+preserved_exact_tokens:
+  - "auto-commit"
+  - "auto-push"
+  - "one-click push"
+  - "dirty / committed / ready-to-push"
+negative_constraints:
+  - "Auto-push remains default disabled."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+
+<<< AUTHORITATIVE_CORE 4701-5053 >>>
+### CRAU-071 - ca_profile Generation Scope And Editability
+
+```yaml
+plan_unit_id: CRAU-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  If ca_profile.xml does not exist, Puppet Master generates it and tells the user
+  it still needs configuration or review; the default scope is shared
+  cross-project maintainer profile, per-project maintainer profile override is
+  optional, and all ca_profile.xml fields must remain editable by the user.
+gui_related: true
+gui_classification_reason: Generated-profile review messaging, scope controls, and editability are visible profile editor behavior.
+split_recommended: true
+split_recommendation_reason: This unit folds ca_profile behavior parent, generation, scope, and editability rule spans.
+depends_on: [CRAU-052, CRAU-060]
+unblocks: [CRAU-072, CRAU-073, CRAU-083]
+acceptance_criteria:
+  - Missing ca_profile.xml is generated.
+  - User is told generated profile still needs configuration or review.
+  - Shared cross-project maintainer profile is default scope.
+  - Per-project maintainer profile override is available.
+  - All ca_profile.xml fields remain editable by the user.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: profile_scope_editability_drift
+reasoning_tier: high
+context_scope: ca_profile_generation_scope_editability
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: ca_profile_generation_scope_editability
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0070
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0071
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0072
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0073
+preserved_exact_tokens:
+  - "`ca_profile.xml`"
+  - "shared cross-project maintainer profile"
+  - "per-project maintainer profile"
+negative_constraints: []
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-072 - ca_profile Image Handling And Public Metadata Reminder
+
+```yaml
+plan_unit_id: CRAU-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  The ca_profile.xml editor supports both uploaded or selected images copied
+  into the managed template repository and external hosted image URLs; uploaded
+  images default to repo-managed assets, and auto-generated profiles show a clear
+  reminder that public-facing maintainer metadata should be configured before the
+  repo is treated as final.
+gui_related: true
+gui_classification_reason: Image-mode selection and public metadata reminder are visible profile editor behavior.
+split_recommended: true
+split_recommendation_reason: This unit folds image handling and user-visible messaging spans.
+depends_on: [CRAU-052, CRAU-071]
+unblocks: [CRAU-083]
+acceptance_criteria:
+  - Profile editor supports upload/select image copied into managed template repository.
+  - Profile editor supports external hosted image URL.
+  - Uploaded images default to repo-managed assets.
+  - Auto-generated profile shows public-facing maintainer metadata review reminder.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: profile_asset_and_metadata_review_gap
+reasoning_tier: standard
+context_scope: ca_profile_image_handling_public_metadata_reminder
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: ca_profile_asset_message_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0074
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0075
+preserved_exact_tokens:
+  - "external hosted image URL"
+  - "repo-managed asset"
+  - "public-facing maintainer metadata"
+negative_constraints: []
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-073 - Docker Manager Scope Split And Migration Alias State
+
+```yaml
+plan_unit_id: CRAU-073
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Docker Manager scope rules are normative: Hide Docker Manager when not used in
+  Project. is global, Hide Docker Manage when not used in Project. is a
+  migration alias only, Docker Manager navigation/dock/panel state and
+  template-repo configuration/status are project-scoped, widget layouts are
+  project-scoped with limited global fallback, shared ca_profile state is global
+  unless per-project override is enabled, and effective-auth snapshots are
+  advisory cached state until revalidation.
+gui_related: true
+gui_classification_reason: Scope, migration aliasing, navigation state, widget layout scope, and advisory auth snapshots affect visible Docker Manager behavior.
+split_recommended: true
+split_recommendation_reason: Source spans S0076-S0077 mix scope rules with implementation state inventory and blocked-outcome state.
+depends_on: [CRAU-004, CRAU-006, CRAU-007, CRAU-019, CRAU-063]
+unblocks: [CRAU-074, CRAU-075]
+acceptance_criteria:
+  - Hide Docker Manager when not used in Project. is global.
+  - Hide Docker Manage when not used in Project. is migration alias only and migrates on read.
+  - Docker Manager navigation/dock/panel state and template-repo state are project-scoped.
+  - Shared ca_profile state is global unless per-project override is enabled.
+  - Effective-auth snapshots remain advisory until revalidation.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: scope_storage_drift
+reasoning_tier: high
+context_scope: docker_manager_scope_split_migration_alias
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: state_scope_split
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0076
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0077
+preserved_exact_tokens:
+  - "`Hide Docker Manager when not used in Project.`"
+  - "`Hide Docker Manage when not used in Project.`"
+  - "TemplateRepoStatus"
+  - "effective-auth snapshots"
+compatibility_only_notes:
+  - "The older Hide Docker Manage setting key is a migration alias only."
+negative_constraints:
+  - "The legacy Hide Docker Manage key must not become a separate active setting."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-074 - Implementation State Inventory And Blocked Outcome State
+
+```yaml
+plan_unit_id: CRAU-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Implementation-facing docs preserve Docker Manager state concepts for detection,
+  hide setting aliasing, requested/effective auth, DockerHub identity, namespace,
+  repository, privacy, push policy, tag defaults, Unraid toggles, template-repo
+  location/remote/branch/status, auto-push, ca_profile scope, image mode, and
+  blocked remote side effects, which remain first-class state transitions
+  distinct from runtime failures in UI, event, and persisted result state.
+gui_related: true
+gui_classification_reason: The state inventory drives visible settings, status, blocked views, and persisted UI behavior.
+split_recommended: true
+split_recommendation_reason: Source span S0077 mixes scope, state inventory, and blocked outcome requirements.
+depends_on: [CRAU-019, CRAU-029, CRAU-043, CRAU-063, CRAU-073]
+unblocks: [CRAU-084]
+acceptance_criteria:
+  - Implementation docs preserve every listed Docker Manager state concept.
+  - Blocked remote side effects remain distinguishable from runtime failures in UI state, event state, and persisted results.
+  - Effective-auth snapshots are advisory cached state until revalidation.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: blocked_state_or_projection_drift
+reasoning_tier: high
+context_scope: implementation_state_inventory_blocked_outcome
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: implementation_state_inventory
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0077
+preserved_exact_tokens:
+  - "requested auth mode"
+  - "effective auth capability set"
+  - "selected namespace and repository"
+  - "selected repository privacy"
+  - "auto-generate Unraid XML toggle"
+  - "managed template-repo enabled toggle"
+  - "uploaded image asset mode vs external URL mode"
+negative_constraints:
+  - "Blocked remote side effects must not collapse into runtime failures."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-075 - Orchestrator Vocabulary Consumer Boundary
+
+```yaml
+plan_unit_id: CRAU-075
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Docker Manager consumes shared orchestrator/runtime vocabulary rather than
+  owning terms such as Feature Seam, Work Package, package/seam overseers,
+  promotion class, lane pool, contamination, safe point, restore point, rollback,
+  and effective execution identity; Docker Manager copy preserves the boundary
+  between execution truth, projections, and page or widget/page UI-only overlays.
+gui_related: true
+gui_classification_reason: Vocabulary ownership affects user-facing Docker Manager copy, badges, receipts, disabled controls, and help text.
+split_recommended: true
+split_recommendation_reason: Source span S0078 is ownership-sensitive and split into vocabulary, approval, identity, routing, and help units.
+depends_on: [CRAU-015, CRAU-023, CRAU-073]
+unblocks: [CRAU-076, CRAU-077, CRAU-078, CRAU-079, CRAU-080]
+acceptance_criteria:
+  - Docker Manager does not re-own canonical definitions from Glossary, Crosswalk, Decision Policy, 00-plans-index, or plans-index.
+  - Docker Manager copy preserves execution truth versus projection versus UI-only overlay boundaries.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: owner_boundary_drift
+reasoning_tier: high
+context_scope: orchestrator_vocabulary_consumer_boundary
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/Glossary.md
+  - Plans/Crosswalk.md
+  - Plans/Decision_Policy.md
+  - Plans/00-plans-index.md
+node_compile_hint:
+  mode: vocabulary_consumer_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0078
+preserved_exact_tokens:
+  - "Feature Seam"
+  - "Work Package"
+  - "Promotion"
+  - "safe point"
+  - "restore point"
+  - "effective execution identity"
+negative_constraints:
+  - "Docker Manager must not re-own shared orchestrator/runtime vocabulary."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/Glossary.md
+  - Plans/Crosswalk.md
+```
+
+### CRAU-076 - Hard Gate And Action-Specific Confirmation Boundary
+
+```yaml
+plan_unit_id: CRAU-076
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  hard_gate, HITL /blocked, and remote-side-effect actions use the canonical
+  approval/blocked flow and cannot be downgraded into generic UI confirmation;
+  action-specific confirmation rules remain distinct for create repository,
+  push, rollback, cleanup, delete, and cluster mutation flows with their own
+  reversibility and confirmation evidence.
+gui_related: true
+gui_classification_reason: Approval/blocker rendering and confirmation copy are visible Docker Manager interaction behavior.
+split_recommended: true
+split_recommendation_reason: Source span S0078 mixes approval taxonomy with identity, routing, and help semantics.
+depends_on: [CRAU-015, CRAU-031, CRAU-043, CRAU-075]
+unblocks: [CRAU-081, CRAU-084]
+acceptance_criteria:
+  - hard_gate and HITL /blocked remote-side-effect actions use canonical approval/blocked flow.
+  - Docker Manager may render blockers but must not downgrade them into generic local confirmation copy.
+  - Action-specific confirmation remains distinct from HITL approval.
+  - Non-bypassable hard_gate actions use allowed action IDs rather than generic modals.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: approval_bypass
+reasoning_tier: high
+context_scope: hard_gate_action_specific_confirmation
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: confirmation_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0078
+preserved_exact_tokens:
+  - "`hard_gate`"
+  - "`/blocked`"
+  - "`remote-side-effect`"
+  - "`allowed_action_ids`"
+negative_constraints:
+  - "Docker Manager must not downgrade canonical blockers into generic UI confirmation."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-077 - Requested Effective Execution Identity Disclosure
+
+```yaml
+plan_unit_id: CRAU-077
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Requested versus effective execution identity remains runtime-facing and
+  auditable across requested/effective platform, model, variant, auth, account,
+  Persona, provider/auth/account selection flow, selection/switch reason, and
+  skipped, honored, or clamped controls; requested_account_policy is not a
+  substitute for a user-selected requested_account_id.
+gui_related: true
+gui_classification_reason: Requested/effective identity, switch reasons, and skipped/clamped controls are visible state disclosure.
+split_recommended: true
+split_recommendation_reason: Source span S0078 combines identity disclosure with routing and help semantics.
+depends_on: [CRAU-018, CRAU-029, CRAU-075]
+unblocks: [CRAU-079]
+acceptance_criteria:
+  - Requested/effective execution identity remains runtime-facing and auditable.
+  - requested_account_policy does not replace requested_account_id.
+  - Concrete account selection and fallback remain visible to provider, chat-thread, /chat/SCM, and SCM consumers.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: identity_visibility_gap
+reasoning_tier: high
+context_scope: requested_effective_execution_identity
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: requested_effective_identity
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0078
+preserved_exact_tokens:
+  - "`requested`"
+  - "`effective`"
+  - "`selection_reason`"
+  - "`/clamped`"
+  - "`/switch`"
+  - "`requested_account_policy`"
+  - "`requested_account_id`"
+negative_constraints:
+  - "`requested_account_policy` is not a substitute for a user-selected `requested_account_id`."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+
+<<< CONTEXT_AFTER 5054-5065 >>>
+### CRAU-078 - Runtime Projection Scope And Stale Key Disposition
+
+```yaml
+plan_unit_id: CRAU-078
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Runtime/projection events classify as runtime-internal, operator-visible, or
+  chat-thread resolution events; multi-project, multi-account, and multi-worktree
+  orchestration scopes identity and references by project, package, seam, node,
+  account, and worktree, while stale tier_id usage is migration-only

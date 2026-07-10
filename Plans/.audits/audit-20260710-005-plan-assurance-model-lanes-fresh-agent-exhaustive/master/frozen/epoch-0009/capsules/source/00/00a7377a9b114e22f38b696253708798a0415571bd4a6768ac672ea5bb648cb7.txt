@@ -1,0 +1,315 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1062-1073 >>>
+L00001062	  - "indeterminate_remote_outcome"
+L00001063	  - "owned_by_run"
+L00001064	  - "dirty_worktree"
+L00001065	  - "worktree_conflict"
+L00001066	  - "Replay from last known good"
+L00001067	negative_constraints:
+L00001068	  - "Do not omit missing downstream links or invent lineage."
+L00001069	  - "Do not dispatch Actions-dependent steps from stale readiness snapshots."
+L00001070	owner_hints:
+L00001071	  - Plans/Orchestrator_Page.md
+L00001072	```
+L00001073	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1074-1359 >>>
+L00001074	### OP-013 - Owner Surface Command Routing
+L00001075	
+L00001076	```yaml
+L00001077	plan_unit_id: OP-013
+L00001078	unit_type: constraint
+L00001079	status: accepted
+L00001080	owner_doc: Plans/Orchestrator_Page.md
+L00001081	canonical_text: >-
+L00001082	  Orchestrator command exposure for recovery and navigation is route-open only into owner surfaces, while runtime mutation recovery maps through ordered allowed_action_ids to cmd.runtime commands.
+L00001083	gui_related: true
+L00001084	gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
+L00001085	split_recommended: false
+L00001086	depends_on: []
+L00001087	unblocks: []
+L00001088	acceptance_criteria:
+L00001089	  - Orchestrator may surface route-open commands into Source Control, GitHub Actions, Docker Manager, Kubernetes, and receipt views.
+L00001090	  - Route payloads carry run_id, node_id, blocked_sequence, receipt_ref, and target owner context where available.
+L00001091	  - Mutation recovery remains owned by runtime commands.
+L00001092	validation_surfaces:
+L00001093	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001094	  - python3 scripts/pm-plan-index.py validate
+L00001095	risk_class: owner_surface_command_overreach
+L00001096	reasoning_tier: standard
+L00001097	context_scope: orchestrator_page
+L00001098	implementation_surfaces:
+L00001099	  - Plans/Orchestrator_Page.md
+L00001100	node_compile_hint:
+L00001101	  mode: constraint
+L00001102	  create_worknodes: false
+L00001103	source_lineage:
+L00001104	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0043
+L00001105	preserved_exact_tokens:
+L00001106	  - "cmd.orchestrator.open_in_source_control"
+L00001107	  - "cmd.orchestrator.open_in_github_actions"
+L00001108	  - "cmd.orchestrator.open_in_docker_manager"
+L00001109	  - "cmd.orchestrator.open_kubernetes"
+L00001110	  - "cmd.orchestrator.open_receipt"
+L00001111	  - "allowed_action_ids[]"
+L00001112	  - "cmd.runtime.*"
+L00001113	negative_constraints:
+L00001114	  - "Orchestrator MUST NOT mint panel-local mutation semantics for Source Control, GitHub Actions, Docker Manager, Kubernetes, evidence, or artifact actions."
+L00001115	owner_hints:
+L00001116	  - Plans/Orchestrator_Page.md
+L00001117	```
+L00001118	
+L00001119	### OP-014 - Debug Resume Target Revalidation
+L00001120	
+L00001121	```yaml
+L00001122	plan_unit_id: OP-014
+L00001123	unit_type: constraint
+L00001124	status: accepted
+L00001125	owner_doc: Plans/Orchestrator_Page.md
+L00001126	canonical_text: >-
+L00001127	  Before resuming a Debug investigation, Orchestrator revalidates stored session identity and remote authority, then keeps the run attention_required when reconnection or target selection is required.
+L00001128	gui_related: false
+L00001129	gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.
+L00001130	split_recommended: false
+L00001131	depends_on: []
+L00001132	unblocks: []
+L00001133	acceptance_criteria:
+L00001134	  - dev_session_id, browser_session_id, DAP session identity, and remote authority are checked against stored route and runtime identity.
+L00001135	  - Recoverable stale identity yields session_reconnect_required.
+L00001136	  - Missing deterministic rebinding target yields target_selection_required.
+L00001137	validation_surfaces:
+L00001138	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001139	  - python3 scripts/pm-plan-index.py validate
+L00001140	risk_class: debug_resume_identity_drift
+L00001141	reasoning_tier: standard
+L00001142	context_scope: orchestrator_page
+L00001143	implementation_surfaces:
+L00001144	  - Plans/Orchestrator_Page.md
+L00001145	node_compile_hint:
+L00001146	  mode: constraint
+L00001147	  create_worknodes: false
+L00001148	source_lineage:
+L00001149	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0046
+L00001150	preserved_exact_tokens:
+L00001151	  - "dev_session_id"
+L00001152	  - "browser_session_id"
+L00001153	  - "DAP session identity"
+L00001154	  - "attention_required_reason_code = session_reconnect_required"
+L00001155	  - "attention_required_reason_code = target_selection_required"
+L00001156	negative_constraints:
+L00001157	  - "Orchestrator must not silently mint or infer a different target identity to continue execution."
+L00001158	owner_hints:
+L00001159	  - Plans/Orchestrator_Page.md
+L00001160	```
+L00001161	
+L00001162	### OP-015 - Source Control And Worktree Boundary
+L00001163	
+L00001164	```yaml
+L00001165	plan_unit_id: OP-015
+L00001166	unit_type: requirement
+L00001167	status: accepted
+L00001168	owner_doc: Plans/Orchestrator_Page.md
+L00001169	canonical_text: >-
+L00001170	  Orchestrator remains lane-pool operational truth while Source Control remains the concrete repo and worktree operator; rows, review routes, conflict actions, receipts, and cross-surface links preserve run, package, lane, worktree, repo, branch, head, receipt, and recovery lineage.
+L00001171	gui_related: true
+L00001172	gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
+L00001173	split_recommended: true
+L00001174	split_recommendation_reason: >-
+L00001175	  S0032 carries worktree display compatibility while S0060-S0062 carry the owner boundary and handshake.
+L00001176	depends_on: []
+L00001177	unblocks: []
+L00001178	acceptance_criteria:
+L00001179	  - Worktree rows display owning package, lane, run refs, lifecycle state, and blocked/recovery state.
+L00001180	  - Conflict cards route to Source Control Changes through cmd.source_control.open_conflict.
+L00001181	  - Cross-surface links reopen with stable context after restart or label partial lineage when incomplete.
+L00001182	validation_surfaces:
+L00001183	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001184	  - python3 scripts/pm-plan-index.py validate
+L00001185	risk_class: source_control_boundary_drift
+L00001186	reasoning_tier: standard
+L00001187	context_scope: orchestrator_page
+L00001188	implementation_surfaces:
+L00001189	  - Plans/Orchestrator_Page.md
+L00001190	  - Plans/WorktreeGitImprovement.md
+L00001191	  - Plans/UI_Command_Catalog.md
+L00001192	  - Plans/storage-plan.md
+L00001193	node_compile_hint:
+L00001194	  mode: requirement
+L00001195	  create_worknodes: false
+L00001196	source_lineage:
+L00001197	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0012
+L00001198	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0060
+L00001199	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0062
+L00001200	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+L00001201	preserved_exact_tokens:
+L00001202	  - "repo/worktree/branch/head"
+L00001203	  - "Open Conflict Assistant"
+L00001204	  - "cmd.source_control.open_conflict"
+L00001205	  - "partial lineage"
+L00001206	  - "lane-pool operational truth"
+L00001207	  - "concrete repo/worktree operator"
+L00001208	negative_constraints:
+L00001209	  - "Never silently omit missing hops or invent repo, worktree, branch, head, receipt, or recovery targets."
+L00001210	preserved_contractrefs:
+L00001211	  - "ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md"
+L00001212	owner_hints:
+L00001213	  - Plans/Orchestrator_Page.md
+L00001214	```
+L00001215	
+L00001216	### OP-016 - Owner First Canonicalization And Reconciliation Readiness
+L00001217	
+L00001218	```yaml
+L00001219	plan_unit_id: OP-016
+L00001220	unit_type: validation_rule
+L00001221	status: accepted
+L00001222	owner_doc: Plans/Orchestrator_Page.md
+L00001223	canonical_text: >-
+L00001224	  Owner-doc corrections precede consumer and mirror cleanup, open owner-decision guardrails remain explicit, and reconciliation readiness is classified into still-structural gaps, spec-integrity failures, and plain cleanup buckets.
+L00001225	gui_related: false
+L00001226	gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.
+L00001227	split_recommended: true
+L00001228	split_recommendation_reason: >-
+L00001229	  S0032 includes design-open and authority presentation guardrails in broad scope prose.
+L00001230	depends_on: []
+L00001231	unblocks: []
+L00001232	acceptance_criteria:
+L00001233	  - Owner corrections happen before consumer and mirror cleanup.
+L00001234	  - Fidelity audit reruns after owner and consumer corrections are in place.
+L00001235	  - Open owner decisions remain visible until their owning docs close them.
+L00001236	validation_surfaces:
+L00001237	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001238	  - python3 scripts/pm-plan-index.py validate
+L00001239	risk_class: canonicalization_false_closure
+L00001240	reasoning_tier: standard
+L00001241	context_scope: orchestrator_page
+L00001242	implementation_surfaces:
+L00001243	  - Plans/Orchestrator_Page.md
+L00001244	node_compile_hint:
+L00001245	  mode: validation_rule
+L00001246	  create_worknodes: false
+L00001247	source_lineage:
+L00001248	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0003
+L00001249	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0066
+L00001250	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+L00001251	preserved_exact_tokens:
+L00001252	  - "owner-doc corrections"
+L00001253	  - "fidelity audit"
+L00001254	  - "design-open"
+L00001255	  - "/owner"
+L00001256	  - "still-structural gaps"
+L00001257	  - "spec-integrity failures"
+L00001258	negative_constraints:
+L00001259	  - "Do not hide owner decisions or collapse authority presentation to one monolithic Puppet Master center."
+L00001260	owner_hints:
+L00001261	  - Plans/Orchestrator_Page.md
+L00001262	```
+L00001263	
+L00001264	### OP-017 - Glossary And Help Governance
+L00001265	
+L00001266	```yaml
+L00001267	plan_unit_id: OP-017
+L00001268	unit_type: requirement
+L00001269	status: accepted
+L00001270	owner_doc: Plans/Orchestrator_Page.md
+L00001271	canonical_text: >-
+L00001272	  Glossary and help coverage use stable canonical terms, layered help, a single help-entry template, related-concept clusters, and asymmetric lane/worktree explanations across Orchestrator and Source Control.
+L00001273	gui_related: false
+L00001274	gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.
+L00001275	split_recommended: true
+L00001276	split_recommendation_reason: >-
+L00001277	  S0032 includes lane/worktree help asymmetry while S0063-S0065 carry the help structure.
+L00001278	depends_on: []
+L00001279	unblocks: []
+L00001280	acceptance_criteria:
+L00001281	  - Glossary covers rewrite-critical objects, states, and trust terms.
+L00001282	  - Help is layered as inline help, context help, and canonical help-entry pages.
+L00001283	  - Help entries preserve canonical term, trigger conditions, operator meaning, routes, related concepts, and recovery guidance.
+L00001284	validation_surfaces:
+L00001285	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001286	  - python3 scripts/pm-plan-index.py validate
+L00001287	risk_class: help_glossary_drift
+L00001288	reasoning_tier: standard
+L00001289	context_scope: orchestrator_page
+L00001290	implementation_surfaces:
+L00001291	  - Plans/Orchestrator_Page.md
+L00001292	node_compile_hint:
+L00001293	  mode: requirement
+L00001294	  create_worknodes: false
+L00001295	source_lineage:
+L00001296	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0017
+L00001297	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0027
+L00001298	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0063
+L00001299	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0064
+L00001300	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0065
+L00001301	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+L00001302	preserved_exact_tokens:
+L00001303	  - "inline help"
+L00001304	  - "context help"
+L00001305	  - "canonical term"
+L00001306	  - "trigger conditions"
+L00001307	  - "operator meaning"
+L00001308	  - "related concepts"
+L00001309	  - "lane"
+L00001310	  - "worktree"
+L00001311	negative_constraints:
+L00001312	  - "No additional negative constraints beyond the canonical text."
+L00001313	owner_hints:
+L00001314	  - Plans/Orchestrator_Page.md
+L00001315	```
+L00001316	
+L00001317	### OP-018 - Orchestrator Wide Scale Contract
+L00001318	
+L00001319	```yaml
+L00001320	plan_unit_id: OP-018
+L00001321	unit_type: requirement
+L00001322	status: accepted
+L00001323	owner_doc: Plans/Orchestrator_Page.md
+L00001324	canonical_text: >-
+L00001325	  Dense Orchestrator tabs require slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors across tabs.
+L00001326	gui_related: true
+L00001327	gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
+L00001328	split_recommended: false
+L00001329	depends_on: []
+L00001330	unblocks: []
+L00001331	acceptance_criteria:
+L00001332	  - Slice-based loading is mandatory across dense tabs.
+L00001333	  - Virtualization and lazy expansion are cross-tab requirements.
+L00001334	  - Scale is not limited to the graph tab.
+L00001335	validation_surfaces:
+L00001336	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001337	  - python3 scripts/pm-plan-index.py validate
+L00001338	risk_class: dense_tab_scale_drift
+L00001339	reasoning_tier: standard
+L00001340	context_scope: orchestrator_page
+L00001341	implementation_surfaces:
+L00001342	  - Plans/Orchestrator_Page.md
+L00001343	node_compile_hint:
+L00001344	  mode: requirement
+L00001345	  create_worknodes: false
+L00001346	source_lineage:
+L00001347	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0055
+L00001348	preserved_exact_tokens:
+L00001349	  - "slice-based loading"
+L00001350	  - "virtualization"
+L00001351	  - "lazy expansion"
+L00001352	  - "demand-loaded inspectors"
+L00001353	  - "cross-tab contract"
+L00001354	negative_constraints:
+L00001355	  - "Scale must not be treated as a graph-tab-only concern."
+L00001356	owner_hints:
+L00001357	  - Plans/Orchestrator_Page.md
+L00001358	```
+L00001359	
+
+<<< CONTEXT_AFTER canonical_document_lines=1360-1371 >>>
+L00001360	### OP-019 - Owner Consumer Map And Migration Boundary
+L00001361	
+L00001362	```yaml
+L00001363	plan_unit_id: OP-019
+L00001364	unit_type: requirement
+L00001365	status: accepted
+L00001366	owner_doc: Plans/Orchestrator_Page.md
+L00001367	canonical_text: >-
+L00001368	  This standardized Orchestrator Page document keeps stated owner and consumer boundaries, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00001369	gui_related: false
+L00001370	gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.
+L00001371	split_recommended: false

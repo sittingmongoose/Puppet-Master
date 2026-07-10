@@ -1,0 +1,242 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-241 >>>
+L00000001	# Codex Prompts — PM Bootstrap Planning Ledger
+L00000002	
+L00000003	All `/goal` prompts must stay under 4,000 characters. Replace placeholders before use.
+L00000004	
+L00000005	## 1. Conversational start prompt — not Goal Mode
+L00000006	
+L00000007	```text
+L00000008	Use the PM Bootstrap Planning Ledger for this feature.
+L00000009	
+L00000010	Feature: <feature name>
+L00000011	
+L00000012	Create a new v2 ledger under Plans/ledgers/v2/ with ledger_id pldg-YYYYMMDD-NNN-<slug>. Register it in Plans/ledgers/v2/ledger_registry.json.
+L00000013	
+L00000014	This is a conversational design/spec thread, not a Goal run. Do not write canonical Plans yet. Use the $pm-bootstrap-planning-ledger skill if available.
+L00000015	
+L00000016	Read:
+L00000017	- AGENTS.md
+L00000018	- Plans/bootstrap/Bootstrap_Planning_Workflow.md
+L00000019	- Plans/ledgers/v2/README.md
+L00000020	
+L00000021	After each substantive turn, update events.jsonl, touched records/*.jsonl, and state/current.json, state/handoff.json, state/open_items.json, state/compile_queue.json.
+L00000022	
+L00000023	Preserve exact tokens, examples, negative constraints, stale/retired terms, compatibility-only notes, owner hints, and user corrections. Keep open questions explicit.
+L00000024	
+L00000025	Automatically classify every design atom as gui_related true or false. Mark true for GUI/UI/screens/pages/panels/forms/layout/styling/components/icons/SVGs/images/screenshots/user-visible visual presentation. The user does not need to label GUI work.
+L00000026	```
+L00000027	
+L00000028	## 2. Conversational continue prompt — not Goal Mode
+L00000029	
+L00000030	```text
+L00000031	Continue PM Bootstrap Planning Ledger <ledger_id>.
+L00000032	
+L00000033	This is a conversational design/spec thread, not a Goal run. Do not write canonical Plans unless I explicitly say compile this ledger to Plans.
+L00000034	
+L00000035	Read only by default:
+L00000036	- Plans/ledgers/v2/ledger_registry.json
+L00000037	- Plans/ledgers/v2/<ledger_id>/state/handoff.json
+L00000038	- Plans/ledgers/v2/<ledger_id>/state/current.json
+L00000039	- Plans/ledgers/v2/<ledger_id>/state/open_items.json
+L00000040	- Plans/ledgers/v2/<ledger_id>/state/operating_capsule.json
+L00000041	
+L00000042	Do not read full events.jsonl, source shards, or legacy working_ledger.md unless a state file points to a specific source_ref that must be inspected.
+L00000043	
+L00000044	Continue from the cursor. After each substantive turn, update the ledger and handoff state. Infer gui_related true/false for every new or changed design atom; do not ask me to label GUI work.
+L00000045	```
+L00000046	
+L00000047	## 3. Goal prompt — compile one ledger to Plans docs
+L00000048	
+L00000049	```text
+L00000050	/goal
+L00000051	Compile PM ledger <ledger_id> to canonical Plans docs.
+L00000052	
+L00000053	Read AGENTS.md, Plans/Plan_Document_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/bootstrap/Bootstrap_Design_Brief.md, and the compact state for <ledger_id>. Use the $pm-bootstrap-planning-ledger skill if available.
+L00000054	
+L00000055	Create/update only the relevant live non-pipeline Plans docs. For the bootstrap plan-system ledger, expected targets are:
+L00000056	- Plans/Planning_Ledger_System.md
+L00000057	- Plans/Plan_Document_System.md
+L00000058	- Plans/Plan_To_Node_Compilation.md
+L00000059	- Plans/Bootstrap_Planning_Migration.md
+L00000060	- Plans/00-plans-index.md
+L00000061	
+L00000062	Rules:
+L00000063	- Ledger is source/planning memory, not canon.
+L00000064	- Convert accepted design atoms into stable PlanUnits.
+L00000065	- Every PlanUnit must include gui_related true/false, inferred from content.
+L00000066	- Newly created Plans/*.md owner docs must use the New Plan Authoring Profile from Plans/Plan_Document_System.md, including the required base layout and profile marker.
+L00000067	- Existing owner docs may preserve their current profile/layout when updating them losslessly.
+L00000068	- Never use source_preserving_planunit for new feature content or new owner-doc creation; that mode is only for lossless legacy Plan conversion.
+L00000069	- Preserve source refs, exact tokens, negative constraints, examples, owner hints, stale/retired terms, and compatibility-only notes.
+L00000070	- If owner placement is ambiguous, record candidate owners and adjudication evidence; do not ask row-by-row.
+L00000071	- Do not create WorkNodes or executable build tasks.
+L00000072	- Do not update Spec_Lock, generated shards, evidence bundles, or plan_graph.
+L00000073	- Run safe plan validators before claiming success.
+L00000074	
+L00000075	Stop if open blockers or true product decisions prevent safe compilation. Write exact blockers into ledger state.
+L00000076	```
+L00000077	
+L00000078	## 4. Goal prompt — standardize existing Plans losslessly
+L00000079	
+L00000080	```text
+L00000081	/goal
+L00000082	Convert existing Plans docs to the new Plan Document System format losslessly.
+L00000083	
+L00000084	Read AGENTS.md, Plans/Plan_Document_System.md, Plans/Planning_Ledger_System.md, Plans/Plan_To_Node_Compilation.md, and Plans/bootstrap/Bootstrap_Planning_Workflow.md.
+L00000085	
+L00000086	Do not start broad rewrites until you create a migration inventory. Required phases:
+L00000087	1. Inventory every Plans/*.md doc.
+L00000088	2. Hash originals and segment heading/body spans.
+L00000089	3. Build a coverage map proving every original span maps to a standardized section, PlanUnit, preserved appendix/source block, or explicit disposition.
+L00000090	4. Convert one representative pilot doc first.
+L00000091	5. Run validators.
+L00000092	6. Continue in controlled batches only after pilot passes.
+L00000093	
+L00000094	Preserve ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage.
+L00000095	
+L00000096	Assign gui_related true/false to every PlanUnit by inference. Split mixed GUI/backend units when safe; otherwise mark gui_related=true and note split_recommended.
+L00000097	
+L00000098	Use source_preserving_planunit only for lossless conversion of existing legacy Plans docs. Do not use it for newly authored feature content or new owner docs.
+L00000099	
+L00000100	Do not create WorkNodes. Do not update Spec_Lock, generated shards, evidence bundles, or plan_graph until explicit governance seal.
+L00000101	```
+L00000102	
+L00000103	## 5. Goal prompt — generate PlanUnit index and node-readiness report
+L00000104	
+L00000105	```text
+L00000106	/goal
+L00000107	Generate the PlanUnit index and node-readiness report from standardized Plans.
+L00000108	
+L00000109	Read AGENTS.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, and live Plans docs. Do not alter canonical prose unless a small repair is required and clearly validated.
+L00000110	
+L00000111	Produce generated outputs under Plans/.plan_index/:
+L00000112	- plan_units.jsonl
+L00000113	- doc_cards.json
+L00000114	- dependencies.json
+L00000115	- acceptance_units.jsonl
+L00000116	- coverage_report.json
+L00000117	- node_readiness_report.json
+L00000118	
+L00000119	Also validate the implementation-readiness gate artifacts:
+L00000120	- Plans/.implementation_readiness/readiness_blockers.jsonl
+L00000121	- Plans/.implementation_readiness/readiness_matrix.json
+L00000122	- Plans/.implementation_readiness/buildability_gate_report.json
+L00000123	
+L00000124	Rules:
+L00000125	- PlanUnits are canon-addressable units from live Plans docs.
+L00000126	- Every indexed PlanUnit must include gui_related true/false.
+L00000127	- node_readiness_report may analyze future conversion readiness only.
+L00000128	- Captured source, Plan-complete docs, node-readiness, schema existence, wiring JSON existence, semantic closure, and validators passing are not implementation buildability.
+L00000129	- Approve And Build remains disabled unless Plans/.implementation_readiness/buildability_gate_report.json reports buildability_gate_passed=true.
+L00000130	- Disabled reasons must list open blocker families and exact owner docs, and PNC-019 must remain a hard disabled reason only while node_readiness.hard_disabled is true.
+L00000131	- Do not create WorkNodes, executable build tasks, or final node queues.
+L00000132	- Do not create NodeSeed candidates unless Plans/Plan_To_Node_Compilation.md already defines that candidate contract.
+L00000133	- If Plans are incomplete, set node_readiness_report.status = blocked_plans_incomplete.
+L00000134	- If PlanCompile runtime launch and node-artifact generation are disabled, set status = runtime_disabled.
+L00000135	- Preserve depends_on, unblocks, validation surfaces, acceptance criteria, risk_class, reasoning_tier, context_scope, implementation surfaces, source lineage, and gui_related.
+L00000136	- Do not update Spec_Lock or governance artifacts.
+L00000137	
+L00000138	Run safe validators, including python3 scripts/pm-implementation-readiness.py validate, and write exact blockers if coverage or implementation-readiness reporting is incomplete.
+L00000139	```
+L00000140	
+L00000141	## 6. Goal prompt — governance seal
+L00000142	
+L00000143	```text
+L00000144	/goal
+L00000145	Seal governance after ledger/Plan/PlanUnit changes are stable.
+L00000146	
+L00000147	Read AGENTS.md and the current Plans docs. This phase may update governance artifacts only after confirming no ordinary doc edits remain.
+L00000148	
+L00000149	Tasks:
+L00000150	1. Run safe plan validators.
+L00000151	2. Regenerate generated shards/evidence/plan graph artifacts using repo scripts.
+L00000152	3. Refresh Spec_Lock only after docs and generated indexes are stable.
+L00000153	4. Append/update governance decision artifacts if required by existing repo policy.
+L00000154	5. Run full governance gates:
+L00000155	   - python3 scripts/pm-plans-verify.py run-gates
+L00000156	   - python3 scripts/pm-shard-plans.py --check
+L00000157	6. Produce final certification with changed files, validators, blockers, and unresolved risks.
+L00000158	
+L00000159	Do not change product prose except small governance-reference fixes required by validators. If a validator cannot be repaired safely, stop and report exact blockers.
+L00000160	```
+L00000161	
+L00000162	## 7. Goal prompt — audit a phase after restart
+L00000163	
+L00000164	```text
+L00000165	/goal
+L00000166	Audit PM bootstrap phase state and tell me the next safe action.
+L00000167	
+L00000168	Read AGENTS.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/ledgers/v2/ledger_registry.json, and any ledger state/handoff files relevant to <ledger_id or phase>. Do not edit Plans docs unless I explicitly ask.
+L00000169	
+L00000170	Report:
+L00000171	- active ledger or phase
+L00000172	- current cursor
+L00000173	- open blockers
+L00000174	- open questions
+L00000175	- candidate/unclassified items
+L00000176	- compile/governance readiness
+L00000177	- node-readiness vs WorkNode boundary
+L00000178	- gui_related classification coverage
+L00000179	- validators last run
+L00000180	- exact next safe action
+L00000181	
+L00000182	Do not read full event logs or legacy ledgers unless the compact state points to a specific source_ref.
+L00000183	```
+L00000184	
+L00000185	## 8. Goal prompt — closed-world semantic audit
+L00000186	
+L00000187	```text
+L00000188	/goal
+L00000189	Audit latest PM Bootstrap Ledger-to-Plans cycle for closed-world semantic fidelity and terminal state.
+L00000190	
+L00000191	Input: ledger_id=infer_latest. Audit-only. Do not edit Plans, ledgers, .plan_index, governance, code, WorkNodes, NodeSeeds, queues, manifests, implementation files, or build tasks. Write only Plans/.audits/<audit_id>/*.
+L00000192	
+L00000193	Read AGENTS.md, Plans/00-plans-index.md, Planning_Ledger_System, Plan_Document_System, Bootstrap_Planning_Workflow, closure registry, compact inferred-ledger state, compile_queue, changed Plans docs, .plan_index, FINAL_REPORT, and scripts/pm-audit-closure.py.
+L00000194	
+L00000195	Owner refs: PLS-012 owns registry, audit_scope_manifest.jsonl, repair_impact_matrix.jsonl, reopen policy, refs, and latest_audit_* rules. PDS-014 owns sfk finding_key, chk check_id, repair_required/finding_level, source validation, and coverage.
+L00000196	
+L00000197	Infer observation_ref=HEAD. Infer subject_ref as latest substantive commit touching live Plans, target-ledger governing state, .plan_index, governance, or process scripts; exclude Plans/.audits/**, closure-registry-only commits, and hygiene-only report edits. Infer ledger_id from latest non-background registry/recent commits, audit_id=next audit-YYYYMMDD-NNN-<slug>, and baseline_ref from the parent of the earliest contiguous subject cycle commit.
+L00000198	
+L00000199	Before semantic review, build audit_scope_manifest.jsonl with deterministic chk check_id rows for every compiled atom detail, compile target, added/changed PlanUnit claim, reciprocal source_lineage claim, owner/consumer route, schema/contract identity, depends_on/unblocks edge, ledger projection field, index/governance check, and forbidden-artifact check. Rows carry refs, source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens, covered_artifacts, classification, repair_required, and finding_level. Completion requires 100% classified rows.
+L00000200	
+L00000201	Every finding must carry finding_family, ledger_id, source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens, repair_required, finding_level, and deterministic sfk finding_key from those stable fields. Reject audit-specific keys based on audit_id, row number, or prose order. Audit artifacts must agree on audit_id, ledger_id, baseline_ref, subject_ref, and observation_ref.
+L00000202	
+L00000203	Read registry before emitting risks. If a finding is closed and hashes/evidence match, classify previously_closed with repair_required=false and write closure_reuse.jsonl, not a new semantic risk. Reopen only on changed source/PlanUnit/owner/closure hashes or blocked/reopened status.
+L00000204	
+L00000205	Build atom_fidelity_matrix.jsonl, planunit_source_claims.jsonl, owner_routing_findings.jsonl, closure_reuse.jsonl, ledger_consistency.json, validator_results.json, semantic_risks.jsonl, audit_report.json, and FINAL_REPORT.md. Prove live non-pipeline Plans evidence for exact details; metadata/source_lineage alone is insufficient.
+L00000206	
+L00000207	BLOCKED only when repair_required=true, a validator fails/mutates state, forbidden artifacts exist, or a user decision is required. PASS_WITH_WARNINGS is terminal when all findings are repair_required=false. PASS means no findings.
+L00000208	
+L00000209	Do not emit semantic/currentness findings about old audit report wording, review/commit text, or missing ledger pointers to audit-only observation/hygiene runs. ledger latest_audit_* is stale only when a state-certifying audit/repair that changed or validated canonical Plans, ledger governing state, index, or governance is missing.
+L00000210	
+L00000211	Run pm-audit-closure validate --audit-dir Plans/.audits/<audit_id>, pm-plan-index validate, pm-implementation-readiness validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. Record status/side effects. FINAL_REPORT includes status, refs, changed files, PlanUnit deltas, scope counts, previously_closed, repair_required, validators, implementation-readiness blockers, forbidden artifacts, and next action.
+L00000212	```
+L00000213	
+L00000214	## 9. Goal prompt — repair and certify closed-world audit
+L00000215	
+L00000216	```text
+L00000217	/goal
+L00000218	Repair and certify latest PM Bootstrap closed-world semantic audit.
+L00000219	
+L00000220	Input: audit_id=infer_latest. Infer ledger_id from audit artifacts. Bounded repair only; do not broaden product scope. Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or product build tasks.
+L00000221	
+L00000222	Read AGENTS.md, Plans/00-plans-index.md, Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/bootstrap/Codex_Prompts.md, scripts/pm-audit-closure.py, Plans/.audits/_semantic_closure_registry.jsonl, audit_report.json, FINAL_REPORT.md, audit_scope_manifest.jsonl, closure_reuse.jsonl if present, semantic_risks.jsonl, atom_fidelity_matrix.jsonl, planunit_source_claims.jsonl, owner_routing_findings.jsonl, ledger_consistency.json, validator_results.json, and compact ledger state.
+L00000223	
+L00000224	Owner refs: PLS-012 owns terminal audit state, audit_scope_manifest.jsonl, repair_impact_matrix.jsonl, latest_audit_* rules, and reopen policy. PDS-014 owns sfk finding_key, repair_required/finding_level, source-artifact validation, and closure/impact validation.
+L00000225	
+L00000226	First run python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix as a source check. If it fails only because repair_closure_matrix.jsonl or repair_impact_matrix.jsonl is missing for actionable rows, continue; any unstable finding_key, incomplete scope, ref mismatch, or malformed source artifact must be fixed in audit artifacts before editing canon.
+L00000227	
+L00000228	Scan audit artifacts for repair_required=true. If count is zero, no-op: do not edit Plans, ledgers, governance, registry, repair_closure_matrix.jsonl, repair_impact_matrix.jsonl, or prior audit artifacts; report PASS_WITH_WARNINGS terminal or PASS terminal from the audit.
+L00000229	
+L00000230	Before editing, write repair_impact_matrix.jsonl. Map every actionable finding to files, PlanUnits, schemas, dependency_edges, owner_refs, ledger_projection_fields, index_artifacts, governance_artifacts, scope_check_ids, and post_repair_semantic_audit placeholder. Then repair only mapped impact surfaces. Do not revalidate previously_closed, exact_present, equivalent_with_evidence, ordinary validator warnings, audit-artifact wording, or repair_required=false observations. Audit-only observation/hygiene repairs do not stale/restamp ledger latest_audit_*.
+L00000231	
+L00000232	Write/update repair_closure_matrix.jsonl for repair_required=true rows with source_artifact, source_row, finding_family, audit_id, ledger_id, baseline_ref, subject_ref, observation_ref, source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens, sfk finding_key, closure_status, closure_evidence, closure_reason, and registry_closure_id. Close as repaired, false_positive, explicitly_deferred, source_lineage_only, not_for_plan, stale_retired, or blocked_requires_user_decision. Use reopened only in the global registry when prior closed evidence changed.
+L00000233	
+L00000234	Run an internal post-repair semantic audit over the original audit_scope_manifest.jsonl plus every impact row. If new repair_required findings appear, add them to the same scope/impact set and repair/adjudicate in this Goal. Iterate until repair_required_count=0 or a true user decision blocks. Passing validators alone are insufficient.
+L00000235	
+L00000236	Only after internal semantic closure may you append/update the global registry, regenerate PlanUnit index, refresh implementation-readiness reporting when touched, seal governance if governed files changed, and write REPAIR_CERTIFICATION.md. Then run pm-audit-closure validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix, pm-plan-index validate, pm-implementation-readiness validate, pm-plan-migration validate if present, bootstrap ledger validate, run-gates, shard check, validate-auto-decisions, verify-spec-lock, validate-evidence, and git diff --check. Report changed files, repair_required count, closure/impact counts, validators, implementation-readiness blockers, registry updates, prompt no-op if applicable, and remaining user decisions.
+L00000237	```
+L00000238	
+L00000239	## 10. Ledger Compile Hardening Addendum - pldg-20260618-001-prd-planning-wizard
+L00000240	
+L00000241	For compile, audit, and repair prompts, use bounded read-only subagents when atom, owner-doc, or document-size thresholds are exceeded; require assignment/result evidence and keep the main agent as sole writer. Deep audit must cover atom fidelity, reciprocal lineage, owner routing, changed-doc fidelity, ledger consistency, index/governance status, forbidden artifacts, and validator mutability. Repair must write closure rows only for repair_required=true findings, no-op when none exist, and must not treat passing validators alone as semantic closure when actionable rows remain. PlanUnit indexing remains non-executable, and governance seal validates the target ledger only after Plans and indexes are stable.

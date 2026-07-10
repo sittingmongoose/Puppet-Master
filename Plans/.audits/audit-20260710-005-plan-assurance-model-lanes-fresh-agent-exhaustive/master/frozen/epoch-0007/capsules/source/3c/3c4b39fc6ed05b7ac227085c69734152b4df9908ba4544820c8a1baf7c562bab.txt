@@ -1,0 +1,411 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4307-4318 >>>
+L00004307	  create_worknodes: false
+L00004308	source_lineage:
+L00004309	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0061
+L00004310	preserved_exact_tokens:
+L00004311	  - "select existing template repo"
+L00004312	  - "explicit user confirmation"
+L00004313	negative_constraints:
+L00004314	  - "Managed publishing must remain disabled for that project when existing repo validation fails."
+L00004315	owner_hints:
+L00004316	  - Plans/Containers_Registry_and_Unraid.md
+L00004317	```
+L00004318	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4319-4700 >>>
+L00004319	### CRAU-063 - Template Repo Status State Model
+L00004320	
+L00004321	```yaml
+L00004322	plan_unit_id: CRAU-063
+L00004323	unit_type: requirement
+L00004324	status: accepted
+L00004325	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00004326	canonical_text: >-
+L00004327	  The template-repo status row uses one canonical state model preserving
+L00004328	  unconfigured, config_invalid, clean, dirty_uncommitted, committed_local_only,
+L00004329	  push_in_progress, push_failed, diverged_remote, and needs_review with their
+L00004330	  meanings and user-visible consequences; transition rules continue in the next
+L00004331	  bounded source window.
+L00004332	gui_related: true
+L00004333	gui_classification_reason: The template-repo status row and user-visible consequences are visible settings/publishing UI state.
+L00004334	split_recommended: false
+L00004335	depends_on: [CRAU-053, CRAU-062]
+L00004336	unblocks: []
+L00004337	acceptance_criteria:
+L00004338	  - Template-repo status row uses exactly one canonical state model.
+L00004339	  - unconfigured shows setup CTA.
+L00004340	  - config_invalid blocks publish follow-on push and shows remediation.
+L00004341	  - committed_local_only shows one-click push CTA.
+L00004342	  - push_in_progress disables duplicate push actions.
+L00004343	  - push_failed preserves local commit and shows retry CTA/error.
+L00004344	  - diverged_remote blocks auto-push and requires review/reconcile.
+L00004345	  - needs_review allows local inspection/editing and blocks auto-push.
+L00004346	validation_surfaces:
+L00004347	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004348	  - python3 scripts/pm-plan-index.py validate
+L00004349	risk_class: template_status_drift
+L00004350	reasoning_tier: high
+L00004351	context_scope: template_repo_status_state_model
+L00004352	implementation_surfaces:
+L00004353	  - Plans/Containers_Registry_and_Unraid.md
+L00004354	node_compile_hint:
+L00004355	  mode: template_repo_status_model
+L00004356	  create_worknodes: false
+L00004357	source_lineage:
+L00004358	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0062
+L00004359	preserved_exact_tokens:
+L00004360	  - "`unconfigured`"
+L00004361	  - "`config_invalid`"
+L00004362	  - "`clean`"
+L00004363	  - "`dirty_uncommitted`"
+L00004364	  - "`committed_local_only`"
+L00004365	  - "`push_in_progress`"
+L00004366	  - "`push_failed`"
+L00004367	  - "`diverged_remote`"
+L00004368	  - "`needs_review`"
+L00004369	negative_constraints:
+L00004370	  - "Detailed transition behavior from S0063 is covered by CRAU-064 through CRAU-066 rather than retained as residual source."
+L00004371	owner_hints:
+L00004372	  - Plans/Containers_Registry_and_Unraid.md
+L00004373	```
+L00004374	
+L00004375	### CRAU-064 - Template Repo Review Transition Rules
+L00004376	
+L00004377	```yaml
+L00004378	plan_unit_id: CRAU-064
+L00004379	unit_type: requirement
+L00004380	status: accepted
+L00004381	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00004382	canonical_text: >-
+L00004383	  After successful image publish, Puppet Master generates or updates managed XML
+L00004384	  artifacts; needs_review enters when support_url, overview_markdown, icon_source,
+L00004385	  or safe XML mapping is missing, and clears only after regeneration or explicit
+L00004386	  save produces all review-required fields with no unmapped-field warning.
+L00004387	gui_related: true
+L00004388	gui_classification_reason: Template review, dirty/clean status, and user save/regeneration transitions are visible Docker Manager publishing state.
+L00004389	split_recommended: true
+L00004390	split_recommendation_reason: Source span S0063 also contains auto-commit containment and commit/push status transitions split into adjacent units.
+L00004391	depends_on: [CRAU-048, CRAU-053, CRAU-063]
+L00004392	unblocks: [CRAU-065, CRAU-066]
+L00004393	acceptance_criteria:
+L00004394	  - needs_review enters for missing support_url, overview_markdown, icon_source, or unsafe XML mapping.
+L00004395	  - needs_review clears only after regeneration or explicit user save produces all review-required fields and no unmapped-field warning.
+L00004396	  - Clearing needs_review transitions to dirty_uncommitted when managed files changed locally, otherwise clean.
+L00004397	validation_surfaces:
+L00004398	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004399	  - python3 scripts/pm-plan-index.py validate
+L00004400	risk_class: review_state_transition_drift
+L00004401	reasoning_tier: high
+L00004402	context_scope: template_repo_review_transitions
+L00004403	implementation_surfaces:
+L00004404	  - Plans/Containers_Registry_and_Unraid.md
+L00004405	node_compile_hint:
+L00004406	  mode: template_repo_transition_rules
+L00004407	  create_worknodes: false
+L00004408	source_lineage:
+L00004409	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0063
+L00004410	preserved_exact_tokens:
+L00004411	  - "`needs_review`"
+L00004412	  - "`support_url`"
+L00004413	  - "`overview_markdown`"
+L00004414	  - "`icon_source`"
+L00004415	  - "`dirty_uncommitted`"
+L00004416	  - "`clean`"
+L00004417	negative_constraints: []
+L00004418	owner_hints:
+L00004419	  - Plans/Containers_Registry_and_Unraid.md
+L00004420	```
+L00004421	
+L00004422	### CRAU-065 - Auto Commit Containment And Repo Review Gate
+L00004423	
+L00004424	```yaml
+L00004425	plan_unit_id: CRAU-065
+L00004426	unit_type: constraint
+L00004427	status: accepted
+L00004428	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00004429	canonical_text: >-
+L00004430	  Auto-commit is allowed only when the working-tree diff is fully contained
+L00004431	  within PM-owned paths for the current generation pass; unrelated tracked or
+L00004432	  untracked changes, config_invalid, diverged_remote, needs_review, or
+L00004433	  nondeterministic required path updates stop auto-commit and surface review.
+L00004434	gui_related: true
+L00004435	gui_classification_reason: Review blocking and Review repo state recovery CTA are visible repository workflow behavior.
+L00004436	split_recommended: true
+L00004437	split_recommendation_reason: Source span S0063 also contains review transition and push status behavior.
+L00004438	depends_on: [CRAU-062, CRAU-063, CRAU-064]
+L00004439	unblocks: [CRAU-066, CRAU-067]
+L00004440	acceptance_criteria:
+L00004441	  - PM-owned paths are exactly ca_profile.xml, <maintainer_slug>/<project_slug>.xml, and assets/maintainer/** written in the current generation pass.
+L00004442	  - Auto-commit is allowed only when the diff is fully contained within the PM-owned path set.
+L00004443	  - Unrelated tracked or untracked changes block auto-commit and surface Review repo state.
+L00004444	  - Auto-commit stops and surfaces review for config_invalid, diverged_remote, needs_review, unrelated files, or nondeterministic required path updates.
+L00004445	validation_surfaces:
+L00004446	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004447	  - python3 scripts/pm-plan-index.py validate
+L00004448	risk_class: unsafe_auto_commit
+L00004449	reasoning_tier: high
+L00004450	context_scope: auto_commit_containment_review_gate
+L00004451	implementation_surfaces:
+L00004452	  - Plans/Containers_Registry_and_Unraid.md
+L00004453	node_compile_hint:
+L00004454	  mode: auto_commit_safety_gate
+L00004455	  create_worknodes: false
+L00004456	source_lineage:
+L00004457	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0063
+L00004458	preserved_exact_tokens:
+L00004459	  - "`ca_profile.xml`"
+L00004460	  - "`<maintainer_slug>/<project_slug>.xml`"
+L00004461	  - "`assets/maintainer/**`"
+L00004462	  - "`config_invalid`"
+L00004463	  - "`diverged_remote`"
+L00004464	  - "`Review repo state`"
+L00004465	negative_constraints:
+L00004466	  - "Auto-commit must not include unrelated tracked or untracked file changes."
+L00004467	owner_hints:
+L00004468	  - Plans/Containers_Registry_and_Unraid.md
+L00004469	```
+L00004470	
+L00004471	### CRAU-066 - Commit Push Status And Retry Transitions
+L00004472	
+L00004473	```yaml
+L00004474	plan_unit_id: CRAU-066
+L00004475	unit_type: requirement
+L00004476	status: accepted
+L00004477	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00004478	canonical_text: >-
+L00004479	  Successful local auto-commit transitions to committed_local_only; one-click
+L00004480	  push transitions committed_local_only to push_in_progress to clean on success;
+L00004481	  failed push transitions push_in_progress to push_failed and preserves the local
+L00004482	  commit for retry, while diverged_remote exits only after resolution and
+L00004483	  revalidation.
+L00004484	gui_related: true
+L00004485	gui_classification_reason: Commit/push states and retry CTAs are visible template-repository status behavior.
+L00004486	split_recommended: true
+L00004487	split_recommendation_reason: Source span S0063 includes multiple status enums and transitions.
+L00004488	depends_on: [CRAU-063, CRAU-065]
+L00004489	unblocks: [CRAU-070]
+L00004490	acceptance_criteria:
+L00004491	  - commit_status preserves not_attempted, committed, skipped_review_required, skipped_unrelated_changes, and failed.
+L00004492	  - push_status preserves not_attempted, skipped_auto_push_disabled, push_in_progress, completed, and failed.
+L00004493	  - Failed push preserves the local commit for retry.
+L00004494	  - diverged_remote exits only after branch divergence is resolved externally or by a future reconcile flow and Puppet Master revalidates repo state.
+L00004495	validation_surfaces:
+L00004496	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004497	  - python3 scripts/pm-plan-index.py validate
+L00004498	risk_class: push_retry_state_loss
+L00004499	reasoning_tier: high
+L00004500	context_scope: commit_push_status_retry_transitions
+L00004501	implementation_surfaces:
+L00004502	  - Plans/Containers_Registry_and_Unraid.md
+L00004503	node_compile_hint:
+L00004504	  mode: commit_push_status_model
+L00004505	  create_worknodes: false
+L00004506	source_lineage:
+L00004507	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0063
+L00004508	preserved_exact_tokens:
+L00004509	  - "`committed_local_only`"
+L00004510	  - "`push_in_progress`"
+L00004511	  - "`push_failed`"
+L00004512	  - "`skipped_review_required`"
+L00004513	  - "`skipped_unrelated_changes`"
+L00004514	  - "`skipped_auto_push_disabled`"
+L00004515	  - "`completed`"
+L00004516	negative_constraints:
+L00004517	  - "A failed push must preserve the local commit for retry."
+L00004518	owner_hints:
+L00004519	  - Plans/Containers_Registry_and_Unraid.md
+L00004520	```
+L00004521	
+L00004522	### CRAU-067 - Dirty Repo Adoption Safety
+L00004523	
+L00004524	```yaml
+L00004525	plan_unit_id: CRAU-067
+L00004526	unit_type: constraint
+L00004527	status: accepted
+L00004528	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00004529	canonical_text: >-
+L00004530	  When the selected repo contains unrelated local modifications, Puppet Master
+L00004531	  must not silently fold managed template changes into that worktree state; it
+L00004532	  requires the user to clean the repo, explicitly adopt the dirty repo state, or
+L00004533	  switch to a different managed repo path.
+L00004534	gui_related: false
+L00004535	gui_classification_reason: Dirty-repo adoption is repository mutation safety rather than visual presentation.
+L00004536	split_recommended: false
+L00004537	depends_on: [CRAU-062, CRAU-065]
+L00004538	unblocks: []
+L00004539	acceptance_criteria:
+L00004540	  - Unrelated local modifications block silent managed template mutation.
+L00004541	  - Allowed resolutions are user cleans the repo first, user explicitly adopts the dirty repo state, or user switches to another managed repo path.
+L00004542	validation_surfaces:
+L00004543	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004544	  - python3 scripts/pm-plan-index.py validate
+L00004545	risk_class: dirty_repo_mutation
+L00004546	reasoning_tier: high
+L00004547	context_scope: dirty_repo_adoption_safety
+L00004548	implementation_surfaces:
+L00004549	  - Plans/Containers_Registry_and_Unraid.md
+L00004550	node_compile_hint:
+L00004551	  mode: dirty_repo_adoption_gate
+L00004552	  create_worknodes: false
+L00004553	source_lineage:
+L00004554	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0064
+L00004555	preserved_exact_tokens:
+L00004556	  - "user cleans the repo first"
+L00004557	  - "user explicitly adopts the dirty repo state"
+L00004558	  - "user switches to a different managed repo path"
+L00004559	negative_constraints:
+L00004560	  - "Puppet Master MUST NOT silently fold managed template changes into unrelated worktree modifications."
+L00004561	owner_hints:
+L00004562	  - Plans/Containers_Registry_and_Unraid.md
+L00004563	```
+L00004564	
+L00004565	### CRAU-068 - Template Repo Setup Choices And Repo Shape
+L00004566	
+L00004567	```yaml
+L00004568	plan_unit_id: CRAU-068
+L00004569	unit_type: requirement
+L00004570	status: accepted
+L00004571	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00004572	canonical_text: >-
+L00004573	  When managed Unraid template-repo publishing is enabled and no template repo is
+L00004574	  configured, Puppet Master offers both create-new and select-existing setup
+L00004575	  paths, and the default repository shape is one template repo per project.
+L00004576	gui_related: true
+L00004577	gui_classification_reason: Setup choices are visible onboarding controls for managed template repository publishing.
+L00004578	split_recommended: true
+L00004579	split_recommendation_reason: This unit folds setup flow and default repo shape headings into one setup-readiness contract.
+L00004580	depends_on: [CRAU-060, CRAU-061]
+L00004581	unblocks: [CRAU-069]
+L00004582	acceptance_criteria:
+L00004583	  - Create-new template repo setup is offered.
+L00004584	  - Select-existing template repo setup is offered.
+L00004585	  - Default repo shape remains one template repo per project.
+L00004586	validation_surfaces:
+L00004587	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004588	  - python3 scripts/pm-plan-index.py validate
+L00004589	risk_class: setup_flow_default_drift
+L00004590	reasoning_tier: standard
+L00004591	context_scope: template_repo_setup_choices_shape
+L00004592	implementation_surfaces:
+L00004593	  - Plans/Containers_Registry_and_Unraid.md
+L00004594	node_compile_hint:
+L00004595	  mode: template_repo_setup_defaults
+L00004596	  create_worknodes: false
+L00004597	source_lineage:
+L00004598	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0065
+L00004599	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0066
+L00004600	preserved_exact_tokens:
+L00004601	  - "creating a new template repo automatically"
+L00004602	  - "selecting an existing template repo"
+L00004603	  - "one template repo per project"
+L00004604	negative_constraints: []
+L00004605	owner_hints:
+L00004606	  - Plans/Containers_Registry_and_Unraid.md
+L00004607	```
+L00004608	
+L00004609	### CRAU-069 - Template Repo Layout And Maintainer Slug Defaults
+L00004610	
+L00004611	```yaml
+L00004612	plan_unit_id: CRAU-069
+L00004613	unit_type: requirement
+L00004614	status: accepted
+L00004615	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00004616	canonical_text: >-
+L00004617	  Managed per-project template repositories use a root-level ca_profile.xml,
+L00004618	  maintainer folder, and project-name.xml inside that maintainer folder; the
+L00004619	  maintainer folder defaults to the project's DockerHub namespace and may be
+L00004620	  overridden with a custom maintainer slug.
+L00004621	gui_related: true
+L00004622	gui_classification_reason: Default layout and maintainer slug override are visible setup/review configuration.
+L00004623	split_recommended: true
+L00004624	split_recommendation_reason: This unit folds default layout and maintainer folder source spans into one repository layout identity contract.
+L00004625	depends_on: [CRAU-061]
+L00004626	unblocks: [CRAU-070]
+L00004627	acceptance_criteria:
+L00004628	  - Managed repos use root-level ca_profile.xml.
+L00004629	  - Managed repos include a maintainer folder containing project-name.xml.
+L00004630	  - Maintainer folder defaults to DockerHub namespace.
+L00004631	  - User can override with a custom maintainer slug.
+L00004632	validation_surfaces:
+L00004633	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004634	  - python3 scripts/pm-plan-index.py validate
+L00004635	risk_class: template_repo_layout_drift
+L00004636	reasoning_tier: standard
+L00004637	context_scope: template_repo_layout_maintainer_slug
+L00004638	implementation_surfaces:
+L00004639	  - Plans/Containers_Registry_and_Unraid.md
+L00004640	node_compile_hint:
+L00004641	  mode: template_repo_layout_identity
+L00004642	  create_worknodes: false
+L00004643	source_lineage:
+L00004644	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0067
+L00004645	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0068
+L00004646	preserved_exact_tokens:
+L00004647	  - "`ca_profile.xml`"
+L00004648	  - "`project-name.xml`"
+L00004649	  - "DockerHub namespace"
+L00004650	  - "custom maintainer slug"
+L00004651	negative_constraints: []
+L00004652	owner_hints:
+L00004653	  - Plans/Containers_Registry_and_Unraid.md
+L00004654	```
+L00004655	
+L00004656	### CRAU-070 - Template Repo Commit Push Defaults And Status UX
+L00004657	
+L00004658	```yaml
+L00004659	plan_unit_id: CRAU-070
+L00004660	unit_type: requirement
+L00004661	status: accepted
+L00004662	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00004663	canonical_text: >-
+L00004664	  Template-repo changes auto-commit by default, auto-push remains configurable
+L00004665	  but disabled by default, one-click push is exposed after commit, and Docker
+L00004666	  Manager presents dirty, committed, and ready-to-push template-repo status.
+L00004667	gui_related: true
+L00004668	gui_classification_reason: One-click push and dirty/committed/ready-to-push status are visible Docker Manager UI behavior.
+L00004669	split_recommended: false
+L00004670	depends_on: [CRAU-048, CRAU-063, CRAU-066]
+L00004671	unblocks: [CRAU-083]
+L00004672	acceptance_criteria:
+L00004673	  - Template-repo changes auto-commit by default.
+L00004674	  - Auto-push is configurable but disabled by default.
+L00004675	  - One-click push action is exposed after commit.
+L00004676	  - Docker Manager shows template-repo dirty, committed, and ready-to-push status.
+L00004677	validation_surfaces:
+L00004678	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004679	  - python3 scripts/pm-plan-index.py validate
+L00004680	risk_class: commit_push_default_drift
+L00004681	reasoning_tier: standard
+L00004682	context_scope: template_repo_commit_push_defaults_status_ux
+L00004683	implementation_surfaces:
+L00004684	  - Plans/Containers_Registry_and_Unraid.md
+L00004685	node_compile_hint:
+L00004686	  mode: commit_push_status_ux
+L00004687	  create_worknodes: false
+L00004688	source_lineage:
+L00004689	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0069
+L00004690	preserved_exact_tokens:
+L00004691	  - "auto-commit"
+L00004692	  - "auto-push"
+L00004693	  - "one-click push"
+L00004694	  - "dirty / committed / ready-to-push"
+L00004695	negative_constraints:
+L00004696	  - "Auto-push remains default disabled."
+L00004697	owner_hints:
+L00004698	  - Plans/Containers_Registry_and_Unraid.md
+L00004699	```
+L00004700	
+
+<<< CONTEXT_AFTER canonical_document_lines=4701-4712 >>>
+L00004701	### CRAU-071 - ca_profile Generation Scope And Editability
+L00004702	
+L00004703	```yaml
+L00004704	plan_unit_id: CRAU-071
+L00004705	unit_type: requirement
+L00004706	status: accepted
+L00004707	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00004708	canonical_text: >-
+L00004709	  If ca_profile.xml does not exist, Puppet Master generates it and tells the user
+L00004710	  it still needs configuration or review; the default scope is shared
+L00004711	  cross-project maintainer profile, per-project maintainer profile override is
+L00004712	  optional, and all ca_profile.xml fields must remain editable by the user.

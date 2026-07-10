@@ -1,0 +1,58 @@
+{
+  "assignment_id": "A005-002418-ADVERSARIAL-WIN-E9F0FF594512-0004",
+  "attempt_id": "attempt-0009",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      605,
+      616
+    ],
+    [
+      959,
+      970
+    ]
+  ],
+  "core_range": [
+    617,
+    958
+  ],
+  "core_sha256": "35d2be161911c984d015ec2876a6e2b693256f8e971d3c70e26d5e29d9be72a7",
+  "document_path": "Plans/Runtime_Artifacts_Panel.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/c6/c62e37eabbf49ca50bc491ae336662fde7425d5c0ca1f96ba533b2ef93c509f1.txt",
+  "source_excerpt_sha256": "c62e37eabbf49ca50bc491ae336662fde7425d5c0ca1f96ba533b2ef93c509f1",
+  "source_sha256": "ce32d49b79ce0095cc0b4344fc20312307df45bb8a93642eecfeddfd992ca173",
+  "window_id": "WIN-E9F0FF594512-0004"
+}

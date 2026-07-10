@@ -1,0 +1,419 @@
+<<< CONTEXT_BEFORE 33640-33651 >>>
+      "accessibility_gaps": [
+        "custom_click_target_missing_role",
+        "click_handler_without_keyboard_parity"
+      ],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+
+<<< AUTHORITATIVE_CORE 33652-34041 >>>
+    {
+      "inventory_id": "pmconcept.l15827.1266",
+      "line": 15827,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "pm-tiny-btn",
+      "ui_location": "document",
+      "label": "Show Terminal",
+      "attrs": {
+        "type": "button",
+        "onclick": "PM_TERMINAL_DEMO.revealSession('ts-sess-beta')"
+      },
+      "inline_handlers": {
+        "onclick": "PM_TERMINAL_DEMO.revealSession('ts-sess-beta')"
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_fixture_only",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+      ]
+    },
+    {
+      "inventory_id": "pmconcept.l15833.1267",
+      "line": 15833,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "msg-control-btn",
+      "ui_location": "document",
+      "label": "Copy",
+      "attrs": {
+        "title": "Copy"
+      },
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l15837.1268",
+      "line": 15837,
+      "tag": "span",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "info-icon",
+      "ui_location": "document",
+      "label": "i",
+      "attrs": {
+        "onclick": "this.nextElementSibling.classList.toggle('visible')"
+      },
+      "inline_handlers": {
+        "onclick": "this.nextElementSibling.classList.toggle('visible')"
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [
+        "custom_click_target_missing_role",
+        "click_handler_without_keyboard_parity"
+      ],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l15851.1269",
+      "line": 15851,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "pm-tiny-btn",
+      "ui_location": "document",
+      "label": "Show Output",
+      "attrs": {
+        "type": "button",
+        "onclick": "PM_TERMINAL_DEMO.dispatch('cmd.dev.show_output',{})"
+      },
+      "inline_handlers": {
+        "onclick": "PM_TERMINAL_DEMO.dispatch('cmd.dev.show_output',{})"
+      },
+      "command_tokens": [
+        "cmd.dev.show_output"
+      ],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_fixture_only",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+      ]
+    },
+    {
+      "inventory_id": "pmconcept.l15852.1270",
+      "line": 15852,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "pm-tiny-btn",
+      "ui_location": "document",
+      "label": "Show Problems",
+      "attrs": {
+        "type": "button",
+        "onclick": "PM_TERMINAL_DEMO.dispatch('cmd.dev.show_problems',{})"
+      },
+      "inline_handlers": {
+        "onclick": "PM_TERMINAL_DEMO.dispatch('cmd.dev.show_problems',{})"
+      },
+      "command_tokens": [
+        "cmd.dev.show_problems"
+      ],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_fixture_only",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+      ]
+    },
+    {
+      "inventory_id": "pmconcept.l15853.1271",
+      "line": 15853,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "pm-tiny-btn",
+      "ui_location": "document",
+      "label": "Show Ports",
+      "attrs": {
+        "type": "button",
+        "onclick": "PM_TERMINAL_DEMO.dispatch('cmd.dev.show_ports',{})"
+      },
+      "inline_handlers": {
+        "onclick": "PM_TERMINAL_DEMO.dispatch('cmd.dev.show_ports',{})"
+      },
+      "command_tokens": [
+        "cmd.dev.show_ports"
+      ],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_fixture_only",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+      ]
+    },
+    {
+      "inventory_id": "pmconcept.l15854.1272",
+      "line": 15854,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "pm-tiny-btn",
+      "ui_location": "document",
+      "label": "Open in Terminal",
+      "attrs": {
+        "type": "button",
+        "title": "last-active terminal_session_id",
+        "onclick": "PM_TERMINAL_DEMO.revealSession('ts-sess-gamma')"
+      },
+      "inline_handlers": {
+        "onclick": "PM_TERMINAL_DEMO.revealSession('ts-sess-gamma')"
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_fixture_only",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+      ]
+    },
+    {
+      "inventory_id": "pmconcept.l15860.1273",
+      "line": 15860,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "msg-control-btn",
+      "ui_location": "document",
+      "label": "Copy",
+      "attrs": {
+        "title": "Copy"
+      },
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l15864.1274",
+      "line": 15864,
+      "tag": "span",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "info-icon",
+      "ui_location": "document",
+      "label": "i",
+      "attrs": {
+        "onclick": "this.nextElementSibling.classList.toggle('visible')"
+      },
+      "inline_handlers": {
+        "onclick": "this.nextElementSibling.classList.toggle('visible')"
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [
+        "custom_click_target_missing_role",
+        "click_handler_without_keyboard_parity"
+      ],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l15875.1275",
+      "line": 15875,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "pm-tiny-btn",
+      "ui_location": "document",
+      "label": "Resume Wizard",
+      "attrs": {
+        "type": "button"
+      },
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l15876.1276",
+      "line": 15876,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "pm-tiny-btn",
+      "ui_location": "document",
+      "label": "Restore safe point\u2026",
+      "attrs": {
+        "type": "button",
+        "onclick": "PM_TERMINAL_DEMO.dispatch('cmd.runtime.restore_safe_point_then_retry',{demo:true})"
+      },
+      "inline_handlers": {
+        "onclick": "PM_TERMINAL_DEMO.dispatch('cmd.runtime.restore_safe_point_then_retry',{demo:true})"
+      },
+      "command_tokens": [
+        "cmd.runtime.restore_safe_point_then_retry"
+      ],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_fixture_only",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+      ]
+    },
+    {
+      "inventory_id": "pmconcept.l15877.1277",
+      "line": 15877,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "pm-tiny-btn",
+      "ui_location": "document",
+      "label": "Branch from restore",
+      "attrs": {
+        "type": "button",
+        "onclick": "PM_TERMINAL_DEMO.dispatch('cmd.chat.branch_from_restore',{demo:true})"
+      },
+      "inline_handlers": {
+        "onclick": "PM_TERMINAL_DEMO.dispatch('cmd.chat.branch_from_restore',{demo:true})"
+      },
+      "command_tokens": [
+        "cmd.chat.branch_from_restore"
+      ],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_fixture_only",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+      ]
+    },
+    {
+      "inventory_id": "pmconcept.l15883.1278",
+      "line": 15883,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "msg-control-btn",
+      "ui_location": "document",
+      "label": "Copy",
+      "attrs": {
+        "title": "Copy"
+      },
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l15887.1279",
+      "line": 15887,
+      "tag": "span",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "info-icon",
+      "ui_location": "document",
+      "label": "i",
+      "attrs": {
+        "onclick": "this.nextElementSibling.classList.toggle('visible')"
+      },
+      "inline_handlers": {
+        "onclick": "this.nextElementSibling.classList.toggle('visible')"
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [
+        "custom_click_target_missing_role",
+        "click_handler_without_keyboard_parity"
+      ],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+
+<<< CONTEXT_AFTER 34042-34053 >>>
+    {
+      "inventory_id": "pmconcept.l15893.1280",
+      "line": 15893,
+      "tag": "span",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "pm-problems-footer",
+      "ui_location": "document",
+      "label": "3 problems",
+      "attrs": {
+        "onclick": "PM_TERMINAL_DEMO.showBottomTab('problems')"

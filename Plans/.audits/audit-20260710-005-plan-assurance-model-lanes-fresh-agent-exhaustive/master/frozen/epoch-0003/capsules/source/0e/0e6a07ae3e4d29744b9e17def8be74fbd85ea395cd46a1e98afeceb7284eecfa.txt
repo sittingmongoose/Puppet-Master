@@ -1,0 +1,360 @@
+<<< CONTEXT_BEFORE 3686-3697 >>>
+- Plans/Models_System.md
+- Plans/Provider_OpenCode.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Project_Output_Artifacts.md
+- Plans/FileSafe.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/Permissions_System.md
+- Plans/Contracts_V0.md
+```
+
+
+<<< AUTHORITATIVE_CORE 3698-4028 >>>
+### PP-056 - Teacher PM Knowledge Source Resolution
+
+```yaml
+plan_unit_id: PP-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: 'Teacher answers draw from a live PM knowledge substrate in this order: current surface context,
+  canonical Plans, command catalog, GUI surface registry, model/capability/provider state, permission/policy state,
+  runtime artifacts/history, Help/Glossary entries, taught memory, then safe fallback or handoff. Teacher must cite
+  source groups or show missing coverage, expose source confidence/currentness states, avoid guessing about PM capabilities,
+  and choose handoff when the user asks beyond teaching/help scope, external research beyond sources, build work,
+  audit/repair, direct execution, or specialty tooling.'
+gui_related: false
+gui_classification_reason: Source ordering, confidence, and no-guessing are prompt/source behavior rather than visual
+  presentation; GUI disclosure is owned elsewhere.
+depends_on:
+- P-055
+unblocks:
+- ACD-426
+- ATS-014
+acceptance_criteria:
+- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+  are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+- python3 scripts/pm-plan-index.py validate
+- git diff --check
+risk_class: teacher_pm_knowledge_guessing
+reasoning_tier: high
+context_scope: teacher_pm_knowledge_pipeline
+implementation_surfaces:
+- Plans/Prompt_Pipeline.md
+- future Teacher source resolver
+node_compile_hint:
+  mode: teacher_pm_knowledge_pipeline
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260626-001-feature-name:atom-0095
+- pldg-20260626-001-feature-name:atom-0105
+- pldg-20260626-001-feature-name:atom-0109
+- pldg-20260626-001-feature-name:atom-0115
+- pldg-20260626-001-feature-name:atom-0124
+- pldg-20260626-001-feature-name:atom-0128
+- pldg-20260626-001-feature-name:atom-0137
+- pldg-20260626-001-feature-name:atom-0138
+- pldg-20260626-001-feature-name:atom-0149
+- chat:teacher-feature-initial-framing
+- Plans/Personas.md#P-040---Teacher-Core-Persona
+- Plans/Media_Generation_and_Capabilities.md
+- Plans/UI_Command_Catalog.md
+- chat:teach-visual-specificity-challenge
+- Plans/assistant-chat-design.md#6-Teach
+- chat:teach-help-glossary-rest-request
+- Plans/Glossary.md
+- Plans/assistant-chat-design.md
+- chat:teach-gap-fill-correction
+- q-0028
+- chat:teach-bundle-accepted-pmconcept-reference
+- chat:work-through-teach-gaps
+- Plans/Personas.md#11.8-teacher
+- Plans/assistant-chat-design.md#6-teach
+- Plans/Runtime_Artifacts_Panel.md#runtime-artifact-identity-index-and-preview-rules
+- Plans/Personas.md#P-040-teacher-core-persona
+source_atom_ids:
+- atom-0095
+- atom-0105
+- atom-0109
+- atom-0115
+- atom-0124
+- atom-0128
+- atom-0137
+- atom-0138
+- atom-0149
+decision_refs:
+- dec-0018
+- dec-0019
+- dec-0020
+- dec-0021
+- dec-0022
+- dec-0023
+- dec-0024
+correction_refs:
+- corr-0002
+- corr-0003
+preserved_exact_tokens:
+- know everything in PM
+- how it works
+- all the capabilities of PM
+- how the user interacts with it
+- PM documentation coverage
+- capabilities.get
+- command catalog
+- Where it will get all its info from
+- Sources used
+- PM context
+- capability snapshots
+- settings registry
+- missing coverage
+- current surface/selection context
+- settings
+- command/route registries
+- capability resolver
+- Plans/PlanUnits
+- taught memories
+- current surface/control route
+- Teach-specific help entry
+- Glossary canonical definition
+- owner Plans/PlanUnits
+- command/settings/capability records
+- scoped taught memory
+- missing-help coverage callout
+- current surface/control
+- current thread/project
+- help/glossary entry
+- provider/model/account state
+- runtime artifact
+- stale
+- missing
+- disabled
+- permission-required
+- Teacher handoff
+- missing PM coverage
+- non-teaching assistance
+- implementation work
+- high-capability reasoning
+- external search
+- another persona/tool path
+- required help entry
+- owner source
+- capability record
+- route/control record
+- permission
+- current surface/control context
+- Glossary/help entries
+- UI command/route catalog
+- capability/provider/account snapshots
+- available
+- capability-unavailable
+- conflict-detected
+- could not verify
+- PM knowledge pressure test
+- PM concepts
+- workflows
+- models
+- capabilities
+- permissions
+- history
+- artifacts
+- Personas
+- skills/plugins
+- Orchestrator behavior
+- Teach memory
+- avoid guessing
+- handoff
+negative_constraints:
+- Do not hardcode a stale PM encyclopedia inside the Teacher prompt.
+- Do not let Teacher invent unsupported capabilities or GUI steps when the capability resolver, command catalog,
+  or Plans do not support them.
+- Do not search other projects or external sources unless the user explicitly requests external navigation/import.
+- Do not let Teacher present PM facts as unsourced hidden prompt lore.
+- Do not hide stale, missing, disabled, or capability-unavailable source states.
+- Do not cite unavailable PlanUnits before a future compile creates them.
+- Do not let Teacher invent PM behavior when live PM sources are missing.
+- Do not search external sources or other projects by default.
+- Do not use taught memory outside its approved scope.
+- Do not let Teacher silently skip missing help entries.
+- Do not search/read external or cross-project sources unless the user explicitly approves that route.
+- Do not use taught memory outside its scope.
+- Do not collapse stale, missing, disabled, and permission-required states into generic uncertainty.
+- Do not let Teacher guess through missing PM coverage.
+- Do not silently change persona/model/tool path without disclosure.
+- Do not treat handoff as failure when it is the correct safer route.
+- Do not let Teacher invent PM behavior when owner sources are missing.
+- Do not collapse stale, missing, disabled, permission-required, and capability-unavailable into one vague warning.
+- Do not present unverified PM behavior as fact.
+- Do not cite unavailable future PlanUnits before compile creates them.
+- Do not certify Teacher on a small happy-path chat only.
+- Do not let Teacher answer capability or settings questions without live/source-backed state.
+- Do not treat missing coverage as a passing answer unless it is visibly disclosed and routed.
+owner_hints:
+- Plans/Prompt_Pipeline.md
+- Plans/assistant-chat-design.md
+- Plans/Tools.md
+- Plans/Media_Generation_and_Capabilities.md
+- Plans/UI_Command_Catalog.md
+- Plans/FinalGUISpec.md
+- Plans/Glossary.md
+- Plans/Personas.md
+- Plans/storage-plan.md
+- Plans/Models_System.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Permissions_System.md
+- Plans/Automated_Testing_System.md
+```
+
+## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Prompt Pipeline owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### PP-057 - Shared DRY Instruction Bundle Conformance
+
+```yaml
+plan_unit_id: PP-057
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Assistant, Interview, Orchestrator, delegated child-run, document-builder, and code-generation prompt routes consume
+  one shared Instruction Bundle route for the DRY Method. Prompt builders must not carry prompt-builder-local DRY prose,
+  shadow instruction sources, or route-specific DRY behavior. The Instruction Bundle records
+  `instruction_bundle_ref`, `rules_application_sha256`, `rules_project_sha256`, `dry_method_effective_state`, and
+  `dry_method_reason` as run-start minimum fields when the DRY Method applies, degrades, is disabled, blocks, or
+  caveats a route.
+gui_related: false
+gui_classification_reason: Defines prompt assembly and shared route conformance rather than visual presentation.
+depends_on: [ARC-036, CV-299]
+unblocks: [OSI-430, ISI-019, ATS-018]
+acceptance_criteria:
+  - Every listed prompt route consumes the same DRY Method Instruction Bundle path.
+  - Local prompt templates do not duplicate or fork DRY Method prose.
+  - Run-start minimum fields are present when DRY has a material route effect.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - DRY Method prompt route conformance fixtures
+risk_class: dry_method_prompt_route_drift
+reasoning_tier: high
+context_scope: dry_method_prompt_pipeline
+implementation_surfaces:
+  - Plans/Prompt_Pipeline.md
+  - future prompt assembly
+node_compile_hint:
+  mode: dry_method_shared_instruction_bundle
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-prompt-route-static-conformance
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-003
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-004
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0076
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0083
+source_atom_ids: [atom-0076, atom-0083]
+preserved_exact_tokens:
+  - "Assistant"
+  - "Interview"
+  - "Orchestrator"
+  - "delegated child-run"
+  - "document-builder"
+  - "code-generation"
+  - "Instruction Bundle"
+  - "instruction_bundle_ref"
+  - "rules_application_sha256"
+  - "rules_project_sha256"
+negative_constraints:
+  - Do not create shadow instruction sources.
+  - Do not duplicate DRY prose into prompt builders.
+  - Do not let route-local prompt templates override the shared DRY owner.
+owner_hints:
+  - Plans/Prompt_Pipeline.md
+  - Plans/agent-rules-context.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/interview-subagent-integration.md
+```
+
+## Ledger Compile Addendum - pldg-20260629-001-feature-name
+
+This addendum compiles the Free Models prompt-route consumer contract. It does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+
+### PP-058 - Free Models Requested Effective Route Snapshot Handoff
+
+```yaml
+plan_unit_id: PP-058
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Prompt Pipeline consumes a requested/effective route snapshot for Free Models that includes the user-facing wrapper, underlying provider/model/account/source identity, section policy source, fallback reason, cost/usage refs, capability/support state, and source snapshot refs before provider handoff. Prompt assembly must not infer route identity from friendly model names alone and must preserve section/surface/role override provenance.
+gui_related: false
+gui_classification_reason: Defines prompt assembly and provider handoff metadata, not GUI presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Prompt handoff snapshots include requested and effective provider/model/account/source identity.
+  - Section/surface/role override source is carried through prompt assembly.
+  - Friendly names do not replace canonical provider/model/account/source ids.
+  - Fallback reason and cost/usage refs are available for Usage and Runtime Artifacts projection.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Free Models requested/effective route snapshot fixtures
+  - Prompt handoff provenance fixtures
+risk_class: prompt_route_identity_drift
+reasoning_tier: high
+context_scope: free_models_prompt_pipeline_handoff
+implementation_surfaces:
+  - Plans/Prompt_Pipeline.md
+  - Plans/Models_System.md
+  - Plans/usage-feature.md
+  - Plans/Executor_Protocol.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: free_models_prompt_route_snapshot_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+source_atom_ids: [atom-0012, atom-0026, atom-0113, atom-0117, atom-0118, atom-0122, atom-0126, atom-0234, atom-0238, atom-0242, atom-0246, atom-0276, atom-0281, atom-0282, atom-0297, atom-0298]
+preserved_exact_tokens:
+  - "requested/effective"
+  - "section/surface/role"
+  - "fallback reason"
+  - "provider/model/account/source"
+  - "source snapshot"
+  - "Provider_OpenCode adjacent/reference-only"
+negative_constraints:
+  - Do not infer provider/model/account/source identity from model display names alone.
+  - Do not hide requested/effective model differences when section settings override the global top-10.
+  - Do not compile Free Models ownership into Provider_OpenCode by default.
+owner_hints:
+  - Plans/Prompt_Pipeline.md
+  - Plans/Models_System.md
+  - Plans/usage-feature.md
+  - Plans/Executor_Protocol.md
+```
+
+## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+
+
+<<< CONTEXT_AFTER 4029-4040 >>>
+### PP-059 - P1-CONTEXT-SKILL-BUDGETS
+
+```yaml
+plan_unit_id: PP-059
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  P1-CONTEXT-SKILL-BUDGETS (P1) is compiled as canonical Puppet Master intent for Skill/context catalog progressive disclosure: Add ContextCatalogBudget for skills, MCP tools, provider models, memories, and terminal transcript summaries. The preserved PM gap/delta is: Need explicit skill/tool/catalog listing budgets and omission warnings in GUI. The observed external-repo signal remains source-lineage evidence: Codex official skills docs use progressive disclosure and cap initial skill listing at 2% context or 8k chars; Cline/Agent Zero/Pi all hit compaction/context/provider issues.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:

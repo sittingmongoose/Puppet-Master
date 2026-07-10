@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4139-4150 >>>
+L00004139	preserved_exact_tokens:
+L00004140	  - "`EventRecord`"
+L00004141	  - "`run.started`"
+L00004142	  - "`usage.event`"
+L00004143	  - "`requested_effective_snapshot_ref?`"
+L00004144	  - "`/runtime/auth/account`"
+L00004145	negative_constraints:
+L00004146	  - "Owner docs must not claim runtime alignment while omitting project/thread/run/attempt/account join keys."
+L00004147	owner_hints:
+L00004148	  - Plans/Contracts_V0.md
+L00004149	```
+L00004150	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4151-4535 >>>
+L00004151	### CV-027 - Persona Alias Revival Prohibition
+L00004152	
+L00004153	```yaml
+L00004154	plan_unit_id: CV-027
+L00004155	unit_type: compatibility_disposition
+L00004156	status: accepted
+L00004157	owner_doc: Plans/Contracts_V0.md
+L00004158	canonical_text: >-
+L00004159	  requested_persona_id and effective_persona_id are forbidden canonical names
+L00004160	  and survive only as migration aliases to requested_persona and
+L00004161	  effective_persona.
+L00004162	gui_related: false
+L00004163	gui_classification_reason: This unit is a compatibility disposition for runtime identity field names.
+L00004164	split_recommended: false
+L00004165	depends_on: [CV-012]
+L00004166	unblocks: []
+L00004167	acceptance_criteria:
+L00004168	  - requested_persona_id and effective_persona_id are not canonical field names.
+L00004169	  - The alias mapping to requested_persona and effective_persona remains explicit.
+L00004170	  - Consumers do not normatively revive the retired names.
+L00004171	validation_surfaces:
+L00004172	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004173	  - python3 scripts/pm-plan-index.py validate
+L00004174	risk_class: persona_alias_revival
+L00004175	reasoning_tier: high
+L00004176	context_scope: persona_alias_disposition
+L00004177	implementation_surfaces:
+L00004178	  - Plans/Contracts_V0.md
+L00004179	node_compile_hint:
+L00004180	  mode: compatibility_disposition
+L00004181	  create_worknodes: false
+L00004182	source_lineage:
+L00004183	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00004184	preserved_exact_tokens:
+L00004185	  - "`requested_persona_id`"
+L00004186	  - "`effective_persona_id`"
+L00004187	  - "`requested_persona`"
+L00004188	  - "`effective_persona`"
+L00004189	stale_retired_dispositions:
+L00004190	  - "requested_persona_id and effective_persona_id are migration aliases only."
+L00004191	negative_constraints:
+L00004192	  - "Consumers must not normatively revive requested_persona_id or effective_persona_id."
+L00004193	owner_hints:
+L00004194	  - Plans/Contracts_V0.md
+L00004195	```
+L00004196	
+L00004197	### CV-028 - Requested Effective Projection Visibility
+L00004198	
+L00004199	```yaml
+L00004200	plan_unit_id: CV-028
+L00004201	unit_type: requirement
+L00004202	status: accepted
+L00004203	owner_doc: Plans/Contracts_V0.md
+L00004204	canonical_text: >-
+L00004205	  Orchestrator, Source Control, graph, usage, verifier, live-status, command
+L00004206	  pivot, and inspector surfaces preserve requested/effective account, account
+L00004207	  policy, switch reason, trust, worker identity, and project-scoped derivation.
+L00004208	gui_related: true
+L00004209	gui_classification_reason: This unit controls user-visible projections, live status, command pivots, graph, usage, verifier, and inspector surfaces.
+L00004210	split_recommended: true
+L00004211	depends_on: [CV-013, CV-014, CV-015]
+L00004212	unblocks: [CV-037]
+L00004213	acceptance_criteria:
+L00004214	  - Orchestrator and Source Control projections preserve requested/effective identity.
+L00004215	  - Live-status and command pivots disclose account policy, account selection, switch reason, and project-scoped derivation.
+L00004216	  - Graph, usage, verifier, trust, and worker identity projections remain traceable end to end.
+L00004217	validation_surfaces:
+L00004218	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004219	  - python3 scripts/pm-plan-index.py validate
+L00004220	risk_class: identity_projection_visibility_drift
+L00004221	reasoning_tier: high
+L00004222	context_scope: requested_effective_projection_visibility
+L00004223	implementation_surfaces:
+L00004224	  - Plans/Contracts_V0.md
+L00004225	  - Plans/Orchestrator_Page.md
+L00004226	node_compile_hint:
+L00004227	  mode: identity_projection_contract
+L00004228	  create_worknodes: false
+L00004229	source_lineage:
+L00004230	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00004231	preserved_exact_tokens:
+L00004232	  - "`live-status`"
+L00004233	  - "`/switch`"
+L00004234	  - "`/model`"
+L00004235	  - "`/account`"
+L00004236	  - "`project_id`"
+L00004237	  - "trust-state"
+L00004238	negative_constraints:
+L00004239	  - "Requested/effective identity must not disappear when command pivots or live-status resolve identity."
+L00004240	owner_hints:
+L00004241	  - Plans/Contracts_V0.md
+L00004242	```
+L00004243	
+L00004244	### CV-029 - Blocked Episode Action Identity
+L00004245	
+L00004246	```yaml
+L00004247	plan_unit_id: CV-029
+L00004248	unit_type: requirement
+L00004249	status: accepted
+L00004250	owner_doc: Plans/Contracts_V0.md
+L00004251	canonical_text: >-
+L00004252	  Artifact, HITL, tool-denial, approval, and recovery states converge on blocked
+L00004253	  episode identity with blocked_sequence, ordered allowed_action_ids[] /
+L00004254	  allowed_action_ids, node_id, attempt_id, failure_class, and
+L00004255	  blocked_reason_code; allowed_actions[], request_id, tier_id, and tier_type are
+L00004256	  compatibility or lineage only.
+L00004257	gui_related: false
+L00004258	gui_classification_reason: This unit defines blocked runtime action identity and compatibility fields.
+L00004259	split_recommended: true
+L00004260	depends_on: [CV-023]
+L00004261	unblocks: [CV-030, CV-038, CV-040, CV-053]
+L00004262	acceptance_criteria:
+L00004263	  - Artifact, HITL, tool-denial, approval, and recovery states converge on blocked_episode identity.
+L00004264	  - ordered allowed_action_ids[] / allowed_action_ids is the canonical action identity family.
+L00004265	  - allowed_actions[], request_id, tier_id, and tier_type remain compatibility or lineage only.
+L00004266	validation_surfaces:
+L00004267	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004268	  - python3 scripts/pm-plan-index.py validate
+L00004269	risk_class: blocked_episode_action_drift
+L00004270	reasoning_tier: high
+L00004271	context_scope: blocked_episode_action_identity
+L00004272	implementation_surfaces:
+L00004273	  - Plans/Contracts_V0.md
+L00004274	node_compile_hint:
+L00004275	  mode: blocked_episode_action_contract
+L00004276	  create_worknodes: false
+L00004277	source_lineage:
+L00004278	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00004279	preserved_exact_tokens:
+L00004280	  - "`blocked_sequence`"
+L00004281	  - "`allowed_action_ids[]`"
+L00004282	  - "`allowed_action_ids`"
+L00004283	  - "`allowed_actions[]`"
+L00004284	  - "`request_id`"
+L00004285	  - "`tier_id`"
+L00004286	  - "`tier_type`"
+L00004287	  - "`blocked_reason_code`"
+L00004288	compatibility_only_notes:
+L00004289	  - "allowed_actions[], request_id, tier_id, and tier_type are compatibility or lineage only."
+L00004290	negative_constraints:
+L00004291	  - "Approval and recovery states must not target tier/request-local identity instead of blocked episode identity."
+L00004292	owner_hints:
+L00004293	  - Plans/Contracts_V0.md
+L00004294	```
+L00004295	
+L00004296	### CV-030 - Blocked GUI Action Projection Safety
+L00004297	
+L00004298	```yaml
+L00004299	plan_unit_id: CV-030
+L00004300	unit_type: requirement
+L00004301	status: accepted
+L00004302	owner_doc: Plans/Contracts_V0.md
+L00004303	canonical_text: >-
+L00004304	  Blocked-state GUI commands derive buttons from canonical allowed_action_ids[],
+L00004305	  revalidate stale or degraded projections before mutation, and disable with
+L00004306	  explicit projection_health or projection-freshness reason instead of guessing.
+L00004307	gui_related: true
+L00004308	gui_classification_reason: This unit defines visible blocked-state GUI buttons, disabled states, and projection-health explanations.
+L00004309	split_recommended: true
+L00004310	depends_on: [CV-029]
+L00004311	unblocks: [CV-048]
+L00004312	acceptance_criteria:
+L00004313	  - GUI buttons for blocked-state commands derive from canonical allowed_action_ids[].
+L00004314	  - Stale or degraded projections are revalidated before mutation.
+L00004315	  - Invalid or stale action projections disable with explicit projection_health or projection-freshness reason.
+L00004316	validation_surfaces:
+L00004317	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004318	  - python3 scripts/pm-plan-index.py validate
+L00004319	risk_class: gui_action_projection_stale
+L00004320	reasoning_tier: high
+L00004321	context_scope: blocked_gui_action_projection
+L00004322	implementation_surfaces:
+L00004323	  - Plans/Contracts_V0.md
+L00004324	  - Plans/UI_Command_Catalog.md
+L00004325	node_compile_hint:
+L00004326	  mode: gui_blocked_action_projection
+L00004327	  create_worknodes: false
+L00004328	source_lineage:
+L00004329	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00004330	preserved_exact_tokens:
+L00004331	  - "`allowed_action_ids[]`"
+L00004332	  - "`projection_health`"
+L00004333	  - "projection-freshness"
+L00004334	  - "`GUI`"
+L00004335	  - "`account_pressure_episode`"
+L00004336	negative_constraints:
+L00004337	  - "The GUI must not guess that an old blocked action set is still valid."
+L00004338	owner_hints:
+L00004339	  - Plans/Contracts_V0.md
+L00004340	```
+L00004341	
+L00004342	### CV-031 - Route Identity Normalization Before Addressability
+L00004343	
+L00004344	```yaml
+L00004345	plan_unit_id: CV-031
+L00004346	unit_type: requirement
+L00004347	status: accepted
+L00004348	owner_doc: Plans/Contracts_V0.md
+L00004349	canonical_text: >-
+L00004350	  Project artifacts, validation reports, file-management routes, usage routes,
+L00004351	  generated artifacts, and page links normalize to route_target, OpenSubject,
+L00004352	  object_kind, object_id, target_kind, command_kind, inspector_target, scoped
+L00004353	  resolver rules, and normalizes_to_contract before addressability.
+L00004354	gui_related: false
+L00004355	gui_classification_reason: This unit defines route/open normalization before runtime/generated artifacts become addressable.
+L00004356	split_recommended: true
+L00004357	depends_on: [CV-003, CV-023]
+L00004358	unblocks: [CV-046, CV-054, CV-055, CV-059]
+L00004359	acceptance_criteria:
+L00004360	  - Project artifact, validation, file-management, usage, generated-artifact, and page-link routes normalize before addressability.
+L00004361	  - Path/page-local links and alias wrappers do not bypass route_target/OpenSubject normalization.
+L00004362	  - Scoped resolver rules and normalizes_to_contract are preserved for routing proof.
+L00004363	validation_surfaces:
+L00004364	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004365	  - python3 scripts/pm-plan-index.py validate
+L00004366	risk_class: route_identity_shortcut
+L00004367	reasoning_tier: high
+L00004368	context_scope: route_identity_normalization
+L00004369	implementation_surfaces:
+L00004370	  - Plans/Contracts_V0.md
+L00004371	  - Plans/FileManager.md
+L00004372	  - Plans/UI_Command_Catalog.md
+L00004373	node_compile_hint:
+L00004374	  mode: route_normalization_contract
+L00004375	  create_worknodes: false
+L00004376	source_lineage:
+L00004377	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00004378	preserved_exact_tokens:
+L00004379	  - "`route_target`"
+L00004380	  - "`OpenSubject`"
+L00004381	  - "`object_kind`"
+L00004382	  - "`object_id`"
+L00004383	  - "`target_kind`"
+L00004384	  - "`command_kind`"
+L00004385	  - "`inspector_target`"
+L00004386	  - "`normalizes_to_contract`"
+L00004387	negative_constraints:
+L00004388	  - "Runtime/generated artifacts must not become addressable through path or page-local shortcuts before route normalization."
+L00004389	owner_hints:
+L00004390	  - Plans/Contracts_V0.md
+L00004391	```
+L00004392	
+L00004393	### CV-032 - Runtime UI SSOT Consumer Set
+L00004394	
+L00004395	```yaml
+L00004396	plan_unit_id: CV-032
+L00004397	unit_type: constraint
+L00004398	status: accepted
+L00004399	owner_doc: Plans/Contracts_V0.md
+L00004400	canonical_text: >-
+L00004401	  Plans/Orchestrator_Page.md, Plans/Executor_Protocol.md, and
+L00004402	  Plans/Contracts_V0.md consume the practical runtime/UI SSOT for execution,
+L00004403	  blocked states, /handoff, /recovery, terminals, event families, AttemptJournal,
+L00004404	  and package/seam/lane/promotion identity.
+L00004405	gui_related: false
+L00004406	gui_classification_reason: This unit defines cross-doc runtime/UI SSOT ownership rather than a specific visual surface.
+L00004407	split_recommended: true
+L00004408	depends_on: [CV-003]
+L00004409	unblocks: [CV-033, CV-045]
+L00004410	acceptance_criteria:
+L00004411	  - Orchestrator_Page, Executor_Protocol, and Contracts_V0 consume the runtime/UI SSOT together.
+L00004412	  - AttemptJournal and handoff payloads do not remain iteration-shaped.
+L00004413	  - Package/seam/lane/promotion identity replaces tier-boundary ancestry in execution projections.
+L00004414	validation_surfaces:
+L00004415	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004416	  - python3 scripts/pm-plan-index.py validate
+L00004417	risk_class: runtime_ui_ssot_drift
+L00004418	reasoning_tier: high
+L00004419	context_scope: runtime_ui_ssot_consumers
+L00004420	implementation_surfaces:
+L00004421	  - Plans/Contracts_V0.md
+L00004422	  - Plans/Orchestrator_Page.md
+L00004423	  - Plans/Executor_Protocol.md
+L00004424	node_compile_hint:
+L00004425	  mode: runtime_ui_ssot_boundary
+L00004426	  create_worknodes: false
+L00004427	source_lineage:
+L00004428	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00004429	preserved_exact_tokens:
+L00004430	  - "`/handoff`"
+L00004431	  - "`/recovery`"
+L00004432	  - "`AttemptJournal`"
+L00004433	  - "`/package/seam/lane/promotion`"
+L00004434	  - "`/lane-aware`"
+L00004435	negative_constraints:
+L00004436	  - "AttemptJournal and handoff payloads must not remain /iteration-shaped."
+L00004437	owner_hints:
+L00004438	  - Plans/Contracts_V0.md
+L00004439	```
+L00004440	
+L00004441	### CV-033 - Package Overseer Authority Scope
+L00004442	
+L00004443	```yaml
+L00004444	plan_unit_id: CV-033
+L00004445	unit_type: constraint
+L00004446	status: accepted
+L00004447	owner_doc: Plans/Contracts_V0.md
+L00004448	canonical_text: >-
+L00004449	  package-overseer-only responsibility is bounded to package-local execution
+L00004450	  supervision, dispatch/review cadence, and remediation recommendations;
+L00004451	  cross-package promotion, seam governance, durable route identity, and global
+L00004452	  remediation policy require higher-scope authority.
+L00004453	gui_related: false
+L00004454	gui_classification_reason: This unit defines authority scope boundaries for overseer roles.
+L00004455	split_recommended: false
+L00004456	depends_on: [CV-032]
+L00004457	unblocks: []
+L00004458	acceptance_criteria:
+L00004459	  - Package-overseer-only responsibility remains package-local.
+L00004460	  - Cross-package promotion, seam governance, durable route identity, and global remediation policy require higher-scope authority.
+L00004461	  - Package-local remediation recommendations do not become global remediation policy.
+L00004462	validation_surfaces:
+L00004463	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004464	  - python3 scripts/pm-plan-index.py validate
+L00004465	risk_class: overseer_authority_scope
+L00004466	reasoning_tier: high
+L00004467	context_scope: package_overseer_authority
+L00004468	implementation_surfaces:
+L00004469	  - Plans/Contracts_V0.md
+L00004470	node_compile_hint:
+L00004471	  mode: authority_scope_boundary
+L00004472	  create_worknodes: false
+L00004473	source_lineage:
+L00004474	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00004475	preserved_exact_tokens:
+L00004476	  - "`package-overseer-only`"
+L00004477	  - "cross-package promotion"
+L00004478	  - "seam governance"
+L00004479	  - "durable route identity"
+L00004480	negative_constraints:
+L00004481	  - "Package-local authority must not claim global remediation or seam governance ownership."
+L00004482	owner_hints:
+L00004483	  - Plans/Contracts_V0.md
+L00004484	```
+L00004485	
+L00004486	### CV-034 - Canonical Record Help Anchor Discovery
+L00004487	
+L00004488	```yaml
+L00004489	plan_unit_id: CV-034
+L00004490	unit_type: requirement
+L00004491	status: accepted
+L00004492	owner_doc: Plans/Contracts_V0.md
+L00004493	canonical_text: >-
+L00004494	  Canonical record/help anchors such as canonical_record.v1:{project_id}:{record_id},
+L00004495	  /help, /open, record_id, projection-health, gap-003, and gap-006 are
+L00004496	  route/runtime identity obligations; Glossary terms and Crosswalk names do not
+L00004497	  become alternate runtime owners.
+L00004498	gui_related: false
+L00004499	gui_classification_reason: This unit defines record/help route identity and owner boundaries.
+L00004500	split_recommended: true
+L00004501	depends_on: [CV-003]
+L00004502	unblocks: [CV-037]
+L00004503	acceptance_criteria:
+L00004504	  - Canonical record/help anchors remain discoverable through owner headings or route/open aliases.
+L00004505	  - Glossary terms define vocabulary without becoming alternate runtime, route, or record owners.
+L00004506	  - Crosswalk names owner primitive or contract routes without re-owning runtime records.
+L00004507	validation_surfaces:
+L00004508	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004509	  - python3 scripts/pm-plan-index.py validate
+L00004510	risk_class: record_anchor_discovery_drift
+L00004511	reasoning_tier: high
+L00004512	context_scope: canonical_record_help_anchors
+L00004513	implementation_surfaces:
+L00004514	  - Plans/Contracts_V0.md
+L00004515	  - Plans/Glossary.md
+L00004516	  - Plans/Crosswalk.md
+L00004517	node_compile_hint:
+L00004518	  mode: record_anchor_contract
+L00004519	  create_worknodes: false
+L00004520	source_lineage:
+L00004521	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00004522	preserved_exact_tokens:
+L00004523	  - "`canonical_record.v1:{project_id}:{record_id}`"
+L00004524	  - "`/help`"
+L00004525	  - "`/open`"
+L00004526	  - "`record_id`"
+L00004527	  - "`projection-health`"
+L00004528	  - "`gap-003`"
+L00004529	  - "`gap-006`"
+L00004530	negative_constraints:
+L00004531	  - "Glossary terms and Crosswalk names must not become alternate runtime owners."
+L00004532	owner_hints:
+L00004533	  - Plans/Contracts_V0.md
+L00004534	```
+L00004535	
+
+<<< CONTEXT_AFTER canonical_document_lines=4536-4547 >>>
+L00004536	### CV-035 - Package-Aware Storage Projection Scope
+L00004537	
+L00004538	```yaml
+L00004539	plan_unit_id: CV-035
+L00004540	unit_type: requirement
+L00004541	status: accepted
+L00004542	owner_doc: Plans/Contracts_V0.md
+L00004543	canonical_text: >-
+L00004544	  Storage and projection backbones are package-aware and join attempt, blocked,
+L00004545	  and usage projections to lane, worktree, concern, and project-attention
+L00004546	  identity before any fallback to /tier/session/thread scope.
+L00004547	gui_related: false

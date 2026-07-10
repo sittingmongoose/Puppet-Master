@@ -1,0 +1,402 @@
+<<< CONTEXT_BEFORE 19440-19451 >>>
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0158
+preserved_exact_tokens:
+  - ".git/pm-merge.lock"
+  - "FIRST merge-execution step"
+negative_constraints:
+  - "The UI pre-check `/disabling` state is advisory only."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Executor_Protocol.md
+```
+
+
+<<< AUTHORITATIVE_CORE 19452-19824 >>>
+### ACD-355 - Stale Merge Lock Recovery Compatibility
+
+```yaml
+plan_unit_id: ACD-355
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Stale lock recovery wording is preserved as compatibility disposition: lazy
+  startup removes dead PID or older-than-five-minute lock before new merge and
+  toasts `Stale merge lock cleaned up.`
+gui_related: true
+gui_classification_reason: Stale lock recovery includes a visible toast.
+depends_on: [ACD-354]
+unblocks: []
+acceptance_criteria:
+  - Startup lazily removes stale merge locks when PID is dead or lock is older than five minutes.
+  - Stale lock cleanup happens before new merge execution proceeds.
+  - Cleanup toasts `Stale merge lock cleaned up.`
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: merge_lock
+reasoning_tier: standard
+context_scope: compatibility
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: stale_merge_lock_recovery_compatibility
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0158
+preserved_exact_tokens:
+  - "older than 5 minutes"
+  - "Stale merge lock cleaned up."
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-356 - Merge Strategy Command Templates
+
+```yaml
+plan_unit_id: ACD-356
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Strategy command templates preserve Squash, Merge, Rebase sequences and canonical `{worktree_branch}` aliases for source branch.
+gui_related: false
+gui_classification_reason: Merge command templates are backend Git behavior.
+depends_on: [ACD-354]
+unblocks: [ACD-357, ACD-358, ACD-359]
+acceptance_criteria:
+  - Squash, Merge, and Rebase execution steps preserve their command sequences.
+  - Canonical command templates may use `{worktree_branch}` for the source branch.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: merge_execution
+reasoning_tier: high
+context_scope: git
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: merge_strategy_command_templates
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0158
+preserved_exact_tokens:
+  - "git merge --squash {worktree_branch}"
+  - "git merge --no-ff {worktree_branch} -m \"{message}\""
+  - "git merge --ff-only {worktree_branch}"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+```
+
+### ACD-357 - Worktree Merge Auto Fetch
+
+```yaml
+plan_unit_id: ACD-357
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Auto-fetch runs `git fetch origin {target_branch}` before any merge; if no remote or offline, merge proceeds with local state and advisory toast.
+gui_related: true
+gui_classification_reason: Auto-fetch failure behavior includes an advisory toast.
+depends_on: [ACD-356]
+unblocks: [ACD-358]
+acceptance_criteria:
+  - Backend runs `git fetch origin {target_branch}` before any merge strategy.
+  - Fetch failure from no remote or offline state does not block merge.
+  - Fetch failure shows an advisory toast while proceeding with local state.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: merge_execution
+reasoning_tier: standard
+context_scope: git
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: worktree_merge_auto_fetch
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0158
+preserved_exact_tokens:
+  - "git fetch origin {target_branch}"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+```
+
+### ACD-358 - Non Interactive Rebase Constraint
+
+```yaml
+plan_unit_id: ACD-358
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Rebase is non-interactive only; interactive rebase, `-i`, pick/squash/fixup, and `/squash/fixup` workflows are terminal-only.
+gui_related: false
+gui_classification_reason: Rebase mode limitation is backend command/workflow behavior.
+depends_on: [ACD-356]
+unblocks: [ACD-359]
+acceptance_criteria:
+  - Merge dialog runs non-interactive rebase only.
+  - Interactive rebase and pick/squash/fixup workflows are terminal-only.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: merge_execution
+reasoning_tier: high
+context_scope: git
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: non_interactive_rebase_constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0158
+preserved_exact_tokens:
+  - "interactive `git rebase -i`"
+  - "-i"
+  - "pick/squash/fixup"
+  - "/squash/fixup"
+negative_constraints:
+  - "Interactive rebase is not available through the merge dialog."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+```
+
+### ACD-359 - Merge Authorship And Hooks
+
+```yaml
+plan_unit_id: ACD-359
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Merge commit authorship uses user git identity with no AI co-author injection; hooks are not bypassed, hook failure is merge failure, and hooks run after pre-merge test pass as part of commit pipeline.
+gui_related: false
+gui_classification_reason: Commit authorship and hook execution are backend Git behavior.
+depends_on: [ACD-356, ACD-358]
+unblocks: [ACD-360]
+acceptance_criteria:
+  - Merge commit authorship uses `user.name` and `user.email`.
+  - AI co-author injection is not added.
+  - Git hooks run normally and hook failure is merge failure with Retry/Cancel.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: merge_execution
+reasoning_tier: high
+context_scope: git
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: merge_authorship_hooks
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0158
+preserved_exact_tokens:
+  - "user.name"
+  - "user.email"
+  - "No AI co-author injection"
+  - "pre-merge-commit"
+  - "prepare-commit-msg"
+negative_constraints:
+  - "Git hooks are NOT bypassed."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+```
+
+### ACD-360 - Post Merge Modal
+
+```yaml
+plan_unit_id: ACD-360
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Post-merge modal offers `Keep worktree`, `Remove worktree`, and `Cancel`, defaults from cleanup setting, and has no undo for completed merge.
+gui_related: true
+gui_classification_reason: Post-merge modal and no-undo guidance are visible UI.
+depends_on: [ACD-359]
+unblocks: []
+acceptance_criteria:
+  - Post-merge modal shows merged branch and target branch.
+  - Modal offers Keep worktree, Remove worktree, and Cancel.
+  - Default follows cleanup setting and completed merge has no undo.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: merge_post_behavior
+reasoning_tier: standard
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: post_merge_modal
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0159
+preserved_exact_tokens:
+  - "Branch `assistant/{title}` has been merged into `{target}`."
+  - "Keep worktree"
+  - "Remove worktree"
+  - "git reset"
+  - "git revert"
+negative_constraints:
+  - "No undo for completed merge."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-361 - Source Control Conflict Routing
+
+```yaml
+plan_unit_id: ACD-361
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: UI-initiated conflicts route to Source Control > Changes and `cmd.source_control.open_conflict`; lower-level `cmd.git.*` may support mechanics but is not the GUI entrypoint.
+gui_related: true
+gui_classification_reason: Conflict routing and Source Control entrypoints are visible UI behavior.
+depends_on: [ACD-348]
+unblocks: [ACD-362]
+acceptance_criteria:
+  - UI-initiated conflicts route to Source Control > Changes.
+  - "`cmd.source_control.open_conflict` is the GUI entrypoint."
+  - Lower-level `cmd.git.*` operations may support mechanics but do not become the GUI entrypoint.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: conflict_routing
+reasoning_tier: high
+context_scope: source_control
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: source_control_conflict_routing
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0160
+preserved_exact_tokens:
+  - "Source Control > Changes"
+  - "cmd.source_control.open_conflict"
+  - "cmd.git.conflict_apply_resolution"
+negative_constraints:
+  - "Assistant-bound worktree conflicts do not define a second chat-local conflict UI."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### ACD-362 - Natural Language Conflict Assistance Boundary
+
+```yaml
+plan_unit_id: ACD-362
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Natural-language conflict assistance may explain and propose edits, but semantic resolution requires explicit user approval and follows Source Control Conflict assistant rules, including `/disabled`, `/settings`, and per-project preferences.
+gui_related: true
+gui_classification_reason: Natural-language conflict assistance and approval handoff are user-visible chat and Source Control behavior.
+depends_on: [ACD-361]
+unblocks: [ACD-363]
+acceptance_criteria:
+  - Natural-language assistance may explain choices and propose edits.
+  - Semantic resolution requires explicit user approval.
+  - Conflict flow follows Source Control disabled/settings/preference rules.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: conflict_routing
+reasoning_tier: high
+context_scope: source_control
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: natural_language_conflict_assistance_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0160
+preserved_exact_tokens:
+  - "NL-initiated"
+  - "Open Conflict Assistant"
+  - "cmd.source_control.open_review"
+  - "/disabled"
+  - "/settings"
+negative_constraints:
+  - "Semantic resolution requires explicit user approval."
+  - "Conflict assistance must not create a second chat-local conflict UI."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### ACD-363 - Rebase Conflict Abort Behavior
+
+```yaml
+plan_unit_id: ACD-363
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Rebase conflicts during `git rebase {target}` auto-abort, show dialog error, skip tests, and release lock.
+gui_related: false
+gui_classification_reason: Rebase conflict abort behavior is backend merge/runtime behavior.
+depends_on: [ACD-354, ACD-362]
+unblocks: []
+acceptance_criteria:
+  - Rebase conflicts run `git rebase --abort`.
+  - Dialog shows an error, tests do not run, and merge lock is released.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: conflict_routing
+reasoning_tier: high
+context_scope: git
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: rebase_conflict_abort_behavior
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0160
+preserved_exact_tokens:
+  - "git rebase --abort"
+  - "Tests never run"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+```
+
+
+<<< CONTEXT_AFTER 19825-19836 >>>
+### ACD-364 - Worktree PR Panel Prefill
+
+```yaml
+plan_unit_id: ACD-364
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Create PR opens the existing GitHub PR creation panel with title, body, target branch, and source branch prefilled from thread and commit data.
+gui_related: true
+gui_classification_reason: PR creation panel and prefilled fields are visible UI.
+depends_on: [ACD-347]
+unblocks: [ACD-365]

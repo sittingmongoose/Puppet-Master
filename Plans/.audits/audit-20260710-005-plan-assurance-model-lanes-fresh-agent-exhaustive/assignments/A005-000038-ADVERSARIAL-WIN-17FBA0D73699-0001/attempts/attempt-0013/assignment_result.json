@@ -1,0 +1,297 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000038-ADVERSARIAL-WIN-17FBA0D73699-0001",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0007_b_parallel_dispatcher_epoch_0013/a005_000038_adversarial_e13",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/UI_Wiring_Rules.md",
+    "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa",
+    "core_sha256": "5ea8c5fa5b43d3395b62a3019ad2b43955e281ba00792a0714c95f5e9d34c2ba",
+    "core_range": [1, 358]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "NG-001",
+      "item_type": "explicit_non_gap",
+      "title": "Owner boundary is explicit",
+      "statement": "The document explicitly limits its authority and identifies both what it owns and what must remain in other owner documents.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":68,"line_end":68,"exact_quote":"This document does not own product layout, command catalog membership, runtime event schemas, route semantics, storage projections, or evidence bundle schemas. Those remain with their owner docs and are referenced here for wiring verification.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "NG-002",
+      "item_type": "explicit_non_gap",
+      "title": "Concept artifacts cannot silently become canon",
+      "statement": "Concept inputs are expressly classified as lineage, and mock or demo data is prevented from masquerading as production state without an owner contract.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":28,"line_end":28,"exact_quote":"For the 2026-07-02 GUI/PMConcept readiness repair, `Plans/PMConcept_Control_Reconciliation.json` is the machine-readable concept reconciliation artifact and `Plans/Wiring_Matrix.production.json` is the schema-validated production wiring artifact. PMConcept controls without production command/state/handler/receipt/test coverage remain concept lineage only. PMConcept local/demo/mock data is `concept_fixture_only` unless a canonical owner doc replaces it with a real projected state contract.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "NG-003",
+      "item_type": "explicit_non_gap",
+      "title": "Static accessibility obligations are broad",
+      "statement": "The wiring evidence contract covers names, roles, keyboard activation, focus, semantic state, disabled reasons, dispatch, effects, and tests, providing a strong declaration-level accessibility baseline.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":30,"line_end":30,"exact_quote":"Production wiring evidence MUST include accessibility and interaction readiness: every retained actionable control has an accessible name, semantic role, keyboard activation contract, focus behavior, state attributes (`aria-selected`, `aria-expanded`, `aria-checked`, or equivalent native state where applicable), disabled reason projection, UICommand binding, handler target, receipt/event effect, and test evidence. Icon-only controls without names, custom clickable elements without keyboard parity, tab/menu/disclosure controls without state semantics, and disabled controls without user-visible reasons are GATE-010 failures.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "NG-004",
+      "item_type": "explicit_non_gap",
+      "title": "View-backend purity boundary is testable",
+      "statement": "The view is prohibited from directly reaching backend, storage, domain, handler, or service layers, while unknown commands must be rejected without domain events.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":115,"line_end":115,"exact_quote":"canonical_text: The UI layer MUST dispatch only typed UICommand messages with stable command_id values from Plans/UI_Command_Catalog.md. The view layer is a pure function of projected state plus outbound UICommand emissions and MUST NOT call backend services, storage, domain logic, handlers, or services directly.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "NG-005",
+      "item_type": "explicit_non_gap",
+      "title": "Alias normalization and stale vocabulary are constrained",
+      "statement": "The document recognizes compatibility aliases, requires deprecation consequences, and forbids stale Tiers vocabulary from becoming a live route or object.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":54,"line_end":54,"exact_quote":"A broad public `cmd.nav` / `cmd.nav.*` family is optional alias surface, not the mandatory answer for every route. Wrapper commands can normalize to shared route contracts, and any `cmd.nav` prototype must carry alias `/deprecation`, handler-registration, and gate-maintenance consequences through `GATE-010`.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-001",
+      "item_type": "gap",
+      "title": "Production matrix consumer is omitted from the PlanUnit contract",
+      "statement": "The prose names Wiring_Matrix.production.json as the schema-validated production artifact, but UIW-006 implementation and validation surfaces enumerate only the prose matrix and schema. No acceptance criterion proves that the production artifact is generated, consumed, complete, or current, leaving the declared production consumer outside the executable PlanUnit boundary.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":277,"line_end":277,"exact_quote":"implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.schema.json]","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-002",
+      "item_type": "gap",
+      "title": "Command lifecycle states are unspecified",
+      "statement": "The linear Element-to-State flow has no normative lifecycle for queued, accepted, executing, rejected, cancelled, timed-out, partially completed, or superseded commands. Invalid transitions and late completion after cancellation therefore have no rejection or UI projection rule.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":184,"line_end":184,"exact_quote":"canonical_text: UI command dispatch flows from UI Element to UICommand envelope to Dispatcher to Handler to EventRecord to Projection to UI State. The dispatcher rejects unknown command_id values with structured errors, handlers remain UI-stateless, and UI/view code observes projected state rather than mutating domain state.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-003",
+      "item_type": "gap",
+      "title": "Duplicate and racing dispatches lack idempotency semantics",
+      "statement": "Preserving args and correlation_id does not define deduplication, idempotency keys, ordering, stale-result suppression, or conflict resolution when double-clicks, retries, or concurrent surfaces issue the same or competing commands.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":191,"line_end":191,"exact_quote":"  - UI command flow preserves command_id, args, and correlation_id through dispatch.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-004",
+      "item_type": "gap",
+      "title": "Partial failure between event and projection is not modeled",
+      "statement": "A handler may emit an event successfully while projection delivery, persistence, or UI subscription fails. The required linear flow supplies no receipt semantics that distinguish committed domain work from a failed or stale UI projection.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":184,"line_end":184,"exact_quote":"canonical_text: UI command dispatch flows from UI Element to UICommand envelope to Dispatcher to Handler to EventRecord to Projection to UI State. The dispatcher rejects unknown command_id values with structured errors, handlers remain UI-stateless, and UI/view code observes projected state rather than mutating domain state.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-005",
+      "item_type": "gap",
+      "title": "Recovery and rollback behavior is delegated but not proven",
+      "statement": "Runtime recovery command renaming is covered, but no wiring rule defines retry eligibility, cancellation, compensation, rollback visibility, retry exhaustion, or reconciliation after an ambiguous result. A renamed command can be correctly wired while recovery remains unsafe.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":42,"line_end":42,"exact_quote":"Runtime action wiring reconciles old `cmd.graph` / `cmd.graph.*` recovery actions to canonical `cmd.runtime` / `cmd.runtime.*` command contracts. Package, lane, and `/package/lane` promotion controls must dispatch through cataloged command IDs rather than ad hoc UI confirms or untyped wiring shortcuts.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-006",
+      "item_type": "gap",
+      "title": "Typed and cataloged commands are not authorization proof",
+      "statement": "The dispatcher boundary validates command identity but never requires actor identity, capability, tenant or workspace scope, role authorization, or handler-side reauthorization. A forbidden actor can therefore issue a structurally valid cataloged command unless another owner happens to impose an unverified control.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":121,"line_end":121,"exact_quote":"  - User-initiated UI interactions emit typed UICommand envelopes.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-007",
+      "item_type": "gap",
+      "title": "Visible envelope and evidence fields lack data-lifecycle controls",
+      "statement": "Keeping origin, correlation_id, and args visible creates potential PII, secret, prompt, path, and identifier exposure in matrices, receipts, logs, or evidence. No data classification, field minimization, redaction, retention, deletion, export, or access boundary is required.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":52,"line_end":52,"exact_quote":"The UI command envelope evidence keeps `command_id`, `issued_at`, `origin`, `correlation_id`, and `args` visible and references `Contracts_V0.md`; wiring rows may verify envelope passthrough but do not redefine the command contract.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-008",
+      "item_type": "gap",
+      "title": "Unknown command rejection does not cover hostile arguments",
+      "statement": "GATE-010 rejects unknown command IDs and checks passthrough, but it does not require validation and canonicalization of argument type, size, encoding, nested depth, path, URI, subject identity, or injection-sensitive content before handler invocation.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":40,"line_end":40,"exact_quote":"`GATE-010` route-aware verification includes schema validation, command coverage, handler resolution, `expected-event` emission, unknown-command rejection, architectural lints, wrapper normalization, argument passthrough, correlation passthrough, and route target kind checks.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-009",
+      "item_type": "gap",
+      "title": "Event emission can falsely imply settled GUI truth",
+      "statement": "The matrix proves an expected event but does not require pending, delayed, stale, superseded, failed-projection, or reconnecting states. A UI may re-enable a control or display success when the event exists but its projection has not converged.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":261,"line_end":261,"exact_quote":"canonical_text: The Wiring Matrix binds every interactive UI element to command handler and expected outcome evidence. Rows include ui_element_id, ui_location, ui_command_id, handler_location, expected_event_types, acceptance_checks, and evidence_required, with machine-readable entries keyed by ui_element_id.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-010",
+      "item_type": "gap",
+      "title": "Offline and network-loss transitions are absent",
+      "statement": "No rule states whether commands queue, reject, retry, expire, or become cancelable during disconnection, nor how reconnection prevents duplicate dispatch and reconciles projection lag. Cross-surface and browser-facing wiring can pass while offline behavior is undefined.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":50,"line_end":50,"exact_quote":"Element-centric and command-centric wiring remains the baseline proof: `ui_element_id -> ui_command_id -> handler_location -> expected_event_types` proves dispatch coverage, while route-aware gates add navigation, subject, and `/consumer/runtime-trace` checks without replacing the row shape. The machine-readable wiring schema remains a set of `interactive-element` dispatch rows; producer/consumer trace evidence is layered above that schema rather than used as a substitute for it.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-011",
+      "item_type": "gap",
+      "title": "Coverage has no scale or resource limits",
+      "statement": "The specification requires complete element and command coverage but defines no limits or tests for matrix cardinality, verifier time and memory, command argument size, route fan-out, event bursts, projection backlog, or evidence bundle growth.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":298,"line_end":298,"exact_quote":"canonical_text: UI wiring verification is scriptable and includes schema validation, element uniqueness, command coverage, handler registration, event emission tests, unknown-command rejection tests, handler statelessness lint, UI purity checks, and dead command detection. GATE-010 failures block progression with no manual override.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-012",
+      "item_type": "gap",
+      "title": "Accessibility declarations lack runtime behavior oracles",
+      "statement": "The declaration contract is strong, but the listed verification strategy has no explicit keyboard-only end-to-end oracle, focus order and restoration oracle, screen-reader announcement oracle, high-contrast or reduced-motion state check, or disabled-reason discoverability test. Schema presence alone cannot prove actual interaction parity.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":304,"line_end":304,"exact_quote":"  - Verification runs without paid UI tooling or manual inspection.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-013",
+      "item_type": "gap",
+      "title": "User-visible wiring states have no localization contract",
+      "statement": "Structured errors, disabled reasons, labels, and status announcements are user-visible but lack message-key ownership, interpolation safety, pluralization, locale fallback, bidi handling, expansion and truncation constraints, and tests that bind localized strings to accessible names.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":192,"line_end":192,"exact_quote":"  - Unknown command_id values return structured errors and emit no domain events.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-014",
+      "item_type": "gap",
+      "title": "Alias support lacks a migration lifecycle",
+      "statement": "Alias and deprecation metadata exist, but no compatibility version, minimum supported producer or consumer, telemetry threshold, removal deadline, mixed-version behavior, or migration test is required. An alias can be normalized correctly yet removed while callers remain live.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":245,"line_end":245,"exact_quote":"preserved_exact_tokens: [\"Concepts/PuppetMasterDashComp.html\", \"/PuppetMasterDashComp.html\", \"Concepts/PMConcept.html\", \"/PMConcept.html\", \"command_arg_contract_ref\", \"route_target_kind\", \"subject_kind\", \"deprecated_alias_for\", \"preconditions\", \"arg_passthrough_requirements\", \"correlation_passthrough\", \"route_contract\", \"GATE-010\", \"cmd.runtime\"]","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-015",
+      "item_type": "gap",
+      "title": "Correlation passthrough is not an operational support contract",
+      "statement": "The document preserves correlation but does not require trace completeness, command-to-event-to-projection latency, failure reason codes, redacted diagnostic export, alerting, sampling behavior, support-safe lookup, or an oracle detecting a broken trace hop.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":56,"line_end":56,"exact_quote":"`GATE-010` must verify that wrapper command IDs normalize to shared route primitives instead of treating every public command ID as independent. Generalized route `/subject` navigation cannot be reduced to one-off handler/event coverage; the gate evidence must prove argument passthrough, subject kind, route target kind, and wrapper normalization.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-016",
+      "item_type": "gap",
+      "title": "Destructive promotion controls lack a safety interaction contract",
+      "statement": "Promotion controls must avoid ad hoc confirms, but no canonical typed confirmation, impact preview, authorization recheck, race-safe target binding, undo or compensation, or irreversible-action receipt is required. This can eliminate unsafe ad hoc UI without replacing it with a proven safe path.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":42,"line_end":42,"exact_quote":"Runtime action wiring reconciles old `cmd.graph` / `cmd.graph.*` recovery actions to canonical `cmd.runtime` / `cmd.runtime.*` command contracts. Package, lane, and `/package/lane` promotion controls must dispatch through cataloged command IDs rather than ad hoc UI confirms or untyped wiring shortcuts.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-017",
+      "item_type": "gap",
+      "title": "Cross-document references have no contradiction or version binding",
+      "statement": "The document names owner sources but supplies no binding to owner contract versions or hashes and no deterministic adjudication when command, GUI, gate, and wiring artifacts disagree. Exact reference lint can pass while referenced semantics drift incompatibly.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":334,"line_end":334,"exact_quote":"canonical_text: UI wiring references Contracts_V0, UI_Command_Catalog, Architecture_Invariants, Progression_Gates, Wiring_Matrix, Wiring_Matrix.schema.json, evidence.schema.json, DRY_Rules, and Decision_Policy while preserving their owner boundaries.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-018",
+      "item_type": "gap",
+      "title": "Current autonomous verification depends on unspecified future scripts",
+      "statement": "The scope claims every rule is autonomously verifiable, but UIW-007 lists future verifier scripts and does not name executable commands or fixture oracles for several required checks. The progression block is therefore not presently falsifiable from this contract alone.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":310,"line_end":310,"exact_quote":"  - Future UI wiring verifier scripts","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-019",
+      "item_type": "unknown",
+      "title": "Exactly-one-command cardinality may not fit composite interactions",
+      "statement": "It is unresolved how exactly-one mapping applies to composite widgets, drag sequences, typeahead, repeated key actions, native links, form controls with preview plus commit, or one gesture that must atomically produce several domain intents. Without a definition of interactive element and dispatch aggregation, compliant implementations may diverge.",
+      "severity": "high",
+      "confidence": "medium",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":150,"line_end":150,"exact_quote":"canonical_text: Every interactive UI element, including buttons, menu items, links, toggles, sliders, and form submits, MUST map to exactly one UICommandID recorded in the Wiring Matrix. Orphan elements and orphan commands are gate failures.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    },
+    {
+      "item_id": "GAP-020",
+      "item_type": "gap",
+      "title": "Expected-event proof excludes conditional, no-op, and error outcomes",
+      "statement": "Rows carry expected_event_types but no outcome algebra for authorized no-ops, validation rejection, conditional multi-event emission, asynchronous acceptance, or command success with no domain event. Tests may force a nominal event and miss valid and invalid alternate paths.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [{"path":"Plans/UI_Wiring_Rules.md","line_start":268,"line_end":268,"exact_quote":"  - Row schema preserves handler, expected event, acceptance, and evidence requirements.","source_sha256":"7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"}]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension":"missing_callers_consumers","status":"gap_found","summary":"The declared production matrix is not carried into UIW-006 implementation or validation surfaces.","evidence_item_ids":["GAP-001"]},
+    {"dimension":"invalid_states_transitions","status":"gap_found","summary":"Command lifecycle states, invalid transitions, and conditional outcomes are unspecified.","evidence_item_ids":["GAP-002","GAP-020"]},
+    {"dimension":"concurrency_races","status":"gap_found","summary":"No deduplication, idempotency, ordering, or stale completion semantics constrain racing dispatches.","evidence_item_ids":["GAP-003"]},
+    {"dimension":"partial_failure","status":"gap_found","summary":"The event-to-projection path lacks partial-commit and ambiguous-result handling.","evidence_item_ids":["GAP-004"]},
+    {"dimension":"recovery_rollback","status":"gap_found","summary":"Recovery commands are renamed but retry, cancellation, rollback, and compensation are not specified.","evidence_item_ids":["GAP-005"]},
+    {"dimension":"authority_boundaries","status":"gap_found","summary":"Document ownership and view purity are explicit, but actor authorization at dispatch and handler boundaries is absent.","evidence_item_ids":["NG-001","NG-004","GAP-006"]},
+    {"dimension":"privacy_data_lifecycle","status":"gap_found","summary":"Visible envelope fields and evidence have no minimization, redaction, access, retention, or deletion rules.","evidence_item_ids":["GAP-007"]},
+    {"dimension":"untrusted_inputs","status":"gap_found","summary":"Unknown IDs are rejected, but hostile or malformed command arguments are not normatively validated.","evidence_item_ids":["GAP-008"]},
+    {"dimension":"gui_misleading_states","status":"gap_found","summary":"Expected-event evidence does not prove settled projection truth or require pending, stale, and failed states.","evidence_item_ids":["GAP-009"]},
+    {"dimension":"offline_network_loss","status":"gap_found","summary":"Queueing, expiry, retries, duplicate prevention, and projection reconciliation during network loss are undefined.","evidence_item_ids":["GAP-010"]},
+    {"dimension":"scale_limits","status":"gap_found","summary":"No cardinality, payload, event-rate, backlog, evidence-size, or verifier resource limits exist.","evidence_item_ids":["GAP-011"]},
+    {"dimension":"accessibility","status":"gap_found","summary":"Declaration requirements are strong, but runtime keyboard, focus, announcement, and presentation oracles are incomplete.","evidence_item_ids":["NG-003","GAP-012"]},
+    {"dimension":"localization","status":"gap_found","summary":"Errors, disabled reasons, labels, and live status lack localization and bidirectional-text contracts.","evidence_item_ids":["GAP-013"]},
+    {"dimension":"compatibility_migration","status":"gap_found","summary":"Alias normalization is addressed, but versions, mixed deployments, removal criteria, and migration tests are absent.","evidence_item_ids":["NG-005","GAP-014"]},
+    {"dimension":"observability_support","status":"gap_found","summary":"Correlation is carried, but trace completeness, latency, diagnostics, and support-safe evidence are unspecified.","evidence_item_ids":["GAP-015"]},
+    {"dimension":"destructive_actions","status":"gap_found","summary":"Promotion controls lack typed confirmation, target revalidation, irreversible receipts, and undo or compensation.","evidence_item_ids":["GAP-016"]},
+    {"dimension":"cross_document_seams","status":"gap_found","summary":"Lineage and owner boundaries are explicit, but semantic version binding and conflict adjudication are missing.","evidence_item_ids":["NG-002","NG-001","GAP-017"]},
+    {"dimension":"test_falsifiability","status":"gap_found","summary":"Future unspecified scripts and nominal expected events leave key claims without present executable oracles.","evidence_item_ids":["GAP-018","GAP-020"]},
+    {"dimension":"unknown_unknowns","status":"unknown","summary":"Exactly-one-command mapping is ambiguous for composite, continuous, repeated, and multi-intent interactions.","evidence_item_ids":["GAP-019"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

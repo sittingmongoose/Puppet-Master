@@ -1,0 +1,381 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000029-EXACT-WIN-0C5FC67FDB44-0003",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0007_a_parallel_dispatcher_epoch_0013/a005_29_exact_w3_e13",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Decision_Log.md",
+    "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d",
+    "core_sha256": "8a1c4d5ceeb6bfae08b1a62099cfc0bc43ab0b5143017abfc7f973918b30794b",
+    "core_range": [773, 1164]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-000029-I001",
+      "item_type": "contract",
+      "title": "Provider runtime identity covers non-Orchestrator actors",
+      "statement": "The shared provider-runtime contract explicitly covers assistants, interviewers, builders, overseers, node workers, and provider-backed chat/tool turns, and requires actor_kind and execution_role for auditability.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["DL-016", "provider-runtime-identity"],
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 781, "line_end": 781, "exact_quote": "  The shared provider-runtime contract applies beyond Orchestrator to assistant,", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 783, "line_end": 783, "exact_quote": "  provider-backed chat/tool turns; actor_kind and execution_role are required", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I002",
+      "item_type": "contract",
+      "title": "Provider account snapshots cannot be keyed only by run",
+      "statement": "Provider account snapshot storage must support non-run actors and therefore must not use run_id as its only key.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["DL-016", "storage-identity"],
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 820, "line_end": 820, "exact_quote": "  - \"storage-plan must not key provider account snapshots only by run_id when runtime actors include assistant, interviewer, builders, overseers, and node workers.\"", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I003",
+      "item_type": "gap",
+      "title": "Provider actor identity data contract is incomplete",
+      "statement": "The requirement names actor_kind and execution_role but does not define their allowed values, composite snapshot identity, producer authority, required inputs/outputs, replay resolution, privacy treatment, or migration from run_id-only records.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["DL-016", "provider-runtime-identity"],
+      "gap_kind": "identity_contract_under_specification",
+      "impact": "Implementations can produce incompatible actor identities, collide snapshot records, or replay against the wrong account context.",
+      "builder_discretion": "Builders are left to invent enums, key composition, migration, authorization, retention, and replay behavior.",
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 793, "line_end": 793, "exact_quote": "  - actor_kind and execution_role are preserved for non-run auditability and replay.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 794, "line_end": 794, "exact_quote": "  - storage-plan does not key provider account snapshots only by run_id when runtime actors include non-run actors.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I004",
+      "item_type": "contract",
+      "title": "Sharding fallback decisions must agree",
+      "statement": "Plans/sharding_config.json and Plans/auto_decisions.jsonl must not disagree on fallback chunk-line settings because drift can corrupt owner/consumer reconciliation.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["DL-017", "support-decision-drift"],
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 837, "line_end": 837, "exact_quote": "  Supporting planning machinery is not exempt from decision traceability:", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 873, "line_end": 873, "exact_quote": "  - \"Plans/sharding_config.json and Plans/auto_decisions.jsonl must not disagree on fallback chunk-line settings.\"", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I005",
+      "item_type": "gap",
+      "title": "Drift detection and recovery semantics are absent",
+      "statement": "The decision forbids disagreement but does not identify the authoritative producer, comparison timing, precedence, failure state, repair action, or operational owner when drift is found.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["DL-017", "support-decision-drift"],
+      "gap_kind": "failure_recovery_under_specification",
+      "impact": "A validator can detect disagreement without a deterministic way to choose truth or restore consistency.",
+      "builder_discretion": "Builders must choose precedence, fail-open/fail-closed behavior, and remediation workflow.",
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 847, "line_end": 847, "exact_quote": "  - sharding_config and auto_decisions do not disagree on fallback chunk-line settings.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 848, "line_end": 848, "exact_quote": "  - Decision-state drift in support files is treated as owner/consumer reconciliation risk.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I006",
+      "item_type": "gui_truth",
+      "title": "Canonical labels are a cross-consumer copy contract",
+      "statement": "Runtime and user-facing labels are canonical across label, action, runtime, and object consumers, which cannot invent alternate peer terms.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["DL-018", "canonical-labels"],
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 888, "line_end": 888, "exact_quote": "  Canonical copy favors precise runtime and user-facing labels for seams, graph", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 931, "line_end": 931, "exact_quote": "  - \"`/labels`, `/action`, `/runtime`, and `/object` consumers must not invent alternate peer terms.\"", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I007",
+      "item_type": "gap",
+      "title": "Canonical vocabulary is not complete or machine-resolvable",
+      "statement": "The prose covers challenges, advisory concerns, graph patches, and generation updates, but the preserved token list does not define a complete consumer-key-to-label mapping, aliases, localization rules, or migration behavior for existing alternate terms.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["DL-018", "canonical-labels"],
+      "gap_kind": "copy_contract_under_specification",
+      "impact": "Different consumers can conform to the prohibition while still selecting incompatible canonical text or mishandling legacy/localized copy.",
+      "builder_discretion": "Builders must infer the complete vocabulary, token ownership, alias policy, localization boundary, and compatibility handling.",
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 890, "line_end": 890, "exact_quote": "  challenges, advisory concerns, graph patches, and generation updates; label,", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 917, "line_end": 917, "exact_quote": "preserved_exact_tokens:", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I008",
+      "item_type": "contract",
+      "title": "Governance entities have graph-owned meanings",
+      "statement": "A run is the full canonical graph, a work package is a coherent precomputed subgraph with a local overseer, a feature seam is a cross-package oversight scope, and a node is the smallest executable work unit.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["DL-019", "graph-governance"],
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 947, "line_end": 947, "exact_quote": "  Governance semantics stay graph-owned: a run is the full canonical graph under", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 950, "line_end": 950, "exact_quote": "  scope, a node is the smallest executable work unit, and newly discovered work", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I009",
+      "item_type": "state_transition",
+      "title": "Discovered work becomes graph-governed remediation",
+      "statement": "New work becomes remediation nodes or graph-patch requests, and package-local pass states cannot alone establish seam completion.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["DL-019", "graph-patch", "seam-completion"],
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 951, "line_end": 951, "exact_quote": "  becomes remediation nodes or graph-patch requests.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 986, "line_end": 986, "exact_quote": "  - \"Seam completion requires integration quality rather than package-local pass states alone.\"", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I010",
+      "item_type": "gap",
+      "title": "Graph-patch and integration-quality decisions lack authority and oracle",
+      "statement": "The window does not define who chooses remediation node versus graph-patch request, who approves or applies a patch, or what measurable integration-quality oracle permits seam completion.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["DL-019", "graph-patch", "seam-completion"],
+      "gap_kind": "authority_and_acceptance_under_specification",
+      "impact": "Equivalent discoveries can follow different governance paths and seams can be promoted under inconsistent quality thresholds.",
+      "builder_discretion": "Builders must invent patch authority, transition guards, integration metrics, evidence requirements, and rejection/recovery behavior.",
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 961, "line_end": 961, "exact_quote": "  - Newly discovered work becomes remediation nodes or graph-patch requests.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 962, "line_end": 962, "exact_quote": "  - Seam completion requires integration quality rather than package-local pass states alone.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I011",
+      "item_type": "gui_truth",
+      "title": "Seams UI exposes weak integration and promotion boundaries",
+      "statement": "The Seams UI must visibly summarize weak integration, group concerns under readable headings, and keep Locally Complete, Available to Seam, and Seam Complete distinct across promotion boundaries.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["DL-020", "seams-ui"],
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 1002, "line_end": 1002, "exact_quote": "  Seams UI must summarize weak integration visibly, group concerns under", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 1004, "line_end": 1004, "exact_quote": "  Locally Complete, Available to Seam, and Seam Complete distinct from lane to", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I012",
+      "item_type": "gap",
+      "title": "Seams UI behavior is not operationally specified",
+      "statement": "The requirement names headings and visibility but does not define concern-to-bucket mapping, ordering, counts, drill-down inputs/outputs, empty/loading/error states, accessibility semantics, responsive behavior, or high-volume rendering expectations.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["DL-020", "seams-ui"],
+      "gap_kind": "gui_behavior_under_specification",
+      "impact": "Conforming screens can present materially different information and can fail under accessibility, error, or large-graph conditions.",
+      "builder_discretion": "Builders choose layout, aggregation, interaction, accessibility, failure states, and scaling behavior.",
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 1014, "line_end": 1014, "exact_quote": "  - Weak integration concerns are grouped under readable headings including Wiring, Workflow, State, GUI, and Design.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 1043, "line_end": 1043, "exact_quote": "  - \"Weak integration must not be only a badge without visible seam summary and readable buckets.\"", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I013",
+      "item_type": "state_transition",
+      "title": "Revocation and reopen states remain explicit",
+      "statement": "Promotion Revoked, Seam Completion Revoked, Reopened, Reopened by Patch, and Reopened by New Evidence are distinct named states and cannot be collapsed into generic failure.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["DL-021", "reopen-revocation"],
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 1073, "line_end": 1073, "exact_quote": "  - Promotion Revoked, Seam Completion Revoked, Reopened, Reopened by Patch, and Reopened by New Evidence remain explicit named states.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 1102, "line_end": 1102, "exact_quote": "  - \"Blocked and weak-integration lifecycle states must not be collapsed into generic failure states.\"", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I014",
+      "item_type": "failure_recovery",
+      "title": "Blocked states expose accountable recovery context",
+      "statement": "Every blocked state exposes a blocked reason, blocked owner, and recovery context.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["DL-021", "blocked-state"],
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 1074, "line_end": 1074, "exact_quote": "  - Blocked states expose blocked reason, blocked owner, and recovery context.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I015",
+      "item_type": "gap",
+      "title": "Weak-integration taxonomies are not reconciled",
+      "statement": "DL-020 presents Wiring, Workflow, State, GUI, and Design headings while DL-021 requires runtime/governance visibility, state, workflow, contract, UX, architecture, and recovery buckets; no canonical mapping, nesting, or ownership rule reconciles them.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["DL-020", "DL-021", "weak-integration-taxonomy"],
+      "gap_kind": "cross_requirement_taxonomy_ambiguity",
+      "impact": "UI grouping, policy objects, persisted categories, and downstream analytics can disagree while each appears locally compliant.",
+      "builder_discretion": "Builders must decide whether the lists are aliases, parent/child taxonomies, separate UI and policy models, or conflicting vocabularies.",
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 1003, "line_end": 1003, "exact_quote": "  readable headings such as Wiring, Workflow, State, GUI, and Design, and keep", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 1062, "line_end": 1062, "exact_quote": "  buckets include runtime/governance visibility, state, workflow, contract, UX,", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I016",
+      "item_type": "gap",
+      "title": "Revocation, reopen, and recovery transition contract is missing",
+      "statement": "Named states and Decision_Policy ownership are declared, but allowed source/target transitions, triggering evidence, transition authority, concurrency/idempotency behavior, notification consumers, and recovery completion criteria are not specified.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["DL-021", "reopen-revocation"],
+      "gap_kind": "state_machine_under_specification",
+      "impact": "Different runtimes can reopen, revoke, supersede, or recover the same seam differently and produce irreconcilable histories.",
+      "builder_discretion": "Builders must invent the state machine, authorities, race handling, event outputs, and recovery oracle.",
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 1064, "line_end": 1064, "exact_quote": "  objects and transitions for concerns, corroboration, promotions, and", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 1075, "line_end": 1075, "exact_quote": "  - Decision_Policy owns first-class policy objects and transitions for concerns, corroboration, promotions, and superseded revoked/reopened states.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I017",
+      "item_type": "contract",
+      "title": "Approval anchoring uses canonical runtime identity",
+      "statement": "Approval identity is anchored by run_id, node_id, blocked_sequence, optional attempt_id, and execution-unit context references.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["DL-022", "approval-identity"],
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 1119, "line_end": 1119, "exact_quote": "  Approval anchoring moves to canonical runtime identity: run_id, node_id,", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 1120, "line_end": 1120, "exact_quote": "  blocked_sequence, optional attempt_id, and execution-unit context refs", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I018",
+      "item_type": "gui_truth",
+      "title": "Request-centric approval copy and CTA framing are superseded",
+      "statement": "Button copy, persistence language, and tier-boundary CTA framing must follow canonical runtime identity rather than request-centric framing.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["DL-022", "approval-ui"],
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 1131, "line_end": 1131, "exact_quote": "  - Request-centric button copy, persistence language, and tier-boundary CTA framing are superseded.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 1157, "line_end": 1157, "exact_quote": "  - \"Request-centric approval framing must not supersede canonical runtime identity anchoring.\"", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I019",
+      "item_type": "failure_recovery",
+      "title": "Gate/evidence schema mismatch is a governance defect",
+      "statement": "Evidence contracts must expose gate/evidence schema mismatch as a first-class governance defect.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["DL-022", "evidence-governance"],
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 1122, "line_end": 1122, "exact_quote": "  and tier-boundary approval CTA framing; gate/evidence schema mismatch is a", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 1132, "line_end": 1132, "exact_quote": "  - Gate/evidence schema mismatch is exposed as first-class governance defect.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I020",
+      "item_type": "gap",
+      "title": "Approval identity and evidence-defect contract lacks executable detail",
+      "statement": "The decision does not define field types, nullability beyond optional attempt_id, execution-unit context-ref shape, uniqueness/idempotency, authorization, privacy/redaction, persistence migration, defect payload, or operator recovery flow.",
+      "severity": "critical",
+      "confidence": "high",
+      "feature_keys": ["DL-022", "approval-identity", "evidence-governance"],
+      "gap_kind": "security_and_persistence_contract_under_specification",
+      "impact": "Approval can bind to the wrong blocked episode, leak sensitive context, duplicate under retries, or surface a defect without a safe recovery path.",
+      "builder_discretion": "Builders must choose identity serialization, database keys, authorization checks, context visibility, compatibility migration, idempotency, and defect remediation.",
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 1120, "line_end": 1120, "exact_quote": "  blocked_sequence, optional attempt_id, and execution-unit context refs", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 1123, "line_end": 1123, "exact_quote": "  first-class governance defect that evidence contracts must expose.", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I021",
+      "item_type": "gap",
+      "title": "Validation surfaces do not establish runtime or GUI behavior",
+      "statement": "Every unit in this window relies on plan-migration and plan-index validators; no executable oracle is specified for provider replay, drift recovery, label rendering, graph transitions, Seams UI behavior, blocked-state recovery, approval binding, or evidence-defect handling.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["DL-016", "DL-017", "DL-018", "DL-019", "DL-020", "DL-021", "DL-022"],
+      "gap_kind": "acceptance_oracle_gap",
+      "impact": "Plan structure can validate while the required runtime, governance, and GUI semantics remain untested.",
+      "builder_discretion": "Builders must invent executable tests, fixtures, expected outputs, failure injections, and pass/fail thresholds.",
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 796, "line_end": 796, "exact_quote": "  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 797, "line_end": 797, "exact_quote": "  - python3 scripts/pm-plan-index.py validate", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    },
+    {
+      "item_id": "A005-000029-I022",
+      "item_type": "explicit_non_gap",
+      "title": "Planning units explicitly defer executable work-node creation",
+      "statement": "The node compile hints consistently set create_worknodes to false, so this window intentionally defines planning semantics rather than executable work-node manifests.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["DL-016", "DL-017", "DL-018", "DL-019", "DL-020", "DL-021", "DL-022"],
+      "evidence": [
+        {"path": "Plans/Decision_Log.md", "line_start": 809, "line_end": 809, "exact_quote": "  create_worknodes: false", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"},
+        {"path": "Plans/Decision_Log.md", "line_start": 1146, "line_end": 1146, "exact_quote": "  create_worknodes: false", "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d"}
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension": "behavior", "status": "addressed", "summary": "Required provider identity, drift prevention, vocabulary, graph remediation, seam visibility, lifecycle, and approval behaviors are explicit at requirement level.", "evidence_item_ids": ["A005-000029-I001", "A005-000029-I004", "A005-000029-I009", "A005-000029-I011", "A005-000029-I013", "A005-000029-I017"]},
+    {"dimension": "capabilities", "status": "addressed", "summary": "The window establishes provider-actor auditability, drift guarding, canonical copy, graph-owned governance, weak-integration presentation, reopen/revoke policy, and runtime-anchored approval.", "evidence_item_ids": ["A005-000029-I001", "A005-000029-I004", "A005-000029-I006", "A005-000029-I008", "A005-000029-I011", "A005-000029-I017"]},
+    {"dimension": "inputs_outputs", "status": "gap_found", "summary": "Named identity fields and UI/policy concepts lack complete field schemas, producer inputs, emitted outputs, and payload shapes.", "evidence_item_ids": ["A005-000029-I003", "A005-000029-I012", "A005-000029-I020"]},
+    {"dimension": "contracts", "status": "gap_found", "summary": "High-level cross-document contracts are explicit, but actor identity, canonical vocabulary, state-machine, approval, and defect payload contracts remain incomplete.", "evidence_item_ids": ["A005-000029-I002", "A005-000029-I007", "A005-000029-I016", "A005-000029-I020"]},
+    {"dimension": "states_transitions", "status": "gap_found", "summary": "Named completion, revocation, reopen, blocked, and promotion states exist, but their complete transition graph and guards do not.", "evidence_item_ids": ["A005-000029-I009", "A005-000029-I013", "A005-000029-I016"]},
+    {"dimension": "authority", "status": "gap_found", "summary": "Decision_Policy and graph ownership are named, but transition, patch, drift-repair, and approval authorities are not allocated precisely.", "evidence_item_ids": ["A005-000029-I005", "A005-000029-I010", "A005-000029-I016", "A005-000029-I020"]},
+    {"dimension": "ownership", "status": "addressed", "summary": "Each PlanUnit identifies Decision_Log as owner_doc and lists implementation/owner-hint documents; Decision_Policy explicitly owns lifecycle policy objects and transitions.", "evidence_item_ids": ["A005-000029-I004", "A005-000029-I006", "A005-000029-I016"]},
+    {"dimension": "consumers", "status": "gap_found", "summary": "Several consumers are named, especially label/action/runtime/object surfaces, but notification, event, replay, analytics, and recovery consumers are not enumerated.", "evidence_item_ids": ["A005-000029-I006", "A005-000029-I007", "A005-000029-I016"]},
+    {"dimension": "gui_truth", "status": "gap_found", "summary": "Canonical labels, visible weak-integration summaries, completion distinctions, blocked metadata, and approval framing are explicit, while detailed UI interaction and presentation states remain open.", "evidence_item_ids": ["A005-000029-I006", "A005-000029-I011", "A005-000029-I012", "A005-000029-I014", "A005-000029-I018"]},
+    {"dimension": "failures_recovery", "status": "gap_found", "summary": "Blocked context and schema mismatch are exposed, but deterministic recovery for drift, blocked episodes, revocation/reopen, and evidence defects is missing.", "evidence_item_ids": ["A005-000029-I005", "A005-000029-I014", "A005-000029-I016", "A005-000029-I019", "A005-000029-I020"]},
+    {"dimension": "security_privacy", "status": "gap_found", "summary": "Provider account snapshots, actor auditability, execution context, and approval identity are security-sensitive, yet authorization, redaction, retention, and privacy boundaries are not stated.", "evidence_item_ids": ["A005-000029-I003", "A005-000029-I020"]},
+    {"dimension": "propagation", "status": "gap_found", "summary": "Dependencies, unblocks, implementation surfaces, and owner hints show intended propagation, but event propagation and consistency semantics across consumers are not defined.", "evidence_item_ids": ["A005-000029-I006", "A005-000029-I007", "A005-000029-I016"]},
+    {"dimension": "operations", "status": "gap_found", "summary": "The window does not specify telemetry, alerting, runbooks, reconciliation cadence, or operator workflows for drift, blocked states, schema defects, and replay failures.", "evidence_item_ids": ["A005-000029-I005", "A005-000029-I016", "A005-000029-I020"]},
+    {"dimension": "scale_performance", "status": "gap_found", "summary": "No limits, latency targets, pagination/aggregation rules, snapshot-volume strategy, or large-graph UI behavior are defined.", "evidence_item_ids": ["A005-000029-I003", "A005-000029-I012"]},
+    {"dimension": "compatibility_migration", "status": "gap_found", "summary": "The decisions supersede run_id-only storage, alternate labels, request-centric approval framing, and earlier lifecycle semantics without defining data/copy/state migration or backward compatibility.", "evidence_item_ids": ["A005-000029-I003", "A005-000029-I007", "A005-000029-I016", "A005-000029-I018", "A005-000029-I020"]},
+    {"dimension": "acceptance_oracles", "status": "gap_found", "summary": "Acceptance bullets and plan validators exist, but executable runtime, governance, and GUI oracles are absent.", "evidence_item_ids": ["A005-000029-I010", "A005-000029-I021"]},
+    {"dimension": "builder_discretion", "status": "gap_found", "summary": "Substantial discretion remains in identity schemas, vocabularies, state machines, UI interaction, authority, security, migration, recovery, operations, and tests; work-node creation is explicitly deferred.", "evidence_item_ids": ["A005-000029-I003", "A005-000029-I007", "A005-000029-I010", "A005-000029-I012", "A005-000029-I016", "A005-000029-I020", "A005-000029-I021", "A005-000029-I022"]},
+    {"dimension": "ambiguity_unknowns", "status": "gap_found", "summary": "The most consequential ambiguities are the weak-integration taxonomy mismatch and undefined identity, authority, transition, recovery, and compatibility details.", "evidence_item_ids": ["A005-000029-I003", "A005-000029-I007", "A005-000029-I010", "A005-000029-I015", "A005-000029-I016", "A005-000029-I020"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

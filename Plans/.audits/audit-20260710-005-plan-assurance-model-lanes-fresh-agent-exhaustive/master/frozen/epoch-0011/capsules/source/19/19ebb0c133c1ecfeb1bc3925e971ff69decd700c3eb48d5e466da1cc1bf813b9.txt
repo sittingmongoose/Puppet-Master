@@ -1,0 +1,405 @@
+<<< CONTEXT_BEFORE canonical_document_lines=18537-18548 >>>
+L00018537	- Plans/Contracts_V0.md
+L00018538	- Plans/storage-plan.md
+L00018539	- Plans/Permissions_System.md
+L00018540	- Plans/FileSafe.md
+L00018541	- Plans/Prompt_Pipeline.md
+L00018542	- Plans/FinalGUISpec.md
+L00018543	- Plans/Project_Output_Artifacts.md
+L00018544	- Plans/assistant-chat-design.md
+L00018545	- Plans/Models_System.md
+L00018546	- Plans/Media_Generation_and_Capabilities.md
+L00018547	```
+L00018548	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=18549-18924 >>>
+L00018549	### CV-297 - Teacher Guided Help Activity Envelope
+L00018550	
+L00018551	```yaml
+L00018552	plan_unit_id: CV-297
+L00018553	unit_type: requirement
+L00018554	status: accepted
+L00018555	owner_doc: Plans/Contracts_V0.md
+L00018556	canonical_text: Teacher guided-help records carry launch source, current surface context, summon phrase or help-icon
+L00018557	  route, source groups used, source confidence/currentness state, missing coverage state, guided action kind, target
+L00018558	  surface/object refs, permission or mutation confirmation requirement, activity status, sequence/timestamp, collapsible
+L00018559	  detail payload, and handoff destination/context when Teacher leaves teaching/help mode.
+L00018560	gui_related: false
+L00018561	gui_classification_reason: Teacher launch, source, guided-action, and activity shapes are shared contract data;
+L00018562	  GUI owners render them.
+L00018563	depends_on:
+L00018564	- PP-056
+L00018565	unblocks:
+L00018566	- RAP-036
+L00018567	- UCC-102
+L00018568	- ATS-014
+L00018569	acceptance_criteria:
+L00018570	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00018571	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00018572	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00018573	  are created by this compile.
+L00018574	validation_surfaces:
+L00018575	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00018576	- python3 scripts/pm-plan-index.py validate
+L00018577	- git diff --check
+L00018578	risk_class: teacher_activity_contract_gap
+L00018579	reasoning_tier: high
+L00018580	context_scope: teacher_guided_help_contracts
+L00018581	implementation_surfaces:
+L00018582	- Plans/Contracts_V0.md
+L00018583	- future Teacher activity and guided action records
+L00018584	node_compile_hint:
+L00018585	  mode: teacher_guided_help_contract_envelope
+L00018586	  create_worknodes: false
+L00018587	  create_nodeseeds: false
+L00018588	source_lineage:
+L00018589	- pldg-20260626-001-feature-name:atom-0097
+L00018590	- pldg-20260626-001-feature-name:atom-0098
+L00018591	- pldg-20260626-001-feature-name:atom-0099
+L00018592	- pldg-20260626-001-feature-name:atom-0105
+L00018593	- pldg-20260626-001-feature-name:atom-0137
+L00018594	- pldg-20260626-001-feature-name:atom-0138
+L00018595	- pldg-20260626-001-feature-name:atom-0142
+L00018596	- pldg-20260626-001-feature-name:atom-0145
+L00018597	- pldg-20260626-001-feature-name:atom-0147
+L00018598	- chat:teacher-feature-initial-framing
+L00018599	- Plans/FinalGUISpec.md
+L00018600	- Plans/UI_Command_Catalog.md#2.6A-Chat-thread-lifecycle-commands
+L00018601	- Plans/UI_Command_Catalog.md
+L00018602	- Plans/assistant-chat-design.md#ACD-410---Internal-Target-Payload-Navigation
+L00018603	- memory:MEMORY.md:365
+L00018604	- Plans/assistant-chat-design.md
+L00018605	- chat:teach-visual-specificity-challenge
+L00018606	- chat:work-through-teach-gaps
+L00018607	- Plans/Personas.md#11.8-teacher
+L00018608	- Plans/assistant-chat-design.md#6-teach
+L00018609	- chat:teach-bundle-accepted-pmconcept-reference
+L00018610	- Plans/Runtime_Artifacts_Panel.md#runtime-artifact-identity-index-and-preview-rules
+L00018611	- Plans/Permissions_System.md#2.4A-requested-vs-effective-permissioned-capability-state
+L00018612	- Plans/Permissions_System.md#approval-ui
+L00018613	- Plans/Runtime_Artifacts_Panel.md#artifact-audit-visibility
+L00018614	source_atom_ids:
+L00018615	- atom-0097
+L00018616	- atom-0098
+L00018617	- atom-0099
+L00018618	- atom-0105
+L00018619	- atom-0137
+L00018620	- atom-0138
+L00018621	- atom-0142
+L00018622	- atom-0145
+L00018623	- atom-0147
+L00018624	decision_refs:
+L00018625	- dec-0018
+L00018626	- dec-0019
+L00018627	- dec-0020
+L00018628	- dec-0021
+L00018629	- dec-0022
+L00018630	- dec-0023
+L00018631	- dec-0024
+L00018632	correction_refs:
+L00018633	- corr-0002
+L00018634	preserved_exact_tokens:
+L00018635	- help icon
+L00018636	- clicked
+L00018637	- brings the user to the assistant chat window
+L00018638	- opens a new thread
+L00018639	- Teacher
+L00018640	- teacher can control the Gui to show the user how to do things
+L00018641	- Gui
+L00018642	- show the user how
+L00018643	- OpenSubject
+L00018644	- route_target
+L00018645	- highlight
+L00018646	- spotlight
+L00018647	- assistant chat threads
+L00018648	- show what its doing
+L00018649	- blocked
+L00018650	- skipped
+L00018651	- requires confirmation
+L00018652	- handoff
+L00018653	- Where it will get all its info from
+L00018654	- Sources used
+L00018655	- PM context
+L00018656	- capability snapshots
+L00018657	- command catalog
+L00018658	- settings registry
+L00018659	- missing coverage
+L00018660	- know everything in PM
+L00018661	- how it works
+L00018662	- all the capabilities of PM
+L00018663	- how the user interacts with it
+L00018664	- current surface/control context
+L00018665	- Plans/PlanUnits
+L00018666	- Glossary/help entries
+L00018667	- UI command/route catalog
+L00018668	- capability/provider/account snapshots
+L00018669	- scoped taught memory
+L00018670	- available
+L00018671	- stale
+L00018672	- missing
+L00018673	- disabled
+L00018674	- permission-required
+L00018675	- capability-unavailable
+L00018676	- conflict-detected
+L00018677	- could not verify
+L00018678	- control the Gui
+L00018679	- open route
+L00018680	- focus panel
+L00018681	- scroll to section
+L00018682	- highlight control/region
+L00018683	- expand non-mutating details
+L00018684	- preview selection
+L00018685	- changing a setting
+L00018686	- saving memory
+L00018687	- approving a permission
+L00018688	- undo/rollback
+L00018689	- Teacher activity
+L00018690	- Opening Settings > Models
+L00018691	- Highlighting
+L00018692	- source lookups
+L00018693	- permission waits
+L00018694	- model fallback
+L00018695	- memory save prompts
+L00018696	- handoffs
+L00018697	- collapsible detail
+L00018698	- hand off
+L00018699	- implementation/build work
+L00018700	- high-reasoning architecture decisions
+L00018701	- audit/repair
+L00018702	- external research
+L00018703	- direct execution
+L00018704	- specialty tooling
+L00018705	- suggested destination Persona
+L00018706	- stronger model
+L00018707	negative_constraints:
+L00018708	- Do not reuse an unrelated active chat thread when the help-icon contract says to open a new teaching conversation.
+L00018709	- Do not launch Teacher without preserving current surface context needed for useful help.
+L00018710	- Do not replace Teacher launch with static help pages only.
+L00018711	- Do not let Teacher perform raw uncontrolled GUI mutation outside stable UI command/route contracts.
+L00018712	- Do not allow mutating/destructive GUI actions without confirmation and capability/permission gates.
+L00018713	- Do not use stale or private panel-local route fields when the route/open contract provides canonical targets.
+L00018714	- Do not let Teacher silently manipulate or navigate the GUI with no chat-visible activity trail.
+L00018715	- Do not hide blocked/skipped reasons or requested/effective Persona/model state when they affect the teaching flow.
+L00018716	- Do not let a low-end Teacher model continue silently when the task has become implementation/build work requiring
+L00018717	  handoff.
+L00018718	- Do not let Teacher present PM facts as unsourced hidden prompt lore.
+L00018719	- Do not hide stale, missing, disabled, or capability-unavailable source states.
+L00018720	- Do not cite unavailable PlanUnits before a future compile creates them.
+L00018721	- Do not let Teacher invent PM behavior when owner sources are missing.
+L00018722	- Do not search external sources or other projects by default.
+L00018723	- Do not use taught memory outside its approved scope.
+L00018724	- Do not collapse stale, missing, disabled, permission-required, and capability-unavailable into one vague warning.
+L00018725	- Do not present unverified PM behavior as fact.
+L00018726	- Do not cite unavailable future PlanUnits before compile creates them.
+L00018727	- Do not use raw cursor/click automation as the teaching UI.
+L00018728	- Do not let Teacher execute mutating actions through `Do it` without confirmation.
+L00018729	- Do not let guided GUI actions bypass Permissions_System requested/effective disclosure.
+L00018730	- Do not make Teacher GUI actions silent.
+L00018731	- Do not hide blocked/degraded activity rows after the immediate step passes.
+L00018732	- Do not force users into raw traces for normal teaching transparency.
+L00018733	- Do not let Teacher quietly become a builder or auditor.
+L00018734	- Do not silently switch Persona/model/tool path without disclosure.
+L00018735	- Do not discard Teacher context during handoff.
+L00018736	owner_hints:
+L00018737	- Plans/FinalGUISpec.md
+L00018738	- Plans/UI_Command_Catalog.md
+L00018739	- Plans/assistant-chat-design.md
+L00018740	- Plans/Personas.md
+L00018741	- Plans/storage-plan.md
+L00018742	- Plans/Contracts_V0.md
+L00018743	- Plans/Permissions_System.md
+L00018744	- Plans/Runtime_Artifacts_Panel.md
+L00018745	- Plans/Prompt_Pipeline.md
+L00018746	- Plans/Tools.md
+L00018747	- Plans/Glossary.md
+L00018748	- Plans/Models_System.md
+L00018749	```
+L00018750	
+L00018751	## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+L00018752	
+L00018753	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Contracts owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00018754	
+L00018755	### CV-298 - Notification Delivery Envelope Destination Receipt And Predicate Contract
+L00018756	
+L00018757	```yaml
+L00018758	plan_unit_id: CV-298
+L00018759	unit_type: requirement
+L00018760	status: accepted
+L00018761	owner_doc: Plans/Contracts_V0.md
+L00018762	canonical_text: >-
+L00018763	  Notification delivery uses shared `pm.notification_delivery.v1` envelopes for Slack, Discord, generic webhook,
+L00018764	  ntfy, Pushover, Telegram, in-app toast/banner, system/tray, and sound destinations. Payload fields include
+L00018765	  `delivery_attempt_id`, `source_event_ref`, `attention_key`, `root_cause_key`, `project_ref`, `severity`,
+L00018766	  `event_family`, `event_category`, `title`, `body`, `owner_route`, `projection_freshness`,
+L00018767	  `projection_health`, `redaction_profile_ref`, `source_refs`, `allowed_action_ids`, and `idempotency_key`, with raw
+L00018768	  secrets, webhook URLs, tokens, private paths, full prompts, full logs, screenshots, raw diff bodies, and unredacted
+L00018769	  identities excluded. Destination profiles are provider-typed: Slack records credential_ref, channel_ref,
+L00018770	  mrkdwn_mode, mention_policy, and rate_limit_profile; Discord records webhook_credential_ref, thread_id,
+L00018771	  username/avatar override policy, allowed_mentions, and rate_limit_profile; generic webhook records
+L00018772	  url_credential_ref, method, static_header_refs, body_template_ref, timeout, and success_predicate; ntfy records
+L00018773	  server_ref, topic_ref, credential_ref, priority, tags, click_action_policy, and rate_limit_profile; Pushover records
+L00018774	  app_token_ref, user_key_ref, device, priority, sound, and retry/expire policy; Telegram records bot_token_ref,
+L00018775	  chat_id_ref, message_thread_id, parse_mode, disable_notification, and rate_limit_profile. Delivery receipts record
+L00018776	  provider kind, destination id, event id, event category, status class, HTTP status, provider request/message id when
+L00018777	  available, retry count, next retry time, redaction profile, request digest, response digest, idempotency key, and secret
+L00018778	  refs only. Generic webhook success predicates are bounded to default 2xx plus at most five atoms from
+L00018779	  status_class_is, status_code_equals, header_exists, header_equals_literal, json_pointer_exists, and
+L00018780	  json_pointer_equals_literal.
+L00018781	gui_related: false
+L00018782	gui_classification_reason: Defines shared notification payload, destination, receipt, retry, and predicate data contracts; GUI renders them elsewhere.
+L00018783	depends_on: []
+L00018784	unblocks: [ACD-428, SP-222, PS-124, F3-405, UCC-103, RAP-039, WM-039, ATS-016]
+L00018785	acceptance_criteria:
+L00018786	  - Delivery envelopes and receipts exclude raw secret material and preserve redaction/profile evidence.
+L00018787	  - Provider-specific destination profiles are canonical for Slack, Discord, generic webhook, ntfy, Pushover, and Telegram.
+L00018788	  - Event families and categories distinguish run_blocked, approval_required, human_input_requested, run_failed, run_completed, goal_blocked, provider_attention, system_error, security_attention, quiet_digest, and test_send routing.
+L00018789	  - Retry class is transient for 408, 429, 5xx, and network failures; malformed, revoked, missing, forbidden, or capability-disabled cases are permanent failures.
+L00018790	  - Idempotency keys, rate-limit profiles, mention policies, and provider success predicates are stored or derived without exposing secret material.
+L00018791	  - Generic webhook predicates cannot execute scripts, shell, arbitrary JS, regex-catastrophic expressions, dynamic imports, loops, network calls, or provider snippets.
+L00018792	validation_surfaces:
+L00018793	  - python3 scripts/pm-plan-index.py validate
+L00018794	  - notification delivery contract fixtures
+L00018795	risk_class: notification_contract_secret_or_retry_drift
+L00018796	reasoning_tier: high
+L00018797	context_scope: notification_delivery_contracts
+L00018798	implementation_surfaces:
+L00018799	  - Plans/Contracts_V0.md
+L00018800	  - future notification delivery records
+L00018801	node_compile_hint:
+L00018802	  mode: notification_delivery_contract
+L00018803	  create_worknodes: false
+L00018804	  create_nodeseeds: false
+L00018805	source_lineage:
+L00018806	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-destination-record-schema
+L00018807	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-payload-redaction-trust-copy
+L00018808	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-retry-rate-receipt-contract
+L00018809	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0061
+L00018810	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0062
+L00018811	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0063
+L00018812	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0084
+L00018813	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0091
+L00018814	source_atom_ids: [atom-0061, atom-0062, atom-0063, atom-0084, atom-0091]
+L00018815	decision_refs: [dec-0009, dec-0010, dec-0011, dec-0012, dec-0013]
+L00018816	preserved_exact_tokens:
+L00018817	  - "pm.notification_delivery.v1"
+L00018818	  - "Slack"
+L00018819	  - "Discord"
+L00018820	  - "generic webhook"
+L00018821	  - "ntfy"
+L00018822	  - "Pushover"
+L00018823	  - "Telegram"
+L00018824	  - "delivery_attempt_id"
+L00018825	  - "source_event_ref"
+L00018826	  - "attention_key"
+L00018827	  - "root_cause_key"
+L00018828	  - "event_family"
+L00018829	  - "event_category"
+L00018830	  - "projection_freshness"
+L00018831	  - "projection_health"
+L00018832	  - "projection_trust"
+L00018833	  - "allowed_action_ids"
+L00018834	  - "idempotency_key"
+L00018835	  - "credential_ref"
+L00018836	  - "webhook_credential_ref"
+L00018837	  - "url_credential_ref"
+L00018838	  - "bot_token_ref"
+L00018839	  - "app_token_ref"
+L00018840	  - "user_key_ref"
+L00018841	  - "NotificationDeliveryAttemptReceipt"
+L00018842	  - "status_class_is"
+L00018843	  - "json_pointer_equals_literal"
+L00018844	negative_constraints:
+L00018845	  - Do not include raw secrets, webhook URLs, tokens, private paths, full prompts, full logs, screenshots, raw diff bodies, or unredacted identities in payloads or receipts.
+L00018846	  - Do not let external notification dismissal resolve PM blocked episodes or canonical conditions.
+L00018847	  - Do not allow arbitrary JS, shell, provider snippets, loops, network calls, dynamic imports, or catastrophic regex in generic webhook predicates.
+L00018848	  - Do not enable Slack or Discord broad mentions by default.
+L00018849	stale_retired_dispositions:
+L00018850	  - "`projection_trust` is preserved as compatibility/source-lineage vocabulary only; active notification payloads split it into `projection_freshness` and `projection_health`."
+L00018851	owner_hints:
+L00018852	  - Plans/Contracts_V0.md
+L00018853	  - Plans/assistant-chat-design.md
+L00018854	  - Plans/storage-plan.md
+L00018855	  - Plans/Permissions_System.md
+L00018856	```
+L00018857	
+L00018858	### CV-299 - DRY Provenance And Effective State Contract
+L00018859	
+L00018860	```yaml
+L00018861	plan_unit_id: CV-299
+L00018862	unit_type: requirement
+L00018863	status: accepted
+L00018864	owner_doc: Plans/Contracts_V0.md
+L00018865	canonical_text: >-
+L00018866	  DRY Method provenance uses `dry_method_effective_state` values applied, not_material, degraded_rules_missing,
+L00018867	  degraded_rules_stale, disabled_by_user, blocked_owner_unresolved, and caveated_owner_unresolved. Receipts carry
+L00018868	  `dry_method_reason`, `dry_method_source_refs`, `instruction_bundle_ref`, `rules_application_sha256`, and
+L00018869	  `rules_project_sha256`. Run-start minimum fields include `instruction_bundle_ref`, `rules_application_sha256`,
+L00018870	  `rules_project_sha256`, `dry_method_effective_state`, and `dry_method_reason`, so prompt routes and visible
+L00018871	  disclosures can prove whether DRY applied, degraded, was disabled, blocked a mutation, or proceeded with an
+L00018872	  exploratory caveat.
+L00018873	gui_related: false
+L00018874	gui_classification_reason: Defines shared DRY receipt and provenance data contracts; visible labels are owned by GUI and Assistant Chat.
+L00018875	depends_on: [ARC-036]
+L00018876	unblocks: [ACD-429, F3-406, SP-223, RAP-038, ATS-018]
+L00018877	acceptance_criteria:
+L00018878	  - Effective-state enum values are stable and shared across Assistant, Interview, Orchestrator, delegated child-run, document-builder, and code-generation routes.
+L00018879	  - Receipt fields preserve enough provenance to explain what happened and why.
+L00018880	  - Disabled DRY state cannot be confused with safety, secrets, governance, permission, source-authority, or source-control bypass.
+L00018881	validation_surfaces:
+L00018882	  - python3 scripts/pm-plan-index.py validate
+L00018883	  - DRY Method contract fixtures
+L00018884	risk_class: dry_method_contract_drift
+L00018885	reasoning_tier: high
+L00018886	context_scope: dry_method_contracts
+L00018887	implementation_surfaces:
+L00018888	  - Plans/Contracts_V0.md
+L00018889	  - future run receipts
+L00018890	node_compile_hint:
+L00018891	  mode: dry_method_provenance_contract
+L00018892	  create_worknodes: false
+L00018893	  create_nodeseeds: false
+L00018894	source_lineage:
+L00018895	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-rules-provenance
+L00018896	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-002
+L00018897	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0075
+L00018898	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0083
+L00018899	source_atom_ids: [atom-0075, atom-0083]
+L00018900	decision_refs: [dec-0016]
+L00018901	preserved_exact_tokens:
+L00018902	  - "dry_method_effective_state"
+L00018903	  - "applied"
+L00018904	  - "not_material"
+L00018905	  - "degraded_rules_missing"
+L00018906	  - "degraded_rules_stale"
+L00018907	  - "disabled_by_user"
+L00018908	  - "blocked_owner_unresolved"
+L00018909	  - "caveated_owner_unresolved"
+L00018910	  - "dry_method_reason"
+L00018911	  - "dry_method_source_refs"
+L00018912	  - "instruction_bundle_ref"
+L00018913	  - "rules_application_sha256"
+L00018914	  - "rules_project_sha256"
+L00018915	negative_constraints:
+L00018916	  - Do not create route-local DRY state enums that diverge from this contract.
+L00018917	  - Do not treat disabled DRY as permission to bypass explicit instructions, safety, secrets, source authority, governance, permissions, or source-control hygiene.
+L00018918	owner_hints:
+L00018919	  - Plans/Contracts_V0.md
+L00018920	  - Plans/agent-rules-context.md
+L00018921	  - Plans/Prompt_Pipeline.md
+L00018922	  - Plans/DRY_Rules.md
+L00018923	```
+L00018924	
+
+<<< CONTEXT_AFTER canonical_document_lines=18925-18936 >>>
+L00018925	### CV-300 - Inline Visualizer Bridge Registry And Native Host Boundary
+L00018926	
+L00018927	```yaml
+L00018928	plan_unit_id: CV-300
+L00018929	unit_type: requirement
+L00018930	status: accepted
+L00018931	owner_doc: Plans/Contracts_V0.md
+L00018932	canonical_text: >-
+L00018933	  Inline visualizer host APIs use one typed PM bridge registry rather than a private per-visualizer command
+L00018934	  language. Canonical method ids are `sendPrompt`, `openLink`, `copyToClipboard`, `requestResize`, `toast`,
+L00018935	  `saveState`, and `loadState`; `copyText` is a compatibility alias for `copyToClipboard(text)`, and question-flow
+L00018936	  embedded visual modules omit `sendPrompt`. Every bridge call uses an envelope with `bridge_call_id`,

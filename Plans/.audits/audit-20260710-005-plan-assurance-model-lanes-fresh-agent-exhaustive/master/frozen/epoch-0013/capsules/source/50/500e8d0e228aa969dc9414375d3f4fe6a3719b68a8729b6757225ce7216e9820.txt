@@ -1,0 +1,373 @@
+<<< CONTEXT_BEFORE canonical_document_lines=365-376 >>>
+L00000365	node_compile_hint: {mode: planunit_block_grammar, create_worknodes: false}
+L00000366	source_lineage:
+L00000367	  - pldg-20260610-001-ledger-plan-system:atom-0037
+L00000368	  - source_ref:chat:implementation-readiness-review
+L00000369	preserved_exact_tokens: ["```yaml", "plan_unit_id", "unit_type", "status", "owner_doc", "canonical_text", "gui_related", "source_lineage", "depends_on", "unblocks", "acceptance_criteria", "validation_surfaces", "risk_class", "reasoning_tier", "context_scope", "implementation_surfaces", "node_compile_hint"]
+L00000370	negative_constraints:
+L00000371	  - Do not allow duplicate YAML keys that silently overwrite fields.
+L00000372	owner_hints: [Plans/Plan_Document_System.md]
+L00000373	```
+L00000374	
+L00000375	ContractRef: ContractName:Plans/Plan_Document_System.md
+L00000376	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=377-720 >>>
+L00000377	### PDS-009 - Standard Plan Document Layout Contract
+L00000378	
+L00000379	```yaml
+L00000380	plan_unit_id: PDS-009
+L00000381	unit_type: requirement
+L00000382	status: accepted
+L00000383	owner_doc: Plans/Plan_Document_System.md
+L00000384	canonical_text: Standardized Plan docs use a base layout with compliance/authority, scope, architecture or standard summary, PlanUnits, applicable doc-type modules, migration or compilation coverage, and governance/validation notes. Doc-type modules may be marked not_applicable when a section would otherwise imply missing content. Existing docs convert to this layout only through a lossless inventory and pilot/batch workflow.
+L00000385	gui_related: false
+L00000386	gui_classification_reason: Plan document layout is not GUI implementation work.
+L00000387	depends_on: [PDS-002, PDS-004, PDS-011]
+L00000388	unblocks: [BPM-004, PDS-012]
+L00000389	acceptance_criteria:
+L00000390	  - The converter can identify where each original span lands in the standardized layout.
+L00000391	  - Required layout sections are present or have explicit not_applicable disposition when relevant.
+L00000392	  - Doc-type modules do not force unnatural content into unrelated owner docs.
+L00000393	validation_surfaces:
+L00000394	  - Migration inventory coverage map.
+L00000395	  - Pilot conversion report.
+L00000396	  - Post-conversion plan validators.
+L00000397	risk_class: migration_safety
+L00000398	reasoning_tier: standard
+L00000399	context_scope: all_plans
+L00000400	implementation_surfaces: [Plans/*.md, Plans/.plan_migration]
+L00000401	node_compile_hint: {mode: standardized_doc_layout, create_worknodes: false}
+L00000402	source_lineage:
+L00000403	  - pldg-20260610-001-ledger-plan-system:atom-0038
+L00000404	  - source_ref:chat:implementation-readiness-review
+L00000405	preserved_exact_tokens: ["compliance", "scope", "PlanUnits", "doc-type modules", "not_applicable", "migration coverage", "governance/validation"]
+L00000406	negative_constraints:
+L00000407	  - Do not rewrite all Plans into one rigid skeleton without doc-type modules.
+L00000408	owner_hints: [Plans/Plan_Document_System.md, Plans/Bootstrap_Planning_Migration.md]
+L00000409	```
+L00000410	
+L00000411	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000412	
+L00000413	### PDS-010 - Lossless Migration Artifact Contract
+L00000414	
+L00000415	```yaml
+L00000416	plan_unit_id: PDS-010
+L00000417	unit_type: requirement
+L00000418	status: accepted
+L00000419	owner_doc: Plans/Plan_Document_System.md
+L00000420	canonical_text: >-
+L00000421	  Lossless conversion of existing Plans must produce migration artifacts before
+L00000422	  broad edits: inventory.json, original_hashes.json, span_map.jsonl,
+L00000423	  coverage_map.jsonl, anchor_aliases.json, pilot_report.json,
+L00000424	  batch_report.jsonl, and validation_report.json under a run-scoped migration
+L00000425	  directory. These artifacts prove every original heading/body span is preserved,
+L00000426	  moved, converted to a PlanUnit, placed in an appendix/source block, or
+L00000427	  explicitly dispositioned.
+L00000428	gui_related: false
+L00000429	gui_classification_reason: Migration proof artifacts are not GUI implementation work.
+L00000430	depends_on: [PDS-004, PDS-009]
+L00000431	unblocks: [BPM-004]
+L00000432	acceptance_criteria:
+L00000433	  - No broad conversion starts until original hashes, span map, and coverage map exist.
+L00000434	  - Every original span has exactly one final disposition or an explicit split disposition.
+L00000435	  - A pilot report passes before batch conversion continues.
+L00000436	validation_surfaces:
+L00000437	  - Plans/.plan_migration/<run_id>/coverage_map.jsonl
+L00000438	  - Plans/.plan_migration/<run_id>/validation_report.json
+L00000439	  - python3 scripts/pm-plans-verify.py run-gates
+L00000440	risk_class: content_loss
+L00000441	reasoning_tier: high
+L00000442	context_scope: all_plans
+L00000443	implementation_surfaces: [Plans/.plan_migration, Plans/*.md]
+L00000444	node_compile_hint: {mode: migration_artifact_contract, create_worknodes: false}
+L00000445	source_lineage:
+L00000446	  - pldg-20260610-001-ledger-plan-system:atom-0038
+L00000447	  - source_ref:chat:implementation-readiness-review
+L00000448	preserved_exact_tokens: ["inventory.json", "original_hashes.json", "span_map.jsonl", "coverage_map.jsonl", "anchor_aliases.json", "pilot_report.json", "batch_report.jsonl", "validation_report.json"]
+L00000449	negative_constraints:
+L00000450	  - Do not delete or semantically change original content without coverage-map proof.
+L00000451	owner_hints: [Plans/Plan_Document_System.md, Plans/Bootstrap_Planning_Migration.md]
+L00000452	```
+L00000453	
+L00000454	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000455	
+L00000456	### PDS-011 - Plan Authoring Profiles
+L00000457	
+L00000458	```yaml
+L00000459	plan_unit_id: PDS-011
+L00000460	unit_type: requirement
+L00000461	status: accepted
+L00000462	owner_doc: Plans/Plan_Document_System.md
+L00000463	canonical_text: Plan_Document_System.md defines two Plan document profiles. Legacy Converted Plan Profile docs may preserve historical migrated layout when PlanUnits, indexes, and coverage are valid. New Plan Authoring Profile docs are newly created Plans/*.md owner docs and must use the standard base layout unless explicitly exempted.
+L00000464	gui_related: false
+L00000465	gui_classification_reason: Plan authoring profiles are documentation/governance behavior, not GUI implementation work.
+L00000466	depends_on: [PDS-001, PDS-002]
+L00000467	unblocks: [PDS-012, PDS-013, BPM-002]
+L00000468	acceptance_criteria:
+L00000469	  - Existing migrated docs can retain historical layout under the Legacy Converted Plan Profile when PlanUnit and coverage validation pass.
+L00000470	  - Newly created top-level owner docs under Plans/*.md use the New Plan Authoring Profile unless an explicit exemption is recorded.
+L00000471	  - The two profiles do not create a peer alternative for new docs to use source-preserving migration scaffolding.
+L00000472	validation_surfaces:
+L00000473	  - python3 scripts/pm-plan-index.py validate
+L00000474	  - Manual plan review for profile declarations and exemptions.
+L00000475	risk_class: authoring_drift
+L00000476	reasoning_tier: standard
+L00000477	context_scope: all_plans
+L00000478	implementation_surfaces: [Plans/*.md, Plans/Plan_Document_System.md, Plans/bootstrap/Codex_Prompts.md]
+L00000479	node_compile_hint: {mode: plan_profile_contract, create_worknodes: false}
+L00000480	source_lineage:
+L00000481	  - source_ref:chat:2026-06-13-new-plan-authoring-profile-goal
+L00000482	preserved_exact_tokens: ["Legacy Converted Plan Profile", "New Plan Authoring Profile", "Plans/*.md", "standard base layout"]
+L00000483	negative_constraints:
+L00000484	  - Do not re-convert existing Plans solely to satisfy the New Plan Authoring Profile.
+L00000485	  - Do not treat legacy converted layout compatibility as permission for newly created owner docs to skip the standard base layout.
+L00000486	owner_hints: [Plans/Plan_Document_System.md]
+L00000487	```
+L00000488	
+L00000489	ContractRef: ContractName:Plans/Plan_Document_System.md
+L00000490	
+L00000491	### PDS-012 - New Plan Authoring Base Layout
+L00000492	
+L00000493	```yaml
+L00000494	plan_unit_id: PDS-012
+L00000495	unit_type: requirement
+L00000496	status: accepted
+L00000497	owner_doc: Plans/Plan_Document_System.md
+L00000498	canonical_text: >-
+L00000499	  New Plan Authoring Profile docs use this required base layout in order:
+L00000500	  Compliance / authority note, 0. Scope, 1. Ownership And Consumers,
+L00000501	  2. Canonical PlanUnits, 3. Contracts, Schemas, Events, Or Data Shapes,
+L00000502	  4. Integration Surfaces, 5. Validation And Acceptance, 6. Plan-To-Node
+L00000503	  Readiness, 7. Deferred, Retired, Compatibility, And Non-Goals, and
+L00000504	  8. Source Lineage And Governance.
+L00000505	gui_related: false
+L00000506	gui_classification_reason: Required Plan doc headings are documentation/governance behavior, not GUI implementation work.
+L00000507	depends_on: [PDS-011, PDS-009]
+L00000508	unblocks: [PDS-013]
+L00000509	acceptance_criteria:
+L00000510	  - A newly created owner doc declares the New Plan Authoring Profile in its compliance/authority preamble.
+L00000511	  - Required base sections appear in the canonical order with the specified headings.
+L00000512	  - Non-applicable sections remain present and state not_applicable rather than disappearing.
+L00000513	validation_surfaces:
+L00000514	  - python3 scripts/pm-plan-index.py validate
+L00000515	  - Manual review during ledger-to-Plans compilation.
+L00000516	risk_class: layout_drift
+L00000517	reasoning_tier: standard
+L00000518	context_scope: new_owner_docs
+L00000519	implementation_surfaces: [Plans/*.md, Plans/bootstrap/Codex_Prompts.md]
+L00000520	node_compile_hint: {mode: new_plan_authoring_layout, create_worknodes: false}
+L00000521	source_lineage:
+L00000522	  - source_ref:chat:2026-06-13-new-plan-authoring-profile-goal
+L00000523	preserved_exact_tokens: ["Compliance / authority note", "0. Scope", "1. Ownership And Consumers", "2. Canonical PlanUnits", "3. Contracts, Schemas, Events, Or Data Shapes", "4. Integration Surfaces", "5. Validation And Acceptance", "6. Plan-To-Node Readiness", "7. Deferred, Retired, Compatibility, And Non-Goals", "8. Source Lineage And Governance", "not_applicable"]
+L00000524	negative_constraints:
+L00000525	  - Do not omit a required New Plan base section merely because the section has no applicable content.
+L00000526	owner_hints: [Plans/Plan_Document_System.md]
+L00000527	```
+L00000528	
+L00000529	ContractRef: ContractName:Plans/Plan_Document_System.md
+L00000530	
+L00000531	### PDS-013 - New Plan Layout Validation Boundary
+L00000532	
+L00000533	```yaml
+L00000534	plan_unit_id: PDS-013
+L00000535	unit_type: requirement
+L00000536	status: accepted
+L00000537	owner_doc: Plans/Plan_Document_System.md
+L00000538	canonical_text: Plan layout validation applies strictly to docs that explicitly declare the New Plan Authoring Profile. Legacy converted docs are not failed for historical layout. New profile docs must not contain source_preserving_planunit mode for new feature content.
+L00000539	gui_related: false
+L00000540	gui_classification_reason: Layout validation is governance/tooling behavior, not GUI implementation work.
+L00000541	depends_on: [PDS-012, PDS-006]
+L00000542	unblocks: []
+L00000543	acceptance_criteria:
+L00000544	  - The validator can identify New Plan Authoring Profile docs by an explicit authority-preamble marker.
+L00000545	  - The validator checks required base heading order only for New Plan Authoring Profile docs.
+L00000546	  - Legacy converted docs are not failed for preserving historical layout.
+L00000547	  - New profile docs fail validation if they use source_preserving_planunit.
+L00000548	validation_surfaces:
+L00000549	  - python3 scripts/pm-plan-index.py validate
+L00000550	risk_class: false_layout_failure
+L00000551	reasoning_tier: standard
+L00000552	context_scope: plan_index_validation
+L00000553	implementation_surfaces: [scripts/pm-plan-index.py, Plans/*.md]
+L00000554	node_compile_hint: {mode: new_profile_layout_validator, create_worknodes: false}
+L00000555	source_lineage:
+L00000556	  - source_ref:chat:2026-06-13-new-plan-authoring-profile-goal
+L00000557	preserved_exact_tokens: ["New Plan Authoring Profile", "source_preserving_planunit", "Legacy Converted Plan Profile"]
+L00000558	negative_constraints:
+L00000559	  - Do not fail existing legacy-converted docs for historical layout.
+L00000560	  - Do not use source_preserving_planunit for new feature content.
+L00000561	owner_hints: [Plans/Plan_Document_System.md]
+L00000562	```
+L00000563	
+L00000564	ContractRef: ContractName:Plans/Plan_Document_System.md
+L00000565	
+L00000566	### PDS-014 - Semantic Finding Key And Closure Matrix Validator
+L00000567	
+L00000568	```yaml
+L00000569	plan_unit_id: PDS-014
+L00000570	unit_type: requirement
+L00000571	status: accepted
+L00000572	owner_doc: Plans/Plan_Document_System.md
+L00000573	canonical_text: >-
+L00000574	  Semantic audit findings use a stable deterministic finding_key derived from
+L00000575	  finding_family, ledger_id, source_atom_ids, plan_unit_ids, owner_docs,
+L00000576	  detail_keys, and exact_tokens. Each audit finding records finding_family,
+L00000577	  ledger_id, source_atom_ids, plan_unit_ids, owner_docs, detail_keys,
+L00000578	  exact_tokens, repair_required:boolean,
+L00000579	  finding_level:blocker|warning|observation, and deterministic sfk finding_key;
+L00000580	  audit-id, row-number, and
+L00000581	  prose-order keys are invalid. Audits write audit_scope_manifest.jsonl with
+L00000582	  deterministic check_id rows for the closed-world audit universe and every row
+L00000583	  must be classified before completion. Repair cycles write
+L00000584	  repair_closure_matrix.jsonl only when at least one source row has
+L00000585	  repair_required=true, and close only those actionable rows as repaired,
+L00000586	  false_positive, explicitly_deferred, source_lineage_only, not_for_plan,
+L00000587	  stale_retired, or blocked_requires_user_decision; reopened is reserved for a
+L00000588	  previously closed finding whose source atom, PlanUnit, owner evidence, or
+L00000589	  closure evidence changed. Before repair edits, repair_impact_matrix.jsonl maps
+L00000590	  each actionable source row to synchronized files, PlanUnits, schemas,
+L00000591	  dependency edges, owner refs, ledger projection fields, index artifacts, and
+L00000592	  governance artifacts. Repair must refuse/no-op when the latest audit has zero
+L00000593	  repair_required rows, and must not revalidate previously_closed rows or create
+L00000594	  registry rows for repair_required=false observations. The
+L00000595	  scripts/pm-audit-closure.py validator checks the global registry JSONL,
+L00000596	  required fields, duplicate open finding_keys, invalid closure_status values,
+L00000597	  missing evidence refs, reopened rows, audit source finding identity,
+L00000598	  cross-artifact audit_id/ledger_id/baseline_ref/subject_ref/observation_ref,
+L00000599	  status versus repair_required_count, complete audit_scope_manifest coverage,
+L00000600	  repair_impact_matrix coverage and post-repair drift proof, matrix
+L00000601	  source_artifact/source_row coverage for actionable rows, closure evidence,
+L00000602	  closure reasons, registry_closure_id linkage, and per-audit closure matrix
+L00000603	  completeness across semantic_risks.jsonl, atom_fidelity_matrix.jsonl,
+L00000604	  planunit_source_claims.jsonl, owner_routing_findings.jsonl,
+L00000605	  ledger_consistency.json, and validator_results.json by default.
+L00000606	gui_related: false
+L00000607	gui_classification_reason: Finding identity, closure matrices, and validators are docs/governance behavior, not GUI implementation work.
+L00000608	depends_on:
+L00000609	  - PDS-003
+L00000610	  - PLS-012
+L00000611	unblocks: []
+L00000612	acceptance_criteria:
+L00000613	  - The finding_key algorithm is deterministic and excludes volatile audit prose.
+L00000614	  - New audit finding rows include repair_required:boolean and finding_level:blocker|warning|observation.
+L00000615	  - Audit finding rows fail validation unless finding_family, ledger_id, source_atom_ids, plan_unit_ids, owner_docs, detail_keys, exact_tokens, repair_required, finding_level, and deterministic sfk finding_key are present.
+L00000616	  - audit_scope_manifest.jsonl rows fail validation when check_id is unstable, required check families are missing, or any row is unclassified.
+L00000617	  - Audit source artifacts fail validation when audit_id, ledger_id, baseline_ref, subject_ref, or observation_ref disagree with audit_report.json.
+L00000618	  - audit_report.json fails validation when status and repair_required_count disagree with computed source-artifact findings.
+L00000619	  - repair_impact_matrix.jsonl is mandatory when repair_required=true rows exist and must cover every actionable source row before repair can certify.
+L00000620	  - repair_impact_matrix.jsonl rows fail validation when post-repair semantic audit proof does not cover original scope and impact rows, repair_required_count is nonzero, or schema identity, reciprocal lineage, dependencies, owner routing, or ledger projections drifted.
+L00000621	  - repair_closure_matrix.jsonl is mandatory only when repair_required=true rows exist and covers every actionable source row selected for repair.
+L00000622	  - Warning-only audits with repair_required=false are terminal PASS_WITH_WARNINGS and do not require repair closure rows.
+L00000623	  - previously_closed, exact_present, equivalent_with_evidence, ordinary validator warnings, and audit-artifact wording rows do not require closure rows.
+L00000624	  - Repairs with zero actionable rows no-op without creating registry rows or modifying repo state.
+L00000625	  - Registry rows fail validation when required fields, evidence refs, allowed statuses, or hash-backed reopen rules are missing.
+L00000626	  - Repair closure matrix rows fail validation when source_artifact, source_row, finding_key, closure_status, closure_evidence, closure_reason, or registry_closure_id linkage is missing.
+L00000627	  - Reopened registry rows fail validation unless they reference a prior closed finding_key and prove changed source/PlanUnit/owner/closure hashes.
+L00000628	  - Duplicate open finding_keys fail validation while historical closed rows can remain durable evidence.
+L00000629	validation_surfaces:
+L00000630	  - python3 scripts/pm-audit-closure.py validate
+L00000631	  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/<audit_id> --require-closure-matrix
+L00000632	  - python3 -m unittest tests/test_pm_audit_closure.py
+L00000633	risk_class: false_repair_completion
+L00000634	reasoning_tier: high
+L00000635	context_scope: bootstrap_audit_repair
+L00000636	implementation_surfaces:
+L00000637	  - scripts/pm-audit-closure.py
+L00000638	  - tests/test_pm_audit_closure.py
+L00000639	  - Plans/.audits/_semantic_closure_registry.jsonl
+L00000640	  - Plans/.audits/audit-*/audit_scope_manifest.jsonl
+L00000641	  - Plans/.audits/audit-*/repair_impact_matrix.jsonl
+L00000642	  - Plans/.audits/audit-*/repair_closure_matrix.jsonl
+L00000643	  - Plans/bootstrap/Codex_Prompts.md
+L00000644	node_compile_hint:
+L00000645	  mode: audit_closure_validator
+L00000646	  create_worknodes: false
+L00000647	source_lineage:
+L00000648	  - source_ref:chat:2026-06-17-semantic-closure-registry-support
+L00000649	preserved_exact_tokens:
+L00000650	  - "finding_key"
+L00000651	  - "finding_family"
+L00000652	  - "source_atom_ids"
+L00000653	  - "plan_unit_ids"
+L00000654	  - "owner_docs"
+L00000655	  - "detail_keys"
+L00000656	  - "exact_tokens"
+L00000657	  - "repair_closure_matrix.jsonl"
+L00000658	  - "source_artifact"
+L00000659	  - "source_row"
+L00000660	  - "registry_closure_id"
+L00000661	  - "repair_required"
+L00000662	  - "finding_level"
+L00000663	  - "audit_scope_manifest.jsonl"
+L00000664	  - "check_id"
+L00000665	  - "audit_id"
+L00000666	  - "baseline_ref"
+L00000667	  - "subject_ref"
+L00000668	  - "observation_ref"
+L00000669	  - "repair_impact_matrix.jsonl"
+L00000670	  - "post_repair_semantic_audit"
+L00000671	  - "blocker"
+L00000672	  - "warning"
+L00000673	  - "observation"
+L00000674	  - "ledger_consistency.json"
+L00000675	  - "validator_results.json"
+L00000676	  - "duplicate open finding_keys"
+L00000677	  - "closure_status"
+L00000678	  - "reopen_hash_changes"
+L00000679	  - "reopened"
+L00000680	  - "previously_closed"
+L00000681	  - "PASS_WITH_WARNINGS"
+L00000682	negative_constraints:
+L00000683	  - Do not use audit_id, row number, or prose order as the finding identity.
+L00000684	  - Do not accept incomplete or unclassified audit_scope_manifest.jsonl rows.
+L00000685	  - Do not accept source findings whose audit_id, ledger_id, baseline_ref, subject_ref, or observation_ref disagree with audit_report.json.
+L00000686	  - Do not certify repair without repair_impact_matrix.jsonl coverage for actionable rows.
+L00000687	  - Do not certify repair when post-repair semantic audit proof shows schema identity, reciprocal lineage, dependency, owner routing, or ledger projection drift.
+L00000688	  - Do not claim repair completion with green validators alone when repair_required=true rows lack closure rows.
+L00000689	  - Do not require or generate closure rows for repair_required=false rows.
+L00000690	  - Do not revalidate previously_closed rows as fresh repair work.
+L00000691	  - Do not reopen a finding without changed source/canonical/evidence hashes or a blocked/reopened status.
+L00000692	  - Do not validate only semantic_risks.jsonl when atom, PlanUnit, owner-routing, ledger-consistency, or validator audit artifacts contain repair_required=true rows.
+L00000693	owner_hints:
+L00000694	  - Plans/Plan_Document_System.md
+L00000695	  - Plans/Planning_Ledger_System.md
+L00000696	```
+L00000697	
+L00000698	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Planning_Ledger_System.md
+L00000699	
+L00000700	## 3. Compilation Coverage
+L00000701	
+L00000702	| Ledger atom | Disposition |
+L00000703	| --- | --- |
+L00000704	| atom-0015 | PDS-001 |
+L00000705	| atom-0019 | PDS-002 |
+L00000706	| atom-0020 | PDS-004; BPM-004 owns migration sequencing. |
+L00000707	| atom-0021 | PDS-003 |
+L00000708	| atom-0022 | PDS-003; PNC-002 consumes compiler-facing fields. |
+L00000709	| atom-0026 | PDS-006 |
+L00000710	| atom-0031 | PDS-006 |
+L00000711	| atom-0032 | PDS-003, PDS-007 |
+L00000712	| atom-0033 | PDS-007; PNC-005 owns runtime inheritance. |
+L00000713	| q-0002 | Captured in PDS-004/BPM-004 as a non-blocking future migration choice: "Which representative pilot Plan doc should be converted first?" Disposition remains "Codex should choose after inventory; likely a substantial owner/consumer doc rather than a tiny addendum." |
+L00000714	| source_ref:chat:2026-06-13-new-plan-authoring-profile-goal | PDS-011, PDS-012, PDS-013 |
+L00000715	| source_ref:chat:2026-06-17-semantic-closure-registry-support | PDS-014; PLS-012 owns the durable registry/reopen policy. |
+L00000716	
+L00000717	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000718	
+L00000719	## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+L00000720	
+
+<<< CONTEXT_AFTER canonical_document_lines=721-732 >>>
+L00000721	### PDS-015 - Owner Consumer Reference Scan Gate
+L00000722	
+L00000723	```yaml
+L00000724	plan_unit_id: PDS-015
+L00000725	unit_type: requirement
+L00000726	status: accepted
+L00000727	owner_doc: Plans/Plan_Document_System.md
+L00000728	canonical_text: >-
+L00000729	  Ledger-to-Plans compiles that change owner contracts must account for direct owner docs, consumer docs, and reference/index/UI/wiring docs. The compile records touched concepts, reference scan terms, updated docs, no-update evidence, and deferred evidence. The former broad Plan Wizard rename deferral is superseded by the 2026-06-18 PRD Builder and Planning Wizard owner map; new active content uses Planning Wizard terminology, while retained Plan Wizard and Chain Wizard tokens require explicit historical/source-lineage or compatibility disposition. Completion claims for such compiles must include a reference/backlink scan result or an audit artifact that proves every direct reference was updated, intentionally unchanged, or explicitly deferred. Post-compile audit/index closure validates the updated Plans, repairs exact-detail drift before indexing, regenerates only Plans/.plan_index after Plans are stable, reports governance_status, and runs governance seal only when explicitly asked.
+L00000730	  Post-compile repair must validate the PlanUnit index inputs, do not run PlanCompile, preserve backlinks, index docs, UI command docs, wiring, and crosswalks, and honor: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs. It also preserves: Do not do an uncontrolled whole-repo rename as part of this compile; do not leave direct contradictions in touched sections.
+L00000731	gui_related: false
+L00000732	gui_classification_reason: Reference scan gates and compile closure evidence are plan-document governance behavior.

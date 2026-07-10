@@ -1,0 +1,416 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2081-2092 >>>
+L00002081	source_lineage:
+L00002082	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0037
+L00002083	preserved_exact_tokens:
+L00002084	  - "Catalog-installed commands"
+L00002085	  - "canonical User Commands"
+L00002086	  - "same canonical command roots"
+L00002087	negative_constraints:
+L00002088	  - "Uninstalling a catalog item must not silently delete a user-authored project override that intentionally shadows it."
+L00002089	owner_hints:
+L00002090	  - Plans/Commands_System.md
+L00002091	```
+L00002092	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2093-2479 >>>
+L00002093	### CS-027 - Commands GUI SSOT and Catalog Provenance Display
+L00002094	
+L00002095	```yaml
+L00002096	plan_unit_id: CS-027
+L00002097	unit_type: requirement
+L00002098	status: accepted
+L00002099	owner_doc: Plans/Commands_System.md
+L00002100	canonical_text: >-
+L00002101	  The Commands settings screen is part of Settings > Rules & Commands, this
+L00002102	  document is the SSOT for Commands GUI behavior, and the GUI shows whether each
+L00002103	  command is local/manual, catalog-installed, or catalog-installed with local
+L00002104	  override.
+L00002105	gui_related: true
+L00002106	gui_classification_reason: This PlanUnit governs the visible Commands settings screen and catalog provenance display.
+L00002107	split_recommended: true
+L00002108	split_recommendation_reason: Source span S0037 mixes visible GUI provenance with lifecycle and storage safety covered by CS-026.
+L00002109	depends_on: [CS-026]
+L00002110	unblocks: [CS-028, CS-029, CS-030, CS-040, CS-046, CS-049]
+L00002111	acceptance_criteria:
+L00002112	  - GUI-COMMANDS remains the anchor for Commands GUI behavior.
+L00002113	  - The Commands settings screen is part of the Rules & Commands tab in the unified Settings page.
+L00002114	  - All GUI surfaces described in Commands_System.md remain normative.
+L00002115	  - FinalGUISpec references this section as the SSOT for Commands GUI behavior.
+L00002116	  - The GUI shows whether a command is local/manual, catalog-installed, or catalog-installed with local override.
+L00002117	validation_surfaces:
+L00002118	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002119	  - python3 scripts/pm-plan-index.py validate
+L00002120	risk_class: commands_gui_ssot_drift
+L00002121	reasoning_tier: standard
+L00002122	context_scope: commands_gui_settings
+L00002123	implementation_surfaces:
+L00002124	  - Plans/Commands_System.md
+L00002125	  - Plans/FinalGUISpec.md
+L00002126	node_compile_hint:
+L00002127	  mode: commands_gui_ssot_catalog_provenance
+L00002128	  create_worknodes: false
+L00002129	source_lineage:
+L00002130	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0036
+L00002131	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0037
+L00002132	preserved_exact_tokens:
+L00002133	  - "GUI-COMMANDS"
+L00002134	  - "Rules & Commands"
+L00002135	  - "local/manual"
+L00002136	  - "catalog-installed"
+L00002137	  - "catalog-installed with local override"
+L00002138	  - "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md"
+L00002139	negative_constraints: []
+L00002140	owner_hints:
+L00002141	  - Plans/Commands_System.md
+L00002142	  - Plans/FinalGUISpec.md
+L00002143	```
+L00002144	
+L00002145	### CS-028 - Commands Settings Scope Selector
+L00002146	
+L00002147	```yaml
+L00002148	plan_unit_id: CS-028
+L00002149	unit_type: requirement
+L00002150	status: accepted
+L00002151	owner_doc: Plans/Commands_System.md
+L00002152	canonical_text: >-
+L00002153	  Settings > Rules & Commands includes a Commands section with a top scope
+L00002154	  selector that manages Global commands from ~/.config/puppet-master/commands/
+L00002155	  and Project commands from <project_root>/.puppet-master/commands/ when a
+L00002156	  project is active.
+L00002157	gui_related: true
+L00002158	gui_classification_reason: Scope selection is a visible control in the Commands settings section.
+L00002159	split_recommended: false
+L00002160	depends_on: [CS-012, CS-027]
+L00002161	unblocks: [CS-029, CS-046]
+L00002162	acceptance_criteria:
+L00002163	  - The Commands section within Settings > Rules & Commands provides a top-level scope selector.
+L00002164	  - Global manages commands in ~/.config/puppet-master/commands/.
+L00002165	  - Project is visible when a project is active and manages commands in <project_root>/.puppet-master/commands/.
+L00002166	validation_surfaces:
+L00002167	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002168	  - python3 scripts/pm-plan-index.py validate
+L00002169	risk_class: commands_gui_scope_drift
+L00002170	reasoning_tier: standard
+L00002171	context_scope: commands_gui_settings
+L00002172	implementation_surfaces:
+L00002173	  - Plans/Commands_System.md
+L00002174	node_compile_hint:
+L00002175	  mode: commands_gui_scope_selector
+L00002176	  create_worknodes: false
+L00002177	source_lineage:
+L00002178	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0038
+L00002179	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0039
+L00002180	preserved_exact_tokens:
+L00002181	  - "Settings > Rules & Commands"
+L00002182	  - "Global"
+L00002183	  - "Project"
+L00002184	  - "~/.config/puppet-master/commands/"
+L00002185	  - "<project_root>/.puppet-master/commands/"
+L00002186	negative_constraints: []
+L00002187	owner_hints:
+L00002188	  - Plans/Commands_System.md
+L00002189	```
+L00002190	
+L00002191	### CS-029 - Resolved Command List
+L00002192	
+L00002193	```yaml
+L00002194	plan_unit_id: CS-029
+L00002195	unit_type: requirement
+L00002196	status: accepted
+L00002197	owner_doc: Plans/Commands_System.md
+L00002198	canonical_text: >-
+L00002199	  The Commands GUI lists resolved project and global commands in a table with
+L00002200	  name, scope, description, Persona, Mode, Model, and Subtask columns, shows
+L00002201	  project-local badges and /x- prefixes, and sorts alphabetically with
+L00002202	  project-local overrides before matching global commands.
+L00002203	gui_related: true
+L00002204	gui_classification_reason: The resolved command list is a visible table in Settings.
+L00002205	split_recommended: false
+L00002206	depends_on: [CS-012, CS-021, CS-022, CS-027, CS-028]
+L00002207	unblocks: [CS-046]
+L00002208	acceptance_criteria:
+L00002209	  - The table lists all resolved project and global commands.
+L00002210	  - Project-local commands are indicated with a badge.
+L00002211	  - Columns include Name, Scope, Description, Persona, Mode, Model, and Subtask.
+L00002212	  - Name is bold with /x- prefix shown.
+L00002213	  - Description is truncated to one line.
+L00002214	  - Persona, Mode, and Model show unset inherited states as specified.
+L00002215	  - Subtask true is indicated with a checkbox icon.
+L00002216	  - The table sorts alphabetically by name with project-local entries before global entries when names match.
+L00002217	validation_surfaces:
+L00002218	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002219	  - python3 scripts/pm-plan-index.py validate
+L00002220	risk_class: commands_gui_list_drift
+L00002221	reasoning_tier: standard
+L00002222	context_scope: commands_gui_settings
+L00002223	implementation_surfaces:
+L00002224	  - Plans/Commands_System.md
+L00002225	node_compile_hint:
+L00002226	  mode: commands_gui_resolved_command_list
+L00002227	  create_worknodes: false
+L00002228	source_lineage:
+L00002229	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0040
+L00002230	preserved_exact_tokens:
+L00002231	  - "/x-"
+L00002232	  - "Scope"
+L00002233	  - "Persona"
+L00002234	  - "Mode"
+L00002235	  - "Model"
+L00002236	  - "Subtask"
+L00002237	  - "inherit"
+L00002238	negative_constraints: []
+L00002239	owner_hints:
+L00002240	  - Plans/Commands_System.md
+L00002241	```
+L00002242	
+L00002243	### CS-030 - Command Create Editor Form
+L00002244	
+L00002245	```yaml
+L00002246	plan_unit_id: CS-030
+L00002247	unit_type: requirement
+L00002248	status: accepted
+L00002249	owner_doc: Plans/Commands_System.md
+L00002250	canonical_text: >-
+L00002251	  New Command opens an editor form for name, description, Persona, mode, model,
+L00002252	  subtask, permissions profile override, override built-in, template body, and
+L00002253	  project-local or global save scope, using canonical validation and syntax
+L00002254	  highlighting for command template patterns.
+L00002255	gui_related: true
+L00002256	gui_classification_reason: The create editor form is a visible command authoring UI.
+L00002257	split_recommended: true
+L00002258	split_recommendation_reason: Source span S0041 mixes editor controls with save-time validation covered by CS-033.
+L00002259	depends_on: [CS-013, CS-014, CS-015, CS-021, CS-022, CS-025, CS-027]
+L00002260	unblocks: [CS-031, CS-033, CS-034, CS-046]
+L00002261	acceptance_criteria:
+L00002262	  - New Command opens an editor form.
+L00002263	  - Name is validated per section 2.5 and collision-checked per section 2.4.
+L00002264	  - Description is required and has max 200 chars.
+L00002265	  - Persona, Mode, Model, Subtask, Permissions profile override, and Override built-in controls are present as specified.
+L00002266	  - Override built-in is visible only in Expert mode.
+L00002267	  - Reserved Assistant Chat slash commands fail validation even if Override built-in is enabled.
+L00002268	  - Template body uses a Markdown editor with syntax highlighting for $ARGUMENTS, $N, @path, and !`cmd` patterns.
+L00002269	  - Scope selector supports project-local or global.
+L00002270	validation_surfaces:
+L00002271	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002272	  - python3 scripts/pm-plan-index.py validate
+L00002273	risk_class: commands_gui_create_form_drift
+L00002274	reasoning_tier: standard
+L00002275	context_scope: commands_gui_editor
+L00002276	implementation_surfaces:
+L00002277	  - Plans/Commands_System.md
+L00002278	node_compile_hint:
+L00002279	  mode: commands_gui_create_editor_form
+L00002280	  create_worknodes: false
+L00002281	source_lineage:
+L00002282	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0041
+L00002283	preserved_exact_tokens:
+L00002284	  - "New Command"
+L00002285	  - "override_builtin"
+L00002286	  - "Expert mode"
+L00002287	  - "$ARGUMENTS"
+L00002288	  - "$N"
+L00002289	  - "@path"
+L00002290	  - "!`cmd`"
+L00002291	negative_constraints:
+L00002292	  - "Reserved Assistant Chat slash commands fail validation even if override_builtin is enabled."
+L00002293	owner_hints:
+L00002294	  - Plans/Commands_System.md
+L00002295	```
+L00002296	
+L00002297	### CS-031 - Command Edit Save Targets
+L00002298	
+L00002299	```yaml
+L00002300	plan_unit_id: CS-031
+L00002301	unit_type: requirement
+L00002302	status: accepted
+L00002303	owner_doc: Plans/Commands_System.md
+L00002304	canonical_text: >-
+L00002305	  Row click or edit button opens the command editor pre-populated; editing a
+L00002306	  global command while a project is active offers Save as project override or
+L00002307	  Save globally.
+L00002308	gui_related: true
+L00002309	gui_classification_reason: Edit entry points and save-target options are visible editor interactions.
+L00002310	split_recommended: false
+L00002311	depends_on: [CS-012, CS-030]
+L00002312	unblocks: [CS-032]
+L00002313	acceptance_criteria:
+L00002314	  - Row click opens the same editor pre-populated.
+L00002315	  - Edit button opens the same editor pre-populated.
+L00002316	  - Editing a global command while a project is active offers Save as project override.
+L00002317	  - Editing a global command while a project is active offers Save globally.
+L00002318	validation_surfaces:
+L00002319	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002320	  - python3 scripts/pm-plan-index.py validate
+L00002321	risk_class: commands_gui_edit_target_drift
+L00002322	reasoning_tier: standard
+L00002323	context_scope: commands_gui_editor
+L00002324	implementation_surfaces:
+L00002325	  - Plans/Commands_System.md
+L00002326	node_compile_hint:
+L00002327	  mode: commands_gui_edit_save_targets
+L00002328	  create_worknodes: false
+L00002329	source_lineage:
+L00002330	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0042
+L00002331	preserved_exact_tokens:
+L00002332	  - "Save as project override"
+L00002333	  - "Save globally"
+L00002334	negative_constraints: []
+L00002335	owner_hints:
+L00002336	  - Plans/Commands_System.md
+L00002337	```
+L00002338	
+L00002339	### CS-032 - Command Delete and Reveal Behavior
+L00002340	
+L00002341	```yaml
+L00002342	plan_unit_id: CS-032
+L00002343	unit_type: requirement
+L00002344	status: accepted
+L00002345	owner_doc: Plans/Commands_System.md
+L00002346	canonical_text: >-
+L00002347	  Delete uses a confirmation modal; deleting a project-local command that
+L00002348	  overrides a global command reveals the global version, while deleting a global
+L00002349	  command with no project override removes it entirely.
+L00002350	gui_related: true
+L00002351	gui_classification_reason: Delete confirmation and reveal behavior are visible settings interactions.
+L00002352	split_recommended: false
+L00002353	depends_on: [CS-012, CS-026, CS-031]
+L00002354	unblocks: []
+L00002355	acceptance_criteria:
+L00002356	  - Delete button uses a confirmation modal.
+L00002357	  - Deleting a project-local command that overrides a global one reveals the global version.
+L00002358	  - Deleting a global command with no project override removes it entirely.
+L00002359	validation_surfaces:
+L00002360	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002361	  - python3 scripts/pm-plan-index.py validate
+L00002362	risk_class: commands_gui_delete_drift
+L00002363	reasoning_tier: standard
+L00002364	context_scope: commands_gui_editor
+L00002365	implementation_surfaces:
+L00002366	  - Plans/Commands_System.md
+L00002367	node_compile_hint:
+L00002368	  mode: commands_gui_delete_reveal_behavior
+L00002369	  create_worknodes: false
+L00002370	source_lineage:
+L00002371	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0043
+L00002372	preserved_exact_tokens:
+L00002373	  - "confirmation modal"
+L00002374	  - "project-local command"
+L00002375	  - "global version"
+L00002376	negative_constraints: []
+L00002377	owner_hints:
+L00002378	  - Plans/Commands_System.md
+L00002379	```
+L00002380	
+L00002381	### CS-033 - Command Save Schema Validation
+L00002382	
+L00002383	```yaml
+L00002384	plan_unit_id: CS-033
+L00002385	unit_type: requirement
+L00002386	status: accepted
+L00002387	owner_doc: Plans/Commands_System.md
+L00002388	canonical_text: >-
+L00002389	  Every command save validates the file against the command schema, displays
+L00002390	  inline errors for reserved names, invalid formats, missing description,
+L00002391	  invalid mode, invalid model, and invalid override_builtin use, and blocks save
+L00002392	  until all errors are resolved.
+L00002393	gui_related: true
+L00002394	gui_classification_reason: Inline save validation errors and blocked saves are visible editor behavior.
+L00002395	split_recommended: true
+L00002396	split_recommendation_reason: Span map inferred S0044 as non-GUI, but the source text governs visible inline errors and save blocking.
+L00002397	depends_on: [CS-013, CS-014, CS-025, CS-030]
+L00002398	unblocks: [CS-049]
+L00002399	acceptance_criteria:
+L00002400	  - Every save validates the command file against section 3 schema.
+L00002401	  - Inline errors are displayed for reserved name collision, invalid name format, missing description, invalid mode value, and invalid model format.
+L00002402	  - If override_builtin: true is set while the command name matches a reserved Assistant Chat slash command, inline validation explains that override_builtin does not apply to canonical reserved chat commands.
+L00002403	  - Save is blocked until errors are resolved.
+L00002404	validation_surfaces:
+L00002405	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002406	  - python3 scripts/pm-plan-index.py validate
+L00002407	risk_class: command_save_validation_drift
+L00002408	reasoning_tier: high
+L00002409	context_scope: commands_gui_editor_validation
+L00002410	implementation_surfaces:
+L00002411	  - Plans/Commands_System.md
+L00002412	node_compile_hint:
+L00002413	  mode: commands_gui_save_schema_validation
+L00002414	  create_worknodes: false
+L00002415	source_lineage:
+L00002416	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0041
+L00002417	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0044
+L00002418	preserved_exact_tokens:
+L00002419	  - "override_builtin: true"
+L00002420	  - "reserved name collision"
+L00002421	  - "invalid name format"
+L00002422	  - "missing description"
+L00002423	  - "invalid mode value"
+L00002424	  - "invalid model format"
+L00002425	negative_constraints:
+L00002426	  - "override_builtin does not apply to canonical reserved chat commands."
+L00002427	  - "Block save until errors are resolved."
+L00002428	owner_hints:
+L00002429	  - Plans/Commands_System.md
+L00002430	```
+L00002431	
+L00002432	### CS-034 - Dry-Run Preview Rendering
+L00002433	
+L00002434	```yaml
+L00002435	plan_unit_id: CS-034
+L00002436	unit_type: requirement
+L00002437	status: accepted
+L00002438	owner_doc: Plans/Commands_System.md
+L00002439	canonical_text: >-
+L00002440	  The command editor Preview resolves a template with sample arguments and
+L00002441	  renders the fully resolved prompt in a read-only Markdown view with
+L00002442	  highlighted placeholder substitutions, file-include results, shell-injection
+L00002443	  results, or permission-blocked placeholders.
+L00002444	gui_related: true
+L00002445	gui_classification_reason: Dry-run preview is a visible editor preview surface.
+L00002446	split_recommended: true
+L00002447	split_recommendation_reason: Source span S0045 mixes preview rendering with execution safety covered by CS-035.
+L00002448	depends_on: [CS-015, CS-016, CS-017, CS-024, CS-030]
+L00002449	unblocks: [CS-035, CS-046, CS-049]
+L00002450	acceptance_criteria:
+L00002451	  - DRY-RUN remains the anchor for dry-run preview behavior.
+L00002452	  - Preview resolves the template with sample arguments.
+L00002453	  - Preview displays the fully rendered prompt without submitting it.
+L00002454	  - Placeholder substitutions are highlighted.
+L00002455	  - File-include and shell-injection results appear, or permission-blocked placeholders appear.
+L00002456	  - Preview uses a read-only rendered Markdown view.
+L00002457	validation_surfaces:
+L00002458	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002459	  - python3 scripts/pm-plan-index.py validate
+L00002460	risk_class: dry_run_preview_rendering_drift
+L00002461	reasoning_tier: standard
+L00002462	context_scope: commands_gui_preview
+L00002463	implementation_surfaces:
+L00002464	  - Plans/Commands_System.md
+L00002465	node_compile_hint:
+L00002466	  mode: commands_gui_dry_run_preview_rendering
+L00002467	  create_worknodes: false
+L00002468	source_lineage:
+L00002469	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0045
+L00002470	preserved_exact_tokens:
+L00002471	  - "DRY-RUN"
+L00002472	  - "Preview"
+L00002473	  - "permission-blocked placeholders"
+L00002474	  - "read-only rendered Markdown view"
+L00002475	negative_constraints: []
+L00002476	owner_hints:
+L00002477	  - Plans/Commands_System.md
+L00002478	```
+L00002479	
+
+<<< CONTEXT_AFTER canonical_document_lines=2480-2491 >>>
+L00002480	### CS-035 - Dry-Run Preview Execution Safety
+L00002481	
+L00002482	```yaml
+L00002483	plan_unit_id: CS-035
+L00002484	unit_type: constraint
+L00002485	status: accepted
+L00002486	owner_doc: Plans/Commands_System.md
+L00002487	canonical_text: >-
+L00002488	  Dry-run preview does not execute any run; shell injections in preview mode may
+L00002489	  execute the shell command only under bash permission and must not submit the
+L00002490	  result to any agent.
+L00002491	gui_related: false

@@ -1,0 +1,626 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001029-EXACT-WIN-7414C6C901F8-0017",
+  "attempt_id": "attempt-0010",
+  "task_thread_id": "/root/a005_blind_wave_0003_c_retry_cohort_dispatcher_attempt_0010/a005_001029_exact_7414c6c901f8_0017_attempt_0010_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "b3d2ce35cb65c8e371b0f835ae6ba240d0b6fbcf6fc7665d5471cf0d5af0ce16",
+    "core_range": [5923, 6295]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001029-I001",
+      "item_type": "capability",
+      "title": "Optional advanced editor capability catalog is explicit",
+      "statement": "The unit explicitly enumerates the optional Interview and editor capability families: document symbols, contextual diagnostics, type definition, implementation, document links, call hierarchy, folding, selection range, and document highlight.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5929,
+          "line_end": 5929,
+          "exact_quote": "canonical_text: Optional Interview and editor enhancements may include structure-of-file via documentSymbol, diagnostics in interview context, type definition, implementation, document links, call hierarchy, folding range, selection range, and document highlight.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-090"]
+    },
+    {
+      "item_id": "A005-001029-I002",
+      "item_type": "gap",
+      "title": "Optional editor feature selection and behavior remain discretionary",
+      "statement": "The phrase 'may include' does not define which listed features are implemented, how capability availability is detected, what user action invokes each feature, or the success and failure output for any feature.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5929,
+          "line_end": 5929,
+          "exact_quote": "canonical_text: Optional Interview and editor enhancements may include structure-of-file via documentSymbol, diagnostics in interview context, type definition, implementation, document links, call hierarchy, folding range, selection range, and document highlight.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-090"],
+      "gap_kind": "underspecified_optional_capability_contract",
+      "impact": "Builders can ship materially different feature sets and interaction semantics while claiming conformance.",
+      "builder_discretion": "Choose supported features, activation conditions, UI affordances, result presentation, and failure handling."
+    },
+    {
+      "item_id": "A005-001029-I003",
+      "item_type": "explicit_non_gap",
+      "title": "Gate timing, scope, severity, and preflight precedence are defined",
+      "statement": "The gate runs at configured tier boundaries, defaults to phase-only, supports changed-files, open, or project scope, and prevents advisory iteration-local preflight from replacing the configured boundary gate.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5981,
+          "line_end": 5981,
+          "exact_quote": "canonical_text: The LSP diagnostics verification gate runs at configured tier boundaries, defaults to phase boundary only, treats iteration-local preflight as advisory only, checks changed_files, open, or project scope, and blocks by configurable error or error_and_warning severity threshold.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6021,
+          "line_end": 6021,
+          "exact_quote": "- Iteration-local preflight MUST NOT replace the configured boundary gate.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-091"]
+    },
+    {
+      "item_id": "A005-001029-I004",
+      "item_type": "gap",
+      "title": "Severity enum spelling is inconsistent",
+      "statement": "The timing contract names error_and_warning, while the config token list preserves errors_and_warnings and the GUI uses 'Errors and warnings'; no canonical mapping or accepted serialized enum is declared.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5981,
+          "line_end": 5981,
+          "exact_quote": "canonical_text: The LSP diagnostics verification gate runs at configured tier boundaries, defaults to phase boundary only, treats iteration-local preflight as advisory only, checks changed_files, open, or project scope, and blocks by configurable error or error_and_warning severity threshold.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6077,
+          "line_end": 6077,
+          "exact_quote": "- errors_and_warnings",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6130,
+          "line_end": 6130,
+          "exact_quote": "- Errors and warnings",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-091", "LSPS-092", "LSPS-093"],
+      "gap_kind": "cross_surface_enum_drift",
+      "impact": "Configuration serialization and UI round-tripping can disagree or reject a valid selection.",
+      "builder_discretion": "Select a canonical enum spelling and compatibility mapping."
+    },
+    {
+      "item_id": "A005-001029-I005",
+      "item_type": "contract",
+      "title": "Gate configuration location and defaults are explicit",
+      "statement": "The gate is opt-in at verification.lsp_gate, defaults to changed-files scope, errors-only blocking, phase boundary, a ten-second timeout, skip when unavailable, and supports project override through .puppet-master/config.json.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6037,
+          "line_end": 6037,
+          "exact_quote": "canonical_text: The LSP gate config lives at verification.lsp_gate with opt-in defaults, changed_files scope, errors-only blocking, phase boundary, 10-second timeout, skip when unavailable, and project override through .puppet-master/config.json.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-092"]
+    },
+    {
+      "item_id": "A005-001029-I006",
+      "item_type": "gui_truth",
+      "title": "Verification-tab control inventory and shared binding are explicit",
+      "statement": "The Verification tab exposes enable, scope, block-on, tier-boundary, and timeout controls, all bound to the same VerificationConfig blob.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6095,
+          "line_end": 6095,
+          "exact_quote": "canonical_text: The Verification tab exposes an LSP diagnostics gate subsection with enable, scope, block-on, tier-boundary, and timeout controls bound to the same VerificationConfig blob.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-093"]
+    },
+    {
+      "item_id": "A005-001029-I007",
+      "item_type": "gap",
+      "title": "GUI persistence, validation, and unavailable-state behavior are unspecified",
+      "statement": "Binding controls to VerificationConfig does not specify save timing, invalid timeout handling, disabled-control behavior, project-override precedence display, or how unavailable LSP state is represented.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6095,
+          "line_end": 6095,
+          "exact_quote": "canonical_text: The Verification tab exposes an LSP diagnostics gate subsection with enable, scope, block-on, tier-boundary, and timeout controls bound to the same VerificationConfig blob.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-093"],
+      "gap_kind": "gui_state_contract_missing",
+      "impact": "Different clients can persist or reject the same settings differently and obscure effective configuration.",
+      "builder_discretion": "Define form validation, persistence timing, override indicators, enablement rules, and unavailable-state presentation."
+    },
+    {
+      "item_id": "A005-001029-I008",
+      "item_type": "failure_recovery",
+      "title": "Failed-gate result and orchestrator recovery route are defined",
+      "statement": "A failed LSP gate emits passed false, met false, and an actual diagnostic summary, then follows the standard retry, escalation, or stop policy without an LSP-only runner path.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6152,
+          "line_end": 6152,
+          "exact_quote": "canonical_text: When LSP diagnostics fail the gate, the criterion result carries passed false, met false, and an actual diagnostic summary, then follows standard orchestrator retry, escalation, or stop policy with no special LSP-only gate-runner path.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6188,
+          "line_end": 6188,
+          "exact_quote": "- The LSP gate must use the standard failed-gate flow rather than a special-case orchestrator path.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-094"]
+    },
+    {
+      "item_id": "A005-001029-I009",
+      "item_type": "gui_truth",
+      "title": "Failure notification has a canonical report path",
+      "statement": "User-visible failures use the standard Dashboard and Gate report path, with optional toast copy and evidence available for inspection.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6205,
+          "line_end": 6205,
+          "exact_quote": "canonical_text: User-visible LSP gate failures appear through the standard Dashboard and Gate report path, with optional toast copy and attached evidence for inspection.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-095"]
+    },
+    {
+      "item_id": "A005-001029-I010",
+      "item_type": "gap",
+      "title": "Toast emission and notification lifecycle are discretionary",
+      "statement": "The toast is explicitly optional, but no trigger, deduplication, duration, acknowledgement, or accessibility behavior is specified.",
+      "severity": "low",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6232,
+          "line_end": 6232,
+          "exact_quote": "- optional toast",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-095"],
+      "gap_kind": "optional_notification_behavior",
+      "impact": "Users may receive inconsistent or repetitive failure alerts across implementations.",
+      "builder_discretion": "Choose whether and when to emit a toast and define its lifecycle and accessibility semantics."
+    },
+    {
+      "item_id": "A005-001029-I011",
+      "item_type": "contract",
+      "title": "Every gate run must attach diagnostics evidence",
+      "statement": "Pass and fail runs always capture an LSP diagnostics snapshot referenced as lsp_snapshot and attach it as gate evidence.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6253,
+          "line_end": 6253,
+          "exact_quote": "canonical_text: Whenever the LSP gate runs, pass or fail, it captures and attaches an LSP diagnostics snapshot as evidence, referenced as lsp_snapshot and stored under the planned LSP snapshots evidence location or embedded in gate report artifacts.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-096"]
+    },
+    {
+      "item_id": "A005-001029-I012",
+      "item_type": "gap",
+      "title": "Snapshot storage contract has two non-equivalent destinations",
+      "statement": "The evidence may be stored under the planned snapshots location or embedded in gate report artifacts, but selection rules, reference shape, atomicity, retention, and retrieval semantics are not defined.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6253,
+          "line_end": 6253,
+          "exact_quote": "canonical_text: Whenever the LSP gate runs, pass or fail, it captures and attaches an LSP diagnostics snapshot as evidence, referenced as lsp_snapshot and stored under the planned LSP snapshots evidence location or embedded in gate report artifacts.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-096"],
+      "gap_kind": "evidence_storage_ambiguity",
+      "impact": "Evidence consumers cannot rely on one durable lookup, lifecycle, or failure model.",
+      "builder_discretion": "Choose storage destination and define reference, write, retrieval, and retention behavior."
+    },
+    {
+      "item_id": "A005-001029-I013",
+      "item_type": "gap",
+      "title": "Diagnostic evidence privacy and access controls are unspecified",
+      "statement": "The mandatory snapshot requirement does not define redaction of paths or diagnostic text, authorization to inspect evidence, encryption, retention, or deletion.",
+      "severity": "high",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6253,
+          "line_end": 6253,
+          "exact_quote": "canonical_text: Whenever the LSP gate runs, pass or fail, it captures and attaches an LSP diagnostics snapshot as evidence, referenced as lsp_snapshot and stored under the planned LSP snapshots evidence location or embedded in gate report artifacts.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-096"],
+      "gap_kind": "security_privacy_contract_missing",
+      "impact": "Snapshots can persist sensitive repository paths, code-derived messages, or user data without a bounded access and lifecycle policy.",
+      "builder_discretion": "Define redaction, authorization, encryption, retention, deletion, and audit rules."
+    },
+    {
+      "item_id": "A005-001029-I014",
+      "item_type": "gap",
+      "title": "Timeout and unavailable-state recovery semantics are incomplete",
+      "statement": "The defaults provide a ten-second timeout and skip when unavailable, but do not state whether a timeout counts as unavailable, what result fields a skip emits, whether skip is reported to the user, or whether retries occur.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6037,
+          "line_end": 6037,
+          "exact_quote": "canonical_text: The LSP gate config lives at verification.lsp_gate with opt-in defaults, changed_files scope, errors-only blocking, phase boundary, 10-second timeout, skip when unavailable, and project override through .puppet-master/config.json.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-092", "LSPS-094"],
+      "gap_kind": "failure_state_transition_missing",
+      "impact": "The verification gate can silently bypass diagnostics or classify identical failures differently.",
+      "builder_discretion": "Classify timeout versus unavailable, define emitted state and observability, and choose retry behavior."
+    },
+    {
+      "item_id": "A005-001029-I015",
+      "item_type": "gap",
+      "title": "Runtime acceptance oracles are absent",
+      "statement": "The declared validation surfaces validate migration and plan indexing, but no executable oracle checks gate timing, scope filtering, severity thresholds, config round-trip, failure routing, notification, or evidence attachment.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6048,
+          "line_end": 6048,
+          "exact_quote": "validation_surfaces:",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6049,
+          "line_end": 6049,
+          "exact_quote": "- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6050,
+          "line_end": 6050,
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-090", "LSPS-091", "LSPS-092", "LSPS-093", "LSPS-094", "LSPS-095", "LSPS-096"],
+      "gap_kind": "behavioral_acceptance_oracle_missing",
+      "impact": "Plan-format validation can pass while runtime behavior violates the accepted requirements.",
+      "builder_discretion": "Define executable fixtures, expected results, and pass/fail assertions for each runtime and GUI contract."
+    },
+    {
+      "item_id": "A005-001029-I016",
+      "item_type": "gap",
+      "title": "Interdependent gate units declare no dependencies",
+      "statement": "The configuration, GUI, failure flow, user notification, and snapshot units all declare empty dependency lists even though their canonical behaviors consume one another's configuration, gate result, or evidence concepts.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6099,
+          "line_end": 6099,
+          "exact_quote": "depends_on: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6209,
+          "line_end": 6209,
+          "exact_quote": "depends_on: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6257,
+          "line_end": 6257,
+          "exact_quote": "depends_on: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-092", "LSPS-093", "LSPS-094", "LSPS-095", "LSPS-096"],
+      "gap_kind": "dependency_propagation_missing",
+      "impact": "Compilation or implementation ordering can omit required producers and consumers.",
+      "builder_discretion": "Infer dependency edges and propagation ordering among configuration, verifier, orchestrator, GUI, and evidence surfaces."
+    },
+    {
+      "item_id": "A005-001029-I017",
+      "item_type": "explicit_non_gap",
+      "title": "LSP-specific ownership boundary is explicit",
+      "statement": "Plans/LSPSupport.md owns LSP-specific protocol and client constraints while referenced owner documents retain their source-of-truth boundaries.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6025,
+          "line_end": 6025,
+          "exact_quote": "- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-090", "LSPS-091", "LSPS-092", "LSPS-093", "LSPS-094", "LSPS-095", "LSPS-096"]
+    },
+    {
+      "item_id": "A005-001029-I018",
+      "item_type": "gap",
+      "title": "Snapshot size and large-scope performance are unbounded",
+      "statement": "The project scope and mandatory per-run snapshot requirements do not define diagnostic count or byte limits, truncation, pagination, streaming, deduplication, or storage quotas.",
+      "severity": "medium",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5981,
+          "line_end": 5981,
+          "exact_quote": "canonical_text: The LSP diagnostics verification gate runs at configured tier boundaries, defaults to phase boundary only, treats iteration-local preflight as advisory only, checks changed_files, open, or project scope, and blocks by configurable error or error_and_warning severity threshold.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6253,
+          "line_end": 6253,
+          "exact_quote": "canonical_text: Whenever the LSP gate runs, pass or fail, it captures and attaches an LSP diagnostics snapshot as evidence, referenced as lsp_snapshot and stored under the planned LSP snapshots evidence location or embedded in gate report artifacts.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-091", "LSPS-096"],
+      "gap_kind": "scale_performance_bound_missing",
+      "impact": "Whole-project diagnostics can exceed the timeout, inflate reports, or exhaust evidence storage.",
+      "builder_discretion": "Choose limits, truncation and pagination semantics, caching, deduplication, and storage quotas."
+    },
+    {
+      "item_id": "A005-001029-I019",
+      "item_type": "unknown",
+      "title": "Compatibility and migration behavior is not established",
+      "statement": "The reviewed gate-config unit explicitly carries no compatibility-only notes, so behavior for older config keys, enum spellings, persisted blobs, or evidence formats cannot be established from this core.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6079,
+          "line_end": 6079,
+          "exact_quote": "compatibility_only_notes: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-092"],
+      "gap_kind": "compatibility_migration_unknown",
+      "impact": "Existing persisted configuration or evidence may not round-trip after schema naming changes.",
+      "builder_discretion": "No migration or backward-compatibility behavior is constrained by this core."
+    },
+    {
+      "item_id": "A005-001029-I020",
+      "item_type": "gap",
+      "title": "Effective-config propagation is unspecified",
+      "statement": "Although the GUI binds to VerificationConfig and project override is allowed, the core does not define precedence, reload triggers, conflict handling, or when a changed value takes effect in an in-flight phase, task, or subtask.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6037,
+          "line_end": 6037,
+          "exact_quote": "canonical_text: The LSP gate config lives at verification.lsp_gate with opt-in defaults, changed_files scope, errors-only blocking, phase boundary, 10-second timeout, skip when unavailable, and project override through .puppet-master/config.json.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 6095,
+          "line_end": 6095,
+          "exact_quote": "canonical_text: The Verification tab exposes an LSP diagnostics gate subsection with enable, scope, block-on, tier-boundary, and timeout controls bound to the same VerificationConfig blob.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ],
+      "feature_keys": ["LSPS-092", "LSPS-093"],
+      "gap_kind": "configuration_propagation_contract_missing",
+      "impact": "The GUI, persisted project override, and running verifier can observe different effective values.",
+      "builder_discretion": "Define precedence, reload, synchronization, conflict, and activation timing."
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "gap_found",
+      "summary": "Gate execution behavior is substantially defined, but optional editor behaviors and config-change timing remain underspecified.",
+      "evidence_item_ids": ["A005-001029-I002", "A005-001029-I003", "A005-001029-I020"]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "gap_found",
+      "summary": "The advanced capability catalog is explicit, but the supported subset and activation contracts are discretionary.",
+      "evidence_item_ids": ["A005-001029-I001", "A005-001029-I002"]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "gap_found",
+      "summary": "Config inputs, failed-result flags, summaries, and snapshots are named, but skip/timeout outputs and evidence reference shapes are incomplete.",
+      "evidence_item_ids": ["A005-001029-I005", "A005-001029-I008", "A005-001029-I012", "A005-001029-I014"]
+    },
+    {
+      "dimension": "contracts",
+      "status": "gap_found",
+      "summary": "Core gate contracts are explicit, but enum spelling and evidence storage contracts are inconsistent or ambiguous.",
+      "evidence_item_ids": ["A005-001029-I003", "A005-001029-I004", "A005-001029-I005", "A005-001029-I011", "A005-001029-I012"]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "gap_found",
+      "summary": "Fail transitions into standard orchestrator policy are defined; timeout, unavailable, skip, and live config-update transitions are not.",
+      "evidence_item_ids": ["A005-001029-I008", "A005-001029-I014", "A005-001029-I020"]
+    },
+    {
+      "dimension": "authority",
+      "status": "addressed",
+      "summary": "LSP-specific protocol and client authority is assigned to Plans/LSPSupport.md while referenced SSOT boundaries are retained.",
+      "evidence_item_ids": ["A005-001029-I017"]
+    },
+    {
+      "dimension": "ownership",
+      "status": "gap_found",
+      "summary": "Document ownership is explicit, but operational ownership of verifier, config propagation, notification, and evidence lifecycle is not allocated.",
+      "evidence_item_ids": ["A005-001029-I017", "A005-001029-I012", "A005-001029-I020"]
+    },
+    {
+      "dimension": "consumers",
+      "status": "addressed",
+      "summary": "The standard orchestrator flow, Dashboard/Gate report, user inspection path, and evidence surfaces are identifiable consumers.",
+      "evidence_item_ids": ["A005-001029-I008", "A005-001029-I009", "A005-001029-I011"]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "gap_found",
+      "summary": "Controls and failure-report surfaces are explicit, but GUI validation, persistence, unavailable-state, and toast lifecycle remain open.",
+      "evidence_item_ids": ["A005-001029-I006", "A005-001029-I007", "A005-001029-I009", "A005-001029-I010"]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "Failed diagnostics use standard retry, escalation, or stop policy; timeout and unavailable classification and observability are incomplete.",
+      "evidence_item_ids": ["A005-001029-I008", "A005-001029-I014"]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "gap_found",
+      "summary": "Mandatory diagnostics snapshots lack redaction, access, encryption, retention, and deletion rules.",
+      "evidence_item_ids": ["A005-001029-I013"]
+    },
+    {
+      "dimension": "propagation",
+      "status": "gap_found",
+      "summary": "Shared config and downstream gate evidence are named, but dependency edges and effective-config propagation rules are absent.",
+      "evidence_item_ids": ["A005-001029-I016", "A005-001029-I020"]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Timeout and evidence locations are named, but skip observability, evidence retention, retrieval, quotas, and cleanup are not operationally defined.",
+      "evidence_item_ids": ["A005-001029-I012", "A005-001029-I014", "A005-001029-I018"]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "gap_found",
+      "summary": "A timeout exists, but whole-project collection and mandatory snapshots have no count, byte, truncation, pagination, caching, or storage bounds.",
+      "evidence_item_ids": ["A005-001029-I018"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "unknown",
+      "summary": "No compatibility-only notes establish handling for prior config keys, enum spellings, blobs, or evidence formats.",
+      "evidence_item_ids": ["A005-001029-I019"]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "Only plan migration and index validators are declared; runtime and GUI behavioral oracles are absent.",
+      "evidence_item_ids": ["A005-001029-I015"]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Consequential discretion remains over optional feature scope, enum normalization, GUI lifecycle, evidence storage and privacy, timeout handling, scaling, dependencies, and config propagation.",
+      "evidence_item_ids": ["A005-001029-I002", "A005-001029-I004", "A005-001029-I007", "A005-001029-I012", "A005-001029-I013", "A005-001029-I014", "A005-001029-I016", "A005-001029-I018", "A005-001029-I020"]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "Key ambiguities include optional feature selection, severity enum identity, evidence destination, timeout classification, compatibility, and effective-config timing.",
+      "evidence_item_ids": ["A005-001029-I002", "A005-001029-I004", "A005-001029-I012", "A005-001029-I014", "A005-001029-I019", "A005-001029-I020"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

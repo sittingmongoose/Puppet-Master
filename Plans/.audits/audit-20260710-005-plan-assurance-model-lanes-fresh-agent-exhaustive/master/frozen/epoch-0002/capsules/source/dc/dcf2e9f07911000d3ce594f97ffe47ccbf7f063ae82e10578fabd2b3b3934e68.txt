@@ -1,0 +1,423 @@
+<<< CONTEXT_BEFORE 12996-13007 >>>
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0096
+preserved_exact_tokens:
+  - "approve and continue"
+  - "what's blocking?"
+  - "run the suggested fix"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+
+<<< AUTHORITATIVE_CORE 13008-13401 >>>
+### ACD-205 - HITL Continue In Assistant
+
+```yaml
+plan_unit_id: ACD-205
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  HITL pauses show a Dashboard CtA and spawn a named Assistant thread;
+  orchestrator completion or pause offers `Continue in Assistant` with run
+  summary and package, seam, node, or blocked episode context injected.
+gui_related: true
+gui_classification_reason: HITL Dashboard CtA, spawned thread, and Continue in Assistant handoff are visible UI.
+depends_on: [ACD-203]
+unblocks: []
+acceptance_criteria:
+  - HITL pauses show Dashboard CtAs.
+  - HITL pauses spawn an appropriately named Assistant thread.
+  - Continue in Assistant opens Assistant with relevant run context.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: dashboard_cta
+reasoning_tier: high
+context_scope: handoff
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/human-in-the-loop.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: hitl_continue_assistant
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0096
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:13
+preserved_exact_tokens:
+  - "HITL"
+  - "new thread"
+  - "Continue in Assistant"
+  - "run summary"
+  - "phase/task/subtask id"
+  - "orchestrator pauses at a tier boundary"
+negative_constraints:
+  - "Assistant handoff context must not use tier boundary as live runtime authority."
+compatibility_only_notes:
+  - "phase/task/subtask id and tier-boundary examples are compatibility lineage only."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/human-in-the-loop.md
+```
+
+### ACD-206 - Dev Action Mapping
+
+```yaml
+plan_unit_id: ACD-206
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Assistant-invoked dev actions map to stable UI commands and visible shell state changes.
+gui_related: true
+gui_classification_reason: Dev actions, commands, and shell state changes are visible chat/shell UI.
+depends_on: []
+unblocks: [ACD-207, ACD-208, ACD-209]
+acceptance_criteria:
+  - Assistant dev intents resolve to canonical cmd.dev.* or terminal command IDs.
+  - Shell state changes remain visible.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: dev_session
+reasoning_tier: standard
+context_scope: commands
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: dev_action_mapping
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0097
+preserved_exact_tokens:
+  - "cmd.dev.*"
+  - "start hot reload dev mode"
+  - "start dev server"
+  - "run tests in watch mode"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### ACD-207 - Dev Output Projection Boundary
+
+```yaml
+plan_unit_id: ACD-207
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Chat shows dev-session lifecycle state while output routes to canonical
+  Terminal, Output, Problems, Debug Console, and Ports surfaces rather than a
+  parallel chat output model.
+gui_related: true
+gui_classification_reason: Dev-session lifecycle state and output routing are visible shell/chat UI.
+depends_on: [ACD-206]
+unblocks: []
+acceptance_criteria:
+  - Dev-session states are visible in chat/shell surfaces.
+  - Output routes to canonical shell-owned surfaces.
+  - Chat does not create a parallel dev-output model.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: dev_session
+reasoning_tier: high
+context_scope: owner_boundary
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/FileManager.md
+node_compile_hint:
+  mode: dev_output_projection
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0097
+preserved_exact_tokens:
+  - "starting"
+  - "active"
+  - "failed"
+  - "restored"
+  - "Terminal, Output, Problems, Debug Console, and Ports"
+negative_constraints:
+  - "Chat does not create a parallel dev-output model."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-208 - Dev Session Consequence Disclosure
+
+```yaml
+plan_unit_id: ACD-208
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Project switch or workspace-tab close surfaces explicit consequences for active dev sessions.
+gui_related: true
+gui_classification_reason: Project switch and workspace-tab close consequence disclosure is visible UI.
+depends_on: [ACD-206]
+unblocks: [ACD-214]
+acceptance_criteria:
+  - Project switch discloses consequences for active dev sessions.
+  - Workspace-tab close discloses consequences for active dev sessions.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: dev_session
+reasoning_tier: high
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: dev_session_consequence_disclosure
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0097
+preserved_exact_tokens:
+  - "project switch"
+  - "workspace-tab close"
+  - "active dev session"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-209 - Dev Terminal Identity
+
+```yaml
+plan_unit_id: ACD-209
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: A dev session can own or link multiple terminal sessions without collapsing them into one PTY identity.
+gui_related: false
+gui_classification_reason: Dev-session to terminal identity is runtime ownership behavior.
+depends_on: [ACD-206]
+unblocks: [ACD-210, ACD-211, ACD-212]
+acceptance_criteria:
+  - Dev sessions can own or link multiple terminal sessions.
+  - Linked terminal sessions preserve distinct PTY identities.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: dev_session
+reasoning_tier: high
+context_scope: runtime
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: dev_terminal_identity
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0098
+preserved_exact_tokens:
+  - "multiple terminal sessions"
+  - "PTY identity"
+negative_constraints:
+  - "A dev session must not collapse multiple terminal sessions into one PTY identity."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-210 - Dev Session Surface Reveal
+
+```yaml
+plan_unit_id: ACD-210
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Dev-session surface actions reveal current `dev_session_id` Output,
+  Problems, Ports, or primary/last-active terminal without changing canonical
+  owning runtime records.
+gui_related: true
+gui_classification_reason: Show Output, Problems, Ports, and Open in Terminal are visible UI actions.
+depends_on: [ACD-209]
+unblocks: []
+acceptance_criteria:
+  - Show Output, Show Problems, and Show Ports reveal surfaces linked to dev_session_id.
+  - Open in Terminal reveals the primary or last-active terminal when one exists.
+  - Reveal actions do not mutate owning runtime records.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: dev_session
+reasoning_tier: high
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: dev_session_surface_reveal
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0098
+preserved_exact_tokens:
+  - "Show Output"
+  - "Show Problems"
+  - "Show Ports"
+  - "Open in Terminal"
+  - "dev_session_id"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/UI_Command_Catalog.md
+```
+
+### ACD-211 - Editor Pane Reconciliation
+
+```yaml
+plan_unit_id: ACD-211
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Workgroup and editor-stack pane mirroring stays reconciled, and the bottom
+  workspace shows placeholder guidance when a pane exists only in the editor
+  stack rather than pretending the pane no longer exists.
+gui_related: true
+gui_classification_reason: Workgroup, pane, editor-stack, and placeholder guidance are visible shell/editor UI.
+depends_on: [ACD-209]
+unblocks: []
+acceptance_criteria:
+  - Mirrored workgroup/editor-stack pane references are removed or updated on close.
+  - Editor-stack-only panes show placeholder guidance in bottom workspace surfaces.
+  - UI does not pretend editor-stack-only panes no longer exist.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: dev_session
+reasoning_tier: high
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: editor_pane_reconciliation
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0098
+preserved_exact_tokens:
+  - "workgroups"
+  - "leaf panes"
+  - "editor-embedded terminal panels"
+  - "placeholder guidance"
+negative_constraints:
+  - "A pane that exists only in the editor stack must not be treated as nonexistent."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-212 - Dev Session History
+
+```yaml
+plan_unit_id: ACD-212
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Stopping a dev session preserves historical shell evidence and linked surface history after process exit.
+gui_related: false
+gui_classification_reason: Dev-session history preservation is storage/runtime behavior.
+depends_on: [ACD-209]
+unblocks: []
+acceptance_criteria:
+  - Stopping a dev session preserves historical shell evidence.
+  - Linked Output, Problems, Ports, and terminal history remains available after exit.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: dev_session
+reasoning_tier: high
+context_scope: storage
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: dev_session_history
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0098
+preserved_exact_tokens:
+  - "historical shell evidence"
+  - "linked surface history"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-213 - Project Switch State
+
+```yaml
+plan_unit_id: ACD-213
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Switching projects recalculates effective shell, tool, and dev-session state
+  for the new project context while old-project background activity remains
+  visible through badges and attention surfaces tied to its project and
+  session identities.
+gui_related: true
+gui_classification_reason: Project switch recalculation, badges, and attention surfaces are visible UI behavior.
+depends_on: [ACD-208]
+unblocks: [ACD-214]
+acceptance_criteria:
+  - Project switch recalculates effective shell/tool/dev-session state.
+  - Old-project background activity remains visible via project/session-specific badges.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: dev_session
+reasoning_tier: high
+context_scope: project_context
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/Run_Modes.md
+node_compile_hint:
+  mode: project_switch_state
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0099
+preserved_exact_tokens:
+  - "effective shell"
+  - "tool"
+  - "dev-session state"
+  - "badges"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+
+<<< CONTEXT_AFTER 13402-13413 >>>
+### ACD-214 - No Silent Dev Session Orphan
+
+```yaml
+plan_unit_id: ACD-214
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Closing a workspace or terminal tab with an active dev session requires
+  explicit consequence disclosure, and Puppet Master must not silently orphan
+  background workflows by default.
+gui_related: true

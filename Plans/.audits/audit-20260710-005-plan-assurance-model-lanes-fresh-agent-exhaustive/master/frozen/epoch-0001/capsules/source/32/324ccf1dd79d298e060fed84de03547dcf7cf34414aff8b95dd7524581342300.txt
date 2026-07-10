@@ -1,0 +1,396 @@
+<<< CONTEXT_BEFORE 3006-3017 >>>
+- After each run
+- rate limits
+- API errors
+negative_constraints:
+- Polling usage endpoints too frequently must not consume user quota or cause blocked requests.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+
+<<< AUTHORITATIVE_CORE 3018-3384 >>>
+### UF-040 - Canonical UsageRecord Write Path
+
+```yaml
+plan_unit_id: UF-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage must unify around one canonical write path and one UsageRecord schema so Ledger, rollups, and UI projections read the same attribution model rather than parsing ad hoc JSON or duplicate tracker types.
+gui_related: true
+gui_classification_reason: The unit affects user-visible correctness in Ledger/rollup/UI projections and shared backend schema.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-040 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: canonical_usagerecord_write_path
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0070
+preserved_exact_tokens:
+- state::UsageTracker
+- types::UsageRecord
+- platforms::UsageTracker
+- UsageEvent
+- UsageSummary
+- one canonical write path
+- one `UsageRecord` schema
+- usage.jsonl
+negative_constraints:
+- Ledger, rollups, and UI projections must not fork into separate attribution models.
+preserved_contractrefs: []
+compatibility_only_notes:
+- If usage.jsonl persists, it is a mirror / compatibility artifact rather than an independent canonical source.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-041 - Usage Window Model And Platform Semantics
+
+```yaml
+plan_unit_id: UF-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage/cooldown semantics use a generic usage-window model with window_kind, window_label, window_scope, rolling, fixed_reset, billing_cycle, session_only, and unknown semantics so platform-specific windows such as Codex, Claude, Gemini, Cursor, MiniMax, and provider estimates are labeled rather than flattened into one 5h/7d column.
+gui_related: true
+gui_classification_reason: The unit defines user-visible platform-specific window labels and tooltips.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-041 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: usage_window_model_and_platform_semantics
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0071
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0072
+preserved_exact_tokens:
+- 5h/7d
+- usage-window
+- window_kind
+- rolling
+- fixed_reset
+- billing_cycle
+- session_only
+- unknown
+- window_scope
+- MiniMax Coding Plan
+negative_constraints:
+- Avoid one generic `5h/7d` column when semantics differ.
+- The UI may show inferred/estimated usage only if it labels the evidence source and avoids pretending to know reset semantics.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-042 - Seglog Retention Rollup Freshness
+
+```yaml
+plan_unit_id: UF-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage event storage uses retention, optional export-first archival/compaction, daily summary records, incremental redb rollup refresh, and explicit freshness cues; usage.jsonl is a human-readable mirror only and MUST NOT serve aggregation or 5h/7d windows.
+gui_related: true
+gui_classification_reason: The unit defines visible rollup freshness and backend retention behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-042 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: seglog_retention_rollup_freshness
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0073
+preserved_exact_tokens:
+- 90 days
+- archive
+- compact
+- daily summary records
+- redb rollups
+- freshness cue
+- usage.jsonl
+- MUST NOT be used for aggregation
+negative_constraints:
+- usage.jsonl is a human-readable mirror only and MUST NOT be used for aggregation, rollup computation, or 5h/7d window serving.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md'
+compatibility_only_notes:
+- usage.jsonl follows the same retention policy as seglog if retained for debugging.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-043 - Stale Data And Project Scope Disclosure
+
+```yaml
+plan_unit_id: UF-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage must show Last updated and Refresh for stale values, may refresh on focus/run start with rate limiting, and must distinguish current-project Usage from future all-project aggregation through explicit scope labels/selectors.
+gui_related: true
+gui_classification_reason: The unit defines user-visible freshness and project-scope disclosure.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-043 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: stale_data_and_project_scope_disclosure
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0074
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0075
+preserved_exact_tokens:
+- Last updated
+- Refresh
+- 5h/7d
+- Usage for this project
+- Current project
+- All projects
+- scope selector
+negative_constraints:
+- Old numbers must not be presented as current.
+- All-project aggregation requires an explicit scope selector and documented read path.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-044 - Deferred Time Window Selector
+
+```yaml
+plan_unit_id: UF-044
+unit_type: deferred_enhancement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage may later add a time-window selector with 5h, 7d, 24h, and custom date range presets; the phase label is v1 optional and fixed 5h/7d can ship first.
+gui_related: false
+gui_classification_reason: The unit is a deferred option-set control requirement rather than current visual layout.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-044 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: deferred_time_window_selector
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0077
+preserved_exact_tokens:
+- 5h
+- 7d
+- 24h
+- custom date range
+- dropdown
+- preset buttons
+- v1 optional
+- fixed 5h/7d first
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-045 - Deferred Reset Countdown
+
+```yaml
+plan_unit_id: UF-045
+unit_type: deferred_enhancement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage may show reset countdowns such as Resets in 2h 15m from QuotaInfo.resets_at or parsed error/API responses; phase label is v1 if already parsed, low effort.
+gui_related: true
+gui_classification_reason: The unit defines visible reset countdown copy.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-045 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: deferred_reset_countdown
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0078
+preserved_exact_tokens:
+- Reset countdown
+- Resets in 2h 15m
+- QuotaInfo.resets_at
+- v1
+- low effort
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-046 - Deferred Per Run Config Usage
+
+```yaml
+plan_unit_id: UF-046
+unit_type: deferred_enhancement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Execution settings may show per-run, node, package, or execution-scope usage aggregated from usage_event_ref, run_id, node_id, attempt_id, and runtime attribution fields rather than tier_id; phase label is Post-v1.
+gui_related: false
+gui_classification_reason: The unit preserves backend aggregation scope for future Config consumers.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-046 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_195
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: deferred_per_run_config_usage
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0079
+preserved_exact_tokens:
+- This run / node / package
+- usage_event_ref
+- run_id
+- node_id
+- attempt_id
+- tier_id
+- Post-v1
+negative_constraints:
+- Aggregate from canonical usage identity rather than by `tier_id`.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+
+<<< CONTEXT_AFTER 3385-3396 >>>
+### UF-047 - Deferred Usage Page Export
+
+```yaml
+plan_unit_id: UF-047
+unit_type: deferred_enhancement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage page export may export the current ledger filter, date range, or analytics table as CSV/JSON, unifying Ledger export under Usage; phase label is v1 for Ledger export and later analytics extension.
+gui_related: true
+gui_classification_reason: The unit defines visible Usage export actions.
+split_recommended: false
+depends_on:

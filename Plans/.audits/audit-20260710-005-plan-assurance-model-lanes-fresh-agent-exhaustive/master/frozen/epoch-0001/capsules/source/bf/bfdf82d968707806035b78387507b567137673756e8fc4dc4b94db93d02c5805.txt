@@ -1,0 +1,160 @@
+<<< AUTHORITATIVE_CORE 1-145 >>>
+# Puppet Master — User-Project Project Plan Package Outputs (SSOT)
+
+
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+
+
+This document is the **canonical single source of truth (SSOT)** for the user-project **Project Plan Package** outputs produced by **Puppet Master** and staged under:
+
+`.puppet-master/project/**`
+
+It also defines:
+- **seglog canonical persistence** for these artifacts (filesystem is staging/export/cache only)
+- **DRY, contract-referenced plan graph** requirements (**sharded-only plan graph**; machine-runnable, headless) with an **optional, non-canonical** derived export for convenience.
+
+> **Do not duplicate:** This file is the SSOT for artifact paths and sharding rules; other docs should link here instead of repeating them.
+
+## 0. Scope (normative)
+### Runtime Artifacts (GUI panel) — distinct from this document
+
+This document is the SSOT for **Project Plan Package** artifacts (user-project outputs under `.puppet-master/project/**`). A separate concept is **Runtime Artifacts**: agent-run outputs (diffs, plans, evidence, browser recordings, cost_usage, etc.) displayed in the **Artifacts panel** of the GUI. Those are persisted via seglog `runtime_artifact.*` event types and redb `artifacts_index.v1:{project_id}:{artifact_id}`. The full spec (19 types, JSON schemas, task_id rule, reasoning_tokens, cost_usage, Show in Ledger/Usage, browser recordings) is in **Plans/Runtime_Artifacts_Panel.md**. Do not conflate the two: Project Plan Package = user-project deliverables; Runtime Artifacts = agent-run outputs in the Artifacts panel.
+
+Optional runtime-analysis exports that summarize queue analysis, attempts, safe points, remediation, or blocked outcomes remain projections of canonical runtime data. When materialized, they MUST use canonical runtime identities (`scheduler_pass_id`, `attempt_id`, `safe_point_id`, `remediation_root_id`) and faithfully reflect blocked/local-work-preserved state rather than inventing separate artifact-local identity.
+
+Debug/runtime targets are workspace-bound for Project Plan Package linkage only when PM can map them to the current project through `project_id`, `dev_session_id`, workspace preview `/browser` identity, DAP session identity, or explicit user-confirmed project binding.
+
+### P5 project-output artifact recovery requirements
+
+- Historical P5 recovery note, superseded for validation-report naming: `Project_Output_Artifacts.md`, `FileManager.md`, `newtools.md`, and `assistant-memory-subsystem.md` formed a stronger artifact/event/runtime-observability gap cluster. The current validation-report family is `auditor_cycle_report`; legacy `validation_pass_report.pass_verdict` survives only in compatibility mirrors with `compatibility_only: true` and `cycle_report_ref`. The remaining identity/open-by-identity observations are lineage inputs and do not override implementation-facing PlanUnits.
+- Historical P5 recovery note, superseded for validation-report naming: artifact / persistence / lineage owner docs exposed field-family holes that downstream sweeps surfaced. Active canon resolves Auditor cycle identity through `auditor_cycle_report`; legacy `validation_pass_report` mirrors may carry pass-shaped fields only with `compatibility_only: true` and `cycle_report_ref`. The remaining project/thread/run/attempt/account identity, artifact registration, open-by-runtime-identity, and storage-owner observations remain lineage inputs for their owner docs.
+- **`Plans/plan_graph.schema.json` + `Plans/project_plan_node.schema.json` + `Plans/project_plan_graph_index.schema.json`** - **Why impacted:** These are the executable graph contracts. - **Old assumption:** Lexicographic node selection, weak dependency duality (`depends_on` vs `blockers/unblocks`), no package/seam/worktree/account identity. - **New model pressure:** Need node/package/seam/lane/promotion/safe-point fields, multi-project scoping, and alignment with scored ready-set scheduling.
+- Historical P5 recovery note, superseded for validation-report naming: earlier project artifact / file-management gaps cited `validation_pass_report`, `skipped`, and Pass-1 lineage contradictions. Active canon resolves the report family through `auditor_cycle_report`; compatibility exports may mirror legacy pass fields only with `compatibility_only: true` and `cycle_report_ref`. The `project_id`, open-by-identity, and attempt-scoped evidence concerns remain lineage inputs for their owner docs.
+- `Ledger` - must be exact, but exact does not mean fully materialized at once - filtered query + paging + stable sort are required - export can retrieve more than the viewport, but normal browsing should stay slice-based
+- Auditor cycle reports require `provider` and `model` values matching the resolved Auditor loop provider/model and may mirror those values into legacy `validation_pass_report` compatibility exports.
+- Historical lineage fragmentation around a three-pass sweep is superseded: `auditor_cycle_report` is the canonical report family, while `validation_pass_report` is a compatibility mirror that carries `compatibility_only: true`, `cycle_report_ref`, lineage fields, and no independent scheduling or model settings.
+- State the precedence rule directly in `Contracts_V0.md`. - Reject multi-selector route payloads as non-canonical.
+- Promote artifact/memory/live/runtime-observability records to full owner status: - align project-artifact events to EventRecord-level identity, - add missing artifact types, - define an `OpenArtifact`-style FileManager contract plus required supporting projections, - register `memory.*`, `live.*`, doctor/custom-headless, and handoff lifecycle events where they truly belong.
+- The canonical-storage side is already disciplined: - `seglog` is canonical - JSONL mirror is derived - Project Plan Package artifacts are canonically persisted and filesystem materializations are staging/export/cache - packaged document sets already have explicit `manifest.json` ownership
+- `Plans/FileSafe.md` - **Why impacted:** Defines the structure of the active plan and write scopes. - **Old assumption:** `Phase/Task/Subtask/Iteration` hierarchy is the only way to organize work; single active plan. - **New model pressure:** Needs to support "Pack" or "Seam" based scopes and potentially concurrent active contexts.
+- `acknowledged` concerns should reduce repeat in-app surfacing, but they must not mask an active blocked state if the underlying condition still blocks progress.
+- Source Control and artifact navigation surfaces are showing a broader object-identity problem: - `GitHub_Integration.md` still frames worktree ownership around `run/tier` - `FileManager.md` already wants identity-based artifact opening, but its open contract is still too path-first - `Runtime_Artifacts_Panel.md` is missing `attempt_id` in its canonical id set and does not yet absorb trust-tier / degraded-artifact semantics cleanly
+- `workflow_run_id` links Auditor cycles in a sweep, but it is not enough by itself to relate the sweep to `wizard_id`, staged requirements state, or the later launched run; compatibility pass mirrors must point back to the canonical `auditor_cycle_report` through `cycle_report_ref`.
+- Export correctness now depends on the earlier projection-trust work. - Recommended rule: - exports derived from stale/degraded projections must either: - disclose trust state in the export/manifest - or re-query from canonical/current backing data before export
+- `Project_Output_Artifacts.md` is clear that canonical persistence is seglog-first and filesystem materialization under `.puppet-master/project/**` is staging/export/cache only.
+- Adjacent owner reference remains `Plans/Runtime_Artifacts_Panel.md` for this recovery seam.
+- Adjacent owner reference remains `Plans/Runtime_Artifacts_Panel.md` for this recovery seam.
+- Reserve system notifications for sparse, high-value events. - Keep blocked-state persistence semantically stronger than dismissible warning surfaces.
+- Artifact and file-opening semantics are not yet fully aligned with recovery/run-aware identity: - `FileManager.md` is moving toward identity-based opens - `Runtime_Artifacts_Panel.md` and related surfaces still need a tighter canonical id/trust/freshness contract
+- acknowledged concerns must reduce noise without suppressing true blockers - recovery snapshots in wizard-driven flows need enough intent/wizard-step state to avoid restoring into the wrong execution mode
+- The evidence schema cannot cleanly encode route-payload mismatch reports, alias/deprecation findings, or passthrough/correlation failures in a stable machine-readable form.
+- `Runtime_Artifacts_Panel.md` also confirms that artifact surfaces are identity-native and project-scoped, but it still does not fully own the open-resolution path. It references File Manager for open-by-artifact identity, which means the open contract boundary is still under-specified.
+- The current docs already contain several different export families: - config sync/export bundles (`.pm-bundle`) - render/preview exports (for example Mermaid `SVG` / `PNG`) - runtime artifact export from the Artifacts panel - Usage/Ledger CSV/JSON exports - project-output materialization and optional derived exports under `.puppet-master/project/**` - generic thread/run history export from seglog / JSONL mirror
+- Auditor cycle reports and legacy pass-report compatibility mirrors are upstream artifacts, not execution attempts, but they must bridge `/session`, `/node/attempt`, and `/history/ledger/search` views through wizard/session lineage, staged artifact bundle refs, promoted artifact tree refs, and launched `run_id?` when execution later starts from the validated output.
+- Auditor validation reports are hard-gating canon for promotion and launch decisions, so weak identity in those upstream artifacts must block downstream export, History/Ledger, or run-handoff claims until the lineage bridge is explicit.
+- Artifact lineage fields include `linked_artifact_id?` and `logical_artifact_id?` when a renderable output points at another durable artifact or a stable logical artifact identity across materializations.
+- Generated and staged artifacts may enter the UI as `generated://<artifact_id>` or `artifact:<artifact_id>` non-path subjects before any backing file path exists; `artifact_id` remains the identity that open routes, previews, and manifests preserve.
+- `Runtime_Artifacts_Panel.md` depends on open-by-identity behavior, so Project Output artifact records must expose enough identity and resolver metadata that surfaces do not get re-invented as per-surface open contracts.
+- Project summary exports must keep `project health`, `project activity`, and `project attention` separate: health covers setup `/integrity/config`, activity covers active `/paused/queued/background` execution, and attention covers user/operator action needs.
+- event aliasing discipline applies to artifact event families: compatibility aliases may exist only as declared aliases to canonical event/artifact types, never as independent persistence identities.
+- Project identity must remain stable across path moves, `/rebinds`, and worktree-aware flows; exported records carry the project identity instead of deriving it from the current filesystem path.
+- CSV `/table` exports are convenience view exports, not canonical archival exports; when built from stale or `/degraded` projections they must disclose trust state or re-query canonical backing data before export.
+- Artifact and record exports preserve canonical IDs and `/refs`; they must not invent export-local shadow identity for artifacts, receipts, records, or related runtime refs.
+- Project display settings follow the already-emerging `app-default` plus project-specific `/override/effective` grammar so inherited defaults and effective overrides remain visible in exported state.
+- Negative ID rules are part of artifact lineage: do not invent feature-local receipt IDs, do not create artifact-local cost models, and do not conflate runtime artifacts with Project Plan Package artifacts.
+
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md
+
+- This spec applies **ONLY** to **user projects generated by Puppet Master**.
+- User projects **DO NOT** contain a `Plans/` folder.
+  - Any `Plans/*.schema.json` and `Plans/*.md` references in this document refer to **Puppet Master internal** schemas/contracts and are **not copied into user projects**.
+## 1. Canonical persistence vs filesystem staging
+
+- **Canonical persistence:** seglog is the canonical store for Project Plan Package artifacts (see §8).
+- `seglog` is the storage-layer append-only event log for artifact persistence; `usage_event` remains a usage-domain object identity and is not a rename target for seglog references. When an artifact also has cost/accounting lineage, the bridge is `usage_event_ref`; that bridge never replaces `artifact_id`, `logical_path`, or the seglog event identity.
+- **Filesystem under `.puppet-master/project/**`:** staging/export/cache only.
+  - It MUST be **regenerable** by replaying seglog artifact events.
+  - A validator MUST be able to verify byte-identical reconstruction via hashes (see §9).
+
+ContractRef: SchemaID:pm.project-plan-graph-index.v1, Gate:GATE-001, ContractName:Plans/Project_Output_Artifacts.md
+
+## 2. Required artifact set (SSOT) — Project Plan Package
+
+
+These are the **required artifacts** (staging paths in the user workspace) and **must be persisted canonically in seglog**:
+
+1) `.puppet-master/project/requirements.md`  
+2) `.puppet-master/project/contracts/` (Project Contract Pack)  
+3) `.puppet-master/project/plan.md`  
+4) `.puppet-master/project/plan_graph/` (**canonical; sharded plan graph**) containing:
+   - `index.json` (entrypoints, subgraph listing, schema version, validation pointers)
+   - `nodes/<node_id>.json` (one node per file)
+   - optional `edges.json`
+5) `.puppet-master/project/acceptance_manifest.json`  
+6) `.puppet-master/project/auto_decisions.jsonl`  
+7) Optional (non-canonical derived export):
+   - `.puppet-master/project/plan_graph/exports/plan_graph.monolithic.json` (monolithic export; NOT required; NOT canonical)
+8) Optional (GUI):
+    - `.puppet-master/project/ui/wiring_matrix.json`
+    - `.puppet-master/project/ui/ui_command_catalog.json`
+9) Required (derived verification outputs — non-canonical with respect to planning decisions; canonical with respect to verification outputs):
+    - `.puppet-master/project/traceability/requirements_quality_report.json` (machine-readable; schema: `pm.requirements_quality_report.schema.v1`)
+    - `.puppet-master/project/traceability/requirements_coverage.json` (machine-readable; schema: `pm.requirements_coverage.schema.v1`)
+    - `.puppet-master/project/traceability/requirements_coverage.md` (human-readable projection; MUST match JSON counts/IDs exactly)
+10) Optional (human convenience derived output; non-canonical):
+    - `.puppet-master/project/quickstart.md` (deterministic command quickstart; AI correctness and validator correctness MUST NOT depend on this file)
+
+**GUI artifact trigger rule (normative):**
+- If the generated project includes interactive GUI surfaces that dispatch `UICommand` IDs, Puppet Master MUST emit both `.puppet-master/project/ui/wiring_matrix.json` and `.puppet-master/project/ui/ui_command_catalog.json`.
+- If no interactive GUI surface is in scope, both files MAY be absent.
+- A project MUST NOT emit only one of the two GUI artifacts.
+
+ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, Gate:GATE-011, ContractName:Plans/Project_Output_Artifacts.md
+
+### 2.1 Canonical staging tree
+
+```text
+.puppet-master/project/
+  requirements.md
+  contracts/
+    index.json
+    ... contract files (pack members) ...
+  plan.md
+  plan_graph/                # canonical sharded plan graph
+    index.json
+    nodes/
+      <node_id>.json
+    edges.json               # optional
+    exports/
+      plan_graph.monolithic.json  # optional derived export (non-canonical)
+  acceptance_manifest.json
+  auto_decisions.jsonl
+  ui/                        # optional (GUI)
+    wiring_matrix.json       # optional (GUI)
+    ui_command_catalog.json  # optional (GUI)
+  traceability/                          # required derived verification outputs (see §11)
+    requirements_quality_report.json     # machine-readable (pm.requirements_quality_report.schema.v1)
+    requirements_coverage.json           # machine-readable (pm.requirements_coverage.schema.v1)
+    requirements_coverage.md             # human-readable projection (matches JSON counts/IDs)
+  quickstart.md                          # optional derived human convenience file (see §12; non-canonical)
+```
+
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into project output packaging requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+
+<<< CONTEXT_AFTER 146-157 >>>
+### POA-050 - Generated Media Output Packaging And Provenance
+
+```yaml
+plan_unit_id: POA-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Generated media outputs become project artifacts by durable local artifact reference, content hash, provider route/account/model metadata, generation parameter summary, provider receipt refs, provenance caveats, expiry warnings, and source lineage. Project Output Artifacts consumes Runtime Artifacts and Media route truth; it owns packaging/export identity, not provider execution behavior. Expiring provider URLs such as MiniMax Image-01 URL outputs require explicit capture status and 24-hour expiry warning before being treated as durable project outputs. Antigravity OAuth/internal `gemini-3.1-flash-image` outputs may package generated-image artifacts only through durable local refs, content hash, non-secret route/proof refs, and private/unofficial endpoint caveats.
+gui_related: true
+gui_classification_reason: Generated media artifact packaging, export identity, and expiry/provenance presentation are user-visible output behavior.
+depends_on: [RAP-032, RAP-033, MGAC-095, MGAC-096]

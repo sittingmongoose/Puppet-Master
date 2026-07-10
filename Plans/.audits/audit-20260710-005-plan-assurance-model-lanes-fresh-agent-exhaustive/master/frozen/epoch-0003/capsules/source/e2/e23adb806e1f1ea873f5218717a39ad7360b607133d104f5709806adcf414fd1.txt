@@ -1,0 +1,372 @@
+<<< CONTEXT_BEFORE 2085-2096 >>>
+            "string",
+            "null"
+          ]
+        },
+        "capability_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_check"
+          }
+        }
+      }
+    },
+
+<<< AUTHORITATIVE_CORE 2097-2439 >>>
+    "codex_work_package": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "package_id",
+        "stage",
+        "read_files",
+        "write_files",
+        "forbidden_writes",
+        "instructions",
+        "validation_commands",
+        "status"
+      ],
+      "properties": {
+        "package_id": {
+          "type": "string"
+        },
+        "stage": {
+          "type": "string"
+        },
+        "read_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "write_files": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "forbidden_writes": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "instructions": {
+          "type": "string"
+        },
+        "validation_commands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "enum": [
+            "draft",
+            "ready_for_codex",
+            "claimed",
+            "blocked",
+            "complete",
+            "cancelled"
+          ]
+        }
+      }
+    },
+    "codex_external_gui_agent_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "request_id",
+        "gui_related",
+        "frontend_related",
+        "target_surfaces",
+        "prompt",
+        "acceptance_criteria",
+        "status",
+        "provider_kind",
+        "provider_id"
+      ],
+      "properties": {
+        "request_id": {
+          "type": "string"
+        },
+        "gui_related": {
+          "type": "boolean"
+        },
+        "frontend_related": {
+          "type": "boolean"
+        },
+        "target_surfaces": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "prompt": {
+          "type": "string"
+        },
+        "assets": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "enum": [
+            "bootstrap_only_draft",
+            "ready",
+            "sent",
+            "blocked",
+            "complete",
+            "cancelled"
+          ]
+        },
+        "provider_kind": {
+          "type": "string",
+          "enum": [
+            "antigravity",
+            "claude_code",
+            "cursor",
+            "opencode",
+            "custom_cli_provider"
+          ]
+        },
+        "provider_id": {
+          "type": "string"
+        }
+      }
+    },
+    "plan_compile_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "compile_id",
+        "stage",
+        "status",
+        "summary",
+        "evidence_refs",
+        "handoff"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string"
+        },
+        "compile_id": {
+          "type": "string"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage_name"
+        },
+        "status": {
+          "$ref": "#/$defs/result_status"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "handoff": {
+          "$ref": "#/$defs/handoff_row"
+        }
+      }
+    },
+    "test_harness_probe_report": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "probe_id",
+        "target_surface",
+        "harness_type",
+        "capability",
+        "verification_command",
+        "required_adapters",
+        "expected_artifacts",
+        "flake_policy",
+        "gaps",
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "probe_id": {
+          "type": "string"
+        },
+        "target_surface": {
+          "type": "string"
+        },
+        "harness_type": {
+          "$ref": "#/$defs/automation_surface"
+        },
+        "capability": {
+          "type": "string"
+        },
+        "verification_command": {
+          "type": "string"
+        },
+        "required_adapters": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expected_artifacts": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "flake_policy": {
+          "$ref": "#/$defs/flake_policy"
+        },
+        "gaps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/blocker"
+          }
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "blocked"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "test_strategy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "strategy_id",
+        "source_plan_unit_ids",
+        "test_cases",
+        "required_capabilities",
+        "gap_blockers",
+        "test_level",
+        "generated_test_ids",
+        "browser_session_required",
+        "visual_evidence_required",
+        "oracles",
+        "reused_test_ids"
+      ],
+      "properties": {
+        "strategy_id": {
+          "type": "string"
+        },
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "test_cases": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "required_capabilities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/capability_requirement"
+          }
+        },
+        "gap_blockers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/blocker"
+          }
+        },
+        "test_level": {
+          "$ref": "#/$defs/test_level"
+        },
+        "generated_test_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "browser_session_required": {
+          "type": "boolean"
+        },
+        "visual_evidence_required": {
+          "type": "boolean"
+        },
+        "oracles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/test_oracle"
+          }
+        },
+        "reused_test_ids": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "test_case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "test_case_id",
+        "source_plan_unit_ids",
+        "kind",
+        "description",
+        "oracle",
+        "status"
+      ],
+      "properties": {
+        "test_case_id": {
+          "type": "string"
+        },
+        "source_plan_unit_ids": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "kind": {
+          "$ref": "#/$defs/test_level"
+        },
+        "description": {
+          "type": "string"
+        },
+        "oracle": {
+          "$ref": "#/$defs/test_oracle"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "ready",
+            "generated",
+            "reused",
+            "deprecated",
+            "blocked"
+          ]
+        }
+      }
+    },
+    "visual_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id",
+        "source_ref",
+        "artifact_refs",
+        "inspection_status",
+        "notes"
+      ],
+      "properties": {
+        "evidence_id": {
+          "type": "string"
+        },
+        "source_ref": {
+          "$ref": "#/$defs/ref"
+        },
+        "artifact_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "inspection_status": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+
+<<< CONTEXT_AFTER 2440-2451 >>>
+    "source_control_preflight_receipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "repo_ref",
+        "worktree_ref",
+        "branch_ref",
+        "dirty_state",
+        "safe_point_required",
+        "status",
+        "baseline_commit_oid",

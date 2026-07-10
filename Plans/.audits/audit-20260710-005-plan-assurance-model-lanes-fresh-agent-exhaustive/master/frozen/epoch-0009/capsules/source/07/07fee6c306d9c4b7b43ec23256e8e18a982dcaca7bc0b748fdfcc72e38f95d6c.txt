@@ -1,0 +1,183 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1711-1722 >>>
+L00001711	owner_hints:
+L00001712	  - Plans/Automated_Testing_System.md
+L00001713	  - Plans/FinalGUISpec.md
+L00001714	  - Plans/Planning_Wizard.md
+L00001715	  - Plans/assistant-chat-design.md
+L00001716	  - Plans/Contracts_V0.md
+L00001717	```
+L00001718	
+L00001719	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00001720	
+L00001721	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00001722	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1723-1890 >>>
+L00001723	### ATS-021 - P2-TRANSPORT-SOAK-TESTS
+L00001724	
+L00001725	```yaml
+L00001726	plan_unit_id: ATS-021
+L00001727	unit_type: requirement
+L00001728	status: accepted
+L00001729	owner_doc: Plans/Automated_Testing_System.md
+L00001730	canonical_text: >-
+L00001731	  P2-TRANSPORT-SOAK-TESTS (P2) is compiled as canonical Puppet Master intent for Add WS/SSE/terminal/browser/device transport soak tests: Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.
+L00001732	gui_related: true
+L00001733	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00001734	depends_on:
+L00001735	- PDS-003
+L00001736	- PNC-001
+L00001737	unblocks: []
+L00001738	acceptance_criteria:
+L00001739	- Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.
+L00001740	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00001741	validation_surfaces:
+L00001742	- python3 scripts/pm-plan-index.py validate
+L00001743	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00001744	- Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.
+L00001745	risk_class: p2_terminal_runtime_coverage
+L00001746	reasoning_tier: standard
+L00001747	context_scope: terminal_runtime
+L00001748	implementation_surfaces:
+L00001749	- Plans/Automated_Testing_System.md
+L00001750	node_compile_hint:
+L00001751	  mode: p2_transport_soak_tests
+L00001752	  create_worknodes: false
+L00001753	  create_nodeseeds: false
+L00001754	source_lineage:
+L00001755	- pldg-20260703-001-feature-intake:atom-0057
+L00001756	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0057
+L00001757	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0053/P2-TRANSPORT-SOAK-TESTS@line=53
+L00001758	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0053/P2-TRANSPORT-SOAK-TESTS
+L00001759	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00001760	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00001761	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:17
+L00001762	source_atom_ids:
+L00001763	- atom-0057
+L00001764	external_atom_id: extrepo-20260703-0053
+L00001765	source_row_id: P2-TRANSPORT-SOAK-TESTS
+L00001766	priority: P2
+L00001767	finding_family: Add WS/SSE/terminal/browser/device transport soak tests
+L00001768	target_docs:
+L00001769	- Plans/Automated_Testing_System.md
+L00001770	owner_hints:
+L00001771	- Plans/Automated_Testing_System.md
+L00001772	preserved_exact_tokens:
+L00001773	- extrepo-20260703-0053
+L00001774	- P2-TRANSPORT-SOAK-TESTS
+L00001775	- P2
+L00001776	- Add WS/SSE/terminal/browser/device transport soak tests
+L00001777	negative_constraints: []
+L00001778	proposal_or_recommendation: Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.
+L00001779	compile_disposition: create_new_planunit
+L00001780	```
+L00001781	
+L00001782	### ATS-022 - P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS
+L00001783	
+L00001784	```yaml
+L00001785	plan_unit_id: ATS-022
+L00001786	unit_type: requirement
+L00001787	status: accepted
+L00001788	owner_doc: Plans/Automated_Testing_System.md
+L00001789	canonical_text: >-
+L00001790	  P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS (P1) is compiled as canonical Puppet Master intent for Terminal parser/rendering fuzzing, replay corpora, error injection, and giant-output recordings: Imported external-repo finding extrepo-20260703-0082 / P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS (P1). The preserved PM gap/delta is: Terminal Protocol Matrix covers cases to support, but needs a permanent terminal replay/fuzz/error-injection corpus and receipts. The observed external-repo signal remains source-lineage evidence: Ghostty 1.3.0 reports AFL++ fuzzing of the terminal escape parser/VT stream processor, terminal recordings over 4GB, renderer lock improvements, and Tripwire error-injection testing. | tmux issue surface still shows TUI rendering/layout/crash regressions in panes.
+L00001791	gui_related: true
+L00001792	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00001793	depends_on:
+L00001794	- PDS-003
+L00001795	- PNC-001
+L00001796	unblocks: []
+L00001797	acceptance_criteria:
+L00001798	- PM stores minimized terminal replay fixtures for parser bugs, shell markers, giant outputs, unicode/graphemes, bracketed paste, OSC, tmux/zellij/ssh panes, and CLI agents.
+L00001799	- Terminal parser has fuzz tests, chunk-splitting tests, and replay snapshots that compare parse tree, accessible mirror, scrollback, and painted viewport.
+L00001800	- Renderer/scrollback locks are budgeted; oversized recordings degrade with receipts instead of freezing UI.
+L00001801	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00001802	validation_surfaces:
+L00001803	- python3 scripts/pm-plan-index.py validate
+L00001804	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00001805	- PM stores minimized terminal replay fixtures for parser bugs, shell markers, giant outputs, unicode/graphemes, bracketed paste, OSC, tmux/zellij/ssh panes, and CLI agents.
+L00001806	- Terminal parser has fuzz tests, chunk-splitting tests, and replay snapshots that compare parse tree, accessible mirror, scrollback, and painted viewport.
+L00001807	- Renderer/scrollback locks are budgeted; oversized recordings degrade with receipts instead of freezing UI.
+L00001808	risk_class: p1_terminal_runtime_hardening
+L00001809	reasoning_tier: standard
+L00001810	context_scope: terminal_runtime
+L00001811	implementation_surfaces:
+L00001812	- Plans/Automated_Testing_System.md
+L00001813	node_compile_hint:
+L00001814	  mode: p1_terminal_fuzz_tripwire_corpus
+L00001815	  create_worknodes: false
+L00001816	  create_nodeseeds: false
+L00001817	source_lineage:
+L00001818	- pldg-20260703-001-feature-intake:atom-0086
+L00001819	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0086
+L00001820	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0082/P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS@line=82
+L00001821	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0082/P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS
+L00001822	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00001823	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00001824	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:9
+L00001825	source_atom_ids:
+L00001826	- atom-0086
+L00001827	external_atom_id: extrepo-20260703-0082
+L00001828	source_row_id: P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS
+L00001829	priority: P1
+L00001830	finding_family: Terminal parser/rendering fuzzing, replay corpora, error injection, and giant-output recordings
+L00001831	target_docs:
+L00001832	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001833	- Automated_Testing_System.md
+L00001834	- Runtime_Artifacts_Panel.md
+L00001835	- Contracts_V0.md
+L00001836	owner_hints:
+L00001837	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001838	- Automated_Testing_System.md
+L00001839	- Runtime_Artifacts_Panel.md
+L00001840	- Contracts_V0.md
+L00001841	preserved_exact_tokens:
+L00001842	- extrepo-20260703-0082
+L00001843	- P1-TERMINAL-FUZZ-TRIPWIRE-CORPUS
+L00001844	- P1
+L00001845	- Terminal parser/rendering fuzzing, replay corpora, error injection, and giant-output recordings
+L00001846	negative_constraints: []
+L00001847	observed_signal: Ghostty 1.3.0 reports AFL++ fuzzing of the terminal escape parser/VT stream processor, terminal recordings over 4GB, renderer lock improvements, and Tripwire error-injection testing. | tmux issue surface still shows TUI rendering/layout/crash regressions in panes.
+L00001848	pm_gap_or_delta: Terminal Protocol Matrix covers cases to support, but needs a permanent terminal replay/fuzz/error-injection corpus and receipts.
+L00001849	relationship_to_prior_reports: Adds test strategy to prior terminal requirements.
+L00001850	compile_disposition: create_new_planunit
+L00001851	```
+L00001852	
+L00001853	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00001854	
+L00001855	This addendum is canonical automated-testing spec text for deferred non-runtime FABLE rows. It creates no WorkNodes, NodeSeeds, executable queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00001856	
+L00001857	### Test Adapter Interface And TestRunReceipt
+L00001858	
+L00001859	Repairs row `sfk-fa0b68afddc10ec875a0b183`.
+L00001860	
+L00001861	`TestAdapterInvocation` fields are `invocation_id`, `adapter_id`, `test_kind`, `target_ref`, `command_ref?`, `input_artifact_refs[]`, `timeout_ms`, `permission_snapshot_id?`, and `created_at_utc`.
+L00001862	
+L00001863	`TestRunReceipt` fields are `test_run_id`, `adapter_id`, `test_kind`, `target_ref`, `started_at_utc`, `ended_at_utc`, `status`, `passed_count`, `failed_count`, `skipped_count`, `error_count`, `log_artifact_refs[]`, `visual_artifact_refs[]`, `coverage_ref?`, `failure_refs[]`, and `schema_version`.
+L00001864	
+L00001865	`status` values are `queued`, `running`, `passed`, `failed`, `cancelled`, `blocked`, and `inconclusive`.
+L00001866	
+L00001867	### GUI Result Surfacing
+L00001868	
+L00001869	Repairs row `sfk-bd4e3c4facbc54e0a68a60c8`.
+L00001870	
+L00001871	Testing GUI commands are `cmd.testing.open_panel`, `cmd.testing.watch_run`, `cmd.testing.cancel_run`, `cmd.testing.open_receipt`, `cmd.testing.open_failure`, and `cmd.testing.export_bundle`.
+L00001872	
+L00001873	Panel layout contains `run_list`, `active_run_detail`, `failure_list`, `artifact_preview`, and `redaction_notice`. Button states derive from `TestRunReceipt.status`: watch enabled for `queued|running`; cancel enabled for `queued|running`; open receipt enabled for any terminal state; export bundle enabled when `log_artifact_refs[]` or `visual_artifact_refs[]` is non-empty.
+L00001874	
+L00001875	### Runtime Disabled To Enabled Trigger
+L00001876	
+L00001877	Repairs row `sfk-a86063e06fec52acf396acb6`.
+L00001878	
+L00001879	Testing remains runtime-disabled until all of the following are true: a target adapter is configured, the target capability probe returns `available`, permission snapshot is current, required fixtures exist, and the test invocation can produce a `TestRunReceipt` without claiming PNC-019 lifecycle certification. The transition event is `testing.runtime_enabled_for_adapter` with fields `adapter_id`, `project_id`, `capability_probe_ref`, `permission_snapshot_id`, `enabled_at_utc`, and `reason_code`.
+L00001880	
+L00001881	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+L00001882	## FABLE Remaining Action Plan Repair Notes (2026-07-08)
+L00001883	
+L00001884	This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00001885	
+L00001886	- `registry_line 331` (explicitly_deferred; source line 1126; `sfk-fa0b68afddc10ec875a0b183`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: every ATS PlanUnit is prose pointing at generic validators no concrete IPC schema, adapter interface, or `TestRunReceipt` file format anywhere.
+L00001887	- `registry_line 332` (explicitly_deferred; source line 1127; `sfk-bd4e3c4facbc54e0a68a60c8`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: zero GUI wiring despite steer explicitly asking for GUI result surfacing no command IDs, panel layout, or button states for watching/viewing test results.
+L00001888	- `registry_line 333` (explicitly_deferred; source line 1128; `sfk-a86063e06fec52acf396acb6`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] 6 (L279-281): entire document is gated behind an undefined future "runtime_disabled enabled" event with no trigger criteria.
+L00001889	
+L00001890	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

@@ -1,0 +1,58 @@
+{
+  "assignment_id": "A005-001104-ADVERSARIAL-WIN-74C788D8A63C-0029",
+  "attempt_id": "attempt-0010",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      9981,
+      9992
+    ],
+    [
+      10384,
+      10395
+    ]
+  ],
+  "core_range": [
+    9993,
+    10383
+  ],
+  "core_sha256": "b7f3919db1e9894d37b1c4929158f953efab82cd716644841de761f4576e13da",
+  "document_path": "Plans/Tools.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/51/51560febbc130d7d35296f03e8eb20a6c519bb6ec61170ffc83c6e8d63668f16.txt",
+  "source_excerpt_sha256": "51560febbc130d7d35296f03e8eb20a6c519bb6ec61170ffc83c6e8d63668f16",
+  "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca",
+  "window_id": "WIN-74C788D8A63C-0029"
+}

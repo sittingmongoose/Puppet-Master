@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=17920-17931 >>>
+L00017920	          "requirement": "cmd.orchestrator.open_conflict_assistant has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00017921	        },
+L00017922	        {
+L00017923	          "test_id": "wiring.catalog.orchestrator_open_conflict_assistant.accessibility",
+L00017924	          "evidence_kind": "accessibility_regression",
+L00017925	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00017926	        }
+L00017927	      ],
+L00017928	      "event_test_requirements": [
+L00017929	        "Assert cmd.orchestrator.open_conflict_assistant records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00017930	      ]
+L00017931	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=17932-18316 >>>
+L00017932	    "catalog.orchestrator_open_corroboration": {
+L00017933	      "ui_element_id": "catalog.orchestrator_open_corroboration",
+L00017934	      "ui_location": "Orchestrator page",
+L00017935	      "ui_command_id": "cmd.orchestrator.open_corroboration",
+L00017936	      "handler_location": "handlers::orchestrator::open_corroboration",
+L00017937	      "expected_event_types": [],
+L00017938	      "acceptance_checks": [
+L00017939	        "cmd.orchestrator.open_corroboration must be registered in the UICommand dispatcher with typed args and result contract",
+L00017940	        "cmd.orchestrator.open_corroboration must expose projected state selector and disabled reason before dispatch",
+L00017941	        "cmd.orchestrator.open_corroboration dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00017942	        "cmd.orchestrator.open_corroboration must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00017943	        "cmd.orchestrator.open_corroboration must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00017944	      ],
+L00017945	      "evidence_required": "Production wiring contract for cmd.orchestrator.open_corroboration; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00017946	      "state_selector": "state.commands.orchestrator_open_corroboration.availability",
+L00017947	      "disabled_reason_projection": "state.commands.orchestrator_open_corroboration.disabled_reason",
+L00017948	      "effect_contract": {
+L00017949	        "effect_kind": "receipt",
+L00017950	        "description": "cmd.orchestrator.open_corroboration has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00017951	        "receipt_or_event_refs": [
+L00017952	          "cmd.orchestrator.open_corroboration.dispatch_receipt"
+L00017953	        ]
+L00017954	      },
+L00017955	      "accessibility_contract": {
+L00017956	        "role_or_semantics": "catalog.orchestrator_open_corroboration exposes a stable role/name/description matching cmd.orchestrator.open_corroboration.",
+L00017957	        "keyboard_access": "catalog.orchestrator_open_corroboration is reachable and activatable by keyboard where the control is visible.",
+L00017958	        "focus_management": "catalog.orchestrator_open_corroboration preserves visible focus and returns focus deterministically after dispatch or error.",
+L00017959	        "disabled_announcement": "catalog.orchestrator_open_corroboration surfaces state.commands.orchestrator_open_corroboration.disabled_reason to assistive technology when unavailable."
+L00017960	      },
+L00017961	      "test_evidence": [
+L00017962	        {
+L00017963	          "test_id": "wiring.catalog.orchestrator_open_corroboration.dispatcher",
+L00017964	          "evidence_kind": "dispatcher_fixture",
+L00017965	          "requirement": "Dispatching cmd.orchestrator.open_corroboration reaches handlers::orchestrator::open_corroboration with typed args/result contract."
+L00017966	        },
+L00017967	        {
+L00017968	          "test_id": "wiring.catalog.orchestrator_open_corroboration.state_projection",
+L00017969	          "evidence_kind": "state_projection",
+L00017970	          "requirement": "Availability reads state.commands.orchestrator_open_corroboration.availability and disabled copy reads state.commands.orchestrator_open_corroboration.disabled_reason."
+L00017971	        },
+L00017972	        {
+L00017973	          "test_id": "wiring.catalog.orchestrator_open_corroboration.effect",
+L00017974	          "evidence_kind": "receipt_or_event_assertion",
+L00017975	          "requirement": "cmd.orchestrator.open_corroboration has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00017976	        },
+L00017977	        {
+L00017978	          "test_id": "wiring.catalog.orchestrator_open_corroboration.accessibility",
+L00017979	          "evidence_kind": "accessibility_regression",
+L00017980	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00017981	        }
+L00017982	      ],
+L00017983	      "event_test_requirements": [
+L00017984	        "Assert cmd.orchestrator.open_corroboration records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00017985	      ]
+L00017986	    },
+L00017987	    "catalog.orchestrator_open_docker_manager": {
+L00017988	      "ui_element_id": "catalog.orchestrator_open_docker_manager",
+L00017989	      "ui_location": "Orchestrator page",
+L00017990	      "ui_command_id": "cmd.orchestrator.open_docker_manager",
+L00017991	      "handler_location": "handlers::orchestrator::open_docker_manager",
+L00017992	      "expected_event_types": [],
+L00017993	      "acceptance_checks": [
+L00017994	        "cmd.orchestrator.open_docker_manager must be registered in the UICommand dispatcher with typed args and result contract",
+L00017995	        "cmd.orchestrator.open_docker_manager must expose projected state selector and disabled reason before dispatch",
+L00017996	        "cmd.orchestrator.open_docker_manager dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00017997	        "cmd.orchestrator.open_docker_manager must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00017998	        "cmd.orchestrator.open_docker_manager must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00017999	      ],
+L00018000	      "evidence_required": "Production wiring contract for cmd.orchestrator.open_docker_manager; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00018001	      "state_selector": "state.commands.orchestrator_open_docker_manager.availability",
+L00018002	      "disabled_reason_projection": "state.commands.orchestrator_open_docker_manager.disabled_reason",
+L00018003	      "effect_contract": {
+L00018004	        "effect_kind": "receipt",
+L00018005	        "description": "cmd.orchestrator.open_docker_manager has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00018006	        "receipt_or_event_refs": [
+L00018007	          "cmd.orchestrator.open_docker_manager.dispatch_receipt"
+L00018008	        ]
+L00018009	      },
+L00018010	      "accessibility_contract": {
+L00018011	        "role_or_semantics": "catalog.orchestrator_open_docker_manager exposes a stable role/name/description matching cmd.orchestrator.open_docker_manager.",
+L00018012	        "keyboard_access": "catalog.orchestrator_open_docker_manager is reachable and activatable by keyboard where the control is visible.",
+L00018013	        "focus_management": "catalog.orchestrator_open_docker_manager preserves visible focus and returns focus deterministically after dispatch or error.",
+L00018014	        "disabled_announcement": "catalog.orchestrator_open_docker_manager surfaces state.commands.orchestrator_open_docker_manager.disabled_reason to assistive technology when unavailable."
+L00018015	      },
+L00018016	      "test_evidence": [
+L00018017	        {
+L00018018	          "test_id": "wiring.catalog.orchestrator_open_docker_manager.dispatcher",
+L00018019	          "evidence_kind": "dispatcher_fixture",
+L00018020	          "requirement": "Dispatching cmd.orchestrator.open_docker_manager reaches handlers::orchestrator::open_docker_manager with typed args/result contract."
+L00018021	        },
+L00018022	        {
+L00018023	          "test_id": "wiring.catalog.orchestrator_open_docker_manager.state_projection",
+L00018024	          "evidence_kind": "state_projection",
+L00018025	          "requirement": "Availability reads state.commands.orchestrator_open_docker_manager.availability and disabled copy reads state.commands.orchestrator_open_docker_manager.disabled_reason."
+L00018026	        },
+L00018027	        {
+L00018028	          "test_id": "wiring.catalog.orchestrator_open_docker_manager.effect",
+L00018029	          "evidence_kind": "receipt_or_event_assertion",
+L00018030	          "requirement": "cmd.orchestrator.open_docker_manager has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00018031	        },
+L00018032	        {
+L00018033	          "test_id": "wiring.catalog.orchestrator_open_docker_manager.accessibility",
+L00018034	          "evidence_kind": "accessibility_regression",
+L00018035	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00018036	        }
+L00018037	      ],
+L00018038	      "event_test_requirements": [
+L00018039	        "Assert cmd.orchestrator.open_docker_manager records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00018040	      ]
+L00018041	    },
+L00018042	    "catalog.orchestrator_open_github_actions": {
+L00018043	      "ui_element_id": "catalog.orchestrator_open_github_actions",
+L00018044	      "ui_location": "Orchestrator page",
+L00018045	      "ui_command_id": "cmd.orchestrator.open_github_actions",
+L00018046	      "handler_location": "handlers::orchestrator::open_github_actions",
+L00018047	      "expected_event_types": [],
+L00018048	      "acceptance_checks": [
+L00018049	        "cmd.orchestrator.open_github_actions must be registered in the UICommand dispatcher with typed args and result contract",
+L00018050	        "cmd.orchestrator.open_github_actions must expose projected state selector and disabled reason before dispatch",
+L00018051	        "cmd.orchestrator.open_github_actions dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00018052	        "cmd.orchestrator.open_github_actions must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00018053	        "cmd.orchestrator.open_github_actions must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00018054	      ],
+L00018055	      "evidence_required": "Production wiring contract for cmd.orchestrator.open_github_actions; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00018056	      "state_selector": "state.commands.orchestrator_open_github_actions.availability",
+L00018057	      "disabled_reason_projection": "state.commands.orchestrator_open_github_actions.disabled_reason",
+L00018058	      "effect_contract": {
+L00018059	        "effect_kind": "receipt",
+L00018060	        "description": "cmd.orchestrator.open_github_actions has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00018061	        "receipt_or_event_refs": [
+L00018062	          "cmd.orchestrator.open_github_actions.dispatch_receipt"
+L00018063	        ]
+L00018064	      },
+L00018065	      "accessibility_contract": {
+L00018066	        "role_or_semantics": "catalog.orchestrator_open_github_actions exposes a stable role/name/description matching cmd.orchestrator.open_github_actions.",
+L00018067	        "keyboard_access": "catalog.orchestrator_open_github_actions is reachable and activatable by keyboard where the control is visible.",
+L00018068	        "focus_management": "catalog.orchestrator_open_github_actions preserves visible focus and returns focus deterministically after dispatch or error.",
+L00018069	        "disabled_announcement": "catalog.orchestrator_open_github_actions surfaces state.commands.orchestrator_open_github_actions.disabled_reason to assistive technology when unavailable."
+L00018070	      },
+L00018071	      "test_evidence": [
+L00018072	        {
+L00018073	          "test_id": "wiring.catalog.orchestrator_open_github_actions.dispatcher",
+L00018074	          "evidence_kind": "dispatcher_fixture",
+L00018075	          "requirement": "Dispatching cmd.orchestrator.open_github_actions reaches handlers::orchestrator::open_github_actions with typed args/result contract."
+L00018076	        },
+L00018077	        {
+L00018078	          "test_id": "wiring.catalog.orchestrator_open_github_actions.state_projection",
+L00018079	          "evidence_kind": "state_projection",
+L00018080	          "requirement": "Availability reads state.commands.orchestrator_open_github_actions.availability and disabled copy reads state.commands.orchestrator_open_github_actions.disabled_reason."
+L00018081	        },
+L00018082	        {
+L00018083	          "test_id": "wiring.catalog.orchestrator_open_github_actions.effect",
+L00018084	          "evidence_kind": "receipt_or_event_assertion",
+L00018085	          "requirement": "cmd.orchestrator.open_github_actions has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00018086	        },
+L00018087	        {
+L00018088	          "test_id": "wiring.catalog.orchestrator_open_github_actions.accessibility",
+L00018089	          "evidence_kind": "accessibility_regression",
+L00018090	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00018091	        }
+L00018092	      ],
+L00018093	      "event_test_requirements": [
+L00018094	        "Assert cmd.orchestrator.open_github_actions records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00018095	      ]
+L00018096	    },
+L00018097	    "catalog.orchestrator_open_graph_generation": {
+L00018098	      "ui_element_id": "catalog.orchestrator_open_graph_generation",
+L00018099	      "ui_location": "Orchestrator page",
+L00018100	      "ui_command_id": "cmd.orchestrator.open_graph_generation",
+L00018101	      "handler_location": "handlers::orchestrator::open_graph_generation",
+L00018102	      "expected_event_types": [],
+L00018103	      "acceptance_checks": [
+L00018104	        "cmd.orchestrator.open_graph_generation must be registered in the UICommand dispatcher with typed args and result contract",
+L00018105	        "cmd.orchestrator.open_graph_generation must expose projected state selector and disabled reason before dispatch",
+L00018106	        "cmd.orchestrator.open_graph_generation dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00018107	        "cmd.orchestrator.open_graph_generation must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00018108	        "cmd.orchestrator.open_graph_generation must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00018109	      ],
+L00018110	      "evidence_required": "Production wiring contract for cmd.orchestrator.open_graph_generation; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00018111	      "state_selector": "state.commands.orchestrator_open_graph_generation.availability",
+L00018112	      "disabled_reason_projection": "state.commands.orchestrator_open_graph_generation.disabled_reason",
+L00018113	      "effect_contract": {
+L00018114	        "effect_kind": "receipt",
+L00018115	        "description": "cmd.orchestrator.open_graph_generation has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00018116	        "receipt_or_event_refs": [
+L00018117	          "cmd.orchestrator.open_graph_generation.dispatch_receipt"
+L00018118	        ]
+L00018119	      },
+L00018120	      "accessibility_contract": {
+L00018121	        "role_or_semantics": "catalog.orchestrator_open_graph_generation exposes a stable role/name/description matching cmd.orchestrator.open_graph_generation.",
+L00018122	        "keyboard_access": "catalog.orchestrator_open_graph_generation is reachable and activatable by keyboard where the control is visible.",
+L00018123	        "focus_management": "catalog.orchestrator_open_graph_generation preserves visible focus and returns focus deterministically after dispatch or error.",
+L00018124	        "disabled_announcement": "catalog.orchestrator_open_graph_generation surfaces state.commands.orchestrator_open_graph_generation.disabled_reason to assistive technology when unavailable."
+L00018125	      },
+L00018126	      "test_evidence": [
+L00018127	        {
+L00018128	          "test_id": "wiring.catalog.orchestrator_open_graph_generation.dispatcher",
+L00018129	          "evidence_kind": "dispatcher_fixture",
+L00018130	          "requirement": "Dispatching cmd.orchestrator.open_graph_generation reaches handlers::orchestrator::open_graph_generation with typed args/result contract."
+L00018131	        },
+L00018132	        {
+L00018133	          "test_id": "wiring.catalog.orchestrator_open_graph_generation.state_projection",
+L00018134	          "evidence_kind": "state_projection",
+L00018135	          "requirement": "Availability reads state.commands.orchestrator_open_graph_generation.availability and disabled copy reads state.commands.orchestrator_open_graph_generation.disabled_reason."
+L00018136	        },
+L00018137	        {
+L00018138	          "test_id": "wiring.catalog.orchestrator_open_graph_generation.effect",
+L00018139	          "evidence_kind": "receipt_or_event_assertion",
+L00018140	          "requirement": "cmd.orchestrator.open_graph_generation has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00018141	        },
+L00018142	        {
+L00018143	          "test_id": "wiring.catalog.orchestrator_open_graph_generation.accessibility",
+L00018144	          "evidence_kind": "accessibility_regression",
+L00018145	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00018146	        }
+L00018147	      ],
+L00018148	      "event_test_requirements": [
+L00018149	        "Assert cmd.orchestrator.open_graph_generation records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00018150	      ]
+L00018151	    },
+L00018152	    "catalog.orchestrator_open_graph_patch": {
+L00018153	      "ui_element_id": "catalog.orchestrator_open_graph_patch",
+L00018154	      "ui_location": "Orchestrator page",
+L00018155	      "ui_command_id": "cmd.orchestrator.open_graph_patch",
+L00018156	      "handler_location": "handlers::orchestrator::open_graph_patch",
+L00018157	      "expected_event_types": [],
+L00018158	      "acceptance_checks": [
+L00018159	        "cmd.orchestrator.open_graph_patch must be registered in the UICommand dispatcher with typed args and result contract",
+L00018160	        "cmd.orchestrator.open_graph_patch must expose projected state selector and disabled reason before dispatch",
+L00018161	        "cmd.orchestrator.open_graph_patch dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00018162	        "cmd.orchestrator.open_graph_patch must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00018163	        "cmd.orchestrator.open_graph_patch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00018164	      ],
+L00018165	      "evidence_required": "Production wiring contract for cmd.orchestrator.open_graph_patch; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00018166	      "state_selector": "state.commands.orchestrator_open_graph_patch.availability",
+L00018167	      "disabled_reason_projection": "state.commands.orchestrator_open_graph_patch.disabled_reason",
+L00018168	      "effect_contract": {
+L00018169	        "effect_kind": "receipt",
+L00018170	        "description": "cmd.orchestrator.open_graph_patch has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00018171	        "receipt_or_event_refs": [
+L00018172	          "cmd.orchestrator.open_graph_patch.dispatch_receipt"
+L00018173	        ]
+L00018174	      },
+L00018175	      "accessibility_contract": {
+L00018176	        "role_or_semantics": "catalog.orchestrator_open_graph_patch exposes a stable role/name/description matching cmd.orchestrator.open_graph_patch.",
+L00018177	        "keyboard_access": "catalog.orchestrator_open_graph_patch is reachable and activatable by keyboard where the control is visible.",
+L00018178	        "focus_management": "catalog.orchestrator_open_graph_patch preserves visible focus and returns focus deterministically after dispatch or error.",
+L00018179	        "disabled_announcement": "catalog.orchestrator_open_graph_patch surfaces state.commands.orchestrator_open_graph_patch.disabled_reason to assistive technology when unavailable."
+L00018180	      },
+L00018181	      "test_evidence": [
+L00018182	        {
+L00018183	          "test_id": "wiring.catalog.orchestrator_open_graph_patch.dispatcher",
+L00018184	          "evidence_kind": "dispatcher_fixture",
+L00018185	          "requirement": "Dispatching cmd.orchestrator.open_graph_patch reaches handlers::orchestrator::open_graph_patch with typed args/result contract."
+L00018186	        },
+L00018187	        {
+L00018188	          "test_id": "wiring.catalog.orchestrator_open_graph_patch.state_projection",
+L00018189	          "evidence_kind": "state_projection",
+L00018190	          "requirement": "Availability reads state.commands.orchestrator_open_graph_patch.availability and disabled copy reads state.commands.orchestrator_open_graph_patch.disabled_reason."
+L00018191	        },
+L00018192	        {
+L00018193	          "test_id": "wiring.catalog.orchestrator_open_graph_patch.effect",
+L00018194	          "evidence_kind": "receipt_or_event_assertion",
+L00018195	          "requirement": "cmd.orchestrator.open_graph_patch has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00018196	        },
+L00018197	        {
+L00018198	          "test_id": "wiring.catalog.orchestrator_open_graph_patch.accessibility",
+L00018199	          "evidence_kind": "accessibility_regression",
+L00018200	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00018201	        }
+L00018202	      ],
+L00018203	      "event_test_requirements": [
+L00018204	        "Assert cmd.orchestrator.open_graph_patch records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00018205	      ]
+L00018206	    },
+L00018207	    "catalog.orchestrator_open_in_docker_manager": {
+L00018208	      "ui_element_id": "catalog.orchestrator_open_in_docker_manager",
+L00018209	      "ui_location": "Orchestrator page",
+L00018210	      "ui_command_id": "cmd.orchestrator.open_in_docker_manager",
+L00018211	      "handler_location": "handlers::orchestrator::open_in_docker_manager",
+L00018212	      "expected_event_types": [],
+L00018213	      "acceptance_checks": [
+L00018214	        "cmd.orchestrator.open_in_docker_manager must be registered in the UICommand dispatcher with typed args and result contract",
+L00018215	        "cmd.orchestrator.open_in_docker_manager must expose projected state selector and disabled reason before dispatch",
+L00018216	        "cmd.orchestrator.open_in_docker_manager dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00018217	        "cmd.orchestrator.open_in_docker_manager must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00018218	        "cmd.orchestrator.open_in_docker_manager must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00018219	      ],
+L00018220	      "evidence_required": "Production wiring contract for cmd.orchestrator.open_in_docker_manager; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00018221	      "state_selector": "state.commands.orchestrator_open_in_docker_manager.availability",
+L00018222	      "disabled_reason_projection": "state.commands.orchestrator_open_in_docker_manager.disabled_reason",
+L00018223	      "effect_contract": {
+L00018224	        "effect_kind": "receipt",
+L00018225	        "description": "cmd.orchestrator.open_in_docker_manager has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00018226	        "receipt_or_event_refs": [
+L00018227	          "cmd.orchestrator.open_in_docker_manager.dispatch_receipt"
+L00018228	        ]
+L00018229	      },
+L00018230	      "accessibility_contract": {
+L00018231	        "role_or_semantics": "catalog.orchestrator_open_in_docker_manager exposes a stable role/name/description matching cmd.orchestrator.open_in_docker_manager.",
+L00018232	        "keyboard_access": "catalog.orchestrator_open_in_docker_manager is reachable and activatable by keyboard where the control is visible.",
+L00018233	        "focus_management": "catalog.orchestrator_open_in_docker_manager preserves visible focus and returns focus deterministically after dispatch or error.",
+L00018234	        "disabled_announcement": "catalog.orchestrator_open_in_docker_manager surfaces state.commands.orchestrator_open_in_docker_manager.disabled_reason to assistive technology when unavailable."
+L00018235	      },
+L00018236	      "test_evidence": [
+L00018237	        {
+L00018238	          "test_id": "wiring.catalog.orchestrator_open_in_docker_manager.dispatcher",
+L00018239	          "evidence_kind": "dispatcher_fixture",
+L00018240	          "requirement": "Dispatching cmd.orchestrator.open_in_docker_manager reaches handlers::orchestrator::open_in_docker_manager with typed args/result contract."
+L00018241	        },
+L00018242	        {
+L00018243	          "test_id": "wiring.catalog.orchestrator_open_in_docker_manager.state_projection",
+L00018244	          "evidence_kind": "state_projection",
+L00018245	          "requirement": "Availability reads state.commands.orchestrator_open_in_docker_manager.availability and disabled copy reads state.commands.orchestrator_open_in_docker_manager.disabled_reason."
+L00018246	        },
+L00018247	        {
+L00018248	          "test_id": "wiring.catalog.orchestrator_open_in_docker_manager.effect",
+L00018249	          "evidence_kind": "receipt_or_event_assertion",
+L00018250	          "requirement": "cmd.orchestrator.open_in_docker_manager has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00018251	        },
+L00018252	        {
+L00018253	          "test_id": "wiring.catalog.orchestrator_open_in_docker_manager.accessibility",
+L00018254	          "evidence_kind": "accessibility_regression",
+L00018255	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00018256	        }
+L00018257	      ],
+L00018258	      "event_test_requirements": [
+L00018259	        "Assert cmd.orchestrator.open_in_docker_manager records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00018260	      ]
+L00018261	    },
+L00018262	    "catalog.orchestrator_open_in_github_actions": {
+L00018263	      "ui_element_id": "catalog.orchestrator_open_in_github_actions",
+L00018264	      "ui_location": "Orchestrator page",
+L00018265	      "ui_command_id": "cmd.orchestrator.open_in_github_actions",
+L00018266	      "handler_location": "handlers::orchestrator::open_in_github_actions",
+L00018267	      "expected_event_types": [],
+L00018268	      "acceptance_checks": [
+L00018269	        "cmd.orchestrator.open_in_github_actions must be registered in the UICommand dispatcher with typed args and result contract",
+L00018270	        "cmd.orchestrator.open_in_github_actions must expose projected state selector and disabled reason before dispatch",
+L00018271	        "cmd.orchestrator.open_in_github_actions dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00018272	        "cmd.orchestrator.open_in_github_actions must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00018273	        "cmd.orchestrator.open_in_github_actions must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00018274	      ],
+L00018275	      "evidence_required": "Production wiring contract for cmd.orchestrator.open_in_github_actions; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00018276	      "state_selector": "state.commands.orchestrator_open_in_github_actions.availability",
+L00018277	      "disabled_reason_projection": "state.commands.orchestrator_open_in_github_actions.disabled_reason",
+L00018278	      "effect_contract": {
+L00018279	        "effect_kind": "receipt",
+L00018280	        "description": "cmd.orchestrator.open_in_github_actions has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00018281	        "receipt_or_event_refs": [
+L00018282	          "cmd.orchestrator.open_in_github_actions.dispatch_receipt"
+L00018283	        ]
+L00018284	      },
+L00018285	      "accessibility_contract": {
+L00018286	        "role_or_semantics": "catalog.orchestrator_open_in_github_actions exposes a stable role/name/description matching cmd.orchestrator.open_in_github_actions.",
+L00018287	        "keyboard_access": "catalog.orchestrator_open_in_github_actions is reachable and activatable by keyboard where the control is visible.",
+L00018288	        "focus_management": "catalog.orchestrator_open_in_github_actions preserves visible focus and returns focus deterministically after dispatch or error.",
+L00018289	        "disabled_announcement": "catalog.orchestrator_open_in_github_actions surfaces state.commands.orchestrator_open_in_github_actions.disabled_reason to assistive technology when unavailable."
+L00018290	      },
+L00018291	      "test_evidence": [
+L00018292	        {
+L00018293	          "test_id": "wiring.catalog.orchestrator_open_in_github_actions.dispatcher",
+L00018294	          "evidence_kind": "dispatcher_fixture",
+L00018295	          "requirement": "Dispatching cmd.orchestrator.open_in_github_actions reaches handlers::orchestrator::open_in_github_actions with typed args/result contract."
+L00018296	        },
+L00018297	        {
+L00018298	          "test_id": "wiring.catalog.orchestrator_open_in_github_actions.state_projection",
+L00018299	          "evidence_kind": "state_projection",
+L00018300	          "requirement": "Availability reads state.commands.orchestrator_open_in_github_actions.availability and disabled copy reads state.commands.orchestrator_open_in_github_actions.disabled_reason."
+L00018301	        },
+L00018302	        {
+L00018303	          "test_id": "wiring.catalog.orchestrator_open_in_github_actions.effect",
+L00018304	          "evidence_kind": "receipt_or_event_assertion",
+L00018305	          "requirement": "cmd.orchestrator.open_in_github_actions has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00018306	        },
+L00018307	        {
+L00018308	          "test_id": "wiring.catalog.orchestrator_open_in_github_actions.accessibility",
+L00018309	          "evidence_kind": "accessibility_regression",
+L00018310	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00018311	        }
+L00018312	      ],
+L00018313	      "event_test_requirements": [
+L00018314	        "Assert cmd.orchestrator.open_in_github_actions records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00018315	      ]
+L00018316	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=18317-18328 >>>
+L00018317	    "catalog.orchestrator_open_in_source_control": {
+L00018318	      "ui_element_id": "catalog.orchestrator_open_in_source_control",
+L00018319	      "ui_location": "Orchestrator page",
+L00018320	      "ui_command_id": "cmd.orchestrator.open_in_source_control",
+L00018321	      "handler_location": "handlers::orchestrator::open_in_source_control",
+L00018322	      "expected_event_types": [],
+L00018323	      "acceptance_checks": [
+L00018324	        "cmd.orchestrator.open_in_source_control must be registered in the UICommand dispatcher with typed args and result contract",
+L00018325	        "cmd.orchestrator.open_in_source_control must expose projected state selector and disabled reason before dispatch",
+L00018326	        "cmd.orchestrator.open_in_source_control dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00018327	        "cmd.orchestrator.open_in_source_control must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00018328	        "cmd.orchestrator.open_in_source_control must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

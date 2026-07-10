@@ -1,0 +1,392 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-377 >>>
+L00000001	# Puppet Master -- GitHub API Auth and Flows
+L00000002	
+L00000003	
+L00000004	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000005	
+L00000006	
+L00000007	<!--
+L00000008	PUPPET MASTER -- PLAN DOC REWRITE HEADER
+L00000009	
+L00000010	ABSOLUTE NAMING RULE:
+L00000011	- Platform name is "Puppet Master" only.
+L00000012	- If older naming exists, refer to it only as "legacy naming" (do not quote it).
+L00000013	
+L00000014	LOCKED DECISIONS (DO NOT CHANGE IN THIS DOC):
+L00000015	- GitHub operations: GitHub API provider only; no external auth-shell dependency
+L00000016	- Default auth flow: OAuth device-code
+L00000017	- No secrets in seglog/redb/Tantivy or logs; secrets live only in OS credential store
+L00000018	
+L00000019	REWRITE METADATA:
+L00000020	- Doc updated by: GitHub Copilot CLI (deep review pass)
+L00000021	- Legacy intent preserved: YES
+L00000022	- Primary Target Primitives:
+L00000023	  - Provider (GitHub API)
+L00000024	  - Patch Pipeline (local git)
+L00000025	  - Policy Engine / Permissions (redaction, secrets)
+L00000026	  - Session Store (seglog events)
+L00000027	  - UI Surface (commands only; UI holds no business logic)
+L00000028	- Canonical sources referenced (DRY):
+L00000029	  - Plans/Spec_Lock.json
+L00000030	  - Plans/DRY_Rules.md
+L00000031	  - Plans/Contracts_V0.md
+L00000032	  - Plans/Glossary.md
+L00000033	  - Plans/Architecture_Invariants.md
+L00000034	  - Plans/Progression_Gates.md
+L00000035	  - Plans/UI_Command_Catalog.md
+L00000036	  - Plans/storage-plan.md
+L00000037	  - Plans/Crosswalk.md
+L00000038	  - Plans/Decision_Policy.md
+L00000039	-->
+L00000040	
+L00000041	## Change Summary
+L00000042	
+L00000043	
+L00000044	- 2026-02-25: Added scope-failure UI cross-reference so `MissingScopes` and related auth failures explicitly drive disabled-state behavior for PR/Issues/Actions surfaces in `Plans/GitHub_Integration.md §B`.
+L00000045	- 2026-02-25: Added SSH Remote Dev Server auth context section; added device-code prominence note; cross-references Plans/GitHub_Integration.md §C.
+L00000046	
+L00000047	## Purpose
+L00000048	Define the canonical GitHub API authentication contract and GitHub API call flows Puppet Master relies on for repository, fork, and pull request workflows.
+L00000049	
+L00000050	This document also defines the hard boundary between:
+L00000051	- **Local Git operations** (performed via the local `git` binary), and
+L00000052	- **GitHub hosting operations** (performed via the GitHub HTTPS API).
+L00000053	
+L00000054	`github_api` is the auth realm for GitHub REST `/platform` operations such as repo create, fork, PR, and permission checks; GitHub Copilot auth does not authorize these repository/platform mutations.
+L00000055	
+L00000056	Git transport auth and GitHub API auth are separate systems. `github_api` tokens never transfer to SSH remotes, local Git credential helpers, or Source Control SSH operations, and an expired or insufficient GitHub API credential is a canonical blocked/runtime condition with owner routing through GitHub Actions or GitHub API auth recovery rather than a panel-local refresh case.
+L00000057	
+L00000058	`Plans/GitHub_Integration.md` remains the consumer cross-reference for `/remote` GitHub surfaces: hosted and SSH remote mutations consume FileSafe.md mutation-safety, write-scope, and durability contracts rather than bypassing the FileSafe owner.
+L00000059	
+L00000060	Generic API key, HTTP auth, OAuth 2.0, OpenID Connect, and mTLS mechanisms are transport-layer auth families only when an owning provider/runtime contract explicitly maps them into a GitHub operation. They do not replace the `github_api` OAuth device-code flow or OS credential-store token boundary.
+L00000061	
+L00000062	### OAuth device-code flow contract
+L00000063	
+L00000064	The `github_api` realm uses GitHub OAuth device flow only for constrained local/headless contexts. The app must have device flow enabled before PM presents this route.
+L00000065	
+L00000066	Device-code steps:
+L00000067	1. Start auth with `POST https://github.com/login/device/code`, passing `client_id` and requested space-delimited `scope`.
+L00000068	2. Store only the non-secret pending auth record: `device_code_ref`, `user_code`, `verification_uri`, `expires_at`, `poll_interval_seconds`, requested scopes, host, and account binding.
+L00000069	3. Show `verification_uri` and `user_code` to the user, with expiry and requested scopes visible.
+L00000070	4. Poll `POST https://github.com/login/oauth/access_token` with `client_id`, `device_code`, and `grant_type = urn:ietf:params:oauth:grant-type:device_code`.
+L00000071	5. Poll no faster than the returned `interval`; on `slow_down`, increase the interval by 5 seconds and persist the new poll cadence.
+L00000072	6. Terminal success stores the access token only in the OS credential store and persists `credential_ref`, scopes, host, account_id, and expiry/refresh metadata outside the token secret.
+L00000073	
+L00000074	Device-code polling errors are closed to `authorization_pending`, `slow_down`, `expired_token`, `unsupported_grant_type`, `incorrect_client_credentials`, `incorrect_device_code`, `access_denied`, and `network_or_rate_limited`. `authorization_pending` keeps polling until expiry. `slow_down` adjusts cadence. `expired_token`, `incorrect_client_credentials`, `incorrect_device_code`, `unsupported_grant_type`, and `access_denied` stop polling and surface a retry/start-over action.
+L00000075	
+L00000076	Scope matrix:
+L00000077	- Repository create/fork/PR, private repo reads, branch/commit/status mutations: request `repo`.
+L00000078	- GitHub Actions workflow dispatch, run rerun/cancel, and workflow-file mutation: request `workflow` in addition to repo access.
+L00000079	- Organization/team membership lookup and org-owned repo routing: request `read:org`.
+L00000080	- User email disclosure for account labeling only: request `user:email` when the label cannot be derived from non-email identity.
+L00000081	- Webhook management: request `admin:repo_hook` only for hook create/update/delete flows and never for ordinary PR/issue operations.
+L00000082	
+L00000083	Missing scopes produce `blocked_reason_code = missing_scopes` with `missing_scopes[]`, `credential_ref`, `account_id`, `operation_ref`, and `allowed_action_ids[]` that include reconnect with expanded scopes or choose another account when permitted.
+L00000084	
+L00000085	Credential storage:
+L00000086	- PM uses the platform OS credential store through the Rust `keyring` crate abstraction: macOS Keychain, Windows Credential Manager, and Linux Secret Service/libsecret where available.
+L00000087	- Credential service names use `puppet-master.github_api`.
+L00000088	- Credential keys use `github_api/{host}/{account_id}/{credential_ref}`; `host` is `github.com` or the normalized enterprise host, `account_id` is PM's stable internal account id, and `credential_ref` is the durable pointer stored in PM records.
+L00000089	- Seglog, redb, Tantivy, logs, prompts, exports, and runtime artifacts may store only `credential_ref`, scope metadata, account metadata, and redacted health state, never the raw token or device_code secret.
+L00000090	
+L00000091	ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Permissions_System.md
+L00000092	
+L00000093	ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline, Primitive:Provider
+L00000094	
+L00000095	#### Cross-owner command and routing dependencies
+L00000096	
+L00000097	- `Plans/Permissions_System.md` / `/Permissions_System.md` owns scope-keyed approval semantics, de-tiered gating language, and permission snapshots consumed by GitHub API mutation gates.
+L00000098	- `Plans/UI_Command_Catalog.md` / `/UI_Command_Catalog.md` owns governance command families, typed route-payload normalization, and projection-freshness gating for GitHub command surfaces.
+L00000099	- `Plans/WorktreeGitImprovement.md` / `/WorktreeGitImprovement.md` owns lane and `/worktree` lifecycle vocabulary, cleanup semantics, gating checks, and transition rules for repository worktree state.
+L00000100	- `Plans/Progression_Gates.md` / `/Progression_Gates.md` owns the replacement of tier-scoped gate logic with package-completion and seam-transition gates that GitHub orchestration consumes.
+L00000101	- Wizard-blocked and thread-blocked flows may serialize `resume_url`, including wizard-step restoration detail, but `/open` behavior normalizes through canonical object identity and scope identity before using that URL.
+L00000102	
+L00000103	GitHub API OAuth callback listeners are loopback-only: they bind only to the configured loopback `bind-address` / `bind-host` for the active local, WSL, container, or remote-dev context, and wildcard/public-interface callback binds are invalid.
+L00000104	
+L00000105	### GitHub host policy and enterprise availability
+L00000106	
+L00000107	`github_host_policy` distinguishes at least `github.com_only` and `enterprise_allowed`. If the MVP remains `github.com_only`, GHES repositories and GitHub Enterprise Server URLs receive deterministic disabled-state UX rather than hidden fallback or accidental downgraded behavior.
+L00000108	
+L00000109	## Canonical data-shape reconciliation
+L00000110	
+L00000111	### Required data shape
+L00000112	
+L00000113	#### Stable account identity and credential references
+L00000114	- Replace login-keyed durable GitHub identity with stable `account_id` / `credential_ref`.
+L00000115	- GitHub identity is account-keyed, not login-keyed: stable internal `account_id` is the durable join key, while login and disclosure-only provider metadata remain display/audit descriptors.
+L00000116	- Canonical GitHub runtime and mutation envelopes carry `requested_account_id`, `effective_account_id`, stable `account_id`, `credential_ref`, `account_type`, `account_login`, `execution_role`, `operational_identity`, and `account_switch_lineage[]`.
+L00000117	- `account_login` and any provider-native handle stay descriptive only; `credential_ref` points to the credential-store entry that actually authorizes the GitHub account.
+L00000118	- GitHub auth retry and failover follow multi-account policy: bare-context fallback may start without a persona only when the owning runtime contract permits it; Docker `/media/provider` and provider `/model` flows carry account-resolution lineage instead of stopping at provider/model labels.
+L00000119	- The requested-vs-effective admin capability UI displays stable `account_id`, effective-account, and switch-reason; login-keyed handles are display-only, and blocked-state copy explains why a requested account was skipped, clamped, or fell through.
+L00000120	
+L00000121	#### Recovery context and mutation gating
+L00000122	
+L00000123	- Run Graph and Orchestrator GitHub actions normalize onto `cmd.runtime` / `cmd.runtime.*` plus `cmd.orchestrator.open_in_` / `cmd.orchestrator.open_in_*` bindings with a mutation action envelope and trust-state gating.
+L00000124	- Trust/degraded-state split: low-risk read-only inspection may run on refreshing, stale, and sometimes degraded projections; deep-linking is allowed when target identity remains valid; live mutation, approval, recovery, retry, and cleanup require `current` or direct canonical-runtime validation.
+L00000125	- GitHub mutations and Orchestrator handoffs include `/degraded-state` gating and concern handoff rules before execution.
+L00000126	- Gating level `none` is limited to safe navigation or `/focus` actions and low-risk presentation actions that do not touch user-data and do not mutate live-runtime state.
+L00000127	- `contextual-help-only` guidance may appear on individual graph badges, narrow panel chips, trust-state chrome, widget-specific filter fields, and per-surface action gating messages, but it never upgrades a disabled or degraded action into an executable mutation.
+L00000128	- GitHub recovery payloads consume `execution_unit_context` as the runtime-facing union of immutable attempt handoff identity, active blocked `/recovery/runtime` gating anchors, and workspace `/isolation` anchors.
+L00000129	- Runtime-era command wiring/gate contracts require reverse `matrix-to-catalog` coverage, precondition `/freshness/mutation-risk` fields, stale-blocking policy, explicit dispatcher obligations, and machine-verifiable allowed-action selection before dispatch.
+L00000130	- GitHub-facing Orchestrator, widget, and Run Graph consumers read the shared `projection-health` / `trust-state` record family for action gating and fallback instead of inventing surface-local degraded-state checks.
+L00000131	- Historical-run rendering, idle widget rendering, and `/degraded-mode` projection gates are surface-level GitHub requirements as well as storage concerns; GitHub-facing views must show historical-run and degraded projection state before enabling mutation-capable actions.
+L00000132	- Multi-account GitHub and widget data sourcing must not fall back to pre-rewrite or single-account-only identity rules; cross-surface `/GitHub` and `/integration` pivots carry lane, package, `/runtime`, degraded-trust, `/package/degraded-trust`, and stale-data state into mutation gating and concern ownership.
+L00000133	- Mutation and `/recovery` audits carry stable workspace and provider-attempt anchors, because deferred provider work cannot be repaired correctly from GitHub login, branch, or panel state alone.
+L00000134	- Blocked `/HITL/policy` flows re-anchor on canonical node `/attempt` identifiers and the current blocked sequence before GitHub recovery, approval, retry, or cleanup continues.
+L00000135	- GitHub operations that traverse `/skills/formatters`, DAE, mixed mutation semantics, or runtime tool reachability inherit runtime safety and capability contracts; those capability boundaries must not remain under-owned or be recreated as GitHub-local auth rules.
+L00000136	- Orchestrator and Source Control stay intentionally asymmetric: Orchestrator owns package `/governance/execution` truth, while Source Control owns concrete Git `/worktree` inspection and mutation; GitHub routes preserve that split rather than treating repository hosting as the graph authority.
+L00000137	- Routing, blocked-family, and attribution flows reconcile end-to-end across owner and consumer docs before GitHub-facing commands claim a recoverable, attributable, or safe-to-mutate state.
+L00000138	
+L00000139	
+L00000140	- Add recovery context payload and trust/degraded-state gating for GitHub mutations.
+L00000141	- Every write-capable GitHub request carries `recovery_context { blocked_sequence, blocked_episode_id, recovery_handshake_state, trust_state, degraded_state, approval_id?, dae_jail_posture }`.
+L00000142	- A GitHub mutation may proceed only after the startup recovery handshake rebinds the current blocked episode, `trust_state` is writable, `degraded_state` is false, and any approval or DAE jail gate has been cleared.
+L00000143	
+L00000144	#### Runtime identity and blocked-policy transfer
+L00000145	- Transfer execution_role, requested_account_id, operational_identity, account-switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs.
+L00000146	- GitHub write attempts mint or reuse the current `blocked_sequence`; startup recovery must rebind that same sequence before resuming deferred work.
+L00000147	- Carry usage switch-history and usage execution-role follow-through.
+L00000148	- Usage and audit rows record `execution_role`, requested/effective account identity, switch history, pressure owner, and the GitHub `account_id` / `credential_ref` pair that actually executed the call.
+L00000149	
+L00000150	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md
+L00000151	
+L00000152	## Browser/debug auth handoff and session shaping
+L00000153	- Browser session-shaping actions remain `explicit_confirmation` operations when they mutate cookies, `/storage`, storage `/export` or import state, offline `/mock` routing, or promotion into normal browsing.
+L00000154	- App-debug login handoff normally remains in the same isolated automation session so authenticated state can resume the investigation, while PM-owned provider `/device/login` flows may use a dedicated `auth_session` when that is the canonical provider flow.
+L00000155	
+L00000156	## Owner / Consumer Map
+L00000157	
+L00000158	`Plans/GitHub_API_Auth_and_Flows.md` remains the owner doc for GitHub API auth realm, credential secrecy, local Git versus GitHub hosting boundaries, callback binding policy, host policy, stable account identity, mutation recovery context, runtime identity transfer, and browser/debug auth handoff. Cross-doc consumers must preserve the owner routing in the source body rather than recreating GitHub-local auth, disabled-state, worktree, permission, or command-routing rules.
+L00000159	
+L00000160	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000161	
+L00000162	## PlanUnits
+L00000163	
+L00000164	### GAAAF-002 - Locked GitHub API Auth Decisions And Credential Secrecy
+L00000165	
+L00000166	```yaml
+L00000167	plan_unit_id: GAAAF-002
+L00000168	unit_type: requirement
+L00000169	status: accepted
+L00000170	owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+L00000171	canonical_text: GitHub platform operations use the github_api realm with the GitHub API provider, OAuth device-code default auth flow, no external auth-shell dependency, and secrets stored only in the OS credential store rather than seglog, redb, Tantivy, or logs.
+L00000172	gui_related: false
+L00000173	gui_classification_reason: This unit defines provider/auth and credential-storage rules, not GUI presentation.
+L00000174	split_recommended: true
+L00000175	depends_on: []
+L00000176	unblocks: []
+L00000177	acceptance_criteria:
+L00000178	- The covered source span remains losslessly available for exact-text audit.
+L00000179	- The behavior is addressable through this fine-grained PlanUnit instead of broad GAAAF-001 coverage.
+L00000180	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000181	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000182	validation_surfaces:
+L00000183	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000184	- python3 scripts/pm-plan-index.py validate
+L00000185	risk_class: github_auth_drift
+L00000186	reasoning_tier: standard
+L00000187	context_scope: github_api_auth_standardization
+L00000188	implementation_surfaces:
+L00000189	- Plans/GitHub_API_Auth_and_Flows.md
+L00000190	node_compile_hint:
+L00000191	  mode: locked_github_api_auth_decisions_credential_secrecy
+L00000192	  create_worknodes: false
+L00000193	source_lineage:
+L00000194	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0001
+L00000195	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0003
+L00000196	preserved_exact_tokens:
+L00000197	- Puppet Master -- GitHub API Auth and Flows
+L00000198	- github_api
+L00000199	- GitHub API provider only
+L00000200	- OAuth device-code
+L00000201	- no external auth-shell dependency
+L00000202	- No secrets in seglog/redb/Tantivy or logs
+L00000203	- OS credential store
+L00000204	- repo create, fork, PR, and permission checks
+L00000205	negative_constraints:
+L00000206	- Generic API key, HTTP auth, OAuth 2.0, OpenID Connect, and mTLS mechanisms do not replace the github_api OAuth device-code flow or OS credential-store token boundary.
+L00000207	compatibility_only_notes: []
+L00000208	stale_retired_dispositions: []
+L00000209	owner_boundary_notes:
+L00000210	- Plans/GitHub_API_Auth_and_Flows.md owns GitHub API auth realm, token storage boundary, and GitHub REST /platform operation authorization.
+L00000211	owner_hints:
+L00000212	- Plans/GitHub_API_Auth_and_Flows.md
+L00000213	preserved_contractrefs:
+L00000214	- 'ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline, Primitive:Provider'
+L00000215	split_recommendation_reason: GitHub_API_Auth_and_Flows-S0003 also contains remote consumer and GUI disabled-state concerns covered by GAAAF-003.
+L00000216	```
+L00000217	
+L00000218	### GAAAF-003 - Local Git, GitHub Hosting, And Remote Consumer Boundary
+L00000219	
+L00000220	```yaml
+L00000221	plan_unit_id: GAAAF-003
+L00000222	unit_type: requirement
+L00000223	status: accepted
+L00000224	owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+L00000225	canonical_text: Local Git operations remain performed by the local git binary while GitHub hosting operations use the GitHub HTTPS API; GitHub Copilot auth does not authorize repository/platform mutations, github_api tokens never transfer to SSH remotes or local Git credential helpers, and GitHub_Integration remote surfaces consume FileSafe mutation-safety, write-scope, and durability contracts.
+L00000226	gui_related: true
+L00000227	gui_classification_reason: This unit includes user-visible blocked/runtime and disabled-state behavior for GitHub surfaces as well as remote-surface consumer routing.
+L00000228	split_recommended: true
+L00000229	depends_on: []
+L00000230	unblocks: []
+L00000231	acceptance_criteria:
+L00000232	- The covered source span remains losslessly available for exact-text audit.
+L00000233	- The behavior is addressable through this fine-grained PlanUnit instead of broad GAAAF-001 coverage.
+L00000234	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000235	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000236	validation_surfaces:
+L00000237	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000238	- python3 scripts/pm-plan-index.py validate
+L00000239	risk_class: github_auth_drift
+L00000240	reasoning_tier: standard
+L00000241	context_scope: github_api_auth_standardization
+L00000242	implementation_surfaces:
+L00000243	- Plans/GitHub_API_Auth_and_Flows.md
+L00000244	node_compile_hint:
+L00000245	  mode: local_git_github_hosting_remote_consumer_boundary
+L00000246	  create_worknodes: false
+L00000247	source_lineage:
+L00000248	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0003
+L00000249	preserved_exact_tokens:
+L00000250	- Local Git operations
+L00000251	- GitHub HTTPS API
+L00000252	- GitHub Copilot auth does not authorize
+L00000253	- github_api tokens never transfer to SSH remotes
+L00000254	- canonical blocked/runtime condition
+L00000255	- GitHub_Integration.md
+L00000256	- /remote
+L00000257	- FileSafe.md mutation-safety
+L00000258	negative_constraints:
+L00000259	- An expired or insufficient GitHub API credential is not a panel-local refresh case.
+L00000260	- Hosted and SSH remote mutations must not bypass the FileSafe owner.
+L00000261	compatibility_only_notes: []
+L00000262	stale_retired_dispositions: []
+L00000263	owner_boundary_notes:
+L00000264	- Plans/GitHub_Integration.md remains the consumer cross-reference for /remote GitHub surfaces.
+L00000265	- Plans/FileSafe.md owns mutation-safety, write-scope, and durability contracts consumed by hosted and SSH remote mutations.
+L00000266	owner_hints:
+L00000267	- Plans/GitHub_API_Auth_and_Flows.md
+L00000268	preserved_contractrefs:
+L00000269	- 'ContractRef: SchemaID:Spec_Lock.json#github_operations, Primitive:PatchPipeline, Primitive:Provider'
+L00000270	split_recommendation_reason: GitHub_API_Auth_and_Flows-S0003 also carries core auth realm and credential secrecy constraints covered by GAAAF-002.
+L00000271	```
+L00000272	
+L00000273	### GAAAF-004 - Cross-owner Command Routing And Loopback Callback Policy
+L00000274	
+L00000275	```yaml
+L00000276	plan_unit_id: GAAAF-004
+L00000277	unit_type: requirement
+L00000278	status: accepted
+L00000279	owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+L00000280	canonical_text: GitHub command and routing dependencies stay owned by Permissions_System, UI_Command_Catalog, WorktreeGitImprovement, and Progression_Gates; wizard/thread resume URLs normalize through object and scope identity, and OAuth callback listeners are loopback-only for the active local, WSL, container, or remote-dev context.
+L00000281	gui_related: false
+L00000282	gui_classification_reason: This unit defines command routing, owner-doc dependencies, and auth callback binding constraints, not GUI presentation.
+L00000283	split_recommended: false
+L00000284	depends_on: []
+L00000285	unblocks: []
+L00000286	acceptance_criteria:
+L00000287	- The covered source span remains losslessly available for exact-text audit.
+L00000288	- The behavior is addressable through this fine-grained PlanUnit instead of broad GAAAF-001 coverage.
+L00000289	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000290	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000291	validation_surfaces:
+L00000292	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000293	- python3 scripts/pm-plan-index.py validate
+L00000294	risk_class: github_auth_drift
+L00000295	reasoning_tier: standard
+L00000296	context_scope: github_api_auth_standardization
+L00000297	implementation_surfaces:
+L00000298	- Plans/GitHub_API_Auth_and_Flows.md
+L00000299	node_compile_hint:
+L00000300	  mode: cross_owner_command_routing_loopback_callback_policy
+L00000301	  create_worknodes: false
+L00000302	source_lineage:
+L00000303	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0004
+L00000304	preserved_exact_tokens:
+L00000305	- Permissions_System.md
+L00000306	- UI_Command_Catalog.md
+L00000307	- WorktreeGitImprovement.md
+L00000308	- Progression_Gates.md
+L00000309	- resume_url
+L00000310	- /open
+L00000311	- loopback-only
+L00000312	- bind-address
+L00000313	- bind-host
+L00000314	- wildcard/public-interface callback binds are invalid
+L00000315	negative_constraints:
+L00000316	- Wildcard/public-interface callback binds are invalid.
+L00000317	- /open behavior normalizes through canonical object identity and scope identity before using resume_url.
+L00000318	compatibility_only_notes: []
+L00000319	stale_retired_dispositions: []
+L00000320	owner_boundary_notes:
+L00000321	- Permissions_System owns scope-keyed approval semantics and snapshots consumed by GitHub API mutation gates.
+L00000322	- UI_Command_Catalog owns governance command families, route-payload normalization, and projection-freshness gating.
+L00000323	- WorktreeGitImprovement owns lane and /worktree lifecycle vocabulary, cleanup semantics, gating checks, and transition rules.
+L00000324	- Progression_Gates owns package-completion and seam-transition gates consumed by GitHub orchestration.
+L00000325	owner_hints:
+L00000326	- Plans/GitHub_API_Auth_and_Flows.md
+L00000327	```
+L00000328	
+L00000329	### GAAAF-005 - GitHub Host Policy And Enterprise Disabled-state UX
+L00000330	
+L00000331	```yaml
+L00000332	plan_unit_id: GAAAF-005
+L00000333	unit_type: requirement
+L00000334	status: accepted
+L00000335	owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+L00000336	canonical_text: The github_host_policy distinguishes github.com_only and enterprise_allowed; if MVP remains github.com_only, GHES repositories and GitHub Enterprise Server URLs receive deterministic disabled-state UX rather than hidden fallback or accidental downgraded behavior.
+L00000337	gui_related: true
+L00000338	gui_classification_reason: This unit defines deterministic user-visible disabled-state UX for unsupported GitHub Enterprise Server repositories.
+L00000339	split_recommended: false
+L00000340	depends_on: []
+L00000341	unblocks: []
+L00000342	acceptance_criteria:
+L00000343	- The covered source span remains losslessly available for exact-text audit.
+L00000344	- The behavior is addressable through this fine-grained PlanUnit instead of broad GAAAF-001 coverage.
+L00000345	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000346	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000347	validation_surfaces:
+L00000348	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000349	- python3 scripts/pm-plan-index.py validate
+L00000350	risk_class: github_auth_drift
+L00000351	reasoning_tier: standard
+L00000352	context_scope: github_api_auth_standardization
+L00000353	implementation_surfaces:
+L00000354	- Plans/GitHub_API_Auth_and_Flows.md
+L00000355	node_compile_hint:
+L00000356	  mode: github_host_policy_enterprise_disabled_state_ux
+L00000357	  create_worknodes: false
+L00000358	source_lineage:
+L00000359	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0005
+L00000360	preserved_exact_tokens:
+L00000361	- github_host_policy
+L00000362	- github.com_only
+L00000363	- enterprise_allowed
+L00000364	- GHES repositories
+L00000365	- GitHub Enterprise Server URLs
+L00000366	- deterministic disabled-state UX
+L00000367	- hidden fallback
+L00000368	- accidental downgraded behavior
+L00000369	negative_constraints:
+L00000370	- GHES repositories and GitHub Enterprise Server URLs must not receive hidden fallback or accidental downgraded behavior when MVP policy is github.com_only.
+L00000371	compatibility_only_notes: []
+L00000372	stale_retired_dispositions: []
+L00000373	owner_boundary_notes: []
+L00000374	owner_hints:
+L00000375	- Plans/GitHub_API_Auth_and_Flows.md
+L00000376	```
+L00000377	
+
+<<< CONTEXT_AFTER canonical_document_lines=378-389 >>>
+L00000378	### GAAAF-006 - Stable Account Identity And Credential Reference Keying
+L00000379	
+L00000380	```yaml
+L00000381	plan_unit_id: GAAAF-006
+L00000382	unit_type: requirement
+L00000383	status: accepted
+L00000384	owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+L00000385	canonical_text: 'GitHub identity is account-keyed rather than login-keyed: stable account_id is the durable join key, credential_ref points to the credential-store entry that authorizes the account, and runtime/mutation envelopes carry requested/effective account identity, account metadata, execution role, operational identity, and account_switch_lineage.'
+L00000386	gui_related: false
+L00000387	gui_classification_reason: This unit defines identity and credential data shapes, not GUI presentation.
+L00000388	split_recommended: true
+L00000389	depends_on: []

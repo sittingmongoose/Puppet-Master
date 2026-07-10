@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3452-3463 >>>
+L00003452	- registry
+L00003453	negative_constraints:
+L00003454	- Custom/plugin commands may compose with reserved first-party families only by using explicit extension verbs that do not replace canonical meaning.
+L00003455	preserved_contractrefs: []
+L00003456	compatibility_only_notes:
+L00003457	- Existing cmd.actions.* rows are compatibility aliases until migrated.
+L00003458	- Existing cmd.k8s.* rows are compatibility aliases unless updated to cmd.docker.k8s.*.
+L00003459	stale_retired_dispositions: []
+L00003460	owner_hints:
+L00003461	- Plans/UI_Command_Catalog.md
+L00003462	```
+L00003463	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3464-3820 >>>
+L00003464	### UCC-042 - Operational Coverage Breadth And Disabled State Requirements
+L00003465	
+L00003466	```yaml
+L00003467	plan_unit_id: UCC-042
+L00003468	unit_type: requirement
+L00003469	status: accepted
+L00003470	owner_doc: Plans/UI_Command_Catalog.md
+L00003471	canonical_text: Operational command coverage must include Source Control navigation/history/graph/worktrees/git operations, GitHub Actions rerun/cancel/pin/admin/current-branch/log pivots, Docker Manager images/compose/bake/context/network/volume/Kubernetes/auth/publish/remediation families, and deterministic disabled-state/help behavior.
+L00003472	gui_related: true
+L00003473	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00003474	split_recommended: false
+L00003475	depends_on:
+L00003476	- PDS-003
+L00003477	- PDS-004
+L00003478	- PDS-005
+L00003479	- PNC-001
+L00003480	unblocks: []
+L00003481	acceptance_criteria:
+L00003482	- UCC-042 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00003483	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003484	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003485	validation_surfaces:
+L00003486	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003487	- python3 scripts/pm-plan-index.py validate
+L00003488	risk_class: ui_command_catalog_drift
+L00003489	reasoning_tier: standard
+L00003490	context_scope: ui_command_catalog_batch_189
+L00003491	implementation_surfaces:
+L00003492	- Plans/UI_Command_Catalog.md
+L00003493	node_compile_hint:
+L00003494	  mode: operational_coverage_breadth_disabled_states
+L00003495	  create_worknodes: false
+L00003496	source_lineage:
+L00003497	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0027
+L00003498	preserved_exact_tokens:
+L00003499	- /history/graph/worktrees
+L00003500	- /conflict/graph
+L00003501	- /unstage/discard/diff/commit/push/pull/sync/fetch/branch/stash
+L00003502	- /cancel/pin/admin/current-branch
+L00003503	- /detail/logs
+L00003504	- /detail/job-expand/view-logs/download-log
+L00003505	- /images/compose/build-bake/contexts/networks/volumes/runtime
+L00003506	- /auth/Unraid
+L00003507	- /publish/template
+L00003508	- /underdefined
+L00003509	- /admin/help
+L00003510	negative_constraints:
+L00003511	- The command catalog must not remain publish-centric or underdefined.
+L00003512	- Any underdefined command family must resolve to a first-class owner command or documented compatibility alias.
+L00003513	preserved_contractrefs: []
+L00003514	compatibility_only_notes:
+L00003515	- Existing Git basics, Actions list/detail/logs, and Docker publish/auth/template flows are well-covered but no longer sufficient.
+L00003516	stale_retired_dispositions: []
+L00003517	owner_hints:
+L00003518	- Plans/UI_Command_Catalog.md
+L00003519	```
+L00003520	
+L00003521	### UCC-043 - Operational Route Wiring Persistence And Owner Boundaries
+L00003522	
+L00003523	```yaml
+L00003524	plan_unit_id: UCC-043
+L00003525	unit_type: requirement
+L00003526	status: accepted
+L00003527	owner_doc: Plans/UI_Command_Catalog.md
+L00003528	canonical_text: Operational wiring uses first-class route commands and per-project persistence for Source Control, GitHub Actions, and Docker Manager, while GitHub API remains backend plumbing and owner boundaries stay explicit across catalog consumers.
+L00003529	gui_related: true
+L00003530	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00003531	split_recommended: false
+L00003532	depends_on:
+L00003533	- PDS-003
+L00003534	- PDS-004
+L00003535	- PDS-005
+L00003536	- PNC-001
+L00003537	unblocks: []
+L00003538	acceptance_criteria:
+L00003539	- UCC-043 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00003540	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003541	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003542	validation_surfaces:
+L00003543	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003544	- python3 scripts/pm-plan-index.py validate
+L00003545	risk_class: ui_command_catalog_drift
+L00003546	reasoning_tier: standard
+L00003547	context_scope: ui_command_catalog_batch_189
+L00003548	implementation_surfaces:
+L00003549	- Plans/UI_Command_Catalog.md
+L00003550	node_compile_hint:
+L00003551	  mode: operational_route_wiring_persistence_boundaries
+L00003552	  create_worknodes: false
+L00003553	source_lineage:
+L00003554	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0027
+L00003555	preserved_exact_tokens:
+L00003556	- Open in Source Control
+L00003557	- SCM
+L00003558	- repo
+L00003559	- worktree
+L00003560	- compare target
+L00003561	- baseline
+L00003562	- run/attempt lineage
+L00003563	- restore-before-rerun
+L00003564	- baseline_target
+L00003565	- source_control.project_state.{project_id}
+L00003566	- github_actions.project_state.{project_id}
+L00003567	- Docker Manager
+L00003568	- GitHub API
+L00003569	- backend plumbing
+L00003570	- Plans/00-plans-index.md
+L00003571	- Plans/Crosswalk.md
+L00003572	- Plans/UI_Wiring_Rules.md
+L00003573	- Plans/Wiring_Matrix.md
+L00003574	negative_constraints: []
+L00003575	preserved_contractrefs: []
+L00003576	compatibility_only_notes: []
+L00003577	stale_retired_dispositions: []
+L00003578	owner_hints:
+L00003579	- Plans/UI_Command_Catalog.md
+L00003580	```
+L00003581	
+L00003582	### UCC-044 - Source Control Review Diff Conflict Command Rows
+L00003583	
+L00003584	```yaml
+L00003585	plan_unit_id: UCC-044
+L00003586	unit_type: requirement
+L00003587	status: accepted
+L00003588	owner_doc: Plans/UI_Command_Catalog.md
+L00003589	canonical_text: Source Control review, conflict, merge editor, git diff, hunk staging, discard, and conflict resolution command rows define stable command IDs, payloads, confirmations, and preconditions for review and conflict workflows.
+L00003590	gui_related: true
+L00003591	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00003592	split_recommended: false
+L00003593	depends_on:
+L00003594	- PDS-003
+L00003595	- PDS-004
+L00003596	- PDS-005
+L00003597	- PNC-001
+L00003598	unblocks: []
+L00003599	acceptance_criteria:
+L00003600	- UCC-044 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00003601	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003602	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003603	validation_surfaces:
+L00003604	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003605	- python3 scripts/pm-plan-index.py validate
+L00003606	risk_class: ui_command_catalog_drift
+L00003607	reasoning_tier: standard
+L00003608	context_scope: ui_command_catalog_batch_189
+L00003609	implementation_surfaces:
+L00003610	- Plans/UI_Command_Catalog.md
+L00003611	node_compile_hint:
+L00003612	  mode: source_control_review_diff_conflict_rows
+L00003613	  create_worknodes: false
+L00003614	source_lineage:
+L00003615	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0028
+L00003616	preserved_exact_tokens:
+L00003617	- cmd.source_control.open_review
+L00003618	- cmd.source_control.review.open
+L00003619	- cmd.source_control.review.swap
+L00003620	- cmd.source_control.set_compare_target
+L00003621	- cmd.source_control.open_conflict
+L00003622	- cmd.source_control.open_merge_editor
+L00003623	- cmd.git.diff_open
+L00003624	- cmd.git.diff_toggle_mode
+L00003625	- cmd.git.diff_set_compare_target
+L00003626	- cmd.git.stage_hunks
+L00003627	- cmd.git.unstage_hunks
+L00003628	- cmd.git.discard_hunks
+L00003629	- cmd.git.conflict_apply_resolution
+L00003630	negative_constraints: []
+L00003631	preserved_contractrefs:
+L00003632	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
+L00003633	compatibility_only_notes:
+L00003634	- cmd.source_control.review.open is a compatibility alias for cmd.source_control.open_review.
+L00003635	stale_retired_dispositions: []
+L00003636	owner_hints:
+L00003637	- Plans/UI_Command_Catalog.md
+L00003638	```
+L00003639	
+L00003640	### UCC-045 - Source Control Graph History Stash And Commit Assistance Rows
+L00003641	
+L00003642	```yaml
+L00003643	plan_unit_id: UCC-045
+L00003644	unit_type: requirement
+L00003645	status: accepted
+L00003646	owner_doc: Plans/UI_Command_Catalog.md
+L00003647	canonical_text: Source Control graph focus/filter/layout, history open, tab selection, stash controls, AI commit batching, accepted commit groups, and generated commit-message rows preserve graph/history/stash and advisory commit-assistance behavior.
+L00003648	gui_related: true
+L00003649	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00003650	split_recommended: false
+L00003651	depends_on:
+L00003652	- PDS-003
+L00003653	- PDS-004
+L00003654	- PDS-005
+L00003655	- PNC-001
+L00003656	unblocks: []
+L00003657	acceptance_criteria:
+L00003658	- UCC-045 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00003659	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003660	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003661	validation_surfaces:
+L00003662	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003663	- python3 scripts/pm-plan-index.py validate
+L00003664	risk_class: ui_command_catalog_drift
+L00003665	reasoning_tier: standard
+L00003666	context_scope: ui_command_catalog_batch_189
+L00003667	implementation_surfaces:
+L00003668	- Plans/UI_Command_Catalog.md
+L00003669	node_compile_hint:
+L00003670	  mode: source_control_graph_history_stash_commit_rows
+L00003671	  create_worknodes: false
+L00003672	source_lineage:
+L00003673	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0028
+L00003674	preserved_exact_tokens:
+L00003675	- cmd.source_control.graph.focus
+L00003676	- cmd.source_control.graph.filter
+L00003677	- cmd.source_control.graph.layout
+L00003678	- cmd.source_control.graph.focus/filter/layout
+L00003679	- cmd.source_control.graph_focus
+L00003680	- cmd.source_control.graph_filter
+L00003681	- cmd.source_control.history_open_commit
+L00003682	- cmd.source_control.select_tab
+L00003683	- cmd.source_control.stash
+L00003684	- cmd.source_control.stash.*
+L00003685	- cmd.source_control.suggest_commit_batches
+L00003686	- cmd.source_control.suggest_commit_groups
+L00003687	- cmd.source_control.accept_commit_group
+L00003688	- cmd.source_control.generate_commit_message
+L00003689	negative_constraints: []
+L00003690	preserved_contractrefs: []
+L00003691	compatibility_only_notes:
+L00003692	- Graph focus/filter/layout grouped names and suggest_commit_groups are compatibility alias families.
+L00003693	stale_retired_dispositions: []
+L00003694	owner_hints:
+L00003695	- Plans/UI_Command_Catalog.md
+L00003696	```
+L00003697	
+L00003698	### UCC-046 - Source Control Compare Persistence And Disabled Boundary
+L00003699	
+L00003700	```yaml
+L00003701	plan_unit_id: UCC-046
+L00003702	unit_type: requirement
+L00003703	status: accepted
+L00003704	owner_doc: Plans/UI_Command_Catalog.md
+L00003705	canonical_text: Compare-open identity is repository-scoped, review state persists per project, conflict assistant records events and blocked handoffs without persisting conflicted file content, disabled states explain concrete blockers, and route/view ownership remains Source Control-owned.
+L00003706	gui_related: true
+L00003707	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00003708	split_recommended: false
+L00003709	depends_on:
+L00003710	- PDS-003
+L00003711	- PDS-004
+L00003712	- PDS-005
+L00003713	- PNC-001
+L00003714	unblocks: []
+L00003715	acceptance_criteria:
+L00003716	- UCC-046 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00003717	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003718	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003719	validation_surfaces:
+L00003720	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003721	- python3 scripts/pm-plan-index.py validate
+L00003722	risk_class: ui_command_catalog_drift
+L00003723	reasoning_tier: standard
+L00003724	context_scope: ui_command_catalog_batch_189
+L00003725	implementation_surfaces:
+L00003726	- Plans/UI_Command_Catalog.md
+L00003727	node_compile_hint:
+L00003728	  mode: source_control_compare_persistence_disabled_boundary
+L00003729	  create_worknodes: false
+L00003730	source_lineage:
+L00003731	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0028
+L00003732	preserved_exact_tokens:
+L00003733	- compare_open
+L00003734	- project_id
+L00003735	- repo_id
+L00003736	- repo_relative_path
+L00003737	- worktree_id
+L00003738	- side_by_side
+L00003739	- unified
+L00003740	- stage_hunk
+L00003741	- unstage_hunk
+L00003742	- discard_hunk
+L00003743	- /open-resolution
+L00003744	- Review mode state
+L00003745	- per-project persistence
+L00003746	- /event/storage
+L00003747	- /disabled
+L00003748	- stale-target
+L00003749	- Source Control > Changes
+L00003750	negative_constraints:
+L00003751	- No consumer surface may create ad hoc compare, /diff, /compare, or /compare/stage state from path strings alone.
+L00003752	- Conflict assistant commands do not persist conflicted file content.
+L00003753	preserved_contractrefs: []
+L00003754	compatibility_only_notes:
+L00003755	- compare_open maps to cmd.source_control.open_review or cmd.git.diff_open.
+L00003756	stale_retired_dispositions: []
+L00003757	owner_hints:
+L00003758	- Plans/UI_Command_Catalog.md
+L00003759	```
+L00003760	
+L00003761	### UCC-047 - Github Actions Run Job Log Browser Rows
+L00003762	
+L00003763	```yaml
+L00003764	plan_unit_id: UCC-047
+L00003765	unit_type: requirement
+L00003766	status: accepted
+L00003767	owner_doc: Plans/UI_Command_Catalog.md
+L00003768	canonical_text: GitHub Actions command rows cover show/switch/rerun/cancel, workflow pin/unpin/settings, dispatch-readiness validation, compare-last-success, open current branch, open related diff, logs, workflow/job detail, retry, copy URL, copy logs, open in GitHub, branch-to-diff, and run-to-browser pivots.
+L00003769	gui_related: true
+L00003770	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00003771	split_recommended: false
+L00003772	depends_on:
+L00003773	- PDS-003
+L00003774	- PDS-004
+L00003775	- PDS-005
+L00003776	- PNC-001
+L00003777	unblocks: []
+L00003778	acceptance_criteria:
+L00003779	- UCC-047 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00003780	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003781	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003782	validation_surfaces:
+L00003783	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003784	- python3 scripts/pm-plan-index.py validate
+L00003785	risk_class: ui_command_catalog_drift
+L00003786	reasoning_tier: standard
+L00003787	context_scope: ui_command_catalog_batch_189
+L00003788	implementation_surfaces:
+L00003789	- Plans/UI_Command_Catalog.md
+L00003790	node_compile_hint:
+L00003791	  mode: github_actions_run_job_log_browser_rows
+L00003792	  create_worknodes: false
+L00003793	source_lineage:
+L00003794	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0029
+L00003795	preserved_exact_tokens:
+L00003796	- cmd.actions.show
+L00003797	- cmd.actions.switch_subview
+L00003798	- cmd.actions.rerun
+L00003799	- cmd.actions.cancel
+L00003800	- cmd.github.actions.pin
+L00003801	- cmd.github.actions.unpin
+L00003802	- cmd.github.actions.settings.open
+L00003803	- cmd.github.actions.open_current_branch
+L00003804	- cmd.github.actions.validate_dispatch_readiness
+L00003805	- cmd.github.actions.compare_last_success
+L00003806	- cmd.github.actions.open_related_diff
+L00003807	- cmd.actions.view_logs
+L00003808	- cmd.github.actions.open_step_logs
+L00003809	- cmd.github.actions.open_in_github
+L00003810	- cmd.github.actions.open_run_diff
+L00003811	- cmd.github.actions.open_run_in_browser
+L00003812	negative_constraints: []
+L00003813	preserved_contractrefs:
+L00003814	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md'
+L00003815	compatibility_only_notes: []
+L00003816	stale_retired_dispositions: []
+L00003817	owner_hints:
+L00003818	- Plans/UI_Command_Catalog.md
+L00003819	```
+L00003820	
+
+<<< CONTEXT_AFTER canonical_document_lines=3821-3832 >>>
+L00003821	### UCC-048 - Github Actions Correlation And Legacy Alias Rules
+L00003822	
+L00003823	```yaml
+L00003824	plan_unit_id: UCC-048
+L00003825	unit_type: requirement
+L00003826	status: accepted
+L00003827	owner_doc: Plans/UI_Command_Catalog.md
+L00003828	canonical_text: GitHub Actions commands carry workflow/run/job/step/check/log identity for route-open pivots, preserve source-control correlation, and treat legacy cmd.github_actions.* and cmd.actions pin/unpin names as compatibility aliases rather than a second namespace.
+L00003829	gui_related: true
+L00003830	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00003831	split_recommended: false
+L00003832	depends_on:

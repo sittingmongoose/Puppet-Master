@@ -1,0 +1,154 @@
+<<< CONTEXT_BEFORE 2222-2233 >>>
+- project-level rather than run-level
+negative_constraints:
+- Historical /current run switching must not change layout identity.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- The route contract layer owns the controlled coarse destination enum/family.
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 2234-2372 >>>
+### ARC-035 - Owner Consumer Boundary
+
+```yaml
+plan_unit_id: ARC-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: The Owner / Consumer Map preserves that source-preserving standardization keeps original owner and consumer
+  boundaries, Plans/agent-rules-context.md remains owner for the behavior described by its preserved sections, and cross-doc
+  ownership follows ContractRefs and boundary notes already present in the source text.
+gui_related: false
+gui_classification_reason: This unit records standardization owner/consumer boundaries, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered rules-context fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/agent-rules-context.md remains the owner for application/project rules context while referenced owners retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_consumer_boundary
+reasoning_tier: standard
+context_scope: agent_rules_context_standardization
+implementation_surfaces:
+- Plans/agent-rules-context.md
+node_compile_hint:
+  mode: owner_consumer_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:agent-rules-context-S0043
+preserved_exact_tokens:
+- Owner / Consumer Map
+- source-preserving standardization
+- owner and consumer boundaries
+- Plans/agent-rules-context.md
+- ContractRefs
+- boundary notes
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/agent-rules-context.md remains the owner doc for preserved rules-context behavior while cross-doc ownership follows
+  ContractRefs and boundary notes.
+owner_hints:
+- Plans/agent-rules-context.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+```
+
+
+## Migration Coverage
+
+Original hash: `7815be0dff378aa826fab1ec2295a7c1e1f87c5580142922ed5b3c64a58698de`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+
+Phase 2B batches 113 and 114 atomized source spans `agent-rules-context-S0001` through `agent-rules-context-S0043` into fine-grained PlanUnits `ARC-002` through `ARC-035`, except for structural and migration-lineage dispositions. `agent-rules-context-S0044` is the PlanUnits heading, `agent-rules-context-S0045` is the retired `ARC-001` bridge disposition, and `agent-rules-context-S0046` is Migration Coverage metadata. `ARC-001` is retired to migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Agent Rules Context owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### ARC-036 - Application-Level Default DRY Guard
+
+```yaml
+plan_unit_id: ARC-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/agent-rules-context.md
+canonical_text: >-
+  PM applies the DRY Method as an application-level default guard through the shared rules pipeline and Instruction
+  Bundle. The setting key is `app.agent_rules.dry_method_default_guard`, stored as enabled or disabled_by_user, with
+  enabled as the default. Disabling it turns off only the default DRY guard and DRY-specific caveat/block behavior;
+  explicit user/project instructions, safety, secrets, source authority, governance phase boundaries, permissions,
+  and source-control hygiene remain active.
+gui_related: false
+gui_classification_reason: Defines application rules behavior and default guard semantics rather than visual presentation.
+depends_on: []
+unblocks: [PP-057, DR-036, DP-063, CV-299, F3-406, ATS-018]
+acceptance_criteria:
+  - DRY Method is default-on unless the user explicitly disables the default guard.
+  - The disable path cannot bypass non-DRY authority boundaries.
+  - The rule is injected through the shared Instruction Bundle route, not copied into local prompt builders.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - DRY Method rules-context fixtures
+risk_class: dry_method_default_guard_drift
+reasoning_tier: high
+context_scope: dry_method_agent_rules_context
+implementation_surfaces:
+  - Plans/agent-rules-context.md
+  - future application rules pipeline
+node_compile_hint:
+  mode: dry_method_application_default_guard
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-app-default
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-001
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-default-004
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0054
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0073
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0083
+source_atom_ids: [atom-0054, atom-0073, atom-0083]
+decision_refs: [dec-0016]
+preserved_exact_tokens:
+  - "DRY Method"
+  - "default"
+  - "the user can turn it off"
+  - "app.agent_rules.dry_method_default_guard"
+  - "enabled"
+  - "disabled_by_user"
+  - "Instruction Bundle"
+negative_constraints:
+  - Do not make DRY opt-in by default.
+  - Do not make DRY impossible to disable.
+  - Do not treat disabled DRY as permission to bypass explicit instructions, safety, secrets, source authority, governance, permissions, or source-control hygiene.
+  - Do not create shadow instruction sources.
+owner_hints:
+  - Plans/agent-rules-context.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/DRY_Rules.md
+```
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime agent-rules rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-4008c76510d28b5c52ceedae`: `AgentRulesContextRequest` fields are `request_id`, `project_id?`, `application_rules_ref`, `project_rules_ref?`, `scoped_agents_enabled`, `max_bytes`, and `created_at_utc`. `AgentRulesContextResult` fields are `request_id`, `included_paths[]`, `formatted_block_ref`, `warnings[]`, `errors[]`, `byte_count`, and `schema_version`.
+- Repairs `sfk-d708c289ede618386ed6a0fd`: GUI placement is `Settings > Rules & Commands > Instructions`. Commands are `cmd.rules.validate`, `cmd.rules.save_application`, `cmd.rules.save_project`, and `cmd.rules.revert`. Dirty states are `clean`, `dirty`, `validating`, `saving`, `saved`, and `save_failed`.

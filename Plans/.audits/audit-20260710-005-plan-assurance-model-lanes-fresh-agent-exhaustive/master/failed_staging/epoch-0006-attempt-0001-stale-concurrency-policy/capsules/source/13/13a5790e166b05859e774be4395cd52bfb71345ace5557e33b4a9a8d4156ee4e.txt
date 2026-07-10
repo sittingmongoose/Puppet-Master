@@ -1,0 +1,367 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-352 >>>
+L00000001	# Planning Wizard
+L00000002	
+L00000003	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. This document is compiled from bootstrap ledger `pldg-20260618-001-prd-planning-wizard`; the ledger remains source-lineage memory, while this live Plan doc is canonical after compilation.
+L00000004	
+L00000005	> **PlanProfile:** New Plan Authoring Profile
+L00000006	
+L00000007	## 0. Scope
+L00000008	
+L00000009	Planning Wizard is the finished-product planning workspace that consumes an Approved PRD Pack, normalized requirements input, or structured Assistant Chat seed and turns it into implementation-ready Plans, a Final Plan Pack, and an ApprovedPlanPack suitable for Plan Compile after explicit `Approve And Build` approval.
+L00000010	
+L00000011	
+L00000012	## 1. Ownership And Consumers
+L00000013	
+L00000014	Planning Wizard owns PlanningRun, topic graph, topic agents, topic-scoped ledger work, Planning Context Capsules, topic conversion and audits, final integration, Planning Amendments, compile readiness, ApprovedPlanPack authority, Planning Wizard GUI states, and the Approve And Build transition. It consumes PRD Builder, Assistant Chat, Goal Runtime, Plan Document System, Plan To Node Compilation, Automated Testing, Executor, Contracts, source-control, permissions, Final GUI, Orchestrator, and HITL contracts without owning low-level runtime execution after Executor activation.
+L00000015	
+L00000016	Planning Wizard may self-initiate web/search/fetch/extract/research/deep-research/crawl/map (`websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`) and Site Reader/browser evidence through the shared PM WebOperation/BrowserAction dispatcher when current external facts, docs, issues, PRs, URLs, visual/dynamic pages, project context, comparative research, or source authority materially changes planning. The resulting read receipts, extract receipts, citations, browser artifacts, source-selection reasons, research closure states, and failure states are planning evidence only until explicit approval; they may flow into Planning Context Capsules, topic ledgers, topic plans, audit findings, Final Plan Pack source refs, and ApprovedPlanPack lineage, but they do not create WorkNodes, NodeSeeds, executable queues, runtime code, implementation files, production build tasks, or Plan Compile authority by themselves. Retired Chain Wizard wording remains compatibility/search lineage only and does not become a dependency or product term.
+L00000017	
+L00000018	
+L00000019	## 2. Canonical PlanUnits
+L00000020	
+L00000021	
+L00000022	### PWIZ-001 - Planning Wizard Naming, Inputs, And Handoff Seeds
+L00000023	
+L00000024	
+L00000025	```yaml
+L00000026	plan_unit_id: PWIZ-001
+L00000027	unit_type: requirement
+L00000028	status: accepted
+L00000029	owner_doc: Plans/Planning_Wizard.md
+L00000030	canonical_text: 'The canonical product name is Planning Wizard; Chain Wizard and Plan Wizard are stale names that must be retired from active product prose, UI, commands, events, and contracts. Planning Wizard accepts exactly three canonical input seed families before topic work begins: ApprovedPRDPack, normalized_requirements_pack, or assistant_chat_handoff_seed. Each seed preserves source identity, version, hashes, warnings, amendments, lineage, project context, and bounded work_intent axes; multiple compatible intents such as feature work plus release PR delivery may overlap in one PlanningRun without collapsing project context into a single lossy mode enum. Send to Planning Wizard creates a structured seed containing goal, scope, project, requirements, assumptions, open questions, source message references, artifacts, repository context, and suggested mode rather than copying an unbounded transcript. When Assistant Chat already contains sufficient planning-intake intent, the handoff may construct a traceable seed or draft PRD Pack and begin Planning Wizard intake without forcing the user through repeated PRD Builder questions.'
+L00000031	gui_related: true
+L00000032	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00000033	depends_on: []
+L00000034	unblocks: []
+L00000035	acceptance_criteria:
+L00000036	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000037	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000038	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000039	- Canonical input seeds preserve identity, version/hash, warnings, lineage, project context, and multiple compatible work_intent axes.
+L00000040	validation_surfaces:
+L00000041	- python3 scripts/pm-plan-index.py validate
+L00000042	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000043	risk_class: owner_drift
+L00000044	reasoning_tier: standard
+L00000045	context_scope: ledger_to_plans_compile
+L00000046	implementation_surfaces:
+L00000047	- Plans/Planning_Wizard.md
+L00000048	- Plans/FinalGUISpec.md
+L00000049	- Plans/00-plans-index.md
+L00000050	- Plans/Contracts_V0.md
+L00000051	- Plans/assistant-chat-design.md
+L00000052	- Plans/PRD_Builder.md
+L00000053	node_compile_hint:
+L00000054	  mode: canonical_planunit_from_bootstrap_ledger
+L00000055	  create_worknodes: false
+L00000056	  create_nodeseeds: false
+L00000057	source_lineage:
+L00000058	- pldg-20260618-001-prd-planning-wizard:atom-0002
+L00000059	- pldg-20260618-001-prd-planning-wizard:atom-0039
+L00000060	- pldg-20260618-001-prd-planning-wizard:atom-0040
+L00000061	- pldg-20260618-001-prd-planning-wizard:atom-0041
+L00000062	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/01-naming-and-boundaries.md#SRC-NAMING
+L00000063	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+L00000064	source_atom_ids:
+L00000065	- atom-0002
+L00000066	- atom-0039
+L00000067	- atom-0040
+L00000068	- atom-0041
+L00000069	decision_refs:
+L00000070	- dec-0001
+L00000071	correction_refs:
+L00000072	- corr-0002
+L00000073	preserved_exact_tokens:
+L00000074	- Planning Wizard
+L00000075	- Chain Wizard
+L00000076	- Plan Wizard
+L00000077	- Approved PRD Pack
+L00000078	- ApprovedPRDPack
+L00000079	- normalized_requirements_pack
+L00000080	- Assistant Chat handoff seed
+L00000081	- assistant_chat_handoff_seed
+L00000082	- Send to Planning Wizard
+L00000083	- structured seed
+L00000084	- fast-path
+L00000085	negative_constraints:
+L00000086	- Do not use Chain Wizard or Plan Wizard as current terminology.
+L00000087	- Do not use the raw Assistant Chat transcript as the sole Planning Wizard handoff.
+L00000088	- Do not sacrifice provenance, quality warnings, or readiness validation to avoid repetition.
+L00000089	- Do not collapse overlapping compatible work intents or project context into a single lossy mode enum.
+L00000090	owner_hints:
+L00000091	- Plans/Planning_Wizard.md
+L00000092	- Plans/FinalGUISpec.md
+L00000093	- Plans/00-plans-index.md
+L00000094	- Plans/Contracts_V0.md
+L00000095	- Plans/assistant-chat-design.md
+L00000096	- Plans/PRD_Builder.md
+L00000097	```
+L00000098	
+L00000099	## GUI approval and Plan Compile launch repair addendum (2026-07-02)
+L00000100	
+L00000101	This addendum closes the Approve And Build defects from the PMConcept readiness report. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+L00000102	
+L00000103	The production final-review control dispatches `cmd.planning_wizard.approve_and_build`. The command payload carries the exact final-review CAS/currentness values shown to the user: `project_id`, `planning_run_id`, PlanningRun revision, topic map version, `approved_plan_pack_id`, pack version/hash, project-context snapshot hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, final audit/closure hash, approval actor, and deterministic idempotency key.
+L00000104	
+L00000105	Approval fails closed when any planning state, source pack, project context, topic readiness, audit closure, testing policy, Plan index input, or displayed final-review CAS input changed after the user reviewed it. A stale failure routes to bounded revalidation or final-review refresh; it must not silently approve a different plan.
+L00000106	
+L00000107	Successful approval atomically writes `approval_cas_receipt`, publishes `PlanApproved`, creates or binds exactly one `PlanCompileRun`, and returns the durable `plan_compile_run_id` synchronously. Projection reconciliation may show a pending launch shell in Orchestrator Plan Compile, but run identity itself may not be left to eventual projection. Duplicate delivery with the same CAS inputs and idempotency key returns the same `PlanCompileRun`.
+L00000108	
+L00000109	Planning Wizard and PlanApproved records consume `execution_unit_context` only through the Executor-owned contract in `Plans/Executor_Protocol.md` and `Plans/execution_unit_context.schema.json`. They must not define a local context field list, must not persist an embedded context payload without `schema_version`, and must not store secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets in the context payload.
+L00000110	
+L00000111	Persisted Planning Wizard approval, PlanApproved, and final-review events consume the canonical EventRecord envelope in `Plans/Contracts_V0.md#EventRecord` and `Plans/event_record.schema.json`. Planning Wizard owns approval behavior and CAS/idempotency semantics, but it must not copy the EventRecord field set or treat the EventRecord schema as permission to emit PlanCompile runtime artifacts.
+L00000112	
+L00000113	The Planning Wizard and PMConcept concept surface must not expose `START`, `BUILD`, `Start Chain`, or `Approve & Continue` as ordinary build-launch controls. `Approve And Build` is the only ordinary final planning approval-to-PlanCompileRun launch authority; later controls are post-approval Plan Compile or runtime controls with scoped commands, disabled reasons, receipt effects, and stale-projection behavior.
+L00000114	
+L00000115	
+L00000116	### PWIZ-002 - PlanningRun Aggregate, Thread Topology, Context, And Intent Axes
+L00000117	
+L00000118	
+L00000119	```yaml
+L00000120	plan_unit_id: PWIZ-002
+L00000121	unit_type: requirement
+L00000122	status: accepted
+L00000123	owner_doc: Plans/Planning_Wizard.md
+L00000124	canonical_text: 'Each planning topic, integration pass, and attached audit/repair activity is a bounded child thread grouped by planning_run_id and thread_group_id under one collapsible Planning Run parent. PlanningRun owns source pack identity, project and work-intent context, thread group, global planning ledger, dynamic topic map, topic threads, topic plan drafts, amendments, invalidations, audit cycles, final plan pack, status, hashes, and handoff events. Planning Wizard classifies project context independently from work intent so overlapping cases such as an existing Git repository plus feature work plus PR delivery are represented without a misleading single mode enum. Project context supports greenfield, existing local project, existing Git repository, remote SSH project, and fork or external upstream contexts, with explicit repository and host facts. Work intent supports new product, feature or enhancement, refactor or rewrite,
+L00000125	  bugfix or bounded task, and contribution PR, and may include more than one compatible delivery intent.'
+L00000126	gui_related: true
+L00000127	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00000128	depends_on: []
+L00000129	unblocks: []
+L00000130	acceptance_criteria:
+L00000131	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000132	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000133	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000134	validation_surfaces:
+L00000135	- python3 scripts/pm-plan-index.py validate
+L00000136	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000137	risk_class: owner_drift
+L00000138	reasoning_tier: high
+L00000139	context_scope: ledger_to_plans_compile
+L00000140	implementation_surfaces:
+L00000141	- Plans/Planning_Wizard.md
+L00000142	- Plans/assistant-chat-design.md
+L00000143	- Plans/FinalGUISpec.md
+L00000144	- Plans/Contracts_V0.md
+L00000145	- Plans/storage-plan.md
+L00000146	- Plans/FileSafe.md
+L00000147	- Plans/GitHub_Integration.md
+L00000148	node_compile_hint:
+L00000149	  mode: canonical_planunit_from_bootstrap_ledger
+L00000150	  create_worknodes: false
+L00000151	  create_nodeseeds: false
+L00000152	source_lineage:
+L00000153	- pldg-20260618-001-prd-planning-wizard:atom-0009
+L00000154	- pldg-20260618-001-prd-planning-wizard:atom-0042
+L00000155	- pldg-20260618-001-prd-planning-wizard:atom-0043
+L00000156	- pldg-20260618-001-prd-planning-wizard:atom-0044
+L00000157	- pldg-20260618-001-prd-planning-wizard:atom-0045
+L00000158	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md#SRC-GUI
+L00000159	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+L00000160	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md#SRC-PROJECT
+L00000161	source_atom_ids:
+L00000162	- atom-0009
+L00000163	- atom-0042
+L00000164	- atom-0043
+L00000165	- atom-0044
+L00000166	- atom-0045
+L00000167	decision_refs:
+L00000168	- dec-0003
+L00000169	- dec-0010
+L00000170	correction_refs:
+L00000171	- corr-0005
+L00000172	preserved_exact_tokens:
+L00000173	- planning_run_id
+L00000174	- thread_group_id
+L00000175	- collapsible
+L00000176	- PlanningRun
+L00000177	- topic map
+L00000178	- project context
+L00000179	- work intent
+L00000180	- greenfield
+L00000181	- existing local project
+L00000182	- existing Git repository
+L00000183	- remote SSH
+L00000184	- fork or external upstream
+L00000185	- new product
+L00000186	- feature or enhancement
+L00000187	- refactor or rewrite
+L00000188	- bugfix
+L00000189	- contribution PR
+L00000190	negative_constraints:
+L00000191	- Do not use one unbounded transcript for the entire Planning Wizard.
+L00000192	owner_hints:
+L00000193	- Plans/Planning_Wizard.md
+L00000194	- Plans/assistant-chat-design.md
+L00000195	- Plans/FinalGUISpec.md
+L00000196	- Plans/Contracts_V0.md
+L00000197	- Plans/storage-plan.md
+L00000198	- Plans/FileSafe.md
+L00000199	- Plans/GitHub_Integration.md
+L00000200	```
+L00000201	
+L00000202	
+L00000203	### PWIZ-003 - Dynamic Topic Graph And Topic Operations
+L00000204	
+L00000205	
+L00000206	```yaml
+L00000207	plan_unit_id: PWIZ-003
+L00000208	unit_type: requirement
+L00000209	status: accepted
+L00000210	owner_doc: Plans/Planning_Wizard.md
+L00000211	canonical_text: 'Planning Wizard derives an initial topic graph from the input pack, project/repository context, work intent, risk, and known defaults rather than enforcing a fixed list of sections. Possible topics include overview, product behavior, GUI or UX, backend, data, integrations, security, permissions, testing, deployment, migration, observability, and risks, but actual titles and scope are evidence-driven. The controller can add, split, merge, rename, defer, reopen, reorder, and mark topics impacted, recording the reason, source refs, dependencies, user-visible origin, and resulting invalidations. The GUI suggests a next topic and conversational sequence while the underlying topic map preserves dependencies and allows safe navigation, reopening, and parallel background work.'
+L00000212	gui_related: true
+L00000213	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00000214	depends_on: []
+L00000215	unblocks: []
+L00000216	acceptance_criteria:
+L00000217	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000218	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000219	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000220	validation_surfaces:
+L00000221	- python3 scripts/pm-plan-index.py validate
+L00000222	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000223	risk_class: owner_drift
+L00000224	reasoning_tier: standard
+L00000225	context_scope: ledger_to_plans_compile
+L00000226	implementation_surfaces:
+L00000227	- Plans/Planning_Wizard.md
+L00000228	- Plans/FinalGUISpec.md
+L00000229	- Plans/Contracts_V0.md
+L00000230	node_compile_hint:
+L00000231	  mode: canonical_planunit_from_bootstrap_ledger
+L00000232	  create_worknodes: false
+L00000233	  create_nodeseeds: false
+L00000234	source_lineage:
+L00000235	- pldg-20260618-001-prd-planning-wizard:atom-0046
+L00000236	- pldg-20260618-001-prd-planning-wizard:atom-0047
+L00000237	- pldg-20260618-001-prd-planning-wizard:atom-0048
+L00000238	- pldg-20260618-001-prd-planning-wizard:atom-0049
+L00000239	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+L00000240	source_atom_ids:
+L00000241	- atom-0046
+L00000242	- atom-0047
+L00000243	- atom-0048
+L00000244	- atom-0049
+L00000245	decision_refs:
+L00000246	- dec-0010
+L00000247	correction_refs: []
+L00000248	preserved_exact_tokens:
+L00000249	- dynamic topic map
+L00000250	- topic graph
+L00000251	- GUI / UX
+L00000252	- Security
+L00000253	- Testing
+L00000254	- add_topic
+L00000255	- split_topic
+L00000256	- merge_topics
+L00000257	- mark_topic_impacted
+L00000258	- suggested order
+L00000259	- dependency graph
+L00000260	negative_constraints:
+L00000261	- Do not hardcode one universal topic taxonomy for all projects.
+L00000262	owner_hints:
+L00000263	- Plans/Planning_Wizard.md
+L00000264	- Plans/FinalGUISpec.md
+L00000265	- Plans/Contracts_V0.md
+L00000266	```
+L00000267	
+L00000268	
+L00000269	### PWIZ-004 - Topic Agents, Context Capsules, Questions, And Safe Autonomy
+L00000270	
+L00000271	
+L00000272	```yaml
+L00000273	plan_unit_id: PWIZ-004
+L00000274	unit_type: requirement
+L00000275	status: accepted
+L00000276	owner_doc: Plans/Planning_Wizard.md
+L00000277	canonical_text: 'Every substantive Planning Wizard exchange must append an event and update topic-scoped planning atoms plus any affected global decisions, constraints, dependencies, invalidations, amendments, questions, and handoff state before the turn is complete. Each topic agent receives a bounded Planning Context Capsule containing approved PRD summary, project context, global decisions and constraints, glossary, relevant prior topic-plan summaries, dependencies, assumptions, questions, and artifact references. Each topic conversation is handled by a fresh topic agent with a bounded thread, topic brief, Context Capsule, relevant sources, and topic-scoped write card. Each topic agent asks gap-driven questions relevant to its active topic and implementation-readiness risks, using known answers and defaults so it does not drift into unrelated domains. Planning Wizard proactively resolves behavior, state, data, identity, permissions,
+L00000278	  failure modes, edge cases, integration constraints, acceptance evidence, currentness, idempotency, migration, operations, and implementation boundaries. The controller answers auto-resolvable gaps from evidence, applies safe defaults with recorded assumptions, and defers downstream-only details; it asks the user only for genuine product direction, risk acceptance, destructive authority, credentials, legal policy, or irreconcilable ambiguity.'
+L00000279	gui_related: false
+L00000280	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00000281	depends_on: []
+L00000282	unblocks: []
+L00000283	acceptance_criteria:
+L00000284	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000285	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000286	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000287	validation_surfaces:
+L00000288	- python3 scripts/pm-plan-index.py validate
+L00000289	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000290	risk_class: owner_drift
+L00000291	reasoning_tier: high
+L00000292	context_scope: ledger_to_plans_compile
+L00000293	implementation_surfaces:
+L00000294	- Plans/Planning_Wizard.md
+L00000295	- Plans/Planning_Ledger_System.md
+L00000296	- Plans/assistant-chat-design.md
+L00000297	- Plans/Goal_Runtime_System.md
+L00000298	- Plans/human-in-the-loop.md
+L00000299	node_compile_hint:
+L00000300	  mode: canonical_planunit_from_bootstrap_ledger
+L00000301	  create_worknodes: false
+L00000302	  create_nodeseeds: false
+L00000303	source_lineage:
+L00000304	- pldg-20260618-001-prd-planning-wizard:atom-0011
+L00000305	- pldg-20260618-001-prd-planning-wizard:atom-0016
+L00000306	- pldg-20260618-001-prd-planning-wizard:atom-0050
+L00000307	- pldg-20260618-001-prd-planning-wizard:atom-0051
+L00000308	- pldg-20260618-001-prd-planning-wizard:atom-0052
+L00000309	- pldg-20260618-001-prd-planning-wizard:atom-0053
+L00000310	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+L00000311	source_atom_ids:
+L00000312	- atom-0011
+L00000313	- atom-0016
+L00000314	- atom-0050
+L00000315	- atom-0051
+L00000316	- atom-0052
+L00000317	- atom-0053
+L00000318	decision_refs:
+L00000319	- dec-0004
+L00000320	- dec-0011
+L00000321	correction_refs:
+L00000322	- corr-0004
+L00000323	- corr-0006
+L00000324	preserved_exact_tokens:
+L00000325	- after every substantive turn
+L00000326	- topic_id
+L00000327	- global planning state
+L00000328	- Planning Context Capsule
+L00000329	- fresh topic agent
+L00000330	- bounded thread
+L00000331	- topic-relevant
+L00000332	- gap-driven
+L00000333	- behavior
+L00000334	- state
+L00000335	- failure modes
+L00000336	- idempotency
+L00000337	- safe defaults
+L00000338	- minimal HITL
+L00000339	negative_constraints:
+L00000340	- Do not advance a topic from chat state that has not been durably synchronized.
+L00000341	- Do not inject all prior raw chat histories and complete raw ledgers into every topic agent by default.
+L00000342	- Do not ask generic questions that do not materially affect the active topic.
+L00000343	- Do not convert ordinary planning uncertainty into a Needs user decision blocker.
+L00000344	owner_hints:
+L00000345	- Plans/Planning_Wizard.md
+L00000346	- Plans/Planning_Ledger_System.md
+L00000347	- Plans/assistant-chat-design.md
+L00000348	- Plans/Goal_Runtime_System.md
+L00000349	- Plans/human-in-the-loop.md
+L00000350	```
+L00000351	
+L00000352	
+
+<<< CONTEXT_AFTER canonical_document_lines=353-364 >>>
+L00000353	### PWIZ-005 - Topic Ledger, Invalidation, Amendments, And PRD Immutability
+L00000354	
+L00000355	
+L00000356	```yaml
+L00000357	plan_unit_id: PWIZ-005
+L00000358	unit_type: requirement
+L00000359	status: accepted
+L00000360	owner_doc: Plans/Planning_Wizard.md
+L00000361	canonical_text: 'Topic agents write topic_id-scoped records into one Planning Run ledger plus global records for cross-topic decisions and constraints, avoiding independent ledgers that can silently disagree. A later decision that changes a prior topic''s assumptions or outputs marks affected topic drafts stale_due_to_dependency_change, stale_due_to_new_scope, or requires_recompile/requires_reaudit and propagates impact through typed topic dependencies. New information during planning becomes a planning clarification, immutable Planning Amendment, out_of_current_approved_scope item, or PRD revision request according to materiality and impact. Approved PRD Packs remain immutable; Planning Wizard records amendments or requests a successor PRD rather than editing the approved source snapshot in place.'
+L00000362	gui_related: true
+L00000363	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00000364	depends_on: []

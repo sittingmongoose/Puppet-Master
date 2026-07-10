@@ -1,0 +1,767 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001026-ADVERSARIAL-WIN-7414C6C901F8-0015",
+  "attempt_id": "attempt-0009",
+  "task_thread_id": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001026_adversarial_0015_attempt_0009_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "2817d929df8986217f0b01593a33c5f5ba96baaccdfc95ca1a88efc1e0d474fb",
+    "core_range": [
+      5197,
+      5569
+    ]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "GAP-001",
+      "item_type": "gap",
+      "title": "Phase dependencies and consumers are absent",
+      "statement": "All eight checklist units expose empty dependency and unblock lists even though Phase 2 navigation, semantic actions, rename, request control, and Settings rely on Phase 1 registry and document-sync capabilities. The window therefore does not identify required callers, downstream consumers, or ordering gates.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_callers_consumers",
+      "impact": "A compiler or builder can schedule user-visible Phase 2 features without a registry, synchronized document state, or capability-ready server, producing structurally valid but unusable work.",
+      "feature_keys": [
+        "LSPS-076",
+        "LSPS-077",
+        "LSPS-078",
+        "LSPS-079",
+        "LSPS-080",
+        "LSPS-081",
+        "LSPS-082"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5203,
+          "line_end": 5203,
+          "exact_quote": "canonical_text: Phase 1 checklist implementation includes server registry loading, all built-in servers plus slint-lsp, ESLint and Slint root discovery, document sync, and version tracking.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5263,
+          "line_end": 5263,
+          "exact_quote": "depends_on: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-002",
+      "item_type": "acceptance_oracle",
+      "title": "Acceptance criteria validate preservation, not product behavior",
+      "statement": "Every unit repeats migration traceability and index-validation criteria, but none provides falsifiable runtime or GUI assertions for registry loading, synchronization, diagnostics, navigation, semantic actions, edits, request control, or Settings. Exact-text survival cannot establish behavioral correctness.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "The requirements can pass their listed validations while every described LSP behavior remains unimplemented or incorrect.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5210,
+          "line_end": 5210,
+          "exact_quote": "- The covered source span remains losslessly available for exact-text audit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5216,
+          "line_end": 5216,
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-003",
+      "item_type": "state_transition",
+      "title": "Document synchronization has no ordering or recovery state machine",
+      "statement": "The plan names didOpen, didChange, didSave, didClose, a default debounce, and version tracking without specifying event ordering, change coalescing, save-versus-close races, server restart replay, rejected versions, multi-view edits, or recovery after a partially delivered sync sequence.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "Servers may compute against missing, reordered, or stale document states and the client has no specified route back to convergence.",
+      "feature_keys": [
+        "LSPS-076"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5236,
+          "line_end": 5236,
+          "exact_quote": "- didOpen",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5241,
+          "line_end": 5241,
+          "exact_quote": "- track document version",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-004",
+      "item_type": "gui_truth",
+      "title": "Diagnostics and status surfaces lack freshness and provenance rules",
+      "statement": "Diagnostics are mapped to several GUI surfaces and the status bar has example labels, but the plan does not define version correlation, deduplication, clearing after close or server disable, source-server identity, partial publication, stale-result suppression, or when Ready, Initializing, and Error may truthfully be shown.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "gui_misleading_states",
+      "impact": "The editor, gutter, Problems panel, and status bar can disagree or present obsolete server output as current truth.",
+      "feature_keys": [
+        "LSPS-077",
+        "LSPS-081"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5259,
+          "line_end": 5259,
+          "exact_quote": "canonical_text: Phase 1 user-visible checklist implementation maps diagnostics to underlines, gutter markers, and Problems, implements hover, completion, and LSP status examples in the status bar.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5294,
+          "line_end": 5294,
+          "exact_quote": "- 'rust-analyzer: Ready'",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-005",
+      "item_type": "authority",
+      "title": "Heuristic navigation fallback is not distinguished from authoritative LSP results",
+      "statement": "Go-to-definition permits a heuristic/index fallback, but no trigger, confidence threshold, precedence, stale-index handling, labeling, or user-visible distinction is defined. The same affordance can therefore imply authoritative semantic navigation when it is only a guess.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authority_boundaries",
+      "impact": "Users can navigate to the wrong declaration without knowing that a lower-authority fallback produced the result.",
+      "feature_keys": [
+        "LSPS-078"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5346,
+          "line_end": 5346,
+          "exact_quote": "- 'Fallback: heuristic/index'",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-006",
+      "item_type": "gui_truth",
+      "title": "Semantic feature availability is not capability-gated",
+      "statement": "Code actions, code lens, signature help, inlay hints, and semantic tokens are grouped as one implementation checklist, yet the window gives no per-server capability negotiation, dynamic-registration, refresh, unsupported-state, or per-feature failure behavior. Syntax-only fallback is named only for semantic tokens and does not resolve the other affordances.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "Menus, lightbulbs, popups, links, and decorations can appear actionable when the active server does not support or has withdrawn the underlying capability.",
+      "feature_keys": [
+        "LSPS-079"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5373,
+          "line_end": 5373,
+          "exact_quote": "canonical_text: Phase 2 editor semantics implement code actions, code lens, signature help, inlay hints, and semantic tokens with editor affordances and syntax-only fallback where applicable.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5409,
+          "line_end": 5409,
+          "exact_quote": "- fall back to syntax-only",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "NONGAP-007",
+      "item_type": "explicit_non_gap",
+      "title": "Rename and format edits have an explicit FileSafe authority boundary",
+      "statement": "The core explicitly requires rename and format edits to pass through FileSafe-backed workspace/applyEdit rather than granting the LSP an unspecified direct-write route. This is a meaningful authority and destructive-action constraint, although transaction behavior remains unspecified separately.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "LSPS-080"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5463,
+          "line_end": 5463,
+          "exact_quote": "- Rename and format edits must apply through FileSafe-backed workspace/applyEdit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-008",
+      "item_type": "failure_recovery",
+      "title": "Workspace edits have no atomicity, conflict, rollback, or confirmation contract",
+      "statement": "FileSafe is named as the apply boundary and a preview is required only 'where needed,' but the plan does not define who decides preview necessity, multi-file atomicity, open-buffer conflicts, dirty files, version preconditions, partial application, rollback, undo grouping, user cancellation, or recovery after a failed edit.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "recovery_rollback",
+      "impact": "Rename or format can partially mutate a workspace, overwrite newer edits, or leave the UI reporting success without a recoverable transaction.",
+      "feature_keys": [
+        "LSPS-080"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5427,
+          "line_end": 5427,
+          "exact_quote": "canonical_text: Phase 2 rename and format implement prepareRename, rename, formatting, and rangeFormatting, show preview where needed, and apply changes through FileSafe-backed workspace/applyEdit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5456,
+          "line_end": 5456,
+          "exact_quote": "- show preview",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-009",
+      "item_type": "state_transition",
+      "title": "Timeout, cancellation, stale response, and disable races are unresolved",
+      "statement": "The plan says to discard or re-request stale results and to stop LSP when disabled, but does not define timeout-versus-response precedence, cancellation acknowledgement, late-response disposal, re-request limits, version snapshot selection, in-flight request handling during disable, or enable-after-disable reinitialization.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_races",
+      "impact": "Late results can repopulate disabled or stale UI, retry loops can amplify load, and requests can hang or duplicate across state transitions.",
+      "feature_keys": [
+        "LSPS-081"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5480,
+          "line_end": 5480,
+          "exact_quote": "canonical_text: Phase 2 request control honors timeout, cancellation, stale document discard or re-request behavior, per-server enable/disable, lsp.<id>.disabled, and lsp:false.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5506,
+          "line_end": 5506,
+          "exact_quote": "- discard or re-request on stale document version",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5512,
+          "line_end": 5512,
+          "exact_quote": "- Per-server disabled state must stop LSP for that language.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-010",
+      "item_type": "authority",
+      "title": "Custom server entries lack an untrusted-input and execution boundary",
+      "statement": "Settings exposes all servers and custom entries with an undifferentiated 'validation' token, but the core does not constrain executable paths, arguments, environment variables, working directories, root discovery, network endpoints, duplicate identifiers, privilege inheritance, workspace-provided configuration, or who may authorize execution.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "untrusted_inputs",
+      "impact": "A malformed or hostile custom entry can execute unintended commands, escape intended workspace scope, collide with built-ins, or transmit project content without an explicit trust decision.",
+      "feature_keys": [
+        "LSPS-076",
+        "LSPS-082"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5529,
+          "line_end": 5529,
+          "exact_quote": "canonical_text: Phase 2 Settings > LSP exposes per-server enablement and custom entries according to the FinalGUISpec Settings contract.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5557,
+          "line_end": 5557,
+          "exact_quote": "- all servers and custom entries",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5558,
+          "line_end": 5558,
+          "exact_quote": "- validation",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-011",
+      "item_type": "gap",
+      "title": "User-visible LSP surfaces omit accessibility and localization contracts",
+      "statement": "The GUI units name underlines, gutter markers, Problems, hover, completion, status, breadcrumbs, panels, popups, links, inline decorations, preview, and Settings without keyboard traversal, focus order, screen-reader semantics, non-color cues, contrast, reduced-motion behavior, zoom/reflow, localized labels, pluralization, text expansion, bidirectional text, or locale-safe sorting.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "accessibility_localization",
+      "impact": "Core LSP behavior can be inaccessible to keyboard or assistive-technology users and break under translated or bidirectional content.",
+      "feature_keys": [
+        "LSPS-077",
+        "LSPS-078",
+        "LSPS-079",
+        "LSPS-080",
+        "LSPS-082"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5259,
+          "line_end": 5259,
+          "exact_quote": "canonical_text: Phase 1 user-visible checklist implementation maps diagnostics to underlines, gutter markers, and Problems, implements hover, completion, and LSP status examples in the status bar.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5315,
+          "line_end": 5315,
+          "exact_quote": "canonical_text: Phase 2 editor navigation implements definition, references, breadcrumbs, documentSymbol, and workspace/symbol with documented keyboard and click affordances plus FileManager fallback.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-012",
+      "item_type": "gap",
+      "title": "No scale or backpressure limits are defined",
+      "statement": "The registry, document sync, diagnostics, references, document symbols, workspace symbols, semantic tokens, code lens, inlay hints, and multi-file edits have no maximum result counts, paging, cancellation checkpoints, memory budgets, debounce bounds beyond one default, virtualized rendering, queue limits, or overload degradation rules.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "scale_limits",
+      "impact": "Large workspaces or noisy servers can exhaust memory, monopolize the UI thread, flood request queues, or render unbounded result sets unusable.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5238,
+          "line_end": 5238,
+          "exact_quote": "- default 100 ms",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5353,
+          "line_end": 5353,
+          "exact_quote": "- workspace/symbol",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-013",
+      "item_type": "gap",
+      "title": "Server data access and retention are unspecified",
+      "statement": "Loading built-in and custom servers and synchronizing documents implies disclosure of workspace paths and source text, yet the core gives no data-minimization, root-scope, consent, local-versus-remote labeling, log redaction, retention, cache deletion, telemetry, secret-file exclusion, or post-disable cleanup rule.",
+      "severity": "critical",
+      "confidence": "medium",
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Project content or secrets can cross an unintended server boundary and remain in process, logs, caches, or transport after the server is disabled.",
+      "feature_keys": [
+        "LSPS-076",
+        "LSPS-081",
+        "LSPS-082"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5203,
+          "line_end": 5203,
+          "exact_quote": "canonical_text: Phase 1 checklist implementation includes server registry loading, all built-in servers plus slint-lsp, ESLint and Slint root discovery, document sync, and version tracking.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5557,
+          "line_end": 5557,
+          "exact_quote": "- all servers and custom entries",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-014",
+      "item_type": "failure_recovery",
+      "title": "Operational observability stops at three example status labels",
+      "statement": "The plan does not require structured request and lifecycle logs, correlation identifiers, server stderr capture, latency and timeout metrics, queue depth, retry counts, version mismatch evidence, capability snapshots, diagnostic provenance, health history, support export, or redaction. Ready, Initializing, and Error examples are not sufficient to diagnose partial failure.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "observability_support",
+      "impact": "Users and support cannot distinguish server failure, client desynchronization, capability absence, timeout, bad configuration, or stale output.",
+      "feature_keys": [
+        "LSPS-077",
+        "LSPS-081"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5293,
+          "line_end": 5293,
+          "exact_quote": "- status bar",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5296,
+          "line_end": 5296,
+          "exact_quote": "- 'Error: ...'",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-015",
+      "item_type": "gap",
+      "title": "Compatibility and migration behavior is absent",
+      "statement": "All compatibility-only notes are empty across the core, and the requirements do not define LSP protocol-version negotiation, server-version variance, capability evolution, configuration-schema versioning, built-in registry upgrades, custom-entry migration, key deprecation, or restoration of settings after downgrade.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "compatibility_migration",
+      "impact": "Upgrades or downgrades can silently invalidate server configuration and change user-visible behavior without a migration or recovery path.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5499,
+          "line_end": 5499,
+          "exact_quote": "node_compile_hint:",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5513,
+          "line_end": 5513,
+          "exact_quote": "compatibility_only_notes: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-016",
+      "item_type": "consumer",
+      "title": "Recommended splits have no adjudicated subcontracts",
+      "statement": "Each broad unit is marked split_recommended and says repeated lineage avoids inventing subspans, but no actual child contracts, feature ownership, dependency edges, or separate acceptance oracles are provided. The broad checklists therefore remain ambiguous about which implementation or consumer owns each separable concern.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "cross_document_seams",
+      "impact": "Builders can divide the same source differently, omit a concern between owners, or duplicate behavior while still claiming the parent unit is covered.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5206,
+          "line_end": 5206,
+          "exact_quote": "split_recommended: true",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5250,
+          "line_end": 5250,
+          "exact_quote": "split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "NONGAP-017",
+      "item_type": "explicit_non_gap",
+      "title": "Source preservation and governance validation are explicit",
+      "statement": "The core explicitly requires lossless source-span availability, traceability of exact tokens and owner boundaries, and migration/index validation. This supports governance fidelity, even though it is not a behavioral acceptance oracle.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5212,
+          "line_end": 5212,
+          "exact_quote": "- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5215,
+          "line_end": 5215,
+          "exact_quote": "- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "UNKNOWN-018",
+      "item_type": "unknown",
+      "title": "Referenced owner contracts cannot be confirmed inside the blind window",
+      "statement": "The core delegates GUI behavior to FinalGUISpec, file operations to FileSafe, and navigation fallback to FileManager while stating that referenced owner documents retain their SSOT boundaries. Because unrelated sources are forbidden in this phase, whether those documents close accessibility, transactional, security, lifecycle, or state-truth gaps is unknown rather than assumed.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "cross_document_seams",
+      "impact": "The apparent gaps may be closed elsewhere, but this PlanUnit window provides neither ContractRefs nor dependency edges that make such closure verifiable here.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5302,
+          "line_end": 5302,
+          "exact_quote": "- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5305,
+          "line_end": 5305,
+          "exact_quote": "preserved_contractrefs: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-019",
+      "item_type": "failure_recovery",
+      "title": "Transport loss and unavailable-server behavior are unspecified",
+      "statement": "Request timeout and cancellation are named, but the core does not distinguish a slow request from a dead process, broken stdio or network transport, unavailable executable, offline remote endpoint, or half-open connection; nor does it define queuing, degradation, reconnection, replay, user messaging, or data cleanup in those states.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "offline_network_loss",
+      "impact": "The editor can hang, repeatedly retry, lose changes, or expose stale functionality when a server or transport is unavailable.",
+      "feature_keys": [
+        "LSPS-081"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 5505,
+          "line_end": 5505,
+          "exact_quote": "- Request timeout and cancellation",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Phase sequencing, callers, and consumers are absent; broad units also lack adjudicated child ownership.",
+      "evidence_item_ids": [
+        "GAP-001",
+        "GAP-016"
+      ]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Document sync, capability availability, diagnostic freshness, cancellation, staleness, and enablement have incomplete state machines.",
+      "evidence_item_ids": [
+        "GAP-003",
+        "GAP-004",
+        "GAP-006",
+        "GAP-009"
+      ]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Sync ordering, workspace-edit conflicts, late responses, cancellation, retries, and disable transitions lack race-resolution rules.",
+      "evidence_item_ids": [
+        "GAP-003",
+        "GAP-008",
+        "GAP-009"
+      ]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "The core does not define recovery from partial sync, partial workspace edits, degraded capabilities, lost transport, or incomplete GUI publication.",
+      "evidence_item_ids": [
+        "GAP-003",
+        "GAP-004",
+        "GAP-008",
+        "GAP-014",
+        "GAP-019"
+      ]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "Workspace edits have no rollback contract and request or transport recovery lacks bounded replay and convergence rules.",
+      "evidence_item_ids": [
+        "GAP-008",
+        "GAP-009",
+        "GAP-019"
+      ]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "FileSafe is an explicit edit boundary, but heuristic navigation and custom server execution authority remain unspecified; referenced owner closure is unknown.",
+      "evidence_item_ids": [
+        "GAP-005",
+        "NONGAP-007",
+        "GAP-010",
+        "UNKNOWN-018"
+      ]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "No disclosure, minimization, retention, redaction, secret exclusion, or cleanup contract governs document data sent to servers.",
+      "evidence_item_ids": [
+        "GAP-013"
+      ]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Custom server entries have no specified validation or execution sandbox boundary.",
+      "evidence_item_ids": [
+        "GAP-010"
+      ]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Diagnostics, server status, heuristic navigation, capability affordances, and late results can misrepresent current authoritative state.",
+      "evidence_item_ids": [
+        "GAP-004",
+        "GAP-005",
+        "GAP-006",
+        "GAP-009"
+      ]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "Timeout exists as a token, but server unavailability and transport-loss states have no degradation or reconnection contract.",
+      "evidence_item_ids": [
+        "GAP-019"
+      ]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Unbounded workspace queries, diagnostics, semantic results, sync queues, and edits lack budgets and backpressure.",
+      "evidence_item_ids": [
+        "GAP-012"
+      ]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "The named GUI surfaces have no keyboard, focus, assistive-technology, non-color, contrast, zoom, or reflow requirements.",
+      "evidence_item_ids": [
+        "GAP-011"
+      ]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "Status, panels, tooltips, menus, settings, and result lists have no translation, expansion, sorting, or bidirectional-text contract.",
+      "evidence_item_ids": [
+        "GAP-011"
+      ]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Protocol, server, registry, and configuration evolution and downgrade behavior are absent.",
+      "evidence_item_ids": [
+        "GAP-015"
+      ]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Example status labels exist, but diagnostic evidence, correlation, metrics, logs, health history, and support export are not required.",
+      "evidence_item_ids": [
+        "GAP-014"
+      ]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "FileSafe explicitly constrains the write path, but preview policy, atomicity, conflict handling, undo, rollback, and partial-apply semantics remain open.",
+      "evidence_item_ids": [
+        "NONGAP-007",
+        "GAP-008"
+      ]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "unknown",
+      "summary": "The core references FinalGUISpec, FileSafe, and FileManager but has empty ContractRefs and no dependency edges; blind-window rules prevent confirming closure in those owners.",
+      "evidence_item_ids": [
+        "GAP-016",
+        "UNKNOWN-018"
+      ]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Governance fidelity is explicitly testable, but none of the described runtime or GUI behaviors has a falsifiable acceptance oracle.",
+      "evidence_item_ids": [
+        "GAP-002",
+        "NONGAP-017"
+      ]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "unknown",
+      "summary": "Broad recommended splits, empty ContractRefs, and inaccessible owner docs leave additional seam closure indeterminate without inventing facts.",
+      "evidence_item_ids": [
+        "GAP-016",
+        "UNKNOWN-018"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

@@ -1,0 +1,410 @@
+<<< CONTEXT_BEFORE 1844-1855 >>>
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_pick_element_for_chat.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.pick_element_for_chat emits expected event(s): browser.context_captured."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.browser.pick_element_for_chat emits browser.context_captured with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 1856-2236 >>>
+    "catalog.browser_promote_to_normal_browsing": {
+      "ui_element_id": "catalog.browser_promote_to_normal_browsing",
+      "ui_location": "Browser preview and visible testing surfaces",
+      "ui_command_id": "cmd.browser.promote_to_normal_browsing",
+      "handler_location": "handlers::browser::promote_to_normal_browsing",
+      "expected_event_types": [
+        "browser.session.promoted"
+      ],
+      "acceptance_checks": [
+        "cmd.browser.promote_to_normal_browsing must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.browser.promote_to_normal_browsing must expose projected state selector and disabled reason before dispatch",
+        "cmd.browser.promote_to_normal_browsing dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.browser.promote_to_normal_browsing must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.promote_to_normal_browsing must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.browser.promote_to_normal_browsing; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.browser_promote_to_normal_browsing.availability",
+      "disabled_reason_projection": "state.commands.browser_promote_to_normal_browsing.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.browser.promote_to_normal_browsing emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
+        "receipt_or_event_refs": [
+          "browser.session.promoted",
+          "cmd.browser.promote_to_normal_browsing.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.browser_promote_to_normal_browsing exposes a stable role/name/description matching cmd.browser.promote_to_normal_browsing.",
+        "keyboard_access": "catalog.browser_promote_to_normal_browsing is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.browser_promote_to_normal_browsing preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.browser_promote_to_normal_browsing surfaces state.commands.browser_promote_to_normal_browsing.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.browser_promote_to_normal_browsing.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.browser.promote_to_normal_browsing reaches handlers::browser::promote_to_normal_browsing with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.browser_promote_to_normal_browsing.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.browser_promote_to_normal_browsing.availability and disabled copy reads state.commands.browser_promote_to_normal_browsing.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.browser_promote_to_normal_browsing.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.browser.promote_to_normal_browsing emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
+        },
+        {
+          "test_id": "wiring.catalog.browser_promote_to_normal_browsing.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_promote_to_normal_browsing.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.promote_to_normal_browsing emits expected event(s): browser.session.promoted."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.browser.promote_to_normal_browsing emits browser.session.promoted with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
+      ]
+    },
+    "catalog.browser_reopen": {
+      "ui_element_id": "catalog.browser_reopen",
+      "ui_location": "Browser preview and visible testing surfaces",
+      "ui_command_id": "cmd.browser.reopen",
+      "handler_location": "handlers::browser::reopen",
+      "expected_event_types": [
+        "browser.session.state_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.browser.reopen must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.browser.reopen must expose projected state selector and disabled reason before dispatch",
+        "cmd.browser.reopen dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.browser.reopen must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.reopen must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.browser.reopen; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.browser_reopen.availability",
+      "disabled_reason_projection": "state.commands.browser_reopen.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.browser.reopen emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
+        "receipt_or_event_refs": [
+          "browser.session.state_changed",
+          "cmd.browser.reopen.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.browser_reopen exposes a stable role/name/description matching cmd.browser.reopen.",
+        "keyboard_access": "catalog.browser_reopen is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.browser_reopen preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.browser_reopen surfaces state.commands.browser_reopen.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.browser_reopen.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.browser.reopen reaches handlers::browser::reopen with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.browser_reopen.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.browser_reopen.availability and disabled copy reads state.commands.browser_reopen.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.browser_reopen.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.browser.reopen emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
+        },
+        {
+          "test_id": "wiring.catalog.browser_reopen.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_reopen.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.reopen emits expected event(s): browser.session.state_changed."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.browser.reopen emits browser.session.state_changed with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
+      ]
+    },
+    "catalog.browser_retry": {
+      "ui_element_id": "catalog.browser_retry",
+      "ui_location": "Browser preview and visible testing surfaces",
+      "ui_command_id": "cmd.browser.retry",
+      "handler_location": "handlers::browser::retry",
+      "expected_event_types": [
+        "browser.session.state_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.browser.retry must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.browser.retry must expose projected state selector and disabled reason before dispatch",
+        "cmd.browser.retry dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.browser.retry must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.retry must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.browser.retry; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.browser_retry.availability",
+      "disabled_reason_projection": "state.commands.browser_retry.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.browser.retry emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
+        "receipt_or_event_refs": [
+          "browser.session.state_changed",
+          "cmd.browser.retry.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.browser_retry exposes a stable role/name/description matching cmd.browser.retry.",
+        "keyboard_access": "catalog.browser_retry is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.browser_retry preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.browser_retry surfaces state.commands.browser_retry.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.browser_retry.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.browser.retry reaches handlers::browser::retry with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.browser_retry.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.browser_retry.availability and disabled copy reads state.commands.browser_retry.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.browser_retry.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.browser.retry emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
+        },
+        {
+          "test_id": "wiring.catalog.browser_retry.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_retry.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.retry emits expected event(s): browser.session.state_changed."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.browser.retry emits browser.session.state_changed with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
+      ]
+    },
+    "catalog.browser_revoke_share_with_agent": {
+      "ui_element_id": "catalog.browser_revoke_share_with_agent",
+      "ui_location": "Browser preview and visible testing surfaces",
+      "ui_command_id": "cmd.browser.revoke_share_with_agent",
+      "handler_location": "handlers::browser::revoke_share_with_agent",
+      "expected_event_types": [
+        "browser.context_share_revoked"
+      ],
+      "acceptance_checks": [
+        "cmd.browser.revoke_share_with_agent must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.browser.revoke_share_with_agent must expose projected state selector and disabled reason before dispatch",
+        "cmd.browser.revoke_share_with_agent dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.browser.revoke_share_with_agent must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.revoke_share_with_agent must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.browser.revoke_share_with_agent; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.browser_revoke_share_with_agent.availability",
+      "disabled_reason_projection": "state.commands.browser_revoke_share_with_agent.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.browser.revoke_share_with_agent emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
+        "receipt_or_event_refs": [
+          "browser.context_share_revoked",
+          "cmd.browser.revoke_share_with_agent.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.browser_revoke_share_with_agent exposes a stable role/name/description matching cmd.browser.revoke_share_with_agent.",
+        "keyboard_access": "catalog.browser_revoke_share_with_agent is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.browser_revoke_share_with_agent preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.browser_revoke_share_with_agent surfaces state.commands.browser_revoke_share_with_agent.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.browser_revoke_share_with_agent.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.browser.revoke_share_with_agent reaches handlers::browser::revoke_share_with_agent with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.browser_revoke_share_with_agent.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.browser_revoke_share_with_agent.availability and disabled copy reads state.commands.browser_revoke_share_with_agent.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.browser_revoke_share_with_agent.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.browser.revoke_share_with_agent emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
+        },
+        {
+          "test_id": "wiring.catalog.browser_revoke_share_with_agent.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_revoke_share_with_agent.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.revoke_share_with_agent emits expected event(s): browser.context_share_revoked."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.browser.revoke_share_with_agent emits browser.context_share_revoked with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
+      ]
+    },
+    "catalog.browser_share_with_agent": {
+      "ui_element_id": "catalog.browser_share_with_agent",
+      "ui_location": "Browser preview and visible testing surfaces",
+      "ui_command_id": "cmd.browser.share_with_agent",
+      "handler_location": "handlers::browser::share_with_agent",
+      "expected_event_types": [
+        "browser.context_shared"
+      ],
+      "acceptance_checks": [
+        "cmd.browser.share_with_agent must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.browser.share_with_agent must expose projected state selector and disabled reason before dispatch",
+        "cmd.browser.share_with_agent dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.browser.share_with_agent must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.share_with_agent must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.browser.share_with_agent; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.browser_share_with_agent.availability",
+      "disabled_reason_projection": "state.commands.browser_share_with_agent.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.browser.share_with_agent emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
+        "receipt_or_event_refs": [
+          "browser.context_shared",
+          "cmd.browser.share_with_agent.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.browser_share_with_agent exposes a stable role/name/description matching cmd.browser.share_with_agent.",
+        "keyboard_access": "catalog.browser_share_with_agent is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.browser_share_with_agent preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.browser_share_with_agent surfaces state.commands.browser_share_with_agent.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.browser_share_with_agent.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.browser.share_with_agent reaches handlers::browser::share_with_agent with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.browser_share_with_agent.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.browser_share_with_agent.availability and disabled copy reads state.commands.browser_share_with_agent.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.browser_share_with_agent.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.browser.share_with_agent emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
+        },
+        {
+          "test_id": "wiring.catalog.browser_share_with_agent.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_share_with_agent.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.share_with_agent emits expected event(s): browser.context_shared."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.browser.share_with_agent emits browser.context_shared with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
+      ]
+    },
+    "catalog.browser_stop_agent_keep_browser": {
+      "ui_element_id": "catalog.browser_stop_agent_keep_browser",
+      "ui_location": "Browser preview and visible testing surfaces",
+      "ui_command_id": "cmd.browser.stop_agent_keep_browser",
+      "handler_location": "handlers::browser::stop_agent_keep_browser",
+      "expected_event_types": [
+        "browser.session.takeover_state_changed",
+        "dev.session.stopped"
+      ],
+      "acceptance_checks": [
+        "cmd.browser.stop_agent_keep_browser must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.browser.stop_agent_keep_browser must expose projected state selector and disabled reason before dispatch",
+        "cmd.browser.stop_agent_keep_browser dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.browser.stop_agent_keep_browser must have a typed payload/result contract and canonical browser event effect",
+        "cmd.browser.stop_agent_keep_browser must declare state selector, disabled reason, browser event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.browser.stop_agent_keep_browser; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.browser_stop_agent_keep_browser.availability",
+      "disabled_reason_projection": "state.commands.browser_stop_agent_keep_browser.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.browser.stop_agent_keep_browser emits canonical browser/runtime domain event(s) from Plans/UI_Command_Catalog.md and records a correlated dispatch receipt.",
+        "receipt_or_event_refs": [
+          "browser.session.takeover_state_changed",
+          "dev.session.stopped",
+          "cmd.browser.stop_agent_keep_browser.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.browser_stop_agent_keep_browser exposes a stable role/name/description matching cmd.browser.stop_agent_keep_browser.",
+        "keyboard_access": "catalog.browser_stop_agent_keep_browser is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.browser_stop_agent_keep_browser preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.browser_stop_agent_keep_browser surfaces state.commands.browser_stop_agent_keep_browser.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.browser_stop_agent_keep_browser.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.browser.stop_agent_keep_browser reaches handlers::browser::stop_agent_keep_browser with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.browser_stop_agent_keep_browser.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.browser_stop_agent_keep_browser.availability and disabled copy reads state.commands.browser_stop_agent_keep_browser.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.browser_stop_agent_keep_browser.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.browser.stop_agent_keep_browser emits expected browser/runtime event(s) and records a correlated dispatch receipt without fabricating command_applied events."
+        },
+        {
+          "test_id": "wiring.catalog.browser_stop_agent_keep_browser.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.browser_stop_agent_keep_browser.events",
+          "evidence_kind": "event_test",
+          "requirement": "Dispatching cmd.browser.stop_agent_keep_browser emits expected event(s): browser.session.takeover_state_changed, dev.session.stopped."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.browser.stop_agent_keep_browser emits browser.session.takeover_state_changed with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage.",
+        "Assert cmd.browser.stop_agent_keep_browser emits dev.session.stopped with command_id, origin, correlation_id, browser_session_id where applicable, and receipt linkage."
+      ]
+    },
+
+<<< CONTEXT_AFTER 2237-2248 >>>
+    "catalog.browser_take_over": {
+      "ui_element_id": "catalog.browser_take_over",
+      "ui_location": "Browser preview and visible testing surfaces",
+      "ui_command_id": "cmd.browser.take_over",
+      "handler_location": "handlers::browser::take_over",
+      "expected_event_types": [
+        "browser.session.takeover_state_changed"
+      ],
+      "acceptance_checks": [
+        "cmd.browser.take_over must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.browser.take_over must expose projected state selector and disabled reason before dispatch",
+        "cmd.browser.take_over dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",

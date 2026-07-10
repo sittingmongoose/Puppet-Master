@@ -1,0 +1,413 @@
+<<< CONTEXT_BEFORE 709-720 >>>
+| atom-0026 | PDS-006 |
+| atom-0031 | PDS-006 |
+| atom-0032 | PDS-003, PDS-007 |
+| atom-0033 | PDS-007; PNC-005 owns runtime inheritance. |
+| q-0002 | Captured in PDS-004/BPM-004 as a non-blocking future migration choice: "Which representative pilot Plan doc should be converted first?" Disposition remains "Codex should choose after inventory; likely a substantial owner/consumer doc rather than a tiny addendum." |
+| source_ref:chat:2026-06-13-new-plan-authoring-profile-goal | PDS-011, PDS-012, PDS-013 |
+| source_ref:chat:2026-06-17-semantic-closure-registry-support | PDS-014; PLS-012 owns the durable registry/reopen policy. |
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+
+
+<<< AUTHORITATIVE_CORE 721-1104 >>>
+### PDS-015 - Owner Consumer Reference Scan Gate
+
+```yaml
+plan_unit_id: PDS-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: >-
+  Ledger-to-Plans compiles that change owner contracts must account for direct owner docs, consumer docs, and reference/index/UI/wiring docs. The compile records touched concepts, reference scan terms, updated docs, no-update evidence, and deferred evidence. The former broad Plan Wizard rename deferral is superseded by the 2026-06-18 PRD Builder and Planning Wizard owner map; new active content uses Planning Wizard terminology, while retained Plan Wizard and Chain Wizard tokens require explicit historical/source-lineage or compatibility disposition. Completion claims for such compiles must include a reference/backlink scan result or an audit artifact that proves every direct reference was updated, intentionally unchanged, or explicitly deferred. Post-compile audit/index closure validates the updated Plans, repairs exact-detail drift before indexing, regenerates only Plans/.plan_index after Plans are stable, reports governance_status, and runs governance seal only when explicitly asked.
+  Post-compile repair must validate the PlanUnit index inputs, do not run PlanCompile, preserve backlinks, index docs, UI command docs, wiring, and crosswalks, and honor: Do not update only the obvious owner docs while leaving stale references in consumer/index/UI docs. It also preserves: Do not do an uncontrolled whole-repo rename as part of this compile; do not leave direct contradictions in touched sections.
+gui_related: false
+gui_classification_reason: Reference scan gates and compile closure evidence are plan-document governance behavior.
+depends_on: [PDS-014]
+unblocks: []
+acceptance_criteria:
+  - Owner, consumer, reference/index/UI, and wiring docs are accounted for after owner contract edits.
+  - Direct references are updated, intentionally unchanged with evidence, or explicitly deferred.
+  - Active owner and consumer prose uses Planning Wizard after the 2026-06-18 owner map; retained Plan Wizard or Chain Wizard tokens are historical/source-lineage or compatibility-only.
+  - Post-compile closure validates Plans first, repairs exact-detail drift before index generation, regenerates only Plans/.plan_index, and does not seal governance without an explicit request.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future owner_routing_findings.jsonl audit
+risk_class: stale_reference_drift
+reasoning_tier: high
+context_scope: ledger_to_plans_reference_scan
+implementation_surfaces: [Plans/Plan_Document_System.md, Plans/Planning_Ledger_System.md, Plans/00-plans-index.md]
+node_compile_hint: {mode: owner_consumer_reference_scan_gate, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0059
+  - pldg-20260617-001-plans-to-code-handoff:atom-0062
+  - pldg-20260617-001-plans-to-code-handoff:atom-0063
+  - pldg-20260617-001-plans-to-code-handoff:atom-0064
+  - pldg-20260617-001-plans-to-code-handoff:dec-0027
+  - pldg-20260617-001-plans-to-code-handoff:dec-0028
+  - pldg-20260617-001-plans-to-code-handoff:corr-0010
+preserved_exact_tokens:
+  - "reference/backlink scan"
+  - "touched concepts"
+  - "direct references"
+  - "backlinks"
+  - "index docs"
+  - "UI command docs"
+  - "wiring"
+  - "crosswalks"
+  - "no-update evidence"
+  - "deferred rename"
+  - "owner prose"
+  - "consumer docs"
+  - "reference/index/UI docs"
+  - "directly reference"
+  - "broad Plan Wizard rename remains deferred"
+  - "Planning Wizard"
+  - "post-compile audit/index"
+  - "repairs exact-detail drift"
+  - "Plans/.plan_index"
+  - "governance_status"
+negative_constraints:
+  - Do not claim ledger-to-Plans compile complete until reference scan results are recorded.
+  - Do not do an uncontrolled whole-repo rename as part of this compile.
+  - Do not leave direct contradictions in touched sections.
+  - Do not run governance seal unless explicitly asked.
+compatibility_only_notes:
+  - Pre-rename Plan Wizard and Chain Wizard tokens may remain in source_lineage, preserved_exact_tokens, historical migration notes, and compatibility aliases only.
+stale_retired_dispositions:
+  - The old Plan Wizard redesign deferred framing is superseded by the 2026-06-18 PRD Builder and Planning Wizard owner map.
+owner_hints:
+  - Plans/Plan_Document_System.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/00-plans-index.md
+```
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/00-plans-index.md
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### PDS-016 - Planning Implementation Readiness And Claim Traceability
+
+```yaml
+plan_unit_id: PDS-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: 'The primary PRD contains Summary, Problem or Opportunity, Goals, Users or Actors, Scope, Non-Goals, Functional Requirements, Non-Functional Requirements, UX Expectations, Data or Integration or Environment Constraints, Acceptance Criteria, Assumptions, Risks and Dependencies, Open Questions, and Source Notes. At topic closure, a separate Overseer conversion agent transforms accepted topic ledger records into a versioned Topic Plan Draft or PlanUnit candidates with exact source lineage, assumptions, open non-blocking items, and cross-topic impacts. After required topics are Ready, a fresh Overseer agent reconciles topic drafts into a coherent Final Plan Pack, resolves duplicates and owner boundaries, and computes cross-topic dependencies, consistency, and compile readiness. Images are supporting references; any requirement, decision, constraint, flow, or acceptance implication introduced by an image must also be written into the
+  planning ledger and canonical Plan text. Final Plan Pack audit covers PRD and ledger fidelity, exact details, unsupported inventions, owner and consumer placement, cross-topic conflicts, implementation readiness, testing readiness, security/data/permissions consistency, repository currentness, source lineage, schemas, mechanics, and future compile readiness. Implementation readiness requires behavior, actors and identity, data and state transitions, edge and failure cases, permissions, currentness and idempotency, UI commands and states where applicable, adapters and side effects, validation surfaces, acceptance evidence, dependencies, and handoff contracts. Every material plan and compile claim must trace to an Approved PRD Pack, user planning answer, accepted Planning Amendment, repository fact, reference artifact, explicit system policy, or recorded assumption; unsupported invented claims are audit defects. Create Plans/PRD_Builder.md and
+  Plans/Planning_Wizard.md using the New Plan Authoring Profile and make them authoritative owners for their respective finished-product workflows. Run a doc-impact pass over Assistant Chat, Goal Runtime, Planning Ledger, Plan Document, Plan Compile, Automated Testing, Executor, Orchestrator, Personas, Models, FileSafe, Git/worktree, GitHub, permissions, contracts, commands, GUI, wiring, artifacts, indexes, and reference docs.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: implementation_readiness
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Plan_Document_System.md
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/00-plans-index.md
+- Plans/Crosswalk.md
+- Plans/Wiring_Matrix.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0024
+- pldg-20260618-001-prd-planning-wizard:atom-0058
+- pldg-20260618-001-prd-planning-wizard:atom-0063
+- pldg-20260618-001-prd-planning-wizard:atom-0066
+- pldg-20260618-001-prd-planning-wizard:atom-0132
+- pldg-20260618-001-prd-planning-wizard:atom-0141
+- pldg-20260618-001-prd-planning-wizard:atom-0142
+- pldg-20260618-001-prd-planning-wizard:atom-0158
+- pldg-20260618-001-prd-planning-wizard:atom-0160
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/07-audit-readiness-and-safety.md#SRC-AUDIT
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/10-doc-and-contract-impact.md#SRC-IMPACT
+source_atom_ids:
+- atom-0024
+- atom-0058
+- atom-0063
+- atom-0066
+- atom-0132
+- atom-0141
+- atom-0142
+- atom-0158
+- atom-0160
+decision_refs:
+- dec-0008
+- dec-0012
+- dec-0028
+- dec-0029
+correction_refs:
+- corr-0008
+preserved_exact_tokens:
+- Functional Requirements
+- Non-Functional Requirements
+- Acceptance Criteria
+- Open Questions
+- Source Notes
+- Topic Plan Draft
+- topic closure
+- Overseer
+- Final Plan Pack
+- cross-topic integration
+- supporting reference
+- text remains canonical
+- semantic fidelity
+- implementation readiness
+- source lineage
+- behavior
+- state transitions
+- failure cases
+- idempotency
+- acceptance evidence
+- traceability
+- unsupported claim
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- PlanProfile
+- doc-impact pass
+negative_constraints:
+- Do not leave a material requirement only inside an image.
+- Do not certify invented planning details with no source or explicit assumption.
+owner_hints:
+- Plans/PRD_Builder.md
+- Plans/Plan_Document_System.md
+- Plans/Planning_Wizard.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/00-plans-index.md
+- Plans/Crosswalk.md
+- Plans/Wiring_Matrix.md
+```
+
+### PDS-017 - Retired Compatibility Retrieval Exclusion
+
+```yaml
+plan_unit_id: PDS-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: 'Retired compatibility/source-lineage documents may remain in Plans for auditability, but active product, runtime, implementation, RAG, and search consumers must not retrieve them as current authority. Plans/chain-wizard.md and Plans/chain-wizard-flexibility.md are retained only as compatibility and source-lineage evidence after the PRD Builder and Planning Wizard owner map; product search, runtime-contract search, Plan Compile retrieval, and implementation-agent context builders must exclude those paths or label returned snippets as retired compatibility evidence before use. The exclusion choice is represented in Plans/prd_planning_runtime_contracts.json and validated by scripts/pm-prd-planning-runtime-validate.py; compacting either file to tombstone-only form remains a separate owner decision, not a prerequisite for this bounded repair.'
+gui_related: false
+gui_classification_reason: Search/index/retrieval governance, not visual presentation.
+depends_on: [PDS-016, PNC-018]
+unblocks: []
+acceptance_criteria:
+- Retired Chain Wizard docs are listed in the runtime contract packet retired_search_exclusions.
+- Active PRD Builder and Planning Wizard owner docs remain the product authority.
+- Compatibility snippets from retired docs cannot be consumed as current runtime/implementation instructions.
+validation_surfaces:
+- python3 scripts/pm-plans-verify.py validate-prd-planning-runtime-contracts
+- python3 scripts/pm-plans-verify.py run-gates
+risk_class: stale_legacy_retrieval
+reasoning_tier: standard
+context_scope: retired_compatibility_search_exclusion
+implementation_surfaces:
+- Plans/Plan_Document_System.md
+- Plans/00-plans-index.md
+- Plans/prd_planning_runtime_contracts.json
+- scripts/pm-prd-planning-runtime-validate.py
+node_compile_hint:
+  mode: retired_retrieval_exclusion_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- Plans/chain-wizard.md
+- Plans/chain-wizard-flexibility.md
+- Plans/PRD_Builder.md#PRDB-001
+- Plans/Planning_Wizard.md#PWIZ-001
+- external_report:PRD_Planning_Runtime_Second_Sweep/IR-019
+preserved_exact_tokens:
+- Chain Wizard
+- compatibility/source-lineage
+- retired_search_exclusions
+- PRD Builder
+- Planning Wizard
+negative_constraints:
+- Do not use retired Chain Wizard docs as active product or implementation authority.
+- Do not move legacy prose into PRD Builder or Planning Wizard owner docs.
+owner_hints:
+- Plans/Plan_Document_System.md
+- Plans/00-plans-index.md
+- Plans/prd_planning_runtime_contracts.json
+```
+
+## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+
+### PDS-018 - PDS-018
+
+```yaml
+plan_unit_id: PDS-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: >-
+  The import preserves raw target_docs exactly, but future compile must adjudicate 12 empty target-doc rows, pathless aliases, missing placeholders such as Terminal_Integration.md / Context_Management.md / Skill_System.md, process-governance placeholders, and conditional owner docs before writing canonical Plans.
+gui_related: false
+gui_classification_reason: Backend/orchestration import guardrail; not itself GUI implementation work.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- atom-0122 source details remain traceable through source_lineage and preserved source fields.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+risk_class: import_guardrail_compile
+reasoning_tier: high
+context_scope: import_guardrail
+implementation_surfaces:
+- Plans/Plan_Document_System.md
+node_compile_hint:
+  mode: atom_0122
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0122
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0122
+- subagent:019f297e-fc1f-7e70-a9ab-ddd11d446df3
+- subagent:019f297e-fcd6-71f1-a6f2-e410e13a3c38
+source_atom_ids:
+- atom-0122
+owner_hints:
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/parallel_agent_synthesis_20260703.json
+preserved_exact_tokens:
+- 12 rows have empty target_docs
+- Terminal_Integration.md
+- Context_Management.md
+- Skill_System.md
+- Spec_Lock / governance seal docs
+- Future compile must adjudicate missing and stale target docs
+negative_constraints: []
+compile_disposition: create_new_planunit
+```
+
+## Implementation Readiness Gate Addendum - 2026-07-05
+
+This addendum owns the implementation-readiness blocker registry shape. It does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance seal artifacts, or production build tasks.
+
+### PDS-019 - Implementation Readiness Blocker Registry
+
+```yaml
+plan_unit_id: PDS-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: >-
+  Plans/.implementation_readiness/readiness_blockers.jsonl is the file-backed implementation-readiness blocker
+  registry. Each row uses schema_id `pm.implementation_readiness.blocker.v1` and records blocker_id,
+  blocker_family, status, severity, summary, exact owner_docs, blocked_surfaces, blocked_false_proofs,
+  required_evidence, acceptance_to_close, source_refs, and notes. The required blocker families are
+  contract_materialization, persistence_materialization, gui_wiring, security_boundary, runtime_lifecycle,
+  provider_stream, behavioral_acceptance, structural_integrity, owner_routing, currentness, and
+  clean_room_harness. Plans/.implementation_readiness/readiness_matrix.json owns the blocker schema,
+  false-proof guardrails, proof dimensions, and Wizard gate contract; buildability_gate_report.json is the
+  generated consumer report. Open blocker rows disable Approve And Build; closed or accepted_risk rows remain
+  historical closure evidence and do not require disabled reasons. readiness_blockers.jsonl and readiness_matrix.json
+  are governed readiness inputs, buildability_gate_report.json is a generated governed report, and
+  scripts/pm-implementation-readiness.py is the governed validator/generator registered through Spec Lock during
+  governance seal. Passing plan validators, source-preservation acceptance, existing schemas, wiring JSON existence,
+  and semantic closure are explicitly insufficient to close a blocker without scope-matched concrete evidence. PDS-020
+  owns the narrower non-executable spec/schema/validator/fixture closure lane for non-runtime families; ordinary
+  buildability still requires command-wiring, security, persistence, currentness, provider, structural, owner-routing,
+  and clean-room lifecycle evidence at the scope named by each blocker row. Partial
+  PNC-019 bootstrap-authority evidence may be recorded while runtime_lifecycle and clean_room_harness blockers remain
+  open; it must not be counted as blocker closure or ordinary product buildability.
+gui_related: false
+gui_classification_reason: Defines registry schema and governance artifacts rather than visual presentation.
+depends_on: [PDS-016, PNC-019]
+unblocks: [PWIZ-018, PG-060]
+acceptance_criteria:
+  - The registry contains all required blocker families and exact owner_docs for each open blocker.
+  - The readiness matrix records the blocker schema and false-proof guardrails.
+  - The buildability gate report is generated from the registry and matrix rather than hand-authored as product truth.
+  - Closed and accepted_risk rows remain allowed historical evidence and are excluded from open disabled-reason projection.
+  - The readiness script, registry, matrix, and generated report have documented governance status and Spec Lock registration policy.
+  - Preservation-only acceptance criteria and validator success cannot close implementation-readiness blockers.
+  - PNC-019 bootstrap-authority evidence can be partial/blocked evidence only; it does not close runtime_lifecycle or clean_room_harness without executable lifecycle proof.
+validation_surfaces:
+  - python3 scripts/pm-implementation-readiness.py validate
+  - python3 scripts/pm-implementation-readiness.py self-test
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+  - python3 scripts/pm-plan-index.py validate
+risk_class: false_implementation_readiness_registry
+reasoning_tier: high
+context_scope: implementation_readiness_registry
+implementation_surfaces:
+  - Plans/Plan_Document_System.md
+  - Plans/.implementation_readiness/readiness_blockers.jsonl
+  - Plans/.implementation_readiness/readiness_matrix.json
+  - Plans/.implementation_readiness/buildability_gate_report.json
+  - scripts/pm-implementation-readiness.py
+node_compile_hint:
+  mode: implementation_readiness_registry
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - source_ref:chat:2026-07-05-implementation-readiness-buildability-gate
+  - Plans/Planning_Wizard.md#PWIZ-018
+  - Plans/Plan_To_Node_Compilation.md#PNC-019
+  - Plans/Plan_To_Node_Compilation.md#PNC-022
+preserved_exact_tokens:
+  - "readiness_blockers.jsonl"
+  - "readiness_matrix.json"
+  - "buildability_gate_report.json"
+  - "contract_materialization"
+  - "persistence_materialization"
+  - "gui_wiring"
+  - "security_boundary"
+  - "runtime_lifecycle"
+  - "provider_stream"
+  - "behavioral_acceptance"
+  - "structural_integrity"
+  - "owner_routing"
+  - "currentness"
+  - "clean_room_harness"
+negative_constraints:
+  - Do not treat existing JSON schema presence as enough.
+  - Do not treat validators passing as enough.
+  - Do not treat preservation-only acceptance criteria as behavioral acceptance.
+  - Do not create product WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks from the registry.
+owner_hints:
+  - Plans/Plan_Document_System.md
+  - Plans/Planning_Wizard.md
+  - Plans/Plan_To_Node_Compilation.md
+  - Plans/Progression_Gates.md
+```
+
+
+<<< CONTEXT_AFTER 1105-1116 >>>
+### PDS-020 - Non-Executable Readiness Closure Evidence Registry
+
+```yaml
+plan_unit_id: PDS-020
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/Plan_Document_System.md
+canonical_text: >-
+  Plans/.implementation_readiness/non_executable_closure_evidence.schema.json owns the shape of the non-executable
+  implementation-readiness closure evidence artifact, and Plans/.implementation_readiness/non_executable_closure_evidence.json
+  records the current closure evidence for blocker families that can be proven from owner-routed specs, schemas,
+  validators, and positive/negative fixture contracts before executable PNC-019 certification. This closure lane may

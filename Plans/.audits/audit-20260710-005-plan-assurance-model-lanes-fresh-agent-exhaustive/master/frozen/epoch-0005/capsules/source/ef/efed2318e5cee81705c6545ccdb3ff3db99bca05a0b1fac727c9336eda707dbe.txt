@@ -1,0 +1,354 @@
+<<< CONTEXT_BEFORE canonical_document_lines=8944-8955 >>>
+L00008944	- P1
+L00008945	- Terminal host/mediator provenance and diagnostics
+L00008946	- warpdotdev/warp
+L00008947	- tmux/tmux
+L00008948	- openai/codex
+L00008949	negative_constraints: []
+L00008950	observed_signal: Warp clipboard/OSC52 failures across SSH/tmux, ConPTY version breaking PowerShell, and Codex Windows sandbox helper issues show host layer diagnostics matter.
+L00008951	pm_current_coverage: PM has terminal IDs/actions/restore outcomes.
+L00008952	pm_gap_or_delta: 'Add TerminalHostProvenance: shell, PTY backend, ConPTY/OpenConsole/conhost version, tmux/mosh/ssh nesting, TERM/features, OSC52 clipboard path, degraded reason.'
+L00008953	compile_disposition: create_new_planunit
+L00008954	```
+L00008955	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=8956-9294 >>>
+L00008956	### SMPFS-133 - P1-TERMINAL-PTY-STREAM-CONTRACT
+L00008957	
+L00008958	```yaml
+L00008959	plan_unit_id: SMPFS-133
+L00008960	unit_type: requirement
+L00008961	status: accepted
+L00008962	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008963	canonical_text: >-
+L00008964	  P1-TERMINAL-PTY-STREAM-CONTRACT (P1) is compiled as canonical Puppet Master intent for Separate PTY bytes, terminal parser state, scrollback, and model-visible excerpts: Terminal byte stream preserves parser state across chunks; scrollback is not model context; WebSocket, if used, is UI transport not terminal engine.
+L00008965	gui_related: true
+L00008966	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008967	depends_on:
+L00008968	- PDS-003
+L00008969	- PNC-001
+L00008970	unblocks: []
+L00008971	acceptance_criteria:
+L00008972	- Terminal byte stream preserves parser state across chunks
+L00008973	- scrollback is not model context
+L00008974	- WebSocket, if used, is UI transport not terminal engine.
+L00008975	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008976	validation_surfaces:
+L00008977	- python3 scripts/pm-plan-index.py validate
+L00008978	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008979	- Terminal byte stream preserves parser state across chunks
+L00008980	- scrollback is not model context
+L00008981	- WebSocket, if used, is UI transport not terminal engine.
+L00008982	risk_class: p1_terminal_runtime_hardening
+L00008983	reasoning_tier: standard
+L00008984	context_scope: terminal_runtime
+L00008985	implementation_surfaces:
+L00008986	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008987	- Plans/FinalGUISpec.md
+L00008988	- Plans/Runtime_Artifacts_Panel.md
+L00008989	node_compile_hint:
+L00008990	  mode: p1_terminal_pty_stream_contract
+L00008991	  create_worknodes: false
+L00008992	  create_nodeseeds: false
+L00008993	source_lineage:
+L00008994	- pldg-20260703-001-feature-intake:atom-0054
+L00008995	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0054
+L00008996	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0050/P1-TERMINAL-PTY-STREAM-CONTRACT@line=50
+L00008997	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0050/P1-TERMINAL-PTY-STREAM-CONTRACT
+L00008998	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008999	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00009000	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:14
+L00009001	source_atom_ids:
+L00009002	- atom-0054
+L00009003	external_atom_id: extrepo-20260703-0050
+L00009004	source_row_id: P1-TERMINAL-PTY-STREAM-CONTRACT
+L00009005	priority: P1
+L00009006	finding_family: Separate PTY bytes, terminal parser state, scrollback, and model-visible excerpts
+L00009007	target_docs:
+L00009008	- Plans/FinalGUISpec.md
+L00009009	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009010	- Plans/Runtime_Artifacts_Panel.md
+L00009011	owner_hints:
+L00009012	- Plans/FinalGUISpec.md
+L00009013	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009014	- Plans/Runtime_Artifacts_Panel.md
+L00009015	preserved_exact_tokens:
+L00009016	- extrepo-20260703-0050
+L00009017	- P1-TERMINAL-PTY-STREAM-CONTRACT
+L00009018	- P1
+L00009019	- Separate PTY bytes, terminal parser state, scrollback, and model-visible excerpts
+L00009020	negative_constraints: []
+L00009021	proposal_or_recommendation: Terminal byte stream preserves parser state across chunks; scrollback is not model context; WebSocket, if used, is UI transport not terminal engine.
+L00009022	compile_disposition: create_new_planunit
+L00009023	```
+L00009024	
+L00009025	### SMPFS-134 - P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS
+L00009026	
+L00009027	```yaml
+L00009028	plan_unit_id: SMPFS-134
+L00009029	unit_type: requirement
+L00009030	status: accepted
+L00009031	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009032	canonical_text: >-
+L00009033	  P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS (P1) is compiled as canonical Puppet Master intent for Terminal-bound agent output storms and UI safety: Add TerminalAgentSessionMode with command detection, output-rate class, semantic prompt marker support, pasted-command safety, scrollback/token extraction budgets, detached continuation state, and per-agent log suppression. The preserved PM gap/delta is: PM should add agent-specific terminal storm controls: when the terminal runs Claude Code/Codex/OpenCode/etc., PM should know it is agentic output with special backpressure and semantic-marker needs. The observed external-repo signal remains source-lineage evidence: Warp reports TUI agent output/CPU/log floods; Ghostty reports memory leaks in long coding-agent terminal sessions; tmux prompt-marker handling shows semantic terminal metadata can be corrupted by middle layers.
+L00009034	gui_related: true
+L00009035	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00009036	depends_on:
+L00009037	- PDS-003
+L00009038	- PNC-001
+L00009039	unblocks: []
+L00009040	acceptance_criteria:
+L00009041	- Running a high-output TUI agent does not freeze GUI or explode logs.
+L00009042	- OSC 133/633 marker loss/degradation is visible.
+L00009043	- PM never interprets terminal agent text as PM-native tool receipt without adapter proof.
+L00009044	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00009045	validation_surfaces:
+L00009046	- python3 scripts/pm-plan-index.py validate
+L00009047	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00009048	- Running a high-output TUI agent does not freeze GUI or explode logs.
+L00009049	- OSC 133/633 marker loss/degradation is visible.
+L00009050	- PM never interprets terminal agent text as PM-native tool receipt without adapter proof.
+L00009051	risk_class: p1_terminal_runtime_hardening
+L00009052	reasoning_tier: standard
+L00009053	context_scope: terminal_runtime
+L00009054	implementation_surfaces:
+L00009055	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009056	- Plans/FinalGUISpec.md
+L00009057	- Plans/storage-plan.md
+L00009058	- Plans/Executor_Protocol.md
+L00009059	node_compile_hint:
+L00009060	  mode: p1_terminal_agent_output_storm_controls
+L00009061	  create_worknodes: false
+L00009062	  create_nodeseeds: false
+L00009063	source_lineage:
+L00009064	- pldg-20260703-001-feature-intake:atom-0073
+L00009065	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0073
+L00009066	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0069/P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS@line=69
+L00009067	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0069/P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS
+L00009068	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00009069	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00009070	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:15
+L00009071	source_atom_ids:
+L00009072	- atom-0073
+L00009073	external_atom_id: extrepo-20260703-0069
+L00009074	source_row_id: P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS
+L00009075	priority: P1
+L00009076	finding_family: Terminal-bound agent output storms and UI safety
+L00009077	source_repos:
+L00009078	- Warp
+L00009079	- Ghostty
+L00009080	- tmux
+L00009081	- Codex
+L00009082	target_docs:
+L00009083	- Plans/FinalGUISpec.md
+L00009084	- Plans/storage-plan.md
+L00009085	- Plans/Executor_Protocol.md
+L00009086	owner_hints:
+L00009087	- Plans/FinalGUISpec.md
+L00009088	- Plans/storage-plan.md
+L00009089	- Plans/Executor_Protocol.md
+L00009090	preserved_exact_tokens:
+L00009091	- extrepo-20260703-0069
+L00009092	- P1-TERMINAL-AGENT-OUTPUT-STORM-CONTROLS
+L00009093	- P1
+L00009094	- Terminal-bound agent output storms and UI safety
+L00009095	- Warp
+L00009096	- Ghostty
+L00009097	- tmux
+L00009098	- Codex
+L00009099	negative_constraints: []
+L00009100	observed_signal: Warp reports TUI agent output/CPU/log floods; Ghostty reports memory leaks in long coding-agent terminal sessions; tmux prompt-marker handling shows semantic terminal metadata can be corrupted by middle layers.
+L00009101	pm_current_coverage: PM has terminal protocol, persistence, projection throttling, ring buffers, and output retention honesty.
+L00009102	pm_gap_or_delta: 'PM should add agent-specific terminal storm controls: when the terminal runs Claude Code/Codex/OpenCode/etc., PM should know it is agentic output with special backpressure and semantic-marker needs.'
+L00009103	proposal_or_recommendation: Add TerminalAgentSessionMode with command detection, output-rate class, semantic prompt marker support, pasted-command safety, scrollback/token extraction budgets, detached continuation state, and per-agent log suppression.
+L00009104	compile_disposition: create_new_planunit
+L00009105	```
+L00009106	
+L00009107	### SMPFS-135 - P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD
+L00009108	
+L00009109	```yaml
+L00009110	plan_unit_id: SMPFS-135
+L00009111	unit_type: requirement
+L00009112	status: accepted
+L00009113	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009114	canonical_text: >-
+L00009115	  P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD (P1) is compiled as canonical Puppet Master intent for Terminal side channels: pasteboard, one-time codes, drag/drop, file URLs, and OS autofill: Imported external-repo finding extrepo-20260703-0081 / P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD (P1). The preserved PM gap/delta is: Paste safety and OSC52 were covered; OS autofill/OTP/pasteboard/file URL side channels were not called out enough. The observed external-repo signal remains source-lineage evidence: Ghostty 1.3.0 fixed control-character paste/drag command execution; 1.3.1 notes one-time-code inputs no longer appearing in terminal and mac pasteboard/file-url handling issues. | Warp continues to fix profile switcher input clearing, file links, and command confirmation/rejection crashes.
+L00009116	gui_related: true
+L00009117	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00009118	depends_on:
+L00009119	- PDS-003
+L00009120	- PNC-001
+L00009121	unblocks: []
+L00009122	acceptance_criteria:
+L00009123	- Terminal paste/drop/autofill inputs pass through TerminalInputSanitizer with control-code stripping/escaping policy and user-visible preview for dangerous content.
+L00009124	- OTP/autofill/system pasteboard data is blocked from terminal echo/model context unless explicitly approved.
+L00009125	- File URL paste/drag opens are FileSafe checked and do not implicitly execute or read files.
+L00009126	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00009127	validation_surfaces:
+L00009128	- python3 scripts/pm-plan-index.py validate
+L00009129	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00009130	- Terminal paste/drop/autofill inputs pass through TerminalInputSanitizer with control-code stripping/escaping policy and user-visible preview for dangerous content.
+L00009131	- OTP/autofill/system pasteboard data is blocked from terminal echo/model context unless explicitly approved.
+L00009132	- File URL paste/drag opens are FileSafe checked and do not implicitly execute or read files.
+L00009133	risk_class: p1_terminal_runtime_hardening
+L00009134	reasoning_tier: standard
+L00009135	context_scope: terminal_runtime
+L00009136	implementation_surfaces:
+L00009137	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009138	node_compile_hint:
+L00009139	  mode: p1_terminal_sensitive_os_channel_guard
+L00009140	  create_worknodes: false
+L00009141	  create_nodeseeds: false
+L00009142	source_lineage:
+L00009143	- pldg-20260703-001-feature-intake:atom-0085
+L00009144	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0085
+L00009145	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0081/P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD@line=81
+L00009146	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0081/P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD
+L00009147	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00009148	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00009149	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:8
+L00009150	source_atom_ids:
+L00009151	- atom-0085
+L00009152	external_atom_id: extrepo-20260703-0081
+L00009153	source_row_id: P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD
+L00009154	priority: P1
+L00009155	finding_family: 'Terminal side channels: pasteboard, one-time codes, drag/drop, file URLs, and OS autofill'
+L00009156	target_docs:
+L00009157	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009158	- FinalGUISpec.md
+L00009159	- Permissions_System.md
+L00009160	- FileSafe.md
+L00009161	owner_hints:
+L00009162	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009163	- FinalGUISpec.md
+L00009164	- Permissions_System.md
+L00009165	- FileSafe.md
+L00009166	preserved_exact_tokens:
+L00009167	- extrepo-20260703-0081
+L00009168	- P1-TERMINAL-SENSITIVE-OS-CHANNEL-GUARD
+L00009169	- P1
+L00009170	- 'Terminal side channels: pasteboard, one-time codes, drag/drop, file URLs, and OS autofill'
+L00009171	negative_constraints: []
+L00009172	observed_signal: Ghostty 1.3.0 fixed control-character paste/drag command execution; 1.3.1 notes one-time-code inputs no longer appearing in terminal and mac pasteboard/file-url handling issues. | Warp continues to fix profile switcher input clearing, file links, and command confirmation/rejection crashes.
+L00009173	pm_gap_or_delta: Paste safety and OSC52 were covered; OS autofill/OTP/pasteboard/file URL side channels were not called out enough.
+L00009174	relationship_to_prior_reports: Extends terminal paste/protocol safety.
+L00009175	compile_disposition: create_new_planunit
+L00009176	```
+L00009177	
+L00009178	### SMPFS-136 - P1-TERMINAL-INPUT-PASTEBOARD-MATRIX
+L00009179	
+L00009180	```yaml
+L00009181	plan_unit_id: SMPFS-136
+L00009182	unit_type: requirement
+L00009183	status: accepted
+L00009184	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009185	canonical_text: >-
+L00009186	  P1-TERMINAL-INPUT-PASTEBOARD-MATRIX (P1) is compiled as canonical Puppet Master intent for Terminal input, IME, Unicode, pasteboard matrix: Imported external-repo finding extrepo-20260703-0096 / P1-TERMINAL-INPUT-PASTEBOARD-MATRIX (P1). The preserved PM gap/delta is: Terminal tests need input-method and pasteboard channel policies in addition to ANSI/OSC parsing. The observed external-repo signal remains source-lineage evidence: IME candidate window positioning, key repeat/global keybind, macOS pasteboard URL priority, prompt viewport regressions.
+L00009187	gui_related: true
+L00009188	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00009189	depends_on:
+L00009190	- PDS-003
+L00009191	- PNC-001
+L00009192	unblocks: []
+L00009193	acceptance_criteria:
+L00009194	- IME candidate follows cursor cell
+L00009195	- Plain text paste is preferred over URL/file flavors unless explicit
+L00009196	- clear/cls preserves visible prompt/viewport invariants
+L00009197	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00009198	validation_surfaces:
+L00009199	- python3 scripts/pm-plan-index.py validate
+L00009200	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00009201	- IME candidate follows cursor cell
+L00009202	- Plain text paste is preferred over URL/file flavors unless explicit
+L00009203	- clear/cls preserves visible prompt/viewport invariants
+L00009204	risk_class: p1_terminal_runtime_hardening
+L00009205	reasoning_tier: standard
+L00009206	context_scope: terminal_runtime
+L00009207	implementation_surfaces:
+L00009208	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009209	node_compile_hint:
+L00009210	  mode: p1_terminal_input_pasteboard_matrix
+L00009211	  create_worknodes: false
+L00009212	  create_nodeseeds: false
+L00009213	source_lineage:
+L00009214	- pldg-20260703-001-feature-intake:atom-0100
+L00009215	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0100
+L00009216	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0096/P1-TERMINAL-INPUT-PASTEBOARD-MATRIX@line=96
+L00009217	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0096/P1-TERMINAL-INPUT-PASTEBOARD-MATRIX
+L00009218	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00009219	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00009220	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_one_more_external_repo_backlog_2026-07-03.jsonl:9
+L00009221	source_atom_ids:
+L00009222	- atom-0100
+L00009223	external_atom_id: extrepo-20260703-0096
+L00009224	source_row_id: P1-TERMINAL-INPUT-PASTEBOARD-MATRIX
+L00009225	priority: P1
+L00009226	finding_family: Terminal input, IME, Unicode, pasteboard matrix
+L00009227	source_repos:
+L00009228	- Pi
+L00009229	- Ghostty
+L00009230	- Warp
+L00009231	preserved_exact_tokens:
+L00009232	- extrepo-20260703-0096
+L00009233	- P1-TERMINAL-INPUT-PASTEBOARD-MATRIX
+L00009234	- P1
+L00009235	- Terminal input, IME, Unicode, pasteboard matrix
+L00009236	- Pi
+L00009237	- Ghostty
+L00009238	- Warp
+L00009239	negative_constraints: []
+L00009240	observed_signal: IME candidate window positioning, key repeat/global keybind, macOS pasteboard URL priority, prompt viewport regressions.
+L00009241	pm_gap_or_delta: Terminal tests need input-method and pasteboard channel policies in addition to ANSI/OSC parsing.
+L00009242	compile_disposition: create_new_planunit
+L00009243	```
+L00009244	
+L00009245	### SMPFS-137 - SMPFS-137
+L00009246	
+L00009247	```yaml
+L00009248	plan_unit_id: SMPFS-137
+L00009249	unit_type: constraint
+L00009250	status: accepted
+L00009251	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009252	canonical_text: >-
+L00009253	  Terminal lessons from Ghostty, Warp, tmux, and CLI tools apply only to Puppet Master built-in GUI terminal/runtime contracts. They must not create a PM CLI product, make terminal the PM control plane, or mint pseudo-terminals outside terminal_session_id ownership.
+L00009254	gui_related: true
+L00009255	gui_classification_reason: Guardrail affects GUI/user-visible terminal/control surfaces.
+L00009256	depends_on:
+L00009257	- PDS-003
+L00009258	- PNC-001
+L00009259	unblocks: []
+L00009260	acceptance_criteria:
+L00009261	- atom-0118 source details remain traceable through source_lineage and preserved source fields.
+L00009262	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00009263	validation_surfaces:
+L00009264	- python3 scripts/pm-plan-index.py validate
+L00009265	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00009266	risk_class: external_repo_guardrail
+L00009267	reasoning_tier: standard
+L00009268	context_scope: import_guardrail
+L00009269	implementation_surfaces:
+L00009270	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00009271	node_compile_hint:
+L00009272	  mode: atom_0118
+L00009273	  create_worknodes: false
+L00009274	  create_nodeseeds: false
+L00009275	source_lineage:
+L00009276	- pldg-20260703-001-feature-intake:atom-0118
+L00009277	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0118
+L00009278	- subagent:019f297e-fcd6-71f1-a6f2-e410e13a3c38
+L00009279	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/00_CODEX_LEDGER_IMPORT_PROMPT.md
+L00009280	source_atom_ids:
+L00009281	- atom-0118
+L00009282	owner_hints:
+L00009283	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/parallel_agent_synthesis_20260703.json
+L00009284	preserved_exact_tokens:
+L00009285	- Do not create a PM CLI product
+L00009286	- Do not make terminal the PM control plane
+L00009287	- terminal_session_id
+L00009288	- Terminal lessons are GUI-terminal only
+L00009289	negative_constraints:
+L00009290	- Do not create a PM CLI product.
+L00009291	- Do not make terminal the PM control plane.
+L00009292	- Do not mint pseudo-terminals outside terminal_session_id ownership.
+L00009293	compile_disposition: create_new_planunit
+L00009294	```

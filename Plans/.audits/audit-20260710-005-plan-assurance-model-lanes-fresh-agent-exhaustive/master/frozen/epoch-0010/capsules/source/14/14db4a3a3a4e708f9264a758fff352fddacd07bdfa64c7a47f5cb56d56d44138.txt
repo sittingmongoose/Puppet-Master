@@ -1,0 +1,425 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1058-1069 >>>
+L00001058	- Plans/Planning_Wizard.md
+L00001059	- Plans/Plan_Document_System.md
+L00001060	- Plans/Progression_Gates.md
+L00001061	- Plans/Plan_To_Node_Compilation.md
+L00001062	- Plans/Executor_Protocol.md
+L00001063	- Plans/Automated_Testing_System.md
+L00001064	- Plans/Contracts_V0.md
+L00001065	- Plans/human-in-the-loop.md
+L00001066	- Plans/Goal_Runtime_System.md
+L00001067	```
+L00001068	
+L00001069	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1070-1465 >>>
+L00001070	### PWIZ-013 - Planning Run GUI, Topic Progress, And Attached Audits
+L00001071	
+L00001072	
+L00001073	```yaml
+L00001074	plan_unit_id: PWIZ-013
+L00001075	unit_type: requirement
+L00001076	status: accepted
+L00001077	owner_doc: Plans/Planning_Wizard.md
+L00001078	canonical_text: 'Planning Wizard GUI shows a collapsible parent named for the plan or project with child topic threads, dynamically added topics, final integration, final review, and attached audit/repair activity. The user remains in one Planning Wizard workspace with topic map, active Assistant Chat panel, live plan preview, source/annotation/readiness panels, and bounded backend child threads loaded as selected. Topic cards represent not_started, active, ledger_syncing, ledger_synced, compiling, auditing, repairing, ready, impacted, reopened, deferred, and blocked, with clear dependency and origin badges. Long-running topic conversion, audit, repair, final integration, and final audit display active stage, progress counts, assignment counts, findings fixed, current pass, and user-relevant status so the interface never appears stalled. Audit and repair children are attached under their topic or final Plan Pack and summarized in activity/progress
+L00001079	  views; detailed agent traces and evidence may be expanded without cluttering the default thread tree.'
+L00001080	gui_related: true
+L00001081	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00001082	depends_on: []
+L00001083	unblocks: []
+L00001084	acceptance_criteria:
+L00001085	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00001086	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00001087	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00001088	validation_surfaces:
+L00001089	- python3 scripts/pm-plan-index.py validate
+L00001090	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00001091	risk_class: owner_drift
+L00001092	reasoning_tier: high
+L00001093	context_scope: ledger_to_plans_compile
+L00001094	implementation_surfaces:
+L00001095	- Plans/Planning_Wizard.md
+L00001096	- Plans/FinalGUISpec.md
+L00001097	- Plans/assistant-chat-design.md
+L00001098	- Plans/Orchestrator_Page.md
+L00001099	node_compile_hint:
+L00001100	  mode: canonical_planunit_from_bootstrap_ledger
+L00001101	  create_worknodes: false
+L00001102	  create_nodeseeds: false
+L00001103	source_lineage:
+L00001104	- pldg-20260618-001-prd-planning-wizard:atom-0147
+L00001105	- pldg-20260618-001-prd-planning-wizard:atom-0148
+L00001106	- pldg-20260618-001-prd-planning-wizard:atom-0149
+L00001107	- pldg-20260618-001-prd-planning-wizard:atom-0150
+L00001108	- pldg-20260618-001-prd-planning-wizard:atom-0151
+L00001109	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md#SRC-GUI
+L00001110	source_atom_ids:
+L00001111	- atom-0147
+L00001112	- atom-0148
+L00001113	- atom-0149
+L00001114	- atom-0150
+L00001115	- atom-0151
+L00001116	decision_refs: []
+L00001117	correction_refs:
+L00001118	- corr-0005
+L00001119	- corr-0006
+L00001120	preserved_exact_tokens:
+L00001121	- collapsible
+L00001122	- Planning Run
+L00001123	- child topic
+L00001124	- one Planning Wizard page
+L00001125	- active chat panel
+L00001126	- ledger_syncing
+L00001127	- compiling
+L00001128	- auditing
+L00001129	- repairing
+L00001130	- impacted
+L00001131	- progress counts
+L00001132	- audit pass
+L00001133	- attached audit child
+L00001134	- collapsed
+L00001135	negative_constraints:
+L00001136	- Do not present every backend subagent or audit thread as a separate top-level app surface.
+L00001137	owner_hints:
+L00001138	- Plans/Planning_Wizard.md
+L00001139	- Plans/FinalGUISpec.md
+L00001140	- Plans/assistant-chat-design.md
+L00001141	- Plans/Orchestrator_Page.md
+L00001142	```
+L00001143	
+L00001144	
+L00001145	## 3. Contracts, Schemas, Events, Or Data Shapes
+L00001146	
+L00001147	The core data shapes are PlanningRun, thread_group_id, topic map, topic_id-scoped ledger records, Planning Context Capsule, Topic Plan Draft, Planning Amendment, Final Plan Pack, ApprovedPlanPack, PlanApproved event, project-context snapshot, blocker taxonomy, audit records, readiness states, and source-lineage refs.
+L00001148	
+L00001149	
+L00001150	## 4. Integration Surfaces
+L00001151	
+L00001152	Planning Wizard integrates with PRD Builder through Approved PRD Pack, with Assistant Chat through structured handoff seeds and bounded child threads, with Goal Runtime through conversion/audit/specialist roles, with Plan Compile through ApprovedPlanPack and PlanApproved, and with Orchestrator through immediate Plan Compile navigation after approval.
+L00001153	
+L00001154	
+L00001155	## 5. Validation And Acceptance
+L00001156	
+L00001157	Acceptance requires synchronized ledgers, ready or explicitly excluded topics, audited topic plans, resolved invalidations, final integration, final audit, source lineage, captured testing requirements, current project context, zero unapproved incomplete content, a durable ApprovedPlanPack, and a passing approval CAS/currentness check before Plan Compile authority exists.
+L00001158	
+L00001159	
+L00001160	## 6. Plan-To-Node Readiness
+L00001161	
+L00001162	Planning Wizard can approve a pack for Plan Compile but does not itself create runtime WorkNodes, NodeSeeds, executable queues, implementation files, final node manifests, or production build tasks. End-to-end pipeline implementation readiness remains unproven until the clean-room fixture suite passes.
+L00001163	
+L00001164	The final-review Approve And Build control consumes `Plans/.implementation_readiness/buildability_gate_report.json` as a product gate. Captured source, plan-complete documentation, green validators, and semantic closure are preconditions only; they do not enable Approve And Build unless `buildability_gate_passed=true`. While blocked, the disabled reason lists every open blocker family and its exact owner docs, and `PNC-019` surfaces as a hard disabled reason.
+L00001165	
+L00001166	
+L00001167	## 7. Deferred, Retired, Compatibility, And Non-Goals
+L00001168	
+L00001169	Retired current-product terms `Chain Wizard`, `Plan Wizard`, and `Start Chain` are compatibility/search lineage only. Legacy chain-wizard docs are migrated/redirected consumers, not current owners for the finished Planning Wizard workflow.
+L00001170	
+L00001171	
+L00001172	## 8. Source Lineage And Governance
+L00001173	
+L00001174	Compiled from `Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/`. The ledger remains source-lineage memory; generated shard and evidence coverage, Spec Lock hashes, and plan-graph references include this owner doc after the bounded audit repair and governance seal. `Plans/auto_decisions.jsonl` remains deterministic-log managed and is not product prose authority.
+L00001175	
+L00001176	## Ledger Compile Addendum - pldg-20260622-001-fff
+L00001177	
+L00001178	### PWIZ-015 - Planning Wizard Source Picker Discovery Consumer
+L00001179	
+L00001180	```yaml
+L00001181	plan_unit_id: PWIZ-015
+L00001182	unit_type: requirement
+L00001183	status: accepted
+L00001184	owner_doc: Plans/Planning_Wizard.md
+L00001185	canonical_text: >-
+L00001186	  Planning Wizard source/context pickers use DiscoveryService to find relevant project files for planning context without creating WorkNodes. Requests use planning_wizard_source_picker, planning_context intent, project/worktree or remote/SSH identity, policy_context, and file or content_candidate target kinds. Selected candidates preserve ranked provenance in Planning Context Capsules and expose stale, fallback, denied, hidden-by-policy, and no-results states in the picker. Selected sources are planning evidence only; later implementation still performs exact content verification before edits.
+L00001187	gui_related: true
+L00001188	gui_classification_reason: This is the Planning Wizard source/context picker GUI behavior.
+L00001189	depends_on: [F3-399, T-161, SP-217, F2-191]
+L00001190	unblocks: [ATS-011]
+L00001191	acceptance_criteria:
+L00001192	  - Planning Wizard source/context pickers route through DiscoveryService.
+L00001193	  - Selected candidate provenance is preserved in Planning Context Capsules.
+L00001194	  - Discovery selection does not create WorkNodes, NodeSeeds, executable queues, or implementation work.
+L00001195	validation_surfaces:
+L00001196	  - python3 scripts/pm-plan-index.py validate
+L00001197	  - Future Planning Wizard source pick local/SSH tests.
+L00001198	  - Future policy-hidden source no-leak tests.
+L00001199	risk_class: planning_source_context_drift
+L00001200	reasoning_tier: standard
+L00001201	context_scope: planning_wizard_source_picker
+L00001202	implementation_surfaces: [Plans/Planning_Wizard.md, future Planning Wizard source picker]
+L00001203	node_compile_hint: {mode: planning_wizard_discovery_consumer, create_worknodes: false, create_nodeseeds: false}
+L00001204	source_lineage:
+L00001205	  - pldg-20260622-001-fff:atom-0027
+L00001206	  - pldg-20260622-001-fff:atom-0038
+L00001207	  - pldg-20260622-001-fff:atom-0044
+L00001208	  - pldg-20260622-001-fff:atom-0045
+L00001209	  - pldg-20260622-001-fff:atom-0059
+L00001210	  - pldg-20260622-001-fff:atom-0087
+L00001211	  - pldg-20260622-001-fff:atom-0088
+L00001212	  - pldg-20260622-001-fff:atom-0090
+L00001213	  - pldg-20260622-001-fff:state/consumer_conformance_matrix.json#planning_wizard_source_picker
+L00001214	source_atom_ids: [atom-0027, atom-0038, atom-0044, atom-0045, atom-0059, atom-0087, atom-0088, atom-0090]
+L00001215	preserved_exact_tokens: ["Planning Wizard", "planning_wizard_source_picker", "Planning Context Capsules", "planning_context", "content_candidate", "Chain Wizard", "no WorkNodes"]
+L00001216	negative_constraints:
+L00001217	  - Do not revive Chain Wizard terminology.
+L00001218	  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks from source selection.
+L00001219	  - Do not copy unbounded transcripts or unrelated source context.
+L00001220	owner_hints: [Plans/Planning_Wizard.md, Plans/FinalGUISpec.md, Plans/Tools.md, Plans/storage-plan.md]
+L00001221	```
+L00001222	
+L00001223	
+L00001224	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00001225	
+L00001226	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00001227	
+L00001228	### PWIZ-016 - Planning Wizard Historical Plan Pack Records
+L00001229	
+L00001230	```yaml
+L00001231	plan_unit_id: PWIZ-016
+L00001232	unit_type: requirement
+L00001233	status: accepted
+L00001234	owner_doc: Plans/Planning_Wizard.md
+L00001235	canonical_text: Planning Wizard Plan artifacts, Final Plan Packs, ApprovedPlanPacks, and related exports must write
+L00001236	  immutable project-scoped history records that Orchestrator History can browse, compare, export, reopen, and send
+L00001237	  forward subject to currentness and authority checks. Final/approved plan outputs are retained forever by default;
+L00001238	  retained drafts, intermediate outputs, previous versions, archive state, package identity, source-lineage metadata,
+L00001239	  source ledger atom lineage where applicable, and manifest identity remain available for deep compare and filtered
+L00001240	  history.
+L00001241	gui_related: false
+L00001242	gui_classification_reason: Defines Planning Wizard output/history record obligations; GUI presentation is owned
+L00001243	  by Orchestrator History.
+L00001244	depends_on:
+L00001245	- SP-219
+L00001246	unblocks:
+L00001247	- OP-026
+L00001248	- POA-051
+L00001249	acceptance_criteria:
+L00001250	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00001251	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00001252	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00001253	  are created by this compile.
+L00001254	validation_surfaces:
+L00001255	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00001256	- python3 scripts/pm-plan-index.py validate
+L00001257	- git diff --check
+L00001258	risk_class: planning_history_lineage_loss
+L00001259	reasoning_tier: standard
+L00001260	context_scope: planning_wizard_history_records
+L00001261	implementation_surfaces:
+L00001262	- Plans/Planning_Wizard.md
+L00001263	- future Planning Wizard output records
+L00001264	node_compile_hint:
+L00001265	  mode: planning_history_record_contract
+L00001266	  create_worknodes: false
+L00001267	  create_nodeseeds: false
+L00001268	source_lineage:
+L00001269	- pldg-20260626-001-feature-name:atom-0008
+L00001270	- pldg-20260626-001-feature-name:atom-0015
+L00001271	- pldg-20260626-001-feature-name:atom-0016
+L00001272	- pldg-20260626-001-feature-name:atom-0024
+L00001273	- pldg-20260626-001-feature-name:atom-0025
+L00001274	- pldg-20260626-001-feature-name:atom-0034
+L00001275	- pldg-20260626-001-feature-name:atom-0035
+L00001276	- pldg-20260626-001-feature-name:atom-0047
+L00001277	- pldg-20260626-001-feature-name:atom-0052
+L00001278	- pldg-20260626-001-feature-name:atom-0066
+L00001279	- chat:misc-history-scope
+L00001280	- Plans/PRD_Builder.md
+L00001281	- Plans/Planning_Wizard.md
+L00001282	- Plans/Project_Output_Artifacts.md
+L00001283	- Plans/Runtime_Artifacts_Panel.md
+L00001284	- chat:history-defaults-answers
+L00001285	- chat:history-scope-retention-actions-answers
+L00001286	- chat:history-columns-toggle-deep-compare-answers
+L00001287	- chat:history-source-index-answer
+L00001288	- chat:history-projection-lifecycle-answer
+L00001289	- chat:history-pressure-test-request
+L00001290	- chat:history-pressure-test-defaults-answer
+L00001291	source_atom_ids:
+L00001292	- atom-0008
+L00001293	- atom-0015
+L00001294	- atom-0016
+L00001295	- atom-0024
+L00001296	- atom-0025
+L00001297	- atom-0034
+L00001298	- atom-0035
+L00001299	- atom-0047
+L00001300	- atom-0052
+L00001301	- atom-0066
+L00001302	decision_refs:
+L00001303	- dec-0002
+L00001304	- dec-0003
+L00001305	- dec-0004
+L00001306	- dec-0005
+L00001307	- dec-0008
+L00001308	- dec-0009
+L00001309	- dec-0011
+L00001310	- dec-0012
+L00001311	preserved_exact_tokens:
+L00001312	- see historical documents that are made
+L00001313	- by documents I mean the plans and PRD docs that are created by the wizard
+L00001314	- plans and PRD docs
+L00001315	- created by the wizard
+L00001316	- By default it should show only final/approved outputs
+L00001317	- final/approved outputs
+L00001318	- it can be exapnded by the user to show everything
+L00001319	- show everything
+L00001320	- retained forever by default
+L00001321	- 'yes'
+L00001322	- retention/archive rules
+L00001323	- deeper is mvp
+L00001324	- Compare versions
+L00001325	- rendered document diff
+L00001326	- package/source-lineage metadata
+L00001327	- ledger-atom diff
+L00001328	- immutable historical records
+L00001329	- project-scoped unified History index/projection
+L00001330	- source-of-truth shape
+L00001331	- wizard save/approval
+L00001332	- run lifecycle
+L00001333	- artifact/evidence write
+L00001334	- archive/unarchive
+L00001335	- lineage/manifest events
+L00001336	- Before compile
+L00001337	- pressure-test
+L00001338	- remaining underspecified History surfaces
+L00001339	negative_constraints:
+L00001340	- Do not collapse PRD Builder outputs, Planning Wizard outputs, Plan packs, and runtime artifacts into an anonymous
+L00001341	  flat document list.
+L00001342	- Do not treat mutable draft projections as the same thing as immutable approved packs or historical snapshots.
+L00001343	- Do not show every draft/intermediate artifact in the default Documents view.
+L00001344	- Do not hide final/approved artifacts inside raw ledger or export-only views.
+L00001345	- Do not make expanded history indistinguishable from approved/final history.
+L00001346	- Do not omit authority labels such as draft, approved, final, superseded, exported, or generated when showing everything.
+L00001347	- Do not apply ordinary draft/intermediate retention cleanup to final/approved outputs by default.
+L00001348	- Do not silently remove final/approved outputs from History.
+L00001349	- Do not promise draft/intermediate rows remain visible forever by default.
+L00001350	- Do not make archived/hidden all-history rows indistinguishable from deleted records.
+L00001351	- Do not ship compare versions as rendered-text-only in MVP.
+L00001352	- Do not hide source-lineage or package identity changes when comparing historical wizard documents.
+L00001353	- Do not compare by path or title alone when canonical document/package IDs exist.
+L00001354	- Do not let comparison mutate or merge historical records.
+L00001355	- Do not implement the History surface as fragile cross-subsystem ad hoc scans at view time.
+L00001356	- Do not make the History read model global or cross-project by default.
+L00001357	- Do not rely on view-time scanning as the primary way to discover normal History changes.
+L00001358	- Do not omit archive/unarchive or lineage/manifest updates from the projection lifecycle.
+L00001359	- Do not treat this pressure-test as permission to write canonical Plans.
+L00001360	- Do not create Plans/.plan_index, WorkNodes, NodeSeeds, executable queues, Spec_Lock, shards, evidence, plan_graph,
+L00001361	  or auto_decisions.
+L00001362	- Do not compile without a future explicit compile request.
+L00001363	owner_hints:
+L00001364	- Plans/PRD_Builder.md
+L00001365	- Plans/Planning_Wizard.md
+L00001366	- Plans/Project_Output_Artifacts.md
+L00001367	- Plans/Runtime_Artifacts_Panel.md
+L00001368	- Plans/storage-plan.md
+L00001369	- Plans/Contracts_V0.md
+L00001370	- Plans/Orchestrator_Page.md
+L00001371	- Plans/FinalGUISpec.md
+L00001372	- Plans/UI_Command_Catalog.md
+L00001373	- Plans/Permissions_System.md
+L00001374	```
+L00001375	
+L00001376	## Ledger Compile Addendum - pldg-20260701-001-feature-intake
+L00001377	
+L00001378	This addendum compiles first-run onboarding handoff behavior from bootstrap ledger `pldg-20260701-001-feature-intake` into Planning Wizard ownership. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+L00001379	
+L00001380	### PWIZ-017 - First-Run Onboarding Entry And Limited Setup Landing
+L00001381	
+L00001382	```yaml
+L00001383	plan_unit_id: PWIZ-017
+L00001384	unit_type: requirement
+L00001385	status: accepted
+L00001386	owner_doc: Plans/Planning_Wizard.md
+L00001387	canonical_text: >-
+L00001388	  After first-run provider setup completes or the user chooses `Skip for now`, Puppet Master opens Planning Wizard as the
+L00001389	  first full app page rather than routing to the dense Home shell, Settings, or Agent Config. Planning Wizard consumes
+L00001390	  structured `onboarding_setup_state` rather than a raw onboarding transcript. When setup was skipped, provider count is
+L00001391	  zero, provider warnings exist, or Health is not Ready, the landing state shows a limited setup reminder using the copy
+L00001392	  `Provider setup is not finished. You can still open Planning Wizard, but assistant features may need a provider before
+L00001393	  they can run.` and provides a `Set up provider` CTA without blocking entry. Planning Wizard may start intake in this
+L00001394	  limited state, but it must preserve provider setup warnings and must not create WorkNodes, NodeSeeds, executable queues,
+L00001395	  implementation files, or runtime/build surfaces as part of the handoff.
+L00001396	gui_related: true
+L00001397	gui_classification_reason: Defines visible Planning Wizard landing behavior, limited setup reminder copy, and CTA presentation.
+L00001398	depends_on: [PWIZ-001, CV-305, F3-411, ACD-431, UCC-106]
+L00001399	unblocks: [WM-041, ATS-020]
+L00001400	acceptance_criteria:
+L00001401	  - Completed first-run setup opens Planning Wizard as the first full app page.
+L00001402	  - Skipped first-run setup also opens Planning Wizard in limited setup state rather than the dense Home shell.
+L00001403	  - Planning Wizard consumes structured onboarding_setup_state and preserves provider setup warnings.
+L00001404	  - Limited setup state shows the accepted provider-unfinished copy and a provider setup CTA.
+L00001405	  - Planning Wizard does not mark Health Ready or launch Plan Compile/WorkNodes because of first-run handoff.
+L00001406	validation_surfaces:
+L00001407	  - python3 scripts/pm-plan-index.py validate
+L00001408	  - future first-run-to-Planning-Wizard routing fixture
+L00001409	  - future skipped-provider limited-state Planning Wizard fixture
+L00001410	risk_class: planning_wizard_false_ready_handoff
+L00001411	reasoning_tier: high
+L00001412	context_scope: first_run_planning_wizard_landing
+L00001413	implementation_surfaces:
+L00001414	  - Plans/Planning_Wizard.md
+L00001415	  - future Planning Wizard first-run landing state
+L00001416	node_compile_hint:
+L00001417	  mode: first_run_planning_wizard_landing
+L00001418	  create_worknodes: false
+L00001419	  create_nodeseeds: false
+L00001420	source_lineage:
+L00001421	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0029
+L00001422	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0036
+L00001423	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0037
+L00001424	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
+L00001425	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
+L00001426	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
+L00001427	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
+L00001428	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
+L00001429	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
+L00001430	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
+L00001431	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+L00001432	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/pmconcept_gui_reference_20260701.json
+L00001433	source_atom_ids: [atom-0029, atom-0036, atom-0037, atom-0038, atom-0042, atom-0045, atom-0046, atom-0047]
+L00001434	decision_refs: [dec-0007, dec-0008]
+L00001435	preserved_exact_tokens:
+L00001436	  - "After the setup, it dumps the user into the planning Wizard page."
+L00001437	  - "Planning Wizard"
+L00001438	  - "Open Planning Wizard"
+L00001439	  - "Skip for now"
+L00001440	  - "Provider setup is not finished. You can still open Planning Wizard, but assistant features may need a provider before they can run."
+L00001441	  - "Set up provider"
+L00001442	  - "onboarding_setup_state"
+L00001443	  - "setup_completed"
+L00001444	  - "setup_skipped"
+L00001445	  - "connected_provider_count"
+L00001446	  - "provider_warning_count"
+L00001447	  - "free_models_reviewed"
+L00001448	  - "health_summary_state"
+L00001449	negative_constraints:
+L00001450	  - Do not route completed first-run onboarding to the dense Home shell by default.
+L00001451	  - Do not route completed first-run onboarding to Settings or Agent Config as the primary destination unless a later correction changes this decision.
+L00001452	  - Do not use the raw onboarding transcript as the sole Planning Wizard handoff.
+L00001453	  - Do not drop provider setup warnings when entering Planning Wizard.
+L00001454	  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, or runtime/build surfaces as part of first-run handoff.
+L00001455	owner_hints:
+L00001456	  - Plans/Planning_Wizard.md
+L00001457	  - Plans/FinalGUISpec.md
+L00001458	  - Plans/Wiring_Matrix.md
+L00001459	  - Plans/Contracts_V0.md
+L00001460	```
+L00001461	
+L00001462	## Implementation Readiness Gate Addendum - 2026-07-05
+L00001463	
+L00001464	This addendum installs the Planning Wizard buildability gate without creating WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime dispatch, production build tasks, generated governance seal artifacts, or executable PlanCompile artifacts.
+L00001465	
+
+<<< CONTEXT_AFTER canonical_document_lines=1466-1477 >>>
+L00001466	### PWIZ-018 - Approve And Build Buildability Gate
+L00001467	
+L00001468	```yaml
+L00001469	plan_unit_id: PWIZ-018
+L00001470	unit_type: requirement
+L00001471	status: accepted
+L00001472	owner_doc: Plans/Planning_Wizard.md
+L00001473	canonical_text: >-
+L00001474	  Captured source, plan-complete documentation, PlanUnit indexes, semantic closure, schema existence, wiring JSON
+L00001475	  existence, and validator success are separate preconditions and none of them prove implementation buildability.
+L00001476	  Planning Wizard final review must represent the ladder as Captured != Plan-complete != Buildable. The
+L00001477	  `cmd.planning_wizard.approve_and_build` control is disabled unless

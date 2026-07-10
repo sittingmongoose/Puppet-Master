@@ -1,0 +1,378 @@
+<<< CONTEXT_BEFORE 2292-2303 >>>
+- content_type
+- content_length
+- expires_at
+- access_count
+- last_accessed_at
+- 500 MB
+- TTL
+- LRU
+- per-project
+- per-operation
+- cache key ordering
+- change detection persistence
+
+<<< AUTHORITATIVE_CORE 2304-2652 >>>
+
+Rules:
+- Cache lookup is adapter-agnostic and action-free at read time: before provider selection, PM checks `(url, formats_hash)` only; after adapter selection, it validates `adapter_id` and discards a hit on mismatch.
+- If request includes `actions`, skip cache entirely (always fresh-execute). Actions modify page state, so cache lookup only applies to action-free requests.
+- Cache STORE still applies to the final result after actions execute; the post-action content is cacheable for future action-free requests to the same normalized `URL`.
+- Cache bypass: when `cache_policy.max_age_seconds: 0` or `cache_policy.store: false`, storage records `cache_state: "bypassed"` and does not serve a cached read for that operation.
+- If cache is enabled and an entry exists within TTL, return the cached result with `cache_state: "hit"` and skip provider execution UNLESS the request includes `actions` or the post-selection `adapter_id` validation fails.
+- PM cache takes precedence for serving cached content.
+- Firecrawl cache serves as provider-side /latency optimization only.
+- `cache_state: "hit" | "miss" | "bypassed" | "expired_used_for_diff"`
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/storage-plan.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### SP-002 - Storage Owner Scope And Structural Anchor Map
+
+```yaml
+plan_unit_id: SP-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Plans/storage-plan.md preserves storage owner routing for runtime, governance, export, concern, route, projection, artifact, and lane topics through its title and canonical owner-section anchor map."
+gui_related: false
+gui_classification_reason: "This unit preserves backend storage ownership and section routing rather than visual presentation."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-002 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: storage_owner_scope_anchor_map
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0001"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0002"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0003"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0004"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0005"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0006"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0007"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0008"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0009"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0010"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0011"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0012"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0013"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0014"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0015"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0016"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0017"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0018"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0019"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0020"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0021"
+preserved_exact_tokens:
+- "Storage plan (seglog, redb, Tantivy, projectors)"
+- "Canonical owner-section requirements"
+- "Owner-first canonicalization order"
+- "Shared governance/runtime record envelope"
+- "Export taxonomy and manifest contract"
+- "Concern record family definition"
+- "Focused run and historical routing contract"
+- "Source Control and worktree handshake"
+- "Projection trust and action gating"
+- "Lane vs worktree lifecycle split"
+- "Runtime attribution ownership split"
+- "Artifacts index exact indexed fields"
+- "Lane cleanup lineage fields"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+```
+
+### SP-003 - Attempt Snapshot And GUI Disclosure Join
+
+```yaml
+plan_unit_id: SP-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Storage maps the retired Persona/Runtime snapshot payload contract into attempt and permission snapshot storage, preserving snapshot payload fields, requested/effective identity fields, and chat/GUI disclosure joins."
+gui_related: true
+gui_classification_reason: "This unit preserves user-visible chat/GUI disclosure joins backed by storage records."
+split_recommended: true
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+- "CV-001"
+- "UCC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-003 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: attempt_snapshot_gui_disclosure_join
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0022"
+preserved_exact_tokens:
+- "5.1B Persona/Runtime Snapshot Payload Contract"
+- "{ tool_name"
+- "invocation_summary"
+- "options }"
+- "result_id"
+- "requested/effective provider"
+- "requested/effective model"
+- "requested/effective account"
+- "permission_snapshot_id"
+- "account_pressure_episode"
+- "requirements_quality_report_ref"
+- "/chat/GUI"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/FinalGUISpec.md"
+- "Plans/UI_Command_Catalog.md"
+- "Plans/Contracts_V0.md"
+```
+
+### SP-004 - Command Route Normalization And Migration-Only Command Terms
+
+```yaml
+plan_unit_id: SP-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Storage keeps command records graph-local and command-family specific, normalizing wrapper payloads into route-derived target and subject fields while keeping listed command terms migration-only."
+gui_related: true
+gui_classification_reason: "This unit preserves user-visible command routing and surface restore behavior."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+- "UCC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-004 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: command_route_normalization_migration_terms
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0022"
+preserved_exact_tokens:
+- "cmd.search.replace_selected"
+- "cmd.runtime"
+- "cmd.runtime.*"
+- "slash-command"
+- "cmd.nav.focus_route"
+- "cmd.artifacts.show_in_usage"
+- "cmd.orchestrator.open_in_source_control"
+- "destination_surface"
+- "destination_tab"
+- "object_kind"
+- "object_id"
+- "record_id"
+- "artifact_id"
+- "attempt_id"
+- "lane_id"
+- "worktree_id"
+- "usage_event_ref"
+- "filter_payload"
+- "inspector_target"
+- "scroll_target"
+- "focus_behavior"
+negative_constraints:
+- "Command compatibility terms that remain migration-only must not become canonical storage families."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/UI_Command_Catalog.md"
+```
+
+### SP-005 - Runtime Recovery Record Families And Derived Compatibility
+
+```yaml
+plan_unit_id: SP-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Storage owns runtime recovery record families, blocked_sequence identity, recovery fields, operational identity, governance-record templates, and derived-only tier aliases for replayable runtime coordination."
+gui_related: false
+gui_classification_reason: "This unit preserves backend record identity, runtime recovery, and governance storage requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+- "CV-001"
+unblocks: []
+acceptance_criteria:
+- "SP-005 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "Runtime coordination/audit uses event-sourced seglog/redb records and projections as primary authority; file-based canon remains export/inspection mirror material only."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: runtime_recovery_record_families
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0022"
+preserved_exact_tokens:
+- "attempt_id?"
+- "node_id?"
+- "tool.invoked"
+- "attempt/receipt/usage/artifact attribution packet"
+- "tier_runtime_record"
+- "tier_id"
+- "widget.completed_prose"
+- "blocked_sequence"
+- "object_kind = blocked_episode"
+- "recovery kind"
+- "safe-point restore"
+- "restart reconciliation"
+- "blocked prerequisite resolution"
+- "lane/worktree restore"
+- "operational-identity"
+- "governance-record"
+- "/review/promotion/corroboration/graph-patch/recovery"
+negative_constraints:
+- "Runtime compatibility stays derived and must not own canonical execution-unit identity."
+- "Runtime coordination/audit cannot claim both file-based canon and event-sourced canon as primary authority."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/Contracts_V0.md"
+```
+
+### SP-006 - Projection Attention Export And Action-Gating Recovery Rules
+
+```yaml
+plan_unit_id: SP-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Storage recovery rules preserve projection fallback, attention/card/badge behavior, export identity, notification escalation, and action gating from canonical records instead of projection-only state."
+gui_related: true
+gui_classification_reason: "This unit preserves user-visible projection, attention, export, and direct-record action surfaces."
+split_recommended: true
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+- "UCC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-006 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: projection_attention_export_action_gating_rules
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0022"
+preserved_exact_tokens:
+- "Progress"
+- "Seams"
+- "project_summary.v1"
+- "/blocked"
+- "/config"
+- "Ledger/Usage CSV/JSON"
+- "trust-state"
+- "projection_freshness"
+- "projection_health"
+- "/full-record"
+- "attention center"
+- "Project /card"
+- "highest-severity active item plus a count"
+- "direct canonical revalidation"
+- "sensitive actions"
+negative_constraints:
+- "Project /card and badge rollups must not collapse rows into one synthetic project blocked blob."
+- "Attention cards, blocked notices, and wizard surfaces must not keep card-local or notice-local activation fields as canon."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/Project_Output_Artifacts.md"
+```
+
+
+<<< CONTEXT_AFTER 2653-2664 >>>
+### SP-007 - Receipt Bridge And Usage Join Contract
+
+```yaml
+plan_unit_id: SP-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Receipt records bridge attempts, usage, evidence, runtime artifacts, and UI pivots while lifecycle truth remains in durable record families and usage_event_ref does not become a top-level route selector."
+gui_related: false
+gui_classification_reason: "This unit preserves backend receipt and usage join identity rather than visual presentation."
+split_recommended: false
+depends_on:

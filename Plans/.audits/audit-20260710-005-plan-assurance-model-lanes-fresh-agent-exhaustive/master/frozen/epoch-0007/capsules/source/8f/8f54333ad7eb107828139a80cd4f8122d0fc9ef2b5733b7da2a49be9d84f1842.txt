@@ -1,0 +1,426 @@
+<<< CONTEXT_BEFORE canonical_document_lines=958-969 >>>
+L00000958	        },
+L00000959	        "blocked_route": {
+L00000960	          "$ref": "#/$defs/stage_blocked_route"
+L00000961	        },
+L00000962	        "assignment_contract": {
+L00000963	          "$ref": "#/$defs/compile_wave_contract"
+L00000964	        },
+L00000965	        "parent_writeback_policy": {
+L00000966	          "$ref": "#/$defs/parent_writeback_policy"
+L00000967	        }
+L00000968	      }
+L00000969	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=970-1366 >>>
+L00000970	    "node_seed_candidate": {
+L00000971	      "type": "object",
+L00000972	      "additionalProperties": false,
+L00000973	      "required": [
+L00000974	        "source_plan_unit_ids",
+L00000975	        "source_acceptance_unit_ids",
+L00000976	        "objective",
+L00000977	        "owner_area",
+L00000978	        "implementation_surfaces",
+L00000979	        "read_set",
+L00000980	        "write_set_candidates",
+L00000981	        "acceptance_criteria",
+L00000982	        "validator_candidates",
+L00000983	        "dependency_refs",
+L00000984	        "risk_class",
+L00000985	        "reasoning_tier",
+L00000986	        "work_type",
+L00000987	        "gui_related",
+L00000988	        "frontend_related",
+L00000989	        "effort_class",
+L00000990	        "capability_lane",
+L00000991	        "authority",
+L00000992	        "sizing",
+L00000993	        "status",
+L00000994	        "blockers",
+L00000995	        "capability_requirements"
+L00000996	      ],
+L00000997	      "properties": {
+L00000998	        "source_plan_unit_ids": {
+L00000999	          "$ref": "#/$defs/ref_list"
+L00001000	        },
+L00001001	        "source_acceptance_unit_ids": {
+L00001002	          "$ref": "#/$defs/ref_list"
+L00001003	        },
+L00001004	        "objective": {
+L00001005	          "type": "string"
+L00001006	        },
+L00001007	        "owner_area": {
+L00001008	          "type": "string"
+L00001009	        },
+L00001010	        "implementation_surfaces": {
+L00001011	          "$ref": "#/$defs/ref_list"
+L00001012	        },
+L00001013	        "read_set": {
+L00001014	          "$ref": "#/$defs/ref_list"
+L00001015	        },
+L00001016	        "write_set_candidates": {
+L00001017	          "$ref": "#/$defs/ref_list"
+L00001018	        },
+L00001019	        "acceptance_criteria": {
+L00001020	          "type": "array",
+L00001021	          "items": {
+L00001022	            "type": "string"
+L00001023	          }
+L00001024	        },
+L00001025	        "validator_candidates": {
+L00001026	          "type": "array",
+L00001027	          "items": {
+L00001028	            "type": "string"
+L00001029	          }
+L00001030	        },
+L00001031	        "dependency_refs": {
+L00001032	          "$ref": "#/$defs/ref_list"
+L00001033	        },
+L00001034	        "risk_class": {
+L00001035	          "$ref": "#/$defs/risk_class"
+L00001036	        },
+L00001037	        "reasoning_tier": {
+L00001038	          "$ref": "#/$defs/reasoning_tier"
+L00001039	        },
+L00001040	        "work_type": {
+L00001041	          "$ref": "#/$defs/work_type"
+L00001042	        },
+L00001043	        "gui_related": {
+L00001044	          "type": "boolean"
+L00001045	        },
+L00001046	        "frontend_related": {
+L00001047	          "type": "boolean"
+L00001048	        },
+L00001049	        "effort_class": {
+L00001050	          "$ref": "#/$defs/effort_class"
+L00001051	        },
+L00001052	        "effort": {
+L00001053	          "$ref": "#/$defs/effort_class"
+L00001054	        },
+L00001055	        "capability_lane": {
+L00001056	          "$ref": "#/$defs/capability_lane"
+L00001057	        },
+L00001058	        "authority": {
+L00001059	          "$ref": "#/$defs/authority"
+L00001060	        },
+L00001061	        "sizing": {
+L00001062	          "$ref": "#/$defs/sizing"
+L00001063	        },
+L00001064	        "status": {
+L00001065	          "enum": [
+L00001066	            "candidate",
+L00001067	            "review_ready",
+L00001068	            "approved_for_workgraph_draft",
+L00001069	            "blocked",
+L00001070	            "excluded"
+L00001071	          ]
+L00001072	        },
+L00001073	        "blockers": {
+L00001074	          "type": "array",
+L00001075	          "items": {
+L00001076	            "$ref": "#/$defs/blocker"
+L00001077	          }
+L00001078	        },
+L00001079	        "capability_requirements": {
+L00001080	          "type": "array",
+L00001081	          "items": {
+L00001082	            "$ref": "#/$defs/capability_requirement"
+L00001083	          }
+L00001084	        }
+L00001085	      }
+L00001086	    },
+L00001087	    "workgraph_draft": {
+L00001088	      "type": "object",
+L00001089	      "additionalProperties": false,
+L00001090	      "required": [
+L00001091	        "nodes",
+L00001092	        "entrypoints",
+L00001093	        "dependency_edges",
+L00001094	        "scheduler_policy",
+L00001095	        "graph_integrity",
+L00001096	        "authority",
+L00001097	        "evidence",
+L00001098	        "validation_state"
+L00001099	      ],
+L00001100	      "properties": {
+L00001101	        "nodes": {
+L00001102	          "type": "array",
+L00001103	          "minItems": 1,
+L00001104	          "items": {
+L00001105	            "$ref": "#/$defs/workgraph_node"
+L00001106	          }
+L00001107	        },
+L00001108	        "entrypoints": {
+L00001109	          "$ref": "#/$defs/non_empty_ref_list"
+L00001110	        },
+L00001111	        "dependency_edges": {
+L00001112	          "type": "array",
+L00001113	          "items": {
+L00001114	            "$ref": "#/$defs/dependency_edge"
+L00001115	          }
+L00001116	        },
+L00001117	        "scheduler_policy": {
+L00001118	          "$ref": "#/$defs/scheduler_policy"
+L00001119	        },
+L00001120	        "graph_integrity": {
+L00001121	          "$ref": "#/$defs/graph_integrity"
+L00001122	        },
+L00001123	        "authority": {
+L00001124	          "$ref": "#/$defs/authority"
+L00001125	        },
+L00001126	        "evidence": {
+L00001127	          "$ref": "#/$defs/ref_list"
+L00001128	        },
+L00001129	        "validation_state": {
+L00001130	          "$ref": "#/$defs/validation_state"
+L00001131	        }
+L00001132	      }
+L00001133	    },
+L00001134	    "worknode_request": {
+L00001135	      "type": "object",
+L00001136	      "additionalProperties": false,
+L00001137	      "required": [
+L00001138	        "source_plan_unit_ids",
+L00001139	        "source_acceptance_unit_ids",
+L00001140	        "objective",
+L00001141	        "implementation_surfaces",
+L00001142	        "read_set",
+L00001143	        "write_set_candidates",
+L00001144	        "acceptance_criteria",
+L00001145	        "validator_candidates",
+L00001146	        "dependency_refs",
+L00001147	        "work_type",
+L00001148	        "gui_related",
+L00001149	        "frontend_related",
+L00001150	        "effort_class",
+L00001151	        "reasoning_tier",
+L00001152	        "context_size",
+L00001153	        "validation_cost",
+L00001154	        "risk_class",
+L00001155	        "authority_risk",
+L00001156	        "user_visible_risk",
+L00001157	        "capability_lane",
+L00001158	        "test_binding",
+L00001159	        "model_routing",
+L00001160	        "ordering",
+L00001161	        "authority",
+L00001162	        "status",
+L00001163	        "capability_requirements"
+L00001164	      ],
+L00001165	      "properties": {
+L00001166	        "source_plan_unit_ids": {
+L00001167	          "$ref": "#/$defs/non_empty_ref_list"
+L00001168	        },
+L00001169	        "source_acceptance_unit_ids": {
+L00001170	          "$ref": "#/$defs/non_empty_ref_list"
+L00001171	        },
+L00001172	        "objective": {
+L00001173	          "type": "string"
+L00001174	        },
+L00001175	        "implementation_surfaces": {
+L00001176	          "$ref": "#/$defs/ref_list"
+L00001177	        },
+L00001178	        "read_set": {
+L00001179	          "$ref": "#/$defs/ref_list"
+L00001180	        },
+L00001181	        "write_set_candidates": {
+L00001182	          "$ref": "#/$defs/ref_list"
+L00001183	        },
+L00001184	        "acceptance_criteria": {
+L00001185	          "type": "array",
+L00001186	          "items": {
+L00001187	            "type": "string"
+L00001188	          }
+L00001189	        },
+L00001190	        "validator_candidates": {
+L00001191	          "type": "array",
+L00001192	          "items": {
+L00001193	            "type": "string"
+L00001194	          }
+L00001195	        },
+L00001196	        "dependency_refs": {
+L00001197	          "$ref": "#/$defs/ref_list"
+L00001198	        },
+L00001199	        "work_type": {
+L00001200	          "$ref": "#/$defs/work_type"
+L00001201	        },
+L00001202	        "gui_related": {
+L00001203	          "type": "boolean"
+L00001204	        },
+L00001205	        "frontend_related": {
+L00001206	          "type": "boolean"
+L00001207	        },
+L00001208	        "effort_class": {
+L00001209	          "$ref": "#/$defs/effort_class"
+L00001210	        },
+L00001211	        "reasoning_tier": {
+L00001212	          "$ref": "#/$defs/reasoning_tier"
+L00001213	        },
+L00001214	        "context_size": {
+L00001215	          "$ref": "#/$defs/context_size"
+L00001216	        },
+L00001217	        "validation_cost": {
+L00001218	          "$ref": "#/$defs/validation_cost"
+L00001219	        },
+L00001220	        "risk_class": {
+L00001221	          "$ref": "#/$defs/risk_class"
+L00001222	        },
+L00001223	        "authority_risk": {
+L00001224	          "$ref": "#/$defs/authority_risk"
+L00001225	        },
+L00001226	        "user_visible_risk": {
+L00001227	          "$ref": "#/$defs/user_visible_risk"
+L00001228	        },
+L00001229	        "capability_lane": {
+L00001230	          "$ref": "#/$defs/capability_lane"
+L00001231	        },
+L00001232	        "test_binding": {
+L00001233	          "$ref": "#/$defs/test_binding"
+L00001234	        },
+L00001235	        "model_routing": {
+L00001236	          "$ref": "#/$defs/compiler_model_routing"
+L00001237	        },
+L00001238	        "ordering": {
+L00001239	          "$ref": "#/$defs/ordering"
+L00001240	        },
+L00001241	        "authority": {
+L00001242	          "$ref": "#/$defs/authority"
+L00001243	        },
+L00001244	        "status": {
+L00001245	          "enum": [
+L00001246	            "request_draft",
+L00001247	            "intake_pending",
+L00001248	            "accepted_by_executor",
+L00001249	            "rejected",
+L00001250	            "blocked"
+L00001251	          ]
+L00001252	        },
+L00001253	        "capability_requirements": {
+L00001254	          "type": "array",
+L00001255	          "items": {
+L00001256	            "$ref": "#/$defs/capability_requirement"
+L00001257	          }
+L00001258	        }
+L00001259	      }
+L00001260	    },
+L00001261	    "ordering": {
+L00001262	      "type": "object",
+L00001263	      "additionalProperties": false,
+L00001264	      "required": [
+L00001265	        "build_phase",
+L00001266	        "dependency_type",
+L00001267	        "depends_on",
+L00001268	        "unblocks",
+L00001269	        "parallel_group_id",
+L00001270	        "scheduler_lane",
+L00001271	        "ordering_reason",
+L00001272	        "manual_priority",
+L00001273	        "required_before_start",
+L00001274	        "required_after_start",
+L00001275	        "required_before_completion",
+L00001276	        "required_after_completion"
+L00001277	      ],
+L00001278	      "properties": {
+L00001279	        "build_phase": {
+L00001280	          "$ref": "#/$defs/build_phase"
+L00001281	        },
+L00001282	        "dependency_type": {
+L00001283	          "$ref": "#/$defs/dependency_type"
+L00001284	        },
+L00001285	        "depends_on": {
+L00001286	          "$ref": "#/$defs/ref_list"
+L00001287	        },
+L00001288	        "unblocks": {
+L00001289	          "$ref": "#/$defs/ref_list"
+L00001290	        },
+L00001291	        "parallel_group_id": {
+L00001292	          "type": [
+L00001293	            "string",
+L00001294	            "null"
+L00001295	          ]
+L00001296	        },
+L00001297	        "scheduler_lane": {
+L00001298	          "$ref": "#/$defs/scheduler_lane"
+L00001299	        },
+L00001300	        "ordering_reason": {
+L00001301	          "type": "string"
+L00001302	        },
+L00001303	        "manual_priority": {
+L00001304	          "type": "integer",
+L00001305	          "minimum": 0
+L00001306	        },
+L00001307	        "required_before_start": {
+L00001308	          "$ref": "#/$defs/ref_list"
+L00001309	        },
+L00001310	        "required_after_start": {
+L00001311	          "$ref": "#/$defs/ref_list"
+L00001312	        },
+L00001313	        "required_before_completion": {
+L00001314	          "$ref": "#/$defs/ref_list"
+L00001315	        },
+L00001316	        "required_after_completion": {
+L00001317	          "$ref": "#/$defs/ref_list"
+L00001318	        }
+L00001319	      }
+L00001320	    },
+L00001321	    "model_resolution_receipt": {
+L00001322	      "type": "object",
+L00001323	      "additionalProperties": false,
+L00001324	      "required": [
+L00001325	        "receipt_id",
+L00001326	        "requested_lane",
+L00001327	        "requested_model_profile",
+L00001328	        "effective_model_profile",
+L00001329	        "fallback_used",
+L00001330	        "fallback_reason",
+L00001331	        "capability_checks",
+L00001332	        "handoff"
+L00001333	      ],
+L00001334	      "properties": {
+L00001335	        "receipt_id": {
+L00001336	          "type": "string"
+L00001337	        },
+L00001338	        "requested_lane": {
+L00001339	          "$ref": "#/$defs/capability_lane"
+L00001340	        },
+L00001341	        "requested_model_profile": {
+L00001342	          "$ref": "#/$defs/model_profile"
+L00001343	        },
+L00001344	        "effective_model_profile": {
+L00001345	          "$ref": "#/$defs/model_profile"
+L00001346	        },
+L00001347	        "fallback_used": {
+L00001348	          "type": "boolean"
+L00001349	        },
+L00001350	        "fallback_reason": {
+L00001351	          "type": [
+L00001352	            "string",
+L00001353	            "null"
+L00001354	          ]
+L00001355	        },
+L00001356	        "capability_checks": {
+L00001357	          "type": "array",
+L00001358	          "items": {
+L00001359	            "$ref": "#/$defs/capability_check"
+L00001360	          }
+L00001361	        },
+L00001362	        "handoff": {
+L00001363	          "$ref": "#/$defs/handoff_row"
+L00001364	        }
+L00001365	      }
+L00001366	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=1367-1378 >>>
+L00001367	    "test_binding": {
+L00001368	      "type": "object",
+L00001369	      "additionalProperties": false,
+L00001370	      "required": [
+L00001371	        "required_capability_refs",
+L00001372	        "required_harnesses",
+L00001373	        "generated_test_ids",
+L00001374	        "completion_commands",
+L00001375	        "browser_session_required",
+L00001376	        "emulator_required",
+L00001377	        "visual_evidence_required",
+L00001378	        "expected_artifacts",

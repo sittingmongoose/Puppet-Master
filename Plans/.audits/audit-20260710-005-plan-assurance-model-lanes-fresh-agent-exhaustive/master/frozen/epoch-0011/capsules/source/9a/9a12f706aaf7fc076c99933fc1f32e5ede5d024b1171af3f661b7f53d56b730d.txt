@@ -1,0 +1,410 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4824-4835 >>>
+L00004824	compatibility_only_notes: []
+L00004825	stale_retired_dispositions: []
+L00004826	owner_boundary_notes:
+L00004827	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00004828	owner_hints:
+L00004829	- Plans/Models_System.md
+L00004830	preserved_contractrefs:
+L00004831	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md'
+L00004832	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00004833	  where safe.
+L00004834	```
+L00004835	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4836-5216 >>>
+L00004836	### MS-063 - OpenCode Baseline Deltas Anchor
+L00004837	
+L00004838	```yaml
+L00004839	plan_unit_id: MS-063
+L00004840	unit_type: structural_anchor
+L00004841	status: accepted
+L00004842	owner_doc: Plans/Models_System.md
+L00004843	canonical_text: The OpenCode baseline and Puppet Master deltas section anchor is preserved as a reference baseline location.
+L00004844	gui_related: false
+L00004845	gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
+L00004846	  behavior rather than direct GUI presentation.
+L00004847	split_recommended: false
+L00004848	depends_on: []
+L00004849	unblocks: []
+L00004850	acceptance_criteria:
+L00004851	- Covered source spans remain losslessly available for exact-text audit.
+L00004852	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00004853	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00004854	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004855	validation_surfaces:
+L00004856	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004857	- python3 scripts/pm-plan-index.py validate
+L00004858	risk_class: opencode_baseline_deltas_anchor
+L00004859	reasoning_tier: standard
+L00004860	context_scope: models_system_standardization
+L00004861	implementation_surfaces:
+L00004862	- Plans/Models_System.md
+L00004863	node_compile_hint:
+L00004864	  mode: opencode_baseline_deltas_anchor
+L00004865	  create_worknodes: false
+L00004866	source_lineage:
+L00004867	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0045
+L00004868	preserved_exact_tokens:
+L00004869	- BASELINE-DELTAS
+L00004870	- OpenCode baseline and Puppet Master deltas
+L00004871	negative_constraints: []
+L00004872	compatibility_only_notes: []
+L00004873	stale_retired_dispositions: []
+L00004874	owner_boundary_notes:
+L00004875	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00004876	owner_hints:
+L00004877	- Plans/Models_System.md
+L00004878	preserved_contractrefs: []
+L00004879	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00004880	  where safe.
+L00004881	```
+L00004882	
+L00004883	### MS-064 - OpenCode Model Baseline
+L00004884	
+L00004885	```yaml
+L00004886	plan_unit_id: MS-064
+L00004887	unit_type: baseline_reference
+L00004888	status: accepted
+L00004889	owner_doc: Plans/Models_System.md
+L00004890	canonical_text: OpenCode baseline behavior uses provider_id/model_id parsing, first-slash splitting, config model then model.json
+L00004891	  last-used then internal priority sort, provider options, per-agent overrides, provider transforms, and regex overflow detection.
+L00004892	gui_related: false
+L00004893	gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
+L00004894	  behavior rather than direct GUI presentation.
+L00004895	split_recommended: false
+L00004896	depends_on:
+L00004897	- MS-063
+L00004898	unblocks: []
+L00004899	acceptance_criteria:
+L00004900	- Covered source spans remain losslessly available for exact-text audit.
+L00004901	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00004902	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00004903	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004904	validation_surfaces:
+L00004905	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004906	- python3 scripts/pm-plan-index.py validate
+L00004907	risk_class: opencode_model_baseline
+L00004908	reasoning_tier: standard
+L00004909	context_scope: models_system_standardization
+L00004910	implementation_surfaces:
+L00004911	- Plans/Models_System.md
+L00004912	node_compile_hint:
+L00004913	  mode: opencode_model_baseline
+L00004914	  create_worknodes: false
+L00004915	source_lineage:
+L00004916	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0046
+L00004917	preserved_exact_tokens:
+L00004918	- provider_id/model_id
+L00004919	- parseModel()
+L00004920	- first `/`
+L00004921	- config `model` field
+L00004922	- last used (`model.json`)
+L00004923	- internal priority sort
+L00004924	- config.provider.<id>.options
+L00004925	- agent.<name>.model
+L00004926	- regex patterns
+L00004927	negative_constraints: []
+L00004928	compatibility_only_notes: []
+L00004929	stale_retired_dispositions: []
+L00004930	owner_boundary_notes:
+L00004931	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00004932	owner_hints:
+L00004933	- Plans/Models_System.md
+L00004934	preserved_contractrefs: []
+L00004935	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00004936	  where safe.
+L00004937	```
+L00004938	
+L00004939	### MS-065 - Puppet Master Non GUI Model Deltas
+L00004940	
+L00004941	```yaml
+L00004942	plan_unit_id: MS-065
+L00004943	unit_type: delta_contract
+L00004944	status: accepted
+L00004945	owner_doc: Plans/Models_System.md
+L00004946	canonical_text: Puppet Master keeps OpenCode identifier format while adding configurable model priority, Persona file default_model
+L00004947	  overrides, config.default_variant, Rust provider facade normalization, and Rust auto-compaction integration.
+L00004948	gui_related: false
+L00004949	gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
+L00004950	  behavior rather than direct GUI presentation.
+L00004951	split_recommended: false
+L00004952	depends_on:
+L00004953	- MS-064
+L00004954	unblocks: []
+L00004955	acceptance_criteria:
+L00004956	- Covered source spans remain losslessly available for exact-text audit.
+L00004957	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00004958	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00004959	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004960	validation_surfaces:
+L00004961	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004962	- python3 scripts/pm-plan-index.py validate
+L00004963	risk_class: puppet_master_non_gui_model_deltas
+L00004964	reasoning_tier: standard
+L00004965	context_scope: models_system_standardization
+L00004966	implementation_surfaces:
+L00004967	- Plans/Models_System.md
+L00004968	node_compile_hint:
+L00004969	  mode: puppet_master_non_gui_model_deltas
+L00004970	  create_worknodes: false
+L00004971	source_lineage:
+L00004972	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0047
+L00004973	preserved_exact_tokens:
+L00004974	- config.model_priority
+L00004975	- default_model
+L00004976	- PERSONA.md frontmatter
+L00004977	- config.default_variant
+L00004978	- Rust provider facade
+L00004979	- auto-compaction
+L00004980	negative_constraints: []
+L00004981	compatibility_only_notes: []
+L00004982	stale_retired_dispositions: []
+L00004983	owner_boundary_notes:
+L00004984	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00004985	owner_hints:
+L00004986	- Plans/Models_System.md
+L00004987	preserved_contractrefs:
+L00004988	- 'ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md'
+L00004989	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00004990	  where safe.
+L00004991	```
+L00004992	
+L00004993	### MS-066 - Puppet Master GUI Model Deltas
+L00004994	
+L00004995	```yaml
+L00004996	plan_unit_id: MS-066
+L00004997	unit_type: gui_contract
+L00004998	status: accepted
+L00004999	owner_doc: Plans/Models_System.md
+L00005000	canonical_text: Puppet Master adds a full Chat model picker dropdown, dedicated Models settings tab, and per-Persona override
+L00005001	  editing beyond the OpenCode TUI baseline.
+L00005002	gui_related: true
+L00005003	gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
+L00005004	  behavior.
+L00005005	split_recommended: false
+L00005006	depends_on:
+L00005007	- MS-064
+L00005008	unblocks: []
+L00005009	acceptance_criteria:
+L00005010	- Covered source spans remain losslessly available for exact-text audit.
+L00005011	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00005012	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00005013	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00005014	validation_surfaces:
+L00005015	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005016	- python3 scripts/pm-plan-index.py validate
+L00005017	risk_class: puppet_master_gui_model_deltas
+L00005018	reasoning_tier: standard
+L00005019	context_scope: models_system_standardization
+L00005020	implementation_surfaces:
+L00005021	- Plans/Models_System.md
+L00005022	node_compile_hint:
+L00005023	  mode: puppet_master_gui_model_deltas
+L00005024	  create_worknodes: false
+L00005025	source_lineage:
+L00005026	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0047
+L00005027	preserved_exact_tokens:
+L00005028	- GUI model picker
+L00005029	- full model picker dropdown in Chat
+L00005030	- dedicated Models settings tab
+L00005031	- per-Persona override editing
+L00005032	negative_constraints: []
+L00005033	compatibility_only_notes: []
+L00005034	stale_retired_dispositions: []
+L00005035	owner_boundary_notes:
+L00005036	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00005037	owner_hints:
+L00005038	- Plans/Models_System.md
+L00005039	preserved_contractrefs:
+L00005040	- 'ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md'
+L00005041	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00005042	  where safe.
+L00005043	```
+L00005044	
+L00005045	### MS-067 - Acceptance Model Identity And Selection
+L00005046	
+L00005047	```yaml
+L00005048	plan_unit_id: MS-067
+L00005049	unit_type: acceptance_criteria
+L00005050	status: accepted
+L00005051	owner_doc: Plans/Models_System.md
+L00005052	canonical_text: Acceptance criteria require provider_id/model_id identifiers, parseModel first-slash splitting, and deterministic
+L00005053	  model selection for identical inputs.
+L00005054	gui_related: false
+L00005055	gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
+L00005056	  behavior rather than direct GUI presentation.
+L00005057	split_recommended: false
+L00005058	depends_on:
+L00005059	- MS-012
+L00005060	- MS-015
+L00005061	unblocks: []
+L00005062	acceptance_criteria:
+L00005063	- Covered source spans remain losslessly available for exact-text audit.
+L00005064	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00005065	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00005066	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00005067	validation_surfaces:
+L00005068	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005069	- python3 scripts/pm-plan-index.py validate
+L00005070	risk_class: acceptance_model_identity_selection
+L00005071	reasoning_tier: standard
+L00005072	context_scope: models_system_standardization
+L00005073	implementation_surfaces:
+L00005074	- Plans/Models_System.md
+L00005075	node_compile_hint:
+L00005076	  mode: acceptance_model_identity_selection
+L00005077	  create_worknodes: false
+L00005078	source_lineage:
+L00005079	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0048
+L00005080	preserved_exact_tokens:
+L00005081	- ACCEPTANCE
+L00005082	- AC-MOD01
+L00005083	- AC-MOD02
+L00005084	- provider_id/model_id
+L00005085	- parseModel()
+L00005086	- split on the first `/` only
+L00005087	- deterministically
+L00005088	- same model MUST be selected
+L00005089	negative_constraints: []
+L00005090	compatibility_only_notes: []
+L00005091	stale_retired_dispositions: []
+L00005092	owner_boundary_notes:
+L00005093	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00005094	owner_hints:
+L00005095	- Plans/Models_System.md
+L00005096	preserved_contractrefs:
+L00005097	- 'ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Progression_Gates.md'
+L00005098	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00005099	  where safe.
+L00005100	```
+L00005101	
+L00005102	### MS-068 - Acceptance Persona Fallback
+L00005103	
+L00005104	```yaml
+L00005105	plan_unit_id: MS-068
+L00005106	unit_type: acceptance_criteria
+L00005107	status: accepted
+L00005108	owner_doc: Plans/Models_System.md
+L00005109	canonical_text: Acceptance criteria require Persona default_model to override lower-priority defaults but yield to explicit
+L00005110	  run-envelope or tier-config settings, and unavailable Persona models must warn and fall through without blocking the run.
+L00005111	gui_related: false
+L00005112	gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
+L00005113	  behavior rather than direct GUI presentation.
+L00005114	split_recommended: false
+L00005115	depends_on:
+L00005116	- MS-041
+L00005117	unblocks: []
+L00005118	acceptance_criteria:
+L00005119	- Covered source spans remain losslessly available for exact-text audit.
+L00005120	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00005121	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00005122	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00005123	validation_surfaces:
+L00005124	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005125	- python3 scripts/pm-plan-index.py validate
+L00005126	risk_class: acceptance_persona_fallback
+L00005127	reasoning_tier: standard
+L00005128	context_scope: models_system_standardization
+L00005129	implementation_surfaces:
+L00005130	- Plans/Models_System.md
+L00005131	node_compile_hint:
+L00005132	  mode: acceptance_persona_fallback
+L00005133	  create_worknodes: false
+L00005134	source_lineage:
+L00005135	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0048
+L00005136	preserved_exact_tokens:
+L00005137	- AC-MOD03
+L00005138	- AC-MOD04
+L00005139	- Per-Persona `default_model`
+L00005140	- explicit run-envelope
+L00005141	- tier-config model settings
+L00005142	- log a warning
+L00005143	- fall through
+L00005144	- run MUST NOT be blocked
+L00005145	negative_constraints:
+L00005146	- If a Persona specifies an unavailable model, the run MUST NOT be blocked.
+L00005147	compatibility_only_notes: []
+L00005148	stale_retired_dispositions: []
+L00005149	owner_boundary_notes:
+L00005150	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00005151	owner_hints:
+L00005152	- Plans/Models_System.md
+L00005153	preserved_contractrefs:
+L00005154	- 'ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Progression_Gates.md'
+L00005155	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00005156	  where safe.
+L00005157	```
+L00005158	
+L00005159	### MS-069 - Acceptance Variant Resolution And Validation
+L00005160	
+L00005161	```yaml
+L00005162	plan_unit_id: MS-069
+L00005163	unit_type: acceptance_criteria
+L00005164	status: accepted
+L00005165	owner_doc: Plans/Models_System.md
+L00005166	canonical_text: Acceptance criteria require built-in variants to resolve dynamically and fall back to default when unavailable,
+L00005167	  and custom variants to validate unique name and model availability or log warnings.
+L00005168	gui_related: false
+L00005169	gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
+L00005170	  behavior rather than direct GUI presentation.
+L00005171	split_recommended: false
+L00005172	depends_on:
+L00005173	- MS-045
+L00005174	- MS-046
+L00005175	unblocks: []
+L00005176	acceptance_criteria:
+L00005177	- Covered source spans remain losslessly available for exact-text audit.
+L00005178	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00005179	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00005180	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00005181	validation_surfaces:
+L00005182	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005183	- python3 scripts/pm-plan-index.py validate
+L00005184	risk_class: acceptance_variant_resolution_validation
+L00005185	reasoning_tier: standard
+L00005186	context_scope: models_system_standardization
+L00005187	implementation_surfaces:
+L00005188	- Plans/Models_System.md
+L00005189	node_compile_hint:
+L00005190	  mode: acceptance_variant_resolution_validation
+L00005191	  create_worknodes: false
+L00005192	source_lineage:
+L00005193	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0048
+L00005194	preserved_exact_tokens:
+L00005195	- AC-MOD05
+L00005196	- AC-MOD06
+L00005197	- Built-in variants
+L00005198	- resolve dynamically
+L00005199	- fall back to `default`
+L00005200	- Custom variants
+L00005201	- unique name
+L00005202	- valid model identifier
+L00005203	- warning logged
+L00005204	negative_constraints: []
+L00005205	compatibility_only_notes: []
+L00005206	stale_retired_dispositions: []
+L00005207	owner_boundary_notes:
+L00005208	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00005209	owner_hints:
+L00005210	- Plans/Models_System.md
+L00005211	preserved_contractrefs:
+L00005212	- 'ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Progression_Gates.md'
+L00005213	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00005214	  where safe.
+L00005215	```
+L00005216	
+
+<<< CONTEXT_AFTER canonical_document_lines=5217-5228 >>>
+L00005217	### MS-070 - Acceptance Model Picker And Settings UI
+L00005218	
+L00005219	```yaml
+L00005220	plan_unit_id: MS-070
+L00005221	unit_type: acceptance_criteria
+L00005222	status: accepted
+L00005223	owner_doc: Plans/Models_System.md
+L00005224	canonical_text: Acceptance criteria require the Chat model picker to display available models grouped by provider with variant
+L00005225	  quick-switch and Settings Models to support per-model option editing and variant management.
+L00005226	gui_related: true
+L00005227	gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
+L00005228	  behavior.

@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE canonical_document_lines=9898-9909 >>>
+L00009898	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00009899	        },
+L00009900	        {
+L00009901	          "test_id": "wiring.catalog.docker_host_instance_restart.events",
+L00009902	          "evidence_kind": "event_test",
+L00009903	          "requirement": "Assert cmd.docker.host.instance.restart emits expected event type docker.host.instance_lifecycle_requested with command_id, origin, correlation_id, and handler target."
+L00009904	        }
+L00009905	      ],
+L00009906	      "event_test_requirements": [
+L00009907	        "Assert cmd.docker.host.instance.restart emits expected event type docker.host.instance_lifecycle_requested with command_id, origin, correlation_id, and handler target."
+L00009908	      ]
+L00009909	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=9910-10275 >>>
+L00009910	    "catalog.docker_host_instance_retain": {
+L00009911	      "ui_element_id": "catalog.docker_host_instance_retain",
+L00009912	      "ui_location": "Docker Manager > Docker/Hosts page",
+L00009913	      "ui_command_id": "cmd.docker.host.instance.retain",
+L00009914	      "handler_location": "handlers::docker::host_instance_retain",
+L00009915	      "expected_event_types": [
+L00009916	        "docker.host.instance_retention_recorded"
+L00009917	      ],
+L00009918	      "acceptance_checks": [
+L00009919	        "cmd.docker.host.instance.retain must be registered in the UICommand dispatcher with typed args and result contract",
+L00009920	        "cmd.docker.host.instance.retain exposes projected state selector and disabled reason before dispatch",
+L00009921	        "cmd.docker.host.instance.retain dispatch evidence preserves command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00009922	        "cmd.docker.host.instance.retain has regression and accessibility evidence before production certification"
+L00009923	      ],
+L00009924	      "evidence_required": "Production wiring contract for cmd.docker.host.instance.retain; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00009925	      "state_selector": "state.commands.docker_host_instance_retain.availability",
+L00009926	      "disabled_reason_projection": "state.commands.docker_host_instance_retain.disabled_reason",
+L00009927	      "effect_contract": {
+L00009928	        "effect_kind": "event",
+L00009929	        "description": "cmd.docker.host.instance.retain must emit the declared event types and record dispatch correlation evidence.",
+L00009930	        "receipt_or_event_refs": [
+L00009931	          "docker.host.instance_retention_recorded"
+L00009932	        ]
+L00009933	      },
+L00009934	      "accessibility_contract": {
+L00009935	        "role_or_semantics": "catalog.docker_host_instance_retain exposes a stable role/name/description matching cmd.docker.host.instance.retain.",
+L00009936	        "keyboard_access": "catalog.docker_host_instance_retain is reachable and activatable by keyboard where the control is visible.",
+L00009937	        "focus_management": "catalog.docker_host_instance_retain preserves visible focus and returns focus deterministically after dispatch or error.",
+L00009938	        "disabled_announcement": "catalog.docker_host_instance_retain surfaces state.commands.docker_host_instance_retain.disabled_reason to assistive technology when unavailable."
+L00009939	      },
+L00009940	      "test_evidence": [
+L00009941	        {
+L00009942	          "test_id": "wiring.catalog.docker_host_instance_retain.dispatcher",
+L00009943	          "evidence_kind": "dispatcher_fixture",
+L00009944	          "requirement": "Dispatching cmd.docker.host.instance.retain reaches handlers::docker::host_instance_retain with typed args/result contract."
+L00009945	        },
+L00009946	        {
+L00009947	          "test_id": "wiring.catalog.docker_host_instance_retain.state_projection",
+L00009948	          "evidence_kind": "state_projection",
+L00009949	          "requirement": "Availability reads state.commands.docker_host_instance_retain.availability and disabled copy reads state.commands.docker_host_instance_retain.disabled_reason."
+L00009950	        },
+L00009951	        {
+L00009952	          "test_id": "wiring.catalog.docker_host_instance_retain.effect",
+L00009953	          "evidence_kind": "receipt_or_event_assertion",
+L00009954	          "requirement": "cmd.docker.host.instance.retain must emit the declared event types and record dispatch correlation evidence."
+L00009955	        },
+L00009956	        {
+L00009957	          "test_id": "wiring.catalog.docker_host_instance_retain.accessibility",
+L00009958	          "evidence_kind": "accessibility_regression",
+L00009959	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00009960	        },
+L00009961	        {
+L00009962	          "test_id": "wiring.catalog.docker_host_instance_retain.events",
+L00009963	          "evidence_kind": "event_test",
+L00009964	          "requirement": "Assert cmd.docker.host.instance.retain emits expected event type docker.host.instance_retention_recorded with command_id, origin, correlation_id, and handler target."
+L00009965	        }
+L00009966	      ],
+L00009967	      "event_test_requirements": [
+L00009968	        "Assert cmd.docker.host.instance.retain emits expected event type docker.host.instance_retention_recorded with command_id, origin, correlation_id, and handler target."
+L00009969	      ]
+L00009970	    },
+L00009971	    "catalog.docker_host_instance_start": {
+L00009972	      "ui_element_id": "catalog.docker_host_instance_start",
+L00009973	      "ui_location": "Docker Manager > Docker/Hosts page",
+L00009974	      "ui_command_id": "cmd.docker.host.instance.start",
+L00009975	      "handler_location": "handlers::docker::host_instance_start",
+L00009976	      "expected_event_types": [
+L00009977	        "docker.host.instance_lifecycle_requested"
+L00009978	      ],
+L00009979	      "acceptance_checks": [
+L00009980	        "cmd.docker.host.instance.start must be registered in the UICommand dispatcher with typed args and result contract",
+L00009981	        "cmd.docker.host.instance.start exposes projected state selector and disabled reason before dispatch",
+L00009982	        "cmd.docker.host.instance.start dispatch evidence preserves command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00009983	        "cmd.docker.host.instance.start has regression and accessibility evidence before production certification"
+L00009984	      ],
+L00009985	      "evidence_required": "Production wiring contract for cmd.docker.host.instance.start; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00009986	      "state_selector": "state.commands.docker_host_instance_start.availability",
+L00009987	      "disabled_reason_projection": "state.commands.docker_host_instance_start.disabled_reason",
+L00009988	      "effect_contract": {
+L00009989	        "effect_kind": "event",
+L00009990	        "description": "cmd.docker.host.instance.start must emit the declared event types and record dispatch correlation evidence.",
+L00009991	        "receipt_or_event_refs": [
+L00009992	          "docker.host.instance_lifecycle_requested"
+L00009993	        ]
+L00009994	      },
+L00009995	      "accessibility_contract": {
+L00009996	        "role_or_semantics": "catalog.docker_host_instance_start exposes a stable role/name/description matching cmd.docker.host.instance.start.",
+L00009997	        "keyboard_access": "catalog.docker_host_instance_start is reachable and activatable by keyboard where the control is visible.",
+L00009998	        "focus_management": "catalog.docker_host_instance_start preserves visible focus and returns focus deterministically after dispatch or error.",
+L00009999	        "disabled_announcement": "catalog.docker_host_instance_start surfaces state.commands.docker_host_instance_start.disabled_reason to assistive technology when unavailable."
+L00010000	      },
+L00010001	      "test_evidence": [
+L00010002	        {
+L00010003	          "test_id": "wiring.catalog.docker_host_instance_start.dispatcher",
+L00010004	          "evidence_kind": "dispatcher_fixture",
+L00010005	          "requirement": "Dispatching cmd.docker.host.instance.start reaches handlers::docker::host_instance_start with typed args/result contract."
+L00010006	        },
+L00010007	        {
+L00010008	          "test_id": "wiring.catalog.docker_host_instance_start.state_projection",
+L00010009	          "evidence_kind": "state_projection",
+L00010010	          "requirement": "Availability reads state.commands.docker_host_instance_start.availability and disabled copy reads state.commands.docker_host_instance_start.disabled_reason."
+L00010011	        },
+L00010012	        {
+L00010013	          "test_id": "wiring.catalog.docker_host_instance_start.effect",
+L00010014	          "evidence_kind": "receipt_or_event_assertion",
+L00010015	          "requirement": "cmd.docker.host.instance.start must emit the declared event types and record dispatch correlation evidence."
+L00010016	        },
+L00010017	        {
+L00010018	          "test_id": "wiring.catalog.docker_host_instance_start.accessibility",
+L00010019	          "evidence_kind": "accessibility_regression",
+L00010020	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00010021	        },
+L00010022	        {
+L00010023	          "test_id": "wiring.catalog.docker_host_instance_start.events",
+L00010024	          "evidence_kind": "event_test",
+L00010025	          "requirement": "Assert cmd.docker.host.instance.start emits expected event type docker.host.instance_lifecycle_requested with command_id, origin, correlation_id, and handler target."
+L00010026	        }
+L00010027	      ],
+L00010028	      "event_test_requirements": [
+L00010029	        "Assert cmd.docker.host.instance.start emits expected event type docker.host.instance_lifecycle_requested with command_id, origin, correlation_id, and handler target."
+L00010030	      ]
+L00010031	    },
+L00010032	    "catalog.docker_host_instance_stop": {
+L00010033	      "ui_element_id": "catalog.docker_host_instance_stop",
+L00010034	      "ui_location": "Docker Manager > Docker/Hosts page",
+L00010035	      "ui_command_id": "cmd.docker.host.instance.stop",
+L00010036	      "handler_location": "handlers::docker::host_instance_stop",
+L00010037	      "expected_event_types": [
+L00010038	        "docker.host.instance_lifecycle_requested"
+L00010039	      ],
+L00010040	      "acceptance_checks": [
+L00010041	        "cmd.docker.host.instance.stop must be registered in the UICommand dispatcher with typed args and result contract",
+L00010042	        "cmd.docker.host.instance.stop exposes projected state selector and disabled reason before dispatch",
+L00010043	        "cmd.docker.host.instance.stop dispatch evidence preserves command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00010044	        "cmd.docker.host.instance.stop has regression and accessibility evidence before production certification"
+L00010045	      ],
+L00010046	      "evidence_required": "Production wiring contract for cmd.docker.host.instance.stop; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00010047	      "state_selector": "state.commands.docker_host_instance_stop.availability",
+L00010048	      "disabled_reason_projection": "state.commands.docker_host_instance_stop.disabled_reason",
+L00010049	      "effect_contract": {
+L00010050	        "effect_kind": "event",
+L00010051	        "description": "cmd.docker.host.instance.stop must emit the declared event types and record dispatch correlation evidence.",
+L00010052	        "receipt_or_event_refs": [
+L00010053	          "docker.host.instance_lifecycle_requested"
+L00010054	        ]
+L00010055	      },
+L00010056	      "accessibility_contract": {
+L00010057	        "role_or_semantics": "catalog.docker_host_instance_stop exposes a stable role/name/description matching cmd.docker.host.instance.stop.",
+L00010058	        "keyboard_access": "catalog.docker_host_instance_stop is reachable and activatable by keyboard where the control is visible.",
+L00010059	        "focus_management": "catalog.docker_host_instance_stop preserves visible focus and returns focus deterministically after dispatch or error.",
+L00010060	        "disabled_announcement": "catalog.docker_host_instance_stop surfaces state.commands.docker_host_instance_stop.disabled_reason to assistive technology when unavailable."
+L00010061	      },
+L00010062	      "test_evidence": [
+L00010063	        {
+L00010064	          "test_id": "wiring.catalog.docker_host_instance_stop.dispatcher",
+L00010065	          "evidence_kind": "dispatcher_fixture",
+L00010066	          "requirement": "Dispatching cmd.docker.host.instance.stop reaches handlers::docker::host_instance_stop with typed args/result contract."
+L00010067	        },
+L00010068	        {
+L00010069	          "test_id": "wiring.catalog.docker_host_instance_stop.state_projection",
+L00010070	          "evidence_kind": "state_projection",
+L00010071	          "requirement": "Availability reads state.commands.docker_host_instance_stop.availability and disabled copy reads state.commands.docker_host_instance_stop.disabled_reason."
+L00010072	        },
+L00010073	        {
+L00010074	          "test_id": "wiring.catalog.docker_host_instance_stop.effect",
+L00010075	          "evidence_kind": "receipt_or_event_assertion",
+L00010076	          "requirement": "cmd.docker.host.instance.stop must emit the declared event types and record dispatch correlation evidence."
+L00010077	        },
+L00010078	        {
+L00010079	          "test_id": "wiring.catalog.docker_host_instance_stop.accessibility",
+L00010080	          "evidence_kind": "accessibility_regression",
+L00010081	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00010082	        },
+L00010083	        {
+L00010084	          "test_id": "wiring.catalog.docker_host_instance_stop.events",
+L00010085	          "evidence_kind": "event_test",
+L00010086	          "requirement": "Assert cmd.docker.host.instance.stop emits expected event type docker.host.instance_lifecycle_requested with command_id, origin, correlation_id, and handler target."
+L00010087	        }
+L00010088	      ],
+L00010089	      "event_test_requirements": [
+L00010090	        "Assert cmd.docker.host.instance.stop emits expected event type docker.host.instance_lifecycle_requested with command_id, origin, correlation_id, and handler target."
+L00010091	      ]
+L00010092	    },
+L00010093	    "catalog.docker_host_preflight": {
+L00010094	      "ui_element_id": "catalog.docker_host_preflight",
+L00010095	      "ui_location": "Docker Manager > Docker/Hosts page",
+L00010096	      "ui_command_id": "cmd.docker.host.preflight",
+L00010097	      "handler_location": "handlers::docker::host_preflight",
+L00010098	      "expected_event_types": [
+L00010099	        "docker.host.preflight_requested"
+L00010100	      ],
+L00010101	      "acceptance_checks": [
+L00010102	        "cmd.docker.host.preflight must be registered in the UICommand dispatcher with typed args and result contract",
+L00010103	        "cmd.docker.host.preflight exposes projected state selector and disabled reason before dispatch",
+L00010104	        "cmd.docker.host.preflight dispatch evidence preserves command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00010105	        "cmd.docker.host.preflight has regression and accessibility evidence before production certification"
+L00010106	      ],
+L00010107	      "evidence_required": "Production wiring contract for cmd.docker.host.preflight; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00010108	      "state_selector": "state.commands.docker_host_preflight.availability",
+L00010109	      "disabled_reason_projection": "state.commands.docker_host_preflight.disabled_reason",
+L00010110	      "effect_contract": {
+L00010111	        "effect_kind": "event",
+L00010112	        "description": "cmd.docker.host.preflight must emit the declared event types and record dispatch correlation evidence.",
+L00010113	        "receipt_or_event_refs": [
+L00010114	          "docker.host.preflight_requested"
+L00010115	        ]
+L00010116	      },
+L00010117	      "accessibility_contract": {
+L00010118	        "role_or_semantics": "catalog.docker_host_preflight exposes a stable role/name/description matching cmd.docker.host.preflight.",
+L00010119	        "keyboard_access": "catalog.docker_host_preflight is reachable and activatable by keyboard where the control is visible.",
+L00010120	        "focus_management": "catalog.docker_host_preflight preserves visible focus and returns focus deterministically after dispatch or error.",
+L00010121	        "disabled_announcement": "catalog.docker_host_preflight surfaces state.commands.docker_host_preflight.disabled_reason to assistive technology when unavailable."
+L00010122	      },
+L00010123	      "test_evidence": [
+L00010124	        {
+L00010125	          "test_id": "wiring.catalog.docker_host_preflight.dispatcher",
+L00010126	          "evidence_kind": "dispatcher_fixture",
+L00010127	          "requirement": "Dispatching cmd.docker.host.preflight reaches handlers::docker::host_preflight with typed args/result contract."
+L00010128	        },
+L00010129	        {
+L00010130	          "test_id": "wiring.catalog.docker_host_preflight.state_projection",
+L00010131	          "evidence_kind": "state_projection",
+L00010132	          "requirement": "Availability reads state.commands.docker_host_preflight.availability and disabled copy reads state.commands.docker_host_preflight.disabled_reason."
+L00010133	        },
+L00010134	        {
+L00010135	          "test_id": "wiring.catalog.docker_host_preflight.effect",
+L00010136	          "evidence_kind": "receipt_or_event_assertion",
+L00010137	          "requirement": "cmd.docker.host.preflight must emit the declared event types and record dispatch correlation evidence."
+L00010138	        },
+L00010139	        {
+L00010140	          "test_id": "wiring.catalog.docker_host_preflight.accessibility",
+L00010141	          "evidence_kind": "accessibility_regression",
+L00010142	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00010143	        },
+L00010144	        {
+L00010145	          "test_id": "wiring.catalog.docker_host_preflight.events",
+L00010146	          "evidence_kind": "event_test",
+L00010147	          "requirement": "Assert cmd.docker.host.preflight emits expected event type docker.host.preflight_requested with command_id, origin, correlation_id, and handler target."
+L00010148	        }
+L00010149	      ],
+L00010150	      "event_test_requirements": [
+L00010151	        "Assert cmd.docker.host.preflight emits expected event type docker.host.preflight_requested with command_id, origin, correlation_id, and handler target."
+L00010152	      ]
+L00010153	    },
+L00010154	    "catalog.docker_host_profile_save": {
+L00010155	      "ui_element_id": "catalog.docker_host_profile_save",
+L00010156	      "ui_location": "Docker Manager > Docker/Hosts page",
+L00010157	      "ui_command_id": "cmd.docker.host.profile.save",
+L00010158	      "handler_location": "handlers::docker::host_profile_save",
+L00010159	      "expected_event_types": [
+L00010160	        "docker.host.profile_saved"
+L00010161	      ],
+L00010162	      "acceptance_checks": [
+L00010163	        "cmd.docker.host.profile.save must be registered in the UICommand dispatcher with typed args and result contract",
+L00010164	        "cmd.docker.host.profile.save exposes projected state selector and disabled reason before dispatch",
+L00010165	        "cmd.docker.host.profile.save dispatch evidence preserves command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00010166	        "cmd.docker.host.profile.save has regression and accessibility evidence before production certification"
+L00010167	      ],
+L00010168	      "evidence_required": "Production wiring contract for cmd.docker.host.profile.save; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00010169	      "state_selector": "state.commands.docker_host_profile_save.availability",
+L00010170	      "disabled_reason_projection": "state.commands.docker_host_profile_save.disabled_reason",
+L00010171	      "effect_contract": {
+L00010172	        "effect_kind": "event",
+L00010173	        "description": "cmd.docker.host.profile.save must emit the declared event types and record dispatch correlation evidence.",
+L00010174	        "receipt_or_event_refs": [
+L00010175	          "docker.host.profile_saved"
+L00010176	        ]
+L00010177	      },
+L00010178	      "accessibility_contract": {
+L00010179	        "role_or_semantics": "catalog.docker_host_profile_save exposes a stable role/name/description matching cmd.docker.host.profile.save.",
+L00010180	        "keyboard_access": "catalog.docker_host_profile_save is reachable and activatable by keyboard where the control is visible.",
+L00010181	        "focus_management": "catalog.docker_host_profile_save preserves visible focus and returns focus deterministically after dispatch or error.",
+L00010182	        "disabled_announcement": "catalog.docker_host_profile_save surfaces state.commands.docker_host_profile_save.disabled_reason to assistive technology when unavailable."
+L00010183	      },
+L00010184	      "test_evidence": [
+L00010185	        {
+L00010186	          "test_id": "wiring.catalog.docker_host_profile_save.dispatcher",
+L00010187	          "evidence_kind": "dispatcher_fixture",
+L00010188	          "requirement": "Dispatching cmd.docker.host.profile.save reaches handlers::docker::host_profile_save with typed args/result contract."
+L00010189	        },
+L00010190	        {
+L00010191	          "test_id": "wiring.catalog.docker_host_profile_save.state_projection",
+L00010192	          "evidence_kind": "state_projection",
+L00010193	          "requirement": "Availability reads state.commands.docker_host_profile_save.availability and disabled copy reads state.commands.docker_host_profile_save.disabled_reason."
+L00010194	        },
+L00010195	        {
+L00010196	          "test_id": "wiring.catalog.docker_host_profile_save.effect",
+L00010197	          "evidence_kind": "receipt_or_event_assertion",
+L00010198	          "requirement": "cmd.docker.host.profile.save must emit the declared event types and record dispatch correlation evidence."
+L00010199	        },
+L00010200	        {
+L00010201	          "test_id": "wiring.catalog.docker_host_profile_save.accessibility",
+L00010202	          "evidence_kind": "accessibility_regression",
+L00010203	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00010204	        },
+L00010205	        {
+L00010206	          "test_id": "wiring.catalog.docker_host_profile_save.events",
+L00010207	          "evidence_kind": "event_test",
+L00010208	          "requirement": "Assert cmd.docker.host.profile.save emits expected event type docker.host.profile_saved with command_id, origin, correlation_id, and handler target."
+L00010209	        }
+L00010210	      ],
+L00010211	      "event_test_requirements": [
+L00010212	        "Assert cmd.docker.host.profile.save emits expected event type docker.host.profile_saved with command_id, origin, correlation_id, and handler target."
+L00010213	      ]
+L00010214	    },
+L00010215	    "catalog.docker_host_receipt_open": {
+L00010216	      "ui_element_id": "catalog.docker_host_receipt_open",
+L00010217	      "ui_location": "Docker Manager > Docker/Hosts page",
+L00010218	      "ui_command_id": "cmd.docker.host.receipt.open",
+L00010219	      "handler_location": "handlers::docker::host_receipt_open",
+L00010220	      "expected_event_types": [
+L00010221	        "docker.host.receipt_opened"
+L00010222	      ],
+L00010223	      "acceptance_checks": [
+L00010224	        "cmd.docker.host.receipt.open must be registered in the UICommand dispatcher with typed args and result contract",
+L00010225	        "cmd.docker.host.receipt.open exposes projected state selector and disabled reason before dispatch",
+L00010226	        "cmd.docker.host.receipt.open dispatch evidence preserves command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00010227	        "cmd.docker.host.receipt.open has regression and accessibility evidence before production certification"
+L00010228	      ],
+L00010229	      "evidence_required": "Production wiring contract for cmd.docker.host.receipt.open; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00010230	      "state_selector": "state.commands.docker_host_receipt_open.availability",
+L00010231	      "disabled_reason_projection": "state.commands.docker_host_receipt_open.disabled_reason",
+L00010232	      "effect_contract": {
+L00010233	        "effect_kind": "event",
+L00010234	        "description": "cmd.docker.host.receipt.open must emit the declared event types and record dispatch correlation evidence.",
+L00010235	        "receipt_or_event_refs": [
+L00010236	          "docker.host.receipt_opened"
+L00010237	        ]
+L00010238	      },
+L00010239	      "accessibility_contract": {
+L00010240	        "role_or_semantics": "catalog.docker_host_receipt_open exposes a stable role/name/description matching cmd.docker.host.receipt.open.",
+L00010241	        "keyboard_access": "catalog.docker_host_receipt_open is reachable and activatable by keyboard where the control is visible.",
+L00010242	        "focus_management": "catalog.docker_host_receipt_open preserves visible focus and returns focus deterministically after dispatch or error.",
+L00010243	        "disabled_announcement": "catalog.docker_host_receipt_open surfaces state.commands.docker_host_receipt_open.disabled_reason to assistive technology when unavailable."
+L00010244	      },
+L00010245	      "test_evidence": [
+L00010246	        {
+L00010247	          "test_id": "wiring.catalog.docker_host_receipt_open.dispatcher",
+L00010248	          "evidence_kind": "dispatcher_fixture",
+L00010249	          "requirement": "Dispatching cmd.docker.host.receipt.open reaches handlers::docker::host_receipt_open with typed args/result contract."
+L00010250	        },
+L00010251	        {
+L00010252	          "test_id": "wiring.catalog.docker_host_receipt_open.state_projection",
+L00010253	          "evidence_kind": "state_projection",
+L00010254	          "requirement": "Availability reads state.commands.docker_host_receipt_open.availability and disabled copy reads state.commands.docker_host_receipt_open.disabled_reason."
+L00010255	        },
+L00010256	        {
+L00010257	          "test_id": "wiring.catalog.docker_host_receipt_open.effect",
+L00010258	          "evidence_kind": "receipt_or_event_assertion",
+L00010259	          "requirement": "cmd.docker.host.receipt.open must emit the declared event types and record dispatch correlation evidence."
+L00010260	        },
+L00010261	        {
+L00010262	          "test_id": "wiring.catalog.docker_host_receipt_open.accessibility",
+L00010263	          "evidence_kind": "accessibility_regression",
+L00010264	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00010265	        },
+L00010266	        {
+L00010267	          "test_id": "wiring.catalog.docker_host_receipt_open.events",
+L00010268	          "evidence_kind": "event_test",
+L00010269	          "requirement": "Assert cmd.docker.host.receipt.open emits expected event type docker.host.receipt_opened with command_id, origin, correlation_id, and handler target."
+L00010270	        }
+L00010271	      ],
+L00010272	      "event_test_requirements": [
+L00010273	        "Assert cmd.docker.host.receipt.open emits expected event type docker.host.receipt_opened with command_id, origin, correlation_id, and handler target."
+L00010274	      ]
+L00010275	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=10276-10287 >>>
+L00010276	    "catalog.docker_host_refresh": {
+L00010277	      "ui_element_id": "catalog.docker_host_refresh",
+L00010278	      "ui_location": "Docker Manager > Docker/Hosts page",
+L00010279	      "ui_command_id": "cmd.docker.host.refresh",
+L00010280	      "handler_location": "handlers::docker::host_refresh",
+L00010281	      "expected_event_types": [
+L00010282	        "docker.host.refresh_requested"
+L00010283	      ],
+L00010284	      "acceptance_checks": [
+L00010285	        "cmd.docker.host.refresh must be registered in the UICommand dispatcher with typed args and result contract",
+L00010286	        "cmd.docker.host.refresh exposes projected state selector and disabled reason before dispatch",
+L00010287	        "cmd.docker.host.refresh dispatch evidence preserves command_id, origin, correlation_id, handler target, result, and receipt or event effect",

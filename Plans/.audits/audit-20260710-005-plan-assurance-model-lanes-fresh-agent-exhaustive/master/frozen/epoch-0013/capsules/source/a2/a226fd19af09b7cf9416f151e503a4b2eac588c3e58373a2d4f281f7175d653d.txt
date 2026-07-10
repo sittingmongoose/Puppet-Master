@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4910-4921 >>>
+L00004910	  - "`section-anchor`"
+L00004911	  - "`duplicate-number`"
+L00004912	  - "`promoted-shell`"
+L00004913	  - "`persistence-scope`"
+L00004914	  - "`DAE`"
+L00004915	  - "`/FileSafe/recovery`"
+L00004916	negative_constraints:
+L00004917	  - "Cleanup must not declare closure before owner-doc issues are repaired in order."
+L00004918	owner_hints:
+L00004919	  - Plans/Contracts_V0.md
+L00004920	```
+L00004921	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4922-5287 >>>
+L00004922	### CV-043 - Shared Concern Projection Family
+L00004923	
+L00004924	```yaml
+L00004925	plan_unit_id: CV-043
+L00004926	unit_type: requirement
+L00004927	status: accepted
+L00004928	owner_doc: Plans/Contracts_V0.md
+L00004929	canonical_text: >-
+L00004930	  /governance, Seams, History, Progress, Evidence, Ledger, graph inspector,
+L00004931	  concern operations, corroboration, promotion, reviews, graph patches, and
+L00004932	  recovery share one durable governance/concern record family with action policy
+L00004933	  and reversibility classes.
+L00004934	gui_related: true
+L00004935	gui_classification_reason: The listed operational and audit surfaces expose concern projections and graph inspector state.
+L00004936	split_recommended: true
+L00004937	depends_on: [CV-006, CV-007]
+L00004938	unblocks: []
+L00004939	acceptance_criteria:
+L00004940	  - Operational and audit surfaces project the same concern record family.
+L00004941	  - Progress, Seams, Evidence, History, and Ledger preserve distinct projection roles without forking identity.
+L00004942	  - Concern operations preserve action policy, authority, and reversibility classes.
+L00004943	validation_surfaces:
+L00004944	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004945	  - python3 scripts/pm-plan-index.py validate
+L00004946	risk_class: concern_projection_fork
+L00004947	reasoning_tier: high
+L00004948	context_scope: shared_concern_projection_family
+L00004949	implementation_surfaces:
+L00004950	  - Plans/Contracts_V0.md
+L00004951	node_compile_hint:
+L00004952	  mode: concern_projection_contract
+L00004953	  create_worknodes: false
+L00004954	source_lineage:
+L00004955	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00004956	preserved_exact_tokens:
+L00004957	  - "`/governance`"
+L00004958	  - "Seams"
+L00004959	  - "History"
+L00004960	  - "Progress"
+L00004961	  - "Evidence"
+L00004962	  - "Ledger"
+L00004963	  - "graph inspector"
+L00004964	negative_constraints:
+L00004965	  - "Concern projections must not fork separate durable concern identities per surface."
+L00004966	owner_hints:
+L00004967	  - Plans/Contracts_V0.md
+L00004968	```
+L00004969	
+L00004970	### CV-044 - Event Table Runtime Snapshot Completeness
+L00004971	
+L00004972	```yaml
+L00004973	plan_unit_id: CV-044
+L00004974	unit_type: requirement
+L00004975	status: accepted
+L00004976	owner_doc: Plans/Contracts_V0.md
+L00004977	canonical_text: >-
+L00004978	  Event tables and examples inline or reference canonical runtime snapshot fields
+L00004979	  for run.started, usage.event, hitl.*, safe_point.created, scheduler.pass, and
+L00004980	  remediation.resolved; GATE evidence claims are valid only when schemas encode
+L00004981	  produced outputs.
+L00004982	gui_related: false
+L00004983	gui_classification_reason: This unit defines event schema completeness and governance evidence validity.
+L00004984	split_recommended: true
+L00004985	depends_on: [CV-026]
+L00004986	unblocks: []
+L00004987	acceptance_criteria:
+L00004988	  - Runtime event tables/examples carry or reference canonical runtime snapshot fields.
+L00004989	  - Listed event families preserve runtime identity and snapshot completeness.
+L00004990	  - GATE evidence claims are valid only when schemas encode produced outputs.
+L00004991	validation_surfaces:
+L00004992	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004993	  - python3 scripts/pm-plan-index.py validate
+L00004994	risk_class: event_table_underimplementation
+L00004995	reasoning_tier: high
+L00004996	context_scope: event_table_snapshot_completeness
+L00004997	implementation_surfaces:
+L00004998	  - Plans/Contracts_V0.md
+L00004999	node_compile_hint:
+L00005000	  mode: event_table_schema_contract
+L00005001	  create_worknodes: false
+L00005002	source_lineage:
+L00005003	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005004	preserved_exact_tokens:
+L00005005	  - "`run.started`"
+L00005006	  - "`usage.event`"
+L00005007	  - "`hitl.*`"
+L00005008	  - "`safe_point.created`"
+L00005009	  - "`scheduler.pass`"
+L00005010	  - "`remediation.resolved`"
+L00005011	  - "GATE"
+L00005012	negative_constraints:
+L00005013	  - "Evidence claims must not be accepted when schemas do not encode the produced outputs."
+L00005014	owner_hints:
+L00005015	  - Plans/Contracts_V0.md
+L00005016	```
+L00005017	
+L00005018	### CV-045 - Scheduling And Handoff Identity
+L00005019	
+L00005020	```yaml
+L00005021	plan_unit_id: CV-045
+L00005022	unit_type: requirement
+L00005023	status: accepted
+L00005024	owner_doc: Plans/Contracts_V0.md
+L00005025	canonical_text: >-
+L00005026	  Scheduling and handoff schemas preserve package/seam/lane/account/role
+L00005027	  identity, package/seam overseer authority, scored ready-set scheduling,
+L00005028	  safe-point/remediation lineage, and reject hard-coded selection_rule =
+L00005029	  "lexicographic_node_id" except as final tiebreak.
+L00005030	gui_related: false
+L00005031	gui_classification_reason: This unit defines scheduling and handoff schema identity.
+L00005032	split_recommended: true
+L00005033	depends_on: [CV-032, CV-036]
+L00005034	unblocks: []
+L00005035	acceptance_criteria:
+L00005036	  - Scheduling and handoff schemas preserve package/seam/lane/account/role identity.
+L00005037	  - Package/seam overseer authority and safe-point/remediation lineage remain explicit.
+L00005038	  - selection_rule = "lexicographic_node_id" is rejected except as final tiebreak.
+L00005039	validation_surfaces:
+L00005040	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005041	  - python3 scripts/pm-plan-index.py validate
+L00005042	risk_class: scheduling_identity_drift
+L00005043	reasoning_tier: high
+L00005044	context_scope: scheduling_handoff_identity
+L00005045	implementation_surfaces:
+L00005046	  - Plans/Contracts_V0.md
+L00005047	node_compile_hint:
+L00005048	  mode: scheduling_identity_contract
+L00005049	  create_worknodes: false
+L00005050	source_lineage:
+L00005051	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005052	preserved_exact_tokens:
+L00005053	  - "`selection_rule = \"lexicographic_node_id\"`"
+L00005054	  - "scored ready-set scheduling"
+L00005055	  - "safe-point/remediation lineage"
+L00005056	negative_constraints:
+L00005057	  - "Hard-coded lexicographic_node_id selection is allowed only as a final tiebreak."
+L00005058	owner_hints:
+L00005059	  - Plans/Contracts_V0.md
+L00005060	```
+L00005061	
+L00005062	### CV-046 - Route Payload Unified Ontology
+L00005063	
+L00005064	```yaml
+L00005065	plan_unit_id: CV-046
+L00005066	unit_type: requirement
+L00005067	status: accepted
+L00005068	owner_doc: Plans/Contracts_V0.md
+L00005069	canonical_text: >-
+L00005070	  route_payload, primary_route_payload, secondary_route_payload?, resume_url,
+L00005071	  URL deep links, attention rows, palette/search results, and in-app dispatch
+L00005072	  decode to one route model with provenance, trust, and linkage fields.
+L00005073	gui_related: false
+L00005074	gui_classification_reason: This unit defines route payload identity and transport normalization.
+L00005075	split_recommended: true
+L00005076	depends_on: [CV-031]
+L00005077	unblocks: [CV-051, CV-057]
+L00005078	acceptance_criteria:
+L00005079	  - Route payload variants decode to one route model.
+L00005080	  - resume_url and URL deep links remain transport into that model.
+L00005081	  - Provenance, trust, and linkage fields remain available during route decoding.
+L00005082	validation_surfaces:
+L00005083	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005084	  - python3 scripts/pm-plan-index.py validate
+L00005085	risk_class: route_payload_ontology_fork
+L00005086	reasoning_tier: high
+L00005087	context_scope: unified_route_payload_ontology
+L00005088	implementation_surfaces:
+L00005089	  - Plans/Contracts_V0.md
+L00005090	node_compile_hint:
+L00005091	  mode: route_payload_contract
+L00005092	  create_worknodes: false
+L00005093	source_lineage:
+L00005094	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005095	preserved_exact_tokens:
+L00005096	  - "`route_payload`"
+L00005097	  - "`primary_route_payload`"
+L00005098	  - "`secondary_route_payload?`"
+L00005099	  - "`resume_url`"
+L00005100	  - "URL deep links"
+L00005101	negative_constraints:
+L00005102	  - "Route payload variants must not fork separate route models."
+L00005103	owner_hints:
+L00005104	  - Plans/Contracts_V0.md
+L00005105	```
+L00005106	
+L00005107	### CV-047 - Shared Record Envelope Join Completeness
+L00005108	
+L00005109	```yaml
+L00005110	plan_unit_id: CV-047
+L00005111	unit_type: requirement
+L00005112	status: accepted
+L00005113	owner_doc: Plans/Contracts_V0.md
+L00005114	canonical_text: >-
+L00005115	  Shared records expose record_id, record_kind, schema_version, project_id,
+L00005116	  optional run/scope fields, status/timestamps, summary/detail/source/artifact/
+L00005117	  related/lineage refs, actor refs, and requested_effective_snapshot_refs; detail
+L00005118	  opens must not drop joins.
+L00005119	gui_related: false
+L00005120	gui_classification_reason: This unit defines shared record envelope joins and detail-open integrity.
+L00005121	split_recommended: true
+L00005122	depends_on: [CV-006]
+L00005123	unblocks: []
+L00005124	acceptance_criteria:
+L00005125	  - Shared records expose the listed identity, schema, scope, status, timestamp, refs, actor, and snapshot fields.
+L00005126	  - Detail opens preserve joins needed for history, evidence, artifact, source, and lineage traversal.
+L00005127	  - Route/detail openings do not become join-thin rendered summaries.
+L00005128	validation_surfaces:
+L00005129	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005130	  - python3 scripts/pm-plan-index.py validate
+L00005131	risk_class: record_envelope_join_loss
+L00005132	reasoning_tier: high
+L00005133	context_scope: shared_record_envelope_joins
+L00005134	implementation_surfaces:
+L00005135	  - Plans/Contracts_V0.md
+L00005136	node_compile_hint:
+L00005137	  mode: shared_record_join_contract
+L00005138	  create_worknodes: false
+L00005139	source_lineage:
+L00005140	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005141	preserved_exact_tokens:
+L00005142	  - "`record_id`"
+L00005143	  - "`record_kind`"
+L00005144	  - "`schema_version`"
+L00005145	  - "`project_id`"
+L00005146	  - "`requested_effective_snapshot_refs`"
+L00005147	negative_constraints:
+L00005148	  - "Detail opens must not drop shared record joins."
+L00005149	owner_hints:
+L00005150	  - Plans/Contracts_V0.md
+L00005151	```
+L00005152	
+L00005153	### CV-048 - Projection Health Safety States
+L00005154	
+L00005155	```yaml
+L00005156	plan_unit_id: CV-048
+L00005157	unit_type: requirement
+L00005158	status: accepted
+L00005159	owner_doc: Plans/Contracts_V0.md
+L00005160	canonical_text: >-
+L00005161	  Projection states use current, refreshing, stale, degraded, and unavailable;
+L00005162	  trust/gating reads committed projection state, checkpoint refs, and
+L00005163	  last-updated metadata rather than page-local timestamps.
+L00005164	gui_related: false
+L00005165	gui_classification_reason: This unit defines projection health state vocabulary and gating inputs.
+L00005166	split_recommended: true
+L00005167	depends_on: [CV-030, CV-035]
+L00005168	unblocks: [CV-051]
+L00005169	acceptance_criteria:
+L00005170	  - Projection health states use the closed vocabulary current, refreshing, stale, degraded, and unavailable.
+L00005171	  - Trust/gating reads committed projection state, checkpoint refs, and last-updated metadata.
+L00005172	  - Page-local timestamps do not replace projection health metadata.
+L00005173	validation_surfaces:
+L00005174	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005175	  - python3 scripts/pm-plan-index.py validate
+L00005176	risk_class: projection_health_safety_drift
+L00005177	reasoning_tier: high
+L00005178	context_scope: projection_health_safety
+L00005179	implementation_surfaces:
+L00005180	  - Plans/Contracts_V0.md
+L00005181	node_compile_hint:
+L00005182	  mode: projection_health_contract
+L00005183	  create_worknodes: false
+L00005184	source_lineage:
+L00005185	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005186	preserved_exact_tokens:
+L00005187	  - "`current`"
+L00005188	  - "`refreshing`"
+L00005189	  - "`stale`"
+L00005190	  - "`degraded`"
+L00005191	  - "`unavailable`"
+L00005192	negative_constraints:
+L00005193	  - "Trust/gating must not rely on page-local timestamps instead of committed projection state."
+L00005194	owner_hints:
+L00005195	  - Plans/Contracts_V0.md
+L00005196	```
+L00005197	
+L00005198	### CV-049 - Provider Account Bridge Disclosure
+L00005199	
+L00005200	```yaml
+L00005201	plan_unit_id: CV-049
+L00005202	unit_type: requirement
+L00005203	status: accepted
+L00005204	owner_doc: Plans/Contracts_V0.md
+L00005205	canonical_text: >-
+L00005206	  Provider/model/permission/stream/account contracts disclose requested/effective
+L00005207	  auth/account, account binding, actor role, transport-vs-upstream identity,
+L00005208	  realm split github_api vs copilot_github, failover/switch reasoning, and
+L00005209	  lane/account snapshots.
+L00005210	gui_related: false
+L00005211	gui_classification_reason: This unit defines provider/account runtime disclosure and realm boundaries.
+L00005212	split_recommended: true
+L00005213	depends_on: [CV-013, CV-014, CV-016]
+L00005214	unblocks: [CV-050]
+L00005215	acceptance_criteria:
+L00005216	  - Provider/model/permission/stream/account contracts disclose requested/effective auth/account and account binding.
+L00005217	  - Transport host identity remains split from upstream provider identity.
+L00005218	  - github_api and copilot_github remain hard realm splits.
+L00005219	validation_surfaces:
+L00005220	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005221	  - python3 scripts/pm-plan-index.py validate
+L00005222	risk_class: provider_account_bridge_drift
+L00005223	reasoning_tier: high
+L00005224	context_scope: provider_account_bridge
+L00005225	implementation_surfaces:
+L00005226	  - Plans/Contracts_V0.md
+L00005227	node_compile_hint:
+L00005228	  mode: provider_account_disclosure
+L00005229	  create_worknodes: false
+L00005230	source_lineage:
+L00005231	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005232	preserved_exact_tokens:
+L00005233	  - "`github_api`"
+L00005234	  - "`copilot_github`"
+L00005235	  - "requested/effective auth/account"
+L00005236	  - "failover/switch reasoning"
+L00005237	negative_constraints:
+L00005238	  - "Stable account identity normalization must preserve the hard realm split between github_api and copilot_github."
+L00005239	owner_hints:
+L00005240	  - Plans/Contracts_V0.md
+L00005241	```
+L00005242	
+L00005243	### CV-050 - Account Switch Event Audit Fields
+L00005244	
+L00005245	```yaml
+L00005246	plan_unit_id: CV-050
+L00005247	unit_type: requirement
+L00005248	status: accepted
+L00005249	owner_doc: Plans/Contracts_V0.md
+L00005250	canonical_text: >-
+L00005251	  Durable account_switch_event carries switch_event_id, project_id, provider_id,
+L00005252	  requested/from/to account fields, switch_reason, closed decision_kind, source
+L00005253	  episode, run/attempt/thread IDs, and ts.
+L00005254	gui_related: false
+L00005255	gui_classification_reason: This unit defines durable account switch audit records.
+L00005256	split_recommended: false
+L00005257	depends_on: [CV-049]
+L00005258	unblocks: []
+L00005259	acceptance_criteria:
+L00005260	  - account_switch_event carries the listed identity, reason, source episode, run/attempt/thread, and timestamp fields.
+L00005261	  - decision_kind remains a closed field.
+L00005262	  - Requested-side account switching has durable linkage to source episode and execution context.
+L00005263	validation_surfaces:
+L00005264	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005265	  - python3 scripts/pm-plan-index.py validate
+L00005266	risk_class: account_switch_audit_loss
+L00005267	reasoning_tier: high
+L00005268	context_scope: account_switch_event
+L00005269	implementation_surfaces:
+L00005270	  - Plans/Contracts_V0.md
+L00005271	node_compile_hint:
+L00005272	  mode: account_switch_event_contract
+L00005273	  create_worknodes: false
+L00005274	source_lineage:
+L00005275	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0027
+L00005276	preserved_exact_tokens:
+L00005277	  - "`account_switch_event`"
+L00005278	  - "`switch_event_id`"
+L00005279	  - "`switch_reason`"
+L00005280	  - "`decision_kind`"
+L00005281	  - "`ts`"
+L00005282	negative_constraints:
+L00005283	  - "Account switching must not lose durable run/attempt/thread/source linkage."
+L00005284	owner_hints:
+L00005285	  - Plans/Contracts_V0.md
+L00005286	```
+L00005287	
+
+<<< CONTEXT_AFTER canonical_document_lines=5288-5299 >>>
+L00005288	### CV-051 - Project Attention Route Payload
+L00005289	
+L00005290	```yaml
+L00005291	plan_unit_id: CV-051
+L00005292	unit_type: requirement
+L00005293	status: accepted
+L00005294	owner_doc: Plans/Contracts_V0.md
+L00005295	canonical_text: >-
+L00005296	  project_attention_item carries identity, severity, owner/reason/source refs,
+L00005297	  primary and secondary route payloads, projection_trust_state, dismissibility,
+L00005298	  quieting, active, created/updated/resolved timestamps.
+L00005299	gui_related: true

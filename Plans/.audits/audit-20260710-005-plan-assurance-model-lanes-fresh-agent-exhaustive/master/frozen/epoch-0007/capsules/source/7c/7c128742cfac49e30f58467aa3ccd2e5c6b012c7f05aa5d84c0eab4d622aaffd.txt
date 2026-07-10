@@ -1,0 +1,413 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3302-3313 >>>
+L00003302	  - "wizard_snapshot_ref"
+L00003303	  - "launched_run_id"
+L00003304	  - "launched_run_ref"
+L00003305	negative_constraints: []
+L00003306	preserved_contractrefs:
+L00003307	  - "ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Contracts_V0.md"
+L00003308	owner_hints:
+L00003309	  - "Plans/Prompt_Pipeline.md"
+L00003310	  - "Plans/interview-subagent-integration.md"
+L00003311	  - "Plans/Contracts_V0.md"
+L00003312	```
+L00003313	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3314-3697 >>>
+L00003314	### PP-053 - Historical Runtime Handoff Addendum Disposition
+L00003315	
+L00003316	```yaml
+L00003317	plan_unit_id: PP-053
+L00003318	unit_type: compatibility_disposition
+L00003319	status: accepted
+L00003320	owner_doc: Plans/Prompt_Pipeline.md
+L00003321	canonical_text: >-
+L00003322	  The Runtime Attempt Snapshot and Handoff Consolidation Addendum is retained as historical reconciliation context only; canonical runtime handoff fields and rules live in section 6 and this historical note may not override the owner section.
+L00003323	gui_related: false
+L00003324	gui_classification_reason: This unit preserves historical reconciliation context rather than visual presentation.
+L00003325	split_recommended: false
+L00003326	depends_on:
+L00003327	  - "PP-051"
+L00003328	  - "PP-052"
+L00003329	unblocks: []
+L00003330	acceptance_criteria:
+L00003331	  - "Historical Runtime Handoff Addendum Disposition remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00003332	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00003333	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00003334	validation_surfaces:
+L00003335	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003336	  - "python3 scripts/pm-plan-index.py validate"
+L00003337	risk_class: historical_handoff_drift
+L00003338	reasoning_tier: standard
+L00003339	context_scope: prompt_pipeline_historical_disposition
+L00003340	implementation_surfaces:
+L00003341	  - "Plans/Prompt_Pipeline.md"
+L00003342	node_compile_hint:
+L00003343	  mode: compatibility_disposition
+L00003344	  create_worknodes: false
+L00003345	source_lineage:
+L00003346	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0042"
+L00003347	preserved_exact_tokens:
+L00003348	  - "Runtime Attempt Snapshot and Handoff Consolidation Addendum (2026-03-09)"
+L00003349	  - "historical reconciliation context only"
+L00003350	  - "Runtime Attempt Snapshot and Handoff Bundle"
+L00003351	  - "Nothing in this historical note may override the owner section"
+L00003352	negative_constraints:
+L00003353	  - "The historical addendum must not override the owner section in section 6."
+L00003354	preserved_contractrefs: []
+L00003355	compatibility_only_notes:
+L00003356	  - "Historical runtime handoff note is retained for reconciliation context only."
+L00003357	owner_hints:
+L00003358	  - "Plans/Prompt_Pipeline.md"
+L00003359	```
+L00003360	
+L00003361	### PP-001 - Prompt Pipeline Retired Source-Preserving Bridge
+L00003362	
+L00003363	```yaml
+L00003364	plan_unit_id: PP-001
+L00003365	unit_type: compatibility_disposition
+L00003366	status: retired
+L00003367	owner_doc: Plans/Prompt_Pipeline.md
+L00003368	canonical_text: >-
+L00003369	  PP-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 155. Prompt_Pipeline-S0001 through Prompt_Pipeline-S0020 are covered by PP-002 through PP-026, Prompt_Pipeline-S0021 through Prompt_Pipeline-S0042 are covered by PP-027 through PP-053, and Prompt_Pipeline-S0043 through Prompt_Pipeline-S0046 are generated structural/audit dispositions. PP-001 must not re-own or override implementation-facing PlanUnits and must not use source_preserving_planunit compile mode.
+L00003370	gui_related: false
+L00003371	gui_classification_reason: The live retired bridge is migration/audit metadata only; historical GUI-related bridge tokens remain preserved by span_map and coverage_map.
+L00003372	split_recommended: false
+L00003373	depends_on:
+L00003374	  - "PP-002"
+L00003375	  - "PP-003"
+L00003376	  - "PP-004"
+L00003377	  - "PP-005"
+L00003378	  - "PP-006"
+L00003379	  - "PP-007"
+L00003380	  - "PP-008"
+L00003381	  - "PP-009"
+L00003382	  - "PP-010"
+L00003383	  - "PP-011"
+L00003384	  - "PP-012"
+L00003385	  - "PP-013"
+L00003386	  - "PP-014"
+L00003387	  - "PP-015"
+L00003388	  - "PP-016"
+L00003389	  - "PP-017"
+L00003390	  - "PP-018"
+L00003391	  - "PP-019"
+L00003392	  - "PP-020"
+L00003393	  - "PP-021"
+L00003394	  - "PP-022"
+L00003395	  - "PP-023"
+L00003396	  - "PP-024"
+L00003397	  - "PP-025"
+L00003398	  - "PP-026"
+L00003399	  - "PP-027"
+L00003400	  - "PP-028"
+L00003401	  - "PP-029"
+L00003402	  - "PP-030"
+L00003403	  - "PP-031"
+L00003404	  - "PP-032"
+L00003405	  - "PP-033"
+L00003406	  - "PP-034"
+L00003407	  - "PP-035"
+L00003408	  - "PP-036"
+L00003409	  - "PP-037"
+L00003410	  - "PP-038"
+L00003411	  - "PP-039"
+L00003412	  - "PP-040"
+L00003413	  - "PP-041"
+L00003414	  - "PP-042"
+L00003415	  - "PP-043"
+L00003416	  - "PP-044"
+L00003417	  - "PP-045"
+L00003418	  - "PP-046"
+L00003419	  - "PP-047"
+L00003420	  - "PP-048"
+L00003421	  - "PP-049"
+L00003422	  - "PP-050"
+L00003423	  - "PP-051"
+L00003424	  - "PP-052"
+L00003425	  - "PP-053"
+L00003426	unblocks: []
+L00003427	acceptance_criteria:
+L00003428	  - "PP-001 does not override PP-002 through PP-053 for Prompt_Pipeline-S0001 through Prompt_Pipeline-S0042."
+L00003429	  - "Generated Owner / Consumer Map, PlanUnits heading, retired bridge, and Migration Coverage spans remain available for exact-text audit."
+L00003430	  - "Plans/Prompt_Pipeline.md has no residual source_preserving_planunit product coverage after this bridge retirement."
+L00003431	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this disposition."
+L00003432	validation_surfaces:
+L00003433	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00003434	  - "python3 scripts/pm-plan-index.py validate"
+L00003435	risk_class: residual_bridge_overreach
+L00003436	reasoning_tier: standard
+L00003437	context_scope: prompt_pipeline_residual_bridge
+L00003438	implementation_surfaces:
+L00003439	  - "Plans/Prompt_Pipeline.md"
+L00003440	node_compile_hint:
+L00003441	  mode: retired_source_preserving_bridge
+L00003442	  create_worknodes: false
+L00003443	source_lineage:
+L00003444	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0043"
+L00003445	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0044"
+L00003446	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0045"
+L00003447	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0046"
+L00003448	preserved_exact_tokens:
+L00003449	  - "PP-001"
+L00003450	  - "Prompt Pipeline Residual Source-Preserving Bridge"
+L00003451	  - "Prompt Pipeline Retired Source-Preserving Bridge"
+L00003452	  - "Prompt Pipeline (Canonical SSOT) Source-Preserving PlanUnit"
+L00003453	  - "source_preserving_planunit"
+L00003454	  - "retired_source_preserving_bridge"
+L00003455	  - "source_preserving_bridge_retired"
+L00003456	  - "Owner / Consumer Map"
+L00003457	  - "PlanUnits"
+L00003458	  - "Migration Coverage"
+L00003459	  - "PP-002"
+L00003460	  - "PP-053"
+L00003461	  - "Prompt_Pipeline-S0043"
+L00003462	  - "Prompt_Pipeline-S0044"
+L00003463	  - "Prompt_Pipeline-S0045"
+L00003464	  - "Prompt_Pipeline-S0046"
+L00003465	negative_constraints:
+L00003466	  - "PP-001 must not be used as implementation-ready product coverage for spans now mapped to PP-002 through PP-053."
+L00003467	  - "PP-001 must not use source_preserving_planunit compile mode after Phase 2B batch 155."
+L00003468	preserved_contractrefs:
+L00003469	  - "ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md"
+L00003470	compatibility_only_notes:
+L00003471	  - "The retired bridge remains only as migration-lineage compatibility metadata."
+L00003472	stale_retired_dispositions:
+L00003473	  - "source_preserving_bridge_retired"
+L00003474	owner_hints:
+L00003475	  - "Plans/Prompt_Pipeline.md"
+L00003476	```
+L00003477	
+L00003478	## Migration Coverage
+L00003479	
+L00003480	Original hash: `7344aebefa758505ec0fd7b76c5a98b69768cc9253b2e8bd873cd30cdd0e8be7`.
+L00003481	
+L00003482	Run-scoped proof artifacts:
+L00003483	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+L00003484	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+L00003485	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+L00003486	- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+L00003487	
+L00003488	Original spans from `Prompt_Pipeline-S0001` through `Prompt_Pipeline-S0020` are preserved in place and atomized into fine-grained PlanUnits `PP-002` through `PP-026`. Original spans from `Prompt_Pipeline-S0021` through `Prompt_Pipeline-S0042` are preserved in place and atomized into fine-grained PlanUnits `PP-027` through `PP-053`. Generated structural/audit spans `Prompt_Pipeline-S0043` through `Prompt_Pipeline-S0046` are dispositioned in Phase 2B batch 155, and `PP-001` is retired to migration-lineage-only compatibility disposition. `Plans/Prompt_Pipeline.md` has no residual source-preserving product coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+L00003489	
+L00003490	## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+L00003491	
+L00003492	This addendum compiles accepted provider-update ledger atoms into prompt pipeline requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+L00003493	
+L00003494	### PP-054 - Requested Effective Provider Route Snapshot
+L00003495	
+L00003496	```yaml
+L00003497	plan_unit_id: PP-054
+L00003498	unit_type: requirement
+L00003499	status: accepted
+L00003500	owner_doc: Plans/Prompt_Pipeline.md
+L00003501	canonical_text: >-
+L00003502	  Prompt Pipeline records must snapshot requested and effective provider route identity for provider_entry_id, provider_family_id, account_profile_ref, transport_kind, auth_surface, model_id, effort intent, effective effort wire mapping, media_route_id, fallback_used, fallback_reason, support_state, verification_state, and capability gates for each provider attempt. This snapshot feeds usage, runtime artifacts, GUI run status, and audits without letting consumers infer route identity from model names alone.
+L00003503	gui_related: false
+L00003504	gui_classification_reason: Prompt/runtime identity snapshot contract rather than visual presentation.
+L00003505	depends_on: [CV-293, MS-113, MA-062]
+L00003506	unblocks: [UF-074, RAP-032, ACD-424]
+L00003507	acceptance_criteria:
+L00003508	  - Requested and effective provider/model/account/effort/media route identities are recorded per attempt.
+L00003509	  - Fallback and effort-clamp reasons remain queryable.
+L00003510	  - Usage, artifacts, and GUI consumers reuse this snapshot rather than creating independent provider identity guesses.
+L00003511	  - Secret material is not stored in prompt pipeline snapshots.
+L00003512	validation_surfaces:
+L00003513	  - python3 scripts/pm-plan-index.py validate
+L00003514	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+L00003515	risk_class: provider_identity_snapshot_drift
+L00003516	reasoning_tier: high
+L00003517	context_scope: prompt_provider_route_snapshot
+L00003518	implementation_surfaces: [Plans/Prompt_Pipeline.md, Plans/Contracts_V0.md, Plans/Models_System.md, Plans/Multi-Account.md]
+L00003519	node_compile_hint: {mode: requested_effective_provider_route_snapshot, create_worknodes: false, create_nodeseeds: false}
+L00003520	source_lineage:
+L00003521	  - pldg-20260624-001-provider-updates:atom-0119
+L00003522	  - pldg-20260624-001-provider-updates:atom-0122
+L00003523	  - pldg-20260624-001-provider-updates:atom-0139
+L00003524	source_atom_ids: [atom-0017, atom-0052, atom-0117, atom-0118, atom-0119, atom-0122, atom-0129, atom-0131, atom-0132, atom-0139, atom-0140]
+L00003525	preserved_exact_tokens: ["requested", "effective", "provider_entry_id", "provider_family_id", "account_profile_ref", "transport_kind", "auth_surface", "model_id", "media_route_id", "fallback_used", "fallback_reason", "support_state", "verification_state"]
+L00003526	negative_constraints:
+L00003527	  - Do not infer provider route identity from model name alone.
+L00003528	  - Do not store secrets in prompt pipeline snapshots.
+L00003529	  - Do not let usage, GUI, or artifact consumers invent separate requested/effective route schemas.
+L00003530	owner_hints: [Plans/Prompt_Pipeline.md, Plans/Contracts_V0.md, Plans/Models_System.md, Plans/Multi-Account.md]
+L00003531	```
+L00003532	
+L00003533	
+L00003534	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00003535	
+L00003536	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00003537	
+L00003538	### PP-055 - Vision Bridge Prompt Output Contract
+L00003539	
+L00003540	```yaml
+L00003541	plan_unit_id: PP-055
+L00003542	unit_type: requirement
+L00003543	status: accepted
+L00003544	owner_doc: Plans/Prompt_Pipeline.md
+L00003545	canonical_text: The vision bridge uses a structured prompt/output contract. Image source precedence is explicit
+L00003546	  current-turn attachment or selected artifact, then FileSafe-allowed project file, then explicit clipboard image,
+L00003547	  then recent OS screenshot picker. The vision route receives the image plus a bounded task and returns description/answer,
+L00003548	  uncertainty, notable text/OCR when available, limitations, and safety/redaction notes. The non-vision model receives
+L00003549	  the structured derived result and source refs, not raw image bytes. If bridge execution is denied, unavailable,
+L00003550	  inconclusive, or fails validation, PM returns a structured unavailable result; the instruction remains never guess
+L00003551	  image contents.
+L00003552	gui_related: true
+L00003553	gui_classification_reason: The structured image-derived output is user-visible and governs screenshot/image context
+L00003554	  passed into chat.
+L00003555	depends_on:
+L00003556	- CV-296
+L00003557	- F2-192
+L00003558	- PS-121
+L00003559	unblocks:
+L00003560	- RAP-035
+L00003561	- ACD-425
+L00003562	acceptance_criteria:
+L00003563	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00003564	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00003565	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00003566	  are created by this compile.
+L00003567	validation_surfaces:
+L00003568	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00003569	- python3 scripts/pm-plan-index.py validate
+L00003570	- git diff --check
+L00003571	risk_class: vision_prompt_injection_or_guessing
+L00003572	reasoning_tier: high
+L00003573	context_scope: vision_bridge_prompt_output
+L00003574	implementation_surfaces:
+L00003575	- Plans/Prompt_Pipeline.md
+L00003576	- future bridge prompt/result serializer
+L00003577	node_compile_hint:
+L00003578	  mode: vision_bridge_prompt_output
+L00003579	  create_worknodes: false
+L00003580	  create_nodeseeds: false
+L00003581	source_lineage:
+L00003582	- pldg-20260626-001-feature-name:atom-0071
+L00003583	- pldg-20260626-001-feature-name:atom-0075
+L00003584	- pldg-20260626-001-feature-name:atom-0081
+L00003585	- pldg-20260626-001-feature-name:atom-0082
+L00003586	- pldg-20260626-001-feature-name:atom-0085
+L00003587	- pldg-20260626-001-feature-name:atom-0086
+L00003588	- external:github.com/alfaoz/opencode-see-image@cde1615f6dfc9039c58da6813112ee53391b5b49
+L00003589	- Plans/Runtime_Artifacts_Panel.md
+L00003590	- Plans/Prompt_Pipeline.md
+L00003591	- chat:vision-bridge-defaults-answer
+L00003592	- chat:vision-pressure-test-request
+L00003593	- chat:vision-pressure-test-defaults-answer
+L00003594	- Plans/FinalGUISpec.md
+L00003595	- Plans/FileSafe.md
+L00003596	source_atom_ids:
+L00003597	- atom-0071
+L00003598	- atom-0075
+L00003599	- atom-0081
+L00003600	- atom-0082
+L00003601	- atom-0085
+L00003602	- atom-0086
+L00003603	decision_refs:
+L00003604	- dec-0014
+L00003605	- dec-0015
+L00003606	- dec-0016
+L00003607	- dec-0017
+L00003608	preserved_exact_tokens:
+L00003609	- see_image
+L00003610	- experimental.chat.system.transform
+L00003611	- OpenCode SQLite
+L00003612	- part
+L00003613	- screenshotSearchDirs
+L00003614	- SEE_IMAGE_MODEL
+L00003615	- SEE_IMAGE_PROVIDER
+L00003616	- minimax-m3
+L00003617	- opencode-go
+L00003618	- mimo-v2.5-free
+L00003619	- never guess image contents
+L00003620	- chat attachments
+L00003621	- runtime artifacts
+L00003622	- screenshots
+L00003623	- project files
+L00003624	- clipboard
+L00003625	- recent OS screenshots
+L00003626	- FileSafe
+L00003627	- 3. not deferred
+L00003628	- permission denied
+L00003629	- no eligible vision route
+L00003630	- provider unavailable
+L00003631	- auth expired
+L00003632	- timeout
+L00003633	- unsupported/corrupt/too-large image
+L00003634	- missing file/artifact
+L00003635	- empty clipboard
+L00003636	- ambiguous recent screenshot
+L00003637	- redaction blocked
+L00003638	- 'yes'
+L00003639	- current-turn attachment
+L00003640	- selected artifact
+L00003641	- project file allowed by FileSafe
+L00003642	- clipboard image
+L00003643	- recent OS screenshot picker
+L00003644	- ambiguous
+L00003645	- hidden Desktop/Downloads scraping
+L00003646	- sensitivity/redaction policy
+L00003647	- disclosure destination
+L00003648	- explicit user override
+L00003649	- redaction/omission details
+L00003650	- derived artifact manifest
+L00003651	- secrets
+L00003652	- structured prompt/output contract
+L00003653	- bounded question/task
+L00003654	- uncertainty
+L00003655	- notable text/OCR
+L00003656	- limitations
+L00003657	- safety/redaction notes
+L00003658	- source refs
+L00003659	- not raw image bytes
+L00003660	negative_constraints:
+L00003661	- Do not copy OpenCode's SQLite/session model as PM's source of truth.
+L00003662	- Do not hardcode `opencode-go`, `minimax-m3`, or `mimo-v2.5-free` as PM defaults without an explicit provider-routing
+L00003663	  decision.
+L00003664	- Do not carry over OpenCode-specific prompt injection unchanged.
+L00003665	- Do not defer clipboard or recent OS screenshot support out of MVP.
+L00003666	- Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default without PM-owned permission
+L00003667	  and ingestion rules.
+L00003668	- Do not bypass FileSafe or artifact access policy when resolving project images.
+L00003669	- Do not inline raw screenshots into prompts when artifact refs plus bounded summaries are required.
+L00003670	- Do not let the non-vision model infer or guess image contents after bridge failure.
+L00003671	- Do not serialize failed, revoked, blocked, expired, or omitted image artifacts as successful prompt content.
+L00003672	- Do not show a generic failure when PM can provide a concrete reason code and next action.
+L00003673	- Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default.
+L00003674	- Do not choose among ambiguous recent screenshots without user-visible selection or clear recency evidence.
+L00003675	- Do not bypass FileSafe or artifact permissions for project-file image sources.
+L00003676	- Do not silently send sensitive screenshots or images to another provider without policy evaluation.
+L00003677	- Do not claim redaction happened without recording redaction/omission metadata.
+L00003678	- Do not expose secret material in manifests, receipts, GUI previews, or exports.
+L00003679	- Do not pass raw image bytes into non-vision model context when artifact refs plus bounded derived text are the
+L00003680	  contract.
+L00003681	- Do not omit uncertainty or limitations from bridge output when the image is ambiguous or low-confidence.
+L00003682	- Do not let image text/OCR become hidden, unsourced prompt material.
+L00003683	owner_hints:
+L00003684	- Plans/Tools.md
+L00003685	- Plans/Prompt_Pipeline.md
+L00003686	- Plans/Models_System.md
+L00003687	- Plans/Provider_OpenCode.md
+L00003688	- Plans/Runtime_Artifacts_Panel.md
+L00003689	- Plans/Project_Output_Artifacts.md
+L00003690	- Plans/FileSafe.md
+L00003691	- Plans/assistant-chat-design.md
+L00003692	- Plans/FinalGUISpec.md
+L00003693	- Plans/UI_Command_Catalog.md
+L00003694	- Plans/Permissions_System.md
+L00003695	- Plans/Contracts_V0.md
+L00003696	```
+L00003697	
+
+<<< CONTEXT_AFTER canonical_document_lines=3698-3709 >>>
+L00003698	### PP-056 - Teacher PM Knowledge Source Resolution
+L00003699	
+L00003700	```yaml
+L00003701	plan_unit_id: PP-056
+L00003702	unit_type: requirement
+L00003703	status: accepted
+L00003704	owner_doc: Plans/Prompt_Pipeline.md
+L00003705	canonical_text: 'Teacher answers draw from a live PM knowledge substrate in this order: current surface context,
+L00003706	  canonical Plans, command catalog, GUI surface registry, model/capability/provider state, permission/policy state,
+L00003707	  runtime artifacts/history, Help/Glossary entries, taught memory, then safe fallback or handoff. Teacher must cite
+L00003708	  source groups or show missing coverage, expose source confidence/currentness states, avoid guessing about PM capabilities,
+L00003709	  and choose handoff when the user asks beyond teaching/help scope, external research beyond sources, build work,

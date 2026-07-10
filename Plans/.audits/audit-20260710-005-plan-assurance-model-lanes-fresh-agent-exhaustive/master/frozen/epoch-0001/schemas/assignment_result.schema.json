@@ -1,0 +1,314 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assignment_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "attempt_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "audit_id": {
+      "const": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive"
+    },
+    "coverage": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "all_core_lines_reviewed": {
+          "const": true
+        },
+        "dimensions_checked": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "all_core_lines_reviewed",
+        "dimensions_checked"
+      ],
+      "type": "object"
+    },
+    "dimension_assessments": {
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "dimension": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "evidence_item_ids": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "status": {
+            "enum": [
+              "addressed",
+              "gap_found",
+              "unknown",
+              "not_applicable"
+            ]
+          },
+          "summary": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "dimension",
+          "status",
+          "summary",
+          "evidence_item_ids"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "items": {
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "additionalProperties": false,
+        "properties": {
+          "builder_discretion": {
+            "type": "string"
+          },
+          "confidence": {
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "evidence": {
+            "items": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "additionalProperties": false,
+              "properties": {
+                "exact_quote": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "line_end": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "line_start": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "path": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "source_sha256": {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "path",
+                "line_start",
+                "line_end",
+                "exact_quote",
+                "source_sha256"
+              ],
+              "type": "object"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "feature_keys": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "type": "array",
+            "uniqueItems": true
+          },
+          "gap_kind": {
+            "type": "string"
+          },
+          "impact": {
+            "type": "string"
+          },
+          "item_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "item_type": {
+            "enum": [
+              "behavior",
+              "capability",
+              "contract",
+              "state_transition",
+              "authority",
+              "consumer",
+              "gui_truth",
+              "failure_recovery",
+              "acceptance_oracle",
+              "gap",
+              "unknown",
+              "explicit_non_gap"
+            ]
+          },
+          "severity": {
+            "enum": [
+              "none",
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "statement": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "item_id",
+          "item_type",
+          "title",
+          "statement",
+          "severity",
+          "confidence",
+          "evidence"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "model": {
+      "const": "gpt-5.6-sol"
+    },
+    "phase": {
+      "const": "blind_document_window_review"
+    },
+    "reasoning_effort": {
+      "const": "xhigh"
+    },
+    "role": {
+      "enum": [
+        "exact_behavior",
+        "adversarial_negative_space"
+      ]
+    },
+    "schema_version": {
+      "const": "assignment-result-v1"
+    },
+    "self_attestation": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "no_canonical_writes": {
+          "const": true
+        },
+        "no_peer_result_access": {
+          "const": true
+        },
+        "no_prior_audit_access": {
+          "const": true
+        },
+        "no_unrelated_source_access": {
+          "const": true
+        },
+        "terminal_after_submission": {
+          "const": true
+        }
+      },
+      "required": [
+        "no_prior_audit_access",
+        "no_peer_result_access",
+        "no_unrelated_source_access",
+        "no_canonical_writes",
+        "terminal_after_submission"
+      ],
+      "type": "object"
+    },
+    "source_binding": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "additionalProperties": false,
+      "properties": {
+        "core_range": {
+          "maxItems": 2,
+          "minItems": 2,
+          "prefixItems": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "minimum": 1,
+              "type": "integer"
+            }
+          ],
+          "type": "array"
+        },
+        "core_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "document_path": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "source_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "document_path",
+        "source_sha256",
+        "core_sha256",
+        "core_range"
+      ],
+      "type": "object"
+    },
+    "status": {
+      "enum": [
+        "completed",
+        "blocked"
+      ]
+    },
+    "task_thread_id": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "required": [
+    "audit_id",
+    "schema_version",
+    "phase",
+    "assignment_id",
+    "attempt_id",
+    "task_thread_id",
+    "model",
+    "reasoning_effort",
+    "role",
+    "status",
+    "source_binding",
+    "coverage",
+    "items",
+    "dimension_assessments",
+    "self_attestation"
+  ],
+  "type": "object"
+}

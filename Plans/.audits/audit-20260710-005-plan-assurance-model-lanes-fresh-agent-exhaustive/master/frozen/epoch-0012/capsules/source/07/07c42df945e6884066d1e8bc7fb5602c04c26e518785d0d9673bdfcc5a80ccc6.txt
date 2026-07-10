@@ -1,0 +1,347 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-332 >>>
+L00000001	# Misc Plan -- Agent Artifacts, Cleanup & Related Improvements
+L00000002	
+L00000003	
+L00000004	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000005	
+L00000006	
+L00000007	## Plan Document Status
+L00000008	
+L00000009	**This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document covers:
+L00000010	
+L00000011	- Agent-left-behind artifacts (docs, tests, builds) and cleanup policy
+L00000012	- Runner contract implementation (prepare_working_directory, cleanup_after_execution)
+L00000013	- Dedicated agent output directory and evidence retention policy
+L00000014	- Cleanup UX (manual prune, config toggles)
+L00000015	
+L00000016	Implement sections in dependency order. The **DRY Method** (AGENTS.md) applies: single implementation in a dedicated module, no duplicated logic, all new reusable items tagged.
+L00000017	
+L00000018	## Rewrite alignment (2026-02-21)
+L00000019	
+L00000020	This plan's cleanup/artifact retention requirements remain authoritative, but implementation should align with `Plans/rewrite-tie-in-memo.md`:
+L00000021	
+L00000022	- Treat cleanup actions, retained artifacts, and evidence as first-class **artifacts/events** in the unified event model (seglog ledger)
+L00000023	- Prefer enforcing cleanup boundaries via the **patch/apply/verify/rollback pipeline** (worktree/sandbox lifecycle), not UI-only affordances
+L00000024	- Any config/file-path examples should be interpreted as projections/import-export paths in the new seglog/redb architecture
+L00000025	- **Artifact retention and evidence:** Emit **cleanup and evidence events** to seglog (e.g. cleanup run started/completed, evidence retained/pruned, manual 'Clean workspace' action). Use redb for retention policy, retention metadata, or rollups (e.g. last cleanup time, evidence count per run) so dashboard and retention logic can query without scanning seglog. See storage-plan.md for projectors and analytics.
+L00000026	
+L00000027	**Suggested implementation order (DRY-friendly):**  
+L00000028	1) Add `src/cleanup/` with allowlist (DRY:DATA) and `run_git_clean_with_excludes` (DRY:FN); use shared git binary resolution from Worktree plan when available (§10.1).  
+L00000029	2) Implement `prepare_working_directory` and `cleanup_after_execution` (DRY:FN) in cleanup module.  
+L00000030	3) Add/extend runner contract with default impls delegating to cleanup.  
+L00000031	4) Add `run_with_cleanup` wrapper (DRY:FN) and switch all call sites to it.  
+L00000032	5) Document policy in AGENTS.md; add config toggles and Cleanup UX (using existing widgets); wire cleanup config via same Option B as Worktree plan (§10.1).  
+L00000033	6) Agent-output dir, evidence pruning, manual "Clean workspace" action (worktree list from Worktree plan if "all worktrees" desired).
+L00000034	
+L00000035	**Cross-plan:** Section 10 describes how this plan depends on and impacts WorktreeGitImprovement, orchestrator-subagent-integration, and interview-subagent-integration.
+L00000036	
+L00000037	**ELI5/Expert copy alignment:** Any authored tooltip/help/discoverability copy in this plan (for example shortcut/tooling hints) must provide both Expert and ELI5 variants and follow `Plans/FinalGUISpec.md` §7.4.0. App-level **Interaction Mode (Expert/ELI5)** selects variant display; chat-level **Chat ELI5** is separate and chat-only.
+L00000038	
+L00000039	---
+L00000040	
+L00000041	## Table of Contents
+L00000042	
+L00000043	1. [Executive Summary](#1-executive-summary)
+L00000044	2. [Problem Statement](#2-problem-statement)
+L00000045	3. [Cleanup Policy](#3-cleanup-policy) (includes [3.5 DRY Method](#35-dry-method-single-source-of-truth-and-reuse), [3.6 Gitignore and security](#36-gitignore-and-security-no-secrets-to-github))
+L00000046	4. [Runner Contract Implementation](#4-runner-contract-implementation) (includes [4.6 Call sites](#46-call-sites-orchestrator-interview-start-chain-and-conversation), [4.7 DRY module layout and tagging](#47-dry-module-layout-naming-and-tagging), [4.8 Concrete implementation details](#48-concrete-implementation-details))
+L00000047	5. [Agent Output Directory](#5-agent-output-directory)
+L00000048	6. [Evidence Retention & Pruning](#6-evidence-retention--pruning)
+L00000049	7. [Cleanup UX & Config](#7-cleanup-ux--config) (includes [7.5 GUI gaps and updates](#75-gui-gaps-and-updates-consolidated), [7.6 Leveraging platform CLI capabilities](#76-leveraging-platform-cli-capabilities-hooks-skills-plugins-extensions), [7.7 Desktop Shortcuts](#77-desktop-shortcuts-gui-screen), [7.8 Agent Skills](#78-agent-skills-gui), [7.9 Backend: Desktop Shortcuts](#79-backend-desktop-shortcuts), [7.10 Backend: Agent Skills](#710-backend-agent-skills), [7.11 Shortcuts and Skills: gaps, enhancements, implementation readiness](#711-shortcuts-and-skills-gaps-enhancements-implementation-readiness), [7.11.1 Shortcuts: export/import, search/filter, discoverability](#7111-shortcuts-exportimport-searchfilter-discoverability), [7.11.2 Skills: bulk permission, sort/filter, preview, last modified, validate all](#7112-skills-bulk-permission-sortfilter-preview-last-modified-validate-all))
+L00000050	8. [Implementation Checklist](#8-implementation-checklist) (includes [8.1 Core cleanup module](#81-core-cleanup-module-required) through [8.10 Shortcuts and Skills: export/import, search/filter, discoverability, bulk permission, sort/filter, preview, last modified, validate all](#810-shortcuts-and-skills-exportimport-searchfilter-discoverability-bulk-permission-sortfilter-preview-last-modified-validate-all), [8.7 Pre-completion](#87-pre-completion), [8.8 Desktop Shortcuts backend](#88-desktop-shortcuts-backend-77-79), [8.9 Agent Skills backend](#89-agent-skills-backend-78-710))
+L00000051	9. [Risks & Notes](#9-risks--notes)
+L00000052	10. [Cross-Plan Dependencies and Impacts](#10-cross-plan-dependencies-and-impacts)
+L00000053	11. [References](#11-references)
+L00000054	
+L00000055	---
+L00000056	
+L00000057	## 1. Executive Summary
+L00000058	
+L00000059	### Goals
+L00000060	
+L00000061	- **Prevent clutter:** Avoid accumulation of agent-created docs, ad-hoc tests, build artifacts, and old test builds.
+L00000062	- **Align with REQUIREMENTS:** Implement the runner contract (`prepare_working_directory`, `cleanup_after_execution`) and "clean working directory" / "clean up temp files" behavior.
+L00000063	- **Keep evidence valuable:** Retain `.puppet-master/evidence/` and other state; only clean according to an explicit policy.
+L00000064	- **In scope:** Dedicated agent output directory; evidence retention/pruning; user-facing Cleanup UX (config toggles, "Clean workspace now," evidence retention settings).
+L00000065	
+L00000066	### Non-Goals
+L00000067	
+L00000068	- Deleting or ignoring `.puppet-master/evidence/` by default (evidence remains tracked).
+L00000069	- Changing gitignore to blanket `*.log` or ignoring `.puppet-master/`.
+L00000070	
+L00000071	### Target-project DRY (interview-seeded)
+L00000072	
+L00000073	Puppet Master uses the DRY method in its own codebase (AGENTS.md). **Target projects** (projects created or managed by Puppet Master) can use the same reuse-first approach: the **interview** can seed the target project's **AGENTS.md** when it generates that file at interview completion. Seeded content includes a **DRY Method** section and a **Technology & version constraints** (or "Stack conventions") section -- e.g. "always use React 18", "always use Pydantic v2" -- born from the interview (especially Architecture & Technology phase) and optionally from convention templates for well-known stacks. That gives all agents working on the target project (during orchestrator runs or later) clear guidelines: check for existing code and docs before adding new, tag reusable items, and keep a single source of truth for config and specs. **Keep generated AGENTS.md minimal:** it is loaded into agent context; long files consume context and get skimmed, so critical rules get missed. The Interview plan §5.1 specifies: critical-first block at top, size budget (~150-200 lines), linked docs for long reference, and two-tier structure. Implementation belongs in the Interview plan and in `agents_md_generator` (or equivalent); see **Plans/interview-subagent-integration.md** §5.1 (AGENTS.md content: DRY Method and minimality). That subsection also lists **gaps and improvements**: config default for `generate_initial_agents_md`, stack parameterization, preserving the DRY section when agents update AGENTS.md, projects created without the full interview, and overwrite vs. merge if AGENTS.md already exists.
+L00000074	
+L00000075	---
+L00000076	
+L00000077	## 2. Problem Statement
+L00000078	
+L00000079	
+L00000080	**We should be concerned** about accumulation of agent-left-behind content: documents, tests, evidence, and builds can clutter the workspace and evidence directories if there is no cleanup policy. Agents run in fresh processes per iteration (CU-P2-T12). They can leave behind:
+L00000081	
+L00000082	- **Docs:** Extra `.md` files (notes, plans, fragments), sometimes in repo root or `src/`.
+L00000083	- **Tests / scripts:** One-off test files, run scripts, or temporary harnesses.
+L00000084	- **Artifacts:** Build outputs (e.g. `target/` if not already ignored), test output dirs, installers from testing.
+L00000085	- **Temp files:** Editor backups, debug logs, or platform-specific temp dirs created in the workspace.
+L00000086	
+L00000087	The removed Rust/Iced-era `puppet-master-rs` runner discussion specified "Clean working directory state (git checkout to last commit)" plus `prepare_working_directory` and `cleanup_after_execution`; this is historical source-lineage for the rebuild, not current implementation truth. A plain `git checkout` only resets **tracked** files; **untracked** files remain. Without a cleanup policy and implementation, agent-left-behind content accumulates.
+L00000088	
+L00000089	---
+L00000090	
+L00000091	## 3. Cleanup Policy
+L00000092	
+L00000093	### 3.1 What Must Never Be Removed
+L00000094	
+L00000095	
+L00000096	- State files: `progress.txt`, `AGENTS.md`, `prd.json`, and other state as defined in STATE_FILES.md.
+L00000097	- `.puppet-master/` in whole **except** where a retention/pruning policy explicitly allows pruning (e.g. old evidence per Section 6).
+L00000098	- Config and discovery: `.puppet-master/config.yaml`, `.puppet-master/capabilities/`, `.puppet-master/plans/`, etc., unless a future "reset config" feature explicitly does so.
+L00000099	
+L00000100	### 3.2 What May Be Removed (Policy)
+L00000101	
+L00000102	
+L00000103	- **Untracked files and directories** under the workspace (or under the worktree when using worktrees), **except** allowlisted paths.
+L00000104	- **Allowlist (do not remove):**
+L00000105	  - `.puppet-master/`
+L00000106	  - `.gitignore` (and any path/pattern needed so cleanup never deletes it -- see §3.6).
+L00000107	  - Sensitive patterns so we never delete credential or key files (see §3.6).
+L00000108	  - Any path listed in config (e.g. `paths.workspace`, explicit "preserve" list if added).
+L00000109	  - When **Plans/newtools.md** custom headless GUI tool is implemented: `.puppet-master/evidence/gui-automation/` (or equivalent evidence path from that plan) so headless tool evidence is never removed.
+L00000110	- **Agent output directory:** `.puppet-master/agent-output/` (or equivalent) can be cleared between runs by policy while still preserving the rest of `.puppet-master/`; see Section 5.
+L00000111	
+L00000112	### 3.3 Cleanup Scope
+L00000113	
+L00000114	
+L00000115	#### 3.3.1 Assistant worktree persistence
+L00000116	
+L00000117	Assistant-owned worktrees (identified by `owner_thread_id`) are NOT subject to the runner contract cleanup policy that governs orchestrator-owned worktrees. They are persistent by default.
+L00000118	
+L00000119	**Cleanup triggers for assistant worktrees:**
+L00000120	- User clicks Remove in chat header dropdown → confirmation dialog if worktree is dirty
+L00000121	- User deletes thread → cleanup behavior follows `branching.assistant_worktree_cleanup_default` setting: `ask` (show dialog), `keep` (unbind only, keep worktree on disk as manual), `remove` (remove worktree from disk)
+L00000122	- User clicks Remove in Source Control worktree row → confirmation dialog if dirty or thread-bound
+L00000123	- Force-remove via Doctor (orphan cleanup) — only for worktrees with no matching binding and no owner_thread_id
+L00000124	
+L00000125	**App uninstall:** Worktree directories under `.puppet-master/worktrees/` are cleaned up by the uninstall process. Branches created in the main repo remain (git data is preserved).
+L00000126	
+L00000127	**Completed threads:** When a thread reaches terminal/completed state, its worktree binding remains intact. The user can still merge, create PR, or remove. This allows completed work to be reviewed and integrated at the user's pace.
+L00000128	
+L00000129	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
+L00000130	
+L00000131	
+L00000132	- **Main repo path:** When not using worktrees, cleanup runs in `paths.workspace` (or configured project root).
+L00000133	- **Worktrees, lanes, and attempts:** When execution uses a worktree, lane, or attempt-specific working directory, cleanup runs in that selected path only; it must not clean the main working tree for artifacts owned by another lane, attempt, or worktree.
+L00000134	- **After execution:** `cleanup_after_execution` runs in the same directory the agent used (main repo, lane workspace, attempt workspace, or worktree path).
+L00000135	
+L00000136	### 3.4 Cleanup Mechanisms (Choose One or Combine)
+L00000137	
+L00000138	- **Option A -- Conservative:** Remove only known temp dirs and known patterns (e.g. `target/` for Rust, a dedicated `.puppet-master/agent-output/`). No broad `git clean`.
+L00000139	- **Option B -- Moderate:** `git clean -fd` (untracked files/dirs) in workspace/worktree, with an exclude list so `.puppet-master/` and allowlisted paths are never touched. Optionally `git clean -fdx` to also remove ignored files (e.g. `target/`), with same excludes.
+L00000140	- **Option C -- Configurable:** Config flag (e.g. `cleanup.untracked: true/false`, `cleanup.ignored: true/false`) driving Option A vs B and whether to remove ignored dirs. Default: conservative.
+L00000141	
+L00000142	Recommendation: **Option C** so operators can choose safety vs aggressiveness; default to conservative (Option A or B with only untracked, plus explicit exclude list).
+L00000143	
+L00000144	### 3.5 DRY Method: Single source of truth and reuse
+L00000145	
+L00000146	
+L00000147	The project follows the **DRY Method** (AGENTS.md): reusable code is tagged, and no logic is duplicated. Apply it to cleanup as follows.
+L00000148	
+L00000149	- **Single implementation:** All prepare/cleanup logic lives in one module. Runners and call sites **do not** reimplement git clean or allowlist logic; they call into the shared module.
+L00000150	- **Allowlist as data:** Paths and patterns that must never be removed are defined in **one place** (a const, a fn, or a small data type) and used by every cleanup path. No hardcoded exclude lists at call sites.
+L00000151	- **Tagging:** Every new public function, type, or data that is reusable gets a DRY comment:
+L00000152	  - `// DRY:FN:<name>` -- Reusable function (e.g. prepare_working_directory, cleanup_after_execution, run_with_cleanup, run_git_clean_with_excludes).
+L00000153	  - `// DRY:DATA:<name>` -- Single source of truth (e.g. cleanup allowlist / exclude patterns).
+L00000154	  - `// DRY:HELPER:<name>` -- Shared utility used by multiple DRY:FNs if needed.
+L00000155	- **Before adding code:** Check `docs/gui-widget-catalog.md` for any UI; check `src/platforms/platform_specs.rs` for platform data (do not add cleanup-related platform logic there unless it's platform-specific); grep `DRY:` in `src/git/` and `src/cleanup/` to reuse existing helpers.
+L00000156	- **No duplication:** Runners implement the runner contract by **delegating** to the shared cleanup module (e.g. `crate::cleanup::prepare_working_directory(path).await`). The trait can provide default implementations that call the shared module so no runner duplicates logic.
+L00000157	- **Widget catalog:** If any new UI is added (e.g. "Clean workspace" button, cleanup config toggles), check the widget catalog first and use existing widgets; run `scripts/generate-widget-catalog.sh` and `scripts/check-widget-reuse.sh` after changes.
+L00000158	
+L00000159	ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
+L00000160	
+L00000161	**Module placement (see §4.7):** New module `src/cleanup/` with the single implementation; allowlist and git-clean helper live there. Declare `pub mod cleanup` in the parent (e.g. `src/lib.rs` or the crate root that declares `mod git`).
+L00000162	
+L00000163	### 3.6 Gitignore and security (no secrets to GitHub)
+L00000164	
+L00000165	Puppet Master must **respect .gitignore** in all git operations and **never expose secrets** (API keys, tokens, private keys) in commits, logs, evidence, or when pushing to GitHub.
+L00000166	
+L00000167	**Respecting .gitignore**
+L00000168	
+L00000169	- **Staging (add):** The codebase uses `git add -A` (e.g. `GitManager::add_all`) for tier commits. That command stages all changes and adds untracked files that are **not** ignored by .gitignore. So by default, ignored files are not staged. **Do not introduce `git add -f` (force-add)** anywhere; force-add would allow staging files that are in .gitignore and could commit secrets.
+L00000170	- **Cleanup:** The cleanup allowlist and `run_git_clean_with_excludes` must **exclude** `.gitignore` (and optionally other ignore-file names if used) so we never delete the project's ignore rules. Exclude patterns: see "Sensitive patterns" below.
+L00000171	- **Optional safeguard:** Before committing, optionally check that no staged file matches a "sensitive pattern" (e.g. `.env`, `*.pem`, `*.key`) and abort or warn. This protects against a previously force-added secret or a repo with no .gitignore for that file.
+L00000172	
+L00000173	**Sensitive patterns (never remove, never commit, never log)**
+L00000174	
+L00000175	- **Cleanup allowlist / git clean excludes:** In addition to `.puppet-master/`, root-level state files `progress.txt`, `AGENTS.md`, `prd.json` (STATE_FILES.md), include patterns so we **never delete**:
+L00000176	  - `.gitignore`
+L00000177	  - `.env`, `.env.*`, `*.env` (environment and secret files)
+L00000178	  - `*.pem`, `*.key`, `*.crt`, `*.p12` (keys and certs)
+L00000179	  - `.ssh/` (or at least never delete the directory; be conservative)
+L00000180	  - Any path listed in a small **DRY:DATA** "sensitive patterns" list (e.g. in the cleanup module) so one place defines what must never be removed or force-added.
+L00000181	- **Commit / stage:** Do not force-add paths that match these patterns. If adding a "pre-commit" or staged-file check, fail or warn when a staged file matches a sensitive pattern.
+L00000182	
+L00000183	**No secrets in logs, evidence, or GitHub**
+L00000184	
+L00000185	- **Logs:** Do not log token values, API keys, private key contents, or the contents of credential files. `git-actions.log` currently logs action name and details (e.g. commit message). If commit messages ever come from untrusted input or could contain secrets, consider redacting or not logging the message body; at minimum, never log env vars (e.g. `GH_TOKEN`, `GITHUB_TOKEN`) or file paths that point to credential files with their contents.
+L00000186	- **Evidence:** Evidence artifacts (test logs, screenshots, gate reports) must not contain API keys, tokens, or key contents. When capturing command output or writing evidence, strip or redact known secret patterns (e.g. token=..., Authorization: Bearer ...) if that output is ever written to disk or sent elsewhere.
+L00000187	- **Prompts and PR body:** When building prompts for agents or PR title/body for GitHub, do not include environment variables, token values, or file contents that could be secrets. Use placeholders or omit; let the platform CLI use env/auth instead.
+L00000188	- **GitHub (API-only):** The app uses the GitHub HTTPS API for PR creation (no GitHub CLI). Authentication is OAuth device-code by default; tokens live only in the OS credential store at runtime (never in seglog/redb/Tantivy, logs, or evidence). Ensure no code path builds a PR body or title from untrusted input that could contain a secret; keep PR content to tier metadata, file lists, and acceptance criteria only. Canonical: `Plans/GitHub_API_Auth_and_Flows.md`.
+L00000189	
+L00000190	**Summary**
+L00000191	
+L00000192	- Use only `git add -A` (or explicit paths that are not sensitive); never `git add -f` for paths that could be secrets.
+L00000193	- Extend the cleanup allowlist with `.gitignore` and sensitive patterns; implement in the same DRY:DATA source as other excludes.
+L00000194	- Do not log, commit, or include in evidence or PR content: tokens, keys, or credential file contents.
+L00000195	
+L00000196	ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
+L00000197	
+L00000198	---
+L00000199	
+L00000200	## 4. Runner Contract Implementation
+L00000201	
+L00000202	### 4.1 Trait and Types
+L00000203	
+L00000204	- Define (or extend) a runner contract in `puppet-master-rs` that includes:
+L00000205	  - `async fn prepare_working_directory(&self, path: &Path) -> Result<()>`
+L00000206	  - `async fn cleanup_after_execution(&self, pid: u32, work_dir: &Path) -> Result<()>`
+L00000207	- Path may be main workspace or worktree path; callers pass the directory the agent actually used.
+L00000208	
+L00000209	### 4.2 prepare_working_directory
+L00000210	
+L00000211	- **Ensure path is a valid git repo** (e.g. `git rev-parse --show-toplevel`).
+L00000212	- **Optional:** Reset tracked state: `git checkout -- .` and/or `git restore .` in that path (if product wants a hard reset of tracked files; document clearly).
+L00000213	- **Run workspace cleanup here (not after execution):** This is the only place where broad untracked cleanup (e.g. `git clean -fd` with excludes) or conservative cleanup (known temp/agent-output dirs) should run. Doing it **before** the run removes the *previous* run's cruft; doing it after would remove the current run's output (see §9.1.13). Use the allowlist from Section 3; do **not** remove `.puppet-master/` or state files.
+L00000214	
+L00000215	### 4.3 cleanup_after_execution
+L00000216	
+L00000217	- **Kill / terminate process** if still running (existing behavior).
+L00000218	- **Clean temp files** created by the runner (e.g. any temp files used for context copy, as in REQUIREMENTS 26.3).
+L00000219	- **Do not run broad "git clean -fd" (untracked) here.** The orchestrator commits tier progress *after* the runner returns; if we removed untracked files here we would delete the agent's new files before they are committed (§9.1.13). Optionally remove only **known build-artifact dirs** (e.g. `target/`) in `work_dir` if config allows, to reclaim space without touching untracked source or docs. Do **not** remove untracked files in the workspace in this step.
+L00000220	- Log cleanup result (e.g. "Runner temp files removed" or "Cleanup skipped: disabled").
+L00000221	
+L00000222	### 4.4 Wiring
+L00000223	
+L00000224	- **Orchestrator / execution path:** Before spawning an iteration, call `prepare_working_directory(work_dir)`. After the process ends (success or failure), call `cleanup_after_execution(pid, work_dir)`.
+L00000225	- **Platform runners:** Each runner implements the contract; shared logic (e.g. git clean with excludes) can live in a `git` or `cleanup` module so runners don't duplicate code.
+L00000226	
+L00000227	### 4.5 Tests
+L00000228	
+L00000229	- Unit tests: cleanup helper excludes `.puppet-master/` and allowlisted paths; does not delete state files.
+L00000230	- Integration test (optional): create untracked files and maybe a mock `target/` in a temp repo, run cleanup, assert they are removed and allowlisted paths remain.
+L00000231	
+L00000232	### 4.6 Call sites: Orchestrator, Interview, Start chain, and Conversation
+L00000233	
+L00000234	
+L00000235	All code paths that invoke `runner.execute()` should use prepare and cleanup so agent-left-behind artifacts are managed consistently. The following call sites must be updated unless explicitly marked optional.
+L00000236	
+L00000237	| Call site | Location | Working dir source | Update required |
+L00000238	|-----------|----------|--------------------|-----------------|
+L00000239	| **Orchestrator** | `ExecutionEngine::execute_iteration` in `core/execution_engine.rs`; invoked by `orchestrator.rs` (e.g. `execute_iteration(&context)`). | `context.working_dir` (from lane/attempt worktree selection or `config.project.working_directory`). | **Yes.** Call `prepare_working_directory(work_dir)` before building/running the request and `cleanup_after_execution(work_dir)` after `execute` returns (success or failure), for each iteration. This is the main iteration path where cleanup matters most. |
+L00000240	| **Interview (research)** | `interview/research_engine.rs`: `execute_research_ai_call` builds request and calls `runner.execute(&request)`. | Passed in as `working_dir: &Path`. | **Yes.** Call prepare before and cleanup after the execute so research runs don't leave cruft in the project directory. |
+L00000241	| **Start chain** | `start_chain/prd_generator.rs`, `requirements_interviewer.rs`, `architecture_generator.rs`, `multi_pass_generator.rs`: each builds an `ExecutionRequest` with a `working_directory` and calls `runner.execute(&request)`. | Each has its own `working_directory` (e.g. project path). | **Yes.** Use the same prepare/cleanup around each `execute` so PRD/requirements/architecture generation don't accumulate untracked files. |
+L00000242	| **Conversation / wizard** | `app.rs`: `execute_ai_turn` builds request with `working_dir = std::env::current_dir()` and calls `runner.execute(&request)`. | `current_dir()` (process CWD, may not be project root). | **Optional but recommended.** If the conversation runs in a known project path, use that for prepare/cleanup; otherwise use `current_dir()` with the same policy, or skip cleanup when not in a "project" context to avoid cleaning the wrong directory. |
+L00000243	
+L00000244	**Implementation options**
+L00000245	
+L00000246	- **Option A (per call site):** At each call site, call `runner.prepare_working_directory(&request.working_directory).await?` before `execute`, and `runner.cleanup_after_execution(&request.working_directory).await` after `execute` returns. Ensures every path is explicit but duplicates the prepare/execute/cleanup pattern.
+L00000247	- **Option B (wrapper):** Introduce a single helper (e.g. `run_with_cleanup(runner, request) -> Result<ExecutionResult>`) that does: prepare(work_dir) → execute(request) → cleanup(work_dir), and use it from the orchestrator, execution_engine, interview, start_chain, and (optionally) execute_ai_turn. All call sites then go through the wrapper and get consistent behavior; config (e.g. "skip cleanup for interview") can be applied inside the wrapper.
+L00000248	
+L00000249	**Recommendation:** Use **Option B** so prepare/cleanup semantics live in one place and call sites (orchestrator, interviewer, start chain, conversation) are updated to call the wrapper instead of `runner.execute()` directly. The wrapper can read config to skip prepare/cleanup when desired (e.g. for one-off conversation from an arbitrary CWD).
+L00000250	
+L00000251	ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002
+L00000252	
+L00000253	### 4.7 DRY: Module layout, naming, and tagging
+L00000254	
+L00000255	**New module: `src/cleanup/`**
+L00000256	
+L00000257	- **Purpose:** Single place for workspace prepare/cleanup policy and execution. No duplicate logic in runners or call sites.
+L00000258	- **Files (suggested):**
+L00000259	  - `src/cleanup/mod.rs` -- Module root; re-exports and optional `CleanupConfig` (if config is not in a shared config crate).
+L00000260	  - `src/cleanup/workspace.rs` -- Prepare, cleanup, allowlist, and git-clean invocation. All DRY-tagged items below live here (or in mod.rs if small).
+L00000261	- **Parent declaration:** Add `pub mod cleanup;` where other top-level modules are declared (e.g. alongside `pub mod git;`).
+L00000262	
+L00000263	**DRY items to add (tag in code)**
+L00000264	
+L00000265	| Tag | Name | Location | Description |
+L00000266	|-----|------|----------|-------------|
+L00000267	| DRY:DATA | `CLEANUP_EXCLUDE_PATTERNS` or `cleanup_allowlist()` | `cleanup/workspace.rs` | Single source of paths/patterns to never remove: `.puppet-master`, `progress.txt`, `AGENTS.md`, `prd.json`, `.gitignore`, and sensitive patterns (`.env`, `.env.*`, `*.pem`, `*.key`, etc.) per §3.6. Used by git-clean helper (in prepare only) and any conservative cleanup. |
+L00000268	| DRY:FN | `prepare_working_directory` | `cleanup/workspace.rs` | Ensures path is a git repo (or skips git steps if not); optionally runs conservative clean. Called by wrapper or runners. |
+L00000269	| DRY:FN | `cleanup_after_execution` | `cleanup/workspace.rs` | Terminates process if needed; cleans **runner temp files** only (e.g. context copy temp). **Does not** run broad git clean (untracked) -- that runs only in prepare_working_directory (§9.1.13). Optionally removes known build-artifact dirs (e.g. `target/`) per config. Takes `work_dir` and optional config. |
+L00000270	| DRY:FN | `run_git_clean_with_excludes` | `cleanup/workspace.rs` | Builds and runs `git clean -fd` (or `-fdx` when configured) with `-e` exclude patterns from the allowlist. Single implementation for all callers. |
+L00000271	| DRY:FN | `run_with_cleanup` | `core/` or `cleanup/` | Wrapper: prepare(work_dir) → runner.execute(request) → cleanup(work_dir). All call sites (orchestrator, interview, start_chain, execute_ai_turn) use this instead of calling `runner.execute()` directly. |
+L00000272	
+L00000273	**Runner contract and DRY**
+L00000274	
+L00000275	- **Trait:** `PlatformRunner` gains `prepare_working_directory` and `cleanup_after_execution` (or the contract extends to include them). **Default implementations** call `crate::cleanup::prepare_working_directory(path).await` and `crate::cleanup::cleanup_after_execution(work_dir).await` so platform runners do not duplicate logic; they can override only if a platform needs special behavior.
+L00000276	- **Wrapper:** `run_with_cleanup` reads config (e.g. skip prepare/cleanup for conversation or when disabled), then calls the shared prepare and cleanup functions and the runner's `execute`. No per-call-site prepare/cleanup code.
+L00000277	
+L00000278	**Exact git clean invocation (single helper)**
+L00000279	
+L00000280	- **DRY:FN:run_git_clean_with_excludes(** `work_dir`**,** `clean_untracked: bool`**,** `clean_ignored: bool` **)**  
+L00000281	  - **Single source for patterns:** Does **not** take an allowlist parameter; reads from `cleanup_exclude_patterns()` (or `CLEANUP_EXCLUDE_PATTERNS`) in the same module so no caller can pass a different list (DRY).  
+L00000282	  - Runs `git clean -fd` when only untracked; `git clean -fdx` when ignored too. Passes `-e <pattern>` for each entry from the allowlist so `.puppet-master`, `progress.txt`, `AGENTS.md`, `prd.json`, `.gitignore`, and sensitive patterns are never removed.  
+L00000283	  - Document the exact patterns in the function (or in the constant) so §9.1.2 and §9.1.6 are satisfied in one place.  
+L00000284	  - **Use shared git binary:** Resolve the `git` executable via the same helper as GitManager/Doctor (e.g. `path_utils::resolve_executable("git")` until Worktree plan adds `resolve_git_executable()`) so cleanup works when git is in a custom or app-local path. Do not assume `Command::new("git")` is sufficient.
+L00000285	
+L00000286	**Pre-implementation checklist (DRY)**
+L00000287	
+L00000288	- [ ] Grep `DRY:` in `src/git/` and `src/core/` to see if any existing helper can be reused (e.g. git_manager for status; no existing workspace-clean helper expected).
+L00000289	- [ ] Confirm `src/cleanup/` is the right place per AGENTS.md module responsibilities (cleanup is not purely "git operations"; it's workspace hygiene, so a dedicated module is appropriate).
+L00000290	- [ ] After adding code: tag every new public function/data with the correct DRY comment; add no duplicate allowlist or git-clean logic elsewhere.
+L00000291	
+L00000292	### 4.8 Concrete implementation details
+L00000293	
+L00000294	The following gives implementers exact signatures, data, and step-by-step logic so the DRY module can be built without ambiguity.
+L00000295	
+L00000296	**Allowlist (DRY:DATA) -- single source of truth**
+L00000297	
+L00000298	- **Name and location:** In `src/cleanup/workspace.rs`, define a single constant or function that returns the exclude patterns used by `run_git_clean_with_excludes` and by any "sensitive path" check. Recommended: `pub fn cleanup_exclude_patterns() -> &'static [&'static str]` or `const CLEANUP_EXCLUDE_PATTERNS: &[&str]`.
+L00000299	- **Exact patterns (gitignore-style; one entry per `-e`):**  
+L00000300	  `.puppet-master`, `.puppet-master/*`, `progress.txt`, `AGENTS.md`, `prd.json`, `.gitignore`, `.env`, `.env.*`, `*.env`, `*.pem`, `*.key`, `*.crt`, `*.p12`, `.ssh`, `.ssh/*`.  
+L00000301	  Git clean `-e` accepts one pattern per flag; multiple `-e` flags are allowed. Use patterns that match paths relative to `work_dir` (gitignore semantics). Ensure `.puppet-master` and state files are never removed; document in the same module that this list is the single source for both cleanup and (if added) pre-commit sensitive-file checks.
+L00000302	- **Sensitive patterns subset:** Optionally split into `cleanup_exclude_patterns()` (all) and `sensitive_patterns()` (subset for staging checks); both in same file, no duplication of literal strings -- e.g. `sensitive_patterns()` returns a slice of the same literals used in the full list.
+L00000303	
+L00000304	**DRY:FN:run_git_clean_with_excludes**
+L00000305	
+L00000306	- **Signature:** `pub async fn run_git_clean_with_excludes(work_dir: &Path, clean_untracked: bool, clean_ignored: bool) -> Result<()>`.
+L00000307	- **DRY REQUIREMENT:** Tag with `// DRY:FN:run_git_clean_with_excludes`. MUST use `cleanup_exclude_patterns()` from the same module -- DO NOT accept allowlist as parameter or hardcode exclude patterns. MUST use shared git binary resolution (e.g. `path_utils::resolve_executable("git")` or `resolve_git_executable()` from Worktree plan) -- DO NOT hardcode `Command::new("git")`.
+L00000308	- **Behavior:** If `clean_untracked` is false, return `Ok(())` without running git. Otherwise run `git clean -fd` (or `-fdx` if `clean_ignored`). Resolve the git binary via the same helper used by GitManager/Doctor (e.g. `crate::platforms::path_utils::resolve_executable("git")` until Worktree plan adds `resolve_git_executable()`; then switch to that). Build the command with one `-e <pattern>` per entry from `cleanup_exclude_patterns()`. Set `Command::current_dir(work_dir)`. Do not assume `Command::new("git")` is sufficient.
+L00000309	- **Callers:** Only `prepare_working_directory` (and the manual "Clean workspace" action) call this; `cleanup_after_execution` does not.
+L00000310	
+L00000311	**DRY:FN:prepare_working_directory**
+L00000312	
+L00000313	- **Signature:** `pub async fn prepare_working_directory(work_dir: &Path, config: &CleanupConfig) -> Result<()>` (or take config from a shared app config if preferred).
+L00000314	- **DRY REQUIREMENT:** Tag with `// DRY:FN:prepare_working_directory`. MUST call `run_git_clean_with_excludes()` for git clean operations -- DO NOT duplicate git clean logic. MUST use `cleanup_exclude_patterns()` for allowlist -- DO NOT hardcode exclude patterns.
+L00000315	- **Step-by-step:**
+L00000316	  1. **Git check:** Run `git rev-parse --show-toplevel` with `current_dir(work_dir)`. If the command fails (non-repo or git not found), **do not fail the iteration**: log a warning (e.g. "Prepare: not a git repo or git unavailable, skipping git clean") and return `Ok(())`. Optionally run only non-git cleanup (e.g. clear agent-output dir per config) if implemented. This resolves §9.1.3 and §9.1.10 (best-effort; continue without prepare).
+L00000317	  2. **Optional tracked reset:** Do **not** run `git checkout -- .` or `git restore .` unless a future config flag is added and documented; see §9.1.4. For now, prepare only cleans **untracked** (and optionally ignored) files.
+L00000318	  3. **Untracked cleanup:** If config says run untracked cleanup (e.g. `cleanup.untracked == true`), call `run_git_clean_with_excludes(work_dir, true, config.clean_ignored)`.
+L00000319	  4. **Agent-output dir (optional):** If Section 5 is implemented and config says clear agent-output, delete contents of `.puppet-master/agent-output/` (or the path from DRY:DATA constant) but do not remove the directory itself.
+L00000320	  5. Log "Prepare completed" or "Prepare skipped (not a git repo)" as appropriate.
+L00000321	
+L00000322	**DRY:FN:cleanup_after_execution**
+L00000323	
+L00000324	- **Signature:** `pub async fn cleanup_after_execution(pid: u32, work_dir: &Path, config: &CleanupConfig) -> Result<()>`.
+L00000325	- **DRY REQUIREMENT:** Tag with `// DRY:FN:cleanup_after_execution`. MUST use `cleanup_exclude_patterns()` for any path checks -- DO NOT hardcode exclude patterns. MUST use shared git binary resolution if git operations are needed -- DO NOT hardcode `Command::new("git")`.
+L00000326	- **Step-by-step:**
+L00000327	  1. **Terminate process:** If `pid > 0`, attempt to terminate the process (e.g. `kill(pid, SIGTERM)` or platform equivalent); do not block indefinitely; log if termination fails.
+L00000328	  2. **Runner temp files:** Remove any temp files or dirs that the **runner** created for this execution (e.g. context copy temp dir). This requires the runner (or a shared base) to record the temp path(s) so cleanup can remove them; if no such path is stored, this step is a no-op for now. Do **not** run `run_git_clean_with_excludes` here.
+L00000329	  3. **Optional build-artifact dirs:** If config allows (e.g. `cleanup.remove_build_artifacts: true`), remove only known dirs such as `work_dir.join("target")` (Rust). Do not remove untracked source or docs.
+L00000330	  4. Log "Cleanup completed (runner temp removed)" or similar.
+L00000331	
+L00000332	**DRY:FN:run_with_cleanup**
+
+<<< CONTEXT_AFTER canonical_document_lines=333-344 >>>
+L00000333	
+L00000334	- **Placement:** Prefer `src/core/run_with_cleanup.rs` (or a helper in `src/core/execution_engine.rs`) so the execution engine can call it; alternatively `src/cleanup/run_with_cleanup.rs` if the wrapper is considered part of cleanup. Document the choice in AGENTS.md.
+L00000335	- **Signature:** `pub async fn run_with_cleanup<R: PlatformRunner>(runner: &R, request: &ExecutionRequest, config: &CleanupConfig) -> Result<ExecutionResult>`. Alternatively, accept an `Option<&CleanupConfig>` and skip prepare/cleanup when `None` or when config says skip (e.g. for conversation from arbitrary CWD).
+L00000336	- **DRY REQUIREMENT:** Tag with `// DRY:FN:run_with_cleanup`. MUST call `prepare_working_directory()` and `cleanup_after_execution()` from the cleanup module -- DO NOT duplicate prepare/cleanup logic. This wrapper ensures all call sites get consistent behavior.
+L00000337	- **Logic:** (1) If config says skip prepare for this context, skip to step 2. (2) Call `crate::cleanup::prepare_working_directory(&request.working_directory, config).await`; on error, log and continue (per §9.1.10: best-effort). (3) Call `runner.execute(request).await` and capture result. (4) Call `crate::cleanup::cleanup_after_execution(0, &request.working_directory, config).await` (pid may be 0 if not tracked). (5) Return execution result.
+L00000338	- **Call sites (concrete):**
+L00000339	  - **ExecutionEngine:** In `execute_iteration`, wrap `runner.execute(request).await` with `run_with_cleanup(&*runner, request, &cleanup_config).await`. The cleanup_config must be obtained from the same run config as the orchestrator (e.g. from `IterationContext` or from a shared config handle). ExecutionEngine currently has no access to config; add a way to pass cleanup config into ExecutionEngine (e.g. at construction or per execute_iteration). *(Note: `execute_with_sdk_fallback` has been removed — execution is always CLI via `runner.execute()`.)*
+L00000340	  - **research_engine.rs:** In `execute_research_ai_call`, wrap the existing `runner.execute(&request).await` in a call to `run_with_cleanup` so prepare runs before and cleanup after.
+L00000341	  - **start_chain (prd_generator, requirements_interviewer, architecture_generator, multi_pass_generator):** Each currently does `runner.execute(&request).await`; replace with `run_with_cleanup(runner, &request, &config).await`. Obtain config from the same place the start_chain gets its run config.
+L00000342	  - **app.rs execute_ai_turn:** Optionally use `run_with_cleanup` when `working_dir` is a known project path; otherwise call `runner.execute(&request).await` and skip prepare/cleanup to avoid cleaning the wrong directory.
+L00000343	
+L00000344	**Runner contract and config**

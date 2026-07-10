@@ -1,0 +1,142 @@
+<<< CONTEXT_BEFORE canonical_document_lines=714-725 >>>
+L00000714	### RTIM-037 - Rendering Non Goals And Host Bridge Prohibitions
+L00000715	
+L00000716	```yaml
+L00000717	{plan_unit_id: "RTIM-037", unit_type: "constraint", status: "accepted", owner_doc: "Plans/rewrite-tie-in-memo.md", canonical_text: "The rendering contract has no requirement for identical embedded browser panes on every platform, arbitrary WYSIWYG DOM editing, hidden diagram state, or a full-privilege host bridge shared between generated preview content and arbitrary workspace HTML.", gui_related: true, gui_classification_reason: "This unit preserves user-visible GUI, UI, route, surface, or visual rendering requirements.", split_recommended: false, depends_on: ["PDS-003","PDS-004","PDS-005","PNC-001","PS-001","F-043","SMPFS-001"], unblocks: [], acceptance_criteria: ["RTIM-037 remains addressable as a fine-grained Rewrite Tie-In PlanUnit with source-span coverage.","ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.","No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits","python3 scripts/pm-plan-index.py validate"], risk_class: "rewrite_tie_in_drift", reasoning_tier: "standard", context_scope: "rewrite_tie_in", implementation_surfaces: ["Plans/rewrite-tie-in-memo.md"], node_compile_hint: {"mode": "non_goal_constraint","create_worknodes": false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:rewrite-tie-in-memo-S0037"], preserved_exact_tokens: ["Non-goals and prohibitions","No requirement that embedded browser panes work identically","arbitrary WYSIWYG DOM editing","No hidden diagram state","No full-privilege host bridge"], negative_constraints: ["No hidden diagram state may drift from .md or .mmd source.","No full-privilege host bridge may be shared between generated preview content and arbitrary workspace HTML."], preserved_contractrefs: [], owner_hints: ["Plans/rewrite-tie-in-memo.md","Plans/Permissions_System.md","Plans/FileManager.md","Plans/Section15_MVP_Promoted_Features_Spec.md"]}
+L00000718	```
+L00000719	
+L00000720	### RTIM-038 - Scheduler Projection Tie-In
+L00000721	
+L00000722	```yaml
+L00000723	{plan_unit_id: "RTIM-038", unit_type: "requirement", status: "accepted", owner_doc: "Plans/rewrite-tie-in-memo.md", canonical_text: "Runtime scheduler updates are event-driven; queue analysis, remediation lineage, safe points, and projector state derive from canonical event/projection state, with safe points distinct from user-facing restore/rollback history.", gui_related: false, gui_classification_reason: "This unit preserves backend, storage, provider, policy, or ownership requirements rather than visual presentation.", split_recommended: true, depends_on: ["PDS-003","PDS-004","PDS-005","PNC-001","CV-215","CV-216","CV-217","CV-235","SP-001"], unblocks: [], acceptance_criteria: ["RTIM-038 remains addressable as a fine-grained Rewrite Tie-In PlanUnit with source-span coverage.","ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.","No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits","python3 scripts/pm-plan-index.py validate"], risk_class: "rewrite_tie_in_drift", reasoning_tier: "standard", context_scope: "rewrite_tie_in", implementation_surfaces: ["Plans/rewrite-tie-in-memo.md"], node_compile_hint: {"mode": "runtime_scheduler_tie_in","create_worknodes": false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:rewrite-tie-in-memo-S0038"], preserved_exact_tokens: ["Runtime Scheduler Packet Tie-In Note","event-driven scheduler updates","no-polling GUI rule","queue analysis","remediation lineage","runtime safe points","canonical event/projection state"], negative_constraints: [], preserved_contractrefs: [], owner_hints: ["Plans/rewrite-tie-in-memo.md","Plans/Contracts_V0.md","Plans/storage-plan.md"]}
+L00000724	```
+L00000725	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=726-852 >>>
+L00000726	### RTIM-039 - Blocked Outcome UI Storage Preservation
+L00000727	
+L00000728	```yaml
+L00000729	{plan_unit_id: "RTIM-039", unit_type: "requirement", status: "accepted", owner_doc: "Plans/rewrite-tie-in-memo.md", canonical_text: "Blocked outcomes remain first-class in rewrite-era UI and storage and must not be flattened into generic failures.", gui_related: true, gui_classification_reason: "This unit preserves user-visible GUI, UI, route, surface, or visual rendering requirements.", split_recommended: true, depends_on: ["PDS-003","PDS-004","PDS-005","PNC-001","CV-218","CV-219","CV-241","UCC-001","OP-008","RGV-008"], unblocks: [], acceptance_criteria: ["RTIM-039 remains addressable as a fine-grained Rewrite Tie-In PlanUnit with source-span coverage.","ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.","No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."], validation_surfaces: ["python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits","python3 scripts/pm-plan-index.py validate"], risk_class: "rewrite_tie_in_drift", reasoning_tier: "standard", context_scope: "rewrite_tie_in", implementation_surfaces: ["Plans/rewrite-tie-in-memo.md"], node_compile_hint: {"mode": "blocked_state_gui_contract","create_worknodes": false}, source_lineage: ["Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:rewrite-tie-in-memo-S0038"], preserved_exact_tokens: ["blocked-state surfaces","blocked outcomes remain first-class","generic failures","rewrite-era UI or storage"], negative_constraints: ["Blocked outcomes must not be flattened into generic failures in rewrite-era UI or storage."], preserved_contractrefs: [], owner_hints: ["Plans/rewrite-tie-in-memo.md","Plans/Contracts_V0.md","Plans/UI_Command_Catalog.md","Plans/Orchestrator_Page.md","Plans/Run_Graph_View.md"]}
+L00000730	```
+L00000731	
+L00000732	### RTIM-001 - Puppet Master Rewrite Tie-In Contract Retired Source-Preserving Bridge
+L00000733	
+L00000734	```yaml
+L00000735	plan_unit_id: RTIM-001
+L00000736	unit_type: compatibility_disposition
+L00000737	status: retired
+L00000738	owner_doc: Plans/rewrite-tie-in-memo.md
+L00000739	canonical_text: >-
+L00000740	  RTIM-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 162.
+L00000741	  rewrite-tie-in-memo-S0001 through rewrite-tie-in-memo-S0038 are covered by RTIM-002 through RTIM-039
+L00000742	  or explicit structural dispositions, and rewrite-tie-in-memo-S0039 through rewrite-tie-in-memo-S0042 are
+L00000743	  generated structural/audit dispositions. RTIM-001 must not re-own or override implementation-facing
+L00000744	  PlanUnits and must not use source_preserving_planunit compile mode.
+L00000745	gui_related: false
+L00000746	gui_classification_reason: "The live retired bridge is migration/audit metadata only; historical GUI-related bridge tokens remain preserved by span_map and coverage_map."
+L00000747	split_recommended: false
+L00000748	depends_on:
+L00000749	  - "RTIM-002"
+L00000750	  - "RTIM-003"
+L00000751	  - "RTIM-004"
+L00000752	  - "RTIM-005"
+L00000753	  - "RTIM-006"
+L00000754	  - "RTIM-007"
+L00000755	  - "RTIM-008"
+L00000756	  - "RTIM-009"
+L00000757	  - "RTIM-010"
+L00000758	  - "RTIM-011"
+L00000759	  - "RTIM-012"
+L00000760	  - "RTIM-013"
+L00000761	  - "RTIM-014"
+L00000762	  - "RTIM-015"
+L00000763	  - "RTIM-016"
+L00000764	  - "RTIM-017"
+L00000765	  - "RTIM-018"
+L00000766	  - "RTIM-019"
+L00000767	  - "RTIM-020"
+L00000768	  - "RTIM-021"
+L00000769	  - "RTIM-022"
+L00000770	  - "RTIM-023"
+L00000771	  - "RTIM-024"
+L00000772	  - "RTIM-025"
+L00000773	  - "RTIM-026"
+L00000774	  - "RTIM-027"
+L00000775	  - "RTIM-028"
+L00000776	  - "RTIM-029"
+L00000777	  - "RTIM-030"
+L00000778	  - "RTIM-031"
+L00000779	  - "RTIM-032"
+L00000780	  - "RTIM-033"
+L00000781	  - "RTIM-034"
+L00000782	  - "RTIM-035"
+L00000783	  - "RTIM-036"
+L00000784	  - "RTIM-037"
+L00000785	  - "RTIM-038"
+L00000786	  - "RTIM-039"
+L00000787	unblocks: []
+L00000788	acceptance_criteria:
+L00000789	  - "Generated-tail structural and audit spans remain available for exact-text audit."
+L00000790	  - "rewrite-tie-in-memo-S0001 through rewrite-tie-in-memo-S0038 remain mapped to RTIM-002 through RTIM-039 or explicit structural dispositions rather than RTIM-001."
+L00000791	  - "rewrite-tie-in-memo-S0039, S0040, and S0042 are structurally dispositioned as generated metadata."
+L00000792	  - "rewrite-tie-in-memo-S0041 is explicitly dispositioned as retired generated bridge lineage."
+L00000793	  - "RTIM-001 no longer uses node_compile_hint.mode=source_preserving_planunit."
+L00000794	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00000795	validation_surfaces:
+L00000796	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00000797	  - "python3 scripts/pm-plan-index.py validate"
+L00000798	risk_class: residual_bridge_overreach
+L00000799	reasoning_tier: standard
+L00000800	context_scope: rewrite_tie_in_retired_bridge
+L00000801	implementation_surfaces:
+L00000802	  - "Plans/rewrite-tie-in-memo.md"
+L00000803	node_compile_hint:
+L00000804	  mode: retired_source_preserving_bridge
+L00000805	  create_worknodes: false
+L00000806	source_lineage:
+L00000807	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:rewrite-tie-in-memo-S0039"
+L00000808	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:rewrite-tie-in-memo-S0040"
+L00000809	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:rewrite-tie-in-memo-S0041"
+L00000810	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:rewrite-tie-in-memo-S0042"
+L00000811	preserved_exact_tokens:
+L00000812	  - "source_preserving_planunit"
+L00000813	  - "retired_source_preserving_bridge"
+L00000814	  - "Owner / Consumer Map"
+L00000815	  - "PlanUnits"
+L00000816	  - "RTIM-001 - Puppet Master Rewrite Tie-In Contract (Active) Source-Preserving PlanUnit"
+L00000817	  - "Puppet Master Rewrite Tie-In Contract Residual Generated-Tail Bridge"
+L00000818	  - "Puppet Master Rewrite Tie-In Contract Retired Source-Preserving Bridge"
+L00000819	  - "Migration Coverage"
+L00000820	  - "rewrite-tie-in-memo-S0039"
+L00000821	  - "rewrite-tie-in-memo-S0042"
+L00000822	negative_constraints:
+L00000823	  - "RTIM-001 must not provide product implementation coverage for rewrite-tie-in-memo-S0001 through rewrite-tie-in-memo-S0038."
+L00000824	  - "RTIM-001 must not override RTIM-002 through RTIM-039 or structural dispositions."
+L00000825	  - "RTIM-001 must not use source_preserving_planunit compile mode after Phase 2B batch 162."
+L00000826	preserved_contractrefs:
+L00000827	  - "ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md"
+L00000828	compatibility_only_notes:
+L00000829	  - "The retired bridge remains only as migration-lineage compatibility metadata; historical ContractRefs, negative constraints, compatibility notes, and stale/retired evidence remain preserved in span_map and coverage_map."
+L00000830	stale_retired_dispositions:
+L00000831	  - "source_preserving_bridge_retired"
+L00000832	owner_hints:
+L00000833	  - "Plans/rewrite-tie-in-memo.md"
+L00000834	```
+L00000835	
+L00000836	## Migration Coverage
+L00000837	
+L00000838	Original hash: `8086676ed9f42bcf0af1756544bcf56a0444046613af1bf0b372647f30ef45a0`.
+L00000839	
+L00000840	Run-scoped proof artifacts:
+L00000841	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00000842	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00000843	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00000844	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00000845	
+L00000846	Phase 2B batch 161 atomized `rewrite-tie-in-memo-S0001` through `rewrite-tie-in-memo-S0038` into fine-grained PlanUnits `RTIM-002` through `RTIM-039` or explicit structural dispositions. Phase 2B batch 162 structurally dispositioned generated tail spans `rewrite-tie-in-memo-S0039`, `rewrite-tie-in-memo-S0040`, and `rewrite-tie-in-memo-S0042`, and retired `rewrite-tie-in-memo-S0041` as the `RTIM-001` bridge lineage. `RTIM-001` is migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+L00000847	
+L00000848	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00000849	
+L00000850	This addendum repairs non-runtime rewrite memo rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+L00000851	
+L00000852	- Repairs `sfk-fa77b0b241094242f6dcfb70`: this file is an active routing and migration-lineage memo, not fresh standalone product specification. "No open questions" applies only to the memo's routing role; owner docs remain authoritative for unresolved product details.

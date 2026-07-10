@@ -4,12 +4,22 @@
               <div style="display: flex; align-items: center; width: 100%; gap: var(--md);">
                 <div class="title pm6-chat-titlewrap" style="flex: 1; display:flex; align-items:center; gap:var(--sm); font-family:var(--display-font); min-width:0;">
                     <span class="chatHeaderTitle pm6-chat-title" contenteditable="true" spellcheck="false" title="Click to rename this thread" onblur="toast('Thread renamed — title saved.')">Tastebook — planning chat</span>
-                    <span class="pm6-chat-badge pm6-chat-badge-mode" title="Chat mode — set from the composer mode strip">Agent</span>
-                    <span class="pm6-chat-badge pm6-chat-badge-persona" title="Active persona">Product Manager</span>
-                    <span class="pm6-chat-badge pm6-chat-badge-model" title="Requested model — effective model appears per message">Sonnet 4.6</span>
                 </div>
 
-                <div class="pm6-chat-headstats" style="display:flex; gap:var(--md); align-items:center;">
+                <div class="panel-actions" style="display: flex; gap: var(--xs);">
+                  <button class="pm6-chat-iconbtn" title="Duplicate thread" data-demo-action="demo.toast" data-demo-arg="Thread duplicated — the copy starts suspended so it never double-runs work."><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                  <button class="pm6-chat-iconbtn" title="Archive thread" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
+                  <button class="popOutBtn pm6-chat-iconbtn" title="Pop out to floating window"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>
+                  <button class="closeChatBtn pm6-chat-iconbtn" title="Close chat panel"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                </div>
+              </div>
+
+              <div class="pm6-chat-badgerow">
+                <span class="pm6-chat-badge pm6-chat-badge-mode" title="Chat mode — set from the composer mode strip">Agent</span>
+                <span class="pm6-chat-badge pm6-chat-badge-persona" title="Active persona">Product Manager</span>
+                <span class="pm6-chat-badge pm6-chat-badge-model" title="Requested model — effective model appears per message">Sonnet 4.6</span>
+
+                <div class="pm6-chat-headstats" style="display:flex; gap:var(--md); align-items:center; margin-left:auto;">
                   <div class="wt-bind-wrap" style="position:relative;">
                     <button class="wt-bind-btn wt-bound-clean pm6-chat-wt" onclick="toggleWorktreeDropdown(this)" title="Worktree binding: bound, clean — click to switch, create or unbind" style="display:flex; align-items:center; padding:2px; background:none; border:none; color:var(--accent-lime); cursor:pointer;">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
@@ -48,13 +58,6 @@
                     </div>
                   </span>
                   <a href="#" class="pm6-chat-issues" onclick="event.preventDefault(); if(window.PM_TERMINAL_DEMO) PM_TERMINAL_DEMO.showBottomTab('problems');" title="Open Problems in the bottom panel"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> 3 Issues</a>
-                </div>
-
-                <div class="panel-actions" style="display: flex; gap: var(--xs);">
-                  <button class="pm6-chat-iconbtn" title="Duplicate thread" data-demo-action="demo.toast" data-demo-arg="Thread duplicated — the copy starts suspended so it never double-runs work."><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
-                  <button class="pm6-chat-iconbtn" title="Archive thread" data-demo-action="demo.toast" data-demo-arg="Thread archived — restore it any time from History."><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg></button>
-                  <button class="popOutBtn pm6-chat-iconbtn" title="Pop out to floating window"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>
-                  <button class="closeChatBtn pm6-chat-iconbtn" title="Close chat panel"><svg class="icon-inline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
                 </div>
               </div>
               <div style="display: flex; align-items: center; gap: var(--sm);">

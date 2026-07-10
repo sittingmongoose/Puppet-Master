@@ -1,0 +1,362 @@
+<<< CONTEXT_BEFORE 4393-4404 >>>
+- Plans/CLI_Bridged_Providers.md
+- Plans/usage-feature.md
+preserved_exact_tokens:
+- extrepo-20260703-0038
+- P0-PROMPT-CACHE-POLICY
+- P0
+- Add provider-neutral prompt cache policy plus provider adapters
+negative_constraints: []
+proposal_or_recommendation: Cache support states distinguish automatic, explicit, implicit, unsupported, unknown, not reported, and disabled; adapter fixtures cover OpenAI, Anthropic/Bedrock/Vertex, Gemini, Alibaba/Qwen, and OpenCode bridge evidence.
+compile_disposition: create_new_planunit
+```
+
+
+<<< AUTHORITATIVE_CORE 4405-4737 >>>
+### PP-063 - P0-VOLATILE-CONTEXT-QUARANTINE
+
+```yaml
+plan_unit_id: PP-063
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  P0-VOLATILE-CONTEXT-QUARANTINE (P0) is compiled as canonical Puppet Master intent for Separate volatile context from cacheable baseline: Date/workspace root/git flag/file-list/active pane changes do not mutate baseline prompt; they enter metadata or mid-conversation update at safe boundary.
+gui_related: true
+gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Date/workspace root/git flag/file-list/active pane changes do not mutate baseline prompt
+- they enter metadata or mid-conversation update at safe boundary.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Date/workspace root/git flag/file-list/active pane changes do not mutate baseline prompt
+- they enter metadata or mid-conversation update at safe boundary.
+risk_class: p0_context_cache_hardening
+reasoning_tier: high
+context_scope: context_cache
+implementation_surfaces:
+- Plans/Prompt_Pipeline.md
+- Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: p0_volatile_context_quarantine
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0044
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0044
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0040/P0-VOLATILE-CONTEXT-QUARANTINE@line=40
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0040/P0-VOLATILE-CONTEXT-QUARANTINE
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:4
+source_atom_ids:
+- atom-0044
+external_atom_id: extrepo-20260703-0040
+source_row_id: P0-VOLATILE-CONTEXT-QUARANTINE
+priority: P0
+finding_family: Separate volatile context from cacheable baseline
+target_docs:
+- Plans/Prompt_Pipeline.md
+- Plans/assistant-chat-design.md
+owner_hints:
+- Plans/Prompt_Pipeline.md
+- Plans/assistant-chat-design.md
+preserved_exact_tokens:
+- extrepo-20260703-0040
+- P0-VOLATILE-CONTEXT-QUARANTINE
+- P0
+- Separate volatile context from cacheable baseline
+negative_constraints: []
+proposal_or_recommendation: Date/workspace root/git flag/file-list/active pane changes do not mutate baseline prompt; they enter metadata or mid-conversation update at safe boundary.
+compile_disposition: create_new_planunit
+```
+
+### PP-064 - P1-COMPACTION-CACHE-EFFECT
+
+```yaml
+plan_unit_id: PP-064
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  P1-COMPACTION-CACHE-EFFECT (P1) is compiled as canonical Puppet Master intent for Make compaction cache impact explicit: Compaction starts/continues epoch per rule; UI and usage explain cache lineage effect; manual compact does not mint lineage without logical context change.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Compaction starts/continues epoch per rule
+- UI and usage explain cache lineage effect
+- manual compact does not mint lineage without logical context change.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Compaction starts/continues epoch per rule
+- UI and usage explain cache lineage effect
+- manual compact does not mint lineage without logical context change.
+risk_class: p1_context_cache_hardening
+reasoning_tier: standard
+context_scope: context_cache
+implementation_surfaces:
+- Plans/Prompt_Pipeline.md
+- Plans/Automated_Testing_System.md
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: p1_compaction_cache_effect
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0049
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0049
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0045/P1-COMPACTION-CACHE-EFFECT@line=45
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0045/P1-COMPACTION-CACHE-EFFECT
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:9
+source_atom_ids:
+- atom-0049
+external_atom_id: extrepo-20260703-0045
+source_row_id: P1-COMPACTION-CACHE-EFFECT
+priority: P1
+finding_family: Make compaction cache impact explicit
+target_docs:
+- Plans/Prompt_Pipeline.md
+- Plans/Automated_Testing_System.md
+- Plans/usage-feature.md
+owner_hints:
+- Plans/Prompt_Pipeline.md
+- Plans/Automated_Testing_System.md
+- Plans/usage-feature.md
+preserved_exact_tokens:
+- extrepo-20260703-0045
+- P1-COMPACTION-CACHE-EFFECT
+- P1
+- Make compaction cache impact explicit
+negative_constraints: []
+proposal_or_recommendation: Compaction starts/continues epoch per rule; UI and usage explain cache lineage effect; manual compact does not mint lineage without logical context change.
+compile_disposition: create_new_planunit
+```
+
+### PP-065 - P1-PROVIDER-CAPABILITY-EPOCH-CACHE
+
+```yaml
+plan_unit_id: PP-065
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  P1-PROVIDER-CAPABILITY-EPOCH-CACHE (P1) is compiled as canonical Puppet Master intent for Extend provider capability epoch with cache/freshness/source metadata: Model metadata source/freshness/account/route-limit/cache support are recorded; stale/ghost model or route-specific limit changes produce explicit capability epoch.
+gui_related: false
+gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Model metadata source/freshness/account/route-limit/cache support are recorded
+- stale/ghost model or route-specific limit changes produce explicit capability epoch.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Model metadata source/freshness/account/route-limit/cache support are recorded
+- stale/ghost model or route-specific limit changes produce explicit capability epoch.
+risk_class: p1_context_cache_hardening
+reasoning_tier: standard
+context_scope: context_cache
+implementation_surfaces:
+- Plans/Prompt_Pipeline.md
+- Plans/Models_System.md
+- Plans/Provider_OpenCode.md
+node_compile_hint:
+  mode: p1_provider_capability_epoch_cache
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0050
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0050
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0046/P1-PROVIDER-CAPABILITY-EPOCH-CACHE@line=46
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0046/P1-PROVIDER-CAPABILITY-EPOCH-CACHE
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:10
+source_atom_ids:
+- atom-0050
+external_atom_id: extrepo-20260703-0046
+source_row_id: P1-PROVIDER-CAPABILITY-EPOCH-CACHE
+priority: P1
+finding_family: Extend provider capability epoch with cache/freshness/source metadata
+target_docs:
+- Plans/Models_System.md
+- Plans/Provider_OpenCode.md
+owner_hints:
+- Plans/Models_System.md
+- Plans/Provider_OpenCode.md
+preserved_exact_tokens:
+- extrepo-20260703-0046
+- P1-PROVIDER-CAPABILITY-EPOCH-CACHE
+- P1
+- Extend provider capability epoch with cache/freshness/source metadata
+negative_constraints: []
+proposal_or_recommendation: Model metadata source/freshness/account/route-limit/cache support are recorded; stale/ghost model or route-specific limit changes produce explicit capability epoch.
+compile_disposition: create_new_planunit
+```
+
+### PP-066 - P1-MODEL-SWITCH-REPLAY-SANITIZER
+
+```yaml
+plan_unit_id: PP-066
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  P1-MODEL-SWITCH-REPLAY-SANITIZER (P1) is compiled as canonical Puppet Master intent for Sanitize provider-native reasoning/item/cache metadata on model switch: Provider-native reasoning signatures/item ids/cache keys/tool histories are retained only when compatible; otherwise dropped with replay receipt.
+gui_related: false
+gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Provider-native reasoning signatures/item ids/cache keys/tool histories are retained only when compatible
+- otherwise dropped with replay receipt.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Provider-native reasoning signatures/item ids/cache keys/tool histories are retained only when compatible
+- otherwise dropped with replay receipt.
+risk_class: p1_context_cache_hardening
+reasoning_tier: standard
+context_scope: context_cache
+implementation_surfaces:
+- Plans/Prompt_Pipeline.md
+- Plans/Models_System.md
+- Plans/CLI_Bridged_Providers.md
+node_compile_hint:
+  mode: p1_model_switch_replay_sanitizer
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0051
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0051
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0047/P1-MODEL-SWITCH-REPLAY-SANITIZER@line=47
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0047/P1-MODEL-SWITCH-REPLAY-SANITIZER
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:11
+source_atom_ids:
+- atom-0051
+external_atom_id: extrepo-20260703-0047
+source_row_id: P1-MODEL-SWITCH-REPLAY-SANITIZER
+priority: P1
+finding_family: Sanitize provider-native reasoning/item/cache metadata on model switch
+target_docs:
+- Plans/Models_System.md
+- Plans/Prompt_Pipeline.md
+- Plans/CLI_Bridged_Providers.md
+owner_hints:
+- Plans/Models_System.md
+- Plans/Prompt_Pipeline.md
+- Plans/CLI_Bridged_Providers.md
+preserved_exact_tokens:
+- extrepo-20260703-0047
+- P1-MODEL-SWITCH-REPLAY-SANITIZER
+- P1
+- Sanitize provider-native reasoning/item/cache metadata on model switch
+negative_constraints: []
+proposal_or_recommendation: Provider-native reasoning signatures/item ids/cache keys/tool histories are retained only when compatible; otherwise dropped with replay receipt.
+compile_disposition: create_new_planunit
+```
+
+### PP-067 - P1-LOCAL-LLM-CONTEXT-CAPS
+
+```yaml
+plan_unit_id: PP-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  P1-LOCAL-LLM-CONTEXT-CAPS (P1) is compiled as canonical Puppet Master intent for Apply context caps to utility/memory/subagent models: Local utility/memory/subagent contexts enforce model caps and bounded summaries; no hidden full-history stuffing.
+gui_related: false
+gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Local utility/memory/subagent contexts enforce model caps and bounded summaries
+- no hidden full-history stuffing.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Local utility/memory/subagent contexts enforce model caps and bounded summaries
+- no hidden full-history stuffing.
+risk_class: p1_context_cache_hardening
+reasoning_tier: standard
+context_scope: context_cache
+implementation_surfaces:
+- Plans/Prompt_Pipeline.md
+- Plans/Models_System.md
+- Plans/assistant-memory-subsystem.md
+- Plans/Goal_Runtime_System.md
+node_compile_hint:
+  mode: p1_local_llm_context_caps
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0052
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0052
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0048/P1-LOCAL-LLM-CONTEXT-CAPS@line=48
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0048/P1-LOCAL-LLM-CONTEXT-CAPS
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:12
+source_atom_ids:
+- atom-0052
+external_atom_id: extrepo-20260703-0048
+source_row_id: P1-LOCAL-LLM-CONTEXT-CAPS
+priority: P1
+finding_family: Apply context caps to utility/memory/subagent models
+target_docs:
+- Plans/Models_System.md
+- Plans/assistant-memory-subsystem.md
+- Plans/Goal_Runtime_System.md
+owner_hints:
+- Plans/Models_System.md
+- Plans/assistant-memory-subsystem.md
+- Plans/Goal_Runtime_System.md
+preserved_exact_tokens:
+- extrepo-20260703-0048
+- P1-LOCAL-LLM-CONTEXT-CAPS
+- P1
+- Apply context caps to utility/memory/subagent models
+negative_constraints: []
+proposal_or_recommendation: Local utility/memory/subagent contexts enforce model caps and bounded summaries; no hidden full-history stuffing.
+compile_disposition: create_new_planunit
+```
+
+
+<<< CONTEXT_AFTER 4738-4749 >>>
+### PP-068 - P1-PROMPT-CACHE-STABILITY-LINTER
+
+```yaml
+plan_unit_id: PP-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  P1-PROMPT-CACHE-STABILITY-LINTER (P1) is compiled as canonical Puppet Master intent for Prompt/cache/token efficiency hygiene: Add PromptCacheStabilityLinter: stable_prefix_hash, volatile_context_hashes, tool/schema ordering hash, skill catalog slice hash, file-list volatility, date/time/cwd injection warnings, provider cache marker support, and cache hit expectation. The preserved PM gap/delta is: PM should add a linter/diagnostic that explains why cache hit rate is low, not only record usage. The observed external-repo signal remains source-lineage evidence: OpenCode reports system-environment prompt cache invalidation and provider cache-marker gaps; Pi changelog includes prompt caching and cached-token accounting; Codex skills use progressive disclosure; Cline fixes prompt-cache detection and compaction routing.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:

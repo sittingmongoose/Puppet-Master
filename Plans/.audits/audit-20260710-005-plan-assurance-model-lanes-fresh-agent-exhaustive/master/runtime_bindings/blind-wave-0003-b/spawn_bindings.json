@@ -1,0 +1,63 @@
+{
+  "all_fresh": true,
+  "all_unique": true,
+  "attempt_id": "attempt-0009",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "binding_count": 8,
+  "bindings": [
+    {
+      "agent_path": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001021_exact_0013_attempt_0009_terminal",
+      "assignment_id": "A005-001021-EXACT-WIN-7414C6C901F8-0013",
+      "dispatch_receipt_sha256": "69985da60f8f9c2c3f2e00468d2a300550b1c614ebe6af3e1b7c475eead69126",
+      "native_child_thread_id": "019f4dfd-2d8f-7012-8958-681705a29727"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001022_adversarial_0013_attempt_0009_terminal",
+      "assignment_id": "A005-001022-ADVERSARIAL-WIN-7414C6C901F8-0013",
+      "dispatch_receipt_sha256": "17b98998f7bf75cfc94cabe0e4dd10263c1ddd99127997e192886fcc3817755c",
+      "native_child_thread_id": "019f4dfd-9ace-7da1-a584-d867a8139da6"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001023_exact_0014_attempt_0009_terminal",
+      "assignment_id": "A005-001023-EXACT-WIN-7414C6C901F8-0014",
+      "dispatch_receipt_sha256": "b25c87e4e71db9da1f11c1645555035e661b558238c971f088420c5a7ecd41dd",
+      "native_child_thread_id": "019f4dfe-0ce8-7dd0-a29b-3cee16acf54d"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001024_adversarial_0014_attempt_0009_terminal",
+      "assignment_id": "A005-001024-ADVERSARIAL-WIN-7414C6C901F8-0014",
+      "dispatch_receipt_sha256": "e4139e22d52916d0d5e8412aed37cfcaa124b311f757bc5f19d9eee4c14ba71f",
+      "native_child_thread_id": "019f4dfe-78ff-7d82-9dc0-19454dea2b3d"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001025_exact_0015_attempt_0009_terminal",
+      "assignment_id": "A005-001025-EXACT-WIN-7414C6C901F8-0015",
+      "dispatch_receipt_sha256": "6adbbdaa0a3ddede54781084de3ee2c5c9ab594d65fd1c39829fe7ad2d5d43d8",
+      "native_child_thread_id": "019f4dfe-ec6a-7ad0-802e-15a88fd9bc1e"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001026_adversarial_0015_attempt_0009_terminal",
+      "assignment_id": "A005-001026-ADVERSARIAL-WIN-7414C6C901F8-0015",
+      "dispatch_receipt_sha256": "8df5ee486729d354eb4fb5aa5c3a9487dc79918ec6ba2c1212cd5f6c96eabff8",
+      "native_child_thread_id": "019f4dff-5e67-73c1-9f31-ea9d19277a69"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001027_exact_0016_attempt_0009_terminal",
+      "assignment_id": "A005-001027-EXACT-WIN-7414C6C901F8-0016",
+      "dispatch_receipt_sha256": "a0f69c48b698258f3b4bac730f0f1980f92ddf0a5abdfc6d27ef627d3e087011",
+      "native_child_thread_id": "019f4dff-c866-7ef2-ab51-e1d61b83db85"
+    },
+    {
+      "agent_path": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001028_adversarial_0016_attempt_0009_terminal",
+      "assignment_id": "A005-001028-ADVERSARIAL-WIN-7414C6C901F8-0016",
+      "dispatch_receipt_sha256": "383d7ca3e0fbb41235208d623fac97f826a00334b37985a01060231c965c2dc2",
+      "native_child_thread_id": "019f4e00-4360-7823-8496-9749c1080e6c"
+    }
+  ],
+  "cohort_dispatcher_thread_id": "019f4dfc-9364-74f3-ac7a-46b547a8d3fc",
+  "cohort_dispatcher_turn_id": "019f4dfc-93e2-7a53-967b-616239075444",
+  "coverage_credit": 0,
+  "lane_thread_id": "019f4d26-0708-7c12-aa17-a4b124fab923",
+  "lane_turn_id": "019f4dfb-7649-71b1-9c0a-caf1833fa43b",
+  "wave_id": "blind-wave-0003-b"
+}

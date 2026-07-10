@@ -1,0 +1,311 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000001-EXACT-WIN-0063BE2EA917-0001",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0006_a_capacity_dispatcher_epoch_0013/a005_000001_exact_win_0063be2ea917_0001",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/runtime_artifact_failed_attempts.schema.json",
+    "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f",
+    "core_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f",
+    "core_range": [1, 1]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-000001-I001",
+      "item_type": "capability",
+      "title": "Closed top-level failed-attempt artifact envelope",
+      "statement": "The schema defines a JSON object titled Runtime Artifact failed_attempts and rejects undeclared top-level properties.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["runtime_artifact.failed_attempts"],
+      "evidence": [{
+        "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+        "line_start": 1,
+        "line_end": 1,
+        "exact_quote": "\"$id\":\"pm.runtime_artifact.failed_attempts.schema.v1\",\"title\":\"Runtime Artifact failed_attempts\",\"type\":\"object\",\"additionalProperties\":false",
+        "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+      }]
+    },
+    {
+      "item_id": "A005-000001-I002",
+      "item_type": "contract",
+      "title": "Required envelope fields",
+      "statement": "A valid artifact must supply schema and artifact discriminators, project/run/attempt identity, creation time, projection freshness and health, retention class, routing references, and a type-specific payload; all other declared fields are optional.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["runtime_artifact.failed_attempts"],
+      "evidence": [{
+        "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+        "line_start": 1,
+        "line_end": 1,
+        "exact_quote": "\"required\":[\"schema_id\",\"artifact_id\",\"artifact_type\",\"project_id\",\"run_id\",\"attempt_id\",\"created_at_utc\",\"projection_freshness\",\"projection_health\",\"retention_class\",\"routing_refs\",\"type_payload\"]",
+        "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+      }]
+    },
+    {
+      "item_id": "A005-000001-I003",
+      "item_type": "contract",
+      "title": "Fixed schema and artifact discriminators",
+      "statement": "schema_id is fixed to pm.runtime_artifact.failed_attempts.schema.v1 and artifact_type is fixed to failed_attempts, preventing a differently typed artifact from validating under this schema.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["runtime_artifact.failed_attempts"],
+      "evidence": [{
+        "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+        "line_start": 1,
+        "line_end": 1,
+        "exact_quote": "\"schema_id\":{\"type\":\"string\",\"const\":\"pm.runtime_artifact.failed_attempts.schema.v1\"},\"artifact_id\":{\"type\":\"string\",\"minLength\":1},\"artifact_type\":{\"type\":\"string\",\"const\":\"failed_attempts\"}",
+        "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+      }]
+    },
+    {
+      "item_id": "A005-000001-I004",
+      "item_type": "contract",
+      "title": "Non-empty identity and routing minimums",
+      "statement": "artifact_id, project_id, run_id, and attempt_id must be non-empty strings; routing_refs must contain at least one non-empty string. The schema therefore carries minimum identity and propagation handles but does not define their resolution behavior.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["runtime_artifact.failed_attempts"],
+      "builder_discretion": "Identifier syntax, uniqueness scope, referential integrity, and routing resolution are not constrained by this schema.",
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"artifact_id\":{\"type\":\"string\",\"minLength\":1}",
+          "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+        },
+        {
+          "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000001-I005",
+      "item_type": "gap",
+      "title": "Operational metadata lacks semantic constraints",
+      "statement": "created_at_utc, projection_freshness, projection_health, and retention_class are required but constrained only as strings (with created_at_utc merely non-empty). The schema supplies no timestamp format, controlled vocabulary, state relationship, or retention semantics.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "under_specified_operational_contract",
+      "impact": "Producers can emit mutually incompatible freshness, health, time, and retention values that all pass validation, preventing deterministic lifecycle and operational handling.",
+      "builder_discretion": "Builders must invent timestamp parsing, projection states, health states, and retention-class meanings.",
+      "feature_keys": ["runtime_artifact.failed_attempts"],
+      "evidence": [{
+        "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+        "line_start": 1,
+        "line_end": 1,
+        "exact_quote": "\"created_at_utc\":{\"type\":\"string\",\"minLength\":1},\"summary\":{\"type\":\"string\"},\"detail_ref\":{\"type\":\"string\"},\"content_ref\":{\"type\":\"string\"},\"source_surface\":{\"type\":\"string\"},\"projection_freshness\":{\"type\":\"string\"},\"projection_health\":{\"type\":\"string\"},\"retention_class\":{\"type\":\"string\"}",
+        "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+      }]
+    },
+    {
+      "item_id": "A005-000001-I006",
+      "item_type": "gap",
+      "title": "Failed-attempt payload and lifecycle are undefined",
+      "statement": "The only type-specific requirement is that type_payload be a non-empty object. No failed-attempt reason, classification, terminal or retryable state, retry linkage, recovery action, transition rule, or completion outcome is defined.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "missing_failed_attempt_semantics",
+      "impact": "An artifact can validate without conveying why an attempt failed or how consumers should recover, retry, or close the failure.",
+      "builder_discretion": "Builders must design the complete failed-attempt payload and lifecycle contract.",
+      "feature_keys": ["runtime_artifact.failed_attempts"],
+      "evidence": [{
+        "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+        "line_start": 1,
+        "line_end": 1,
+        "exact_quote": "\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+        "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+      }]
+    },
+    {
+      "item_id": "A005-000001-I007",
+      "item_type": "gap",
+      "title": "Authority, ownership, and consumer obligations are not established",
+      "statement": "producer_ref and actor_ref are optional unconstrained strings, while routing_refs is only a required list of strings. The schema does not say who is authoritative, who owns remediation or retention, which consumers must receive the artifact, or what any referenced party must do.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_authority_ownership_consumer_contract",
+      "impact": "Implementations can disagree about the record of authority, remediation owner, delivery targets, and consumer obligations while remaining schema-valid.",
+      "builder_discretion": "Builders must choose authority, ownership, routing semantics, and consumer responsibilities.",
+      "feature_keys": ["runtime_artifact.failed_attempts"],
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"}",
+          "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+        },
+        {
+          "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000001-I008",
+      "item_type": "gap",
+      "title": "Security and privacy rules are absent",
+      "statement": "detail_ref, content_ref, source_surface, producer_ref, actor_ref, and the open type_payload may identify or reference sensitive failure material, but the schema defines no access control, redaction, confidentiality, integrity, provenance-validation, or data-minimization requirements.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_security_privacy_contract",
+      "impact": "Sensitive failure content and actor or producer references can be represented without enforceable protection or minimization rules.",
+      "builder_discretion": "Builders must invent protection and disclosure rules for references and payload content.",
+      "feature_keys": ["runtime_artifact.failed_attempts"],
+      "evidence": [{
+        "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+        "line_start": 1,
+        "line_end": 1,
+        "exact_quote": "\"producer_ref\":{\"type\":\"string\"},\"actor_ref\":{\"type\":\"string\"},\"created_at_utc\":{\"type\":\"string\",\"minLength\":1},\"summary\":{\"type\":\"string\"},\"detail_ref\":{\"type\":\"string\"},\"content_ref\":{\"type\":\"string\"},\"source_surface\":{\"type\":\"string\"}",
+        "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+      }]
+    },
+    {
+      "item_id": "A005-000001-I009",
+      "item_type": "gap",
+      "title": "Collection and payload size are unbounded",
+      "statement": "receipt_refs has no maximum item count, routing_refs has a minimum but no maximum, and type_payload has no property or size ceiling. The schema therefore provides no scale or performance bound for artifact validation, transport, storage, or fan-out.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_scale_bounds",
+      "impact": "Schema-valid artifacts can grow without a declared bound, producing divergent limits or resource exhaustion across implementations.",
+      "builder_discretion": "Builders must choose collection, payload, transport, and storage limits.",
+      "feature_keys": ["runtime_artifact.failed_attempts"],
+      "evidence": [
+        {
+          "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"receipt_refs\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"minLength\":1}}",
+          "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+        },
+        {
+          "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+          "line_start": 1,
+          "line_end": 1,
+          "exact_quote": "\"routing_refs\":{\"type\":\"array\",\"minItems\":1,\"items\":{\"type\":\"string\",\"minLength\":1}},\"type_payload\":{\"type\":\"object\",\"minProperties\":1}",
+          "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000001-I010",
+      "item_type": "gap",
+      "title": "Version identifier has no compatibility or migration policy",
+      "statement": "The schema and schema_id identify version v1, but this window defines no forward or backward compatibility behavior, unknown-version handling, migration path, or deprecation rule.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_compatibility_migration_contract",
+      "impact": "Consumers cannot determine how to handle artifacts from future or legacy schema versions.",
+      "builder_discretion": "Builders must decide compatibility, rejection, and migration behavior beyond exact v1 validation.",
+      "feature_keys": ["runtime_artifact.failed_attempts"],
+      "evidence": [{
+        "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+        "line_start": 1,
+        "line_end": 1,
+        "exact_quote": "\"$id\":\"pm.runtime_artifact.failed_attempts.schema.v1\"",
+        "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+      }]
+    },
+    {
+      "item_id": "A005-000001-I011",
+      "item_type": "acceptance_oracle",
+      "title": "Structural JSON Schema validation oracle",
+      "statement": "Draft 2020-12 JSON Schema validation provides an exact oracle for the declared top-level shape, required fields, discriminator constants, string minimum lengths, array minimums and item shapes, and non-empty type_payload. It is not an oracle for the omitted semantic rules identified in this review.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["runtime_artifact.failed_attempts"],
+      "evidence": [{
+        "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+        "line_start": 1,
+        "line_end": 1,
+        "exact_quote": "{\"$schema\":\"https://json-schema.org/draft/2020-12/schema\"",
+        "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+      }]
+    },
+    {
+      "item_id": "A005-000001-I012",
+      "item_type": "gap",
+      "title": "Open string and payload semantics create consequential builder discretion",
+      "statement": "Most optional references and descriptive fields are unconstrained strings, and type_payload is an open non-empty object. Identifier formats, reference schemes, payload keys, nullability conventions, text limits, and cross-field invariants are therefore ambiguous.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "consequential_builder_discretion",
+      "impact": "Independent producers and consumers can make incompatible yet schema-valid choices for reference, payload, and cross-field semantics.",
+      "builder_discretion": "All identifier/reference formats, payload structure, string bounds, and cross-field invariants not explicitly declared remain implementation choices.",
+      "feature_keys": ["runtime_artifact.failed_attempts"],
+      "evidence": [{
+        "path": "Plans/runtime_artifact_failed_attempts.schema.json",
+        "line_start": 1,
+        "line_end": 1,
+        "exact_quote": "\"thread_id\":{\"type\":\"string\"},\"node_id\":{\"type\":\"string\"},\"provider_attempt_ref\":{\"type\":\"string\"},\"usage_event_ref\":{\"type\":\"string\"}",
+        "source_sha256": "c833b8fa8f37f46ae7bcd2d481f44817b0b0fac90d702549bbbb055a5fddd06f"
+      }]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension":"behavior","status":"addressed","summary":"Validation behavior for the closed top-level object, required members, constants, and minimum shapes is explicit.","evidence_item_ids":["A005-000001-I001","A005-000001-I002","A005-000001-I003","A005-000001-I004"]},
+    {"dimension":"capabilities","status":"addressed","summary":"The schema can validate a structurally typed failed-attempt artifact envelope with identity, operational metadata, routing, references, and a payload.","evidence_item_ids":["A005-000001-I001","A005-000001-I004"]},
+    {"dimension":"inputs_outputs","status":"addressed","summary":"The accepted JSON artifact input/output shape and its required envelope fields are explicit, although payload semantics remain a gap.","evidence_item_ids":["A005-000001-I001","A005-000001-I002","A005-000001-I006"]},
+    {"dimension":"contracts","status":"addressed","summary":"Structural contracts, discriminator constants, required properties, and minimum identity/routing constraints are explicit.","evidence_item_ids":["A005-000001-I001","A005-000001-I002","A005-000001-I003","A005-000001-I004"]},
+    {"dimension":"states_transitions","status":"gap_found","summary":"No failed-attempt state model, transition, retryability, terminality, or recovery progression is defined.","evidence_item_ids":["A005-000001-I006"]},
+    {"dimension":"authority","status":"gap_found","summary":"Optional producer and actor references do not establish an authoritative record or decision authority.","evidence_item_ids":["A005-000001-I007"]},
+    {"dimension":"ownership","status":"gap_found","summary":"No remediation, lifecycle, or retention owner is normatively assigned.","evidence_item_ids":["A005-000001-I007"]},
+    {"dimension":"consumers","status":"gap_found","summary":"Routing references exist, but required consumers and their obligations are undefined.","evidence_item_ids":["A005-000001-I004","A005-000001-I007"]},
+    {"dimension":"gui_truth","status":"not_applicable","summary":"This JSON artifact schema makes no GUI or user-visible presentation contract.","evidence_item_ids":[]},
+    {"dimension":"failures_recovery","status":"gap_found","summary":"Despite the failed_attempts discriminator, failure cause, classification, retry, recovery, and closure semantics are absent.","evidence_item_ids":["A005-000001-I006"]},
+    {"dimension":"security_privacy","status":"gap_found","summary":"References and open payload content have no access, confidentiality, integrity, redaction, or minimization constraints.","evidence_item_ids":["A005-000001-I008"]},
+    {"dimension":"propagation","status":"gap_found","summary":"At least one routing reference is required, but resolution, delivery, fan-out, ordering, and acknowledgement behavior are unspecified.","evidence_item_ids":["A005-000001-I004","A005-000001-I007"]},
+    {"dimension":"operations","status":"gap_found","summary":"Required freshness, health, retention, and creation metadata lack operational vocabularies and semantics.","evidence_item_ids":["A005-000001-I005","A005-000001-I006"]},
+    {"dimension":"scale_performance","status":"gap_found","summary":"Arrays and the open payload have no upper bounds or resource envelope.","evidence_item_ids":["A005-000001-I009"]},
+    {"dimension":"compatibility_migration","status":"gap_found","summary":"The v1 identity is fixed, but compatibility, unknown-version, migration, and deprecation behavior are not defined.","evidence_item_ids":["A005-000001-I010"]},
+    {"dimension":"acceptance_oracles","status":"addressed","summary":"Draft 2020-12 validation is a precise structural oracle for declared constraints, but not for omitted semantics.","evidence_item_ids":["A005-000001-I011"]},
+    {"dimension":"builder_discretion","status":"gap_found","summary":"Open strings, references, payload structure, and absent cross-field rules leave consequential implementation choices.","evidence_item_ids":["A005-000001-I004","A005-000001-I005","A005-000001-I006","A005-000001-I007","A005-000001-I008","A005-000001-I009","A005-000001-I010","A005-000001-I012"]},
+    {"dimension":"ambiguity_unknowns","status":"gap_found","summary":"Operational vocabularies, failure lifecycle, authority, ownership, consumer behavior, security policy, compatibility, and cross-field semantics remain unknown.","evidence_item_ids":["A005-000001-I005","A005-000001-I006","A005-000001-I007","A005-000001-I008","A005-000001-I010","A005-000001-I012"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

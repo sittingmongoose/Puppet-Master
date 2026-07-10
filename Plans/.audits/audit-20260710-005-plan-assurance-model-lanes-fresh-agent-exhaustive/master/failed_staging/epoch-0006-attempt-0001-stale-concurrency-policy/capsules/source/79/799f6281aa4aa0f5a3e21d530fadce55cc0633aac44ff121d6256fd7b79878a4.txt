@@ -1,0 +1,417 @@
+<<< CONTEXT_BEFORE canonical_document_lines=741-752 >>>
+L00000741	If OpenCode or the selected upstream model does not support a requested runtime control, Puppet Master MUST record the control as unsupported/skipped in effective runtime state rather than silently ignoring it.
+L00000742	
+L00000743	**Usage and Ledger alignment:** OpenCode server returns message-level usage; the adapter maps it to normalized usage (same shape as `usage.event`). Persistence and Ledger/Usage consumption follow `Plans/storage-plan.md` and `Plans/usage-feature.md`. For implementers, the OpenCode product pipeline (`Session.getUsage`, processor finish-step) is the reference for how message metadata becomes stored usage; terminology should not drift.
+L00000744	
+L00000745	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md
+L00000746	
+L00000747	## Owner / Consumer Map
+L00000748	
+L00000749	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Provider_OpenCode.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000750	
+L00000751	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000752	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=753-1140 >>>
+L00000753	## PlanUnits
+L00000754	
+L00000755	### PO-002 - Server-Bridged Transport Authority
+L00000756	
+L00000757	```yaml
+L00000758	plan_unit_id: PO-002
+L00000759	unit_type: constraint
+L00000760	status: accepted
+L00000761	owner_doc: Plans/Provider_OpenCode.md
+L00000762	canonical_text: >-
+L00000763	  OpenCode is server-bridged only: Puppet Master communicates through HTTP REST plus SSE via the unified Provider facade and must not run OpenCode as a CLI-bridged runtime transport.
+L00000764	gui_related: false
+L00000765	gui_classification_reason: This unit defines provider transport authority rather than visual presentation.
+L00000766	split_recommended: false
+L00000767	depends_on:
+L00000768	  - "CV-090"
+L00000769	  - "CBP-003"
+L00000770	unblocks: []
+L00000771	acceptance_criteria:
+L00000772	  - "Server-Bridged Transport Authority remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00000773	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00000774	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00000775	validation_surfaces:
+L00000776	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00000777	  - "python3 scripts/pm-plan-index.py validate"
+L00000778	risk_class: opencode_provider_drift
+L00000779	reasoning_tier: standard
+L00000780	context_scope: provider_opencode
+L00000781	implementation_surfaces:
+L00000782	  - "Plans/Provider_OpenCode.md"
+L00000783	node_compile_hint:
+L00000784	  mode: opencode_server_bridge_transport
+L00000785	  create_worknodes: false
+L00000786	source_lineage:
+L00000787	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0003"
+L00000788	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0004"
+L00000789	preserved_exact_tokens:
+L00000790	  - "OpenCode"
+L00000791	  - "server-bridged only"
+L00000792	  - "HTTP REST + SSE"
+L00000793	  - "unified Provider facade"
+L00000794	  - "MUST NOT run OpenCode as a CLI-bridged runtime transport"
+L00000795	  - "ProviderTransport = ServerBridge"
+L00000796	  - "transport = \"http\""
+L00000797	  - "server_credentials"
+L00000798	  - "/provider/auth"
+L00000799	negative_constraints:
+L00000800	  - "OpenCode runtime transport is not optional when OpenCode is enabled; PM must not use OpenCode as a CLI-bridged runtime transport."
+L00000801	preserved_contractrefs:
+L00000802	  - "ContractRef: ContractName:Plans/Contracts_V0.md#21-provider-transport-taxonomy, ContractName:Plans/CLI_Bridged_Providers.md"
+L00000803	owner_hints:
+L00000804	  - "Plans/Provider_OpenCode.md"
+L00000805	  - "Plans/Contracts_V0.md"
+L00000806	  - "Plans/CLI_Bridged_Providers.md"
+L00000807	```
+L00000808	
+L00000809	### PO-003 - PM Native Terminology Boundary
+L00000810	
+L00000811	```yaml
+L00000812	plan_unit_id: PO-003
+L00000813	unit_type: constraint
+L00000814	status: accepted
+L00000815	owner_doc: Plans/Provider_OpenCode.md
+L00000816	canonical_text: >-
+L00000817	  PM keeps PM-native terminology for tools, runtime identity, and provider routing; OpenCode terms may be referenced for alignment or external context but cannot replace PM canonical owner vocabulary or provider-capability ownership.
+L00000818	gui_related: false
+L00000819	gui_classification_reason: This unit defines terminology and ownership boundaries rather than visual presentation.
+L00000820	split_recommended: false
+L00000821	depends_on:
+L00000822	  - "PO-002"
+L00000823	unblocks: []
+L00000824	acceptance_criteria:
+L00000825	  - "PM Native Terminology Boundary remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00000826	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00000827	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00000828	validation_surfaces:
+L00000829	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00000830	  - "python3 scripts/pm-plan-index.py validate"
+L00000831	risk_class: opencode_provider_drift
+L00000832	reasoning_tier: standard
+L00000833	context_scope: provider_opencode
+L00000834	implementation_surfaces:
+L00000835	  - "Plans/Provider_OpenCode.md"
+L00000836	node_compile_hint:
+L00000837	  mode: opencode_terminology_boundary
+L00000838	  create_worknodes: false
+L00000839	source_lineage:
+L00000840	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0006"
+L00000841	preserved_exact_tokens:
+L00000842	  - "websearch"
+L00000843	  - "webfetch"
+L00000844	  - "requested_persona"
+L00000845	  - "effective_persona"
+L00000846	  - "/web-tool"
+L00000847	  - "native for all"
+L00000848	negative_constraints:
+L00000849	  - "OpenCode consumer text must not flatten provider capability differentiation to native for all or replace PM-native ownership boundaries."
+L00000850	preserved_contractrefs:
+L00000851	  - "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md"
+L00000852	owner_hints:
+L00000853	  - "Plans/Provider_OpenCode.md"
+L00000854	  - "Plans/Tools.md"
+L00000855	  - "Plans/Contracts_V0.md"
+L00000856	```
+L00000857	
+L00000858	### PO-004 - Runtime Identity Recovery And Approval Scope Key
+L00000859	
+L00000860	```yaml
+L00000861	plan_unit_id: PO-004
+L00000862	unit_type: requirement
+L00000863	status: accepted
+L00000864	owner_doc: Plans/Provider_OpenCode.md
+L00000865	canonical_text: >-
+L00000866	  OpenCode runtime identity recovery keeps OpenCode session IDs in provider-native correlation fields, preserves canonical thread_id, defines approval_scope_key across actor/lane/run/account or server-profile context, and carries runtime identity through shared attempt, blocked-state, usage, and handoff records.
+L00000867	gui_related: false
+L00000868	gui_classification_reason: This unit defines runtime identity and approval-scope data shape rather than visual presentation.
+L00000869	split_recommended: true
+L00000870	depends_on:
+L00000871	  - "PO-002"
+L00000872	  - "CBP-005"
+L00000873	unblocks: []
+L00000874	acceptance_criteria:
+L00000875	  - "Runtime Identity Recovery And Approval Scope Key remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00000876	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00000877	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00000878	validation_surfaces:
+L00000879	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00000880	  - "python3 scripts/pm-plan-index.py validate"
+L00000881	risk_class: opencode_identity_recovery_gap
+L00000882	reasoning_tier: standard
+L00000883	context_scope: provider_opencode_identity_recovery
+L00000884	implementation_surfaces:
+L00000885	  - "Plans/Provider_OpenCode.md"
+L00000886	node_compile_hint:
+L00000887	  mode: opencode_identity_recovery
+L00000888	  create_worknodes: false
+L00000889	source_lineage:
+L00000890	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0008"
+L00000891	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0009"
+L00000892	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0010"
+L00000893	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0011"
+L00000894	preserved_exact_tokens:
+L00000895	  - "approval_scope_key"
+L00000896	  - "actor"
+L00000897	  - "lane/package/run"
+L00000898	  - "account/server-profile context"
+L00000899	  - "thread_id"
+L00000900	  - "run_id"
+L00000901	  - "message_id"
+L00000902	  - "event_id"
+L00000903	  - "attempt_id"
+L00000904	  - "blocked_reason_code"
+L00000905	  - "allowed_action_ids[]"
+L00000906	  - "safe_point_id"
+L00000907	  - "replan_generation"
+L00000908	  - "OpenCode thread_id collision"
+L00000909	  - "provider-native correlation"
+L00000910	negative_constraints:
+L00000911	  - "OpenCode session IDs must live in provider-native correlation fields and never replace canonical thread_id."
+L00000912	preserved_contractrefs: []
+L00000913	compatibility_only_notes:
+L00000914	  - "Compatibility-era fields such as resume_url? remain drift evidence rather than canonical OpenCode runtime identity."
+L00000915	owner_hints:
+L00000916	  - "Plans/Provider_OpenCode.md"
+L00000917	  - "Plans/Contracts_V0.md"
+L00000918	  - "Plans/Prompt_Pipeline.md"
+L00000919	  - "Plans/storage-plan.md"
+L00000920	```
+L00000921	
+L00000922	### PO-005 - OpenCode Server Model And Runtime Boundary
+L00000923	
+L00000924	```yaml
+L00000925	plan_unit_id: PO-005
+L00000926	unit_type: requirement
+L00000927	status: accepted
+L00000928	owner_doc: Plans/Provider_OpenCode.md
+L00000929	canonical_text: >-
+L00000930	  Puppet Master connects to OpenCode as a client of its local OpenAPI 3.1 HTTP API and SSE stream, treats OpenCode as provider-agnostic upstream configuration, and keeps CLI path input as launcher/discovery fallback rather than runtime transport.
+L00000931	gui_related: false
+L00000932	gui_classification_reason: This unit defines server architecture and runtime boundary rather than visual presentation.
+L00000933	split_recommended: false
+L00000934	depends_on:
+L00000935	  - "PO-002"
+L00000936	unblocks: []
+L00000937	acceptance_criteria:
+L00000938	  - "OpenCode Server Model And Runtime Boundary remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00000939	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00000940	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00000941	validation_surfaces:
+L00000942	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00000943	  - "python3 scripts/pm-plan-index.py validate"
+L00000944	risk_class: opencode_provider_drift
+L00000945	reasoning_tier: standard
+L00000946	context_scope: provider_opencode
+L00000947	implementation_surfaces:
+L00000948	  - "Plans/Provider_OpenCode.md"
+L00000949	node_compile_hint:
+L00000950	  mode: opencode_server_model
+L00000951	  create_worknodes: false
+L00000952	source_lineage:
+L00000953	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0012"
+L00000954	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0013"
+L00000955	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0014"
+L00000956	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0015"
+L00000957	preserved_exact_tokens:
+L00000958	  - "opencode serve"
+L00000959	  - "OpenAPI 3.1"
+L00000960	  - "http://127.0.0.1:4096"
+L00000961	  - "/doc"
+L00000962	  - "REST endpoints"
+L00000963	  - "SSE event stream"
+L00000964	  - "Puppet Master connects to OpenCode as a client"
+L00000965	  - "launcher/discovery fallback only"
+L00000966	  - "run transport remains HTTP/SSE"
+L00000967	negative_constraints:
+L00000968	  - "Puppet Master does not use SDK launch flows or CLI run transport for OpenCode runtime calls."
+L00000969	preserved_contractrefs: []
+L00000970	owner_hints:
+L00000971	  - "Plans/Provider_OpenCode.md"
+L00000972	```
+L00000973	
+L00000974	### PO-006 - Server Profile Connection Contract
+L00000975	
+L00000976	```yaml
+L00000977	plan_unit_id: PO-006
+L00000978	unit_type: requirement
+L00000979	status: accepted
+L00000980	owner_doc: Plans/Provider_OpenCode.md
+L00000981	canonical_text: >-
+L00000982	  OpenCode connection is profile-driven with Managed Server and Attach to Existing Server modes, one-or-many connection_profile_id runtime surfaces, per-profile sidecar state, frozen profile selection before execution, and distinct PM ownership rules for launch versus attached endpoints.
+L00000983	gui_related: false
+L00000984	gui_classification_reason: This unit defines server profile connection data and ownership rather than visual presentation.
+L00000985	split_recommended: false
+L00000986	depends_on:
+L00000987	  - "PO-005"
+L00000988	unblocks: []
+L00000989	acceptance_criteria:
+L00000990	  - "Server Profile Connection Contract remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00000991	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00000992	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00000993	validation_surfaces:
+L00000994	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00000995	  - "python3 scripts/pm-plan-index.py validate"
+L00000996	risk_class: opencode_provider_drift
+L00000997	reasoning_tier: standard
+L00000998	context_scope: provider_opencode
+L00000999	implementation_surfaces:
+L00001000	  - "Plans/Provider_OpenCode.md"
+L00001001	node_compile_hint:
+L00001002	  mode: opencode_server_profile_connection
+L00001003	  create_worknodes: false
+L00001004	source_lineage:
+L00001005	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0016"
+L00001006	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0017"
+L00001007	preserved_exact_tokens:
+L00001008	  - "Server Profile"
+L00001009	  - "Managed Server"
+L00001010	  - "Attach to Existing Server"
+L00001011	  - "connection_profile_id"
+L00001012	  - "/profiles/<connection_profile_id>/"
+L00001013	  - "pm/state.json"
+L00001014	  - "pm/logs/"
+L00001015	  - "pm/projections/"
+L00001016	  - "pm/backups/"
+L00001017	  - "OPENCODE_CONFIG_DIR"
+L00001018	  - "long-lived"
+L00001019	  - "last-mile"
+L00001020	  - "attached-server"
+L00001021	  - "External / Not Managed"
+L00001022	negative_constraints:
+L00001023	  - "All runtime calls remain HTTP/SSE server-bridge calls regardless of whether PM launched the process."
+L00001024	preserved_contractrefs:
+L00001025	  - "ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md"
+L00001026	  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md"
+L00001027	owner_hints:
+L00001028	  - "Plans/Provider_OpenCode.md"
+L00001029	  - "Plans/Multi-Account.md"
+L00001030	  - "Plans/Contracts_V0.md"
+L00001031	  - "Plans/storage-plan.md"
+L00001032	  - "Plans/FinalGUISpec.md"
+L00001033	```
+L00001034	
+L00001035	### PO-007 - Health Discovery State Machine
+L00001036	
+L00001037	```yaml
+L00001038	plan_unit_id: PO-007
+L00001039	unit_type: requirement
+L00001040	status: accepted
+L00001041	owner_doc: Plans/Provider_OpenCode.md
+L00001042	canonical_text: >-
+L00001043	  OpenCode profile readiness evaluates connection or launch state, health check result, then discovery refresh result; profiles become Ready only after health and discovery succeed, degraded connected states preserve last-known provider/model/auth facts, and attached profiles may remain externally managed.
+L00001044	gui_related: false
+L00001045	gui_classification_reason: This unit defines backend health/discovery state semantics rather than visual presentation.
+L00001046	split_recommended: false
+L00001047	depends_on:
+L00001048	  - "PO-006"
+L00001049	  - "CV-125"
+L00001050	unblocks: []
+L00001051	acceptance_criteria:
+L00001052	  - "Health Discovery State Machine remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00001053	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00001054	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00001055	validation_surfaces:
+L00001056	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00001057	  - "python3 scripts/pm-plan-index.py validate"
+L00001058	risk_class: opencode_provider_drift
+L00001059	reasoning_tier: standard
+L00001060	context_scope: provider_opencode
+L00001061	implementation_surfaces:
+L00001062	  - "Plans/Provider_OpenCode.md"
+L00001063	node_compile_hint:
+L00001064	  mode: opencode_health_discovery_state
+L00001065	  create_worknodes: false
+L00001066	source_lineage:
+L00001067	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0018"
+L00001068	preserved_exact_tokens:
+L00001069	  - "Configured"
+L00001070	  - "Launching"
+L00001071	  - "Connecting"
+L00001072	  - "Connected"
+L00001073	  - "Discovering"
+L00001074	  - "Ready"
+L00001075	  - "Connected (stale discovery)"
+L00001076	  - "Connected (discovery failed)"
+L00001077	  - "Disconnected"
+L00001078	  - "Launch failed"
+L00001079	  - "ExternalNotManaged"
+L00001080	  - "Connected in OpenCode"
+L00001081	  - "stale-state"
+L00001082	negative_constraints: []
+L00001083	compatibility_only_notes:
+L00001084	  - "OpenCode message metadata names input_tokens and output_tokens are provider-native raw aliases only; active UsageRecord accounting normalizes them to UF-085 buckets before persistence, display, rollups, or accounting checks."
+L00001085	preserved_contractrefs:
+L00001086	  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md"
+L00001087	stale_retired_dispositions:
+L00001088	  - "Connected (stale discovery) and explicit stale-state labels preserve last-known provider/model/auth facts after failed refresh."
+L00001089	owner_hints:
+L00001090	  - "Plans/Provider_OpenCode.md"
+L00001091	```
+L00001092	
+L00001093	### PO-008 - Health Status Projection
+L00001094	
+L00001095	```yaml
+L00001096	plan_unit_id: PO-008
+L00001097	unit_type: requirement
+L00001098	status: accepted
+L00001099	owner_doc: Plans/Provider_OpenCode.md
+L00001100	canonical_text: >-
+L00001101	  GUI/status projections may label grouped provider/model/auth readiness as /models/auth or /discovery/auth and must keep explicit /stale labeling when cached discovery snapshots are reused after failed refresh.
+L00001102	gui_related: true
+L00001103	gui_classification_reason: This unit preserves GUI/status projection and stale-state labels for OpenCode profiles.
+L00001104	split_recommended: false
+L00001105	depends_on:
+L00001106	  - "PO-007"
+L00001107	unblocks: []
+L00001108	acceptance_criteria:
+L00001109	  - "Health Status Projection remains addressable as a fine-grained Provider OpenCode PlanUnit."
+L00001110	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00001111	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00001112	validation_surfaces:
+L00001113	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00001114	  - "python3 scripts/pm-plan-index.py validate"
+L00001115	risk_class: opencode_provider_drift
+L00001116	reasoning_tier: standard
+L00001117	context_scope: provider_opencode
+L00001118	implementation_surfaces:
+L00001119	  - "Plans/Provider_OpenCode.md"
+L00001120	node_compile_hint:
+L00001121	  mode: opencode_health_status_projection
+L00001122	  create_worknodes: false
+L00001123	source_lineage:
+L00001124	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0018"
+L00001125	preserved_exact_tokens:
+L00001126	  - "/models/auth"
+L00001127	  - "/discovery/auth"
+L00001128	  - "/stale"
+L00001129	  - "GUI/status projections"
+L00001130	  - "last-known provider/model/auth facts"
+L00001131	negative_constraints: []
+L00001132	preserved_contractrefs:
+L00001133	  - "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md"
+L00001134	owner_hints:
+L00001135	  - "Plans/Provider_OpenCode.md"
+L00001136	  - "Plans/FinalGUISpec.md"
+L00001137	  - "Plans/storage-plan.md"
+L00001138	  - "Plans/usage-feature.md"
+L00001139	```
+L00001140	
+
+<<< CONTEXT_AFTER canonical_document_lines=1141-1152 >>>
+L00001141	### PO-009 - Server Provider Auth Realm Mapping
+L00001142	
+L00001143	```yaml
+L00001144	plan_unit_id: PO-009
+L00001145	unit_type: requirement
+L00001146	status: accepted
+L00001147	owner_doc: Plans/Provider_OpenCode.md
+L00001148	canonical_text: >-
+L00001149	  OpenCode has separate server-level auth and provider-level auth realms: PM sends configured server credentials to OpenCode endpoints and treats upstream provider auth as OpenCode-managed provider-native auth exposed by /provider/auth and callback endpoints.
+L00001150	gui_related: false
+L00001151	gui_classification_reason: This unit defines auth realm mapping rather than visual presentation.
+L00001152	split_recommended: false

@@ -1,0 +1,419 @@
+<<< CONTEXT_BEFORE 8036-8047 >>>
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+
+<<< AUTHORITATIVE_CORE 8048-8437 >>>
+    {
+      "inventory_id": "pmconcept.l10704.0275",
+      "line": 10704,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-btn",
+      "ui_location": "wizard-btn-row",
+      "label": "Back",
+      "attrs": {
+        "data-step-target": "3"
+      },
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l10704.0276",
+      "line": 10704,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-btn primary btn-icon",
+      "ui_location": "wizard-btn-row",
+      "label": "Start Planning Interview",
+      "attrs": {
+        "data-step-target": "5"
+      },
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l10723.0277",
+      "line": 10723,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-btn btn-icon",
+      "ui_location": "wizard-btn-group",
+      "label": "Edit",
+      "attrs": {},
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l10723.0278",
+      "line": 10723,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-btn",
+      "ui_location": "wizard-btn-group",
+      "label": "Back",
+      "attrs": {
+        "data-step-target": "4"
+      },
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l10723.0279",
+      "line": 10723,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-btn primary btn-icon",
+      "ui_location": "wizard-btn-group",
+      "label": "Skip to PRD",
+      "attrs": {
+        "data-step-target": "6"
+      },
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l10744.0280",
+      "line": 10744,
+      "tag": "div",
+      "html_id": "pill-prd",
+      "name": null,
+      "role": null,
+      "class": "wizard-doc-pill prd-pill active",
+      "ui_location": "wizard-binder-sidebar",
+      "label": "Product Requirements [PASS]",
+      "attrs": {
+        "onclick": "showPRDMock('prd')"
+      },
+      "inline_handlers": {
+        "onclick": "showPRDMock('prd')"
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [
+        "custom_click_target_missing_role",
+        "click_handler_without_keyboard_parity"
+      ],
+      "disposition": "concept_fixture_only",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+      ]
+    },
+    {
+      "inventory_id": "pmconcept.l10745.0281",
+      "line": 10745,
+      "tag": "div",
+      "html_id": "pill-seeds",
+      "name": null,
+      "role": null,
+      "class": "wizard-doc-pill prd-pill",
+      "ui_location": "wizard-binder-sidebar",
+      "label": "Contract Seeds [REVIEW]",
+      "attrs": {
+        "onclick": "showPRDMock('seeds')"
+      },
+      "inline_handlers": {
+        "onclick": "showPRDMock('seeds')"
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [
+        "custom_click_target_missing_role",
+        "click_handler_without_keyboard_parity"
+      ],
+      "disposition": "concept_fixture_only",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+      ]
+    },
+    {
+      "inventory_id": "pmconcept.l10746.0282",
+      "line": 10746,
+      "tag": "div",
+      "html_id": "pill-arch",
+      "name": null,
+      "role": null,
+      "class": "wizard-doc-pill prd-pill",
+      "ui_location": "wizard-binder-sidebar",
+      "label": "Architecture [DRAFT]",
+      "attrs": {
+        "onclick": "showPRDMock('arch')"
+      },
+      "inline_handlers": {
+        "onclick": "showPRDMock('arch')"
+      },
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [
+        "custom_click_target_missing_role",
+        "click_handler_without_keyboard_parity"
+      ],
+      "disposition": "concept_fixture_only",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+      ]
+    },
+    {
+      "inventory_id": "pmconcept.l10751.0283",
+      "line": 10751,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-btn btn-icon",
+      "ui_location": "wizard-btn-group",
+      "label": "Edit",
+      "attrs": {},
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l10752.0284",
+      "line": 10752,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-btn btn-icon",
+      "ui_location": "wizard-btn-group",
+      "label": "Export",
+      "attrs": {},
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l10755.0285",
+      "line": 10755,
+      "tag": "button",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-btn",
+      "ui_location": "wizard-btn-group",
+      "label": "Back",
+      "attrs": {
+        "data-step-target": "5"
+      },
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l10756.0286",
+      "line": 10756,
+      "tag": "button",
+      "html_id": "resubmitBtn6",
+      "name": null,
+      "role": null,
+      "class": "wizard-btn btn-icon",
+      "ui_location": "wizard-btn-group",
+      "label": "Resubmit with Annotations",
+      "attrs": {},
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l10757.0287",
+      "line": 10757,
+      "tag": "button",
+      "html_id": "approveBtn6",
+      "name": null,
+      "role": null,
+      "class": "wizard-btn primary btn-icon",
+      "ui_location": "wizard-btn-group",
+      "label": "Approve PRD for Planning Wizard",
+      "attrs": {
+        "data-command": "cmd.prd_builder.approve_for_planning_wizard",
+        "data-step-target": "7"
+      },
+      "inline_handlers": {},
+      "command_tokens": [
+        "cmd.prd_builder.approve_for_planning_wizard"
+      ],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "production_wiring_required",
+      "canonical_command_id": "cmd.prd_builder.approve_for_planning_wizard",
+      "wiring_matrix_key": "catalog.prd_builder_approve_for_planning_wizard",
+      "notes": [],
+      "production_accessibility_contract": {
+        "accessible_name": "Approve PRD for Planning Wizard",
+        "semantic_role": "native Slint control or explicit accessible-role matching the action",
+        "keyboard_semantics": "keyboard activation parity required for every click/tap action",
+        "focus_semantics": "focus-visible state required and disabled reason must be perceivable",
+        "pmconcept_gap_disposition": "PMConcept inline/custom markup is concept fixture only; production evidence must prove these semantics."
+      },
+      "production_wiring_contract": {
+        "command_id": "cmd.prd_builder.approve_for_planning_wizard",
+        "handler_target": "handlers::prd_builder::approve_for_planning_wizard",
+        "state_selector": "state.cmd_prd_builder_approve_for_planning_wizard.enabled",
+        "disabled_reason_selector": "state.cmd_prd_builder_approve_for_planning_wizard.disabled_reason",
+        "receipt_or_event_effect": "prd_builder.approval_snapshot.created, prd_builder.prd_pack_approved",
+        "test_evidence": "production render/control, dispatcher, disabled-reason, receipt/event, accessibility, and regression evidence required before implementation certification"
+      }
+    },
+    {
+      "inventory_id": "pmconcept.l10803.0288",
+      "line": 10803,
+      "tag": "select",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-select",
+      "ui_location": "wizard-fields",
+      "label": "Claude Code Cursor Gemini OpenCode Codex Copilot",
+      "attrs": {},
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+    {
+      "inventory_id": "pmconcept.l10804.0289",
+      "line": 10804,
+      "tag": "select",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-select",
+      "ui_location": "wizard-fields",
+      "label": "sonnet-4.5 opus-4",
+      "attrs": {},
+      "inline_handlers": {},
+      "command_tokens": [],
+      "local_or_demo_markers": [],
+      "accessibility_gaps": [],
+      "disposition": "concept_only_owner_adjudicated",
+      "canonical_command_id": null,
+      "wiring_matrix_key": null,
+      "notes": [
+        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+      ],
+      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+    },
+
+<<< CONTEXT_AFTER 8438-8449 >>>
+    {
+      "inventory_id": "pmconcept.l10806.0290",
+      "line": 10806,
+      "tag": "select",
+      "html_id": null,
+      "name": null,
+      "role": null,
+      "class": "wizard-select",
+      "ui_location": "wizard-fields",
+      "label": "Medium High Max",
+      "attrs": {},
+      "inline_handlers": {},

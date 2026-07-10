@@ -1,0 +1,393 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3718-3729 >>>
+L00003718	- no hardcoded tool lists
+L00003719	negative_constraints:
+L00003720	- Framework/tool data must not be hardcoded outside the catalog.
+L00003721	- Test strategy behavior must not duplicate tool-use rules across multiple places.
+L00003722	compatibility_only_notes: []
+L00003723	stale_retired_dispositions: []
+L00003724	owner_boundary_notes: []
+L00003725	owner_hints:
+L00003726	- Plans/newtools.md
+L00003727	preserved_contractrefs: []
+L00003728	```
+L00003729	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3730-4093 >>>
+L00003730	### N2-054 - Interview Testing Phase Consistency
+L00003731	
+L00003732	```yaml
+L00003733	plan_unit_id: N2-054
+L00003734	unit_type: requirement
+L00003735	status: accepted
+L00003736	owner_doc: Plans/newtools.md
+L00003737	canonical_text: The interview plan Testing phase already uses qa-expert and test-automator; newtools adds tool discovery and selection as part of that phase, with config wiring following orchestrator config wiring.
+L00003738	gui_related: false
+L00003739	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00003740	split_recommended: false
+L00003741	depends_on: []
+L00003742	unblocks: []
+L00003743	acceptance_criteria:
+L00003744	- Covered source spans remain losslessly available for exact-text audit.
+L00003745	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00003746	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003747	validation_surfaces:
+L00003748	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003749	- python3 scripts/pm-plan-index.py validate
+L00003750	risk_class: interview_testing_phase_consistency
+L00003751	reasoning_tier: standard
+L00003752	context_scope: newtools_standardization
+L00003753	implementation_surfaces:
+L00003754	- Plans/newtools.md
+L00003755	node_compile_hint:
+L00003756	  mode: interview_testing_phase_consistency
+L00003757	  create_worknodes: false
+L00003758	source_lineage:
+L00003759	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0039
+L00003760	preserved_exact_tokens:
+L00003761	- qa-expert
+L00003762	- test-automator
+L00003763	- tool discovery and selection
+L00003764	negative_constraints: []
+L00003765	compatibility_only_notes: []
+L00003766	stale_retired_dispositions: []
+L00003767	owner_boundary_notes: []
+L00003768	owner_hints:
+L00003769	- Plans/newtools.md
+L00003770	preserved_contractrefs:
+L00003771	- 'ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-8-testing, ContractName:Plans/orchestrator-subagent-integration.md#config-wiring'
+L00003772	```
+L00003773	
+L00003774	### N2-055 - Orchestrator Test Strategy Merge Consistency
+L00003775	
+L00003776	```yaml
+L00003777	plan_unit_id: N2-055
+L00003778	unit_type: requirement
+L00003779	status: accepted
+L00003780	owner_doc: Plans/newtools.md
+L00003781	canonical_text: Orchestrator test strategy loading and node-criteria merging must include new tool instructions and debug-log paths in the merged context.
+L00003782	gui_related: false
+L00003783	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00003784	split_recommended: false
+L00003785	depends_on: []
+L00003786	unblocks: []
+L00003787	acceptance_criteria:
+L00003788	- Covered source spans remain losslessly available for exact-text audit.
+L00003789	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00003790	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003791	validation_surfaces:
+L00003792	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003793	- python3 scripts/pm-plan-index.py validate
+L00003794	risk_class: orchestrator_test_strategy_merge_consistency
+L00003795	reasoning_tier: standard
+L00003796	context_scope: newtools_standardization
+L00003797	implementation_surfaces:
+L00003798	- Plans/newtools.md
+L00003799	node_compile_hint:
+L00003800	  mode: orchestrator_test_strategy_merge_consistency
+L00003801	  create_worknodes: false
+L00003802	source_lineage:
+L00003803	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0039
+L00003804	preserved_exact_tokens:
+L00003805	- test strategy
+L00003806	- node criteria
+L00003807	- debug log paths
+L00003808	negative_constraints: []
+L00003809	compatibility_only_notes: []
+L00003810	stale_retired_dispositions: []
+L00003811	owner_boundary_notes: []
+L00003812	owner_hints:
+L00003813	- Plans/newtools.md
+L00003814	preserved_contractrefs:
+L00003815	- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#test-strategy-loading'
+L00003816	```
+L00003817	
+L00003818	### N2-056 - GUI Framework Detection Gap
+L00003819	
+L00003820	```yaml
+L00003821	plan_unit_id: N2-056
+L00003822	unit_type: requirement
+L00003823	status: accepted
+L00003824	owner_doc: Plans/newtools.md
+L00003825	canonical_text: Implementation must add a dedicated GUI framework detection step from Architecture/UX output, project files, or catalog detection hints, or extend TechnologyExtractor with GUI-framework patterns and derive detected_gui_frameworks; the chosen approach must be documented in implementation evidence.
+L00003826	gui_related: true
+L00003827	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+L00003828	split_recommended: false
+L00003829	depends_on: []
+L00003830	unblocks: []
+L00003831	acceptance_criteria:
+L00003832	- Covered source spans remain losslessly available for exact-text audit.
+L00003833	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00003834	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003835	validation_surfaces:
+L00003836	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003837	- python3 scripts/pm-plan-index.py validate
+L00003838	risk_class: gui_framework_detection_gap
+L00003839	reasoning_tier: standard
+L00003840	context_scope: newtools_standardization
+L00003841	implementation_surfaces:
+L00003842	- Plans/newtools.md
+L00003843	node_compile_hint:
+L00003844	  mode: gui_framework_detection_gap
+L00003845	  create_worknodes: false
+L00003846	source_lineage:
+L00003847	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0040
+L00003848	preserved_exact_tokens:
+L00003849	- feature_detector
+L00003850	- technology_matrix
+L00003851	- TechnologyExtractor
+L00003852	- detected_gui_frameworks
+L00003853	negative_constraints: []
+L00003854	compatibility_only_notes: []
+L00003855	stale_retired_dispositions: []
+L00003856	owner_boundary_notes: []
+L00003857	owner_hints:
+L00003858	- Plans/newtools.md
+L00003859	preserved_contractrefs:
+L00003860	- 'ContractRef: SchemaID:evidence.schema.json, Gate:GATE-005, PolicyRule:Decision_Policy.md§2'
+L00003861	```
+L00003862	
+L00003863	### N2-057 - PRD Tool Task Injection Path
+L00003864	
+L00003865	```yaml
+L00003866	plan_unit_id: N2-057
+L00003867	unit_type: requirement
+L00003868	status: accepted
+L00003869	owner_doc: Plans/newtools.md
+L00003870	canonical_text: Tasks for obtaining selected tools and building custom headless tooling must be injected through the PRD generator, requirements document fallback, or separate .puppet-master/interview/gui-testing-plan.md only if PRD cannot be amended; the implementation must document the chosen path and must not leave tasks unwired.
+L00003871	gui_related: false
+L00003872	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00003873	split_recommended: false
+L00003874	depends_on: []
+L00003875	unblocks: []
+L00003876	acceptance_criteria:
+L00003877	- Covered source spans remain losslessly available for exact-text audit.
+L00003878	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00003879	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003880	validation_surfaces:
+L00003881	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003882	- python3 scripts/pm-plan-index.py validate
+L00003883	risk_class: prd_tool_task_injection_path
+L00003884	reasoning_tier: standard
+L00003885	context_scope: newtools_standardization
+L00003886	implementation_surfaces:
+L00003887	- Plans/newtools.md
+L00003888	node_compile_hint:
+L00003889	  mode: prd_tool_task_injection_path
+L00003890	  create_worknodes: false
+L00003891	source_lineage:
+L00003892	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0040
+L00003893	preserved_exact_tokens:
+L00003894	- PRD generator
+L00003895	- .puppet-master/interview/gui-testing-plan.md
+L00003896	- tasks unwired
+L00003897	negative_constraints:
+L00003898	- Implementation must not leave tool setup or custom-headless tasks unwired.
+L00003899	compatibility_only_notes: []
+L00003900	stale_retired_dispositions: []
+L00003901	owner_boundary_notes: []
+L00003902	owner_hints:
+L00003903	- Plans/newtools.md
+L00003904	preserved_contractrefs:
+L00003905	- 'ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation, SchemaID:evidence.schema.json, Gate:GATE-005, PolicyRule:Decision_Policy.md§4'
+L00003906	```
+L00003907	
+L00003908	### N2-058 - Interview State And Config Persistence
+L00003909	
+L00003910	```yaml
+L00003911	plan_unit_id: N2-058
+L00003912	unit_type: requirement
+L00003913	status: accepted
+L00003914	owner_doc: Plans/newtools.md
+L00003915	canonical_text: 'InterviewState gains detected_gui_frameworks: Vec<String>, while InterviewGuiConfig and InterviewOrchestratorConfig gain selected_framework_tools: Vec<FrameworkToolChoice> and plan_custom_headless_tool: bool; app.rs and interview completion wire those values into test strategy and PRD/execution-plan generation.'
+L00003916	gui_related: false
+L00003917	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00003918	split_recommended: false
+L00003919	depends_on: []
+L00003920	unblocks: []
+L00003921	acceptance_criteria:
+L00003922	- Covered source spans remain losslessly available for exact-text audit.
+L00003923	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00003924	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003925	validation_surfaces:
+L00003926	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003927	- python3 scripts/pm-plan-index.py validate
+L00003928	risk_class: interview_state_config_persistence
+L00003929	reasoning_tier: standard
+L00003930	context_scope: newtools_standardization
+L00003931	implementation_surfaces:
+L00003932	- Plans/newtools.md
+L00003933	node_compile_hint:
+L00003934	  mode: interview_state_config_persistence
+L00003935	  create_worknodes: false
+L00003936	source_lineage:
+L00003937	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0040
+L00003938	preserved_exact_tokens:
+L00003939	- InterviewState
+L00003940	- 'detected_gui_frameworks: Vec<String>'
+L00003941	- InterviewGuiConfig
+L00003942	- InterviewOrchestratorConfig
+L00003943	- 'selected_framework_tools: Vec<FrameworkToolChoice>'
+L00003944	- 'plan_custom_headless_tool: bool'
+L00003945	- app.rs
+L00003946	negative_constraints: []
+L00003947	compatibility_only_notes: []
+L00003948	stale_retired_dispositions: []
+L00003949	owner_boundary_notes: []
+L00003950	owner_hints:
+L00003951	- Plans/newtools.md
+L00003952	preserved_contractrefs:
+L00003953	- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, SchemaID:evidence.schema.json, Gate:GATE-005'
+L00003954	```
+L00003955	
+L00003956	### N2-059 - Additive Test Strategy Schema Compatibility
+L00003957	
+L00003958	```yaml
+L00003959	plan_unit_id: N2-059
+L00003960	unit_type: requirement
+L00003961	status: accepted
+L00003962	owner_doc: Plans/newtools.md
+L00003963	canonical_text: NodeTree::load_test_strategy and Plans/test_strategy.schema.json extend additively for headless_gui, framework_tool, and optional tool metadata while preserving backward compatibility for existing files and requiring no migration of old files.
+L00003964	gui_related: false
+L00003965	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00003966	split_recommended: false
+L00003967	depends_on: []
+L00003968	unblocks: []
+L00003969	acceptance_criteria:
+L00003970	- Covered source spans remain losslessly available for exact-text audit.
+L00003971	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00003972	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003973	validation_surfaces:
+L00003974	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003975	- python3 scripts/pm-plan-index.py validate
+L00003976	risk_class: additive_test_strategy_schema_compatibility
+L00003977	reasoning_tier: standard
+L00003978	context_scope: newtools_standardization
+L00003979	implementation_surfaces:
+L00003980	- Plans/newtools.md
+L00003981	node_compile_hint:
+L00003982	  mode: additive_test_strategy_schema_compatibility
+L00003983	  create_worknodes: false
+L00003984	source_lineage:
+L00003985	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0040
+L00003986	preserved_exact_tokens:
+L00003987	- NodeTree::load_test_strategy
+L00003988	- Plans/test_strategy.schema.json
+L00003989	- headless_gui
+L00003990	- framework_tool
+L00003991	- no migration of old files required
+L00003992	negative_constraints: []
+L00003993	compatibility_only_notes:
+L00003994	- Backward compatibility is required for existing test-strategy files.
+L00003995	- No migration of old files is required.
+L00003996	stale_retired_dispositions: []
+L00003997	owner_boundary_notes: []
+L00003998	owner_hints:
+L00003999	- Plans/newtools.md
+L00004000	preserved_contractrefs:
+L00004001	- 'ContractRef: SchemaID:pm.test_strategy.schema.v1, Gate:GATE-001, PolicyRule:Decision_Policy.md§2'
+L00004002	```
+L00004003	
+L00004004	### N2-060 - Custom Headless Verification Command Convention
+L00004005	
+L00004006	```yaml
+L00004007	plan_unit_id: N2-060
+L00004008	unit_type: requirement
+L00004009	status: accepted
+L00004010	owner_doc: Plans/newtools.md
+L00004011	canonical_text: The test strategy generator emits a deterministic convention-based command when the project follows documented naming, or an EXAMPLE-only command with criterion-based instructions when the executable command is project-specific.
+L00004012	gui_related: true
+L00004013	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+L00004014	split_recommended: false
+L00004015	depends_on: []
+L00004016	unblocks: []
+L00004017	acceptance_criteria:
+L00004018	- Covered source spans remain losslessly available for exact-text audit.
+L00004019	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00004020	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004021	validation_surfaces:
+L00004022	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004023	- python3 scripts/pm-plan-index.py validate
+L00004024	risk_class: custom_headless_verification_command_convention
+L00004025	reasoning_tier: standard
+L00004026	context_scope: newtools_standardization
+L00004027	implementation_surfaces:
+L00004028	- Plans/newtools.md
+L00004029	node_compile_hint:
+L00004030	  mode: custom_headless_verification_command_convention
+L00004031	  create_worknodes: false
+L00004032	source_lineage:
+L00004033	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0040
+L00004034	preserved_exact_tokens:
+L00004035	- verification_command
+L00004036	- cargo run --bin headless_runner
+L00004037	- npm run test:headless
+L00004038	- EXAMPLE-only
+L00004039	negative_constraints: []
+L00004040	compatibility_only_notes: []
+L00004041	stale_retired_dispositions: []
+L00004042	owner_boundary_notes: []
+L00004043	owner_hints:
+L00004044	- Plans/newtools.md
+L00004045	preserved_contractrefs:
+L00004046	- 'ContractRef: SchemaID:evidence.schema.json, Gate:GATE-005, PolicyRule:Decision_Policy.md§4'
+L00004047	```
+L00004048	
+L00004049	### N2-061 - Runtime-Mutable GuiToolCatalog Overlay
+L00004050	
+L00004051	```yaml
+L00004052	plan_unit_id: N2-061
+L00004053	unit_type: requirement
+L00004054	status: accepted
+L00004055	owner_doc: Plans/newtools.md
+L00004056	canonical_text: The base catalog is code-shipped defaults; the overlay is stored in non-secret app settings, is editable/importable/exportable, overrides base entries by stable IDs, carries source and last_updated, and all updates pass structured validation.
+L00004057	gui_related: false
+L00004058	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00004059	split_recommended: false
+L00004060	depends_on: []
+L00004061	unblocks: []
+L00004062	acceptance_criteria:
+L00004063	- Covered source spans remain losslessly available for exact-text audit.
+L00004064	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00004065	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004066	validation_surfaces:
+L00004067	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004068	- python3 scripts/pm-plan-index.py validate
+L00004069	risk_class: runtime_mutable_gui_tool_catalog_overlay
+L00004070	reasoning_tier: standard
+L00004071	context_scope: newtools_standardization
+L00004072	implementation_surfaces:
+L00004073	- Plans/newtools.md
+L00004074	node_compile_hint:
+L00004075	  mode: runtime_mutable_gui_tool_catalog_overlay
+L00004076	  create_worknodes: false
+L00004077	source_lineage:
+L00004078	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0040
+L00004079	preserved_exact_tokens:
+L00004080	- Resolved — runtime-mutable overlay
+L00004081	- stable IDs
+L00004082	- last_updated
+L00004083	- structured validation
+L00004084	negative_constraints: []
+L00004085	compatibility_only_notes: []
+L00004086	stale_retired_dispositions: []
+L00004087	owner_boundary_notes: []
+L00004088	owner_hints:
+L00004089	- Plans/newtools.md
+L00004090	preserved_contractrefs:
+L00004091	- 'ContractRef: Primitive:DRYRules, Gate:GATE-009, PolicyRule:Decision_Policy.md§2'
+L00004092	```
+L00004093	
+
+<<< CONTEXT_AFTER canonical_document_lines=4094-4105 >>>
+L00004094	### N2-062 - Catalog Module Ownership Boundary
+L00004095	
+L00004096	```yaml
+L00004097	plan_unit_id: N2-062
+L00004098	unit_type: requirement
+L00004099	status: accepted
+L00004100	owner_doc: Plans/newtools.md
+L00004101	canonical_text: The catalog must live in src/interview/gui_tool_catalog.rs; automation stays focused on running tests, and any later framework branching depends on interview or shared config rather than duplicating catalog data.
+L00004102	gui_related: false
+L00004103	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00004104	split_recommended: false
+L00004105	depends_on: []

@@ -1,0 +1,421 @@
+<<< CONTEXT_BEFORE 22527-22538 >>>
+negative_constraints:
+- No stale active entry after execution.
+compatibility_only_notes:
+- Cadence is plan evidence pending runtime tuning.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Executor scheduling remains adjacent.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 22539-22930 >>>
+### OSI-274 - File Operation Extraction Sources
+
+```yaml
+plan_unit_id: OSI-274
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  File operations can be detected by parsing agent output, native PreToolUse/PostToolUse hooks where available, or
+  Codex/Copilot normalized CLI stream or tool events.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend event extraction and provider adapter evidence rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-273
+unblocks: []
+acceptance_criteria:
+- Covered source lines remain losslessly available for exact-text audit.
+- Platform enrichments do not replace canonical coordination state.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: file_operation_extraction_sources
+node_compile_hint:
+  mode: file_operation_extraction_sources
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+preserved_exact_tokens:
+- Parse agent output
+- PreToolUse
+- PostToolUse
+- Provider event adapters
+- normalized CLI stream/tool events
+negative_constraints:
+- Platform enrichments do not replace canonical coordination state.
+compatibility_only_notes:
+- Adapter details must reconcile with executor and provider contracts.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Provider adapters own platform-specific extraction details.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-275 - Cross-Platform Flow Registration And Edit Update
+
+```yaml
+plan_unit_id: OSI-275
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The cross-platform flow example preserves Agent A registering as Codex, then updating files_being_edited and
+  current_operation while editing src/api.rs.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend coordination scenario evidence rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-270
+- OSI-273
+unblocks: []
+acceptance_criteria:
+- Covered source lines remain losslessly available for exact-text audit.
+- Example ids and files remain evidence, not fixed implementation identifiers.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: cross_platform_flow_registration_edit_update
+node_compile_hint:
+  mode: cross_platform_flow_registration_edit_update
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+preserved_exact_tokens:
+- rust-engineer-1.1.1
+- 'platform: "codex"'
+- 'files_being_edited: ["src/api.rs"]'
+negative_constraints:
+- Example ids and file names are not fixed implementation identifiers.
+compatibility_only_notes:
+- Scenario evidence only.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Orchestration examples preserve flow, not literal runtime ids.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-276 - Cross-Platform Reader Waits And Proceeds
+
+```yaml
+plan_unit_id: OSI-276
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Agent B on Claude Code reads shared coordination state, receives active-agent context, waits or works elsewhere, and then
+  proceeds after Agent A unregisters; canonical projection enables Codex/Claude cross-provider communication.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend cross-provider coordination behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-275
+unblocks: []
+acceptance_criteria:
+- Covered source lines remain losslessly available for exact-text audit.
+- Coordination context helps avoid simultaneous conflicting edits.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: cross_platform_reader_waits_proceeds
+node_compile_hint:
+  mode: cross_platform_reader_waits_proceeds
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+preserved_exact_tokens:
+- test-automator
+- Claude Code
+- Wait for rust-engineer
+- cross-platform communication
+negative_constraints:
+- Avoid simultaneous conflicting edits.
+compatibility_only_notes:
+- Prompt example is evidence only.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Orchestration coordination owns the conflict-avoidance behavior.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-277 - Platform Runner Coordination Contract
+
+```yaml
+plan_unit_id: OSI-277
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  All platform runners read and update canonical coordination state, consume the same prompt injection contract, avoid shared
+  provider sessions or threads, and keep fresh-process isolation per iteration.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend platform runner coordination contracts rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-270
+- OSI-271
+unblocks: []
+acceptance_criteria:
+- Covered source lines remain losslessly available for exact-text audit.
+- Provider-bridge wording does not permit local CLI bridge reuse or shared sessions/threads.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: platform_runner_coordination_contract
+node_compile_hint:
+  mode: platform_runner_coordination_contract
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+preserved_exact_tokens:
+- All platform runners (Cursor, Codex, Claude, Gemini, Copilot)
+- No shared provider sessions/threads
+- fresh-process isolation
+negative_constraints:
+- No shared provider sessions or threads.
+compatibility_only_notes:
+- Provider-bridge wording is integration-layer terminology, not local CLI bridge permission.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Executor/provider runtime owns platform-runner details.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-278 - Agent Coordination Implementation Placement Notes
+
+```yaml
+plan_unit_id: OSI-278
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Agent coordination implementation notes identify future src/core/agent_coordination.rs placement, AgentCoordinator,
+  prompt injection, provider-agnostic status updates, and register/update/unregister timing.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend implementation placement notes rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-260
+- OSI-262
+- OSI-267
+- OSI-277
+unblocks: []
+acceptance_criteria:
+- Covered source lines remain losslessly available for exact-text audit.
+- Plan standardization does not create implementation files.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: agent_coordination_implementation_placement_notes
+node_compile_hint:
+  mode: agent_coordination_implementation_placement_notes
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+preserved_exact_tokens:
+- src/core/agent_coordination.rs
+- AgentCoordinator
+- provider-agnostic
+- Register agent before execution
+negative_constraints:
+- Plan standardization must not create implementation files.
+compatibility_only_notes:
+- Future placement note only.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plan document records implementation surface without creating code.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-279 - Crew Mode Canonical Rules
+
+```yaml
+plan_unit_id: OSI-279
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Crew mode is a multi-model coordination overlay over child runs: members are child runs, model/provider diversity is the
+  default distinguishing axis, the same task and often the same Persona are preserved, member coordination uses an attributable
+  crew board, the parent owns final synthesis and user-facing escalation, and crew shared state is explicit coordination state
+  rather than hidden long-term member memory. Crew defaults live in model/runtime settings, first invocation confirms default
+  crew use, member provider/runtime mapping is disclosed after model choice, and any Copilot-configured member applies a
+  crew-level provider constraint.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers crew orchestration defaults and provider/runtime coordination rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-245
+- OSI-251
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Duplicate source spans are recorded as duplicate coverage and do not create separate implementation scope.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: crew_mode_canonical_rules
+node_compile_hint:
+  mode: crew_mode_canonical_rules
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0143
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0148
+preserved_exact_tokens:
+- Puppet Master Crews (Teams/Fleets Alternative)
+- members are child runs
+- model/provider diversity
+- same Persona
+- attributable crew board
+- not hidden long-term member memory
+- member's provider/runtime surface
+- member’s provider/runtime surface
+negative_constraints:
+- Crew shared state must not become hidden long-term member memory.
+compatibility_only_notes:
+- Duplicate source coverage preserves both apostrophe variants from the repeated block.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Orchestrator owns crew coordination; model/runtime settings and provider docs own runtime choice surfaces.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md'
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/CLI_Bridged_Providers.md'
+```
+
+### OSI-280 - Gap-Era Crew Notes Retired
+
+```yaml
+plan_unit_id: OSI-280
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Gap-era crew notes are retired as canonical guidance; live crew rules resolve through orchestrator contracts rather than
+  illustrative fallback numbers, and superseded gap-era examples MUST NOT be implemented as live crew canon.
+gui_related: false
+gui_classification_reason: This unit covers stale crew-plan disposition rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-279
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Duplicate source spans are recorded as duplicate coverage and do not create separate implementation scope.
+- Retired gap-era examples remain explicitly noncanonical.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: gap_era_crew_notes_retired
+node_compile_hint:
+  mode: gap_era_crew_notes_retired
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0144
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0149
+preserved_exact_tokens:
+- Gaps and Potential Issues for Crews Feature
+- Gap-era crew notes
+- retired as canonical guidance
+- MUST NOT be implemented as live crew canon
+negative_constraints:
+- Superseded gap-era examples MUST NOT be implemented as live crew canon.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Gap-era crew notes in this section are retired as canonical guidance.
+owner_boundary_notes:
+- Live crew rules resolve through orchestrator contracts and referenced owner docs.
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Crosswalk.md'
+```
+
+
+<<< CONTEXT_AFTER 22931-22942 >>>
+### OSI-281 - ExecutionLimits Crew Admission Caps
+
+```yaml
+plan_unit_id: OSI-281
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Crew admission MUST use `executionLimits` as the sole live source for `maxConcurrentCrewsPerPlatform = 4`,
+  `maxConcurrentAgentsPerCrew = 8`, `maxTotalActiveAgents = 32`, `maxNestingDepth = 4`, `maxTotalSpawnedAgents = 99`, and
+  `maxToolRoundsPerAgent = 200`; availability checks may narrow admission based on support, saturation, quota posture, or
+  policy, but they MUST fail closed rather than inventing alternate per-gap ceilings; the first `Canonical crew-cap and

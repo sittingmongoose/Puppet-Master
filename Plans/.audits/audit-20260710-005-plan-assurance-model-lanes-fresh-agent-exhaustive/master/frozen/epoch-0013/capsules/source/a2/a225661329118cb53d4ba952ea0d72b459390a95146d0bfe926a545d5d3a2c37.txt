@@ -1,0 +1,381 @@
+<<< CONTEXT_BEFORE canonical_document_lines=13158-13169 >>>
+L00013158	- 'complete'
+L00013159	- 'incomplete'
+L00013160	- 'complete with warnings'
+L00013161	negative_constraints: []
+L00013162	compatibility_only_notes: []
+L00013163	stale_retired_dispositions: []
+L00013164	owner_boundary_notes: []
+L00013165	owner_hints:
+L00013166	- Plans/orchestrator-subagent-integration.md
+L00013167	preserved_contractrefs: []
+L00013168	```
+L00013169	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=13170-13521 >>>
+L00013170	### OSI-121 - AfterTierEnd Persistence Feedback And Failure Handling
+L00013171	
+L00013172	```yaml
+L00013173	plan_unit_id: OSI-121
+L00013174	unit_type: requirement
+L00013175	status: accepted
+L00013176	owner_doc: Plans/orchestrator-subagent-integration.md
+L00013177	canonical_text: >-
+L00013178	  AfterTierEnd persists verification results, updates tier status in PRD/state, generates feedback for agent/user when verification fails, and handles failures as rework or complete-with-warnings according to policy.
+L00013179	gui_related: true
+L00013180	gui_classification_reason: This unit covers user/operator feedback and tier status surfaces.
+L00013181	split_recommended: false
+L00013182	depends_on:
+L00013183	- OSI-120
+L00013184	unblocks: []
+L00013185	acceptance_criteria:
+L00013186	- Covered source spans remain losslessly available for exact-text audit.
+L00013187	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00013188	  bridge.
+L00013189	- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00013190	  retain their own contracts.
+L00013191	- Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00013192	  final node manifests, or production build tasks.
+L00013193	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00013194	validation_surfaces:
+L00013195	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00013196	- python3 scripts/pm-plan-index.py validate
+L00013197	reasoning_tier: standard
+L00013198	context_scope: orchestrator_subagent_standardization
+L00013199	implementation_surfaces:
+L00013200	- Plans/orchestrator-subagent-integration.md
+L00013201	risk_class: after_tier_end_persistence_feedback_failure_handling
+L00013202	node_compile_hint:
+L00013203	  mode: after_tier_end_persistence_feedback_failure_handling
+L00013204	  create_worknodes: false
+L00013205	source_lineage:
+L00013206	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0097
+L00013207	preserved_exact_tokens:
+L00013208	- 'AfterTierEnd'
+L00013209	- '.puppet-master/state/verification-{node_id}-end.json'
+L00013210	- 'Update tier status'
+L00013211	- 'Generate feedback'
+L00013212	- 'agent/user'
+L00013213	- 'incomplete'
+L00013214	- 'rework'
+L00013215	- 'complete with warnings'
+L00013216	negative_constraints: []
+L00013217	compatibility_only_notes: []
+L00013218	stale_retired_dispositions: []
+L00013219	owner_boundary_notes: []
+L00013220	owner_hints:
+L00013221	- Plans/orchestrator-subagent-integration.md
+L00013222	preserved_contractrefs: []
+L00013223	```
+L00013224	
+L00013225	### OSI-122 - Tier End Orchestrator Integration Example
+L00013226	
+L00013227	```yaml
+L00013228	plan_unit_id: OSI-122
+L00013229	unit_type: requirement
+L00013230	status: accepted
+L00013231	owner_doc: Plans/orchestrator-subagent-integration.md
+L00013232	canonical_text: >-
+L00013233	  The tier-end orchestrator example introduces tier_end verification integration, collecting artifacts and diff, calling verify_tier_end, mapping VerificationStatus to TierStatus, persisting results, updating tier status, and generating feedback when incomplete.
+L00013234	gui_related: false
+L00013235	gui_classification_reason: This unit covers backend orchestrator example flow, not GUI behavior.
+L00013236	split_recommended: false
+L00013237	depends_on:
+L00013238	- OSI-121
+L00013239	unblocks: []
+L00013240	acceptance_criteria:
+L00013241	- Covered source spans remain losslessly available for exact-text audit.
+L00013242	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00013243	  bridge.
+L00013244	- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00013245	  retain their own contracts.
+L00013246	- Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00013247	  final node manifests, or production build tasks.
+L00013248	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00013249	validation_surfaces:
+L00013250	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00013251	- python3 scripts/pm-plan-index.py validate
+L00013252	reasoning_tier: standard
+L00013253	context_scope: orchestrator_subagent_standardization
+L00013254	implementation_surfaces:
+L00013255	- Plans/orchestrator-subagent-integration.md
+L00013256	risk_class: tier_end_orchestrator_integration_example
+L00013257	node_compile_hint:
+L00013258	  mode: tier_end_orchestrator_integration_example
+L00013259	  create_worknodes: false
+L00013260	source_lineage:
+L00013261	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0097
+L00013262	preserved_exact_tokens:
+L00013263	- 'src/verification/tier_end.rs'
+L00013264	- 'verify_tier_end()'
+L00013265	- 'src/core/orchestrator.rs'
+L00013266	- 'complete_tier'
+L00013267	- 'collect_tier_artifacts'
+L00013268	- 'compute_tier_diff'
+L00013269	- 'VerificationStatus::Pass'
+L00013270	- 'VerificationStatus::Fail'
+L00013271	- 'VerificationStatus::Warning'
+L00013272	- 'TierStatus::CompleteWithWarnings'
+L00013273	negative_constraints: []
+L00013274	compatibility_only_notes:
+L00013275	- 'The Rust snippet is plan evidence only, not an executable node output.'
+L00013276	stale_retired_dispositions: []
+L00013277	owner_boundary_notes: []
+L00013278	owner_hints:
+L00013279	- Plans/orchestrator-subagent-integration.md
+L00013280	preserved_contractrefs: []
+L00013281	```
+L00013282	
+L00013283	### OSI-123 - EndVerificationResult Schema And Algorithm
+L00013284	
+L00013285	```yaml
+L00013286	plan_unit_id: OSI-123
+L00013287	unit_type: requirement
+L00013288	status: accepted
+L00013289	owner_doc: Plans/orchestrator-subagent-integration.md
+L00013290	canonical_text: >-
+L00013291	  EndVerificationResult preserves tier type, node id, status, wiring/acceptance/quality checks, findings, feedback, timestamp, and an algorithm that reruns wiring, acceptance criteria, and quality verification, maps critical/major findings to fail or warning, and generates verification feedback on failure.
+L00013292	gui_related: false
+L00013293	gui_classification_reason: This unit covers backend verification result schema and algorithm, not GUI behavior.
+L00013294	split_recommended: false
+L00013295	depends_on:
+L00013296	- OSI-120
+L00013297	- OSI-122
+L00013298	unblocks: []
+L00013299	acceptance_criteria:
+L00013300	- Covered source spans remain losslessly available for exact-text audit.
+L00013301	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00013302	  bridge.
+L00013303	- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00013304	  retain their own contracts.
+L00013305	- Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00013306	  final node manifests, or production build tasks.
+L00013307	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00013308	validation_surfaces:
+L00013309	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00013310	- python3 scripts/pm-plan-index.py validate
+L00013311	reasoning_tier: standard
+L00013312	context_scope: orchestrator_subagent_standardization
+L00013313	implementation_surfaces:
+L00013314	- Plans/orchestrator-subagent-integration.md
+L00013315	risk_class: endverificationresult_schema_algorithm
+L00013316	node_compile_hint:
+L00013317	  mode: endverificationresult_schema_algorithm
+L00013318	  create_worknodes: false
+L00013319	source_lineage:
+L00013320	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0097
+L00013321	preserved_exact_tokens:
+L00013322	- 'EndVerificationResult'
+L00013323	- 'wiring_check'
+L00013324	- 'acceptance_check'
+L00013325	- 'quality_check'
+L00013326	- 'VerificationFinding'
+L00013327	- 'FindingCategory::ConfigWiring'
+L00013328	- 'FindingCategory::AcceptanceCriteria'
+L00013329	- 'FindingCategory::Quality'
+L00013330	- 'FindingSeverity::Critical'
+L00013331	- 'FindingSeverity::Major'
+L00013332	- 'Utc::now()'
+L00013333	- 'generate_verification_feedback'
+L00013334	negative_constraints: []
+L00013335	compatibility_only_notes:
+L00013336	- 'The Rust schema and algorithm snippet is plan evidence only.'
+L00013337	stale_retired_dispositions: []
+L00013338	owner_boundary_notes: []
+L00013339	owner_hints:
+L00013340	- Plans/orchestrator-subagent-integration.md
+L00013341	preserved_contractrefs: []
+L00013342	```
+L00013343	
+L00013344	### OSI-124 - Quality Verification Composition
+L00013345	
+L00013346	```yaml
+L00013347	plan_unit_id: OSI-124
+L00013348	unit_type: requirement
+L00013349	status: accepted
+L00013350	owner_doc: Plans/orchestrator-subagent-integration.md
+L00013351	canonical_text: >-
+L00013352	  run_quality_verification composes required reviewer subagent review and required quality gate criteria, accumulates findings from reviewer_result and quality_gate_result, and passes only when findings are empty.
+L00013353	gui_related: false
+L00013354	gui_classification_reason: This unit covers backend quality verification composition, not GUI behavior.
+L00013355	split_recommended: false
+L00013356	depends_on:
+L00013357	- OSI-116
+L00013358	- OSI-123
+L00013359	unblocks: []
+L00013360	acceptance_criteria:
+L00013361	- Covered source spans remain losslessly available for exact-text audit.
+L00013362	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00013363	  bridge.
+L00013364	- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00013365	  retain their own contracts.
+L00013366	- Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00013367	  final node manifests, or production build tasks.
+L00013368	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00013369	validation_surfaces:
+L00013370	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00013371	- python3 scripts/pm-plan-index.py validate
+L00013372	reasoning_tier: standard
+L00013373	context_scope: orchestrator_subagent_standardization
+L00013374	implementation_surfaces:
+L00013375	- Plans/orchestrator-subagent-integration.md
+L00013376	risk_class: quality_verification_composition
+L00013377	node_compile_hint:
+L00013378	  mode: quality_verification_composition
+L00013379	  create_worknodes: false
+L00013380	source_lineage:
+L00013381	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0097
+L00013382	preserved_exact_tokens:
+L00013383	- 'run_quality_verification'
+L00013384	- 'run_reviewer_subagent'
+L00013385	- 'run_quality_gate_criteria'
+L00013386	- 'reviewer_result'
+L00013387	- 'quality_gate_result'
+L00013388	- 'passed: findings.is_empty()'
+L00013389	negative_constraints: []
+L00013390	compatibility_only_notes: []
+L00013391	stale_retired_dispositions: []
+L00013392	owner_boundary_notes: []
+L00013393	owner_hints:
+L00013394	- Plans/orchestrator-subagent-integration.md
+L00013395	preserved_contractrefs: []
+L00013396	```
+L00013397	
+L00013398	### OSI-125 - Reviewer Subagent Registry And DRY Invocation Boundary
+L00013399	
+L00013400	```yaml
+L00013401	plan_unit_id: OSI-125
+L00013402	unit_type: requirement
+L00013403	status: accepted
+L00013404	owner_doc: Plans/orchestrator-subagent-integration.md
+L00013405	canonical_text: >-
+L00013406	  Reviewer subagent selection and invocation must resolve reviewer-capable entries through subagent registry using execution_unit_context and reviewer role metadata, use platform_specs functions and platform runner abstractions, avoid hardcoded code-reviewer or tier-only lookup, parse reviewer output as SubagentOutput, and preserve task_report feedback.
+L00013407	gui_related: false
+L00013408	gui_classification_reason: This unit covers backend reviewer selection/invocation boundaries, not GUI behavior.
+L00013409	split_recommended: false
+L00013410	depends_on:
+L00013411	- OSI-091
+L00013412	- OSI-124
+L00013413	unblocks: []
+L00013414	acceptance_criteria:
+L00013415	- Covered source spans remain losslessly available for exact-text audit.
+L00013416	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00013417	  bridge.
+L00013418	- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00013419	  retain their own contracts.
+L00013420	- Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00013421	  final node manifests, or production build tasks.
+L00013422	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00013423	validation_surfaces:
+L00013424	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00013425	- python3 scripts/pm-plan-index.py validate
+L00013426	reasoning_tier: standard
+L00013427	context_scope: orchestrator_subagent_standardization
+L00013428	implementation_surfaces:
+L00013429	- Plans/orchestrator-subagent-integration.md
+L00013430	risk_class: reviewer_subagent_registry_dry_invocation_boundary
+L00013431	node_compile_hint:
+L00013432	  mode: reviewer_subagent_registry_dry_invocation_boundary
+L00013433	  create_worknodes: false
+L00013434	source_lineage:
+L00013435	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0097
+L00013436	preserved_exact_tokens:
+L00013437	- 'execution_unit_context'
+L00013438	- 'reviewer role metadata'
+L00013439	- 'never hardcode "code-reviewer"'
+L00013440	- 'tier-only lookup'
+L00013441	- 'platform_specs functions'
+L00013442	- 'DO NOT use match statements'
+L00013443	- 'platform_specs::get_subagent_invocation_format()'
+L00013444	- 'SubagentOutput'
+L00013445	- 'task_report'
+L00013446	negative_constraints:
+L00013447	- 'Never hardcode code-reviewer or select by tier-only lookup.'
+L00013448	- 'Do not use match statements for platform selection.'
+L00013449	compatibility_only_notes: []
+L00013450	stale_retired_dispositions: []
+L00013451	owner_boundary_notes: []
+L00013452	owner_hints:
+L00013453	- Plans/orchestrator-subagent-integration.md
+L00013454	preserved_contractrefs:
+L00013455	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, Gate:GATE-005'
+L00013456	```
+L00013457	
+L00013458	### OSI-126 - Tier Quality Criteria Catalog And Runner
+L00013459	
+L00013460	```yaml
+L00013461	plan_unit_id: OSI-126
+L00013462	unit_type: requirement
+L00013463	status: accepted
+L00013464	owner_doc: Plans/orchestrator-subagent-integration.md
+L00013465	canonical_text: >-
+L00013466	  Quality criteria are selected per tier type and run through quality check runners, preserving phase/task/subtask/iteration source tokens, document and design doc quality checks, linter and test coverage checks, no TODOs without tickets, and iteration quality checked at subtask level.
+L00013467	gui_related: false
+L00013468	gui_classification_reason: This unit covers backend quality criteria catalog behavior, not GUI behavior.
+L00013469	split_recommended: false
+L00013470	depends_on:
+L00013471	- OSI-118
+L00013472	- OSI-124
+L00013473	unblocks: []
+L00013474	acceptance_criteria:
+L00013475	- Covered source spans remain losslessly available for exact-text audit.
+L00013476	- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00013477	  bridge.
+L00013478	- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00013479	  retain their own contracts.
+L00013480	- Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00013481	  final node manifests, or production build tasks.
+L00013482	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00013483	validation_surfaces:
+L00013484	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00013485	- python3 scripts/pm-plan-index.py validate
+L00013486	reasoning_tier: standard
+L00013487	context_scope: orchestrator_subagent_standardization
+L00013488	implementation_surfaces:
+L00013489	- Plans/orchestrator-subagent-integration.md
+L00013490	risk_class: tier_quality_criteria_catalog_runner
+L00013491	node_compile_hint:
+L00013492	  mode: tier_quality_criteria_catalog_runner
+L00013493	  create_worknodes: false
+L00013494	source_lineage:
+L00013495	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0097
+L00013496	preserved_exact_tokens:
+L00013497	- 'get_quality_criteria_for_tier'
+L00013498	- 'Phase'
+L00013499	- 'Task'
+L00013500	- 'Subtask'
+L00013501	- 'Iteration'
+L00013502	- 'document_quality'
+L00013503	- 'design_doc_quality'
+L00013504	- 'no_new_clippy_warnings'
+L00013505	- 'new_code_has_tests'
+L00013506	- 'no_todos_without_tickets'
+L00013507	- 'DocumentReview'
+L00013508	- 'Linter'
+L00013509	- 'TestCoverage'
+L00013510	- 'CodeReview'
+L00013511	- 'Iteration quality checked at subtask level'
+L00013512	negative_constraints: []
+L00013513	compatibility_only_notes:
+L00013514	- 'Phase/Task/Subtask/Iteration are preserved source tokens for tier-era compatibility, not promoted above graph/node identity.'
+L00013515	stale_retired_dispositions: []
+L00013516	owner_boundary_notes: []
+L00013517	owner_hints:
+L00013518	- Plans/orchestrator-subagent-integration.md
+L00013519	preserved_contractrefs: []
+L00013520	```
+L00013521	
+
+<<< CONTEXT_AFTER canonical_document_lines=13522-13533 >>>
+L00013522	### OSI-127 - End Tier Verification Error Handling Policy
+L00013523	
+L00013524	```yaml
+L00013525	plan_unit_id: OSI-127
+L00013526	unit_type: requirement
+L00013527	status: accepted
+L00013528	owner_doc: Plans/orchestrator-subagent-integration.md
+L00013529	canonical_text: >-
+L00013530	  End-tier verification error handling treats artifact collection failure as warning with Info finding, diff computation failure as logged warning and continue, reviewer subagent failure as fail with Critical finding because reviewer is required, and quality gate failure status according to severity.
+L00013531	gui_related: true
+L00013532	gui_classification_reason: This unit covers user/operator-visible verification failure outcomes.
+L00013533	split_recommended: false

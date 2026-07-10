@@ -1,0 +1,423 @@
+<<< CONTEXT_BEFORE 1081-1092 >>>
+- run_id/thread_id/timestamp
+- usage_event_seq
+negative_constraints:
+- Usage `/runtime/storage` paths and artifacts are scoped per-project, per-run, per-package, and per-lane; old tier/workspace-only layouts remain migration inputs and must not replace canonical project/run/package/lane identity.
+- GUI deep-links no longer use `run_id/thread_id/timestamp`, `/thread_id/timestamp`, `usage_event_seq`, broad timestamp filters, or tier-based `usage.jsonl` rollups as canonical navigation.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1093-1486 >>>
+### UF-005 - Usage Export Taxonomy
+
+```yaml
+plan_unit_id: UF-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: 'Usage export semantics stay distinct: record export returns exact record envelopes with stable ids, canonical ids, refs, metadata, and schema-aware payloads; bundle export packages records, Evidence, blobs/files, selected-object bundles, manifests, and run-history artifacts; view export produces filtered tables, charts, CSV/JSON summaries, search results, analytics views, and graph renders without becoming canonical record truth.'
+gui_related: true
+gui_classification_reason: Export is user-facing Usage behavior and file output presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-005 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_194
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: usage_export_taxonomy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0003
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0010
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0014
+preserved_exact_tokens:
+- Export taxonomy and manifest contract
+- record export
+- bundle export
+- view export
+- /records
+- /refs
+- .pm-bundle
+- CSV/JSON
+- graph `/render`
+- JSONL mirror
+negative_constraints:
+- Filtered CSV and JSON summaries are view exports unless they preserve the exact record envelope.
+preserved_contractrefs: []
+compatibility_only_notes:
+- JSONL mirror export is projection-derived rather than a replacement for seglog ownership.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-006 - Projection Trust Blocking And Freshness
+
+```yaml
+plan_unit_id: UF-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage must preserve projection trust, action gating, blocked/runtime recovery ownership, attention-center rows, freshness labeling, and advisory quiet-window behavior without hiding canonical blocked or approval-wait episodes.
+gui_related: true
+gui_classification_reason: The unit governs user-visible freshness, attention, blocked, and recovery presentation.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-006 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_194
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: projection_trust_blocking_and_freshness
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0004
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0007
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0009
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0014
+preserved_exact_tokens:
+- Projection trust and action gating
+- Identity and blocked-policy transfer cluster
+- Blocked-owner eight-kind taxonomy
+- Last updated
+- Refresh
+- quiet suppression
+- /approval-wait
+- blocked/runtime authority
+negative_constraints:
+- Quiet suppression only affects advisory resurfacing; canonical blocked and `/approval-wait` rows must preserve precise owner and reason metadata.
+- Usage consumes Executor_Protocol blocked/runtime recovery ownership outcomes without inventing a separate authority.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- 'Usage freshness is a user-trust requirement: stale values must be visibly marked with `Last updated` and an explicit `Refresh` action.'
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-007 - Account Switch Pressure And Bridge Identity
+
+```yaml
+plan_unit_id: UF-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage attribution preserves account switch and pressure history through actor-scoped snapshots, account_switch_event and account_pressure_episode records, and explicit bridge precedence where attempt_id is the local runtime anchor, provider_attempt_ref? is provider/runtime trace, usage_event_ref is the Usage bridge, and receipt refs are external side-effect lineage.
+gui_related: false
+gui_classification_reason: The unit preserves backend/runtime identity and attribution rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-007 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_194
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: account_switch_pressure_and_bridge_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0005
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0006
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0007
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0008
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0014
+preserved_exact_tokens:
+- Execution role and operational identity
+- Account switch and pressure history
+- attempt_id
+- provider_attempt_ref?
+- usage_event_ref
+- receipt refs
+- actor_kind
+- execution_role
+- account_switch_event
+- account_pressure_episode
+negative_constraints:
+- Scheduler-internal IDs remain scheduler/effective-resolution evidence and must not be inserted into usage_record by default.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-008 - Widget Shell And Project Card Usage Consumers
+
+```yaml
+plan_unit_id: UF-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: 'Usage consumes widget and shell presentation contracts without re-owning them: Widget_System broad pre-rewrite Orchestrator widget material is compatibility lineage, dashboard_layout migration reads yield to widget_layout:v1:dashboard, and project-card usage copy stays compact with one primary and one secondary line.'
+gui_related: true
+gui_classification_reason: The unit constrains user-visible widget, shell, and project-card presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-008 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_194
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: widget_shell_and_project_card_usage_consumers
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0014
+preserved_exact_tokens:
+- Widget_System
+- compatibility lineage
+- dashboard_layout:v1
+- dashboard_layout
+- widget_layout:v1:dashboard
+- project-card usage copy
+- one primary line
+- one secondary line
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes:
+- Widget_System broad pre-rewrite Orchestrator widget model is compatibility lineage, not Usage ownership.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-009 - Quota Visibility And Alerts
+
+```yaml
+plan_unit_id: UF-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage surfaces show quota and plan visibility with 5h and 7d windows, detected/configured plan type, always-visible limits, background refresh, live vs after-run source disclosure, approaching-limit warnings such as 80%, and rate-limit-hit actions to switch platform or pause.
+gui_related: true
+gui_classification_reason: The unit defines visible quota/alert UI behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-009 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_194
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: quota_visibility_and_alerts
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0019
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0020
+preserved_exact_tokens:
+- '5h: X / Y'
+- '7d: X / Y'
+- Plan type
+- Background refresh
+- live
+- after-run
+- 80%
+- Switch platform
+- pause
+- Always-visible limits
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-010 - Ledger Analytics Reporting And Retention
+
+```yaml
+plan_unit_id: UF-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage keeps event-level usage ledger inspection, filtering/export, optional analytics by time/platform/project/tier, cost tracking/attribution, retention/privacy controls, and drill-down without turning filtered exports into canonical history.
+gui_related: true
+gui_classification_reason: The unit defines visible ledger, analytics, reporting, and export surfaces.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-010 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_194
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: ledger_analytics_reporting_and_retention
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0021
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0022
+preserved_exact_tokens:
+- Event-level log
+- platform
+- operation
+- tokens in/out
+- cost
+- filtering
+- export
+- JSON
+- Aggregated view
+- Cost tracking
+- Retention policy
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-011 - Chat Context Circle Affordance
+
+```yaml
+plan_unit_id: UF-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Thread-scoped Usage appears as the chat context circle with hover-revealed Usage, Tokens, Cost, and More Details actions plus explicit click-to-Compact Now behavior; More Details opens the editor-tab Context Detail Pane, Compact Now dispatches only after explicit choice and exposes failure/degraded feedback, and app-wide Usage remains a separate surface.
+gui_related: true
+gui_classification_reason: The unit defines user-visible chat Usage controls.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-011 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_194
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: chat_context_circle_affordance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0023
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/compaction_compile_readiness_matrix.json:cmp-automated-testing-acceptance
+- Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0094
+preserved_exact_tokens:
+- context circle
+- Usage
+- Tokens
+- Cost
+- More Details
+- Compact Now
+- context.compaction.failed
+- Context Detail Pane
+- app-wide Usage
+- OpenCode
+negative_constraints:
+- Compact Now must not dispatch from hover alone.
+- Compact Now failure must not be silent or logs-only.
+- OpenCode references are non-binding UX references and do not replace Puppet Master canonical behavior.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FinalGUISpec.md'
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md'
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/usage-feature.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+
+<<< CONTEXT_AFTER 1487-1498 >>>
+### UF-012 - Context Detail Pane Inspection
+
+```yaml
+plan_unit_id: UF-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: The Context Detail Pane provides curated overview cards, grouped usage breakdowns, per-message inspection, raw payload toggles, provider/model/mode/persona drill-downs, and side-by-side Expert/ELI5 help copy for thread-scoped usage.
+gui_related: true
+gui_classification_reason: The unit defines visible Context Detail Pane inspection behavior.
+split_recommended: false
+depends_on:

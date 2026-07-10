@@ -1,0 +1,412 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3119-3130 >>>
+L00003119	- canonical message/run identity
+L00003120	- aggregated later
+L00003121	negative_constraints: []
+L00003122	preserved_contractrefs: []
+L00003123	compatibility_only_notes: []
+L00003124	stale_retired_dispositions: []
+L00003125	owner_hints:
+L00003126	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003127	- Plans/assistant-chat-design.md
+L00003128	- Plans/usage-feature.md
+L00003129	```
+L00003130	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3131-3513 >>>
+L00003131	### SMPFS-042 - Lightweight Timer UI
+L00003132	
+L00003133	```yaml
+L00003134	plan_unit_id: SMPFS-042
+L00003135	unit_type: requirement
+L00003136	status: accepted
+L00003137	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003138	canonical_text: Timer UI remains lightweight, visible per assistant turn or segment when supported, and must avoid reflow or flicker in long threads.
+L00003139	gui_related: true
+L00003140	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00003141	split_recommended: false
+L00003142	depends_on:
+L00003143	- PDS-003
+L00003144	- PDS-004
+L00003145	- PDS-005
+L00003146	- PNC-001
+L00003147	- ACD-008
+L00003148	- UF-001
+L00003149	unblocks: []
+L00003150	acceptance_criteria:
+L00003151	- SMPFS-042 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00003152	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003153	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003154	validation_surfaces:
+L00003155	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003156	- python3 scripts/pm-plan-index.py validate
+L00003157	risk_class: timer_ui_drift
+L00003158	reasoning_tier: standard
+L00003159	context_scope: stream_timing_gui
+L00003160	implementation_surfaces:
+L00003161	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003162	node_compile_hint:
+L00003163	  mode: lightweight_timer_ui
+L00003164	  create_worknodes: false
+L00003165	source_lineage:
+L00003166	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0028
+L00003167	preserved_exact_tokens:
+L00003168	- timer UI
+L00003169	- lightweight
+L00003170	- reflow/flicker
+L00003171	- long threads
+L00003172	negative_constraints:
+L00003173	- Timer UI must remain lightweight and not cause reflow/flicker in long threads.
+L00003174	preserved_contractrefs: []
+L00003175	compatibility_only_notes: []
+L00003176	stale_retired_dispositions: []
+L00003177	owner_hints:
+L00003178	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003179	- Plans/assistant-chat-design.md
+L00003180	- Plans/usage-feature.md
+L00003181	```
+L00003182	
+L00003183	### SMPFS-043 - Interleaved Thinking Toggle
+L00003184	
+L00003185	```yaml
+L00003186	plan_unit_id: SMPFS-043
+L00003187	unit_type: requirement
+L00003188	status: accepted
+L00003189	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003190	canonical_text: The interleaved thinking toggle is thread-local unless another owner broadens scope, shows requested state and effective provider behavior when exact honoring is unavailable, and prevents provider-specific naming from leaking into canonical user copy.
+L00003191	gui_related: true
+L00003192	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00003193	split_recommended: false
+L00003194	depends_on:
+L00003195	- PDS-003
+L00003196	- PDS-004
+L00003197	- PDS-005
+L00003198	- PNC-001
+L00003199	- ACD-008
+L00003200	- UF-001
+L00003201	unblocks: []
+L00003202	acceptance_criteria:
+L00003203	- SMPFS-043 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00003204	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003205	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003206	validation_surfaces:
+L00003207	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003208	- python3 scripts/pm-plan-index.py validate
+L00003209	risk_class: thinking_toggle_drift
+L00003210	reasoning_tier: standard
+L00003211	context_scope: thinking_toggle_gui
+L00003212	implementation_surfaces:
+L00003213	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003214	node_compile_hint:
+L00003215	  mode: interleaved_thinking_toggle
+L00003216	  create_worknodes: false
+L00003217	source_lineage:
+L00003218	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0029
+L00003219	preserved_exact_tokens:
+L00003220	- Interleaved Thinking Toggle
+L00003221	- thread-local
+L00003222	- requested state
+L00003223	- effective provider behavior
+L00003224	- provider-specific naming
+L00003225	- canonical user copy
+L00003226	negative_constraints:
+L00003227	- The feature cannot rely on provider-specific naming leaking into canonical user copy.
+L00003228	preserved_contractrefs: []
+L00003229	compatibility_only_notes: []
+L00003230	stale_retired_dispositions: []
+L00003231	owner_hints:
+L00003232	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003233	- Plans/assistant-chat-design.md
+L00003234	- Plans/usage-feature.md
+L00003235	```
+L00003236	
+L00003237	### SMPFS-044 - MCP Capability Resolution
+L00003238	
+L00003239	```yaml
+L00003240	plan_unit_id: SMPFS-044
+L00003241	unit_type: requirement
+L00003242	status: accepted
+L00003243	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003244	canonical_text: MCP support is host-managed capability resolution with project-, Persona-, and permission-aware effective tool availability, and unhealthy servers never produce silent success-shaped fallback.
+L00003245	gui_related: false
+L00003246	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00003247	split_recommended: false
+L00003248	depends_on:
+L00003249	- PDS-003
+L00003250	- PDS-004
+L00003251	- PDS-005
+L00003252	- PNC-001
+L00003253	- T-001
+L00003254	- PS-001
+L00003255	unblocks: []
+L00003256	acceptance_criteria:
+L00003257	- SMPFS-044 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00003258	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003259	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003260	validation_surfaces:
+L00003261	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003262	- python3 scripts/pm-plan-index.py validate
+L00003263	risk_class: mcp_capability_drift
+L00003264	reasoning_tier: standard
+L00003265	context_scope: mcp_capability
+L00003266	implementation_surfaces:
+L00003267	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003268	node_compile_hint:
+L00003269	  mode: mcp_capability_resolution
+L00003270	  create_worknodes: false
+L00003271	source_lineage:
+L00003272	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0030
+L00003273	preserved_exact_tokens:
+L00003274	- MCP Support
+L00003275	- host-managed capability resolution
+L00003276	- project-
+L00003277	- Persona-
+L00003278	- permission-aware
+L00003279	- effective MCP tool availability
+L00003280	- unhealthy MCP servers
+L00003281	negative_constraints:
+L00003282	- Unhealthy MCP servers never produce silent success-shaped fallback.
+L00003283	preserved_contractrefs: []
+L00003284	compatibility_only_notes: []
+L00003285	stale_retired_dispositions: []
+L00003286	owner_hints:
+L00003287	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003288	- Plans/Tools.md
+L00003289	- Plans/Permissions_System.md
+L00003290	```
+L00003291	
+L00003292	### SMPFS-045 - MCP Management UI
+L00003293	
+L00003294	```yaml
+L00003295	plan_unit_id: SMPFS-045
+L00003296	unit_type: requirement
+L00003297	status: accepted
+L00003298	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003299	canonical_text: MCP server configuration, enable/disable, test connection, and runtime health are first-class UI behaviors rather than config passthrough only.
+L00003300	gui_related: true
+L00003301	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00003302	split_recommended: false
+L00003303	depends_on:
+L00003304	- PDS-003
+L00003305	- PDS-004
+L00003306	- PDS-005
+L00003307	- PNC-001
+L00003308	- T-001
+L00003309	- PS-001
+L00003310	- UCC-001
+L00003311	unblocks: []
+L00003312	acceptance_criteria:
+L00003313	- SMPFS-045 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00003314	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003315	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003316	validation_surfaces:
+L00003317	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003318	- python3 scripts/pm-plan-index.py validate
+L00003319	risk_class: mcp_management_ui_drift
+L00003320	reasoning_tier: standard
+L00003321	context_scope: mcp_gui
+L00003322	implementation_surfaces:
+L00003323	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003324	node_compile_hint:
+L00003325	  mode: mcp_management_ui
+L00003326	  create_worknodes: false
+L00003327	source_lineage:
+L00003328	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0030
+L00003329	preserved_exact_tokens:
+L00003330	- server configuration
+L00003331	- enable/disable
+L00003332	- test connection
+L00003333	- runtime health
+L00003334	- first-class UI behaviors
+L00003335	- config passthrough only
+L00003336	negative_constraints: []
+L00003337	preserved_contractrefs: []
+L00003338	compatibility_only_notes: []
+L00003339	stale_retired_dispositions: []
+L00003340	owner_hints:
+L00003341	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003342	- Plans/Tools.md
+L00003343	- Plans/Permissions_System.md
+L00003344	- Plans/UI_Command_Catalog.md
+L00003345	```
+L00003346	
+L00003347	### SMPFS-046 - Project Session Browser Data Scope
+L00003348	
+L00003349	```yaml
+L00003350	plan_unit_id: SMPFS-046
+L00003351	unit_type: requirement
+L00003352	status: accepted
+L00003353	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003354	canonical_text: The project/session browser spans projects plus per-project sessions, runs, and threads while active-thread navigation remains directly available in chat.
+L00003355	gui_related: false
+L00003356	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00003357	split_recommended: false
+L00003358	depends_on:
+L00003359	- PDS-003
+L00003360	- PDS-004
+L00003361	- PDS-005
+L00003362	- PNC-001
+L00003363	- SP-001
+L00003364	- ACD-008
+L00003365	unblocks: []
+L00003366	acceptance_criteria:
+L00003367	- SMPFS-046 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00003368	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003369	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003370	validation_surfaces:
+L00003371	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003372	- python3 scripts/pm-plan-index.py validate
+L00003373	risk_class: project_session_browser_scope_drift
+L00003374	reasoning_tier: standard
+L00003375	context_scope: project_session_browser
+L00003376	implementation_surfaces:
+L00003377	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003378	node_compile_hint:
+L00003379	  mode: project_session_browser_data_scope
+L00003380	  create_worknodes: false
+L00003381	source_lineage:
+L00003382	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0031
+L00003383	preserved_exact_tokens:
+L00003384	- Project and Session Browser
+L00003385	- projects
+L00003386	- per-project sessions/runs/threads
+L00003387	- active-thread navigation
+L00003388	- chat
+L00003389	negative_constraints: []
+L00003390	preserved_contractrefs: []
+L00003391	compatibility_only_notes: []
+L00003392	stale_retired_dispositions: []
+L00003393	owner_hints:
+L00003394	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003395	- Plans/storage-plan.md
+L00003396	- Plans/assistant-chat-design.md
+L00003397	```
+L00003398	
+L00003399	### SMPFS-047 - Project Session Browser Surface
+L00003400	
+L00003401	```yaml
+L00003402	plan_unit_id: SMPFS-047
+L00003403	unit_type: requirement
+L00003404	status: accepted
+L00003405	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003406	canonical_text: The project/session browser is a real shell surface with empty states, search and filter behavior, row actions, badges, and responsive collapse behavior.
+L00003407	gui_related: true
+L00003408	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00003409	split_recommended: false
+L00003410	depends_on:
+L00003411	- PDS-003
+L00003412	- PDS-004
+L00003413	- PDS-005
+L00003414	- PNC-001
+L00003415	- UCC-001
+L00003416	- WM-001
+L00003417	unblocks: []
+L00003418	acceptance_criteria:
+L00003419	- SMPFS-047 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00003420	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003421	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003422	validation_surfaces:
+L00003423	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003424	- python3 scripts/pm-plan-index.py validate
+L00003425	risk_class: project_session_browser_ui_drift
+L00003426	reasoning_tier: standard
+L00003427	context_scope: project_session_browser_gui
+L00003428	implementation_surfaces:
+L00003429	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003430	node_compile_hint:
+L00003431	  mode: project_session_browser_surface
+L00003432	  create_worknodes: false
+L00003433	source_lineage:
+L00003434	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0031
+L00003435	preserved_exact_tokens:
+L00003436	- real shell surface
+L00003437	- empty states
+L00003438	- search/filter behavior
+L00003439	- row actions
+L00003440	- badges
+L00003441	- responsive collapse behavior
+L00003442	negative_constraints: []
+L00003443	preserved_contractrefs: []
+L00003444	compatibility_only_notes: []
+L00003445	stale_retired_dispositions: []
+L00003446	owner_hints:
+L00003447	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003448	- Plans/UI_Command_Catalog.md
+L00003449	- Plans/Wiring_Matrix.md
+L00003450	```
+L00003451	
+L00003452	### SMPFS-048 - Streaming Usage Payloads
+L00003453	
+L00003454	```yaml
+L00003455	plan_unit_id: SMPFS-048
+L00003456	unit_type: requirement
+L00003457	status: accepted
+L00003458	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003459	canonical_text: Mid-stream token/context updates preserve provisional stream usage payloads with session_id, response, per-model API totals, and token totals including prompt, total, cached, thoughts, and tool until final provider usage closes the turn.
+L00003460	gui_related: false
+L00003461	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00003462	split_recommended: false
+L00003463	depends_on:
+L00003464	- PDS-003
+L00003465	- PDS-004
+L00003466	- PDS-005
+L00003467	- PNC-001
+L00003468	- ACD-008
+L00003469	- UF-001
+L00003470	- SP-001
+L00003471	unblocks: []
+L00003472	acceptance_criteria:
+L00003473	- SMPFS-048 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00003474	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00003475	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00003476	validation_surfaces:
+L00003477	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003478	- python3 scripts/pm-plan-index.py validate
+L00003479	risk_class: streaming_usage_payload_drift
+L00003480	reasoning_tier: standard
+L00003481	context_scope: streaming_usage
+L00003482	implementation_surfaces:
+L00003483	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003484	node_compile_hint:
+L00003485	  mode: streaming_usage_payloads
+L00003486	  create_worknodes: false
+L00003487	source_lineage:
+L00003488	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0032
+L00003489	preserved_exact_tokens:
+L00003490	- session_id
+L00003491	- response
+L00003492	- per-model API totals
+L00003493	- prompt
+L00003494	- total
+L00003495	- cached
+L00003496	- thoughts
+L00003497	- tool
+L00003498	- provisional
+L00003499	- final provider usage event
+L00003500	negative_constraints:
+L00003501	- Partial updates must not invent final totals before the platform reports them.
+L00003502	- partial updates must not invent final totals before the platform reports them
+L00003503	preserved_contractrefs:
+L00003504	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md'
+L00003505	compatibility_only_notes: []
+L00003506	stale_retired_dispositions: []
+L00003507	owner_hints:
+L00003508	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003509	- Plans/assistant-chat-design.md
+L00003510	- Plans/usage-feature.md
+L00003511	- Plans/storage-plan.md
+L00003512	```
+L00003513	
+
+<<< CONTEXT_AFTER canonical_document_lines=3514-3525 >>>
+L00003514	### SMPFS-049 - Streaming Context Usage UI
+L00003515	
+L00003516	```yaml
+L00003517	plan_unit_id: SMPFS-049
+L00003518	unit_type: requirement
+L00003519	status: accepted
+L00003520	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00003521	canonical_text: Context and usage indicators may update during streaming with stable updating/streaming states, and final per-thread context and usage lands in the canonical Context Detail Pane used outside streaming.
+L00003522	gui_related: true
+L00003523	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00003524	split_recommended: false
+L00003525	depends_on:

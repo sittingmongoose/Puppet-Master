@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3270-3281 >>>
+L00003270	- Remote LSP does not use a port-forwarded secondary protocol or hidden local sync/mirror for LSP operations.
+L00003271	compatibility_only_notes: []
+L00003272	stale_retired_dispositions: []
+L00003273	owner_boundary_notes:
+L00003274	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00003275	owner_hints:
+L00003276	- Plans/LSPSupport.md
+L00003277	preserved_contractrefs:
+L00003278	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md'
+L00003279	split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00003280	```
+L00003281	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3282-3679 >>>
+L00003282	### LSPS-041 - Remote Identity And Path Mapping
+L00003283	
+L00003284	```yaml
+L00003285	plan_unit_id: LSPS-041
+L00003286	unit_type: requirement
+L00003287	status: accepted
+L00003288	owner_doc: Plans/LSPSupport.md
+L00003289	canonical_text: Remote LSP identity preserves user-visible SSH authority, remote-host and working-folder path authority, host-scoped path mapping, and live host/server/root session keys while forbidding hidden mirrors, silent multi-context retargeting, and local-only session-key collisions.
+L00003290	gui_related: false
+L00003291	gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+L00003292	split_recommended: true
+L00003293	depends_on: []
+L00003294	unblocks: []
+L00003295	acceptance_criteria:
+L00003296	- The covered source span remains losslessly available for exact-text audit.
+L00003297	- This behavior is addressable through LSPS-041 instead of broad L-001 source-preserving coverage.
+L00003298	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003299	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003300	validation_surfaces:
+L00003301	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003302	- python3 scripts/pm-plan-index.py validate
+L00003303	risk_class: lsp_contract_drift
+L00003304	reasoning_tier: standard
+L00003305	context_scope: lspsupport_standardization
+L00003306	implementation_surfaces:
+L00003307	- Plans/LSPSupport.md
+L00003308	node_compile_hint:
+L00003309	  mode: remote_identity_and_path_mapping
+L00003310	  create_worknodes: false
+L00003311	source_lineage:
+L00003312	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0031
+L00003313	preserved_exact_tokens:
+L00003314	- user@host:/path/to/project
+L00003315	- /path/to/project
+L00003316	- remote project identity
+L00003317	- remote-host
+L00003318	- working-folder
+L00003319	- user@host:remote/path
+L00003320	- must not create a hidden local `/mirror`
+L00003321	- must not silently retarget `/multi-context` work
+L00003322	- visible `/risk` reason
+L00003323	- stale local-only phrase `(server_id, root)`
+L00003324	- (host_id, server_id, root_identity)
+L00003325	- host-scoped `/path-mapping`
+L00003326	negative_constraints:
+L00003327	- Puppet Master must not create a hidden local mirror, silently retarget multi-context work to local host, or let host-local URI collisions occur.
+L00003328	compatibility_only_notes: []
+L00003329	stale_retired_dispositions: []
+L00003330	owner_boundary_notes:
+L00003331	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00003332	owner_hints:
+L00003333	- Plans/LSPSupport.md
+L00003334	preserved_contractrefs:
+L00003335	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md'
+L00003336	split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00003337	```
+L00003338	
+L00003339	### LSPS-042 - Remote Degraded UX And SSH Owner Boundary
+L00003340	
+L00003341	```yaml
+L00003342	plan_unit_id: LSPS-042
+L00003343	unit_type: requirement
+L00003344	status: accepted
+L00003345	owner_doc: Plans/LSPSupport.md
+L00003346	canonical_text: Remote LSP degraded and connection-loss states follow FileManager and SSH owner patterns by showing Connection lost, Reconnect, Work offline when a validated cache exists, system keychain/agent credential handling, Settings > SSH capability/degraded copy, and shared read-only/offline vocabulary.
+L00003347	gui_related: true
+L00003348	gui_classification_reason: The unit defines user-visible editor, status, Problems, Settings, Chat, copy, or interaction behavior.
+L00003349	split_recommended: true
+L00003350	depends_on: []
+L00003351	unblocks: []
+L00003352	acceptance_criteria:
+L00003353	- The covered source span remains losslessly available for exact-text audit.
+L00003354	- This behavior is addressable through LSPS-042 instead of broad L-001 source-preserving coverage.
+L00003355	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003356	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003357	validation_surfaces:
+L00003358	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003359	- python3 scripts/pm-plan-index.py validate
+L00003360	risk_class: lsp_contract_drift
+L00003361	reasoning_tier: standard
+L00003362	context_scope: lspsupport_standardization
+L00003363	implementation_surfaces:
+L00003364	- Plans/LSPSupport.md
+L00003365	node_compile_hint:
+L00003366	  mode: remote_degraded_ux_and_ssh_owner_boundary
+L00003367	  create_worknodes: false
+L00003368	source_lineage:
+L00003369	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0031
+L00003370	preserved_exact_tokens:
+L00003371	- Connection lost
+L00003372	- Reconnect
+L00003373	- Work offline (cached files only)
+L00003374	- validated cache
+L00003375	- system keychain/agent flows
+L00003376	- ssh_connections
+L00003377	- current SSH remote profile model
+L00003378	- one-auto-retry
+L00003379	- Settings > SSH
+L00003380	- /read-only/offline/refresh
+L00003381	- /offline/degraded
+L00003382	- /enabled
+L00003383	- unavailable vocabulary
+L00003384	negative_constraints:
+L00003385	- Settings > SSH and GUI remote-editor surfaces consume the SSH owner contract instead of redefining it.
+L00003386	compatibility_only_notes: []
+L00003387	stale_retired_dispositions: []
+L00003388	owner_boundary_notes:
+L00003389	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00003390	owner_hints:
+L00003391	- Plans/LSPSupport.md
+L00003392	preserved_contractrefs:
+L00003393	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md'
+L00003394	split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00003395	```
+L00003396	
+L00003397	### LSPS-043 - Remote Mutation Outage And FileSafe Boundary
+L00003398	
+L00003399	```yaml
+L00003400	plan_unit_id: LSPS-043
+L00003401	unit_type: requirement
+L00003402	status: accepted
+L00003403	owner_doc: Plans/LSPSupport.md
+L00003404	canonical_text: 'Remote LSP mutation and outage modes remain visible and FileSafe-gated: rename, broad format, and multi-file code actions require preview confirmation; partial failures report per-file results; remote modes disclose full, diagnostics-only, or no-LSP state; adjacent Search, Source Control, Problems, buffers, and diffs do not silently fall back.'
+L00003405	gui_related: true
+L00003406	gui_classification_reason: The unit defines user-visible editor, status, Problems, Settings, Chat, copy, or interaction behavior.
+L00003407	split_recommended: true
+L00003408	depends_on: []
+L00003409	unblocks: []
+L00003410	acceptance_criteria:
+L00003411	- The covered source span remains losslessly available for exact-text audit.
+L00003412	- This behavior is addressable through LSPS-043 instead of broad L-001 source-preserving coverage.
+L00003413	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003414	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003415	validation_surfaces:
+L00003416	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003417	- python3 scripts/pm-plan-index.py validate
+L00003418	risk_class: lsp_contract_drift
+L00003419	reasoning_tier: standard
+L00003420	context_scope: lspsupport_standardization
+L00003421	implementation_surfaces:
+L00003422	- Plans/LSPSupport.md
+L00003423	node_compile_hint:
+L00003424	  mode: remote_mutation_outage_and_filesafe_boundary
+L00003425	  create_worknodes: false
+L00003426	source_lineage:
+L00003427	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0031
+L00003428	preserved_exact_tokens:
+L00003429	- Remote mutation and availability modes
+L00003430	- preview `/confirmation`
+L00003431	- partial workspace-edit failure reports per-file results
+L00003432	- read-only, locked, unavailable, or `/degraded`
+L00003433	- full_remote_lsp
+L00003434	- degraded_remote_diagnostics_only
+L00003435	- remote_edit_no_lsp
+L00003436	- unsupported local-LSP-on-remote-paths
+L00003437	- must not silently fall back to local Git
+L00003438	- stale snapshots
+L00003439	- /offline/pending-sync
+L00003440	- Hunk-level `/diff` interaction
+L00003441	negative_constraints:
+L00003442	- Remote Source Control must not silently fall back to local Git.
+L00003443	- Preview-worthy remote mutations require the same safe preview/confirmation path as FileSafe edits.
+L00003444	compatibility_only_notes: []
+L00003445	stale_retired_dispositions: []
+L00003446	owner_boundary_notes:
+L00003447	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00003448	owner_hints:
+L00003449	- Plans/LSPSupport.md
+L00003450	preserved_contractrefs:
+L00003451	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md'
+L00003452	split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00003453	```
+L00003454	
+L00003455	### LSPS-044 - Stale Browser And Recovery Exclusion
+L00003456	
+L00003457	```yaml
+L00003458	plan_unit_id: LSPS-044
+L00003459	unit_type: requirement
+L00003460	status: accepted
+L00003461	owner_doc: Plans/LSPSupport.md
+L00003462	canonical_text: 'Browser preview and recovery residue must not re-enter LSP wording: browser-panel tokens stay owned by FileManager, FinalGUISpec, or storage cleanup, while recover-unsaved remains an editor/storage recovery contract outside the LSP session key.'
+L00003463	gui_related: true
+L00003464	gui_classification_reason: The unit defines user-visible editor, status, Problems, Settings, Chat, copy, or interaction behavior.
+L00003465	split_recommended: true
+L00003466	depends_on: []
+L00003467	unblocks: []
+L00003468	acceptance_criteria:
+L00003469	- The covered source span remains losslessly available for exact-text audit.
+L00003470	- This behavior is addressable through LSPS-044 instead of broad L-001 source-preserving coverage.
+L00003471	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003472	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003473	validation_surfaces:
+L00003474	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003475	- python3 scripts/pm-plan-index.py validate
+L00003476	risk_class: lsp_contract_drift
+L00003477	reasoning_tier: standard
+L00003478	context_scope: lspsupport_standardization
+L00003479	implementation_surfaces:
+L00003480	- Plans/LSPSupport.md
+L00003481	node_compile_hint:
+L00003482	  mode: stale_browser_and_recovery_exclusion
+L00003483	  create_worknodes: false
+L00003484	source_lineage:
+L00003485	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0031
+L00003486	preserved_exact_tokens:
+L00003487	- Bottom Panel Browser tab (§7.20)
+L00003488	- preview_mode = browser_panel
+L00003489	- preview_mode
+L00003490	- recover-unsaved
+L00003491	- editor/storage recovery contract
+L00003492	- outside the LSP session key
+L00003493	negative_constraints:
+L00003494	- Browser and recovery residue must not be reintroduced through LSP wording.
+L00003495	compatibility_only_notes:
+L00003496	- Browser-panel and preview_mode tokens are compatibility cleanup residue owned outside LSPSupport.
+L00003497	stale_retired_dispositions: []
+L00003498	owner_boundary_notes:
+L00003499	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00003500	owner_hints:
+L00003501	- Plans/LSPSupport.md
+L00003502	preserved_contractrefs:
+L00003503	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md'
+L00003504	split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00003505	```
+L00003506	
+L00003507	### LSPS-045 - Editor Crate LSP Module Layout
+L00003508	
+L00003509	```yaml
+L00003510	plan_unit_id: LSPS-045
+L00003511	unit_type: requirement
+L00003512	status: accepted
+L00003513	owner_doc: Plans/LSPSupport.md
+L00003514	canonical_text: The LSP client and registry live in the same crate as the editor under a dedicated src/lsp module with client, registry, session/server_handle, document/sync files and lsp-types plus tokio dependencies, while tower-lsp is unnecessary unless implementing a server.
+L00003515	gui_related: false
+L00003516	gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+L00003517	split_recommended: false
+L00003518	depends_on: []
+L00003519	unblocks: []
+L00003520	acceptance_criteria:
+L00003521	- The covered source span remains losslessly available for exact-text audit.
+L00003522	- This behavior is addressable through LSPS-045 instead of broad L-001 source-preserving coverage.
+L00003523	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003524	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003525	validation_surfaces:
+L00003526	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003527	- python3 scripts/pm-plan-index.py validate
+L00003528	risk_class: lsp_contract_drift
+L00003529	reasoning_tier: standard
+L00003530	context_scope: lspsupport_standardization
+L00003531	implementation_surfaces:
+L00003532	- Plans/LSPSupport.md
+L00003533	node_compile_hint:
+L00003534	  mode: editor_crate_lsp_module_layout
+L00003535	  create_worknodes: false
+L00003536	source_lineage:
+L00003537	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0032
+L00003538	preserved_exact_tokens:
+L00003539	- same crate as the editor
+L00003540	- src/lsp/
+L00003541	- client.rs
+L00003542	- registry.rs
+L00003543	- session.rs
+L00003544	- server_handle.rs
+L00003545	- document.rs
+L00003546	- sync.rs
+L00003547	- lsp-types
+L00003548	- tokio
+L00003549	- No need for tower-lsp unless implementing a server
+L00003550	negative_constraints:
+L00003551	- tower-lsp is not required for the GUI-side LSP client unless Puppet Master implements an LSP server.
+L00003552	compatibility_only_notes: []
+L00003553	stale_retired_dispositions: []
+L00003554	owner_boundary_notes:
+L00003555	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00003556	owner_hints:
+L00003557	- Plans/LSPSupport.md
+L00003558	preserved_contractrefs: []
+L00003559	```
+L00003560	
+L00003561	### LSPS-046 - LSP Data Projection Shapes
+L00003562	
+L00003563	```yaml
+L00003564	plan_unit_id: LSPS-046
+L00003565	unit_type: requirement
+L00003566	status: accepted
+L00003567	owner_doc: Plans/LSPSupport.md
+L00003568	canonical_text: Core LSP conceptual structures preserve LspSessionKey, LspSessionProjection, and DocumentBinding fields for project, host, server, root, lifecycle, freshness, health, enablement, capability, restart, error, path, version, and attached server identity.
+L00003569	gui_related: false
+L00003570	gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+L00003571	split_recommended: true
+L00003572	depends_on: []
+L00003573	unblocks: []
+L00003574	acceptance_criteria:
+L00003575	- The covered source span remains losslessly available for exact-text audit.
+L00003576	- This behavior is addressable through LSPS-046 instead of broad L-001 source-preserving coverage.
+L00003577	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003578	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003579	validation_surfaces:
+L00003580	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003581	- python3 scripts/pm-plan-index.py validate
+L00003582	risk_class: lsp_contract_drift
+L00003583	reasoning_tier: standard
+L00003584	context_scope: lspsupport_standardization
+L00003585	implementation_surfaces:
+L00003586	- Plans/LSPSupport.md
+L00003587	node_compile_hint:
+L00003588	  mode: lsp_data_projection_shapes
+L00003589	  create_worknodes: false
+L00003590	source_lineage:
+L00003591	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0033
+L00003592	preserved_exact_tokens:
+L00003593	- LspSessionKey
+L00003594	- project_id
+L00003595	- host_id
+L00003596	- server_id
+L00003597	- root_identity
+L00003598	- LspSessionProjection
+L00003599	- lifecycle_state
+L00003600	- freshness
+L00003601	- health
+L00003602	- requested_enabled
+L00003603	- effective_enabled
+L00003604	- capability_summary
+L00003605	- restart_budget
+L00003606	- last_error
+L00003607	- DocumentBinding
+L00003608	- document_id
+L00003609	- version
+L00003610	- attached_servers[]
+L00003611	negative_constraints: []
+L00003612	compatibility_only_notes: []
+L00003613	stale_retired_dispositions: []
+L00003614	owner_boundary_notes:
+L00003615	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00003616	owner_hints:
+L00003617	- Plans/LSPSupport.md
+L00003618	preserved_contractrefs:
+L00003619	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md'
+L00003620	split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00003621	```
+L00003622	
+L00003623	### LSPS-047 - Lifecycle State Machine And Resource Limits
+L00003624	
+L00003625	```yaml
+L00003626	plan_unit_id: LSPS-047
+L00003627	unit_type: requirement
+L00003628	status: accepted
+L00003629	owner_doc: Plans/LSPSupport.md
+L00003630	canonical_text: The LSP lifecycle uses canonical user/state names and lower-level state transitions from stopped through ready, degraded, stopping, crashed, and restart, with resource limits for server memory and request CPU time.
+L00003631	gui_related: false
+L00003632	gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+L00003633	split_recommended: true
+L00003634	depends_on: []
+L00003635	unblocks: []
+L00003636	acceptance_criteria:
+L00003637	- The covered source span remains losslessly available for exact-text audit.
+L00003638	- This behavior is addressable through LSPS-047 instead of broad L-001 source-preserving coverage.
+L00003639	- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00003640	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003641	validation_surfaces:
+L00003642	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003643	- python3 scripts/pm-plan-index.py validate
+L00003644	risk_class: lsp_contract_drift
+L00003645	reasoning_tier: standard
+L00003646	context_scope: lspsupport_standardization
+L00003647	implementation_surfaces:
+L00003648	- Plans/LSPSupport.md
+L00003649	node_compile_hint:
+L00003650	  mode: lifecycle_state_machine_and_resource_limits
+L00003651	  create_worknodes: false
+L00003652	source_lineage:
+L00003653	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:LSPSupport-S0033
+L00003654	preserved_exact_tokens:
+L00003655	- Starting
+L00003656	- Initializing
+L00003657	- Ready
+L00003658	- RestartBackoff
+L00003659	- Degraded
+L00003660	- ShuttingDown
+L00003661	- Stopped
+L00003662	- stopped → starting → initializing → ready → degraded → stopping → crashed
+L00003663	- max 3 attempts
+L00003664	- 2s/4s/8s
+L00003665	- 512MB
+L00003666	- 30s
+L00003667	negative_constraints:
+L00003668	- Only Ready emits normal feature traffic; degraded and restart states expose reduced capability or recovery status.
+L00003669	compatibility_only_notes: []
+L00003670	stale_retired_dispositions: []
+L00003671	owner_boundary_notes:
+L00003672	- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.
+L00003673	owner_hints:
+L00003674	- Plans/LSPSupport.md
+L00003675	preserved_contractrefs:
+L00003676	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md'
+L00003677	split_recommendation_reason: The source span contains multiple separable LSP concerns; repeated source lineage preserves exact provenance without inventing subspans.
+L00003678	```
+L00003679	
+
+<<< CONTEXT_AFTER canonical_document_lines=3680-3691 >>>
+L00003680	### LSPS-048 - Supervisor DocumentStore Authority
+L00003681	
+L00003682	```yaml
+L00003683	plan_unit_id: LSPS-048
+L00003684	unit_type: requirement
+L00003685	status: accepted
+L00003686	owner_doc: Plans/LSPSupport.md
+L00003687	canonical_text: LspSupervisor plus DocumentStore is the authority boundary for document panes, editor tabs, chat virtual documents, restore/reload, revert, pending-sync state, virtual/real URI identity, and didSave emission after successful shared-store save.
+L00003688	gui_related: false
+L00003689	gui_classification_reason: The unit defines LSP runtime, protocol, registry, routing, or implementation constraints rather than direct GUI presentation.
+L00003690	split_recommended: true
+L00003691	depends_on: []

@@ -1,0 +1,413 @@
+<<< CONTEXT_BEFORE canonical_document_lines=6483-6494 >>>
+L00006483	      },
+L00006484	      "command_tokens": [],
+L00006485	      "local_or_demo_markers": [],
+L00006486	      "accessibility_gaps": [],
+L00006487	      "disposition": "concept_only_owner_adjudicated",
+L00006488	      "canonical_command_id": null,
+L00006489	      "wiring_matrix_key": null,
+L00006490	      "notes": [
+L00006491	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006492	      ],
+L00006493	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006494	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=6495-6878 >>>
+L00006495	    {
+L00006496	      "inventory_id": "pmconcept.l10381.0214",
+L00006497	      "line": 10381,
+L00006498	      "tag": "div",
+L00006499	      "html_id": "projectSettingsModal",
+L00006500	      "name": null,
+L00006501	      "role": null,
+L00006502	      "class": "project-settings-modal",
+L00006503	      "ui_location": "panel-projects",
+L00006504	      "label": "Project Settings General Environment Agent Behavior Core Settings Project Name Working Directory Features Auto-save Files Automatically save changes when switching away. Enable Hit-in-the-Loop Require approval before executing destructive a",
+L00006505	      "attrs": {
+L00006506	        "onclick": "if(event.target===this) this.classList.remove('visible')"
+L00006507	      },
+L00006508	      "inline_handlers": {
+L00006509	        "onclick": "if(event.target===this) this.classList.remove('visible')"
+L00006510	      },
+L00006511	      "command_tokens": [],
+L00006512	      "local_or_demo_markers": [],
+L00006513	      "accessibility_gaps": [
+L00006514	        "custom_click_target_missing_role",
+L00006515	        "click_handler_without_keyboard_parity"
+L00006516	      ],
+L00006517	      "disposition": "concept_only_owner_adjudicated",
+L00006518	      "canonical_command_id": null,
+L00006519	      "wiring_matrix_key": null,
+L00006520	      "notes": [
+L00006521	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006522	      ],
+L00006523	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006524	    },
+L00006525	    {
+L00006526	      "inventory_id": "pmconcept.l10382.0215",
+L00006527	      "line": 10382,
+L00006528	      "tag": "div",
+L00006529	      "html_id": null,
+L00006530	      "name": null,
+L00006531	      "role": null,
+L00006532	      "class": "project-settings-content",
+L00006533	      "ui_location": "projectSettingsModal",
+L00006534	      "label": "Project Settings General Environment Agent Behavior Core Settings Project Name Working Directory Features Auto-save Files Automatically save changes when switching away. Enable Hit-in-the-Loop Require approval before executing destructive a",
+L00006535	      "attrs": {
+L00006536	        "onclick": "event.stopPropagation()"
+L00006537	      },
+L00006538	      "inline_handlers": {
+L00006539	        "onclick": "event.stopPropagation()"
+L00006540	      },
+L00006541	      "command_tokens": [],
+L00006542	      "local_or_demo_markers": [],
+L00006543	      "accessibility_gaps": [
+L00006544	        "custom_click_target_missing_role",
+L00006545	        "click_handler_without_keyboard_parity"
+L00006546	      ],
+L00006547	      "disposition": "concept_only_owner_adjudicated",
+L00006548	      "canonical_command_id": null,
+L00006549	      "wiring_matrix_key": null,
+L00006550	      "notes": [
+L00006551	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006552	      ],
+L00006553	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006554	    },
+L00006555	    {
+L00006556	      "inventory_id": "pmconcept.l10388.0216",
+L00006557	      "line": 10388,
+L00006558	      "tag": "button",
+L00006559	      "html_id": null,
+L00006560	      "name": null,
+L00006561	      "role": null,
+L00006562	      "class": "psm-close",
+L00006563	      "ui_location": "projectSettingsModal",
+L00006564	      "label": "psm-close",
+L00006565	      "attrs": {
+L00006566	        "onclick": "document.getElementById('projectSettingsModal').classList.remove('visible')"
+L00006567	      },
+L00006568	      "inline_handlers": {
+L00006569	        "onclick": "document.getElementById('projectSettingsModal').classList.remove('visible')"
+L00006570	      },
+L00006571	      "command_tokens": [],
+L00006572	      "local_or_demo_markers": [],
+L00006573	      "accessibility_gaps": [],
+L00006574	      "disposition": "concept_only_owner_adjudicated",
+L00006575	      "canonical_command_id": null,
+L00006576	      "wiring_matrix_key": null,
+L00006577	      "notes": [
+L00006578	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006579	      ],
+L00006580	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006581	    },
+L00006582	    {
+L00006583	      "inventory_id": "pmconcept.l10412.0217",
+L00006584	      "line": 10412,
+L00006585	      "tag": "input",
+L00006586	      "html_id": null,
+L00006587	      "name": null,
+L00006588	      "role": null,
+L00006589	      "class": null,
+L00006590	      "ui_location": "projectSettingsModal",
+L00006591	      "label": "puppet-master-rs",
+L00006592	      "attrs": {
+L00006593	        "type": "text",
+L00006594	        "value": "puppet-master-rs"
+L00006595	      },
+L00006596	      "inline_handlers": {},
+L00006597	      "command_tokens": [],
+L00006598	      "local_or_demo_markers": [],
+L00006599	      "accessibility_gaps": [],
+L00006600	      "disposition": "concept_only_owner_adjudicated",
+L00006601	      "canonical_command_id": null,
+L00006602	      "wiring_matrix_key": null,
+L00006603	      "notes": [
+L00006604	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006605	      ],
+L00006606	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006607	    },
+L00006608	    {
+L00006609	      "inventory_id": "pmconcept.l10416.0218",
+L00006610	      "line": 10416,
+L00006611	      "tag": "input",
+L00006612	      "html_id": null,
+L00006613	      "name": null,
+L00006614	      "role": null,
+L00006615	      "class": null,
+L00006616	      "ui_location": "projectSettingsModal",
+L00006617	      "label": "~/Cursor/Puppet Master",
+L00006618	      "attrs": {
+L00006619	        "type": "text",
+L00006620	        "value": "~/Cursor/Puppet Master"
+L00006621	      },
+L00006622	      "inline_handlers": {},
+L00006623	      "command_tokens": [],
+L00006624	      "local_or_demo_markers": [
+L00006625	        "~/"
+L00006626	      ],
+L00006627	      "accessibility_gaps": [],
+L00006628	      "disposition": "concept_fixture_only",
+L00006629	      "canonical_command_id": null,
+L00006630	      "wiring_matrix_key": null,
+L00006631	      "notes": [
+L00006632	        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+L00006633	      ]
+L00006634	    },
+L00006635	    {
+L00006636	      "inventory_id": "pmconcept.l10426.0219",
+L00006637	      "line": 10426,
+L00006638	      "tag": "input",
+L00006639	      "html_id": null,
+L00006640	      "name": null,
+L00006641	      "role": null,
+L00006642	      "class": null,
+L00006643	      "ui_location": "projectSettingsModal",
+L00006644	      "label": "input",
+L00006645	      "attrs": {
+L00006646	        "type": "checkbox"
+L00006647	      },
+L00006648	      "inline_handlers": {},
+L00006649	      "command_tokens": [],
+L00006650	      "local_or_demo_markers": [],
+L00006651	      "accessibility_gaps": [],
+L00006652	      "disposition": "concept_only_owner_adjudicated",
+L00006653	      "canonical_command_id": null,
+L00006654	      "wiring_matrix_key": null,
+L00006655	      "notes": [
+L00006656	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006657	      ],
+L00006658	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006659	    },
+L00006660	    {
+L00006661	      "inventory_id": "pmconcept.l10433.0220",
+L00006662	      "line": 10433,
+L00006663	      "tag": "input",
+L00006664	      "html_id": null,
+L00006665	      "name": null,
+L00006666	      "role": null,
+L00006667	      "class": null,
+L00006668	      "ui_location": "projectSettingsModal",
+L00006669	      "label": "input",
+L00006670	      "attrs": {
+L00006671	        "type": "checkbox"
+L00006672	      },
+L00006673	      "inline_handlers": {},
+L00006674	      "command_tokens": [],
+L00006675	      "local_or_demo_markers": [],
+L00006676	      "accessibility_gaps": [],
+L00006677	      "disposition": "concept_only_owner_adjudicated",
+L00006678	      "canonical_command_id": null,
+L00006679	      "wiring_matrix_key": null,
+L00006680	      "notes": [
+L00006681	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006682	      ],
+L00006683	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006684	    },
+L00006685	    {
+L00006686	      "inventory_id": "pmconcept.l10439.0221",
+L00006687	      "line": 10439,
+L00006688	      "tag": "button",
+L00006689	      "html_id": null,
+L00006690	      "name": null,
+L00006691	      "role": null,
+L00006692	      "class": "psm-btn",
+L00006693	      "ui_location": "projectSettingsModal",
+L00006694	      "label": "Cancel",
+L00006695	      "attrs": {
+L00006696	        "onclick": "document.getElementById('projectSettingsModal').classList.remove('visible')"
+L00006697	      },
+L00006698	      "inline_handlers": {
+L00006699	        "onclick": "document.getElementById('projectSettingsModal').classList.remove('visible')"
+L00006700	      },
+L00006701	      "command_tokens": [],
+L00006702	      "local_or_demo_markers": [],
+L00006703	      "accessibility_gaps": [],
+L00006704	      "disposition": "concept_only_owner_adjudicated",
+L00006705	      "canonical_command_id": null,
+L00006706	      "wiring_matrix_key": null,
+L00006707	      "notes": [
+L00006708	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006709	      ],
+L00006710	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006711	    },
+L00006712	    {
+L00006713	      "inventory_id": "pmconcept.l10440.0222",
+L00006714	      "line": 10440,
+L00006715	      "tag": "button",
+L00006716	      "html_id": null,
+L00006717	      "name": null,
+L00006718	      "role": null,
+L00006719	      "class": "psm-btn primary",
+L00006720	      "ui_location": "projectSettingsModal",
+L00006721	      "label": "Save Changes",
+L00006722	      "attrs": {
+L00006723	        "onclick": "document.getElementById('projectSettingsModal').classList.remove('visible')"
+L00006724	      },
+L00006725	      "inline_handlers": {
+L00006726	        "onclick": "document.getElementById('projectSettingsModal').classList.remove('visible')"
+L00006727	      },
+L00006728	      "command_tokens": [],
+L00006729	      "local_or_demo_markers": [],
+L00006730	      "accessibility_gaps": [],
+L00006731	      "disposition": "concept_only_owner_adjudicated",
+L00006732	      "canonical_command_id": null,
+L00006733	      "wiring_matrix_key": null,
+L00006734	      "notes": [
+L00006735	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006736	      ],
+L00006737	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006738	    },
+L00006739	    {
+L00006740	      "inventory_id": "pmconcept.l10449.0223",
+L00006741	      "line": 10449,
+L00006742	      "tag": "div",
+L00006743	      "html_id": null,
+L00006744	      "name": null,
+L00006745	      "role": null,
+L00006746	      "class": "wizard-nav-step active",
+L00006747	      "ui_location": "wizard-global-nav",
+L00006748	      "label": "Project Setup",
+L00006749	      "attrs": {
+L00006750	        "data-step-target": "0",
+L00006751	        "data-nav-step": "0"
+L00006752	      },
+L00006753	      "inline_handlers": {},
+L00006754	      "command_tokens": [],
+L00006755	      "local_or_demo_markers": [],
+L00006756	      "accessibility_gaps": [
+L00006757	        "custom_click_target_missing_role"
+L00006758	      ],
+L00006759	      "disposition": "concept_only_owner_adjudicated",
+L00006760	      "canonical_command_id": null,
+L00006761	      "wiring_matrix_key": null,
+L00006762	      "notes": [
+L00006763	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006764	      ],
+L00006765	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006766	    },
+L00006767	    {
+L00006768	      "inventory_id": "pmconcept.l10454.0224",
+L00006769	      "line": 10454,
+L00006770	      "tag": "div",
+L00006771	      "html_id": null,
+L00006772	      "name": null,
+L00006773	      "role": null,
+L00006774	      "class": "wizard-nav-step",
+L00006775	      "ui_location": "wizard-global-nav",
+L00006776	      "label": "Requirements Intake",
+L00006777	      "attrs": {
+L00006778	        "data-step-target": "1",
+L00006779	        "data-nav-step": "1"
+L00006780	      },
+L00006781	      "inline_handlers": {},
+L00006782	      "command_tokens": [],
+L00006783	      "local_or_demo_markers": [],
+L00006784	      "accessibility_gaps": [
+L00006785	        "custom_click_target_missing_role"
+L00006786	      ],
+L00006787	      "disposition": "concept_only_owner_adjudicated",
+L00006788	      "canonical_command_id": null,
+L00006789	      "wiring_matrix_key": null,
+L00006790	      "notes": [
+L00006791	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006792	      ],
+L00006793	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006794	    },
+L00006795	    {
+L00006796	      "inventory_id": "pmconcept.l10459.0225",
+L00006797	      "line": 10459,
+L00006798	      "tag": "div",
+L00006799	      "html_id": null,
+L00006800	      "name": null,
+L00006801	      "role": null,
+L00006802	      "class": "wizard-nav-step",
+L00006803	      "ui_location": "wizard-global-nav",
+L00006804	      "label": "PRD Builder",
+L00006805	      "attrs": {
+L00006806	        "data-step-target": "2",
+L00006807	        "data-nav-step": "2"
+L00006808	      },
+L00006809	      "inline_handlers": {},
+L00006810	      "command_tokens": [],
+L00006811	      "local_or_demo_markers": [],
+L00006812	      "accessibility_gaps": [
+L00006813	        "custom_click_target_missing_role"
+L00006814	      ],
+L00006815	      "disposition": "concept_only_owner_adjudicated",
+L00006816	      "canonical_command_id": null,
+L00006817	      "wiring_matrix_key": null,
+L00006818	      "notes": [
+L00006819	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006820	      ],
+L00006821	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006822	    },
+L00006823	    {
+L00006824	      "inventory_id": "pmconcept.l10464.0226",
+L00006825	      "line": 10464,
+L00006826	      "tag": "div",
+L00006827	      "html_id": null,
+L00006828	      "name": null,
+L00006829	      "role": null,
+L00006830	      "class": "wizard-nav-step",
+L00006831	      "ui_location": "wizard-global-nav",
+L00006832	      "label": "Review Requirements",
+L00006833	      "attrs": {
+L00006834	        "data-step-target": "3",
+L00006835	        "data-nav-step": "3"
+L00006836	      },
+L00006837	      "inline_handlers": {},
+L00006838	      "command_tokens": [],
+L00006839	      "local_or_demo_markers": [],
+L00006840	      "accessibility_gaps": [
+L00006841	        "custom_click_target_missing_role"
+L00006842	      ],
+L00006843	      "disposition": "concept_only_owner_adjudicated",
+L00006844	      "canonical_command_id": null,
+L00006845	      "wiring_matrix_key": null,
+L00006846	      "notes": [
+L00006847	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006848	      ],
+L00006849	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006850	    },
+L00006851	    {
+L00006852	      "inventory_id": "pmconcept.l10469.0227",
+L00006853	      "line": 10469,
+L00006854	      "tag": "div",
+L00006855	      "html_id": null,
+L00006856	      "name": null,
+L00006857	      "role": null,
+L00006858	      "class": "wizard-nav-step",
+L00006859	      "ui_location": "wizard-global-nav",
+L00006860	      "label": "Planning Interview Setup",
+L00006861	      "attrs": {
+L00006862	        "data-step-target": "4",
+L00006863	        "data-nav-step": "4"
+L00006864	      },
+L00006865	      "inline_handlers": {},
+L00006866	      "command_tokens": [],
+L00006867	      "local_or_demo_markers": [],
+L00006868	      "accessibility_gaps": [
+L00006869	        "custom_click_target_missing_role"
+L00006870	      ],
+L00006871	      "disposition": "concept_only_owner_adjudicated",
+L00006872	      "canonical_command_id": null,
+L00006873	      "wiring_matrix_key": null,
+L00006874	      "notes": [
+L00006875	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00006876	      ],
+L00006877	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00006878	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=6879-6890 >>>
+L00006879	    {
+L00006880	      "inventory_id": "pmconcept.l10474.0228",
+L00006881	      "line": 10474,
+L00006882	      "tag": "div",
+L00006883	      "html_id": null,
+L00006884	      "name": null,
+L00006885	      "role": null,
+L00006886	      "class": "wizard-nav-step",
+L00006887	      "ui_location": "wizard-global-nav",
+L00006888	      "label": "Planning Interview",
+L00006889	      "attrs": {
+L00006890	        "data-step-target": "5",

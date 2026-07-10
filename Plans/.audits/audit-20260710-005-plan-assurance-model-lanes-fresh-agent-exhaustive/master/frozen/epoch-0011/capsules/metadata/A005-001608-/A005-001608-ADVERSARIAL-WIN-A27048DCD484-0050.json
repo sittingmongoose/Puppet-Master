@@ -1,0 +1,58 @@
+{
+  "assignment_id": "A005-001608-ADVERSARIAL-WIN-A27048DCD484-0050",
+  "attempt_id": "attempt-0011",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      18507,
+      18518
+    ],
+    [
+      18895,
+      18906
+    ]
+  ],
+  "core_range": [
+    18519,
+    18894
+  ],
+  "core_sha256": "13869cbd97ded2651e2efc000b2f526692776cdd2ba06773ec51a8a437b81fd6",
+  "document_path": "Plans/PMConcept_Control_Reconciliation.json",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/cc/ccacdb44ea8755ce5d4dca35b0f939033402f52b1f8f429c2f6efdf754f614e9.txt",
+  "source_excerpt_sha256": "ccacdb44ea8755ce5d4dca35b0f939033402f52b1f8f429c2f6efdf754f614e9",
+  "source_sha256": "cc3485b335e4bba3ed3192b1e15f8163d4b1c10f193c4ad74500b484e5f0dfc2",
+  "window_id": "WIN-A27048DCD484-0050"
+}

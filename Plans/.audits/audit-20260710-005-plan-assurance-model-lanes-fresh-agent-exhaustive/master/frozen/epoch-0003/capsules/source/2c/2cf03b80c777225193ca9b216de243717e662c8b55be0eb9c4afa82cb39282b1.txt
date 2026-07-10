@@ -1,0 +1,420 @@
+<<< CONTEXT_BEFORE 15207-15218 >>>
+          "requirement": "cmd.github.actions.settings.open has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_settings_open.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.github.actions.settings.open records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 15219-15609 >>>
+    "catalog.github_actions_show": {
+      "ui_element_id": "catalog.github_actions_show",
+      "ui_location": "Github Actions surface > Show",
+      "ui_command_id": "cmd.github_actions.show",
+      "handler_location": "handlers::github_actions::show",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.github_actions.show must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.github_actions.show must expose projected state selector and disabled reason before dispatch",
+        "cmd.github_actions.show dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.github_actions.show must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.github_actions.show must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.github_actions.show; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.github_actions_show.availability",
+      "disabled_reason_projection": "state.commands.github_actions_show.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.github_actions.show has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.github_actions.show.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.github_actions_show exposes a stable role/name/description matching cmd.github_actions.show.",
+        "keyboard_access": "catalog.github_actions_show is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.github_actions_show preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.github_actions_show surfaces state.commands.github_actions_show.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.github_actions_show.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.github_actions.show reaches handlers::github_actions::show with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_show.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.github_actions_show.availability and disabled copy reads state.commands.github_actions_show.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_show.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.github_actions.show has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_show.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.github_actions.show records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.github_actions_switch_subview": {
+      "ui_element_id": "catalog.github_actions_switch_subview",
+      "ui_location": "Github Actions surface > Switch Subview",
+      "ui_command_id": "cmd.github_actions.switch_subview",
+      "handler_location": "handlers::github_actions::switch_subview",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.github_actions.switch_subview must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.github_actions.switch_subview must expose projected state selector and disabled reason before dispatch",
+        "cmd.github_actions.switch_subview dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.github_actions.switch_subview must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.github_actions.switch_subview must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.github_actions.switch_subview; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.github_actions_switch_subview.availability",
+      "disabled_reason_projection": "state.commands.github_actions_switch_subview.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.github_actions.switch_subview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.github_actions.switch_subview.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.github_actions_switch_subview exposes a stable role/name/description matching cmd.github_actions.switch_subview.",
+        "keyboard_access": "catalog.github_actions_switch_subview is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.github_actions_switch_subview preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.github_actions_switch_subview surfaces state.commands.github_actions_switch_subview.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.github_actions_switch_subview.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.github_actions.switch_subview reaches handlers::github_actions::switch_subview with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_switch_subview.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.github_actions_switch_subview.availability and disabled copy reads state.commands.github_actions_switch_subview.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_switch_subview.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.github_actions.switch_subview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_switch_subview.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.github_actions.switch_subview records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.github_actions_unpin": {
+      "ui_element_id": "catalog.github_actions_unpin",
+      "ui_location": "Source Control > GitHub Actions > Actions > Unpin",
+      "ui_command_id": "cmd.github.actions.unpin",
+      "handler_location": "handlers::github::actions_unpin",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.github.actions.unpin must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.github.actions.unpin must expose projected state selector and disabled reason before dispatch",
+        "cmd.github.actions.unpin dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.github.actions.unpin must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.github.actions.unpin must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.github.actions.unpin; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.github_actions_unpin.availability",
+      "disabled_reason_projection": "state.commands.github_actions_unpin.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.github.actions.unpin has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.github.actions.unpin.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.github_actions_unpin exposes a stable role/name/description matching cmd.github.actions.unpin.",
+        "keyboard_access": "catalog.github_actions_unpin is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.github_actions_unpin preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.github_actions_unpin surfaces state.commands.github_actions_unpin.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.github_actions_unpin.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.github.actions.unpin reaches handlers::github::actions_unpin with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_unpin.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.github_actions_unpin.availability and disabled copy reads state.commands.github_actions_unpin.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_unpin.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.github.actions.unpin has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_unpin.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.github.actions.unpin records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.github_actions_validate_dispatch_readiness": {
+      "ui_element_id": "catalog.github_actions_validate_dispatch_readiness",
+      "ui_location": "GitHub Actions dispatch readiness surface",
+      "ui_command_id": "cmd.github.actions.validate_dispatch_readiness",
+      "handler_location": "handlers::github::actions_validate_dispatch_readiness",
+      "expected_event_types": [
+        "github.actions.dispatch_readiness_validated"
+      ],
+      "acceptance_checks": [
+        "cmd.github.actions.validate_dispatch_readiness must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.github.actions.validate_dispatch_readiness must expose projected state selector and disabled reason before dispatch",
+        "cmd.github.actions.validate_dispatch_readiness dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.github.actions.validate_dispatch_readiness must have regression and accessibility evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.github.actions.validate_dispatch_readiness; Validates workflow dispatch readiness before any workflow run action and must preserve disabled/blocker reasons.  Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.github_actions_validate_dispatch_readiness.availability",
+      "disabled_reason_projection": "state.commands.github_actions_validate_dispatch_readiness.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.github.actions.validate_dispatch_readiness must emit the declared event types and record dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "github.actions.dispatch_readiness_validated"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.github_actions_validate_dispatch_readiness exposes a stable role/name/description matching cmd.github.actions.validate_dispatch_readiness.",
+        "keyboard_access": "catalog.github_actions_validate_dispatch_readiness is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.github_actions_validate_dispatch_readiness preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.github_actions_validate_dispatch_readiness surfaces state.commands.github_actions_validate_dispatch_readiness.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.github_actions_validate_dispatch_readiness.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.github.actions.validate_dispatch_readiness reaches handlers::github::actions_validate_dispatch_readiness with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_validate_dispatch_readiness.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.github_actions_validate_dispatch_readiness.availability and disabled copy reads state.commands.github_actions_validate_dispatch_readiness.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_validate_dispatch_readiness.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.github.actions.validate_dispatch_readiness must emit the declared event types and record dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_validate_dispatch_readiness.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.github_actions_validate_dispatch_readiness.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.github.actions.validate_dispatch_readiness emits expected event type github.actions.dispatch_readiness_validated with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.github.actions.validate_dispatch_readiness emits expected event type github.actions.dispatch_readiness_validated with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.github_connect": {
+      "ui_element_id": "catalog.github_connect",
+      "ui_location": "Source Control > GitHub Actions > Connect",
+      "ui_command_id": "cmd.github.connect",
+      "handler_location": "handlers::github::connect",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.github.connect must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.github.connect must expose projected state selector and disabled reason before dispatch",
+        "cmd.github.connect dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.github.connect must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.github.connect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.github.connect; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.github_connect.availability",
+      "disabled_reason_projection": "state.commands.github_connect.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.github.connect has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.github.connect.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.github_connect exposes a stable role/name/description matching cmd.github.connect.",
+        "keyboard_access": "catalog.github_connect is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.github_connect preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.github_connect surfaces state.commands.github_connect.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.github_connect.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.github.connect reaches handlers::github::connect with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.github_connect.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.github_connect.availability and disabled copy reads state.commands.github_connect.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.github_connect.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.github.connect has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.github_connect.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.github.connect records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.github_disconnect": {
+      "ui_element_id": "catalog.github_disconnect",
+      "ui_location": "Source Control > GitHub Actions > Disconnect",
+      "ui_command_id": "cmd.github.disconnect",
+      "handler_location": "handlers::github::disconnect",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.github.disconnect must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.github.disconnect must expose projected state selector and disabled reason before dispatch",
+        "cmd.github.disconnect dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.github.disconnect must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.github.disconnect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.github.disconnect; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.github_disconnect.availability",
+      "disabled_reason_projection": "state.commands.github_disconnect.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.github.disconnect has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.github.disconnect.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.github_disconnect exposes a stable role/name/description matching cmd.github.disconnect.",
+        "keyboard_access": "catalog.github_disconnect is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.github_disconnect preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.github_disconnect surfaces state.commands.github_disconnect.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.github_disconnect.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.github.disconnect reaches handlers::github::disconnect with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.github_disconnect.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.github_disconnect.availability and disabled copy reads state.commands.github_disconnect.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.github_disconnect.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.github.disconnect has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.github_disconnect.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.github.disconnect records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.graph_approve_hitl": {
+      "ui_element_id": "catalog.graph_approve_hitl",
+      "ui_location": "Graph surface > Approve Hitl",
+      "ui_command_id": "cmd.graph.approve_hitl",
+      "handler_location": "handlers::graph::approve_hitl",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.graph.approve_hitl must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.graph.approve_hitl must expose projected state selector and disabled reason before dispatch",
+        "cmd.graph.approve_hitl dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.graph.approve_hitl must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.graph.approve_hitl must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.graph.approve_hitl; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.graph_approve_hitl.availability",
+      "disabled_reason_projection": "state.commands.graph_approve_hitl.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.graph.approve_hitl has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.graph.approve_hitl.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.graph_approve_hitl exposes a stable role/name/description matching cmd.graph.approve_hitl.",
+        "keyboard_access": "catalog.graph_approve_hitl is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.graph_approve_hitl preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.graph_approve_hitl surfaces state.commands.graph_approve_hitl.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.graph_approve_hitl.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.graph.approve_hitl reaches handlers::graph::approve_hitl with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.graph_approve_hitl.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.graph_approve_hitl.availability and disabled copy reads state.commands.graph_approve_hitl.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.graph_approve_hitl.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.graph.approve_hitl has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.graph_approve_hitl.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.graph.approve_hitl records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< CONTEXT_AFTER 15610-15621 >>>
+    "catalog.graph_deny_hitl": {
+      "ui_element_id": "catalog.graph_deny_hitl",
+      "ui_location": "Graph surface > Deny Hitl",
+      "ui_command_id": "cmd.graph.deny_hitl",
+      "handler_location": "handlers::graph::deny_hitl",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.graph.deny_hitl must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.graph.deny_hitl must expose projected state selector and disabled reason before dispatch",
+        "cmd.graph.deny_hitl dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.graph.deny_hitl must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.graph.deny_hitl must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

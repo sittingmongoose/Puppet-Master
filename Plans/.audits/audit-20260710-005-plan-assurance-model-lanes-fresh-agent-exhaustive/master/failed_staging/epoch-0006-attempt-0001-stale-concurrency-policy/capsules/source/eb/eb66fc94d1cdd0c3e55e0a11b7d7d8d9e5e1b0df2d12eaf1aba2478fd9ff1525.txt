@@ -1,0 +1,384 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2231-2242 >>>
+L00002231	  - "`Anchor not found — reselect to re-anchor`"
+L00002232	negative_constraints:
+L00002233	  - "`Send selection to chat` is a thread-scoped chip/handoff path; it must not be collapsed into the durable `/annotation` lifecycle, and it does not create patch-apply semantics."
+L00002234	owner_hints:
+L00002235	  - Plans/Crosswalk.md
+L00002236	  - Plans/FinalGUISpec.md
+L00002237	  - Plans/storage-plan.md
+L00002238	  - Plans/chain-wizard-flexibility.md
+L00002239	  - Plans/interview-subagent-integration.md
+L00002240	  - Plans/assistant-chat-design.md
+L00002241	```
+L00002242	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2243-2597 >>>
+L00002243	### C-035 - Targeted Revision Pass Boundary
+L00002244	
+L00002245	```yaml
+L00002246	plan_unit_id: C-035
+L00002247	unit_type: requirement
+L00002248	status: accepted
+L00002249	owner_doc: Plans/Crosswalk.md
+L00002250	canonical_text: >-
+L00002251	  TargetedRevisionPass routes targeted revision through workflow, UI, prompt,
+L00002252	  persistence, interview, and permission owners; Resubmit with Annotations
+L00002253	  consumes ordered annotation records, records addressed/still_open/cannot_apply
+L00002254	  outcomes, supports explicit requested/effective revision capability, exposes
+L00002255	  bundle lifecycle/audit events, and remains note-based V1 without direct
+L00002256	  patch-apply behavior.
+L00002257	gui_related: true
+L00002258	gui_classification_reason: This unit governs Resubmit with Annotations, document review, and revision workflow controls.
+L00002259	split_recommended: false
+L00002260	depends_on: [C-028, C-034]
+L00002261	unblocks: [C-036]
+L00002262	acceptance_criteria:
+L00002263	  - "Targeted revision consumes deterministic ordered annotation records."
+L00002264	  - "Each input annotation records addressed, still_open, or cannot_apply with explanation and optional updated anchor."
+L00002265	  - "Targeted revision does not trigger Multi-Pass Review and direct patch-apply is out of scope."
+L00002266	validation_surfaces:
+L00002267	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002268	  - python3 scripts/pm-plan-index.py validate
+L00002269	risk_class: targeted_revision_pass_boundary_drift
+L00002270	reasoning_tier: high
+L00002271	context_scope: targeted_revision_pass_boundary
+L00002272	implementation_surfaces:
+L00002273	  - Plans/Crosswalk.md
+L00002274	  - Plans/chain-wizard-flexibility.md
+L00002275	  - Plans/interview-subagent-integration.md
+L00002276	  - Plans/FinalGUISpec.md
+L00002277	  - Plans/Prompt_Pipeline.md
+L00002278	  - Plans/storage-plan.md
+L00002279	  - Plans/Permissions_System.md
+L00002280	node_compile_hint:
+L00002281	  mode: targeted_revision_pass_boundary
+L00002282	  create_worknodes: false
+L00002283	source_lineage:
+L00002284	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0026
+L00002285	preserved_exact_tokens:
+L00002286	  - "`Primitive:TargetedRevisionPass`"
+L00002287	  - "`Resubmit with Annotations`"
+L00002288	  - "`addressed | still_open | cannot_apply`"
+L00002289	  - "`schema_enforced_structured_revision`"
+L00002290	  - "`validated_structured_revision`"
+L00002291	  - "`chat_handoff_only`"
+L00002292	  - "`bundle.revision_started`"
+L00002293	  - "`bundle.revision_completed`"
+L00002294	negative_constraints:
+L00002295	  - "Targeted revision MUST NOT trigger Multi-Pass Review."
+L00002296	  - "V1 is note-based embedded-document review upgraded into structured annotations; direct `patch-apply` behavior is out of scope."
+L00002297	owner_hints:
+L00002298	  - Plans/Crosswalk.md
+L00002299	  - Plans/chain-wizard-flexibility.md
+L00002300	  - Plans/interview-subagent-integration.md
+L00002301	  - Plans/Prompt_Pipeline.md
+L00002302	  - Plans/storage-plan.md
+L00002303	  - Plans/Permissions_System.md
+L00002304	```
+L00002305	
+L00002306	### C-036 - Final Review Gate Boundary
+L00002307	
+L00002308	```yaml
+L00002309	plan_unit_id: C-036
+L00002310	unit_type: requirement
+L00002311	status: accepted
+L00002312	owner_doc: Plans/Crosswalk.md
+L00002313	canonical_text: >-
+L00002314	  FinalReviewGate routes final-review-only Multi-Pass Review through workflow
+L00002315	  and storage owners; it is enabled only when all bundle docs are Approved/Done
+L00002316	  and no durable annotations remain open, pending Send selection to chat chips
+L00002317	  do not satisfy or bypass it, reruns are explicit, and the gate decision is
+L00002318	  Accept, Reject, or Edit.
+L00002319	gui_related: false
+L00002320	gui_classification_reason: This unit defines workflow gate semantics and artifact taxonomy rather than UI presentation.
+L00002321	split_recommended: false
+L00002322	depends_on: [C-034, C-035]
+L00002323	unblocks: []
+L00002324	acceptance_criteria:
+L00002325	  - "Multi-Pass Review is final-review only and requires approved/done bundle docs with no open durable annotations."
+L00002326	  - "Question/comment annotations count as open until user resolution."
+L00002327	  - "Final gate decisions are Accept, Reject, or Edit."
+L00002328	validation_surfaces:
+L00002329	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002330	  - python3 scripts/pm-plan-index.py validate
+L00002331	risk_class: final_review_gate_boundary_drift
+L00002332	reasoning_tier: high
+L00002333	context_scope: final_review_gate_boundary
+L00002334	implementation_surfaces:
+L00002335	  - Plans/Crosswalk.md
+L00002336	  - Plans/chain-wizard-flexibility.md
+L00002337	  - Plans/interview-subagent-integration.md
+L00002338	  - Plans/storage-plan.md
+L00002339	node_compile_hint:
+L00002340	  mode: final_review_gate_boundary
+L00002341	  create_worknodes: false
+L00002342	source_lineage:
+L00002343	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0027
+L00002344	preserved_exact_tokens:
+L00002345	  - "`Multi-Pass Review`"
+L00002346	  - "`Approved/Done`"
+L00002347	  - "`Send selection to chat`"
+L00002348	  - "`Accept | Reject | Edit`"
+L00002349	negative_constraints:
+L00002350	  - "Pending Send selection to chat chips do not satisfy or bypass the final review gate."
+L00002351	owner_hints:
+L00002352	  - Plans/Crosswalk.md
+L00002353	  - Plans/chain-wizard-flexibility.md
+L00002354	  - Plans/interview-subagent-integration.md
+L00002355	  - Plans/storage-plan.md
+L00002356	```
+L00002357	
+L00002358	### C-037 - Recovery Terminology Distinction
+L00002359	
+L00002360	```yaml
+L00002361	plan_unit_id: C-037
+L00002362	unit_type: requirement
+L00002363	status: accepted
+L00002364	owner_doc: Plans/Crosswalk.md
+L00002365	canonical_text: >-
+L00002366	  Recovery terminology distinguishes safe point as runtime-internal
+L00002367	  retry/remediation anchor, restore point as user-visible history/rewind anchor,
+L00002368	  rollback as explicit request/confirm restoration flow, and worktree baseline
+L00002369	  as execution-root state used to materialize a safe point or restore point
+L00002370	  depending on context.
+L00002371	gui_related: true
+L00002372	gui_classification_reason: The unit includes user-visible restore point, rollback, and UI copy distinctions.
+L00002373	split_recommended: false
+L00002374	depends_on: [C-017, C-029]
+L00002375	unblocks: []
+L00002376	acceptance_criteria:
+L00002377	  - "safe point, restore point, rollback, and worktree baseline remain distinct terms."
+L00002378	  - "Docs and implementations do not use these terms interchangeably."
+L00002379	  - "UI copy preserves the distinction."
+L00002380	validation_surfaces:
+L00002381	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002382	  - python3 scripts/pm-plan-index.py validate
+L00002383	risk_class: recovery_terminology_conflation
+L00002384	reasoning_tier: high
+L00002385	context_scope: recovery_terminology_distinction
+L00002386	implementation_surfaces:
+L00002387	  - Plans/Crosswalk.md
+L00002388	  - Plans/Executor_Protocol.md
+L00002389	  - Plans/storage-plan.md
+L00002390	  - Plans/Decision_Policy.md
+L00002391	node_compile_hint:
+L00002392	  mode: recovery_terminology_distinction
+L00002393	  create_worknodes: false
+L00002394	source_lineage:
+L00002395	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0028
+L00002396	preserved_exact_tokens:
+L00002397	  - "`safe point`"
+L00002398	  - "`restore point`"
+L00002399	  - "`rollback`"
+L00002400	  - "`worktree baseline`"
+L00002401	negative_constraints:
+L00002402	  - "Docs and implementations must not use these terms interchangeably."
+L00002403	  - "UI copy must preserve the distinction."
+L00002404	owner_hints:
+L00002405	  - Plans/Crosswalk.md
+L00002406	  - Plans/Executor_Protocol.md
+L00002407	  - Plans/storage-plan.md
+L00002408	  - Plans/Decision_Policy.md
+L00002409	```
+L00002410	
+L00002411	### C-038 - Runtime Scheduler Recovery Ownership Precedence
+L00002412	
+L00002413	```yaml
+L00002414	plan_unit_id: C-038
+L00002415	unit_type: requirement
+L00002416	status: accepted
+L00002417	owner_doc: Plans/Crosswalk.md
+L00002418	canonical_text: >-
+L00002419	  Runtime scheduler and recovery ownership routes lifecycle and scheduling to
+L00002420	  Executor_Protocol, runtime events/enums/payloads to Contracts_V0, persistence
+L00002421	  and restart recovery to storage-plan, deterministic recovery defaults to
+L00002422	  Decision_Policy, runtime command IDs to UI_Command_Catalog, Context Lens
+L00002423	  control/action wiring to Wiring_Matrix, and chat/GUI/run-graph/orchestrator/
+L00002424	  wizard surfaces as consumers.
+L00002425	gui_related: true
+L00002426	gui_classification_reason: The unit names GUI, chat, run graph, orchestrator, wizard, and Context Lens consumer surfaces.
+L00002427	split_recommended: false
+L00002428	depends_on: [C-017, C-029, C-037]
+L00002429	unblocks: [C-039, C-046]
+L00002430	acceptance_criteria:
+L00002431	  - "Executor_Protocol owns runtime lifecycle, scheduling, blocked_sequence minting, and restart-recovery to first scheduler.pass handoff from startup_recovered."
+L00002432	  - "Contracts_V0 owns runtime events, enums, payloads, and contracts/UI payload implications."
+L00002433	  - "Legacy packet-era names are compatibility terms only."
+L00002434	  - "Scheduler truth does not split among lexicographic, scored, and UI-derived recovery models."
+L00002435	validation_surfaces:
+L00002436	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002437	  - python3 scripts/pm-plan-index.py validate
+L00002438	risk_class: runtime_scheduler_recovery_owner_split
+L00002439	reasoning_tier: high
+L00002440	context_scope: runtime_scheduler_recovery_ownership_precedence
+L00002441	implementation_surfaces:
+L00002442	  - Plans/Crosswalk.md
+L00002443	  - Plans/Executor_Protocol.md
+L00002444	  - Plans/Contracts_V0.md
+L00002445	  - Plans/storage-plan.md
+L00002446	  - Plans/Decision_Policy.md
+L00002447	  - Plans/UI_Command_Catalog.md
+L00002448	  - Plans/Wiring_Matrix.md
+L00002449	node_compile_hint:
+L00002450	  mode: runtime_scheduler_recovery_ownership_precedence
+L00002451	  create_worknodes: false
+L00002452	source_lineage:
+L00002453	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0029
+L00002454	preserved_exact_tokens:
+L00002455	  - "`analysis_id`"
+L00002456	  - "`run.scheduler_analysis`"
+L00002457	  - "`allowed_actions[]`"
+L00002458	  - "`recovery_options[]`"
+L00002459	  - "`blocked_sequence`"
+L00002460	  - "`startup_recovered`"
+L00002461	  - "`scheduler.pass`"
+L00002462	  - "`execution_role`"
+L00002463	  - "`/worktree/permission/runtime`"
+L00002464	negative_constraints:
+L00002465	  - "Legacy packet-era names such as analysis_id, run.scheduler_analysis, allowed_actions[], and recovery_options[] are compatibility terms only."
+L00002466	  - "When a consumer doc conflicts with the owner docs, the owner docs win."
+L00002467	  - "Stale canonical text must be replaced or retired, not preserved by later additive notes alone."
+L00002468	  - "Scheduler truth must not split among lexicographic, scored, and UI-derived recovery models across Plans/Executor_Protocol.md, Plans/Progression_Gates.md, Plans/plan_graph.schema.json, and Plans/Run_Graph_View.md."
+L00002469	owner_hints:
+L00002470	  - Plans/Crosswalk.md
+L00002471	  - Plans/Executor_Protocol.md
+L00002472	  - Plans/Contracts_V0.md
+L00002473	  - Plans/storage-plan.md
+L00002474	  - Plans/Decision_Policy.md
+L00002475	  - Plans/UI_Command_Catalog.md
+L00002476	  - Plans/Wiring_Matrix.md
+L00002477	```
+L00002478	
+L00002479	### C-039 - Source Control Operations Ownership
+L00002480	
+L00002481	```yaml
+L00002482	plan_unit_id: C-039
+L00002483	unit_type: requirement
+L00002484	status: accepted
+L00002485	owner_doc: Plans/Crosswalk.md
+L00002486	canonical_text: >-
+L00002487	  SourceControlSurface routes Git-local and Git-remote repo operations, history,
+L00002488	  graph, stash, conflicts, worktree UX, remote-first Source Control/SSH
+L00002489	  consequences, worktree lifecycle, and Worktrees subview routing to
+L00002490	  GitHub_Integration and WorktreeGitImprovement, while GitHub-hosted workflow
+L00002491	  and admin behavior does not belong to Source Control.
+L00002492	gui_related: true
+L00002493	gui_classification_reason: SourceControlSurface, Worktrees subview routing, graph/history/conflict UX, and Source Control rows are user-visible surfaces.
+L00002494	split_recommended: true
+L00002495	split_recommendation_reason: Crosswalk-S0031 is split across Source Control operation, identity, command, and cross-surface panel concerns.
+L00002496	depends_on: [C-010, C-025, C-038]
+L00002497	unblocks: [C-040, C-041, C-042]
+L00002498	acceptance_criteria:
+L00002499	  - "Git-local and Git-remote repo operations, history, graph, stash, conflicts, and worktree UX belong to Source Control."
+L00002500	  - "Remote-first project-mode consequences route through the Source Control and SSH owner chain."
+L00002501	  - "GitHub-hosted workflow/admin behavior does not belong to Source Control."
+L00002502	  - "Remote project mode consumers do not silently substitute local files, local git, or local shells."
+L00002503	validation_surfaces:
+L00002504	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002505	  - python3 scripts/pm-plan-index.py validate
+L00002506	risk_class: source_control_operation_owner_drift
+L00002507	reasoning_tier: high
+L00002508	context_scope: source_control_operations_ownership
+L00002509	implementation_surfaces:
+L00002510	  - Plans/Crosswalk.md
+L00002511	  - Plans/GitHub_Integration.md
+L00002512	  - Plans/WorktreeGitImprovement.md
+L00002513	  - Plans/UI_Command_Catalog.md
+L00002514	node_compile_hint:
+L00002515	  mode: source_control_operations_ownership
+L00002516	  create_worknodes: false
+L00002517	source_lineage:
+L00002518	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0031
+L00002519	preserved_exact_tokens:
+L00002520	  - "`SourceControlSurface`"
+L00002521	  - "`Git-local`"
+L00002522	  - "`Git-remote`"
+L00002523	  - "`Plans/GitHub_Integration.md §C`"
+L00002524	  - "`Worktrees`"
+L00002525	  - "`package/lane/run`"
+L00002526	  - "ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/UI_Command_Catalog.md"
+L00002527	negative_constraints:
+L00002528	  - "GitHub-hosted workflow/admin behavior does not belong to Source Control."
+L00002529	  - "Remote project mode must not silently substitute local files, local git, or local shells."
+L00002530	owner_hints:
+L00002531	  - Plans/Crosswalk.md
+L00002532	  - Plans/GitHub_Integration.md
+L00002533	  - Plans/WorktreeGitImprovement.md
+L00002534	  - Plans/UI_Command_Catalog.md
+L00002535	```
+L00002536	
+L00002537	### C-040 - Source Control Worktree Identity Cleanup Gates
+L00002538	
+L00002539	```yaml
+L00002540	plan_unit_id: C-040
+L00002541	unit_type: requirement
+L00002542	status: accepted
+L00002543	owner_doc: Plans/Crosswalk.md
+L00002544	canonical_text: >-
+L00002545	  Source Control and GitHub worktree views stay worktree-centric while attaching
+L00002546	  package-lane and seam/lane-aware visibility; WorktreeGitImprovement owns
+L00002547	  worktree_id, base-branch, and lifecycle semantics; cleanup/archive/prune/
+L00002548	  remove is gated by active-run ownership, blocked recovery, safe-point restore,
+L00002549	  conflict inspection, and newer lane/worktree lineage; Git (GitHub) is only a
+L00002550	  migration alias.
+L00002551	gui_related: true
+L00002552	gui_classification_reason: This unit governs Source Control rows, worktree views, cleanup actions, and visible migration labels.
+L00002553	split_recommended: true
+L00002554	split_recommendation_reason: Crosswalk-S0031 is split across Source Control operation, identity, command, and cross-surface panel concerns.
+L00002555	depends_on: [C-025, C-039]
+L00002556	unblocks: [C-041, C-042]
+L00002557	acceptance_criteria:
+L00002558	  - "Source Control and GitHub worktree views stay worktree-centric with package-lane and seam/lane-aware visibility."
+L00002559	  - "Legacy run/tier row ownership remains compatibility metadata, not shared worktree identity."
+L00002560	  - "Blocked-emitter behavior routes through Contracts and runtime owner docs rather than being inferred from Source Control rows."
+L00002561	  - "Git (GitHub) is a migration alias only."
+L00002562	validation_surfaces:
+L00002563	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002564	  - python3 scripts/pm-plan-index.py validate
+L00002565	risk_class: source_control_worktree_identity_drift
+L00002566	reasoning_tier: high
+L00002567	context_scope: source_control_worktree_identity_cleanup_gates
+L00002568	implementation_surfaces:
+L00002569	  - Plans/Crosswalk.md
+L00002570	  - Plans/WorktreeGitImprovement.md
+L00002571	  - Plans/GitHub_Integration.md
+L00002572	  - Plans/Contracts_V0.md
+L00002573	node_compile_hint:
+L00002574	  mode: source_control_worktree_identity_cleanup_gates
+L00002575	  create_worknodes: false
+L00002576	source_lineage:
+L00002577	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0031
+L00002578	preserved_exact_tokens:
+L00002579	  - "`/worktree-centric`"
+L00002580	  - "`/seam/lane-aware`"
+L00002581	  - "`worktree_id`"
+L00002582	  - "`base-branch`"
+L00002583	  - "`/prune/remove`"
+L00002584	  - "`safe-point restore`"
+L00002585	  - "`Git (GitHub)`"
+L00002586	  - "`/surfaces`"
+L00002587	negative_constraints:
+L00002588	  - "Legacy run/tier row ownership is compatibility metadata, not the shared worktree identity model."
+L00002589	  - "Canonical blocked-emitter behavior must not be inferred from Source Control rows."
+L00002590	  - "Live surfaces route through Source Control plus WorktreeGitImprovement rather than preserving a combined Git/GitHub panel."
+L00002591	owner_hints:
+L00002592	  - Plans/Crosswalk.md
+L00002593	  - Plans/WorktreeGitImprovement.md
+L00002594	  - Plans/GitHub_Integration.md
+L00002595	  - Plans/Contracts_V0.md
+L00002596	```
+L00002597	
+
+<<< CONTEXT_AFTER canonical_document_lines=2598-2609 >>>
+L00002598	### C-041 - Git Diff Commands And Chat Recovery Boundary
+L00002599	
+L00002600	```yaml
+L00002601	plan_unit_id: C-041
+L00002602	unit_type: requirement
+L00002603	status: accepted
+L00002604	owner_doc: Plans/Crosswalk.md
+L00002605	canonical_text: >-
+L00002606	  Git/diff command anchors are owned by GitHub_Integration, chat rollback and
+L00002607	  recovery anchors remain owned by UI_Command_Catalog, and compatibility
+L00002608	  shorthands such as local-git and worktree/push route through
+L00002609	  Primitive:PatchPipeline and Source Control owners without letting consumer

@@ -1,0 +1,429 @@
+<<< CONTEXT_BEFORE 2847-2858 >>>
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Feature-owner docs own their surfaces; anti-drift companions must be read alongside them.
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md,
+  ContractName:Plans/storage-plan.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 2859-3258 >>>
+### 0PI-040 - Visible Source-Control Surface Routing
+
+```yaml
+plan_unit_id: 0PI-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: The source control, GitHub Actions, and Docker Manager restart-pass owner map preserves FinalGUISpec ownership
+  of activity-bar and side-panel vocabulary, Source Control, GitHub Actions, Docker Manager, cross-surface deep links, blocked-state
+  presentation, mirror/owner attention behavior, GitHub Actions Current Branch / Workflows / Settings, secrets, variables,
+  /environments, rerun/cancel/pin, workflow authoring help, Docker Manager operational subviews, /auth/Unraid, Publish / Unraid,
+  Kubernetes placement, Orchestrator receipts, and deep links into owner surfaces.
+gui_related: true
+gui_classification_reason: The unit covers visible source-control, actions, Docker Manager, side-panel, and deep-link UI surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: visible_source_control_surface_routing
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: visible_source_control_surface_routing
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0021
+preserved_exact_tokens:
+- activity-bar and side-panel vocabulary
+- Source Control
+- GitHub Actions
+- Docker Manager
+- Current Branch
+- Workflows
+- Settings
+- secrets
+- variables
+- /environments
+- rerun/cancel/pin
+- workflow authoring help
+- /auth/Unraid
+- Publish / Unraid
+- Kubernetes placement
+- Orchestrator receipts
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- FinalGUISpec and feature-owner docs own visible shell vocabulary and deep-link behavior.
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md,
+  ContractName:Plans/storage-plan.md'
+```
+
+### 0PI-041 - Retired Git Alias And Stale-Canon Risk
+
+```yaml
+plan_unit_id: 0PI-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: The source-control/GitHub Actions/Docker Manager addendum preserves Git (GitHub) only as a retired migration
+  alias and records the highest stale-canon replacement risk in rewrite-tie-in-memo.md, usage-feature.md, FinalGUISpec.md,
+  and Media_Generation_and_Capabilities.md, which must be reconciled against feature owners before older wording is treated
+  as authoritative.
+gui_related: true
+gui_classification_reason: The unit covers a user-facing retired Git label and stale GUI/usage/media consumer risk.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: retired_git_alias_and_stale_canon_risk
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: retired_git_alias_and_stale_canon_risk
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0021
+preserved_exact_tokens:
+- Git (GitHub)
+- retired migration alias
+- stale-canon
+- Plans/rewrite-tie-in-memo.md
+- Plans/usage-feature.md
+- Plans/FinalGUISpec.md
+- Plans/Media_Generation_and_Capabilities.md
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Git (GitHub) is retained only as a retired migration alias.
+- Older source-control/GitHub Actions/Docker Manager wording must not be treated as authoritative before reconciliation.
+owner_boundary_notes: []
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md,
+  ContractName:Plans/storage-plan.md'
+```
+
+### 0PI-042 - Web Firecrawl Owner Set
+
+```yaml
+plan_unit_id: 0PI-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: The Web Tools + Firecrawl + Missing-Spec Owner Alignment Note preserves the reconciled owner and consumer
+  set for web tools, Firecrawl, questions, planning/TODO, permissions, runtime identity, and MCP across Tools, assistant chat,
+  FinalGUISpec, Permissions, storage, Commands, UI Command Catalog, Skills, Contracts, Run Modes, Section 15, MCP Integration,
+  LSPSupport, CLI Bridged Providers, Provider OpenCode, and newfeatures.
+gui_related: true
+gui_classification_reason: The unit includes web/chat/widget/tool/provider owner routing with user-visible web and chat surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_firecrawl_owner_set
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: web_firecrawl_owner_set
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0022
+preserved_exact_tokens:
+- Web Tools + Firecrawl + Missing-Spec Owner Alignment Note (2026-03-30)
+- web tools
+- Firecrawl
+- questions
+- planning/TODO
+- permissions
+- runtime identity
+- MCP
+- Plans/Tools.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/Permissions_System.md
+- Plans/storage-plan.md
+- Plans/Commands_System.md
+- Plans/UI_Command_Catalog.md
+- Plans/Skills_System.md
+- Plans/Contracts_V0.md
+- Plans/Run_Modes.md
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/MCP_Integration.md
+- Plans/LSPSupport.md
+- Plans/CLI_Bridged_Providers.md
+- Plans/Provider_OpenCode.md
+- Plans/newfeatures.md
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Consumer summaries defer to repaired owner sections rather than keeping competing canon.
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/MCP_Integration.md, ContractName:Plans/Tools.md, ContractName:Plans/CLI_Bridged_Providers.md,
+  ContractName:Plans/Provider_OpenCode.md'
+```
+
+### 0PI-043 - Firecrawl Consumer Deference And Anchors
+
+```yaml
+plan_unit_id: 0PI-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: 'The Firecrawl alignment note preserves the consumer-deference rule, verify-only out-of-packet scope, exact
+  anchor-level regeneration targets, and drift-risk heading labels including #4.1, #8.6, #13.1, #13.2, #13.3, #28.2, storage
+  #4.1/#4.3/#4.4, Tools #3.6/#10.3/#10.7/## 11/## 12/## 13, Permissions #6/#10.4, Commands #7/#2.4, Skills #4/#6, Section15
+  #1.3A, MCP owner sections after ## 4, and FinalGUISpec audit/replacement surfaces.'
+gui_related: true
+gui_classification_reason: The unit covers exact anchors for chat, storage, tool, permission, command, skill, browser, MCP,
+  and GUI audit surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: firecrawl_consumer_deference_and_anchors
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: firecrawl_consumer_deference_and_anchors
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0022
+preserved_exact_tokens:
+- Consumer summaries
+- defer
+- Verify-only docs
+- out of packet scope
+- '#4.1'
+- '#8.6'
+- '#13.1'
+- '#13.2'
+- '#13.3'
+- '#28.2'
+- '#4.3'
+- '#4.4'
+- '#3.6'
+- '#10.3'
+- '#10.7'
+- '## 11'
+- '## 12'
+- '## 13'
+- '## 6'
+- '### 10.4'
+- Plans/FinalGUISpec.md
+- '### 7.19 Agent Activity'
+- '## 15'
+- drift-risk heading labels
+negative_constraints:
+- Verify-only docs are intentionally out of packet scope when no edits are required.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/MCP_Integration.md, ContractName:Plans/Tools.md, ContractName:Plans/CLI_Bridged_Providers.md,
+  ContractName:Plans/Provider_OpenCode.md'
+```
+
+### 0PI-044 - Firecrawl Obligation Routing
+
+```yaml
+plan_unit_id: 0PI-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: The Firecrawl alignment note preserves explicit obligation routing for obl-013, obl-014, obl-053, obl-054,
+  obl-066, obl-067, obl-044, obl-055, obl-056, obl-040, obl-059, obl-060, obl-036, obl-037, obl-042, obl-048, obl-035, obl-045,
+  obl-046, obl-047, obl-051, obl-062, and obl-064, keeps ownership/index descriptions drift-sensitive, and keeps Plans/newfeatures.md
+  as a summary rollup consumer for repaired web/question/MCP/LSP surfaces.
+gui_related: false
+gui_classification_reason: The unit records obligation-to-owner routing and index drift governance rather than GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: firecrawl_obligation_routing
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: firecrawl_obligation_routing
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0022
+preserved_exact_tokens:
+- Obligation routing remains explicit
+- obl-013
+- obl-014
+- obl-053
+- obl-054
+- obl-066
+- obl-067
+- obl-044
+- obl-055
+- obl-056
+- obl-040
+- obl-059
+- obl-060
+- obl-036
+- obl-037
+- obl-042
+- obl-048
+- obl-035
+- obl-045
+- obl-046
+- obl-047
+- obl-051
+- obl-062
+- obl-064
+- drift-sensitive
+- Plans/newfeatures.md
+- /question/MCP/LSP
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Normative behavior remains in the owner docs, while newfeatures is a summary rollup consumer only.
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs: []
+```
+
+### 0PI-045 - Slash And Provider Drift Guards
+
+```yaml
+plan_unit_id: 0PI-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: 'The Firecrawl alignment note preserves slash-command cleanup and provider drift guards: XV2 and XV-FIX are
+  AUTHORITATIVE for the reserved-command family, /clear is LOCKED and REMOVED from the reserved set, native PM structured
+  reading uses /detail-level with minimal, summary, and full and is not MCP-based, and web-provider drift checks must preserve
+  /effective-state, cache-persistence, under-specification, Rerun in Terminal, /TODO/Plan/Deep, Provider_OpenCode, and CLI_Bridged_Providers.'
+gui_related: true
+gui_classification_reason: The unit covers slash commands, command labels, structured reading UX, terminal rerun, and provider/chat
+  command surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.
+- Plans/00-plans-index.md remains an index and routing map; named owner docs carry product canon.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: slash_and_provider_drift_guards
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: slash_and_provider_drift_guards
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0022
+preserved_exact_tokens:
+- Slash-command cleanup is locked
+- XV2
+- XV-FIX
+- AUTHORITATIVE
+- /clear
+- LOCKED
+- REMOVED
+- /detail-level
+- minimal
+- summary
+- full
+- not MCP-based
+- /effective-state
+- cache-persistence
+- under-specification
+- Rerun in Terminal
+- /TODO/Plan/Deep
+- Plans/Provider_OpenCode.md
+- Plans/CLI_Bridged_Providers.md
+negative_constraints:
+- Native PM structured reading uses /detail-level and is not MCP-based.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- /clear is locked and removed from the reserved-command family.
+owner_boundary_notes: []
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 3259-3270 >>>
+### 0PI-046 - Firecrawl Packet-Conflict Reset Scope
+
+```yaml
+plan_unit_id: 0PI-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: The Firecrawl/missing-spec packet-conflict reset preserves the reset title RECONCILIATION / COVERAGE PASS
+  — PACKET-CONFLICT RESET (2026-04-06), supersedes older three-bucket, 12-doc, 13-doc, 23-blocker, and coverage-consuming
+  registers, covers the full Firecrawl gap analysis plus missing-spec owner-alignment surface, consumes 54 active obligations
+  and 7 active coverage blockers into MUST CHANGE owner docs plus MUST RECONCILE consumers, and keeps WebAction/browser consumer
+  routing exact.

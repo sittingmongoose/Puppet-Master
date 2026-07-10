@@ -1,0 +1,384 @@
+<<< CONTEXT_BEFORE 5570-5581 >>>
+- TODO linkage
+- /blocked
+- thread history/storage
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 5582-5936 >>>
+### T-060 - Task Launch Bounds Metadata And Timeout Clamp
+
+```yaml
+plan_unit_id: T-060
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: '`task` launches canonical child runs with requested/effective persona, runtime, account, capability, write-scope,
+  effort, required/optional classification, inherited ceilings, and clamped `task_timeout_ms` metadata.'
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-005
+- T-055
+unblocks: []
+acceptance_criteria:
+- Children may narrow but must not widen parent bounds.
+- Omitted timeout defaults to inherited remaining budget.
+- Broader requested timeout is clamped and emits a structured diagnostic.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: task_launch_bounds_metadata
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0038
+preserved_exact_tokens:
+- canonical child runs
+- subagent_registry
+- requested and effective Persona
+- required
+- optional
+- parent permission ceiling
+- write scope
+- remaining budget
+- task_timeout_ms
+- MUST NOT widen
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md,
+  ContractName:Plans/Models_System.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-061 - Task No-Silent-Fallback And Copilot Strict Deny
+
+```yaml
+plan_unit_id: T-061
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Explicit child runtime requests fail or ask when unavailable; implicit orchestrator selections may fallback
+  with recorded reason; Copilot-native subagent paths require a Copilot-rooted parent.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-060
+unblocks: []
+acceptance_criteria:
+- Explicit unavailable runtime requests do not silently fallback.
+- Implicit fallback records the fallback reason.
+- A non-Copilot parent gets strict deny for Copilot-native subagent semantics.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: task_runtime_fallback_policy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0038
+preserved_exact_tokens:
+- No-silent-fallback
+- explicit user or command requests
+- implicit orchestrator-selected runtime surfaces
+- fallback reason
+- Copilot-rooted parent
+- Copilot-native subagent path
+- strict deny
+- not silent downgrade
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Commands_System.md, ContractName:Plans/storage-plan.md'
+- 'ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-062 - Task Child Lifecycle Unified Model
+
+```yaml
+plan_unit_id: T-062
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Retry, reroute, replacement, cancellation, and resume are lifecycle semantics of one canonical child-run model
+  shared by command subtasks, interview children, crew members, and orchestrator children.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-060
+unblocks: []
+acceptance_criteria:
+- Resume applies only to non-terminal interrupted or waiting children.
+- Task does not create separate runtime classes for command, interview, crew, or orchestrator children.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: task_child_lifecycle_model
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0038
+preserved_exact_tokens:
+- retry
+- reroute
+- replacement
+- cancellation
+- resume
+- non-terminal interrupted or waiting children
+- command subtasks
+- interview children
+- crew members
+- orchestrator children
+- same canonical child-run model
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md,
+  ContractName:Plans/Commands_System.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-063 - Delegated Debug Investigation Participation
+
+```yaml
+plan_unit_id: T-063
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Delegated task runs may join an existing investigation by inheriting `investigation_id` and a narrowed-or-equal
+  permission snapshot, adding evidence, instrumentation updates, and verification results through canonical contracts only.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-055
+unblocks: []
+acceptance_criteria:
+- No second mutation-capable investigation is created for the same project/worktree unless a higher-level isolation flow exists.
+- Temporary instrumentation carries its `instrumentation_id` cleanup contract.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: delegated_investigation_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0039
+preserved_exact_tokens:
+- investigation_id
+- narrowed-or-equal permission snapshot
+- evidence
+- instrumentation updates
+- verification results
+- second mutation-capable investigation
+- project/worktree
+- instrumentation_id
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/orchestrator-subagent-integration.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-064 - GitHubApiTool Sole HTTPS Interface
+
+```yaml
+plan_unit_id: T-064
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: '`GitHubApiTool` is the sole permitted interface for GitHub HTTPS API operations; `gh` is forbidden for auth,
+  status, repo, fork, and PR operations.'
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- GitHub CLI is forbidden for auth/status/repo/fork/PR operations.
+- Auth flows remain owned by `Plans/GitHub_API_Auth_and_Flows.md`.
+- API version default remains configurable.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: github_api_tool_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0040
+preserved_exact_tokens:
+- GitHubApiTool
+- GitHub HTTPS API calls
+- repository
+- fork
+- PR
+- issue
+- status
+- gh
+- Spec_Lock.json#github_operations
+- github.api_version
+- '"2022-11-28"'
+- Crosswalk.md §3.1
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ToolID:GitHubApiTool, SchemaID:Spec_Lock.json#github_operations, Primitive:Tool'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-065 - Custom Tool Registry And Event Normalization
+
+```yaml
+plan_unit_id: T-065
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Custom tools are user- or project-defined callable functions registered with name, description, input schema,
+  permissions, and normalized invocation/result events in seglog.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Custom tools are not policy-exempt.
+- 'Wildcard permissions such as `myproject_*: ask` remain valid.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: custom_tool_registry_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0041
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0042
+preserved_exact_tokens:
+- Custom tools
+- Name
+- description
+- input schema
+- Permission model
+- allow/deny/ask
+- wildcards
+- 'myproject_*: ask'
+- seglog
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-066 - Custom Tool Schema Discovery And Enablement
+
+```yaml
+plan_unit_id: T-066
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Custom tool schemas use JSON Schema or equivalent and discovery comes from project config, enabled lists,
+  or explicit scans without arbitrary disk loading.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Prompt descriptions are preserved.
+- Arbitrary code is not loaded from disk without explicit enablement.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: custom_tool_discovery_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0043
+preserved_exact_tokens:
+- JSON Schema
+- description for model prompt
+- project-level
+- user-level
+- enabled list
+- scan
+- explicit enablement
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 5937-5948 >>>
+### T-067 - Custom Tool Subprocess Safety FileSafe And Host Policy
+
+```yaml
+plan_unit_id: T-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: MVP custom tools run arbitrary code in subprocesses with configurable timeout and output caps, apply FileSafe
+  where classifiable, use prefixes/namespaces, and obey enterprise host-policy before external host contact.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false

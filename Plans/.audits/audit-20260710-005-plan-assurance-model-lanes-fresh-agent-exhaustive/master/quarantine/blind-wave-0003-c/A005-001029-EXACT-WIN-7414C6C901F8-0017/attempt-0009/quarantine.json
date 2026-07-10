@@ -1,0 +1,23 @@
+{
+  "assignment_id": "A005-001029-EXACT-WIN-7414C6C901F8-0017",
+  "attempt_id": "attempt-0009",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "cohort_dispatcher_thread_id": "019f4dfc-d0c2-7882-b197-76ffb318c02f",
+  "coverage_credit": 0,
+  "misdirected_dispatch_receipt_preserved": true,
+  "misdirected_dispatch_receipt_sha256": "b6bf28f78fd0f400394e577637a1eab1b49eb8d25d046bc442e8de15cd56cba2",
+  "native_child_thread_id": "019f4dfd-31d0-7eb0-b5c3-2616b97cbd61",
+  "native_child_thread_state": "idle",
+  "native_child_turn_id": "019f4dfd-32ad-7a41-bfe7-8ee2ef741c94",
+  "native_child_turn_status": "completed",
+  "official_dispatch_receipt_present": false,
+  "preserve_artifacts": true,
+  "reason": "cohort dispatcher wrote dispatch receipt outside the authorized audit root; official receipt was absent and no result or terminal seal was produced",
+  "result_present": false,
+  "retry_requires_fresh_identity": true,
+  "status": "quarantined_zero_credit",
+  "task_thread_id": "/root/a005_blind_wave_0003_c_cohort_dispatcher_attempt_0009/leaf_a005_001029_attempt_0009",
+  "terminal_response_prefix": "PMR1",
+  "terminal_seal_present": false,
+  "wave_id": "blind-wave-0003-c"
+}

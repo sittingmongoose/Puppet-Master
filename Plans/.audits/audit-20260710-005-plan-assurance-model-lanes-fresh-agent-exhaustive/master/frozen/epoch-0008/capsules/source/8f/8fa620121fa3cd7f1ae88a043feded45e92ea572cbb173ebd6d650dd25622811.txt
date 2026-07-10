@@ -1,0 +1,67 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-66 >>>
+L00000001	{
+L00000002	  "$schema": "https://json-schema.org/draft/2020-12/schema",
+L00000003	  "$id": "pm.auto_decisions.schema.v1",
+L00000004	  "title": "Puppet Master Auto Decisions (JSONL row)",
+L00000005	  "type": "object",
+L00000006	  "additionalProperties": false,
+L00000007	  "required": [
+L00000008	    "schema_id",
+L00000009	    "decision_id",
+L00000010	    "timestamp_utc",
+L00000011	    "scope",
+L00000012	    "inputs_hash",
+L00000013	    "decision",
+L00000014	    "rationale",
+L00000015	    "applied_to",
+L00000016	    "contract_refs"
+L00000017	  ],
+L00000018	  "properties": {
+L00000019	    "schema_id": {
+L00000020	      "type": "string",
+L00000021	      "const": "pm.auto_decisions.schema.v1"
+L00000022	    },
+L00000023	    "decision_id": {
+L00000024	      "type": "string",
+L00000025	      "minLength": 3,
+L00000026	      "description": "File-wide unique identity for future rows. Historical duplicate decision_id values are grandfathered only by validate-auto-decisions when their exact (decision_id, inputs_hash) identity is listed by the validator; new rows must not reuse a historical duplicate decision_id."
+L00000027	    },
+L00000028	    "timestamp_utc": {
+L00000029	      "type": "string"
+L00000030	    },
+L00000031	    "scope": {
+L00000032	      "type": "string",
+L00000033	      "minLength": 1
+L00000034	    },
+L00000035	    "inputs_hash": {
+L00000036	      "type": "string",
+L00000037	      "minLength": 8
+L00000038	    },
+L00000039	    "decision": {
+L00000040	      "type": "string",
+L00000041	      "minLength": 1
+L00000042	    },
+L00000043	    "rationale": {
+L00000044	      "type": "string",
+L00000045	      "minLength": 1
+L00000046	    },
+L00000047	    "applied_to": {
+L00000048	      "type": "array",
+L00000049	      "minItems": 1,
+L00000050	      "items": {
+L00000051	        "type": "string",
+L00000052	        "minLength": 1
+L00000053	      }
+L00000054	    },
+L00000055	    "contract_refs": {
+L00000056	      "type": "array",
+L00000057	      "items": {
+L00000058	        "type": "string",
+L00000059	        "minLength": 1
+L00000060	      }
+L00000061	    },
+L00000062	    "example": {
+L00000063	      "type": "boolean"
+L00000064	    }
+L00000065	  }
+L00000066	}

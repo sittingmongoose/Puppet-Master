@@ -1,0 +1,294 @@
+<<< CONTEXT_BEFORE canonical_document_lines=6261-6272 >>>
+L00006261	preserved_exact_tokens: ["enabled_on_instance", "usable_now", "blocked_reason", "caller_scope", "execution_role", "identity disclosure level", "visible but not currently usable", "capabilities.get"]
+L00006262	negative_constraints:
+L00006263	  - Do not infer `usable_now` from `enabled_on_instance`.
+L00006264	  - Do not expose a visible but not currently usable capability without `blocked_reason`, `caller_scope`, `execution_role`, and identity disclosure level.
+L00006265	owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/agent-rules-context.md, Plans/Skills_System.md]
+L00006266	```
+L00006267	
+L00006268	
+L00006269	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00006270	
+L00006271	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00006272	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=6273-6537 >>>
+L00006273	### MGAC-093 - Planning Visual Reference Artifact Consumers
+L00006274	
+L00006275	```yaml
+L00006276	plan_unit_id: MGAC-093
+L00006277	unit_type: requirement
+L00006278	status: accepted
+L00006279	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00006280	canonical_text: 'Planning topics may accept uploaded reference images and generate wireframes, architecture diagrams, data-flow diagrams, state diagrams, or visual references through the existing image system, with artifact IDs, provenance, topic links, version, and status.'
+L00006281	gui_related: true
+L00006282	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00006283	depends_on: []
+L00006284	unblocks: []
+L00006285	acceptance_criteria:
+L00006286	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00006287	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00006288	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00006289	validation_surfaces:
+L00006290	- python3 scripts/pm-plan-index.py validate
+L00006291	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00006292	risk_class: owner_drift
+L00006293	reasoning_tier: standard
+L00006294	context_scope: ledger_to_plans_compile
+L00006295	implementation_surfaces:
+L00006296	- Plans/Media_Generation_and_Capabilities.md
+L00006297	- Plans/Planning_Wizard.md
+L00006298	- Plans/Project_Output_Artifacts.md
+L00006299	node_compile_hint:
+L00006300	  mode: canonical_planunit_from_bootstrap_ledger
+L00006301	  create_worknodes: false
+L00006302	  create_nodeseeds: false
+L00006303	source_lineage:
+L00006304	- pldg-20260618-001-prd-planning-wizard:atom-0065
+L00006305	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+L00006306	source_atom_ids:
+L00006307	- atom-0065
+L00006308	decision_refs: []
+L00006309	correction_refs: []
+L00006310	preserved_exact_tokens:
+L00006311	- uploaded reference image
+L00006312	- generated reference image
+L00006313	negative_constraints: []
+L00006314	owner_hints:
+L00006315	- Plans/Planning_Wizard.md
+L00006316	- Plans/Media_Generation_and_Capabilities.md
+L00006317	- Plans/Project_Output_Artifacts.md
+L00006318	```
+L00006319	
+L00006320	
+L00006321	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00006322	
+L00006323	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00006324	
+L00006325	### MGAC-099 - Vision Bridge Media Capability Eligibility
+L00006326	
+L00006327	```yaml
+L00006328	plan_unit_id: MGAC-099
+L00006329	unit_type: requirement
+L00006330	status: accepted
+L00006331	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00006332	canonical_text: The PM-native vision bridge uses current route-specific media capability truth. Models with reliable
+L00006333	  native image input do not need bridge fallback; models without image input may use the PM vision_bridge / see_image
+L00006334	  capability when policy, permissions, and provider availability allow. Media input, image input, generated-media
+L00006335	  output, and image generation remain separate capabilities. OpenCode defaults such as opencode-go, minimax-m3,
+L00006336	  mimo-v2.5-free, OpenCode auth.json, OpenCode DB, Bun, or OpenCode CLI behavior are source-lineage only and not
+L00006337	  PM defaults.
+L00006338	gui_related: true
+L00006339	gui_classification_reason: Image input/media capability truth affects user-visible image/screenshot handling and
+L00006340	  model route availability.
+L00006341	depends_on:
+L00006342	- MS-116
+L00006343	unblocks:
+L00006344	- PP-055
+L00006345	- ATS-013
+L00006346	acceptance_criteria:
+L00006347	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00006348	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00006349	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00006350	  are created by this compile.
+L00006351	validation_surfaces:
+L00006352	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00006353	- python3 scripts/pm-plan-index.py validate
+L00006354	- git diff --check
+L00006355	risk_class: media_capability_route_drift
+L00006356	reasoning_tier: high
+L00006357	context_scope: vision_bridge_media_capability
+L00006358	implementation_surfaces:
+L00006359	- Plans/Media_Generation_and_Capabilities.md
+L00006360	- future provider/model capability matrix
+L00006361	node_compile_hint:
+L00006362	  mode: vision_media_capability_truth
+L00006363	  create_worknodes: false
+L00006364	  create_nodeseeds: false
+L00006365	source_lineage:
+L00006366	- pldg-20260626-001-feature-name:atom-0069
+L00006367	- pldg-20260626-001-feature-name:atom-0072
+L00006368	- pldg-20260626-001-feature-name:atom-0074
+L00006369	- pldg-20260626-001-feature-name:atom-0087
+L00006370	- chat:opencode-see-image-request
+L00006371	- Plans/Provider_OpenCode.md
+L00006372	- external:github.com/alfaoz/opencode-see-image@cde1615f6dfc9039c58da6813112ee53391b5b49
+L00006373	- Plans/Media_Generation_and_Capabilities.md
+L00006374	- chat:vision-bridge-defaults-answer
+L00006375	- chat:vision-pressure-test-request
+L00006376	- chat:vision-pressure-test-defaults-answer
+L00006377	- Plans/Models_System.md
+L00006378	source_atom_ids:
+L00006379	- atom-0069
+L00006380	- atom-0072
+L00006381	- atom-0074
+L00006382	- atom-0087
+L00006383	decision_refs:
+L00006384	- dec-0014
+L00006385	- dec-0015
+L00006386	- dec-0016
+L00006387	- dec-0017
+L00006388	preserved_exact_tokens:
+L00006389	- opencode-see-image
+L00006390	- see_image
+L00006391	- models models without vision
+L00006392	- adopt it to PM
+L00006393	- image
+L00006394	- screenshot
+L00006395	- that is for Opencode
+L00006396	- OpenCode plugin APIs
+L00006397	- auth.json
+L00006398	- opencode.db
+L00006399	- Bun
+L00006400	- opencode run
+L00006401	- --dangerously-skip-permissions
+L00006402	- provider/model capability matrix
+L00006403	- project/account policy
+L00006404	- media_input
+L00006405	- image input
+L00006406	- support-state
+L00006407	- opencode-go
+L00006408	- mimo-v2.5-free
+L00006409	- 2. yes
+L00006410	- requested/effective provider/model/account
+L00006411	- usage/cost refs
+L00006412	- bounded transient failures
+L00006413	- falls back
+L00006414	- policy permits
+L00006415	- disclosure permission covers the destination
+L00006416	- 'yes'
+L00006417	negative_constraints:
+L00006418	- Do not let non-vision models guess image contents when a bridge is available.
+L00006419	- Do not treat image input as image generation.
+L00006420	- Do not compile this requirement to canonical Plans without a future explicit compile request.
+L00006421	- Do not make OpenCode the owner of PM media tools.
+L00006422	- Do not use OpenCode provider capability reporting as a substitute for PM-native media capability records.
+L00006423	- Do not introduce a provider-specific dependency where a PM-native tool/capability can serve all provider routes.
+L00006424	- Do not hardcode OpenCode `opencode-go` or `mimo-v2.5-free` as PM's bridge defaults.
+L00006425	- Do not flatten route-specific media state into a single provider-level boolean.
+L00006426	- Do not clear a route as vision-capable without current provider/model capability evidence.
+L00006427	- Do not depend on OpenCode `auth.json`, OpenCode DB, Bun, or OpenCode CLI dependency for PM bridge routing.
+L00006428	- Do not silently reroute an image to a different provider/account than the user allowed.
+L00006429	- Do not treat provider catalog visibility as proof that a route can currently process image input.
+L00006430	- Do not hide usage/cost attribution when the bridge uses a separate model route.
+L00006431	owner_hints:
+L00006432	- Plans/Media_Generation_and_Capabilities.md
+L00006433	- Plans/Models_System.md
+L00006434	- Plans/Prompt_Pipeline.md
+L00006435	- Plans/Tools.md
+L00006436	- Plans/Runtime_Artifacts_Panel.md
+L00006437	- Plans/FinalGUISpec.md
+L00006438	- Plans/Provider_OpenCode.md
+L00006439	- Plans/MCP_Integration.md
+L00006440	- Plans/usage-feature.md
+L00006441	- Plans/Contracts_V0.md
+L00006442	- Plans/Permissions_System.md
+L00006443	```
+L00006444	
+L00006445	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00006446	
+L00006447	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00006448	
+L00006449	### MGAC-100 - P0-MULTIMODAL-INPUT-SETTLEMENT
+L00006450	
+L00006451	```yaml
+L00006452	plan_unit_id: MGAC-100
+L00006453	unit_type: requirement
+L00006454	status: accepted
+L00006455	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00006456	canonical_text: "P0-MULTIMODAL-INPUT-SETTLEMENT (P0) is compiled as canonical Puppet Master intent for Vision/multimodal input admission and fallback: Add MultimodalInputSettlement: source_surface, media_type, MIME, byte_size, redaction_state, artifact_ref, model_modality_support, requested_route, effective_route, fallback_caption_route, original_retention, provider_payload_shape, and denied_reason. Never silently base64/text-inject unsupported images. The preserved PM gap/delta is: PM\u2019s media/vision coverage should be tied to provider request admission: image/PDF/audio/screenshot/file attachments need a settlement record before they can enter model-visible context. The observed external-repo signal remains source-lineage evidence: OpenCode issues show image attachments going to text-only models, custom OpenAI-compatible providers rejecting images, wrong MIME types, vision-enabled read failures, and auto image-to-text fallback requests. Cline reports CLI/browser automation image-format\
+L00006457	  \ gaps. Codex IDE officially supports image generation/editing and model/context surfaces."
+L00006458	gui_related: true
+L00006459	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00006460	depends_on:
+L00006461	- PDS-003
+L00006462	- PNC-001
+L00006463	unblocks: []
+L00006464	acceptance_criteria:
+L00006465	- Text-only model + image file yields denied_or_captioned, never hidden prompt bloat.
+L00006466	- Wrong MIME is blocked before provider request.
+L00006467	- Vision-capable custom provider must prove modality support or fall back.
+L00006468	- GUI can show original artifact and caption/fallback provenance.
+L00006469	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00006470	validation_surfaces:
+L00006471	- python3 scripts/pm-plan-index.py validate
+L00006472	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00006473	- Text-only model + image file yields denied_or_captioned, never hidden prompt bloat.
+L00006474	- Wrong MIME is blocked before provider request.
+L00006475	- Vision-capable custom provider must prove modality support or fall back.
+L00006476	- GUI can show original artifact and caption/fallback provenance.
+L00006477	risk_class: p0_multimodal_and_attachments_hardening
+L00006478	reasoning_tier: high
+L00006479	context_scope: multimodal_and_attachments
+L00006480	implementation_surfaces:
+L00006481	- Plans/Media_Generation_and_Capabilities.md
+L00006482	- Plans/Models_System.md
+L00006483	- Plans/Tools.md
+L00006484	- Plans/FinalGUISpec.md
+L00006485	- Plans/Provider_OpenCode.md
+L00006486	node_compile_hint:
+L00006487	  mode: p0_multimodal_input_settlement
+L00006488	  create_worknodes: false
+L00006489	  create_nodeseeds: false
+L00006490	source_lineage:
+L00006491	- pldg-20260703-001-feature-intake:atom-0063
+L00006492	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0063
+L00006493	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0059/P0-MULTIMODAL-INPUT-SETTLEMENT@line=59
+L00006494	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0059/P0-MULTIMODAL-INPUT-SETTLEMENT
+L00006495	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00006496	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00006497	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:5
+L00006498	source_atom_ids:
+L00006499	- atom-0063
+L00006500	external_atom_id: extrepo-20260703-0059
+L00006501	source_row_id: P0-MULTIMODAL-INPUT-SETTLEMENT
+L00006502	priority: P0
+L00006503	finding_family: Vision/multimodal input admission and fallback
+L00006504	source_repos:
+L00006505	- OpenCode
+L00006506	- Cline
+L00006507	- Codex
+L00006508	- Pi
+L00006509	target_docs:
+L00006510	- Plans/Media_Generation_and_Capabilities.md
+L00006511	- Plans/Models_System.md
+L00006512	- Plans/Tools.md
+L00006513	- Plans/FinalGUISpec.md
+L00006514	- Plans/Provider_OpenCode.md
+L00006515	owner_hints:
+L00006516	- Plans/Media_Generation_and_Capabilities.md
+L00006517	- Plans/Models_System.md
+L00006518	- Plans/Tools.md
+L00006519	- Plans/FinalGUISpec.md
+L00006520	- Plans/Provider_OpenCode.md
+L00006521	preserved_exact_tokens:
+L00006522	- extrepo-20260703-0059
+L00006523	- P0-MULTIMODAL-INPUT-SETTLEMENT
+L00006524	- P0
+L00006525	- Vision/multimodal input admission and fallback
+L00006526	- OpenCode
+L00006527	- Cline
+L00006528	- Codex
+L00006529	- Pi
+L00006530	negative_constraints: []
+L00006531	observed_signal: OpenCode issues show image attachments going to text-only models, custom OpenAI-compatible providers rejecting images, wrong MIME types, vision-enabled read failures, and auto image-to-text fallback requests. Cline reports CLI/browser automation image-format gaps. Codex IDE officially supports image generation/editing and model/context surfaces.
+L00006532	pm_current_coverage: Media_Generation_and_Capabilities has media route taxonomy, capability telemetry, Vision Bridge eligibility, media tool contracts, and no-stale capability cache. Models_System also has Vision Bridge requested/effective route resolution.
+L00006533	pm_gap_or_delta: "PM\u2019s media/vision coverage should be tied to provider request admission: image/PDF/audio/screenshot/file attachments need a settlement record before they can enter model-visible context."
+L00006534	proposal_or_recommendation: 'Add MultimodalInputSettlement: source_surface, media_type, MIME, byte_size, redaction_state, artifact_ref, model_modality_support, requested_route, effective_route, fallback_caption_route, original_retention, provider_payload_shape, and denied_reason. Never silently base64/text-inject unsupported images.'
+L00006535	compile_disposition: create_new_planunit
+L00006536	```
+L00006537	
+
+<<< CONTEXT_AFTER canonical_document_lines=6538-6549 >>>
+L00006538	### MGAC-101 - P1-MULTIMODAL-FALLBACK-TRANSCRIPTION-POLICY
+L00006539	
+L00006540	```yaml
+L00006541	plan_unit_id: MGAC-101
+L00006542	unit_type: requirement
+L00006543	status: accepted
+L00006544	owner_doc: Plans/Media_Generation_and_Capabilities.md
+L00006545	canonical_text: >-
+L00006546	  P1-MULTIMODAL-FALLBACK-TRANSCRIPTION-POLICY (P1) is compiled as canonical Puppet Master intent for Fallback captioning/OCR/transcription as explicit route: Define MediaFallbackCaptionPolicy: fallback model/provider, cost/latency, user permission, original artifact retention, caption confidence, redaction, provider payload, and GUI disclosure. The preserved PM gap/delta is: Captioning fallback must be opt-in/visible and produce a separate artifact; it must not pretend the selected model saw the original image. The observed external-repo signal remains source-lineage evidence: OpenCode requested auto image-to-text fallback for non-multimodal providers, while other issues show unsupported images causing context bloat/errors.
+L00006547	gui_related: true
+L00006548	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00006549	depends_on:

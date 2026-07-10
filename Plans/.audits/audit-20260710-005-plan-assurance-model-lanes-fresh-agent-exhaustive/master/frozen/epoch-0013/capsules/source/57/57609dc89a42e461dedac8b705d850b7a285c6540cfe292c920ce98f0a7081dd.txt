@@ -1,0 +1,220 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2603-2614 >>>
+L00002603	- `selection_source`
+L00002604	- `selection_reason`
+L00002605	- `override_scope`
+L00002606	
+L00002607	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
+L00002608	
+L00002609	Canonical enum closure:
+L00002610	- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew`
+L00002611	- `requested_runtime_mode` and `effective_runtime_mode` are closed to the canonical runtime postures from `Plans/Run_Modes.md`
+L00002612	- `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning
+L00002613	
+L00002614	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2615-2805 >>>
+L00002615	
+L00002616	Resolution rules:
+L00002617	- `use ask mode`, `don't edit`, and `just inspect` resolve to `effective_mode_overlay = none` and canonical runtime `ask`
+L00002618	- `use plan mode` resolves to `effective_mode_overlay = plan` and canonical runtime `plan`
+L00002619	- `use deep plan` resolves to `effective_mode_overlay = deep_plan` and canonical runtime `plan`
+L00002620	- `use agent mode` clears planning overlays and resolves to the normal execution posture for the thread, preserving explicit permission posture such as `regular` or `yolo`
+L00002621	- compact display labels are derived from the effective overlay plus runtime posture so the visible label can still be `Ask`, `Agent`, `Plan`, or `Deep Plan`
+L00002622	
+L00002623	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+L00002624	### 29.2 Assistant recommendation of Planning Wizard
+L00002625	
+L00002626	Assistant chat should proactively recommend the Planning Wizard when the user appears to be asking for:
+L00002627	- a new feature inside an existing project
+L00002628	- a substantial enhancement
+L00002629	- a major refactor / major change
+L00002630	- feature work that likely benefits from adaptive interview scoping and orchestrator follow-through
+L00002631	
+L00002632	Signals may come from:
+L00002633	- direct natural-language phrasing (`add a feature`, `major enhancement`, `big change`, `large refactor`)
+L00002634	- inferred scope (many affected domains, many open questions, large plan size)
+L00002635	- Deep Plan output after research
+L00002636	
+L00002637	Recommendation behavior:
+L00002638	- recommendation is a CTA, not an automatic redirect
+L00002639	- the user may accept or decline
+L00002640	- declining keeps the user in chat with no hidden workflow switch
+L00002641	
+L00002642	### 29.3 Deep Plan post-planning recommendation
+L00002643	
+L00002644	Deep Plan MUST perform a final wizard-escalation evaluation before defaulting to pure chat execution.
+L00002645	
+L00002646	Deep Plan should recommend the Planning Wizard when one or more of the following are true:
+L00002647	- the work spans several interview domains (for example UI + data + security, or architecture + deployment + testing)
+L00002648	- the plan still contains material unresolved questions
+L00002649	- the plan reads like a feature spec rather than a finite implementation checklist
+L00002650	- the likely output should include orchestrator-ready project artifacts rather than only code edits
+L00002651	
+L00002652	### 29.4 Accepting the recommendation: handoff to Planning Wizard / Interview
+L00002653	
+L00002654	If the user accepts the recommendation, Assistant Chat MUST launch the Planning Wizard / Interview flow with a structured handoff bundle.
+L00002655	
+L00002656	Required handoff payload fields:
+L00002657	- `handoff_source` (`assistant_chat` or `deep_plan`)
+L00002658	- `handoff_reason` (`feature_request`, `major_change`, `deep_plan_recommendation`, `user_explicit`, or similar deterministic enum)
+L00002659	- `origin_thread_id`
+L00002660	- `origin_message_id`
+L00002661	- `project_id` when available
+L00002662	- `project_path` when available
+L00002663	- `default_intent = EnhanceRewriteAdd`
+L00002664	- `user_goal`
+L00002665	- `requirements_summary`
+L00002666	- `scope_summary`
+L00002667	- `codebase_summary`
+L00002668	- `has_gui_hint`
+L00002669	- `plan_artifact_ref` when a plan exists
+L00002670	- `plan_todo_snapshot[]`
+L00002671	- `open_questions[]`
+L00002672	- `assumptions[]`
+L00002673	- `chat_excerpt_refs[]`
+L00002674	
+L00002675	`chat_excerpt_refs[]` entries identify bounded source excerpts by `thread_id`, `message_id`, optional `range_ref`, `excerpt_role`, and `redaction_state`. They are lineage pointers for imported assistant/deep-plan context, not copied transcript authority, and the wizard resolves them through the canonical thread/message store before rendering or reusing excerpts.
+L00002676	
+L00002677	Handoff rules:
+L00002678	- imported context must be visible to the user; it must not be hidden system state
+L00002679	- the imported plan, if present, becomes contextual input for the wizard/interviewer rather than an immediate executable artifact
+L00002680	- the handoff must preserve the audit trail that the wizard was launched from Assistant Chat / Deep Plan
+L00002681	
+L00002682	### 29.5 Wizard launch behavior from chat handoff
+L00002683	
+L00002684	Launch behavior depends on available project context:
+L00002685	- if the current thread already has an active project/path, open the Planning Wizard in the preloaded `EnhanceRewriteAdd` flow with imported context ready for requirements/interview review
+L00002686	- if the current thread lacks required project context, open the Planning Wizard with the imported context preserved and land on the project-setup review path first
+L00002687	
+L00002688	The interviewer must not start cold:
+L00002689	- imported context is available before the first interview question
+L00002690	- the imported plan may be opened as additional context for the interviewer
+L00002691	- the mandatory scope probe still runs; the imported context does not bypass phase 0
+L00002692	
+L00002693	### 29.6 Acceptance criteria
+L00002694	
+L00002695	- Ask mode is reachable by natural-language requests and visibly resolves to canonical runtime `ask`.
+L00002696	- Natural-language requests for Plan and Deep Plan resolve to workflow overlays plus canonical runtime `plan`.
+L00002697	- Assistant chat can recommend the Planning Wizard for feature/enhancement/major-change requests.
+L00002698	- Deep Plan can recommend the Planning Wizard after planning when the work is too large or too spec-like for chat-only execution.
+L00002699	- Accepting the recommendation opens the Planning Wizard / Interview flow with imported assistant context and, when present, the plan artifact reference/content.
+L00002700	- The imported handoff remains visible/auditable and does not silently create a repo file.
+L00002701	
+L00002702	## Unified Thread Blocked-State Lifecycle
+L00002703	
+L00002704	Canonical thread blocked surfaces reuse the shared blocked packet instead of local ask-flow tuples. This section supersedes earlier overlapping blocked-state addenda in this document; those addenda remain historical transfer notes and must not be read as peer recovery guidance.
+L00002705	
+L00002706	
+L00002707	Required fields:
+L00002708	- `blocked_notice`
+L00002709	- `blocked_sequence`
+L00002710	- `approval_scope_key`
+L00002711	- `allowed_action_ids[]`
+L00002712	
+L00002713	### Multi-episode display
+L00002714	- each `blocked_notice` renders as its own system message
+L00002715	- `validation_blocked` and `remediation_ceiling_exceeded` remain ordinary members of the blocked taxonomy
+L00002716	- chat action buttons are rendered from ordered `allowed_action_ids[]`
+L00002717	- resolving one blocked episode does not collapse sibling blocked episodes
+L00002718	## Worktrees in Assistant
+L00002719	
+L00002720	This section specifies the W.1-W.17 thread-level worktree binding feature: a per-thread worktree button in the chat header, worktree icon in the thread selector, merge-back flow, pre-merge test gate, and all associated lifecycle, data model, events, commands, settings, and error handling.
+L00002721	
+L00002722	ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+L00002723	
+L00002724	### W.0 Source Control consumer state
+L00002725	
+L00002726	Assistant chat deep-links into Source Control without owning its accordion layout. Per-project Source Control section open/close (`/close`) state persists at `config:project:{pid}:source_control.accordion_state` as:
+L00002727	
+L00002728	```json
+L00002729	{ "Changes": true, "Worktrees": false, "Branches/Stash": false, "History": false, "Graph": false }
+L00002730	```
+L00002731	
+L00002732	## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+L00002733	
+L00002734	This addendum compiles Assistant Chat containerized-host projection obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
+L00002735	
+L00002736	### ACD-430 - Assistant Chat Host Readiness Cards And Docker/Hosts Pivots
+L00002737	
+L00002738	```yaml
+L00002739	plan_unit_id: ACD-430
+L00002740	unit_type: requirement
+L00002741	status: accepted
+L00002742	owner_doc: Plans/assistant-chat-design.md
+L00002743	canonical_text: >-
+L00002744	  Assistant Chat surfaces containerized-host readiness, blocked/degraded/unavailable states, access URL confidence, and
+L00002745	  Docker/Hosts pivots as shared PM capability context. Chat may show host readiness cards, Open App/Open Container pivots,
+L00002746	  recent host/test receipts, and blocked-action summaries linked to Docker/Hosts, Runtime Artifacts, Executor attempts,
+L00002747	  and Automated Testing receipts. Chat does not own Docker, Kubernetes, SSH, file, terminal, or cleanup mutation
+L00002748	  semantics; any action request resolves through UI_Command_Catalog, HostCapabilityCommand, Executor/Tools/ATS,
+L00002749	  Permissions, FileSafe, and receipt paths. Stale or missing projections degrade the chat card rather than authorizing
+L00002750	  sensitive actions.
+L00002751	gui_related: true
+L00002752	gui_classification_reason: This PlanUnit defines visible Assistant Chat cards, pivots, and user-facing host readiness presentation.
+L00002753	depends_on: [F3-410, UCC-105, RAP-042, CV-303]
+L00002754	unblocks: []
+L00002755	acceptance_criteria:
+L00002756	  - Assistant Chat can display host readiness, blocked/unavailable/degraded states, access confidence, stale state, and next-action summaries.
+L00002757	  - Chat cards deep-link to Docker/Hosts, Runtime Artifacts, Orchestrator/Executor run details, and test receipts without becoming mutation authorities.
+L00002758	  - Open App and Open Container pivots use UI_Command_Catalog and port_access_record evidence rather than guessed localhost URLs.
+L00002759	  - Chat does not hide disabled, stale, unsupported, host-untrusted, FileSafe-blocked, or permission-required states behind optimistic UI.
+L00002760	validation_surfaces:
+L00002761	  - python3 scripts/pm-plan-index.py validate
+L00002762	  - future Assistant Chat host-readiness card fixture
+L00002763	risk_class: chat_host_projection_authority_drift
+L00002764	reasoning_tier: standard
+L00002765	context_scope: assistant_chat_containerized_host_projection
+L00002766	implementation_surfaces:
+L00002767	  - Plans/assistant-chat-design.md
+L00002768	  - future Assistant Chat host readiness and action cards
+L00002769	node_compile_hint:
+L00002770	  mode: assistant_chat_host_readiness_projection
+L00002771	  create_worknodes: false
+L00002772	  create_nodeseeds: false
+L00002773	source_lineage:
+L00002774	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0040
+L00002775	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0041
+L00002776	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
+L00002777	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0075
+L00002778	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0079
+L00002779	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0080
+L00002780	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+L00002781	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#docker_hosts_gui_ia
+L00002782	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#control_plane_contract
+L00002783	source_atom_ids: [atom-0040, atom-0041, atom-0073, atom-0075, atom-0079, atom-0080, atom-0081]
+L00002784	preserved_exact_tokens:
+L00002785	  - "chat assistant"
+L00002786	  - "all the different areas of PM"
+L00002787	  - "Docker/Hosts"
+L00002788	  - "Open App"
+L00002789	  - "Open Container"
+L00002790	  - "blocked/unavailable/degraded"
+L00002791	negative_constraints:
+L00002792	  - Do not scatter mutation ownership into Assistant Chat.
+L00002793	  - Do not hide blocked, unavailable, disabled, stale, or degraded states behind optimistic UI.
+L00002794	  - Do not guess localhost URLs when port_access_record evidence is missing or low-confidence.
+L00002795	owner_hints:
+L00002796	  - Plans/assistant-chat-design.md
+L00002797	  - Plans/FinalGUISpec.md
+L00002798	  - Plans/UI_Command_Catalog.md
+L00002799	  - Plans/Runtime_Artifacts_Panel.md
+L00002800	```
+L00002801	
+L00002802	## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+L00002803	
+L00002804	This addendum compiles accepted provider-update ledger atoms into Assistant Chat consumer requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+L00002805	
+
+<<< CONTEXT_AFTER canonical_document_lines=2806-2817 >>>
+L00002806	### ACD-424 - Chat Provider Model Effort And Media Route Consumers
+L00002807	
+L00002808	```yaml
+L00002809	plan_unit_id: ACD-424
+L00002810	unit_type: requirement
+L00002811	status: accepted
+L00002812	owner_doc: Plans/assistant-chat-design.md
+L00002813	canonical_text: >-
+L00002814	  Assistant Chat header, composer, and run-status surfaces consume the provider/account/model/effort and media-route schemas owned by Models, Multi-Account, Contracts, and Media. Chat may present selected provider, account/profile, model, requested thinking effort, effective effort status, media input/generation availability, and source-confidence/blocked states, but it must not own provider catalog truth or infer capability from legacy `platform_specs`. Chat media controls consume route-specific image-generation eligibility from the GUI/Settings and Media owners, including OpenAI/Codex route families, MiniMax `image-01`, Gemini Direct where verified, and Antigravity OAuth/internal `gemini-3.1-flash-image`, while public text-only `agy` rows remain capability metadata and not generated-image engines unless exact artifact proof exists. Unsupported, clamped, gated, unverified, and fallback outcomes remain visible in the turn/run status.
+L00002815	gui_related: true
+L00002816	gui_classification_reason: Assistant Chat header, composer, and status controls are user-visible UI behavior.
+L00002817	depends_on: [F3-400, F3-401, MS-113, MS-115, CV-293]

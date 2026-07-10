@@ -1,0 +1,418 @@
+<<< CONTEXT_BEFORE canonical_document_lines=23014-23025 >>>
+L00023014	- "stdin/TTY"
+L00023015	- "Background/watch/server actions"
+L00023016	negative_constraints:
+L00023017	- "Terminal action canon must not collapse distinct terminal actions into one normalized target."
+L00023018	compatibility_only_notes: []
+L00023019	stale_retired_dispositions: []
+L00023020	owner_boundary_notes:
+L00023021	- "FinalGUISpec owns visible card/widget behavior; owner docs retain runtime, tool, permission, schema, and storage authority."
+L00023022	owner_hints:
+L00023023	- "Plans/FinalGUISpec.md"
+L00023024	```
+L00023025	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=23026-23414 >>>
+L00023026	### F3-361 - Terminal Preview Payload Recovery And No Pseudo-Terminal Boundary
+L00023027	
+L00023028	```yaml
+L00023029	plan_unit_id: F3-361
+L00023030	unit_type: requirement
+L00023031	status: accepted
+L00023032	owner_doc: Plans/FinalGUISpec.md
+L00023033	canonical_text: >-
+L00023034	  Terminal preview cards use collapsed 5-line and expanded 15-line previews, persist after
+L00023035	  completion, show status, cwd, command summary, elapsed time, exit code or truncation
+L00023036	  indicator, stay read-only and non-interactive, store large payloads behind refs or blobs,
+L00023037	  stop owning full transcript after promotion, and distinguish attach failure recovery for
+L00023038	  live process, ended process, and inline-only completed command. Inline previews and
+L00023039	  linkbacks add views into the shell-owned model rather than minting pseudo-terminals.
+L00023040	gui_related: true
+L00023041	gui_classification_reason: >-
+L00023042	  This unit defines visible FinalGUISpec widget or card behavior.
+L00023043	split_recommended: false
+L00023044	depends_on: []
+L00023045	unblocks: []
+L00023046	acceptance_criteria:
+L00023047	- "The covered source span remains losslessly available for exact-text audit."
+L00023048	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00023049	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00023050	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00023051	validation_surfaces:
+L00023052	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00023053	- "python3 scripts/pm-plan-index.py validate"
+L00023054	risk_class: finalgui_drift
+L00023055	reasoning_tier: standard
+L00023056	context_scope: finalgui_standardization
+L00023057	implementation_surfaces:
+L00023058	- "Plans/FinalGUISpec.md"
+L00023059	node_compile_hint:
+L00023060	  mode: terminal_preview_payload_recovery_and_no_pseudo_terminal_boundary
+L00023061	  create_worknodes: false
+L00023062	source_lineage:
+L00023063	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0230"
+L00023064	preserved_exact_tokens:
+L00023065	- "Collapsed preview: 5 lines"
+L00023066	- "Expanded preview: 15 lines"
+L00023067	- "READ-ONLY and non-interactive"
+L00023068	- "Large payloads store full data behind refs/blobs"
+L00023069	- "after promotion, chat stops owning the full transcript"
+L00023070	- "attach failure recovery"
+L00023071	- "/inline"
+L00023072	- "/command-card"
+L00023073	- "mini-terminal previews"
+L00023074	- "pseudo-terminals"
+L00023075	negative_constraints:
+L00023076	- "Chat and terminal must not collapse into one undifferentiated transcript."
+L00023077	- "Inline previews must not mint brand-new pseudo-terminals with separate runtime ownership."
+L00023078	compatibility_only_notes: []
+L00023079	stale_retired_dispositions: []
+L00023080	owner_boundary_notes:
+L00023081	- "FinalGUISpec owns visible card/widget behavior; owner docs retain runtime, tool, permission, schema, and storage authority."
+L00023082	owner_hints:
+L00023083	- "Plans/FinalGUISpec.md"
+L00023084	```
+L00023085	
+L00023086	### F3-362 - Search Then Read Citation Provenance
+L00023087	
+L00023088	```yaml
+L00023089	plan_unit_id: F3-362
+L00023090	unit_type: requirement
+L00023091	status: accepted
+L00023092	owner_doc: Plans/FinalGUISpec.md
+L00023093	canonical_text: >-
+L00023094	  Search result cards preserve search-then-read answer construction: final citations come from
+L00023095	  the actual read path, raw search snippets alone are not enough final-answer provenance, chat
+L00023096	  may shortlist with search, and chosen pages must be read before citation as final evidence.
+L00023097	gui_related: true
+L00023098	gui_classification_reason: >-
+L00023099	  This unit defines visible FinalGUISpec widget or card behavior.
+L00023100	split_recommended: false
+L00023101	depends_on: []
+L00023102	unblocks: []
+L00023103	acceptance_criteria:
+L00023104	- "The covered source span remains losslessly available for exact-text audit."
+L00023105	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00023106	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00023107	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00023108	validation_surfaces:
+L00023109	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00023110	- "python3 scripts/pm-plan-index.py validate"
+L00023111	risk_class: finalgui_drift
+L00023112	reasoning_tier: standard
+L00023113	context_scope: finalgui_standardization
+L00023114	implementation_surfaces:
+L00023115	- "Plans/FinalGUISpec.md"
+L00023116	node_compile_hint:
+L00023117	  mode: search_then_read_citation_provenance
+L00023118	  create_worknodes: false
+L00023119	source_lineage:
+L00023120	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0231"
+L00023121	preserved_exact_tokens:
+L00023122	- "search-then-read behavior"
+L00023123	- "final citations come from the actual read path"
+L00023124	- "raw search snippets alone are not enough provenance"
+L00023125	- "chat may shortlist with search"
+L00023126	- "read chosen pages before citing them as final evidence"
+L00023127	negative_constraints: []
+L00023128	compatibility_only_notes: []
+L00023129	stale_retired_dispositions: []
+L00023130	owner_boundary_notes:
+L00023131	- "Storage, contracts, and browser ContractRefs own provenance payloads; FinalGUISpec owns visible search-result card behavior."
+L00023132	owner_hints:
+L00023133	- "Plans/FinalGUISpec.md"
+L00023134	```
+L00023135	
+L00023136	### F3-363 - Provider-Specific Websearch Option Surface Boundary
+L00023137	
+L00023138	```yaml
+L00023139	plan_unit_id: F3-363
+L00023140	unit_type: requirement
+L00023141	status: accepted
+L00023142	owner_doc: Plans/FinalGUISpec.md
+L00023143	canonical_text: >-
+L00023144	  The Firecrawl websearch mapping preserves provider-specific search behavior and option
+L00023145	  surface, including Serper-backed Google-result behavior, sources, categories, and optional
+L00023146	  result scraping behavior, without FinalGUISpec becoming the provider option owner.
+L00023147	gui_related: false
+L00023148	gui_classification_reason: >-
+L00023149	  This unit preserves a non-GUI owner-boundary or provider semantics constraint.
+L00023150	split_recommended: false
+L00023151	depends_on: []
+L00023152	unblocks: []
+L00023153	acceptance_criteria:
+L00023154	- "The covered source span remains losslessly available for exact-text audit."
+L00023155	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00023156	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00023157	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00023158	validation_surfaces:
+L00023159	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00023160	- "python3 scripts/pm-plan-index.py validate"
+L00023161	risk_class: finalgui_drift
+L00023162	reasoning_tier: standard
+L00023163	context_scope: finalgui_standardization
+L00023164	implementation_surfaces:
+L00023165	- "Plans/FinalGUISpec.md"
+L00023166	node_compile_hint:
+L00023167	  mode: provider_specific_websearch_option_surface_boundary
+L00023168	  create_worknodes: false
+L00023169	source_lineage:
+L00023170	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0231"
+L00023171	preserved_exact_tokens:
+L00023172	- "Firecrawl `websearch`"
+L00023173	- "provider-specific search behavior"
+L00023174	- "Serper-backed Google-result behavior"
+L00023175	- "sources"
+L00023176	- "categories"
+L00023177	- "optional result scraping behavior"
+L00023178	negative_constraints: []
+L00023179	compatibility_only_notes: []
+L00023180	stale_retired_dispositions: []
+L00023181	owner_boundary_notes:
+L00023182	- "Provider/tool owner docs own websearch option semantics; FinalGUISpec records the consumer boundary only."
+L00023183	owner_hints:
+L00023184	- "Plans/FinalGUISpec.md"
+L00023185	```
+L00023186	
+L00023187	### F3-364 - Web Capability Unavailable And Site Reader Identity
+L00023188	
+L00023189	```yaml
+L00023190	plan_unit_id: F3-364
+L00023191	unit_type: requirement
+L00023192	status: accepted
+L00023193	owner_doc: Plans/FinalGUISpec.md
+L00023194	canonical_text: >-
+L00023195	  Web operation cards include a capability-unavailable terminal branch with clear setup
+L00023196	  guidance when no provider supports the requested operation; Site Reader v1 requires real
+L00023197	  browser interaction capability; Reading Site is reserved exclusively for the PM-native Site
+L00023198	  Reader path; provider-routed fetch uses Fetching Site: <url> (via <provider>) and must not
+L00023199	  reuse the reserved native identity.
+L00023200	gui_related: true
+L00023201	gui_classification_reason: >-
+L00023202	  This unit defines visible FinalGUISpec widget or card behavior.
+L00023203	split_recommended: false
+L00023204	depends_on: []
+L00023205	unblocks: []
+L00023206	acceptance_criteria:
+L00023207	- "The covered source span remains losslessly available for exact-text audit."
+L00023208	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00023209	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00023210	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00023211	validation_surfaces:
+L00023212	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00023213	- "python3 scripts/pm-plan-index.py validate"
+L00023214	risk_class: finalgui_drift
+L00023215	reasoning_tier: standard
+L00023216	context_scope: finalgui_standardization
+L00023217	implementation_surfaces:
+L00023218	- "Plans/FinalGUISpec.md"
+L00023219	node_compile_hint:
+L00023220	  mode: web_capability_unavailable_and_site_reader_identity
+L00023221	  create_worknodes: false
+L00023222	source_lineage:
+L00023223	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0232"
+L00023224	preserved_exact_tokens:
+L00023225	- "capability-unavailable terminal branch"
+L00023226	- "clear setup guidance"
+L00023227	- "Site Reader v1"
+L00023228	- "real browser-interaction capability"
+L00023229	- "Reading Site"
+L00023230	- "Fetching Site: <url> (via <provider>)"
+L00023231	- "provider-routed fetch must not reuse the reserved native Site Reader identity"
+L00023232	negative_constraints:
+L00023233	- "Provider-routed fetch must not reuse the reserved native Site Reader identity."
+L00023234	compatibility_only_notes: []
+L00023235	stale_retired_dispositions: []
+L00023236	owner_boundary_notes:
+L00023237	- "Tools and browser/Site Reader owners retain routing authority; FinalGUISpec owns visible labels and recovery copy."
+L00023238	owner_hints:
+L00023239	- "Plans/FinalGUISpec.md"
+L00023240	```
+L00023241	
+L00023242	### F3-365 - Firecrawl Research And Batch Semantics
+L00023243	
+L00023244	```yaml
+L00023245	plan_unit_id: F3-365
+L00023246	unit_type: requirement
+L00023247	status: accepted
+L00023248	owner_doc: Plans/FinalGUISpec.md
+L00023249	canonical_text: >-
+L00023250	  Firecrawl webresearch preserves provider-native no-URL natural-language research behavior,
+L00023251	  navigation/forms/pagination capability, structured extraction during agent-led research,
+L00023252	  continue_on_error: false, stop on first failure, and return of completed results plus
+L00023253	  failure detail.
+L00023254	gui_related: false
+L00023255	gui_classification_reason: >-
+L00023256	  This unit preserves a non-GUI owner-boundary or provider semantics constraint.
+L00023257	split_recommended: false
+L00023258	depends_on: []
+L00023259	unblocks: []
+L00023260	acceptance_criteria:
+L00023261	- "The covered source span remains losslessly available for exact-text audit."
+L00023262	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00023263	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00023264	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00023265	validation_surfaces:
+L00023266	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00023267	- "python3 scripts/pm-plan-index.py validate"
+L00023268	risk_class: finalgui_drift
+L00023269	reasoning_tier: standard
+L00023270	context_scope: finalgui_standardization
+L00023271	implementation_surfaces:
+L00023272	- "Plans/FinalGUISpec.md"
+L00023273	node_compile_hint:
+L00023274	  mode: firecrawl_research_and_batch_semantics
+L00023275	  create_worknodes: false
+L00023276	source_lineage:
+L00023277	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0232"
+L00023278	preserved_exact_tokens:
+L00023279	- "webresearch"
+L00023280	- "no-URL natural-language research"
+L00023281	- "navigation/forms/pagination capability"
+L00023282	- "structured extraction behavior"
+L00023283	- "continue_on_error: false"
+L00023284	- "stop on the first failure"
+L00023285	- "return completed results plus failure detail"
+L00023286	negative_constraints: []
+L00023287	compatibility_only_notes: []
+L00023288	stale_retired_dispositions: []
+L00023289	owner_boundary_notes:
+L00023290	- "Tools/provider docs own Firecrawl routing and batch semantics; FinalGUISpec preserves the consumer boundary."
+L00023291	owner_hints:
+L00023292	- "Plans/FinalGUISpec.md"
+L00023293	```
+L00023294	
+L00023295	### F3-366 - Web Progress And Cancellation Payload Carry-Through
+L00023296	
+L00023297	```yaml
+L00023298	plan_unit_id: F3-366
+L00023299	unit_type: requirement
+L00023300	status: accepted
+L00023301	owner_doc: Plans/FinalGUISpec.md
+L00023302	canonical_text: >-
+L00023303	  Long-running web operation cards preserve structured progress_event payloads and
+L00023304	  cancellation with partial results, including tool_use_id, operation, phase, detail,
+L00023305	  pages_completed, pages_total, elapsed_ms, estimated_remaining_ms, and cancelled: true where
+L00023306	  applicable.
+L00023307	gui_related: true
+L00023308	gui_classification_reason: >-
+L00023309	  This unit defines visible FinalGUISpec widget or card behavior.
+L00023310	split_recommended: false
+L00023311	depends_on: []
+L00023312	unblocks: []
+L00023313	acceptance_criteria:
+L00023314	- "The covered source span remains losslessly available for exact-text audit."
+L00023315	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00023316	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00023317	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00023318	validation_surfaces:
+L00023319	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00023320	- "python3 scripts/pm-plan-index.py validate"
+L00023321	risk_class: finalgui_drift
+L00023322	reasoning_tier: standard
+L00023323	context_scope: finalgui_standardization
+L00023324	implementation_surfaces:
+L00023325	- "Plans/FinalGUISpec.md"
+L00023326	node_compile_hint:
+L00023327	  mode: web_progress_and_cancellation_payload_carry_through
+L00023328	  create_worknodes: false
+L00023329	source_lineage:
+L00023330	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0232"
+L00023331	preserved_exact_tokens:
+L00023332	- "progress_event"
+L00023333	- "tool_use_id"
+L00023334	- "operation"
+L00023335	- "phase"
+L00023336	- "detail"
+L00023337	- "pages_completed"
+L00023338	- "pages_total"
+L00023339	- "elapsed_ms"
+L00023340	- "estimated_remaining_ms"
+L00023341	- "cancelled: true"
+L00023342	- "partial results"
+L00023343	negative_constraints: []
+L00023344	compatibility_only_notes: []
+L00023345	stale_retired_dispositions: []
+L00023346	owner_boundary_notes:
+L00023347	- "FinalGUISpec owns visible card/widget behavior; owner docs retain runtime, tool, permission, schema, and storage authority."
+L00023348	owner_hints:
+L00023349	- "Plans/FinalGUISpec.md"
+L00023350	```
+L00023351	
+L00023352	### F3-367 - Shared Operation Card Lifecycle State Machine
+L00023353	
+L00023354	```yaml
+L00023355	plan_unit_id: F3-367
+L00023356	unit_type: requirement
+L00023357	status: accepted
+L00023358	owner_doc: Plans/FinalGUISpec.md
+L00023359	canonical_text: >-
+L00023360	  Operation cards are restricted to stateful, time-bounded lifecycle-bearing operations,
+L00023361	  exclude other widget families, and use a locked card-level state machine reconciled against
+L00023362	  the 8-state agent/process taxonomy; card states include pending, running, completed, failed,
+L00023363	  cancelled, blocked, starting, exited, background, backgrounded, disconnected, restoring,
+L00023364	  terminated, and attention_required according to owner mappings.
+L00023365	gui_related: true
+L00023366	gui_classification_reason: >-
+L00023367	  This unit defines visible FinalGUISpec widget or card behavior.
+L00023368	split_recommended: false
+L00023369	depends_on: []
+L00023370	unblocks: []
+L00023371	acceptance_criteria:
+L00023372	- "The covered source span remains losslessly available for exact-text audit."
+L00023373	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00023374	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00023375	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00023376	validation_surfaces:
+L00023377	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00023378	- "python3 scripts/pm-plan-index.py validate"
+L00023379	risk_class: finalgui_drift
+L00023380	reasoning_tier: standard
+L00023381	context_scope: finalgui_standardization
+L00023382	implementation_surfaces:
+L00023383	- "Plans/FinalGUISpec.md"
+L00023384	node_compile_hint:
+L00023385	  mode: shared_operation_card_lifecycle_state_machine
+L00023386	  create_worknodes: false
+L00023387	source_lineage:
+L00023388	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0232"
+L00023389	preserved_exact_tokens:
+L00023390	- "stateful, time-bounded lifecycle-bearing operations"
+L00023391	- "8-state agent/process taxonomy"
+L00023392	- "pending"
+L00023393	- "running"
+L00023394	- "completed"
+L00023395	- "failed"
+L00023396	- "cancelled"
+L00023397	- "blocked"
+L00023398	- "starting"
+L00023399	- "exited"
+L00023400	- "background"
+L00023401	- "backgrounded"
+L00023402	- "disconnected"
+L00023403	- "restoring"
+L00023404	- "terminated"
+L00023405	- "attention_required"
+L00023406	negative_constraints: []
+L00023407	compatibility_only_notes: []
+L00023408	stale_retired_dispositions: []
+L00023409	owner_boundary_notes:
+L00023410	- "assistant-chat-design.md owns terminal command-card state mappings; FinalGUISpec owns visible card-state presentation."
+L00023411	owner_hints:
+L00023412	- "Plans/FinalGUISpec.md"
+L00023413	```
+L00023414	
+
+<<< CONTEXT_AFTER canonical_document_lines=23415-23426 >>>
+L00023415	### F3-368 - Message Controls Queue And Scroll Behavior
+L00023416	
+L00023417	```yaml
+L00023418	plan_unit_id: F3-368
+L00023419	unit_type: requirement
+L00023420	status: accepted
+L00023421	owner_doc: Plans/FinalGUISpec.md
+L00023422	canonical_text: >-
+L00023423	  Message controls attach Stop, Edit, and Resend only to the most recent user-sent message,
+L00023424	  use FIFO queued-message semantics with max two queued messages, discard later history or
+L00023425	  work for rewind/resend/edit behavior, keep queue state transient across reload/restart, keep
+L00023426	  Stop from clearing the queue, keep code-block copy always visible, disclose subagents, and

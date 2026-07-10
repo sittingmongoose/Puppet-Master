@@ -1,0 +1,727 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001042-ADVERSARIAL-WIN-749F06E4B796-0004",
+  "attempt_id": "attempt-0012",
+  "task_thread_id": "/root/a005_blind_wave_0005_b_dispatcher_epoch_0012/bw5b_a1042",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Automated_Testing_System.md",
+    "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
+    "core_sha256": "626107887fe4959eaa6acf6cd987b9527256df146d78a5c01acecff2ac4926c2",
+    "core_range": [1036, 1370]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "ADV-001",
+      "item_type": "explicit_non_gap",
+      "title": "Teach visibly discloses model, source, and missing coverage",
+      "statement": "The Teach acceptance scope explicitly covers requested/effective model disclosure, PM knowledge source disclosure, missing-coverage callout, degraded overlays, and activity cards, reducing the risk that the GUI presents unsupported Teacher output as authoritative.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1045,
+          "line_end": 1045,
+          "exact_quote": "  model disclosure, PM knowledge source disclosure, missing coverage callout, guided overlay happy path and degraded",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1207,
+          "line_end": 1207,
+          "exact_quote": "- Do not let Teacher answer capability or settings questions without live/source-backed state.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-014"],
+      "gap_kind": "none",
+      "impact": "Provides a meaningful GUI-truth and authority guardrail.",
+      "builder_discretion": "Choose fixtures and presentation details while preserving visible disclosure."
+    },
+    {
+      "item_id": "ADV-002",
+      "item_type": "gap",
+      "title": "Teach scenarios lack falsifiable expected outcomes",
+      "statement": "ATS-014 enumerates a very broad set of paths but does not define inputs, expected outputs, pass/fail predicates, fixture identities, or negative oracles for summon disambiguation, model selection, mutation confirmation, memory conflicts, or handoff. Its listed validation surfaces are governance validators rather than executable Teach behavior tests.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1066,
+          "line_end": 1066,
+          "exact_quote": "validation_surfaces:",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1068,
+          "line_end": 1068,
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-014"],
+      "gap_kind": "test_falsifiability",
+      "impact": "A test suite could claim coverage while asserting only that surfaces exist.",
+      "builder_discretion": "Fixture organization is discretionary; observable pass and fail predicates are not."
+    },
+    {
+      "item_id": "ADV-003",
+      "item_type": "gap",
+      "title": "Teach transition, concurrency, and recovery semantics are absent",
+      "statement": "Save, cancel, conflict, revoke, unlock, mutation confirmation, activity cards, and handoff are named, but legal state transitions, concurrent Teacher-thread behavior, duplicate summons, mutation-versus-cancel races, failed handoff recovery, and rollback semantics are not specified as acceptance oracles.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1046,
+          "line_end": 1046,
+          "exact_quote": "  states, mutation confirmation, activity cards, memory capture save/cancel/scope/conflict/revoke/unlock, Teacher",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-014"],
+      "gap_kind": "invalid_states_transitions_concurrency_recovery",
+      "impact": "Race-dependent loss, duplicate mutation, or stranded handoff state could pass the stated scope.",
+      "builder_discretion": "Implementation may choose its state machine, but tests need an explicit externally observable transition contract."
+    },
+    {
+      "item_id": "ADV-004",
+      "item_type": "gap",
+      "title": "Teach memory lifecycle is only action-enumerated",
+      "statement": "Memory capture actions include scope, revoke, and unlock, yet the core does not establish retention, post-revocation deletion, derived-copy cleanup, export or backup handling, scope-change propagation, or what activity/source disclosure remains after revocation.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1046,
+          "line_end": 1046,
+          "exact_quote": "  states, mutation confirmation, activity cards, memory capture save/cancel/scope/conflict/revoke/unlock, Teacher",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-014"],
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Revoked or re-scoped Teach memory may remain recoverable or usable without a test failure.",
+      "builder_discretion": "Retention durations may be product-defined elsewhere; the test must still verify the bound contract."
+    },
+    {
+      "item_id": "ADV-005",
+      "item_type": "gap",
+      "title": "Teach mutation authority has no actor or approval matrix",
+      "statement": "The text requires GUI-control safety and mutation confirmation but does not identify which actor may propose, approve, execute, cancel, or retry each mutation, nor how permission denial and authority changes during confirmation are tested.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1189,
+          "line_end": 1189,
+          "exact_quote": "- Do not call Teach implementation-ready without tests for model default/settings, invocation routing, help-icon",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1190,
+          "line_end": 1190,
+          "exact_quote": "  launch, knowledge substrate behavior, GUI control safety, and activity transparency.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-014"],
+      "gap_kind": "authority_boundaries",
+      "impact": "A confirmation dialog can exist while unauthorized or stale-authority mutations still execute.",
+      "builder_discretion": "Dialog presentation is discretionary; actor and authorization outcomes must be testable."
+    },
+    {
+      "item_id": "ADV-006",
+      "item_type": "gap",
+      "title": "Teach has no offline or stale-live-state oracle",
+      "statement": "Teacher is forbidden from answering capability and settings questions without live/source-backed state, but ATS-014 does not define offline startup, network loss mid-answer, stale-cache age, reconnection, source timeout, or whether the answer is blocked, degraded, queued, or invalidated.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1207,
+          "line_end": 1207,
+          "exact_quote": "- Do not let Teacher answer capability or settings questions without live/source-backed state.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-014"],
+      "gap_kind": "offline_network_loss",
+      "impact": "Stale state could be presented as live or the UI could hang without violating a named oracle.",
+      "builder_discretion": "The degraded UX may vary; it must visibly distinguish unavailable and stale state."
+    },
+    {
+      "item_id": "ADV-007",
+      "item_type": "gap",
+      "title": "Teach omits scale and localization stress",
+      "statement": "The pressure test spans many knowledge domains and calls for responsive and overflow behavior, but no corpus size, result count, history size, simultaneous threads, latency ceiling, long translated label, bidirectional-text, pluralization, or locale-sensitive formatting boundary is stated.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1047,
+          "line_end": 1047,
+          "exact_quote": "  handoff, responsive/overflow/keyboard/screen-reader behavior, Teach Help/Glossary coverage, and a PM knowledge",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1048,
+          "line_end": 1048,
+          "exact_quote": "  pressure test over PM concepts, workflows, settings, models, capabilities, permissions, history, artifacts, Personas,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-014"],
+      "gap_kind": "scale_limits_localization",
+      "impact": "Nominal English fixtures may pass while large or localized content breaks the Teacher surface.",
+      "builder_discretion": "Threshold values may be calibrated, but explicit boundary fixtures are required."
+    },
+    {
+      "item_id": "ADV-008",
+      "item_type": "gap",
+      "title": "Teach accessibility topics lack measurable oracles",
+      "statement": "Keyboard and screen-reader coverage is explicitly required, but focus order, focus restoration after overlay or thread launch, escape behavior, accessible names, announcements for source/model changes, and pass criteria are not defined.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1205,
+          "line_end": 1205,
+          "exact_quote": "- Do not skip responsive, overflow, keyboard, or screen-reader checks for the guided overlay and Teacher thread.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-014"],
+      "gap_kind": "accessibility_oracle",
+      "impact": "A superficial screen-reader smoke test could satisfy the wording despite unusable focus or announcements.",
+      "builder_discretion": "Testing tooling is discretionary; accessible interaction outcomes are not."
+    },
+    {
+      "item_id": "ADV-009",
+      "item_type": "explicit_non_gap",
+      "title": "Visualizer covers hostile marker and sandbox inputs",
+      "statement": "ATS-015 explicitly excludes markers from tool, reasoning, execution, code fences, and literal content, validates origin_nonce and bridge schemas, and denies parent or network escape paths. This is a substantive untrusted-input and authority boundary.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1237,
+          "line_end": 1237,
+          "exact_quote": "  `@@@VIZ-END`; false-positive exclusion for tool_calls, reasoning, code_execution, Markdown code fences, and",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1241,
+          "line_end": 1241,
+          "exact_quote": "  denial for allow-same-origin, parent.document, parent localStorage, CDN, dynamic import, and unvetted network;",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-015"],
+      "gap_kind": "none",
+      "impact": "Provides explicit negative-space coverage for parser confusion and webview privilege escape.",
+      "builder_discretion": "Fuzz corpus design may vary while preserving each named denial."
+    },
+    {
+      "item_id": "ADV-010",
+      "item_type": "gap",
+      "title": "Visualizer serialization does not cover lifecycle races",
+      "statement": "Serialized script execution and zero-flicker finalization are named, but the core does not specify overlapping streamed visualizers, duplicate bridge_call_id behavior, reload during script execution, save/load racing finalization, cancellation, crash recovery, replay, or rollback after partially mutated DOM state.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1238,
+          "line_end": 1238,
+          "exact_quote": "  marker-like literal content; progressive render and zero-flicker finalization; serialized script execution;",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-015"],
+      "gap_kind": "concurrency_races_recovery_rollback",
+      "impact": "Interleavings can corrupt rendered state or execute a stale script while all named happy-path assertions pass.",
+      "builder_discretion": "Internal scheduling is discretionary; race outcomes and cleanup must be explicit."
+    },
+    {
+      "item_id": "ADV-011",
+      "item_type": "gap",
+      "title": "Visualizer quotas have no boundary or exhaustion behavior",
+      "statement": "The acceptance criteria mention save/load quota but provide no byte, entry, time, DOM, script, stream, or concurrent-instance limit and no expected UI or recovery behavior when limits are reached.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1251,
+          "line_end": 1251,
+          "exact_quote": "  - Tests prove bridge envelope origin/nonce, method schema, return/error, save/load quota, and native webview adapter mapping behavior.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-015"],
+      "gap_kind": "scale_limits",
+      "impact": "Resource exhaustion may freeze the host or silently discard state without failing acceptance.",
+      "builder_discretion": "Platform-specific thresholds are acceptable if surfaced and tested consistently."
+    },
+    {
+      "item_id": "ADV-012",
+      "item_type": "gap",
+      "title": "Visualizer adapter compatibility lacks version and migration tests",
+      "statement": "Rust plus Slint webview mapping and bridge aliases are listed, but there is no version negotiation, unknown-method behavior, old saved-state migration, forward/backward compatibility, platform parity matrix, or round-trip equivalence oracle.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1240,
+          "line_end": 1240,
+          "exact_quote": "  `saveState`, and `loadState`; question-flow omission of sendPrompt; Rust + Slint webview adapter mapping; sandbox",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-015"],
+      "gap_kind": "compatibility_migration",
+      "impact": "Bridge or saved-state upgrades can strand existing content without detection.",
+      "builder_discretion": "Supported version span may be chosen elsewhere; compatibility outcomes need fixtures."
+    },
+    {
+      "item_id": "ADV-013",
+      "item_type": "gap",
+      "title": "Visualizer failures lack support-grade observability",
+      "statement": "Return/error and visible fallback states are required, but ATS-015 does not define correlation identifiers, structured error classes, safe diagnostic fields, user-copy-to-log linkage, export behavior for failure evidence, or redaction assertions beyond the general no-secret requirement.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1252,
+          "line_end": 1252,
+          "exact_quote": "  - Tests prove sandbox/network/library denials produce visible fallback states without leaks.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-015"],
+      "gap_kind": "observability_support",
+      "impact": "Failures may be visible but not diagnosable or safely exportable by support.",
+      "builder_discretion": "Telemetry backend is discretionary; diagnosable, redacted linkage is not."
+    },
+    {
+      "item_id": "ADV-014",
+      "item_type": "explicit_non_gap",
+      "title": "Notification tests name failure classes, idempotency, and secret exclusions",
+      "statement": "ATS-016 distinguishes retryable provider/network statuses from permanent malformed, revoked, missing, or forbidden outcomes, names idempotency, and forbids secrets across several evidence surfaces. This directly addresses important partial-failure and privacy negative space.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1308,
+          "line_end": 1308,
+          "exact_quote": "  provider error, 408/429/5xx/network retry behavior, malformed/revoked/missing/forbidden permanent failures, rate-limit",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1321,
+          "line_end": 1321,
+          "exact_quote": "  - Secret material never appears in logs, receipts, screenshots, exports, or GUI previews.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-016"],
+      "gap_kind": "none",
+      "impact": "Provides a strong minimum set of delivery failure and leakage assertions.",
+      "builder_discretion": "Provider mock implementation may vary."
+    },
+    {
+      "item_id": "ADV-015",
+      "item_type": "gap",
+      "title": "Notification retry behavior has no stateful delivery oracle",
+      "statement": "Retryable statuses and idempotency are named without defining attempt ceilings, backoff or Retry-After handling, jitter, persistence across restart, ordering, deduplication key lifetime, terminal transition, cancellation, reconnect behavior, or what GUI status is shown during and after exhaustion.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1308,
+          "line_end": 1308,
+          "exact_quote": "  provider error, 408/429/5xx/network retry behavior, malformed/revoked/missing/forbidden permanent failures, rate-limit",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1309,
+          "line_end": 1309,
+          "exact_quote": "  mocks, idempotency, mention-policy denial, provider-specific profile validation, success receipt mocks, no-secret",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-016"],
+      "gap_kind": "invalid_states_transitions_partial_failure_recovery_offline",
+      "impact": "A retry storm, duplicate external send, or permanently ambiguous delivery state could pass the plan.",
+      "builder_discretion": "Backoff policy values may be provider-specific; bounded transitions and deduplication must be testable."
+    },
+    {
+      "item_id": "ADV-016",
+      "item_type": "gap",
+      "title": "Destination mutation races and destructive actions are unspecified",
+      "statement": "CRUD, toggle, and test are covered, but no oracle exists for deleting or disabling a destination during an in-flight send, concurrent edits, stale test-send confirmations, credential rotation between approval and dispatch, rollback after partial update, or whether destructive operations require confirmation and are recoverable.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1307,
+          "line_end": 1307,
+          "exact_quote": "  CRUD/toggle/test, Slack, Discord, generic webhook, ntfy, Pushover, Telegram mocks, payload redaction, missing auth,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1318,
+          "line_end": 1318,
+          "exact_quote": "  - Automated delivery tests use mocks by default; live sends require explicit user action and enabled destination.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-016"],
+      "gap_kind": "concurrency_races_destructive_actions_authority",
+      "impact": "A confirmed action can target stale configuration or a deleted destination and cause an unintended external send.",
+      "builder_discretion": "Locking strategy is discretionary; stale-authority and in-flight mutation outcomes are not."
+    },
+    {
+      "item_id": "ADV-017",
+      "item_type": "gap",
+      "title": "Notification privacy coverage stops at direct secret leakage",
+      "statement": "The no-secret assertions are strong but do not cover retention and deletion of destination profiles, tokens, payload bodies, recipient identifiers, receipts, screenshots, exports, imported licenses, or derived metadata; nor do they specify redaction of sensitive non-secret content.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1321,
+          "line_end": 1321,
+          "exact_quote": "  - Secret material never appears in logs, receipts, screenshots, exports, or GUI previews.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-016"],
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Personal or operational data can persist or leak while literal credentials remain absent.",
+      "builder_discretion": "Retention windows may be policy-owned; deletion and redaction assertions must bind to them."
+    },
+    {
+      "item_id": "ADV-018",
+      "item_type": "gap",
+      "title": "Notification accessibility and localization lack concrete states",
+      "statement": "Sound is correctly forbidden as the only carrier, but no visual, haptic, screen-reader, focus, motion, caption, locale, bidirectional text, translated provider-error, or long-label oracle is required for settings, previews, test sends, and delivery failures.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1312,
+          "line_end": 1312,
+          "exact_quote": "  manifest review, unsupported format rejection, and accessibility where sound is not the only carrier.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-016"],
+      "gap_kind": "accessibility_localization",
+      "impact": "The suite can pass with an inaccessible or untranslated failure path.",
+      "builder_discretion": "Alternative carrier design may vary; equivalence and localization outcomes must be asserted."
+    },
+    {
+      "item_id": "ADV-019",
+      "item_type": "gap",
+      "title": "Sound import compatibility has no migration or rollback oracle",
+      "statement": "PeonPing/OpenPeon mapping, unknown-manifest review, and unsupported-format rejection are named, but version discovery, collision handling, partial import, duplicate identity, path traversal, re-import idempotency, preservation of provenance, failed migration rollback, and round-trip export are not specified.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1311,
+          "line_end": 1311,
+          "exact_quote": "  sound preview local-only, explicit live test-send gating, PeonPing/OpenPeon import compatibility mapping, unknown",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1322,
+          "line_end": 1322,
+          "exact_quote": "  - Sound upload and imported pack tests enforce format, size, duration, path, decode, license, and compatibility boundaries.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-016"],
+      "gap_kind": "compatibility_migration_recovery_untrusted_inputs",
+      "impact": "Malformed or partially migrated packs can corrupt the catalog or bypass path and provenance boundaries.",
+      "builder_discretion": "Migration mechanism may vary; atomicity, validation, and rollback results must be observable."
+    },
+    {
+      "item_id": "ADV-020",
+      "item_type": "gap",
+      "title": "No executable caller or suite consumer is bound",
+      "statement": "All three PlanUnits point to future tests or fixture suites, and two validation surfaces name only plan-index validation. No test runner, fixture loader, CI gate, platform matrix, product caller, result consumer, or failure owner is identified.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1075,
+          "line_end": 1075,
+          "exact_quote": "- future Teach/Teacher tests",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1255,
+          "line_end": 1255,
+          "exact_quote": "  - future inline visualizer v2 fixture suite",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1325,
+          "line_end": 1325,
+          "exact_quote": "  - future notification and sound delivery fixture suite",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-014", "ATS-015", "ATS-016"],
+      "gap_kind": "missing_callers_consumers_test_falsifiability",
+      "impact": "The acceptance requirements can remain inert prose with no executable enforcement or accountable consumer.",
+      "builder_discretion": "The runner and CI architecture may be selected later; binding to an executable consumer is required before readiness."
+    },
+    {
+      "item_id": "ADV-021",
+      "item_type": "gap",
+      "title": "Cross-document dependencies are named but seams are not tested",
+      "statement": "Dependencies and owner hints identify many adjacent documents, yet the core does not define reciprocal contract assertions across chat, settings, permissions, models, runtime artifacts, GUI command routing, bridge contracts, and plan help sources. A locally passing owner-doc test can therefore miss incompatible seam behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1209,
+          "line_end": 1209,
+          "exact_quote": "owner_hints:",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1246,
+          "line_end": 1246,
+          "exact_quote": "depends_on: [ACD-427, CV-300, F3-404, SP-221, PS-123, RAP-037]",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1315,
+          "line_end": 1315,
+          "exact_quote": "depends_on: [ACD-428, CV-298, F3-405, SP-222, PS-124, RAP-039, UCC-103, WM-039]",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-014", "ATS-015", "ATS-016"],
+      "gap_kind": "cross_document_seams",
+      "impact": "Interface drift can survive isolated acceptance suites.",
+      "builder_discretion": "Seam-test placement is discretionary; reciprocal observable contracts are not."
+    },
+    {
+      "item_id": "ADV-022",
+      "item_type": "unknown",
+      "title": "Residual unknowns are not explored by generative or chaos testing",
+      "statement": "The units preserve enumerated tokens and named negative constraints but do not require property-based generation, malformed corpus mutation, schedule perturbation, provider-contract drift, resource fault injection, or exploratory unknown-state discovery. Unexpected combinations outside the lists remain unbounded.",
+      "severity": "medium",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1288,
+          "line_end": 1288,
+          "exact_quote": "negative_constraints:",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1359,
+          "line_end": 1359,
+          "exact_quote": "negative_constraints:",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ],
+      "feature_keys": ["ATS-014", "ATS-015", "ATS-016"],
+      "gap_kind": "unknown_unknowns",
+      "impact": "Combinatorial failures outside the hand-enumerated cases may not be discovered until production.",
+      "builder_discretion": "Generation and perturbation strategy is discretionary; some bounded unknown-space exploration should be required."
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Future suites are named without executable callers, CI consumers, or failure owners.",
+      "evidence_item_ids": ["ADV-020"]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Named actions and failure classes lack complete legal-state and transition oracles.",
+      "evidence_item_ids": ["ADV-003", "ADV-015", "ADV-016"]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Serialization and idempotency are present, but lifecycle and configuration races remain unspecified.",
+      "evidence_item_ids": ["ADV-003", "ADV-010", "ADV-016"]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Provider failure categories and visible fallbacks are addressed, while stateful partial completion and exhaustion behavior are not.",
+      "evidence_item_ids": ["ADV-013", "ADV-014", "ADV-015"]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "Failed handoff, partial render, notification retry, and import rollback semantics are absent.",
+      "evidence_item_ids": ["ADV-003", "ADV-010", "ADV-015", "ADV-019"]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "Visualizer sandbox and live-send gating are explicit, but Teach mutation actors and stale approval authority are unbound.",
+      "evidence_item_ids": ["ADV-005", "ADV-009", "ADV-016"]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "No-secret assertions are strong, but retention, revocation, derived data, and deletion are incomplete.",
+      "evidence_item_ids": ["ADV-004", "ADV-014", "ADV-017"]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Visualizer parsing and sandbox cases are strong; imported pack and natural-language/source adversarial boundaries are less complete.",
+      "evidence_item_ids": ["ADV-009", "ADV-019", "ADV-022"]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "addressed",
+      "summary": "Model/source/missing-coverage disclosure, visualizer fallbacks, activity transparency, and non-sound carriers are explicitly required, though detailed oracles remain in other dimensions.",
+      "evidence_item_ids": ["ADV-001", "ADV-013", "ADV-018"]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "Network retry is named, but offline startup, disconnect, reconnect, stale-state, queue, and cancellation outcomes are not complete.",
+      "evidence_item_ids": ["ADV-006", "ADV-015"]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "No systematic corpus, instance, payload, queue, history, quota, or resource ceilings and exhaustion oracles exist.",
+      "evidence_item_ids": ["ADV-007", "ADV-011"]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "Accessibility domains are named, but focus, announcement, equivalence, and measurable pass criteria are incomplete.",
+      "evidence_item_ids": ["ADV-008", "ADV-018"]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "Localized visualizer feedback is named, while Teach and notification locale, bidi, expansion, and translated-error behavior are absent.",
+      "evidence_item_ids": ["ADV-007", "ADV-018"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Native adapter and named sound-pack compatibility lack version, atomic migration, rollback, and round-trip oracles.",
+      "evidence_item_ids": ["ADV-012", "ADV-019"]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Activity, receipts, and errors exist, but safe structured diagnostics and correlation across GUI and support evidence are not bound.",
+      "evidence_item_ids": ["ADV-001", "ADV-013", "ADV-014"]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "Memory revoke and destination delete/update are named without confirmation freshness, undo, atomicity, or recovery outcomes.",
+      "evidence_item_ids": ["ADV-003", "ADV-016"]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "Dependencies and owner hints identify seams but do not establish reciprocal integration assertions.",
+      "evidence_item_ids": ["ADV-021"]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Broad coverage claims lack fixture-bound inputs, expected outputs, failure predicates, and executable gate ownership.",
+      "evidence_item_ids": ["ADV-002", "ADV-020"]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "unknown",
+      "summary": "The enumerated cases do not bound emergent combinations, fuzz inputs, schedule perturbations, or provider drift.",
+      "evidence_item_ids": ["ADV-022"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

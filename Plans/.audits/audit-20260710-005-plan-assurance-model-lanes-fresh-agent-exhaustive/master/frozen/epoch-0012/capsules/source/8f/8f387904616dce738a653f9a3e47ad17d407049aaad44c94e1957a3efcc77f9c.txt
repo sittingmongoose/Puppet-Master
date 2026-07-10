@@ -1,0 +1,403 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1286-1297 >>>
+L00001286	- Plans/Contracts_V0.md
+L00001287	- Plans/storage-plan.md
+L00001288	- Plans/FinalGUISpec.md
+L00001289	- Plans/assistant-chat-design.md
+L00001290	- Plans/UI_Command_Catalog.md
+L00001291	- Plans/Orchestrator_Page.md
+L00001292	- Plans/Permissions_System.md
+L00001293	- Plans/Prompt_Pipeline.md
+L00001294	- Plans/Media_Generation_and_Capabilities.md
+L00001295	- Plans/Models_System.md
+L00001296	```
+L00001297	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1298-1671 >>>
+L00001298	### RAP-036 - Teacher Activity Transparency Projection
+L00001299	
+L00001300	```yaml
+L00001301	plan_unit_id: RAP-036
+L00001302	unit_type: requirement
+L00001303	status: accepted
+L00001304	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00001305	canonical_text: Teacher activity such as route opens, highlights, source lookups, permission waits, model fallback,
+L00001306	  missing coverage, memory save prompts, and handoffs is represented as compact Assistant Chat cards or rows with
+L00001307	  durable detail payloads. Important blocked or degraded activity remains visible in the thread and can be inspected
+L00001308	  later without forcing the user into raw traces.
+L00001309	gui_related: true
+L00001310	gui_classification_reason: Teacher activity rows/cards and durable detail payloads are user-visible runtime projections.
+L00001311	depends_on:
+L00001312	- ACD-426
+L00001313	- CV-297
+L00001314	unblocks:
+L00001315	- ATS-014
+L00001316	acceptance_criteria:
+L00001317	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00001318	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00001319	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00001320	  are created by this compile.
+L00001321	validation_surfaces:
+L00001322	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00001323	- python3 scripts/pm-plan-index.py validate
+L00001324	- git diff --check
+L00001325	risk_class: teacher_activity_trace_gap
+L00001326	reasoning_tier: standard
+L00001327	context_scope: teacher_activity_projection
+L00001328	implementation_surfaces:
+L00001329	- Plans/Runtime_Artifacts_Panel.md
+L00001330	- future Teacher activity detail rows
+L00001331	node_compile_hint:
+L00001332	  mode: teacher_activity_projection
+L00001333	  create_worknodes: false
+L00001334	  create_nodeseeds: false
+L00001335	source_lineage:
+L00001336	- pldg-20260626-001-feature-name:atom-0099
+L00001337	- pldg-20260626-001-feature-name:atom-0107
+L00001338	- pldg-20260626-001-feature-name:atom-0145
+L00001339	- pldg-20260626-001-feature-name:atom-0147
+L00001340	- chat:teacher-feature-initial-framing
+L00001341	- memory:MEMORY.md:365
+L00001342	- Plans/assistant-chat-design.md
+L00001343	- Plans/FinalGUISpec.md
+L00001344	- chat:teach-visual-specificity-challenge
+L00001345	- chat:work-through-teach-gaps
+L00001346	- Plans/Runtime_Artifacts_Panel.md#artifact-audit-visibility
+L00001347	- chat:teach-bundle-accepted-pmconcept-reference
+L00001348	- Plans/Personas.md#11.8-teacher
+L00001349	source_atom_ids:
+L00001350	- atom-0099
+L00001351	- atom-0107
+L00001352	- atom-0145
+L00001353	- atom-0147
+L00001354	decision_refs:
+L00001355	- dec-0018
+L00001356	- dec-0019
+L00001357	- dec-0020
+L00001358	- dec-0021
+L00001359	- dec-0022
+L00001360	- dec-0023
+L00001361	- dec-0024
+L00001362	correction_refs:
+L00001363	- corr-0002
+L00001364	preserved_exact_tokens:
+L00001365	- assistant chat threads
+L00001366	- show what its doing
+L00001367	- blocked
+L00001368	- skipped
+L00001369	- requires confirmation
+L00001370	- handoff
+L00001371	- How it will show the user
+L00001372	- Opening Settings > Models
+L00001373	- Highlighting
+L00001374	- Waiting for confirmation
+L00001375	- Blocked
+L00001376	- Handing off
+L00001377	- Teacher activity
+L00001378	- source lookups
+L00001379	- permission waits
+L00001380	- model fallback
+L00001381	- missing coverage
+L00001382	- memory save prompts
+L00001383	- handoffs
+L00001384	- collapsible detail
+L00001385	- hand off
+L00001386	- implementation/build work
+L00001387	- high-reasoning architecture decisions
+L00001388	- audit/repair
+L00001389	- external research
+L00001390	- direct execution
+L00001391	- specialty tooling
+L00001392	- suggested destination Persona
+L00001393	- stronger model
+L00001394	negative_constraints:
+L00001395	- Do not let Teacher silently manipulate or navigate the GUI with no chat-visible activity trail.
+L00001396	- Do not hide blocked/skipped reasons or requested/effective Persona/model state when they affect the teaching flow.
+L00001397	- Do not let a low-end Teacher model continue silently when the task has become implementation/build work requiring
+L00001398	  handoff.
+L00001399	- Do not make GUI guidance silent or invisible in the chat thread.
+L00001400	- Do not show vague activity text when PM knows the route/control/action.
+L00001401	- Do not hide blocked, skipped, fallback, or handoff state.
+L00001402	- Do not make Teacher GUI actions silent.
+L00001403	- Do not hide blocked/degraded activity rows after the immediate step passes.
+L00001404	- Do not force users into raw traces for normal teaching transparency.
+L00001405	- Do not let Teacher quietly become a builder or auditor.
+L00001406	- Do not silently switch Persona/model/tool path without disclosure.
+L00001407	- Do not discard Teacher context during handoff.
+L00001408	owner_hints:
+L00001409	- Plans/assistant-chat-design.md
+L00001410	- Plans/FinalGUISpec.md
+L00001411	- Plans/Personas.md
+L00001412	- Plans/Runtime_Artifacts_Panel.md
+L00001413	- Plans/UI_Command_Catalog.md
+L00001414	- Plans/Models_System.md
+L00001415	```
+L00001416	
+L00001417	## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+L00001418	
+L00001419	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Runtime Artifacts owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00001420	
+L00001421	### RAP-037 - Inline Visualizer Artifact Projection And Export Routing
+L00001422	
+L00001423	```yaml
+L00001424	plan_unit_id: RAP-037
+L00001425	unit_type: requirement
+L00001426	status: accepted
+L00001427	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00001428	canonical_text: >-
+L00001429	  Inline visualizer v2 artifacts appear in runtime artifact projections with source fragment identity, title/type/version,
+L00001430	  render config, approved bridge metadata, current fallback or error state, replay/re-render status, export availability,
+L00001431	  and snapshot fallback provenance when re-render is impractical. The projection does not expose raw iframe heap,
+L00001432	  same-origin storage, secrets, unredacted diagnostics, or parent DOM/localStorage access.
+L00001433	gui_related: true
+L00001434	gui_classification_reason: Runtime artifact rows/projections and export availability are visible UI.
+L00001435	depends_on: [ACD-427, CV-300, SP-221, PS-123]
+L00001436	unblocks: [ATS-015]
+L00001437	acceptance_criteria:
+L00001438	  - Visualizer artifacts can be inspected and exported without exposing private iframe or parent state.
+L00001439	  - Replay status distinguishes re-rendered source/config from snapshot fallback.
+L00001440	  - Degraded or failed visualizers keep visible fallback/error provenance.
+L00001441	validation_surfaces:
+L00001442	  - python3 scripts/pm-plan-index.py validate
+L00001443	  - Inline visualizer artifact projection fixtures
+L00001444	risk_class: inline_visualizer_artifact_projection_gap
+L00001445	reasoning_tier: high
+L00001446	context_scope: inline_visualizer_v2_runtime_projection
+L00001447	implementation_surfaces:
+L00001448	  - Plans/Runtime_Artifacts_Panel.md
+L00001449	  - future runtime artifact rows
+L00001450	node_compile_hint:
+L00001451	  mode: inline_visualizer_v2_artifact_projection
+L00001452	  create_worknodes: false
+L00001453	  create_nodeseeds: false
+L00001454	source_lineage:
+L00001455	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/inline_visualizer_v2_readiness_matrix.json:iv2-persistence-reload-security
+L00001456	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0060
+L00001457	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0088
+L00001458	source_atom_ids: [atom-0060, atom-0088]
+L00001459	preserved_exact_tokens:
+L00001460	  - "source fragment"
+L00001461	  - "title/type/version"
+L00001462	  - "render config"
+L00001463	  - "approved bridge metadata"
+L00001464	  - "snapshot fallback"
+L00001465	  - "raw parent localStorage"
+L00001466	negative_constraints:
+L00001467	  - Do not expose raw iframe heap or parent DOM/localStorage state in artifact projections.
+L00001468	  - Do not hide degraded or failed visualizer provenance inside opaque logs only.
+L00001469	owner_hints:
+L00001470	  - Plans/Runtime_Artifacts_Panel.md
+L00001471	  - Plans/storage-plan.md
+L00001472	  - Plans/assistant-chat-design.md
+L00001473	```
+L00001474	
+L00001475	### RAP-038 - DRY Method Receipt And Disclosure Projection
+L00001476	
+L00001477	```yaml
+L00001478	plan_unit_id: RAP-038
+L00001479	unit_type: requirement
+L00001480	status: accepted
+L00001481	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00001482	canonical_text: >-
+L00001483	  Runtime artifacts and run detail projections expose DRY Method receipt state when it materially affects a turn,
+L00001484	  including `dry_method_effective_state`, `dry_method_reason`, `dry_method_source_refs`, `instruction_bundle_ref`,
+L00001485	  `rules_application_sha256`, and `rules_project_sha256`. Projection labels distinguish applied, not_material,
+L00001486	  degraded_rules_missing, degraded_rules_stale, disabled_by_user, blocked_owner_unresolved, and
+L00001487	  caveated_owner_unresolved without flooding routine turns.
+L00001488	gui_related: true
+L00001489	gui_classification_reason: Run detail projection labels and receipt inspection are user-visible UI.
+L00001490	depends_on: [ACD-429, CV-299, SP-223]
+L00001491	unblocks: [ATS-018]
+L00001492	acceptance_criteria:
+L00001493	  - DRY receipt fields are inspectable when DRY affects trust, mutation, or routing.
+L00001494	  - Routine not_material state can stay in detail/provenance rather than chat message text.
+L00001495	  - Missing/stale rules and unresolved owner/source route states are visibly distinct.
+L00001496	validation_surfaces:
+L00001497	  - python3 scripts/pm-plan-index.py validate
+L00001498	  - DRY receipt projection fixtures
+L00001499	risk_class: dry_method_projection_gap
+L00001500	reasoning_tier: high
+L00001501	context_scope: dry_method_runtime_projection
+L00001502	implementation_surfaces:
+L00001503	  - Plans/Runtime_Artifacts_Panel.md
+L00001504	  - future run detail projections
+L00001505	node_compile_hint:
+L00001506	  mode: dry_method_receipt_projection
+L00001507	  create_worknodes: false
+L00001508	  create_nodeseeds: false
+L00001509	source_lineage:
+L00001510	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-rules-provenance
+L00001511	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-chat-what-why
+L00001512	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0074
+L00001513	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0075
+L00001514	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0089
+L00001515	source_atom_ids: [atom-0074, atom-0075, atom-0089]
+L00001516	preserved_exact_tokens:
+L00001517	  - "dry_method_effective_state"
+L00001518	  - "dry_method_reason"
+L00001519	  - "dry_method_source_refs"
+L00001520	  - "instruction_bundle_ref"
+L00001521	  - "rules_application_sha256"
+L00001522	  - "rules_project_sha256"
+L00001523	  - "degraded_rules_missing"
+L00001524	  - "degraded_rules_stale"
+L00001525	  - "disabled_by_user"
+L00001526	  - "blocked_owner_unresolved"
+L00001527	  - "caveated_owner_unresolved"
+L00001528	negative_constraints:
+L00001529	  - Do not hide trust-affecting missing/stale DRY state in logs only.
+L00001530	  - Do not flood routine turns when DRY has no material effect.
+L00001531	owner_hints:
+L00001532	  - Plans/Runtime_Artifacts_Panel.md
+L00001533	  - Plans/Contracts_V0.md
+L00001534	  - Plans/storage-plan.md
+L00001535	```
+L00001536	
+L00001537	### RAP-039 - Notification Delivery Receipt Projection And Export Routing
+L00001538	
+L00001539	```yaml
+L00001540	plan_unit_id: RAP-039
+L00001541	unit_type: requirement
+L00001542	status: accepted
+L00001543	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00001544	canonical_text: >-
+L00001545	  Runtime Artifacts projects NotificationDeliveryAttemptReceipt and notification/sound test-send/export evidence without
+L00001546	  becoming the delivery, storage, permission, or alert-state owner. Notification delivery receipt artifacts preserve
+L00001547	  delivery_attempt_id, source_event_ref, destination id, provider kind, event category, status class, HTTP status,
+L00001548	  provider request/message id when available, retry count, next retry time, redaction profile, request digest, response
+L00001549	  digest, idempotency key, and secret refs only. The projection exposes inspect, Show in Ledger, Show source event, and
+L00001550	  export routes through canonical receipt/source refs, marks mock versus live test-send evidence, and redacts raw
+L00001551	  secrets, webhook URLs, tokens, private paths, screenshots, raw diff bodies, full prompts, full logs, and unredacted
+L00001552	  identities from rows, previews, exports, and screenshots.
+L00001553	gui_related: true
+L00001554	gui_classification_reason: Runtime artifact rows, receipt inspection, export availability, and test-send evidence projection are user-visible UI.
+L00001555	depends_on: [CV-298, SP-222, PS-124]
+L00001556	unblocks: [ATS-016]
+L00001557	acceptance_criteria:
+L00001558	  - Notification delivery receipts are inspectable and exportable through Runtime Artifacts without replacing contract, storage, or permission authority.
+L00001559	  - Test-send evidence distinguishes mock delivery, live delivery, provider error, retry, and permanent failure states.
+L00001560	  - Exported receipt bundles preserve canonical receipt/source refs and disclose redactions or omitted evidence.
+L00001561	  - Secret material, webhook URLs, tokens, private paths, screenshots, raw diff bodies, full prompts, full logs, and unredacted identities never appear in rows, previews, exports, or screenshots.
+L00001562	validation_surfaces:
+L00001563	  - python3 scripts/pm-plan-index.py validate
+L00001564	  - Notification delivery receipt Runtime Artifacts projection fixtures
+L00001565	risk_class: notification_receipt_projection_gap
+L00001566	reasoning_tier: high
+L00001567	context_scope: notifications_sounds_receipt_projection
+L00001568	implementation_surfaces:
+L00001569	  - Plans/Runtime_Artifacts_Panel.md
+L00001570	  - future Runtime Artifacts notification receipt rows
+L00001571	node_compile_hint:
+L00001572	  mode: notification_delivery_receipt_projection
+L00001573	  create_worknodes: false
+L00001574	  create_nodeseeds: false
+L00001575	source_lineage:
+L00001576	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-destination-record-schema
+L00001577	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-payload-redaction-trust-copy
+L00001578	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-retry-rate-receipt-contract
+L00001579	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:preview-test-send-accessibility
+L00001580	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0061
+L00001581	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0062
+L00001582	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0063
+L00001583	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0069
+L00001584	  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0091
+L00001585	source_atom_ids: [atom-0061, atom-0062, atom-0063, atom-0069, atom-0091]
+L00001586	preserved_exact_tokens:
+L00001587	  - "NotificationDeliveryAttemptReceipt"
+L00001588	  - "delivery_attempt_id"
+L00001589	  - "source_event_ref"
+L00001590	  - "HTTP status"
+L00001591	  - "provider request/message id"
+L00001592	  - "retry count"
+L00001593	  - "redaction profile"
+L00001594	  - "request digest"
+L00001595	  - "response digest"
+L00001596	  - "secret refs only"
+L00001597	  - "test-send"
+L00001598	  - "export"
+L00001599	negative_constraints:
+L00001600	  - Do not make Runtime Artifacts Panel the owner of notification delivery, storage, credential custody, or alert-state truth.
+L00001601	  - Do not expose raw secrets, webhook URLs, tokens, private paths, screenshots, raw diff bodies, full prompts, full logs, or unredacted identities.
+L00001602	  - Do not represent mock delivery as live provider success.
+L00001603	owner_hints:
+L00001604	  - Plans/Runtime_Artifacts_Panel.md
+L00001605	  - Plans/Contracts_V0.md
+L00001606	  - Plans/storage-plan.md
+L00001607	  - Plans/Permissions_System.md
+L00001608	```
+L00001609	
+L00001610	## Ledger Compile Addendum - pldg-20260629-001-feature-name
+L00001611	
+L00001612	This addendum compiles Free Models runtime artifact and diagnostic projections. It does not make Runtime Artifacts Panel the owner of routing, storage, permissions, or model precedence, and it does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+L00001613	
+L00001614	### RAP-040 - Free Models Auto Apply Diagnostics And Runtime Evidence Projection
+L00001615	
+L00001616	```yaml
+L00001617	plan_unit_id: RAP-040
+L00001618	unit_type: requirement
+L00001619	status: accepted
+L00001620	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00001621	canonical_text: >-
+L00001622	  Runtime Artifacts and Advanced/Support diagnostics project Free Models Auto Apply evidence including last successful source/ref/hash, last failed check time, error class, affected provider/model ids, route impact, import diff, activation receipt, quarantine/rollback refs, and redacted copy/export with redaction summary. Normal UI remains plain and passive for successful checks, routine automatic failures, and repeated background check failures unless routing availability is affected.
+L00001623	gui_related: true
+L00001624	gui_classification_reason: Runtime Artifacts Panel and Advanced/Support diagnostics are user-visible panels/projections.
+L00001625	depends_on: []
+L00001626	unblocks: []
+L00001627	acceptance_criteria:
+L00001628	  - Successful validated Auto Apply updates appear as passive timestamps in normal settings, while details remain in Advanced/Support.
+L00001629	  - Quarantined or failed updates expose route impact and redacted evidence without raw secrets/tokens.
+L00001630	  - Repeated automatic background check failures remain passive in normal UI and move to Advanced/Support diagnostics unless routing availability is affected.
+L00001631	  - Diagnostics copy/export includes a redaction summary.
+L00001632	validation_surfaces:
+L00001633	  - python3 scripts/pm-plan-index.py validate
+L00001634	  - Free Models diagnostics projection fixtures
+L00001635	  - Redacted copy/export fixtures
+L00001636	risk_class: diagnostics_projection_drift
+L00001637	reasoning_tier: high
+L00001638	context_scope: free_models_auto_apply_diagnostics
+L00001639	implementation_surfaces:
+L00001640	  - Plans/Runtime_Artifacts_Panel.md
+L00001641	  - Plans/FinalGUISpec.md
+L00001642	  - Plans/storage-plan.md
+L00001643	  - Plans/Contracts_V0.md
+L00001644	node_compile_hint:
+L00001645	  mode: free_models_auto_apply_diagnostics_planunit
+L00001646	  create_worknodes: false
+L00001647	  create_nodeseeds: false
+L00001648	source_lineage:
+L00001649	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00001650	source_atom_ids: [atom-0077, atom-0081, atom-0083, atom-0087, atom-0093, atom-0097, atom-0116, atom-0121, atom-0125, atom-0129, atom-0133, atom-0137, atom-0177, atom-0178, atom-0179, atom-0180, atom-0181, atom-0182, atom-0183, atom-0184, atom-0186, atom-0187, atom-0190, atom-0191, atom-0225, atom-0229, atom-0233, atom-0237, atom-0241, atom-0245, atom-0249, atom-0252, atom-0253, atom-0256, atom-0260, atom-0264, atom-0287, atom-0288, atom-0291, atom-0292]
+L00001651	preserved_exact_tokens:
+L00001652	  - "Advanced/Support diagnostics"
+L00001653	  - "last successful source/ref/hash"
+L00001654	  - "last failed check time"
+L00001655	  - "error class"
+L00001656	  - "affected provider/model IDs"
+L00001657	  - "route impact"
+L00001658	  - "redacted copy/export"
+L00001659	  - "redaction summary"
+L00001660	  - "The user can’t fix this"
+L00001661	negative_constraints:
+L00001662	  - Do not expose secrets or tokens in Advanced/Support diagnostics.
+L00001663	  - Do not create normal UI noise for repeated automatic Free Models check failures unless routing availability is affected.
+L00001664	  - Do not export raw secrets or tokens in diagnostics copy/export.
+L00001665	owner_hints:
+L00001666	  - Plans/Runtime_Artifacts_Panel.md
+L00001667	  - Plans/FinalGUISpec.md
+L00001668	  - Plans/storage-plan.md
+L00001669	  - Plans/Permissions_System.md
+L00001670	```
+L00001671	
+
+<<< CONTEXT_AFTER canonical_document_lines=1672-1683 >>>
+L00001672	### RAP-041 - Free Models Route Provenance And Usage Receipt Projection
+L00001673	
+L00001674	```yaml
+L00001675	plan_unit_id: RAP-041
+L00001676	unit_type: requirement
+L00001677	status: accepted
+L00001678	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00001679	canonical_text: >-
+L00001680	  Runtime Artifacts projects Free Models route provenance by showing friendly `Free Models` model/provider names normally while preserving underlying provider/model/account/source identity, exact snapshot ids, source hashes, upstream refs, alias/rename/provider-move lineage, attempted models, skipped entries, final result, and plain switch reasons in expanded details or Advanced/Support. Raw provider payloads remain Advanced/Support-only and redacted according to policy.
+L00001681	gui_related: true
+L00001682	gui_classification_reason: Runtime Artifacts and expanded Usage provenance are user-visible diagnostic panels.
+L00001683	depends_on: []

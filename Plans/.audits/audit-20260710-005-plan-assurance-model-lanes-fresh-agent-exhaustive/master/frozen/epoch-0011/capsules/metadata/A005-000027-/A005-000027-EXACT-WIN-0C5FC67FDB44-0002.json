@@ -1,0 +1,57 @@
+{
+  "assignment_id": "A005-000027-EXACT-WIN-0C5FC67FDB44-0002",
+  "attempt_id": "attempt-0011",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      383,
+      394
+    ],
+    [
+      773,
+      784
+    ]
+  ],
+  "core_range": [
+    395,
+    772
+  ],
+  "core_sha256": "6b641348454056f8a8a1dc2f2c83f06637839d64291564265d8ca8aec9992338",
+  "document_path": "Plans/Decision_Log.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/9e/9e0adab02c2f52aafbfa947dff6f9b91e41a9c5e2c2551929879b8f518dde775.txt",
+  "source_excerpt_sha256": "9e0adab02c2f52aafbfa947dff6f9b91e41a9c5e2c2551929879b8f518dde775",
+  "source_sha256": "9e5ca811dda6d3862ef956e00f6ebe89545f1cb4a786fbb1d3e6fc3f3e00ae7d",
+  "window_id": "WIN-0C5FC67FDB44-0002"
+}

@@ -1,0 +1,415 @@
+<<< CONTEXT_BEFORE 6026-6037 >>>
+- "Guard"
+- "Remote publication and remote repo mutation"
+- "ask"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Tools.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 6038-6423 >>>
+### PS-089 - Policy Denied Outcomes Are Blocked Outcomes
+
+```yaml
+plan_unit_id: PS-089
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "When the permission layer prevents execution, runtime treats the result as blocked or denied rather than generic failure, including deny rules, user ask rejection, headless ask-to-deny, and external_publish_side_effect blocks."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-042
+- PS-076
+- PS-084
+unblocks: []
+acceptance_criteria:
+- "PS-089 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_207
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: policy_denied_blocked_outcome
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0072
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0073
+preserved_exact_tokens:
+- "Runtime blocked-Outcome Integration Addendum (2026-03-08)"
+- "Policy-denied outcomes are blocked outcomes"
+- "blocked/denied"
+- "generic failure"
+- "deny rules"
+- "user rejection of `ask`"
+- "headless `ask -> deny`"
+- "external_publish_side_effect blocks"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Contracts_V0.md"
+- "Plans/storage-plan.md"
+```
+
+### PS-090 - Blocked Recovery Payload Schema And Alias Closure
+
+```yaml
+plan_unit_id: PS-090
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Permission blocked and denied outcomes expose canonical blocked-state payload fields, blocked family, guard details, allowed_action_ids[], optional approval and snapshot refs, revalidation status, and executed: false; legacy recovery_options[] and allowed_actions[] are compatibility aliases only."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-042
+- PS-089
+unblocks: []
+acceptance_criteria:
+- "PS-090 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: blocked_recovery_payload_schema
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0074
+preserved_exact_tokens:
+- "blocked_family"
+- "blocked_policy"
+- "blocked_approval"
+- "blocked_preflight"
+- "blocked_governance"
+- "blocked_reason_code"
+- "guard_name?"
+- "allowed_action_ids[]"
+- "approval_scope_key?"
+- "approval_target_ref?"
+- "permission_snapshot_id?"
+- "runtime_identity_context?"
+- "revalidation_required?"
+- "executed: false"
+- "recovery_options[]"
+- "allowed_actions[]"
+negative_constraints:
+- "Runtime payload field names are closed; legacy recovery_options[] and allowed_actions[] must not replace allowed_action_ids[] in new blocked or recovery payloads."
+- "Prose-only recovery hints are non-conforming when allowed_action_ids[] are required."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md"
+compatibility_only_notes:
+- "legacy recovery_options[] and allowed_actions[] are compatibility aliases only."
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/assistant-chat-design.md"
+- "Plans/Contracts_V0.md"
+- "Plans/storage-plan.md"
+- "Plans/Decision_Policy.md"
+```
+
+### PS-091 - Approval Surface Action Semantics
+
+```yaml
+plan_unit_id: PS-091
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Approval surfaces in chat, dialogs, and cards summarize the exact target, scope, and drift boundary while mapping UI labels to canonical one-shot approval, reusable scope or session approval when policy allows, and deny or decline semantics."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+split_recommended: false
+depends_on:
+- PS-031
+- PS-042
+- PS-090
+unblocks: []
+acceptance_criteria:
+- "PS-091 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: blocked_recovery_action_surface_semantics
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0074
+preserved_exact_tokens:
+- "approval surfaces"
+- "chat/dialogs/cards"
+- "exact target"
+- "scope"
+- "drift boundary"
+- "one-shot approval"
+- "reusable scope/session approval"
+- "deny/decline"
+negative_constraints:
+- "UI labels may vary, but exposed actions must map to canonical approval and deny semantics rather than local enum families."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/assistant-chat-design.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-092 - Domain Sensitive Approval Classes
+
+```yaml
+plan_unit_id: PS-092
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Domain-sensitive operational sessions and remote mutations use separate permission classes, so generic tool allow, /session/YOLO, or headless defaults never approve SCM destructive actions, workflow admin CRUD, image or template publish, Kubernetes mutations, docker exec or attach, kubectl exec, or kubectl port-forward."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-018
+- PS-037
+- PS-084
+- PS-085
+unblocks: []
+acceptance_criteria:
+- "PS-092 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: domain_sensitive_approval_classes
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0074
+preserved_exact_tokens:
+- "docker exec"
+- "docker attach"
+- "kubectl exec"
+- "kubectl port-forward"
+- "/force-push/prune/destructive"
+- "workflow /cancel/rerun/admin CRUD"
+- "image push"
+- "repo create"
+- "template push"
+- "Kubernetes /delete/exec/port-forward"
+- "domain approval class"
+negative_constraints:
+- "Generic tool allow, /session/YOLO, or headless defaults never approve domain-sensitive remote side effects."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Containers_Registry_and_Unraid.md"
+- "Plans/GitHub_API_Auth_and_Flows.md"
+```
+
+### PS-093 - Queued Approval Preflight Binding
+
+```yaml
+plan_unit_id: PS-093
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "/queued and background approval requests bind to the exact queued attempt, target, guard, and preflight snapshot; resumption can pause one node, block the run, or block a follow-on step, but it always re-runs preflight when target, policy, or permission snapshot may have changed."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-006
+- PS-042
+- PS-090
+unblocks: []
+acceptance_criteria:
+- "PS-093 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: queued_approval_preflight_binding
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0074
+preserved_exact_tokens:
+- "/queued"
+- "background approval requests"
+- "exact queued attempt"
+- "target"
+- "guard"
+- "preflight snapshot"
+- "re-runs preflight"
+negative_constraints:
+- "Approval reuse must not resume a queued attempt without re-running preflight when target, policy, or permission snapshot may have changed."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Executor_Protocol.md"
+```
+
+### PS-094 - Per Target Mutating Operation Dedupe
+
+```yaml
+plan_unit_id: PS-094
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Mutating actions use a per-target in-flight operation key for /dedupe across the main window, detached windows, Dashboard, and Orchestrator shortcuts; identical operations coalesce and conflicting operations surface operation_in_progress with owning target and action context."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-037
+- PS-089
+unblocks: []
+acceptance_criteria:
+- "PS-094 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: mutating_operation_dedupe
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0074
+preserved_exact_tokens:
+- "per-target in-flight operation key"
+- "/dedupe"
+- "main window"
+- "detached windows"
+- "Dashboard"
+- "Orchestrator shortcuts"
+- "operation_in_progress"
+negative_constraints:
+- "Conflicting mutating operations must not silently coalesce as if they were identical operations."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Executor_Protocol.md"
+- "Plans/Orchestrator_Page.md"
+```
+
+### PS-095 - Stable Target Revalidation Refresh
+
+```yaml
+plan_unit_id: PS-095
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Every mutating action revalidates stable target identity immediately before execution, including stale table rows, stale cards, and stale /selections; material target changes abort with state_changed_refresh_required and require refresh or reselection."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+split_recommended: false
+depends_on:
+- PS-011
+- PS-094
+unblocks: []
+acceptance_criteria:
+- "PS-095 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_208
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: stable_target_revalidation_refresh
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0074
+preserved_exact_tokens:
+- "stable target identity"
+- "stale table rows"
+- "stale cards"
+- "stale /selections"
+- "state_changed_refresh_required"
+- "refresh"
+- "reselection"
+negative_constraints:
+- "A stale visible target must not be treated as authoritative for mutation after material target identity changes."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md"
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "Stale rows, cards, and /selections require refresh or reselection before mutation."
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 6424-6435 >>>
+### PS-096 - Indeterminate Remote Outcome Recovery
+
+```yaml
+plan_unit_id: PS-096
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Remote-side-effect transports may end as indeterminate_remote_outcome when server-side action might have succeeded but the client lost confirmation; the receipt preserves requested, transport_lost, and later reconciled states, and the UI exposes a Refresh remote state recovery CTA instead of labeling the action simply failed."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+split_recommended: false
+depends_on:

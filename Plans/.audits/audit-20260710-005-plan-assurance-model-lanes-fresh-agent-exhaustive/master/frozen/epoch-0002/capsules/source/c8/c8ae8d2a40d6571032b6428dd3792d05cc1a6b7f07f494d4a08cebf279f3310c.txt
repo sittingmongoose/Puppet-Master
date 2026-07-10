@@ -1,0 +1,336 @@
+<<< CONTEXT_BEFORE 7329-7340 >>>
+owner_hints:
+- Plans/FinalGUISpec.md
+- Plans/assistant-chat-design.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/UI_Command_Catalog.md
+- Plans/Orchestrator_Page.md
+- Plans/Permissions_System.md
+- Plans/FileSafe.md
+- Plans/storage-plan.md
+- Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 7341-7647 >>>
+### UCC-102 - Teach Guided GUI Command Taxonomy
+
+```yaml
+plan_unit_id: UCC-102
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Teach guided GUI commands include help-icon launch, /teach launch, natural-language summon handoff,
+  route open, tab or panel focus, spotlight/highlight, scroll-to-field, safe read-only inspect, explain current
+  UI, and optional Do it execution only for explicitly safe actions. Mutations require confirmation, permission
+  gates, and activity transparency. Degraded states include missing target, stale navigation, permission denied,
+  unavailable command, model/capability fallback, missing help entry, and user stop, each with a visible next action.
+gui_related: true
+gui_classification_reason: Defines user-visible guided action commands, route/highlight controls, mutation confirmation,
+  and degraded action handling.
+depends_on:
+- PS-122
+unblocks:
+- ATS-014
+acceptance_criteria:
+- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+  are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+- python3 scripts/pm-plan-index.py validate
+- git diff --check
+risk_class: teach_guided_command_drift
+reasoning_tier: high
+context_scope: teach_guided_gui_commands
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+- future command palette and guided overlay commands
+node_compile_hint:
+  mode: teach_guided_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260626-001-feature-name:atom-0097
+- pldg-20260626-001-feature-name:atom-0098
+- pldg-20260626-001-feature-name:atom-0139
+- pldg-20260626-001-feature-name:atom-0140
+- pldg-20260626-001-feature-name:atom-0142
+- pldg-20260626-001-feature-name:atom-0143
+- pldg-20260626-001-feature-name:atom-0144
+- chat:teacher-feature-initial-framing
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md#2.6A-Chat-thread-lifecycle-commands
+- Plans/UI_Command_Catalog.md
+- Plans/assistant-chat-design.md#ACD-410---Internal-Target-Payload-Navigation
+- chat:work-through-teach-gaps
+- Plans/FinalGUISpec.md#F3-016-help-and-contextual-affordances
+- chat:teach-bundle-accepted-pmconcept-reference
+- Plans/assistant-chat-design.md#6-teach
+- Plans/FinalGUISpec.md#19.6-natural-language-invocation-feedback
+- Plans/Permissions_System.md#2.4A-requested-vs-effective-permissioned-capability-state
+- Plans/Permissions_System.md#approval-ui
+- Plans/Media_Generation_and_Capabilities.md#capability-usability-semantics
+source_atom_ids:
+- atom-0097
+- atom-0098
+- atom-0139
+- atom-0140
+- atom-0142
+- atom-0143
+- atom-0144
+decision_refs:
+- dec-0018
+- dec-0019
+- dec-0020
+- dec-0024
+preserved_exact_tokens:
+- help icon
+- clicked
+- brings the user to the assistant chat window
+- opens a new thread
+- Teacher
+- teacher can control the Gui to show the user how to do things
+- Gui
+- show the user how
+- OpenSubject
+- route_target
+- highlight
+- spotlight
+- Teacher mode
+- current surface
+- Teacher badge
+- context chip
+- model chip
+- source disclosure
+- /teach
+- teach me
+- show me how
+- help me understand this
+- what does this mean
+- explain this screen
+- walk me through
+- remember that
+- for this repo always
+- compact disambiguation
+- control the Gui
+- open route
+- focus panel
+- scroll to section
+- highlight control/region
+- expand non-mutating details
+- preview selection
+- changing a setting
+- saving memory
+- approving a permission
+- undo/rollback
+- spotlight/outline
+- anchored caption
+- step counter
+- Back
+- Next
+- Stop
+- Let me try
+- Do it
+- return-to-chat
+- small screens
+- safe spacing
+- target surface unavailable
+- route/control no longer exists
+- context stale
+- selection lost
+- permission blocked
+- capability unavailable
+- help entry missing
+- model fallback/clamp
+- user stops
+negative_constraints:
+- Do not reuse an unrelated active chat thread when the help-icon contract says to open a new teaching conversation.
+- Do not launch Teacher without preserving current surface context needed for useful help.
+- Do not replace Teacher launch with static help pages only.
+- Do not let Teacher perform raw uncontrolled GUI mutation outside stable UI command/route contracts.
+- Do not allow mutating/destructive GUI actions without confirmation and capability/permission gates.
+- Do not use stale or private panel-local route fields when the route/open contract provides canonical targets.
+- Do not silently mutate an existing non-Teacher thread into Teacher mode.
+- Do not lose the originating surface/control context during launch.
+- Do not require users to know `/teach` before discovering help.
+- Do not turn every help request into durable memory capture.
+- Do not persist natural-language instructions without explicit confirmation.
+- Do not guess between one-off teaching and Teach capture when the user intent is ambiguous.
+- Do not use raw cursor/click automation as the teaching UI.
+- Do not let Teacher execute mutating actions through `Do it` without confirmation.
+- Do not let guided GUI actions bypass Permissions_System requested/effective disclosure.
+- Do not obscure the target control with the explanation caption.
+- Do not make the overlay inaccessible without keyboard or screen-reader fallback.
+- Do not trap the user in the overlay without Stop/return-to-chat.
+- Do not keep stepping through a stale or missing UI target.
+- Do not hide permission/capability/model degraded states.
+- Do not turn degraded guidance into generic apology text without a next action.
+owner_hints:
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/assistant-chat-design.md
+- Plans/Personas.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+- Plans/Permissions_System.md
+- Plans/Commands_System.md
+- Plans/Automated_Testing_System.md
+- Plans/Media_Generation_and_Capabilities.md
+- Plans/Glossary.md
+```
+
+## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into UI Command Catalog owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### UCC-103 - Notifications And Sounds Command Catalog
+
+```yaml
+plan_unit_id: UCC-103
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  Notifications and Sounds commands include `cmd.settings.open_notifications`, destination create/update/delete/toggle/test,
+  notification mapping update, runtime override set, and sound preview/upload/pack import/asset delete/asset restore/asset
+  export/mapping set. Destination test commands require explicit user action, enabled destination authority, rate limiting,
+  masking, and receipt recording. Destination create/update payloads carry provider-specific profile fields from CV-298
+  for Slack, Discord, generic webhook, ntfy, Pushover, and Telegram while storing only credential refs for secrets. Sound
+  preview is local only and must not send external notifications.
+gui_related: true
+gui_classification_reason: Defines user-visible settings, destination, mapping, preview, upload, import/export, and test-send commands.
+depends_on: [CV-298, PS-124]
+unblocks: [WM-039, ATS-016]
+acceptance_criteria:
+  - Every Notifications & Sounds GUI control routes through a stable command ID.
+  - Destination create/update commands accept provider-specific profile payloads without exposing raw URLs or tokens.
+  - Test-send commands are separate from local preview and cannot mutate alert state.
+  - Sound asset commands distinguish user-uploaded assets, imported packs, built-ins, hide/disable, restore, and export behavior.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Notifications and Sounds command catalog fixtures
+risk_class: notification_command_catalog_gap
+reasoning_tier: high
+context_scope: notifications_sounds_commands
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - future Settings > General > Notifications & Sounds commands
+node_compile_hint:
+  mode: notifications_sounds_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:notify-settings-gui-command-wiring
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/notifications_sounds_readiness_matrix.json:preview-test-send-accessibility
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0064
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0068
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0069
+source_atom_ids: [atom-0064, atom-0068, atom-0069]
+preserved_exact_tokens:
+  - "cmd.settings.open_notifications"
+  - "cmd.notifications.destination.create"
+  - "cmd.notifications.destination.update"
+  - "cmd.notifications.destination.delete"
+  - "cmd.notifications.destination.toggle"
+  - "cmd.notifications.destination.test"
+  - "cmd.notifications.mapping.update"
+  - "cmd.notifications.override.set"
+  - "cmd.sound.preview"
+  - "cmd.sound.upload"
+  - "cmd.sound.pack.import"
+  - "cmd.sound.asset.delete"
+  - "cmd.sound.asset.restore"
+  - "cmd.sound.asset.export"
+  - "cmd.sound.mapping.set"
+negative_constraints:
+  - Do not route local sound preview through external notification delivery.
+  - Do not make test-send implicit from saving settings.
+  - Do not create visualizer bridge aliases as UI command IDs unless they dispatch outside the iframe host bridge.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+```
+
+### UCC-104 - DRY Method Settings Command
+
+```yaml
+plan_unit_id: UCC-104
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  The DRY Method Settings command catalog defines `cmd.settings.agent_rules.dry_method_default_guard.set` with payload
+  `{ scope: "application", value: "enabled" | "disabled_by_user" }`, emitted event
+  `settings.agent_rules.dry_method_default_guard.updated`, visible surfaces Settings > General > Agent Rules and
+  Assistant Chat DRY disclosure, and help copy explaining what the toggle changes. The command turns off only PM's
+  default reuse-first DRY guard; it does not disable explicit project/user instructions, safety, secrets, source
+  authority, governance, permissions, source-control hygiene, or receipt provenance.
+gui_related: true
+gui_classification_reason: Defines a user-visible Settings command, toggle payload, event, and help copy.
+depends_on: [CV-299, SP-223]
+unblocks: [WM-040, ATS-018]
+acceptance_criteria:
+  - The DRY Method toggle has one stable command id and payload enum.
+  - The visible command copy explains that disabling DRY only disables the default reuse-first guard.
+  - Command handling preserves DRY receipt provenance and does not weaken non-DRY authority boundaries.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - DRY Method settings command fixture
+risk_class: dry_method_settings_command_gap
+reasoning_tier: high
+context_scope: dry_method_settings_command
+implementation_surfaces:
+  - Plans/UI_Command_Catalog.md
+  - future Settings > General > Agent Rules commands
+node_compile_hint:
+  mode: dry_method_settings_command_catalog
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_compile_readiness_matrix.json:dry-app-default
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-001
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/state/dry_method_defaults_matrix.json:dry-val-002
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0073
+  - Plans/ledgers/v2/pldg-20260627-001-feature-intake/records/design_atoms.jsonl:atom-0089
+source_atom_ids: [atom-0073, atom-0089]
+decision_refs: [dec-0016, dec-0017]
+preserved_exact_tokens:
+  - "cmd.settings.agent_rules.dry_method_default_guard.set"
+  - "app.agent_rules.dry_method_default_guard"
+  - "enabled"
+  - "disabled_by_user"
+  - "Settings > General > Agent Rules"
+  - "DRY Method is on by default. Turning it off disables only PM's default reuse-first guard; project/user instructions, safety, secrets, source authority, governance, permissions, and source-control rules still apply."
+negative_constraints:
+  - Do not make DRY opt-in by default.
+  - Do not treat disabled DRY as permission to bypass explicit instructions, safety, secrets, source authority, governance, permissions, or source-control hygiene.
+  - Do not delete DRY receipt provenance when the user disables the default guard.
+owner_hints:
+  - Plans/UI_Command_Catalog.md
+  - Plans/Wiring_Matrix.md
+  - Plans/FinalGUISpec.md
+  - Plans/storage-plan.md
+```
+
+## Ledger Compile Addendum - pldg-20260701-001-feature-intake
+
+This addendum compiles first-run onboarding command obligations from bootstrap ledger `pldg-20260701-001-feature-intake` into UI_Command_Catalog ownership. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+
+
+<<< CONTEXT_AFTER 7648-7659 >>>
+### UCC-106 - First-Run Onboarding Command Family
+
+```yaml
+plan_unit_id: UCC-106
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: >-
+  First-run onboarding GUI actions use a registered onboarding command family rather than page-local button payloads.
+  Required commands include `cmd.onboarding.first_run.open`, `cmd.onboarding.provider_setup.open`,
+  `cmd.onboarding.provider_setup.use_provider`, `cmd.onboarding.skip_to_planning_wizard`,
+  `cmd.onboarding.free_models.review`, `cmd.onboarding.free_models.defer`, `cmd.onboarding.review_setup`,

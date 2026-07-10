@@ -1,0 +1,429 @@
+<<< CONTEXT_BEFORE canonical_document_lines=11210-11221 >>>
+L00011210	  - "`reviews`"
+L00011211	  - "`usage`"
+L00011212	  - "`lineage`"
+L00011213	  - "`details`"
+L00011214	  - "`/subsection`"
+L00011215	negative_constraints:
+L00011216	  - "inspector_target must not replace selector identity."
+L00011217	  - "inspector_target must not become a universal dumping ground for feature-local anchors."
+L00011218	owner_hints:
+L00011219	  - Plans/Contracts_V0.md
+L00011220	```
+L00011221	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=11222-11621 >>>
+L00011222	### CV-168 - Route Open Normalization Anti-Fork
+L00011223	
+L00011224	```yaml
+L00011225	plan_unit_id: CV-168
+L00011226	unit_type: constraint
+L00011227	status: accepted
+L00011228	owner_doc: Plans/Contracts_V0.md
+L00011229	canonical_text: >-
+L00011230	  Settings, object navigation, search/open entry points, chat links, file-tree
+L00011231	  selections, and wizard/object links normalize to route_target plus OpenFile or
+L00011232	  OpenSubject; generated, thread-backed, artifact-backed, browser-session,
+L00011233	  terminal-session, and dev-session reveals must not mint new routing primitives.
+L00011234	gui_related: false
+L00011235	gui_classification_reason: This unit defines route/open normalization boundaries.
+L00011236	split_recommended: true
+L00011237	depends_on: [CV-031, CV-055, CV-163]
+L00011238	unblocks: [CV-172, CV-174]
+L00011239	acceptance_criteria:
+L00011240	  - "Settings, object navigation, search/open entry points, chat links, file-tree selections, and wizard/object links normalize to route_target plus OpenFile or OpenSubject."
+L00011241	  - "Generated, thread-backed, artifact-backed, browser-session, terminal-session, and dev-session reveals do not mint new routing primitives."
+L00011242	  - "OpenSubject owns document/artifact source realization."
+L00011243	  - "OpenFile owns workspace-file path opens."
+L00011244	validation_surfaces:
+L00011245	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011246	  - python3 scripts/pm-plan-index.py validate
+L00011247	risk_class: route_open_primitive_fork
+L00011248	reasoning_tier: high
+L00011249	context_scope: route_open_normalization_antifork
+L00011250	implementation_surfaces:
+L00011251	  - Plans/Contracts_V0.md
+L00011252	  - Plans/Crosswalk.md
+L00011253	  - Plans/FileManager.md
+L00011254	  - Plans/UI_Command_Catalog.md
+L00011255	node_compile_hint:
+L00011256	  mode: route_open_normalization_constraint
+L00011257	  create_worknodes: false
+L00011258	source_lineage:
+L00011259	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+L00011260	preserved_exact_tokens:
+L00011261	  - "`OpenFile`"
+L00011262	  - "`OpenSubject`"
+L00011263	  - "`/object/navigation`"
+L00011264	  - "`/thread-backed`"
+L00011265	  - "`/artifact-backed`"
+L00011266	  - "browser-session"
+L00011267	  - "terminal-session"
+L00011268	  - "dev-session"
+L00011269	negative_constraints:
+L00011270	  - "Consumers must not own bespoke open behavior or mint a new route primitive for generated/thread/artifact/browser/terminal/dev reveals."
+L00011271	owner_hints:
+L00011272	  - Plans/Contracts_V0.md
+L00011273	```
+L00011274	
+L00011275	### CV-169 - Route Resolver Fields And Alias Normalization
+L00011276	
+L00011277	```yaml
+L00011278	plan_unit_id: CV-169
+L00011279	unit_type: compatibility_disposition
+L00011280	status: accepted
+L00011281	owner_doc: Plans/Contracts_V0.md
+L00011282	canonical_text: >-
+L00011283	  Route resolver refinement uses resolver_scope, route_recipe_id?, tab_family?,
+L00011284	  and open_disposition?, with legacy tab-family and open-disposition labels
+L00011285	  normalized to canonical underscore field names.
+L00011286	gui_related: false
+L00011287	gui_classification_reason: This unit defines route resolver fields and alias normalization.
+L00011288	split_recommended: true
+L00011289	depends_on: [CV-163]
+L00011290	unblocks: [CV-170, CV-172]
+L00011291	acceptance_criteria:
+L00011292	  - "resolver_scope closes to project, run, thread, and global."
+L00011293	  - "open_disposition closes to reuse_existing, open_new, split_group, and focus_only."
+L00011294	  - "route_recipe_id? and tab_family? remain owner-defined refinement fields."
+L00011295	  - "Legacy tab-family and open-disposition labels normalize to tab_family and open_disposition."
+L00011296	validation_surfaces:
+L00011297	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011298	  - python3 scripts/pm-plan-index.py validate
+L00011299	risk_class: route_resolver_alias_drift
+L00011300	reasoning_tier: high
+L00011301	context_scope: route_resolver_fields_aliases
+L00011302	implementation_surfaces:
+L00011303	  - Plans/Contracts_V0.md
+L00011304	  - Plans/Crosswalk.md
+L00011305	  - Plans/FinalGUISpec.md
+L00011306	node_compile_hint:
+L00011307	  mode: route_resolver_alias_disposition
+L00011308	  create_worknodes: false
+L00011309	source_lineage:
+L00011310	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+L00011311	preserved_exact_tokens:
+L00011312	  - "`resolver_scope`"
+L00011313	  - "`route_recipe_id?`"
+L00011314	  - "`tab_family?`"
+L00011315	  - "`open_disposition?`"
+L00011316	  - "`tab-family`"
+L00011317	  - "`open-disposition`"
+L00011318	compatibility_only_notes:
+L00011319	  - "Legacy labels tab-family and open-disposition map to tab_family and open_disposition."
+L00011320	negative_constraints:
+L00011321	  - "Producers must use canonical underscore field names in payloads."
+L00011322	owner_hints:
+L00011323	  - Plans/Contracts_V0.md
+L00011324	```
+L00011325	
+L00011326	### CV-170 - Route Validity InvalidRoute Reject Rules
+L00011327	
+L00011328	```yaml
+L00011329	plan_unit_id: CV-170
+L00011330	unit_type: constraint
+L00011331	status: accepted
+L00011332	owner_doc: Plans/Contracts_V0.md
+L00011333	canonical_text: >-
+L00011334	  Routes are rejected as invalid_route when target_kind, selector,
+L00011335	  resolver_scope, tab_family, or open_disposition is invalid for the destination
+L00011336	  surface; resolver scope is explicit where object kinds can exist in multiple
+L00011337	  runs, threads, or projects.
+L00011338	gui_related: false
+L00011339	gui_classification_reason: This unit defines route validation and reject rules.
+L00011340	split_recommended: true
+L00011341	depends_on: [CV-054, CV-169]
+L00011342	unblocks: [CV-171, CV-172]
+L00011343	acceptance_criteria:
+L00011344	  - "Invalid destination, selector, resolver scope, tab family, or open disposition combinations are rejected as invalid_route."
+L00011345	  - "Resolver scope is explicit when the same object_kind can exist in more than one run, thread, or project."
+L00011346	  - "tab_id is rejected as shell-local state when it is not valid for the destination surface."
+L00011347	  - "tab_id does not replace target_kind or inspector_target."
+L00011348	validation_surfaces:
+L00011349	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011350	  - python3 scripts/pm-plan-index.py validate
+L00011351	risk_class: route_invalid_combo_acceptance
+L00011352	reasoning_tier: high
+L00011353	context_scope: route_validity_reject_rules
+L00011354	implementation_surfaces:
+L00011355	  - Plans/Contracts_V0.md
+L00011356	  - Plans/Crosswalk.md
+L00011357	  - Plans/FinalGUISpec.md
+L00011358	node_compile_hint:
+L00011359	  mode: route_validity_reject_constraint
+L00011360	  create_worknodes: false
+L00011361	source_lineage:
+L00011362	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+L00011363	preserved_exact_tokens:
+L00011364	  - "`invalid_route`"
+L00011365	  - "`resolver_scope`"
+L00011366	  - "`tab_id`"
+L00011367	  - "`target_kind`"
+L00011368	  - "`inspector_target`"
+L00011369	negative_constraints:
+L00011370	  - "Invalid destination/scope combinations must not be accepted as valid routes."
+L00011371	owner_hints:
+L00011372	  - Plans/Contracts_V0.md
+L00011373	```
+L00011374	
+L00011375	### CV-171 - Scoped Resolution Examples And Object Rules
+L00011376	
+L00011377	```yaml
+L00011378	plan_unit_id: CV-171
+L00011379	unit_type: requirement
+L00011380	status: accepted
+L00011381	owner_doc: Plans/Contracts_V0.md
+L00011382	canonical_text: >-
+L00011383	  Route examples and scoped-resolution rules are normative selector refinements
+L00011384	  owned by route_target and OpenSubject; chat search, wizard resume, blocked
+L00011385	  episode, scheduler pass, safe point, remediation, and attempt selectors retain
+L00011386	  their specified object IDs and focused_run_id requirements.
+L00011387	gui_related: false
+L00011388	gui_classification_reason: This unit defines route selector examples and scoped object rules.
+L00011389	split_recommended: true
+L00011390	depends_on: [CV-164, CV-170]
+L00011391	unblocks: []
+L00011392	acceptance_criteria:
+L00011393	  - "A chat search result uses object_kind = message with object_id = <message_id>."
+L00011394	  - "A wizard resume uses object_kind = wizard with object_id = <wizard_id>."
+L00011395	  - "blocked_episode, scheduler_pass, safe_point, remediation, and attempt keep their specified object_id forms and focused_run_id requirements."
+L00011396	  - "route_target owns destination, scope, selector, and resolver validation while OpenSubject owns identity-native source opening."
+L00011397	validation_surfaces:
+L00011398	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011399	  - python3 scripts/pm-plan-index.py validate
+L00011400	risk_class: scoped_route_rule_owner_drift
+L00011401	reasoning_tier: high
+L00011402	context_scope: scoped_resolution_examples_object_rules
+L00011403	implementation_surfaces:
+L00011404	  - Plans/Contracts_V0.md
+L00011405	  - Plans/Crosswalk.md
+L00011406	  - Plans/Run_Graph_View.md
+L00011407	node_compile_hint:
+L00011408	  mode: scoped_route_resolution_contract
+L00011409	  create_worknodes: false
+L00011410	source_lineage:
+L00011411	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+L00011412	preserved_exact_tokens:
+L00011413	  - "object_kind = message"
+L00011414	  - "object_kind = wizard"
+L00011415	  - "`blocked_sequence`"
+L00011416	  - "`scheduler_pass_id`"
+L00011417	  - "`safe_point_id`"
+L00011418	  - "`remediation_root_id`"
+L00011419	  - "`attempt_id`"
+L00011420	negative_constraints:
+L00011421	  - "Selector precedence, reject rules, route examples, and scoped-resolution rules must not move to consumer-owned behavior."
+L00011422	owner_hints:
+L00011423	  - Plans/Contracts_V0.md
+L00011424	```
+L00011425	
+L00011426	### CV-172 - Route Reuse And Extra Args Prohibition
+L00011427	
+L00011428	```yaml
+L00011429	plan_unit_id: CV-172
+L00011430	unit_type: constraint
+L00011431	status: accepted
+L00011432	owner_doc: Plans/Contracts_V0.md
+L00011433	canonical_text: >-
+L00011434	  Route reuse is allowed only when open_disposition permits reuse and the
+L00011435	  destination still reveals the requested object, scope, and inspector target;
+L00011436	  OpenFile reuse is one-tab-per-path-per-group, and producers may not add a
+L00011437	  generic extra-args bag to bypass validation.
+L00011438	gui_related: false
+L00011439	gui_classification_reason: This unit defines route reuse and field validation constraints.
+L00011440	split_recommended: true
+L00011441	depends_on: [CV-168, CV-169, CV-170]
+L00011442	unblocks: []
+L00011443	acceptance_criteria:
+L00011444	  - "Route activation may reuse an existing destination only when open_disposition permits reuse."
+L00011445	  - "The existing destination must still reveal the requested object, scope, and inspector target."
+L00011446	  - "OpenFile reuse is one-tab-per-path-per-group."
+L00011447	  - "Opening the same path in another group requires explicit multi-group disposition."
+L00011448	  - "Route producers do not add generic extra-args bags to bypass field validation."
+L00011449	validation_surfaces:
+L00011450	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011451	  - python3 scripts/pm-plan-index.py validate
+L00011452	risk_class: route_extra_args_validation_bypass
+L00011453	reasoning_tier: high
+L00011454	context_scope: route_reuse_extra_args_prohibition
+L00011455	implementation_surfaces:
+L00011456	  - Plans/Contracts_V0.md
+L00011457	  - Plans/FileManager.md
+L00011458	  - Plans/UI_Command_Catalog.md
+L00011459	node_compile_hint:
+L00011460	  mode: route_reuse_validation_constraint
+L00011461	  create_worknodes: false
+L00011462	source_lineage:
+L00011463	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0060
+L00011464	preserved_exact_tokens:
+L00011465	  - "`reuse_existing`"
+L00011466	  - "`multi-group`"
+L00011467	  - "`open_disposition`"
+L00011468	  - "generic extra-args bag"
+L00011469	negative_constraints:
+L00011470	  - "Route producers must not add a generic extra-args bag to bypass field validation."
+L00011471	owner_hints:
+L00011472	  - Plans/Contracts_V0.md
+L00011473	```
+L00011474	
+L00011475	### CV-173 - Debug Target Kind Classification Enum
+L00011476	
+L00011477	```yaml
+L00011478	plan_unit_id: CV-173
+L00011479	unit_type: requirement
+L00011480	status: accepted
+L00011481	owner_doc: Plans/Contracts_V0.md
+L00011482	canonical_text: >-
+L00011483	  debug_target_kind is the canonical investigation-target classification for
+L00011484	  Debug Mode, naming the operational class under investigation and closing to
+L00011485	  dev_session, browser_target, dap_session, agent_session, and imported_bundle.
+L00011486	gui_related: false
+L00011487	gui_classification_reason: This unit defines debug target classification semantics.
+L00011488	split_recommended: true
+L00011489	depends_on: [CV-123, CV-163]
+L00011490	unblocks: [CV-174]
+L00011491	acceptance_criteria:
+L00011492	  - "debug_target_kind names the operational class being investigated."
+L00011493	  - "debug_target_kind closes to dev_session, browser_target, dap_session, agent_session, and imported_bundle."
+L00011494	  - "debug_target_kind does not replace route_target, OpenSubject, or stored session identities."
+L00011495	validation_surfaces:
+L00011496	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011497	  - python3 scripts/pm-plan-index.py validate
+L00011498	risk_class: debug_target_kind_route_replacement
+L00011499	reasoning_tier: high
+L00011500	context_scope: debug_target_kind_classification
+L00011501	implementation_surfaces:
+L00011502	  - Plans/Contracts_V0.md
+L00011503	  - Plans/assistant-chat-design.md
+L00011504	  - Plans/Prompt_Pipeline.md
+L00011505	  - Plans/storage-plan.md
+L00011506	  - Plans/Runtime_Artifacts_Panel.md
+L00011507	node_compile_hint:
+L00011508	  mode: debug_target_kind_contract
+L00011509	  create_worknodes: false
+L00011510	source_lineage:
+L00011511	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0061
+L00011512	preserved_exact_tokens:
+L00011513	  - "`debug_target_kind`"
+L00011514	  - "Debug Mode"
+L00011515	  - "`dev_session`"
+L00011516	  - "`browser_target`"
+L00011517	  - "`dap_session`"
+L00011518	  - "`agent_session`"
+L00011519	  - "`imported_bundle`"
+L00011520	  - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
+L00011521	negative_constraints:
+L00011522	  - "debug_target_kind does not replace route_target, OpenSubject, or stored session identities."
+L00011523	owner_hints:
+L00011524	  - Plans/Contracts_V0.md
+L00011525	```
+L00011526	
+L00011527	### CV-174 - Debug Imported Bundle And Display Boundary
+L00011528	
+L00011529	```yaml
+L00011530	plan_unit_id: CV-174
+L00011531	unit_type: constraint
+L00011532	status: accepted
+L00011533	owner_doc: Plans/Contracts_V0.md
+L00011534	canonical_text: >-
+L00011535	  Live or resumable debug targets are PM-controlled target classes, while
+L00011536	  imported_bundle identifies external evidence that can be inspected and
+L00011537	  reasoned over without pretending PM can still drive the original runtime
+L00011538	  target; durable routing and opening continue through canonical route/open
+L00011539	  contracts.
+L00011540	gui_related: false
+L00011541	gui_classification_reason: This unit defines debug imported bundle and display boundaries.
+L00011542	split_recommended: true
+L00011543	depends_on: [CV-168, CV-173]
+L00011544	unblocks: []
+L00011545	acceptance_criteria:
+L00011546	  - "dev_session, browser_target, dap_session, and agent_session identify live or resumable PM-controlled targets."
+L00011547	  - "imported_bundle identifies an external investigation bundle."
+L00011548	  - "Consumers may display requested and effective target details."
+L00011549	  - "Durable routing and opening continue through canonical route/open contracts."
+L00011550	validation_surfaces:
+L00011551	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011552	  - python3 scripts/pm-plan-index.py validate
+L00011553	risk_class: debug_imported_bundle_live_control_confusion
+L00011554	reasoning_tier: high
+L00011555	context_scope: debug_imported_bundle_display_boundary
+L00011556	implementation_surfaces:
+L00011557	  - Plans/Contracts_V0.md
+L00011558	  - Plans/Runtime_Artifacts_Panel.md
+L00011559	  - Plans/assistant-chat-design.md
+L00011560	node_compile_hint:
+L00011561	  mode: debug_imported_bundle_boundary_constraint
+L00011562	  create_worknodes: false
+L00011563	source_lineage:
+L00011564	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0061
+L00011565	preserved_exact_tokens:
+L00011566	  - "`imported_bundle`"
+L00011567	  - "requested"
+L00011568	  - "effective"
+L00011569	  - "route/open contracts"
+L00011570	negative_constraints:
+L00011571	  - "imported_bundle must not pretend PM can still drive the original runtime target."
+L00011572	owner_hints:
+L00011573	  - Plans/Contracts_V0.md
+L00011574	```
+L00011575	
+L00011576	### CV-175 - OpenSubject Required Fields And Intents
+L00011577	
+L00011578	```yaml
+L00011579	plan_unit_id: CV-175
+L00011580	unit_type: requirement
+L00011581	status: accepted
+L00011582	owner_doc: Plans/Contracts_V0.md
+L00011583	canonical_text: >-
+L00011584	  OpenSubject is the canonical identity-native source-open contract with
+L00011585	  required subject_id and open_intent fields; open_intent is closed to
+L00011586	  open_source, open_preview, and open_review.
+L00011587	gui_related: false
+L00011588	gui_classification_reason: This unit defines source-open contract fields rather than visual presentation.
+L00011589	split_recommended: false
+L00011590	depends_on: [CV-168]
+L00011591	unblocks: [CV-176, CV-177]
+L00011592	acceptance_criteria:
+L00011593	  - "OpenSubject requires subject_id and open_intent."
+L00011594	  - "open_intent accepts only open_source, open_preview, and open_review."
+L00011595	validation_surfaces:
+L00011596	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011597	  - python3 scripts/pm-plan-index.py validate
+L00011598	risk_class: open_subject_field_drift
+L00011599	reasoning_tier: high
+L00011600	context_scope: open_subject_required_fields
+L00011601	implementation_surfaces:
+L00011602	  - Plans/Contracts_V0.md
+L00011603	  - Plans/FileManager.md
+L00011604	node_compile_hint:
+L00011605	  mode: open_subject_contract
+L00011606	  create_worknodes: false
+L00011607	source_lineage:
+L00011608	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0062
+L00011609	preserved_exact_tokens:
+L00011610	  - "`OpenSubject`"
+L00011611	  - "`subject_id`"
+L00011612	  - "`open_intent`"
+L00011613	  - "`open_source`"
+L00011614	  - "`open_preview`"
+L00011615	  - "`open_review`"
+L00011616	negative_constraints: []
+L00011617	owner_hints:
+L00011618	  - Plans/Contracts_V0.md
+L00011619	  - Plans/FileManager.md
+L00011620	```
+L00011621	
+
+<<< CONTEXT_AFTER canonical_document_lines=11622-11633 >>>
+L00011622	### CV-176 - OpenSubject Resolution And Route Boundary
+L00011623	
+L00011624	```yaml
+L00011625	plan_unit_id: CV-176
+L00011626	unit_type: constraint
+L00011627	status: accepted
+L00011628	owner_doc: Plans/Contracts_V0.md
+L00011629	canonical_text: >-
+L00011630	  OpenSubject resolves canonical identity to OpenFile or to a transient
+L00011631	  generated://<artifact_id> buffer, while terminal, dev-session, and
+L00011632	  browser-session reveals normalize through route_target instead of overloading
+L00011633	  OpenSubject.

@@ -1,0 +1,352 @@
+<<< AUTHORITATIVE_CORE 1-337 >>>
+{
+  "schema_id": "pm.web_provider_adapter_registry.seed.v1",
+  "status": "canonical_seed_no_secrets",
+  "owner_schema": "Plans/web_operation_contracts.schema.json#/$defs/WebProviderAdapterRegistry",
+  "registry_ssot": "PM WebProviderAdapterRegistry",
+  "negative_constraints": [
+    "Provider config files, MCP projections, model-native tool declarations, coding-agent bridge files, and GUI settings rows are projections of these registry rows.",
+    "Projection examples serialize capability refs, health refs, egress policy refs, and credential refs only; they never serialize raw API keys, OAuth tokens, passwords, cookies, headers, or local machine paths.",
+    "DirectApi coding providers use PM-native registry capability projection and do not require provider-side MCP config files as canonical truth.",
+    "Site Reader is PM-managed native runtime; Playwright and CDP are fallback/reference only and do not become product dependency terms.",
+    "Seeded provider capability claims cite packet/receipt provenance and keep health_state=unknown until an explicit live health/projection sync records current provider evidence."
+  ],
+  "registry_rows": [
+    {
+      "registry_id": "webreg.pm_site_reader.v1",
+      "adapter_id": "pm.site_reader",
+      "provider_id": "pm_native",
+      "display_name": "PM Site Reader",
+      "adapter_kind": "pm_native",
+      "capabilities": [
+        {
+          "operation": "read",
+          "support_tier": "native",
+          "enabled_state": "enabled",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.pm_native.default",
+          "cache_policy": {
+            "max_age_seconds": 14400,
+            "store": true
+          },
+          "fallback_rank": 0,
+          "robots_supported": true,
+          "ssrf_private_host_policy_ref": "egress:web.public_http_only"
+        },
+        {
+          "operation": "extract",
+          "support_tier": "pm_composed",
+          "enabled_state": "enabled",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.pm_native.default",
+          "cache_policy": {
+            "max_age_seconds": 14400,
+            "store": true
+          },
+          "fallback_rank": 0,
+          "robots_supported": true,
+          "ssrf_private_host_policy_ref": "egress:web.public_http_only"
+        },
+        {
+          "operation": "crawl",
+          "support_tier": "pm_composed",
+          "enabled_state": "enabled",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.pm_native.default",
+          "cache_policy": {
+            "max_age_seconds": 86400,
+            "store": true
+          },
+          "fallback_rank": 0,
+          "robots_supported": true,
+          "ssrf_private_host_policy_ref": "egress:web.public_http_only"
+        },
+        {
+          "operation": "map",
+          "support_tier": "pm_composed",
+          "enabled_state": "enabled",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.pm_native.default",
+          "cache_policy": {
+            "max_age_seconds": 86400,
+            "store": true
+          },
+          "fallback_rank": 0,
+          "robots_supported": true,
+          "ssrf_private_host_policy_ref": "egress:web.public_http_only"
+        }
+      ],
+      "projection_state": "not_projected",
+      "egress_policy": {
+        "policy_id": "egress:web.public_http_only",
+        "ssrf_private_host_policy": "deny_private_hosts",
+        "robots_policy": "respect",
+        "redirect_policy": "public_http_only",
+        "dns_rebind_check": true,
+        "fanout_limit": 50,
+        "max_depth": 3,
+        "secret_redaction_required": true
+      },
+      "secrets_policy": "no_secrets_required",
+      "last_health_check_ref": "health:web.pm_site_reader",
+      "capability_source_refs": [
+        "WEB_CAPABILITY_AGENTIC_ROUTING_REVIEW.md",
+        "FINDINGS_MATRIX_V3.json",
+        "Plans/web_capability_source_packet_receipt.json"
+      ],
+      "capability_claim_state": "source_packet_seed_pending_live_health"
+    },
+    {
+      "registry_id": "webreg.exa.direct_api.v1",
+      "adapter_id": "exa.direct_api",
+      "provider_id": "exa",
+      "display_name": "Exa",
+      "adapter_kind": "direct_api",
+      "credential_ref": "secret_ref:provider.exa.default",
+      "capabilities": [
+        {
+          "operation": "search",
+          "support_tier": "native",
+          "enabled_state": "unconfigured",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.exa.default",
+          "cache_policy": {
+            "max_age_seconds": 3600,
+            "store": true
+          },
+          "fallback_rank": 10,
+          "robots_supported": false,
+          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+        },
+        {
+          "operation": "read",
+          "support_tier": "near_native",
+          "enabled_state": "unconfigured",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.exa.default",
+          "cache_policy": {
+            "max_age_seconds": 14400,
+            "store": true
+          },
+          "fallback_rank": 20,
+          "robots_supported": false,
+          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+        },
+        {
+          "operation": "extract",
+          "support_tier": "near_native",
+          "enabled_state": "unconfigured",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.exa.default",
+          "cache_policy": {
+            "max_age_seconds": 14400,
+            "store": true
+          },
+          "fallback_rank": 20,
+          "robots_supported": false,
+          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+        },
+        {
+          "operation": "research",
+          "support_tier": "native",
+          "enabled_state": "unconfigured",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.exa.default",
+          "cache_policy": {
+            "max_age_seconds": 3600,
+            "store": true
+          },
+          "fallback_rank": 10,
+          "robots_supported": false,
+          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+        },
+        {
+          "operation": "deep_research",
+          "support_tier": "native",
+          "enabled_state": "unconfigured",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.exa.default",
+          "cache_policy": {
+            "max_age_seconds": 3600,
+            "store": true
+          },
+          "fallback_rank": 10,
+          "robots_supported": false,
+          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+        },
+        {
+          "operation": "crawl",
+          "support_tier": "native",
+          "enabled_state": "unconfigured",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.exa.default",
+          "cache_policy": {
+            "max_age_seconds": 86400,
+            "store": true
+          },
+          "fallback_rank": 20,
+          "robots_supported": false,
+          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+        }
+      ],
+      "projection_state": "not_projected",
+      "egress_policy": {
+        "policy_id": "egress:web.provider_public_only",
+        "ssrf_private_host_policy": "deny_private_hosts",
+        "robots_policy": "not_applicable",
+        "redirect_policy": "public_http_only",
+        "dns_rebind_check": true,
+        "fanout_limit": 50,
+        "max_depth": 3,
+        "secret_redaction_required": true
+      },
+      "secrets_policy": "secret_refs_only",
+      "last_health_check_ref": "health:web.exa",
+      "capability_source_refs": [
+        "WEB_CAPABILITY_AGENTIC_ROUTING_REVIEW.md",
+        "FINDINGS_MATRIX_V3.json",
+        "Plans/web_capability_source_packet_receipt.json"
+      ],
+      "capability_claim_state": "source_packet_seed_pending_live_health"
+    },
+    {
+      "registry_id": "webreg.tavily.direct_api.v1",
+      "adapter_id": "tavily.direct_api",
+      "provider_id": "tavily",
+      "display_name": "Tavily",
+      "adapter_kind": "direct_api",
+      "credential_ref": "secret_ref:provider.tavily.default",
+      "capabilities": [
+        {
+          "operation": "search",
+          "support_tier": "native",
+          "enabled_state": "unconfigured",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.tavily.default",
+          "cache_policy": {
+            "max_age_seconds": 3600,
+            "store": true
+          },
+          "fallback_rank": 15,
+          "robots_supported": false,
+          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+        },
+        {
+          "operation": "read",
+          "support_tier": "near_native",
+          "enabled_state": "unconfigured",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.tavily.default",
+          "cache_policy": {
+            "max_age_seconds": 14400,
+            "store": true
+          },
+          "fallback_rank": 25,
+          "robots_supported": false,
+          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+        },
+        {
+          "operation": "extract",
+          "support_tier": "native",
+          "enabled_state": "unconfigured",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.tavily.default",
+          "cache_policy": {
+            "max_age_seconds": 14400,
+            "store": true
+          },
+          "fallback_rank": 15,
+          "robots_supported": false,
+          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+        },
+        {
+          "operation": "research",
+          "support_tier": "native",
+          "enabled_state": "unconfigured",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.tavily.default",
+          "cache_policy": {
+            "max_age_seconds": 3600,
+            "store": true
+          },
+          "fallback_rank": 15,
+          "robots_supported": false,
+          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+        },
+        {
+          "operation": "deep_research",
+          "support_tier": "native",
+          "enabled_state": "unconfigured",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.tavily.default",
+          "cache_policy": {
+            "max_age_seconds": 3600,
+            "store": true
+          },
+          "fallback_rank": 15,
+          "robots_supported": false,
+          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+        },
+        {
+          "operation": "crawl",
+          "support_tier": "native",
+          "enabled_state": "unconfigured",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.tavily.default",
+          "cache_policy": {
+            "max_age_seconds": 86400,
+            "store": true
+          },
+          "fallback_rank": 15,
+          "robots_supported": false,
+          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+        },
+        {
+          "operation": "map",
+          "support_tier": "native",
+          "enabled_state": "unconfigured",
+          "health_state": "unknown",
+          "cost_policy_ref": "cost:web.tavily.default",
+          "cache_policy": {
+            "max_age_seconds": 86400,
+            "store": true
+          },
+          "fallback_rank": 15,
+          "robots_supported": false,
+          "ssrf_private_host_policy_ref": "egress:web.provider_public_only"
+        }
+      ],
+      "projection_state": "not_projected",
+      "egress_policy": {
+        "policy_id": "egress:web.provider_public_only",
+        "ssrf_private_host_policy": "deny_private_hosts",
+        "robots_policy": "not_applicable",
+        "redirect_policy": "public_http_only",
+        "dns_rebind_check": true,
+        "fanout_limit": 50,
+        "max_depth": 3,
+        "secret_redaction_required": true
+      },
+      "secrets_policy": "secret_refs_only",
+      "last_health_check_ref": "health:web.tavily",
+      "capability_source_refs": [
+        "WEB_CAPABILITY_AGENTIC_ROUTING_REVIEW.md",
+        "FINDINGS_MATRIX_V3.json",
+        "Plans/web_capability_source_packet_receipt.json"
+      ],
+      "capability_claim_state": "source_packet_seed_pending_live_health"
+    },
+
+<<< CONTEXT_AFTER 338-349 >>>
+    {
+      "registry_id": "webreg.firecrawl.direct_api.v1",
+      "adapter_id": "firecrawl.direct_api",
+      "provider_id": "firecrawl",
+      "display_name": "Firecrawl",
+      "adapter_kind": "direct_api",
+      "credential_ref": "secret_ref:provider.firecrawl.default",
+      "capabilities": [
+        {
+          "operation": "search",
+          "support_tier": "native",
+          "enabled_state": "unconfigured",

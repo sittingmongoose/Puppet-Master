@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE 13140-13151 >>>
+preserved_exact_tokens:
+  - "`cost_usd`"
+  - "`<$0.01 => 6 decimals`"
+  - "integer microdollars"
+  - "adjustment record"
+negative_constraints:
+  - "Negative-cost display must never be backed by mutating prior usage."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+```
+
+
+<<< AUTHORITATIVE_CORE 13152-13508 >>>
+### CV-207 - Executor Consumer Anchors And Legacy Audit Closure
+
+```yaml
+plan_unit_id: CV-207
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 owns the shared usage attribution tuple while Executor Protocol
+  owns classified outcome, doom-loop, signal/lifecycle, and blocked/retry prose;
+  legacy LF-004 and LF-008 audit contradictions are closed by conditional
+  omission rules, and audit verdict words are not schema states.
+gui_related: false
+gui_classification_reason: This unit defines owner boundaries and stale audit dispositions.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - "Executor Protocol anchors remain owner prose for outcome, doom-loop, signal/lifecycle, and blocked/retry behavior."
+  - "Contracts_V0 owns the shared usage attribution tuple."
+  - "Legacy audit verdict words and stale TODOs are not schema states in this contract."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: executor_usage_owner_boundary_drift
+reasoning_tier: high
+context_scope: executor_usage_consumer_boundary
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/CLI_Bridged_Providers.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: executor_consumer_anchor_compatibility_disposition
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0070
+preserved_exact_tokens:
+  - "`LF-004`"
+  - "`LF-008`"
+  - "`MINOR`"
+  - "`MOSTLY`"
+  - "`CONFIRMED`"
+  - "`timeout_ms`"
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Architecture_Invariants.md"
+stale_retired_dispositions:
+  - "Audit verdict words such as MINOR, MOSTLY, and CONFIRMED are not schema states."
+  - "Stale TODOs, case-folding examples, and shell-isolation notes remain non-authoritative unless restated in the relevant owner contract."
+negative_constraints:
+  - "Executor/runtime contract fields must not be restated as usage attribution fields."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+```
+
+### CV-208 - Budget Enforcement Events And Overrun Evidence
+
+```yaml
+plan_unit_id: CV-208
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Spending-limit enforcement reads the canonical usage_record stream and legacy
+  record review marker through the same attribution tuple; pre-dispatch budget
+  failures emit kill.budget_exceeded, while post-response overruns emit
+  done.budget_exceeded and persist overrun evidence.
+gui_related: false
+gui_classification_reason: This unit defines budget enforcement events rather than visual presentation.
+split_recommended: false
+depends_on: [CV-199]
+unblocks: [CV-209]
+acceptance_criteria:
+  - "Pre-dispatch budget failures emit kill.budget_exceeded."
+  - "Post-response overruns emit done.budget_exceeded and persist overrun evidence."
+  - "Legacy record review marker remains interpreted through the same attribution tuple."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: budget_event_semantics_drift
+reasoning_tier: high
+context_scope: budget_enforcement_events
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+  - Plans/Run_Modes.md
+node_compile_hint:
+  mode: budget_enforcement_event_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0071
+preserved_exact_tokens:
+  - "`usage_record`"
+  - "`/record`"
+  - "`kill.budget_exceeded`"
+  - "`done.budget_exceeded`"
+  - "overrun evidence"
+compatibility_only_notes:
+  - "The legacy /record review marker remains input to spending-limit enforcement through the canonical attribution tuple."
+negative_constraints:
+  - "Post-response overrun recording must not rewrite prior usage."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+```
+
+### CV-209 - Usage Pipeline Rollups And Bridge Failure Classes
+
+```yaml
+plan_unit_id: CV-209
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  The canonical usage pipeline is seglog to analytics scan to redb rollups to
+  UI; rollups preserve per-run, per-session, and per-tool attribution, and CLI
+  bridge projections preserve quota, rate-limit, and circuit-breaker failure
+  class distinctions.
+gui_related: false
+gui_classification_reason: This unit defines usage pipeline and bridge failure semantics.
+split_recommended: false
+depends_on: [CV-208]
+unblocks: []
+acceptance_criteria:
+  - "Rollups preserve parent_run_id, cache_hit, and cache_strategy where relevant."
+  - "Child usage is not collapsed into display-only parent totals."
+  - "CLI bridge projections preserve 402 quota_exceeded, 429 rate limit, and the 2 minutes circuit-breaker value."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_rollup_attribution_loss
+reasoning_tier: high
+context_scope: usage_pipeline_rollups_bridge_classes
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+  - Plans/CLI_Bridged_Providers.md
+  - Plans/Run_Modes.md
+node_compile_hint:
+  mode: usage_pipeline_rollup_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0071
+preserved_exact_tokens:
+  - "`seglog -> analytics scan -> redb rollups -> UI`"
+  - "`parent_run_id`"
+  - "`cache_hit?`"
+  - "`cache_strategy?`"
+  - "`402 / quota_exceeded`"
+  - "`429 / rate limit`"
+  - "`2 minutes`"
+  - "ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md"
+negative_constraints:
+  - "Helper calls and subagent work must not collapse into display-only parent totals."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+  - Plans/CLI_Bridged_Providers.md
+```
+
+### CV-210 - OpenRouter Cache Metadata And TTL Boundary
+
+```yaml
+plan_unit_id: CV-210
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  PM records OpenRouter cache-key and TTL policy as provider/cache metadata for
+  reuse, billing, debugging, and accounting, but must not treat TTL as a
+  PM-owned persistence guarantee.
+gui_related: false
+gui_classification_reason: This unit defines provider cache metadata semantics rather than visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: [CV-211]
+acceptance_criteria:
+  - "OpenRouter cache-key policy is recorded when it affects reuse, billing, or debugging."
+  - "prompt_cache_key remains provider/cache metadata."
+  - "TTL policy is recorded for accounting and debug explanation without becoming PM-owned persistence."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: openrouter_cache_ttl_ownership_drift
+reasoning_tier: high
+context_scope: openrouter_cache_metadata
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+  - Plans/storage-plan.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: openrouter_cache_metadata_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0072
+preserved_exact_tokens:
+  - "OpenRouter"
+  - "`prompt_cache_key`"
+  - "`/accounting`"
+  - "`#16848`"
+  - "`#16850`"
+negative_constraints:
+  - "PM must not treat OpenRouter cache TTL as a PM-owned persistence guarantee."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+  - Plans/Prompt_Pipeline.md
+```
+
+### CV-211 - OpenRouter Cache Token Bucket Accounting
+
+```yaml
+plan_unit_id: CV-211
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  OpenRouter cache-write token accounting maps into canonical cache token
+  buckets, with cache-write tokens persisted as cache_write, cache_write_1h, or
+  provider TTL-specific cache_write_ttl where exposed, cache reads persisted as
+  cache_read, and legacy cache_creation_input_tokens/cache_read_input_tokens
+  retained only as import/export aliases.
+gui_related: false
+gui_classification_reason: This unit defines usage accounting buckets rather than visual presentation.
+split_recommended: false
+depends_on: [CV-196, CV-210]
+unblocks: []
+acceptance_criteria:
+  - "Cache-write accounting evidence maps to cache_write, cache_write_1h, or cache_write_ttl where exposed."
+  - "Cache reads remain in cache_read."
+  - "Legacy cache_creation_input_tokens and cache_read_input_tokens normalize before persistence, aggregation, or GUI display."
+  - "Provider cache behavior does not redefine PM storage persistence."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: openrouter_cache_bucket_drift
+reasoning_tier: high
+context_scope: openrouter_cache_token_accounting
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+  - Plans/storage-plan.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: openrouter_cache_bucket_accounting
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0072
+preserved_exact_tokens:
+  - "`#18440`"
+  - "`cache_creation_input_tokens`"
+  - "`cache_read_input_tokens`"
+  - "ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md"
+negative_constraints:
+  - "Cache-write evidence must not replace canonical cache token buckets."
+  - "Legacy cache alias fields must not be presented as canonical cache buckets."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+```
+
+### CV-212 - Billing Entity Conditional Fields
+
+```yaml
+plan_unit_id: CV-212
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  requested_billing_entity_id and effective_billing_entity_id are
+  conditionally required fields included only when billing entity selection
+  exists for the provider and when the field is meaningful in the current flow.
+gui_related: false
+gui_classification_reason: This unit defines billing schema field conditions rather than visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: [CV-213]
+acceptance_criteria:
+  - "requested_billing_entity_id is included only when billing entity selection exists and is meaningful."
+  - "effective_billing_entity_id is included only when billing entity selection exists and is meaningful."
+  - "Fields are omitted when billing entity selection is unavailable or meaningless for the flow."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: billing_entity_field_condition_drift
+reasoning_tier: high
+context_scope: billing_entity_conditional_fields
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Multi-Account.md
+node_compile_hint:
+  mode: billing_entity_conditional_fields
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0073
+preserved_exact_tokens:
+  - "`requested_billing_entity_id`"
+  - "`effective_billing_entity_id`"
+  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md"
+negative_constraints:
+  - "Billing entity fields must not be required when billing entity selection is absent or meaningless."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/Multi-Account.md
+```
+
+### CV-213 - Billing Entity Uniform Application And Tuple Sufficiency
+
+```yaml
+plan_unit_id: CV-213
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Billing entity conditional-requirement rules apply uniformly in
+  EventRecord.payload, AuthState, and usage attribution; billing_entity_id alone
+  is never a sufficient canonical substitute when account or entitlement context
+  exists.
+gui_related: false
+gui_classification_reason: This unit defines billing attribution semantics rather than visual presentation.
+split_recommended: false
+depends_on: [CV-201, CV-212]
+unblocks: []
+acceptance_criteria:
+  - "EventRecord.payload applies billing entity fields only when meaningful."
+  - "AuthState persists selection only when the effective quota bucket depends on entity selection."
+  - "Usage attribution preserves the full known attribution tuple."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: billing_entity_tuple_collapse
+reasoning_tier: high
+context_scope: billing_entity_uniform_application
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+  - Plans/CLI_Bridged_Providers.md
+node_compile_hint:
+  mode: billing_entity_tuple_sufficiency
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0073
+preserved_exact_tokens:
+  - "`EventRecord.payload`"
+  - "`AuthState`"
+  - "`billing_entity_id`"
+  - "`(provider_id, model_id, account_id?, billing_entity_id?, entitlement_class?)`"
+  - "ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md"
+negative_constraints:
+  - "`billing_entity_id` alone is never a sufficient canonical substitute when account or entitlement context exists."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+```
+
+
+<<< CONTEXT_AFTER 13509-13520 >>>
+### CV-214 - UI Readiness Projection Consumer Boundary
+
+```yaml
+plan_unit_id: CV-214
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  UI readiness projections that mention pm.lock, viewer-mode, MCP lazy-load, or
+  startup-time are consumers of owner contracts and must preserve referenced
+  owner state without minting parallel status fields.
+gui_related: true

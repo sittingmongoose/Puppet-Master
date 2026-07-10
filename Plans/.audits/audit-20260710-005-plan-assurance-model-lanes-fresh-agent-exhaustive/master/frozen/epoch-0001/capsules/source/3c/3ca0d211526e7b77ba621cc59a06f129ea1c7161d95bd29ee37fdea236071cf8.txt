@@ -1,0 +1,239 @@
+<<< AUTHORITATIVE_CORE 1-238 >>>
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/execution_unit_context.schema.json",
+  "title": "Execution Unit Context Contract",
+  "description": "Executor-owned runtime context packet. Consumers reference this schema; they do not redefine the field set. No secret, token, password, credential, or raw provider-auth value may be persisted in this payload.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "execution_unit_type",
+    "execution_unit_id",
+    "run_id",
+    "node_id",
+    "attempt_id",
+    "execution_role",
+    "operational_identity",
+    "requested_account_binding",
+    "approval_scope_key",
+    "created_at_utc"
+  ],
+  "properties": {
+    "schema_id": {
+      "type": "string",
+      "const": "pm.execution_unit_context"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "execution_unit_type": {
+      "type": "string",
+      "enum": [
+        "run",
+        "seam",
+        "package",
+        "node",
+        "overseer",
+        "delegated_subagent",
+        "recovery",
+        "verification",
+        "host_operation"
+      ]
+    },
+    "execution_unit_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "parent_execution_unit_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "project_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "thread_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "wizard_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "resolution_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "run_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "node_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "attempt_id": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "lane_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "package_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "seam_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "worktree_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "working_directory": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "scheduler_pass_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "execution_role": {
+      "type": "string",
+      "enum": [
+        "assistant",
+        "interviewer",
+        "requirements_builder",
+        "prd_builder",
+        "package_overseer",
+        "seam_overseer",
+        "node_worker",
+        "reviewer",
+        "verifier",
+        "corroborator",
+        "recovery_actor",
+        "host_operator"
+      ]
+    },
+    "requested_account_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "requested_account_binding": {
+      "type": "string",
+      "enum": [
+        "none",
+        "preferred",
+        "required",
+        "system_default"
+      ]
+    },
+    "requested_account_policy": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "effective_account_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "operational_identity": {
+      "$ref": "#/$defs/operational_identity"
+    },
+    "blocked_sequence": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "allowed_action_ids": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      },
+      "uniqueItems": true
+    },
+    "approval_scope_key": {
+      "$ref": "#/$defs/non_empty_string"
+    },
+    "permission_snapshot_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "usage_event_ref": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "runtime_policy_snapshot_ref": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "source_control_context_ref": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "host_assignment_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "safe_point_id": {
+      "$ref": "#/$defs/nullable_non_empty_string"
+    },
+    "redaction_profile": {
+      "type": "string",
+      "enum": [
+        "no_secrets",
+        "redacted",
+        "secret_refs_only"
+      ]
+    },
+    "replay_policy": {
+      "type": "string",
+      "enum": [
+        "rehydrate_exact",
+        "rehydrate_with_current_policy",
+        "blocked_until_rebound"
+      ]
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time",
+      "minLength": 1
+    },
+    "updated_at_utc": {
+      "anyOf": [
+        {
+          "type": "string",
+          "format": "date-time",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nullable_non_empty_string": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "operational_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "identity_id",
+        "identity_kind"
+      ],
+      "properties": {
+        "identity_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "identity_kind": {
+          "type": "string",
+          "enum": [
+            "human_user",
+            "assistant_agent",
+            "system_service",
+            "provider_account",
+            "host_capability"
+          ]
+        },
+        "display_label": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        },
+        "source_ref": {
+          "$ref": "#/$defs/nullable_non_empty_string"
+        }
+      }
+    }
+  }
+}

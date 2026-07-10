@@ -1,0 +1,289 @@
+<<< CONTEXT_BEFORE canonical_document_lines=613-624 >>>
+L00000613	| `cmd.github.actions.validate_dispatch_readiness` | Validate Dispatch Readiness | Revalidates workflow dispatch readiness before rerun, dispatch, or hosted-admin mutation | — | `actions_panel_visible && selected_workflow` |
+L00000614	| `cmd.actions.view_logs` | View Logs | Opens full log output for selected job/step | — | `actions_panel_visible && selected_job` |
+L00000615	| `cmd.actions.open_in_browser` | Open in Browser | Opens the workflow run on GitHub.com | — | `actions_panel_visible && selected_run` |
+L00000616	
+L00000617	Rules:
+L00000618	- Actions-to-code commands bridge GitHub Actions to Source Control without moving ownership of hosted runs into Source Control.
+L00000619	- `open_related_diff` and `open_related_worktree` use receipt-backed run id, commit range, changed files, branch, and worktree refs when available.
+L00000620	- If exact correlation is unavailable, commands show candidate commit ranges, workflow file diffs, or related worktrees with an uncertainty label instead of auto-opening a guessed target.
+L00000621	
+L00000622	ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md
+L00000623	
+L00000624	### 2.5A Docker Manager command family
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=625-884 >>>
+L00000625	
+L00000626	| Command ID | Label | Description | Preconditions |
+L00000627	|---|---|---|---|
+L00000628	| `cmd.docker.build` | Build Image | Compatibility alias for the selected `cmd.docker.build.*` path | `docker_available && build_target_selected` |
+L00000629	| `cmd.docker.build.select_target` | Select Build Target | Selects Dockerfile, context, target stage, platform, and build mode before build or bake | `docker_available && build_candidate_present` |
+L00000630	| `cmd.docker.build.run` | Run Build | Runs the selected Docker build path and records last successful build target plus validation snapshot | `docker_available && build_target_selected` |
+L00000631	| `cmd.docker.bake.preview` | Preview Bake | Previews resolved Bake targets and platforms without publishing | `docker_available && bake_file_resolved` |
+L00000632	| `cmd.docker.bake.run` | Run Bake | Runs the selected `cmd.docker.bake.*` target | `docker_available && bake_target_selected` |
+L00000633	| `cmd.docker.run` | Run Container | Starts a container from selected image | `docker_available && image_selected` |
+L00000634	| `cmd.docker.stop` | Stop Container | Stops a running container | `docker_available && container_running` |
+L00000635	| `cmd.docker.restart` | Restart Container | Restarts a container | `docker_available && container_selected` |
+L00000636	| `cmd.docker.remove` | Remove Container | Removes a stopped container | `docker_available && container_stopped` |
+L00000637	| `cmd.docker.container.open` | Open Container Access | Opens a resolved URL or access target for a running container when confidence is sufficient | `docker_available && container_running && access_target_resolved` |
+L00000638	| `cmd.docker.container.view_logs` | View Container Logs | Opens container logs with follow, paused snapshot, and historical modes | `docker_available && container_selected` |
+L00000639	| `cmd.docker.container.attach_shell` | Attach Shell | Starts an audited `docker exec/attach` shell session in a running container | `docker_available && container_running && permission_allowed` |
+L00000640	| `cmd.docker.container.stats` | View Stats | Shows live or cached container stats with freshness markers | `docker_available && container_selected` |
+L00000641	| `cmd.docker.container.inspect` | Inspect Container | Shows structured inspect output with secret and redaction policy applied | `docker_available && container_selected` |
+L00000642	| `cmd.docker.logs` | View Logs | Compatibility alias for `cmd.docker.container.view_logs` | `docker_available && container_selected` |
+L00000643	| `cmd.docker.exec` | Exec Shell | Compatibility alias for `cmd.docker.container.attach_shell` | `docker_available && container_running` |
+L00000644	| `cmd.docker.inspect` | Inspect | Compatibility alias for `cmd.docker.container.inspect` | `docker_available && resource_selected` |
+L00000645	| `cmd.docker.compose_up` | Compose Up | Compatibility alias for a full-compose scenario run | `docker_available && compose_file_selected` |
+L00000646	| `cmd.docker.compose_down` | Compose Down | Compatibility alias for full-compose down | `docker_available && compose_running` |
+L00000647	| `cmd.docker.compose.up_subset` | Compose Up Subset | Starts selected services/profiles/env files/ports from a compose scenario | `docker_available && compose_subset_valid` |
+L00000648	| `cmd.docker.compose.down_subset` | Compose Down Subset | Stops selected services from a compose scenario | `docker_available && compose_subset_running` |
+L00000649	| `cmd.docker.compose.scenario.save` | Save Compose Scenario | Saves selected services, `/profiles/env` files, port mappings, detached mode, and log-follow defaults | `compose_file_selected` |
+L00000650	| `cmd.docker.compose.scenario.run` | Run Compose Scenario | Runs a saved scenario and records the scenario id on the preview or development run | `docker_available && compose_scenario_valid` |
+L00000651	| `cmd.docker.compose.scenario.edit` | Edit Compose Scenario | Edits a saved scenario or repairs degraded scenario validation | `compose_scenario_selected` |
+L00000652	| `cmd.docker.compose.scenario.delete` | Delete Compose Scenario | Deletes a saved scenario without deleting compose files | `compose_scenario_selected` |
+L00000653	| `cmd.docker.create_repository` | Create Repository | Starts the protected DockerHub repository creation confirmation flow for the proposed namespace/repository/privacy tuple | `registry_target_missing && permission_allowed` |
+L00000654	| `cmd.docker.create_repository.confirm` | Confirm Repository Creation | Confirms the protected repository creation request after showing namespace, repository name, privacy, and private-by-default notice | `repository_creation_confirmation_visible` |
+L00000655	| `cmd.docker.create_repository.cancel` | Cancel Repository Creation | Cancels the protected repository creation request without approving image push or registry promotion | `repository_creation_confirmation_visible` |
+L00000656	| `cmd.docker.registry.promote` | Promote Registry Artifact | Promotes, copies, or retags a digest-first artifact to a selected target registry/repo/tag | `registry_source_resolved && registry_target_allowed` |
+L00000657	| `cmd.docker.registry.tag_push` | Tag And Push | Applies the approved `/tag/push` action to a digest-first artifact | `registry_target_allowed && permission_allowed` |
+L00000658	| `cmd.docker.image.push` | Push Image | Compatibility alias for an approved image push through Docker Manager registry publish authority | `image_selected && registry_target_allowed && permission_allowed` |
+L00000659	| `cmd.docker.drift.compare` | Compare Docker Drift | Compares local Dockerfile, `/compose/bake`, and manifests with last build, publish, or deploy metadata | `docker_project_detected` |
+L00000660	| `cmd.docker.cleanup.scan` | Scan Cleanup | Dry-runs prune/remove recommendations with protected asset and receipt checks | `docker_available` |
+L00000661	| `cmd.docker.cleanup.prune` | Prune Selected Assets | Executes approved cleanup targets after dry-run review | `cleanup_targets_selected && permission_allowed` |
+L00000662	
+L00000663	The grouped command token `cmd.docker.compose.scenario.save/run/edit/delete` denotes the scenario command family; payloads use the concrete ids above. Legacy Docker rows normalize into canonical `cmd.docker.container.*`, `cmd.docker.compose.*`, `cmd.docker.bake.*`, or registry command families and MUST NOT introduce new payload shapes.
+L00000664	`cmd.docker.show` and `cmd.docker.switch_subview` are shell/view-state compatibility wrappers for opening Docker Manager and selecting a Docker Manager subview. They do not replace concrete Docker Manager domain-action rows such as build, compose, registry, cleanup, or Kubernetes commands.
+L00000665	Docker `/publish/repo-management` and `/lineage` routes preserve the authority split: `cmd.orchestrator.push_image` is the Orchestrator after-build remote side-effect step, while `cmd.docker.image.push` and `cmd.docker.registry.tag_push` are Docker Manager registry publish commands that must share the same permission, account, receipt, and lineage checks rather than claiming a separate event family.
+L00000666	
+L00000667	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+L00000668	
+L00000669	### 2.5B Docker Manager Kubernetes command family
+L00000670	
+L00000671	| Command ID | Label | Description | Preconditions |
+L00000672	|---|---|---|---|
+L00000673	| `cmd.docker.k8s.apply` | Apply Manifest | Applies a selected manifest or Helm-rendered manifest inside the selected project scope | `k8s_connected && manifest_selected && permission_allowed` |
+L00000674	| `cmd.docker.k8s.diff` | Diff Manifest | Diffs selected manifests against the selected context, namespace, or workload where supported | `k8s_connected && manifest_selected` |
+L00000675	| `cmd.docker.k8s.logs` | View Workload Logs | Opens workload or pod logs with follow, paused snapshot, and historical modes | `k8s_connected && workload_selected` |
+L00000676	| `cmd.docker.k8s.exec` | Exec In Workload | Starts an audited privileged exec session in the selected pod/container | `k8s_connected && workload_running && permission_allowed` |
+L00000677	| `cmd.docker.k8s.port_forward` | Port Forward | Starts an audited port-forward with local bind address/port recorded | `k8s_connected && workload_selected && permission_allowed` |
+L00000678	| `cmd.docker.k8s.select_context` | Select Context | Selects the project-focused Kubernetes context and revalidates capability | `k8s_available` |
+L00000679	| `cmd.docker.k8s.select_namespace` | Select Namespace | Selects the namespace within the selected context and refreshes workload focus | `k8s_connected` |
+L00000680	| `cmd.docker.k8s.helm_preview` | Preview Helm | Renders Helm output for the selected release/chart without applying it | `k8s_project_detected && helm_source_selected` |
+L00000681	| `cmd.docker.k8s.helm_install` | Install Helm | Installs or upgrades the selected Helm release after permission and diff review | `k8s_connected && helm_source_selected && permission_allowed` |
+L00000682	
+L00000683	The grouped command token `cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace` denotes the canonical Docker Manager Kubernetes family. Existing `cmd.k8s.*`, `set_context`, and `set_namespace` rows are compatibility aliases until migrated; canonical payloads use `cmd.docker.k8s.*`.
+L00000684	
+L00000685	Docker Manager and `/Kubernetes` command availability copy uses the shared disabled-state taxonomy from the containers and worktree owner docs: `Unsupported`, `Not configured`, `Unauthorized`, `Unreachable`, `Degraded`, and `Partial capability`. UI command rows surface those canonical `/UX-state` reason families from runtime projection state instead of inventing panel-local Docker/Kubernetes disabled wording; legacy `cmd.container.*` references are retired to the active `cmd.docker.*` and `cmd.docker.k8s.*` namespaces.
+L00000686	
+L00000687	Docker and Kubernetes side-effect commands use domain-bound approval scoping: registry promotion binds approval to the exact registry/namespace/repository, digest/tag target, and publish action; Kubernetes mutations bind approval to the selected context, namespace, workload/resource, and operation. Cross-surface receipts retain `docker_refs` and `kubernetes_refs` lineage, and runtime drift-detection or `/trust/proxy` blockers must refresh effective capability before mutation.
+L00000688	
+L00000689	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Tools.md
+L00000690	
+L00000691	### 2.5C Project-scope git worktree commands
+L00000692	
+L00000693	These commands manage repository-level worktree inventory, ownership, safe actions, and lifecycle. They complement, but do not replace, the assistant thread-scoped `cmd.chat.worktree.*` family defined in section 2.6.1. The grouped tokens `cmd.git.worktree.list/select/open/compare/prune/recover`, `cmd.git.worktree.open|compare|recover|prune|focus_lineage`, and `cmd.git.worktree.recover/prune/remove/reuse` denote the canonical project-scope safe-worktree command set; payloads use the concrete IDs below.
+L00000694	
+L00000695	| Command ID | Label | Description | Preconditions |
+L00000696	|---|---|---|---|
+L00000697	| `cmd.git.worktree.list` | List Worktrees | Shows all worktrees for current repo, including stale/blocked ownership projection state | `git_available` |
+L00000698	| `cmd.git.worktree.select` | Select Worktree | Selects a worktree row and persists selected worktree/filter state per project | `git_available && worktree_row_available` |
+L00000699	| `cmd.git.worktree.open` | Open Worktree | Opens or focuses the selected worktree root | `git_available && worktree_selected && worktree_path_resolvable` |
+L00000700	| `cmd.git.worktree.open_files` | Open Worktree Files | Compatibility alias for opening the selected worktree root/files through `cmd.git.worktree.open` plus File Manager focus; does not create a separate assistant-thread worktree command | `git_available && worktree_selected && worktree_path_resolvable` |
+L00000701	| `cmd.git.worktree.compare` | Compare Worktree | Opens Review mode for the selected worktree against a base branch, another worktree, PR target, or commit range | `git_available && worktree_selected && compare_target_resolvable` |
+L00000702	| `cmd.git.worktree.create` | Create Worktree | Creates a new git worktree at specified path | `git_available && !worktree_limit_reached` |
+L00000703	| `cmd.git.worktree.remove` | Remove Worktree | Removes an existing live worktree after confirmation, lineage, safe-point, blocked-state, and cleanup gates pass | `git_available && worktree_selected && worktree_clean && prune_policy_allows && lineage_gate_passed` |
+L00000704	| `cmd.git.worktree.prune` | Prune Worktree | Prunes eligible stale worktree metadata after active-run, blocked, safe-point, and lineage gates pass | `git_available && worktree_selected && prune_policy_allows && lineage_gate_passed` |
+L00000705	| `cmd.git.worktree.request_prune` | Request Worktree Prune | Compatibility alias for approval-gated prune/remove request flows | `git_available && worktree_selected` |
+L00000706	| `cmd.git.worktree.reuse` | Reuse Worktree | Rebinds a clean, lineage-compatible worktree to a new run/lane/package owner after reuse gates pass | `git_available && worktree_selected && ownership_resolvable && worktree_clean && lineage_gate_passed` |
+L00000707	| `cmd.git.worktree.recover` | Recover Worktree | Reopens or rebinds a worktree from stored lineage; if ownership cannot be resolved after restart, marks `unknown ownership` rather than unlocking silently | `git_available && worktree_selected` |
+L00000708	| `cmd.git.worktree.focus_lineage` | Focus Worktree Lineage | Focuses the selected worktree's owner run, branch lineage, receipt, or `/orphaned` tombstone context without mutating it | `git_available && worktree_selected` |
+L00000709	| `cmd.git.worktree.release` | Release Worktree Ownership | Releases runtime ownership after lineage-safe completion, archival, or an explicit recorded override | `git_available && worktree_selected && ownership_resolvable` |
+L00000710	| `cmd.git.worktree.lock` | Lock Worktree | Prevents accidental removal of worktree | `git_available && worktree_selected` |
+L00000711	| `cmd.git.worktree.unlock` | Unlock Worktree | Removes lock from worktree | `git_available && worktree_locked` |
+L00000712	| `cmd.git.worktree.switch` | Switch to Worktree | Compatibility alias for select plus open until callers migrate | `git_available && worktree_selected` |
+L00000713	
+L00000714	Rules:
+L00000715	- `cmd.git.worktree.*` owns project-scope worktree inventory, lock state, navigation, ownership release, recovery, prune/remove, and reuse entrypoints.
+L00000716	- `cmd.chat.worktree.*` remains the thread-scoped wrapper family and MAY normalize internally to project-scope worktree operations.
+L00000717	- Manual prune/remove/reuse is forbidden while the worktree is `active` or `blocked_preserved` unless explicit override policy allows it and records the override.
+L00000718	- Safe worktree action commands carry enough `repo_id`, `worktree_id`, optional `safe_point_id`, lane/run/package refs, blocked/recovery lineage, and blocked reason payloads to preserve stale-run and crashed-session safety.
+L00000719	- `show-unsafe-actions` expert mode may reveal disabled choices but must not make them executable while active run, blocked, safe-point, or lineage gates fail.
+L00000720	- Optional confirmation strictness applies before destructive or ownership-changing actions, including remove, prune, and reuse.
+L00000721	
+L00000722	ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md
+L00000723	
+L00000724	### 2.6 Chat context usage commands
+L00000725	
+L00000726	#### 2.6A Chat thread lifecycle commands
+L00000727	
+L00000728	The grouped token `cmd.chat.{new,archive,delete,rename,pin,export,search}` denotes chat thread lifecycle and discovery commands, not message-level delete or file-restore behavior.
+L00000729	
+L00000730	| Command ID | Label | Description | Preconditions |
+L00000731	|---|---|---|---|
+L00000732	| `cmd.chat.new` | New Thread | Creates or focuses a fresh assistant thread shell; `thread_id` is minted when the first user message commits | `chat_available` |
+L00000733	| `cmd.chat.archive` | Archive Thread | Archives the selected thread while preserving transcript, lineage, citations, attachments, and audit metadata | `thread_selected && !active_run_in_thread` |
+L00000734	| `cmd.chat.delete` | Delete Thread | Deletes the selected thread from ordinary navigation after retention/worktree cleanup confirmation | `thread_selected && delete_confirmed && !active_run_in_thread` |
+L00000735	| `cmd.chat.rename` | Rename Thread | Renames the selected thread title without changing thread_id, message ids, or worktree lineage | `thread_selected` |
+L00000736	| `cmd.chat.pin` | Pin Thread | Pins or unpins the selected thread in the thread list without changing lifecycle state | `thread_selected` |
+L00000737	| `cmd.chat.export` | Export Thread | Exports the selected thread transcript and permitted metadata to the supported local export format | `thread_selected` |
+L00000738	| `cmd.chat.search` | Search Thread | Searches within the selected thread and restores focus to exact message matches | `thread_selected` |
+L00000739	
+L00000740	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+L00000741	
+L00000742	#### Context Lens commands
+L00000743	
+L00000744	Context Lens command IDs stay in lockstep with `Plans/assistant-chat-design.md`, `Plans/Wiring_Matrix.md`, and `Plans/FinalGUISpec.md` for placement, mode activation, message-selection toggles, multi-select behavior, Subcompact apply/revert, clear/reset behavior, and the dropdown `Turn Off` label.
+L00000745	
+L00000746	| Command ID | Purpose | Notes |
+L00000747	|---|---|---|
+L00000748	| `cmd.chat.context_lens.toggle` | Open or close the Context Lens dropdown | Owner control lives in the top-right of the chat window, immediately to the right of the search bar. |
+L00000749	| `cmd.chat.context_lens.set_mode` | Set active mode to `mute`, `focus`, or `subcompact` | Multi-select is supported in all modes. |
+L00000750	| `cmd.chat.context_lens.turn_off` | Exit Context Lens mode and clear active selection state | Dropdown entry label is `Turn Off`. |
+L00000751	| `cmd.chat.context_lens.toggle_message_selection` | Toggle one message into or out of the active selection set | Applies immediately in `mute` and `focus`. |
+L00000752	| `cmd.chat.context_lens.clear_selection` | Clear the current active selection set | Does not mutate canonical history. |
+L00000753	| `cmd.chat.context_lens.apply_subcompact` | Apply Subcompact to the current selected region | Requires explicit user confirmation because it creates a local summary artifact. |
+L00000754	| `cmd.chat.context_lens.revert_subcompact` | Restore a previously subcompacted region to full effective-context state | Uses canonical source refs for rehydration. |
+L00000755	
+L00000756	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+L00000757	
+L00000758	#### 2.6.1 Assistant worktree commands
+L00000759	
+L00000760	Six commands for assistant thread-level worktree operations. All share the base when-clause `activeThreadExists && projectIsGitRepo && !projectIsRemoteNonSSH`; each row adds its own visibility and enablement when-clause.
+L00000761	
+L00000762	| Command ID | Slash command | Label | Description | Extra when-clause |
+L00000763	|---|---|---|---|---|
+L00000764	| `cmd.chat.worktree.create` | `/worktree create` | Create Worktree | Creates a worktree for the active thread and opens the create/bind dialog | visible when `!activeThreadHasWorktree`; enabled when visible |
+L00000765	| `cmd.chat.worktree.unbind` | `/worktree unbind` | Unbind Worktree | Detaches the active thread from its worktree while keeping the worktree on disk | visible when `activeThreadHasWorktree`; enabled when `!activeThreadHasActiveRun` |
+L00000766	| `cmd.chat.worktree.remove` | `/worktree remove` | Remove Worktree | Detaches and prunes the active thread's worktree, with confirmation if dirty | visible when `activeThreadHasWorktree`; enabled when `!activeThreadHasActiveRun` |
+L00000767	| `cmd.chat.worktree.merge` | `/worktree merge [--squash|--rebase]` | Merge Worktree | Opens the merge-back dialog for the active thread's worktree | visible when `activeThreadHasWorktree`; enabled when `!activeThreadHasActiveRun && !worktreeDirty && !worktreeHasConflicts && !worktreeDetachedHead && !mergeLockHeld` |
+L00000768	| `cmd.chat.worktree.pr` | `/worktree pr` | Create PR | Opens the PR creation panel for the active thread's worktree branch | visible when `activeThreadHasWorktree && projectHasGitHubRemote`; enabled when `!activeThreadHasActiveRun && !worktreeDetachedHead` |
+L00000769	| `cmd.chat.worktree.info` | `/worktree` | Worktree Info | Shows the active thread's current worktree binding and status without mutation | visible when `activeThreadHasWorktree`; enabled when visible |
+L00000770	
+L00000771	`Open Files` routes through the project-scope `cmd.git.worktree.open` command. Arbitrary Bind Existing remains outside the Assistant thread-worktree MVP and must not be exposed as `cmd.chat.worktree.bind_existing`.
+L00000772	
+L00000773	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md
+L00000774	
+L00000775	**Context variable definitions:**
+L00000776	- `activeThreadExists`: a chat thread is selected in the assistant panel
+L00000777	- `activeThreadHasWorktree`: active thread has a non-null worktree binding in redb
+L00000778	- `activeThreadHasActiveRun`: active thread has a run in progress against the bound worktree
+L00000779	- `projectIsGitRepo`: active project has a `.git` directory
+L00000780	- `projectIsRemoteNonSSH`: project is remote-mode but not SSH-tunneled (worktrees unsupported)
+L00000781	- `projectHasGitHubRemote`: project git config contains a `github.com` remote URL
+L00000782	- `worktreeDirty`, `worktreeHasConflicts`, `worktreeDetachedHead`, and `mergeLockHeld`: projection-backed guards from the bound worktree and merge lock state
+L00000783	
+L00000784	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integration.md
+L00000785	
+L00000786	| Command ID | Payload | Domain event(s) | UI surface(s) |
+L00000787	|---|---|---|---|
+L00000788	| `cmd.chat.compact_context` | `{ thread_id }` | `context.compaction.started`, `context.compaction.completed`, `context.compaction.failed`; result status `started | already_running | cancelled | no_op | degraded | unavailable | retry_scheduled | completed | failed` | Chat context circle Compact Now action, command palette |
+L00000789	| `cmd.chat.open_thread_context_details` | `{ thread_id }` | layout/UI state only | Chat context hover module, artifact deep-links |
+L00000790	| `cmd.chat.focus_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
+L00000791	| `cmd.chat.close_thread_context_details` | `{ thread_id }` | layout/UI state only | Editor tab / thread Context Detail Pane |
+L00000792	
+L00000793	Rules:
+L00000794	- hover-summary disclosure is passive UI and does not require its own stable command ID
+L00000795	- choosing `More Details` dispatches `cmd.chat.open_thread_context_details`
+L00000796	- clicking the circle may reveal `Compact Now` locally, but `cmd.chat.compact_context` is dispatched only when the user actually chooses that action
+L00000797	- the command result must surface already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed outcomes through visible status or receipt-backed detail
+L00000798	- `cmd.chat.open_thread_usage`, `cmd.chat.focus_thread_usage`, and `cmd.chat.close_thread_usage` are superseded and MUST NOT remain canonical IDs
+L00000799	- Legacy callers that still cite `cmd.chat.open_thread_usage` or `cmd.chat.focus_thread_usage` normalize to route/open Usage context and are not pure shell or layout toggles.
+L00000800	
+L00000801	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+L00000802	### 2.6A Render / browser preview commands
+L00000803	Browser, terminal, and dev-session commands share one shell/runtime interaction family. Browser commands own browser-session behavior, terminal commands own section or tab or pane or session behavior, and dev commands own dev-workflow behavior.
+L00000804	
+L00000805	#### Browser preview and browsing commands
+L00000806	
+L00000807	Rules:
+L00000808	- Browser export can retrieve more than the viewport, but normal browsing stays slice-based.
+L00000809	- Browser automation commands for Debug investigations carry the chosen URL plus normalized `/domain/session` identity so command routing can bind the browser session, permission scope, and evidence bundle without relying on a freeform label.
+L00000810	- Browser command inventory is expanded beyond the older `/focus/detach/share/revoke` shorthand. That shorthand maps only to the concrete focus, detach, share, and revoke rows below; `/screenshot/devtools/automation` maps to screenshot capture, DevTools, automation takeover, promotion, and recovery command rows in this table.
+L00000811	- This `Plans/UI_Command_Catalog.md` browser section is canonical and packetizable only when consumers reference concrete `cmd.browser.*` command IDs, payloads, and emitted events from this catalog plus the behavior owner in `Plans/Section15_MVP_Promoted_Features_Spec.md`, rather than stale aggregate browser labels.
+L00000812	- `Research_session` permission is gated by the parent web tool permission; e.g., `webfetch` permission covers browser actions performed within the owning `webfetch` call.
+L00000813	
+L00000814	| Command ID | Payload | Domain event(s) | UI surface(s) |
+L00000815	|---|---|---|---|
+L00000816	| `cmd.browser.open_workspace_preview` | `{ project_id, target, workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, editor/browser tab |
+L00000817	| `cmd.browser.open_detached_preview` | `{ project_id, target, source_workspace_tab_id }` | `browser.session.created`, `browser.session.state_changed` | File preview, command palette, detached browser |
+L00000818	| `cmd.browser.focus_browser_tab` | `{ browser_session_id }` | layout/UI state only | editor/browser tab surface |
+L00000819	| `cmd.browser.detach_browser_tab` | `{ browser_session_id }` | `browser.session.state_changed` | editor/browser tab surface |
+L00000820	| `cmd.browser.open_devtools` | `{ browser_session_id, mode? }` | layout/UI state only | browser chrome, command palette |
+L00000821	| `cmd.browser.toggle_devtools_dock` | `{ browser_session_id, dock }` | layout/UI state only | browser chrome, DevTools surface |
+L00000822	| `cmd.browser.pick_element_for_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+L00000823	| `cmd.browser.add_selection_to_chat` | `{ browser_session_id, thread_id? }` | `browser.context_captured` | browser chrome, assistant chat |
+L00000824	| `cmd.browser.add_selection_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
+L00000825	| `cmd.browser.add_selection_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `browser.context_captured`, `runtime_artifact.created` | browser chrome, assistant chat |
+L00000826	| `cmd.browser.add_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'clip' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+L00000827	| `cmd.browser.add_full_screenshot_to_chat` | `{ browser_session_id, thread_id?, scope:'full' }` | `runtime_artifact.created` | browser chrome, assistant chat |
+L00000828	| `cmd.browser.share_with_agent` | `{ browser_session_id, thread_id }` | `browser.context_shared` | browser chrome, assistant chat |
+L00000829	| `cmd.browser.revoke_share_with_agent` | `{ browser_session_id, thread_id? }` | `browser.context_share_revoked` | browser chrome, attention surfaces |
+L00000830	| `cmd.browser.take_over` | `{ browser_session_id, takeover_choice:'pause_agent'|'let_agent_continue'|'stop_agent_keep_browser' }` | `browser.session.takeover_state_changed` | browser takeover prompt, automation banner |
+L00000831	| `cmd.browser.pause_agent` | `{ browser_session_id }` | `browser.session.takeover_state_changed` | browser chrome, automation banner |
+L00000832	| `cmd.browser.let_agent_continue` | `{ browser_session_id }` | `browser.session.takeover_state_changed` | browser takeover prompt |
+L00000833	| `cmd.browser.stop_agent_keep_browser` | `{ browser_session_id }` | `browser.session.takeover_state_changed`, `dev.session.stopped` | browser takeover prompt, browser chrome |
+L00000834	| `cmd.browser.promote_to_normal_browsing` | `{ browser_session_id, target_workspace_tab_id? }` | `browser.session.promoted` | browser chrome, command palette |
+L00000835	| `cmd.browser.reopen` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |
+L00000836	| `cmd.browser.retry` | `{ browser_session_id }` | `browser.session.state_changed` | recovery banner, attention center |
+L00000837	| `cmd.browser.keep_closed` | `{ browser_session_id }` | `browser.session.closed` | recovery banner, attention center |
+L00000838	
+L00000839	Capture event rules:
+L00000840	- `browser.context_captured` MUST carry `attachment_type: "browser_element_context" | "browser_selection_context"`, `chip_id`, `browser_session_id`, `thread_id?`, capture status, and source/provenance fields so element-pick and text-selection captures remain distinct through composer prep and prompt serialization.
+L00000841	- `cmd.browser.share_with_agent` and `cmd.browser.revoke_share_with_agent` update browser-session share state only; they do not create `browser.context_captured` events and do not serialize page, selection, or element context without a separate explicit capture command.
+L00000842	
+L00000843	ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+L00000844	
+L00000845	#### Terminal session and layout commands
+L00000846	
+L00000847	This section defines the canonical contract for this surface.
+L00000848	
+L00000849	Core rules:
+L00000850	- Terminal promotion and handoff are LOCKED so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.
+L00000851	- Terminal-handoff routing is the canonical bridge from chat/tool cards into live terminal sessions; it preserves session identity and must not re-own the terminal session under an individual tool.
+L00000852	- The `/terminal` surface consumes the command identities in this section; callers use these stable command IDs rather than inventing terminal-local aliases.
+L00000853	- Terminal action canon must preserve the distinct terminal actions in owned command-table rows. Distinct terminal actions must keep owned command-table rows and do not collapse terminal actions into one normalized target.
+L00000854	- chat-callable one-shot tools such as bash, grep, codesearch, chatsearch, logsearch, and logread stay in-chat by default with concise expandable audit/result blocks; interactive, long-running, or stdin-requiring shell/PTY work promotes to Terminal, Output, or Ports surfaces with chat retaining pointers and bounded `/previews`.
+L00000855	- One-shot bash/command cards retain the exact command text in the chat message, expose bounded expandable `/output`, and keep full large output behind refs/blobs owned by the runtime surface.
+L00000856	- Command cards label completed shell work as `Ran: <command>` and active shell work as `Running: <command>`; web/search operation cards label discovery summaries as `<operation>: <query/url> — N sources`.
+L00000857	- PM built-in agents performing shell-like automation default to PTY-backed terminal execution when work is user-inspectable, multi-step, long-running, or likely to need intervention; non-PTY hidden execution is reserved for infrastructure-like helper work where shell semantics are irrelevant. Agent-originated Output and agent-originated inline `/summaries` must not impersonate a pseudo-console; when a canonical terminal session exists they expose a compact-audit pointer plus `live-terminal` reveal/focus controls.
+L00000858	- Terminal-originated work and terminal-originated secondary artifacts can emit `/Problems/Ports`, `/Ports/Output`, and `/port/output` items without surrendering terminal ownership of the live session. Those items carry `/linkback`, reveal-origin, and same-session routing to the originating terminal when one exists; preview surfaces may link to the preview-driving dev session or terminal, but reveal is navigation rather than surface replacement.
+L00000859	- Historical command and audit details show the frozen permission/runtime snapshot that actually governed execution, including policy/mode/project changes; current Settings state must not replace historical `/policy/mode/project` evidence.
+L00000860	- Dedicated log and audit surfaces provide richer search plus `/filter/drill-down`, `/changes`, `/summaries`, `/transparency`, and `/logging/subagents` over event-log summaries and blobs, while in-thread transparency remains concise and user-facing.
+L00000861	
+L00000862	| Command ID | Payload | Domain event(s) | UI surface(s) |
+L00000863	| --- | --- | --- | --- |
+L00000864	| `cmd.terminal.open` | label `Open in Terminal`; `terminal_session_id`; reveal existing session context; optional `origin_surface`, `reveal-origin`, and `/linkback` refs | terminal session reveal/focus | command cards, terminal surfaces, Problems, Ports, Output, previews |
+L00000865	| `cmd.terminal.show` | label `Show Terminal`; `terminal_session_id`; focus the same live session already associated with the card or route context | terminal session reveal/focus | command cards, terminal surfaces |
+L00000866	| `cmd.terminal.rerun` | label `Rerun in Terminal`; command replay payload plus terminal session launch context; same-session flag or new-session request | new terminal launch; command replay | command cards, terminal surfaces |
+L00000867	| `cmd.terminal.detach` | label `Detach/Pop-Out`; `terminal_session_id`; detach target | terminal detach/pop-out | command cards, terminal surfaces |
+L00000868	| `cmd.terminal.focus` | `terminal_session_id?`, `terminal_pane_id?`, `dev_session_id?`, `/last-relevant` fallback mode | terminal reveal/focus | command cards, command palette, terminal surfaces |
+L00000869	| `cmd.terminal.split_pane` | `terminal_session_id?`, `terminal_tab_id`, direction, profile/cwd hints | terminal layout changed | terminal surfaces |
+L00000870	| `cmd.terminal.move_pane` | moved-pane identity, source and target `/tab/pane/session`, `/pane/session`, section/window target | terminal layout changed | terminal surfaces |
+L00000871	| `cmd.terminal.close_pane` | `terminal_pane_id`, `terminal_session_id?`, `termination_policy?` | terminal layout changed or session stopping | terminal surfaces |
+L00000872	| `cmd.terminal.restart_replace` | `terminal_session_id`, `/restart/replace` policy, command replay or shell profile hints | terminal session replaced | command cards, terminal surfaces |
+L00000873	
+L00000874	Fields:
+L00000875	- stable command IDs
+L00000876	- terminal_session_id
+L00000877	- Open in Terminal
+L00000878	- Show Terminal
+L00000879	- Rerun in Terminal
+L00000880	- Detach/Pop-Out
+L00000881	- Command ID
+L00000882	- Payload
+L00000883	- Domain event(s)
+L00000884	- UI surface(s)
+
+<<< CONTEXT_AFTER canonical_document_lines=885-896 >>>
+L00000885	
+L00000886	Rules:
+L00000887	- Shell owns interactive state; chat owns preview+audit
+L00000888	- Commands requiring stdin/TTY start Terminal immediately
+L00000889	- Background/watch/server actions create terminal-owned session
+L00000890	- One-shot commands remain chat-inline by default
+L00000891	- Terminal shortcut metadata records interaction-mode eligibility, focus context, suppressed binding disclosure, and whether the action preempts shell/TUI input; unsafe `terminal-search` entries must be unavailable instead of stealing TUI keystrokes.
+L00000892	- Every promoted command card binds to stable terminal session identity
+L00000893	- Command-card terminal affordances include command-output and copy-output actions, reliable `/copy/paste` in output and input areas, mouse-driven selection/copy/paste support, keyboard-selection, wrapped-line input navigation, TUI capture guidance, remote-context and shell/profile diagnostics, and automation `/focus/reuse` hooks for opening, focusing, reusing, interrupting, resizing, and capturing structured terminal state.
+L00000894	- Large payloads store full data behind refs/blobs
+L00000895	- non-interactive work may promote if it becomes long-running
+L00000896	- attach failure recovery differs for live process, ended process, and inline-only completed command

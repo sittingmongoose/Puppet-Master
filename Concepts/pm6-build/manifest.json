@@ -503,6 +503,16 @@
    "expected_shape": "\u2026</script> (sibling B: closes the engine script block opened by sibling A)"
   },
   {
+   "file": "29x-pm6-js-demo-files.part.html",
+   "kind": "new-stub-js",
+   "name": "pm6-js-demo-files",
+   "marker": null,
+   "marker_rule": "stub",
+   "owner": "demo-engine",
+   "insertion": "after part 29; globals FIRST, demo-engine SECOND, then listed order",
+   "expected_shape": "<script id=\"pm6-js-demo-files\">\u2026</script> (rich TEXT.files bodies; must stay AFTER sibling B \u2014 the engine siblings share one script block)"
+  },
+  {
    "file": "29x-pm6-js-dashboard.part.html",
    "kind": "new-stub-js",
    "name": "pm6-js-dashboard",

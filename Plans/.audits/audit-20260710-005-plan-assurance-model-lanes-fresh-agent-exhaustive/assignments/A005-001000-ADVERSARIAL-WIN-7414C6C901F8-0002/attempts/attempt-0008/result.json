@@ -1,0 +1,585 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001000-ADVERSARIAL-WIN-7414C6C901F8-0002",
+  "attempt_id": "attempt-0008",
+  "task_thread_id": "/root/a005_001000_adversarial_win_0002_attempt_0008_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "ab4845782b20ae1f454499e05526aa2b62cfc4ab2d85216a68bf41beb9229bf2",
+    "core_range": [295, 586]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001000-0002-I001",
+      "item_type": "gap",
+      "title": "Concurrent start collision is unspecified",
+      "statement": "Registration-before-spawn prevents an untracked child, but the required sequence does not define what a second concurrent starter does when the same (host_id, server_id, root_identity) key is already starting, ready, failed, or shutting down. Insert collision, waiter attachment, idempotency, and stale-record replacement semantics are therefore missing.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_and_state_transition",
+      "impact": "Two callers can overwrite a record, spawn duplicate servers, wait forever, or revive a session during shutdown.",
+      "builder_discretion": "Define an atomic get-or-reserve operation with explicit outcomes for every existing lifecycle state and a single spawn owner.",
+      "feature_keys": ["lsp_session_lifecycle"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 372,
+          "line_end": 372,
+          "exact_quote": "An LSP server MUST be registered in the session map (keyed by `(host_id, server_id, root_identity)`) before its process is spawned. Spawning before registration creates a window where the process exists but cannot be found, tracked, or shut down.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 378,
+          "line_end": 383,
+          "exact_quote": "Required sequence:\n1. Acquire the session-map write lock.\n2. Insert the session record with status `starting`.\n3. Release the write lock.\n4. Spawn the subprocess.\n5. Transition the record to `ready` or `failed` after handshake completion.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I002",
+      "item_type": "gap",
+      "title": "Crash handling can erase useful diagnostic truth",
+      "statement": "The crash path clears all diagnostics immediately while separately showing an Error state. It does not specify whether cleared diagnostics become stale/tombstoned, whether the Problems panel explains their removal, how diagnostics are repopulated after restart, or what proves the cache and UI converge. This can make a broken server look like a clean project.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "gui_truth_and_recovery",
+      "impact": "Users and Assistant consumers may infer that problems were fixed when the diagnostic producer merely crashed.",
+      "builder_discretion": "Preserve last-known diagnostics with explicit stale provenance or show a scoped unavailable tombstone until a fresh publishDiagnostics snapshot replaces them.",
+      "feature_keys": ["diagnostics", "problems_panel", "server_restart"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 397,
+          "line_end": 397,
+          "exact_quote": "| **Server crash or exit** | **Client (LSP layer):** On process exit or broken pipe (e.g. when writing to stdin fails), (1) mark that server's state as Error, (2) clear all diagnostics for documents owned by that server (DiagnosticsCache), (3) notify UI to refresh Problems panel and gutter. **UI:** Show \"Error\" in status bar for that server; offer \"Restart language server\" button (or auto-restart with exponential backoff, e.g. 1s, 2s, 4s, cap 30s). **Logging:** Log exit code and stderr tail for debugging. |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I003",
+      "item_type": "gap",
+      "title": "Open-document and workspace caps have no deterministic policy",
+      "statement": "The plan offers examples for limiting documents and roots but does not specify the selection order, treatment of dirty or foreground documents, duplicate roots, user feedback, persistence, or behavior when the cap is lowered. The examples are not falsifiable limits.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "scale_limit",
+      "impact": "Different implementations can silently omit different files or roots and produce inconsistent diagnostics and navigation.",
+      "builder_discretion": "Specify deterministic priority/eviction rules, non-evictable states, visible excluded counts, and boundary tests.",
+      "feature_keys": ["document_sync", "workspace_initialization"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 399,
+          "line_end": 400,
+          "exact_quote": "| **Many open documents** | **Client:** Limit documents pushed to each server (e.g. only currently open tabs, or N most recent per root). **Editor/FileManager:** When a buffer is evicted (FileManager §12.2.1), **client** sends `didClose` for that URI so the server can free memory. **Config:** Optional cap (e.g. max 50 open docs per server) in Settings. |\n| **Large workspace at init** | **Client:** At initialize, send only roots that have at least one open document, capped at 10 (§7, §14.6). **When:** During `initialize` request; do not send thousands of paths. |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I004",
+      "item_type": "gap",
+      "title": "Debounced changes lack flush and ordering semantics",
+      "statement": "The didChange flood mitigation defines a resettable timer but not maximum latency, monotonic version assignment, serialization with didSave/didClose, flush-on-navigation, behavior after send failure, or whether a later full-content update supersedes queued incremental changes.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "partial_failure_and_ordering",
+      "impact": "A save, close, request, or crash near the debounce boundary can leave the server on an older document version while the UI assumes synchronization.",
+      "builder_discretion": "Define a per-document ordered queue, flush barriers for dependent operations, retry/supersession rules, and version-based acceptance tests.",
+      "feature_keys": ["document_sync"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 401,
+          "line_end": 401,
+          "exact_quote": "| **didChange flood** | **Client:** Debounce `didChange` (default 100 ms after last edit; §7, §14.4). When server supports incremental sync, send only `contentChanges`; otherwise full content. **When:** On every buffer edit, start/reset debounce timer; on timer fire, send one `didChange`. |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I005",
+      "item_type": "gap",
+      "title": "Tool result envelope is only a status vocabulary",
+      "statement": "The canonical tool surface names status values but defines no payload shape for results, partial data, unavailable reasons, errors, server/session identity, document version, staleness, retryability, or approval denial. Callers cannot reliably distinguish valid empty results from degraded or stale responses.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "contract_and_acceptance_oracle",
+      "impact": "GUI, chat, agent, and automation consumers can interpret the same response incompatibly and cannot construct decisive conformance tests.",
+      "builder_discretion": "Define a discriminated result schema per operation with common provenance, freshness, error, partial-result, and retry fields.",
+      "feature_keys": ["lsp_tool_surface"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 414,
+          "line_end": 415,
+          "exact_quote": "- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope. The canonical tool surface is nine read-only operations plus one write/approval-gated `rename`; the packetization label `10 read-only + 1 write-gated (lsp_rename)` is reconciled here by treating `lsp_rename` as a legacy alias for `rename`, not a second operation. `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` / `lsp_rename` requires `path` + `position` + `newName` with approval gating.\n- `obl-064` owns this MVP LSP features summary and requires the missing-result envelope `status: ok | partial | unavailable | error`; stale aliases, short names, or ad hoc result envelopes are retired in favor of this section.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 437,
+          "line_end": 442,
+          "exact_quote": "Rules:\n- ok | partial | unavailable | error\n- `workspaceSymbol` requires `query`\n- Position-based operations use `path` + `position` (line/character).\n- `rename` requires `path` + `position` + `newName`.\n- `rename` is approval-gated because it applies edits.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I006",
+      "item_type": "gap",
+      "title": "Custom server execution lacks a trust boundary",
+      "statement": "Settings can accept a custom executable command, arguments, environment, initialization data, paths, and overrides, yet the core does not define shell-vs-argv parsing, executable provenance, project-vs-user authority, approval, secret redaction, environment inheritance, working directory, sandboxing, or protection against a repository persuading PM to run an untrusted server.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "untrusted_input_and_authority",
+      "impact": "A malformed or malicious configuration can execute arbitrary local or remote code, leak credentials through environment variables, or attach a server to unintended files.",
+      "builder_discretion": "Use argv-only execution, explicit trust provenance and scope, least-privilege environment allowlists, secret-safe display/logging, and approval for new or changed executable identities.",
+      "feature_keys": ["lsp_settings", "custom_servers"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 550,
+          "line_end": 552,
+          "exact_quote": "- `Settings > LSP lists all servers and custom entries with validation`; that phrase is a product requirement, not a placeholder. The GUI includes a global master toggle, a searchable `/filterable` full-catalog list, per-server enable/disable, add custom server `/form`, edit custom server action, `/built-in` override/reset behavior, malformed command/config validation, visible distinction among catalog/built-in server, built-in server with user override, user-added custom server, disabled/enabled/misconfigured/unavailable states, command plus args, handled extensions/selectors, env/init options, root-discovery mode, install `/provisioning` notes, and global vs project-scope override. Requested state and effective state must both be shown when a global enablement is masked by a project override or missing binary.\n- Registry rows expose `/languages`, `/selectors`, source badges (`Microsoft`, `OpenCode`, `PM`, `Custom`), classification badges (`Default managed`, `Manual/toolchain`, `Experimental`), `/install` and `/toolchain` provenance, explicit `/effective-state`, path and `/exclusion` controls, and built-in `Override` plus `Reset to catalog defaults` actions. Custom rows keep full edit and remove controls; built-in rows keep read-only catalog metadata except for allowed overrides.\n- The LSP registry participates in the GUI Settings `/inspectors` pattern and the `two-level` Settings navigation model. Registry `/filtering` and `/filter/grouping` cover at least `/ecosystem`, language, source, requested state, effective state, support classification, and lifecycle state. Detail panes show canonical `/names`, aliases/source names, `/install/download/legal` and `/provisioning` posture, platform restrictions, command/env/init fields, and validation errors without turning Settings into the SSOT for runtime attachment.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I007",
+      "item_type": "gap",
+      "title": "Chat code analysis lacks provenance and virtual-document lifecycle rules",
+      "statement": "Chat code blocks are routed by language detection and may use real or virtual URIs, but the core does not define how a code block is safely proven to map to a project file, which thread/project authority permits analysis, how collisions are prevented, when virtual documents are opened/changed/closed, or when their contents and server-derived results are deleted.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_authority_and_lifecycle",
+      "impact": "Untrusted message content can be analyzed under the wrong project identity, retained beyond the chat, or exposed to a language server that should not receive it.",
+      "builder_discretion": "Require explicit project/thread binding, canonical URI provenance, collision-resistant virtual URI namespaces, lifecycle deletion, and disclosure when content is sent to a server.",
+      "feature_keys": ["chat_lsp", "virtual_documents"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 343,
+          "line_end": 345,
+          "exact_quote": "Activation:\n- Chat LSP activates when a chat thread has an associated project with LSP servers running\n- chat messages containing code blocks are analyzed by the appropriate LSP server based on language detection",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 352,
+          "line_end": 352,
+          "exact_quote": "- code blocks that map to project files use those real file URIs; other code blocks use the virtual-document contract in §14.8",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I008",
+      "item_type": "gap",
+      "title": "Assistant diagnostic ingestion has no privacy or scale contract",
+      "statement": "Current diagnostics are included in Assistant/Interview context without a stated consent model, project/worktree isolation, redaction rules, maximum volume, ordering, deduplication, retention, or disclosure of which server produced the data. The detailed to-chat shape preserves diagnostic content but does not bound its lifecycle.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle_and_scale",
+      "impact": "Sensitive paths, code-derived messages, and third-party server output can cross context boundaries or overwhelm model context while appearing authoritative.",
+      "builder_discretion": "Define scoped opt-in policy, provenance, redaction, bounded selection, deletion/retention, and stale-data handling before diagnostics enter AI context.",
+      "feature_keys": ["assistant_context", "diagnostics"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 356,
+          "line_end": 356,
+          "exact_quote": "Diagnostic-to-chat pipeline behavior is a context-packaging contract, not a second diagnostics owner. The `to-chat` payload uses the same diagnostic entry shape as §17.2 (`path`, `line`, `character`, `severity`, `message`, `source`, optional `code`) plus refs to the originating LSP session and URI; severity mapping preserves `Error`, `Warning`, `Info`, and `Hint` labels when chat summarizes or filters diagnostics. Chat LSP remains read-only for MVP; when a separate later-phase chat workflow surfaces a quick fix, code action, rename, or workspace edit from this diagnostic context, it opens explicit preview/confirmation and applies only through FileSafe-backed `workspace/applyEdit`, preserving the code action approval flow rather than mutating directly from the message.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 534,
+          "line_end": 534,
+          "exact_quote": "- [ ] Diagnostics for LLM/Assistant: include current LSP diagnostics in context fed to Assistant/Interview.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I009",
+      "item_type": "gap",
+      "title": "Detailed Settings requirements omit accessibility behavior",
+      "statement": "The searchable, filterable, two-level registry specifies many visual fields and controls but no keyboard traversal, focus restoration, accessible names, status/error announcements, non-color badge semantics, scaling, reduced-motion behavior, or screen-reader relationships for master/project overrides and validation errors.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "accessibility",
+      "impact": "Users of keyboards, screen readers, magnification, or non-color cues may be unable to configure servers or understand effective state.",
+      "builder_discretion": "Add explicit interaction and semantic accessibility acceptance criteria for registry list, filters, detail pane, forms, badges, and asynchronous state changes.",
+      "feature_keys": ["lsp_settings_gui"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 541,
+          "line_end": 552,
+          "exact_quote": "Settings > LSP is a searchable registry-management surface, not a flat toggle list.\n\nIt MUST allow the user to:\n- globally enable or disable LSP\n- search and filter the full support catalog\n- enable or disable catalog entries\n- inspect source/classification badges and effective overlap resolution\n- add custom servers\n- inspect requested vs effective attach state per server and project context\n- `Settings > LSP lists all servers and custom entries with validation`; that phrase is a product requirement, not a placeholder. The GUI includes a global master toggle, a searchable `/filterable` full-catalog list, per-server enable/disable, add custom server `/form`, edit custom server action, `/built-in` override/reset behavior, malformed command/config validation, visible distinction among catalog/built-in server, built-in server with user override, user-added custom server, disabled/enabled/misconfigured/unavailable states, command plus args, handled extensions/selectors, env/init options, root-discovery mode, install `/provisioning` notes, and global vs project-scope override. Requested state and effective state must both be shown when a global enablement is masked by a project override or missing binary.\n- Registry rows expose `/languages`, `/selectors`, source badges (`Microsoft`, `OpenCode`, `PM`, `Custom`), classification badges (`Default managed`, `Manual/toolchain`, `Experimental`), `/install` and `/toolchain` provenance, explicit `/effective-state`, path and `/exclusion` controls, and built-in `Override` plus `Reset to catalog defaults` actions. Custom rows keep full edit and remove controls; built-in rows keep read-only catalog metadata except for allowed overrides.\n- The LSP registry participates in the GUI Settings `/inspectors` pattern and the `two-level` Settings navigation model. Registry `/filtering` and `/filter/grouping` cover at least `/ecosystem`, language, source, requested state, effective state, support classification, and lifecycle state. Detail panes show canonical `/names`, aliases/source names, `/install/download/legal` and `/provisioning` posture, platform restrictions, command/env/init fields, and validation errors without turning Settings into the SSOT for runtime attachment.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I010",
+      "item_type": "gap",
+      "title": "User-facing LSP state has no localization contract",
+      "statement": "The plan prescribes literal status and action copy and a dense searchable catalog, but does not specify localization keys, interpolation, pluralization, text expansion, sort/search normalization, bidirectional layout, or whether server-originated diagnostic text is distinguished from localized application copy.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "localization",
+      "impact": "Localized builds can truncate or mis-sort controls and can misleadingly present untranslated server text as PM-authored UI.",
+      "builder_discretion": "Define localizable message keys and layout/search tests across expansion, RTL, Unicode normalization, and mixed localized/server-originated text.",
+      "feature_keys": ["lsp_gui_copy", "lsp_settings_gui"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 397,
+          "line_end": 398,
+          "exact_quote": "| **Server crash or exit** | **Client (LSP layer):** On process exit or broken pipe (e.g. when writing to stdin fails), (1) mark that server's state as Error, (2) clear all diagnostics for documents owned by that server (DiagnosticsCache), (3) notify UI to refresh Problems panel and gutter. **UI:** Show \"Error\" in status bar for that server; offer \"Restart language server\" button (or auto-restart with exponential backoff, e.g. 1s, 2s, 4s, cap 30s). **Logging:** Log exit code and stderr tail for debugging. |\n| **Server slow or unresponsive** | **Client:** Apply request timeouts (§14.4); on timeout, discard response and show \"Timed out\". Send LSP cancel on user navigate/edit. **UI:** While a request is in flight and no response yet, show \"Waiting for language server...\" in status bar; never block UI thread on LSP. **Optional (client):** After N timeouts for a server in a session, throttle or disable heavy features (e.g. workspace symbol) for that server until next restart. |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I011",
+      "item_type": "gap",
+      "title": "Worktree removal races with retained session activity",
+      "statement": "Sessions remain alive for background diagnostics across thread switches and are shut down when a worktree is removed, but the plan does not define coordination with open buffers, in-flight requests, pending debounced changes, removal failure, recreation at the same path, or late diagnostics from the old process.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_recovery_and_lifecycle",
+      "impact": "A removed or recreated worktree can receive late output, leak a process, lose pending changes, or have an old session mistaken for the new worktree.",
+      "builder_discretion": "Introduce a generation identity and explicit draining/shutting_down state, cancel and fence all requests, close documents, await bounded termination, and reject late events.",
+      "feature_keys": ["worktree_lsp", "lsp_session_lifecycle"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 573,
+          "line_end": 580,
+          "exact_quote": "- When a thread with a bound worktree is active and the user opens files from that worktree, LSP sessions use `root_identity = worktree_path`\n- If an LSP session for `(host_id, server_id, worktree_path)` does not exist, one is started (warm-start on worktree creation if feasible)\n- When the worktree is removed, the associated LSP session is shut down gracefully\n- Multiple worktrees may each have their own LSP session for the same server_id (each with a different root_identity)\n\n**Thread switch behavior:**\n- Switching threads does NOT kill LSP sessions for the previous thread's worktree — they remain available for background diagnostics and are reused if the user switches back\n- LSP session lifecycle is tied to worktree existence, not thread focus",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I012",
+      "item_type": "gap",
+      "title": "Root identity migration and canonicalization are incomplete",
+      "statement": "The key requires a canonical on-host worktree path, but the core does not specify symlink/case/Unicode normalization, deleted paths, host reconnection identity, legacy main-root session migration, or how existing persisted records keyed by a raw path are detected and retired.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "compatibility_and_migration",
+      "impact": "Equivalent paths can create duplicate sessions, while an upgrade can orphan old records or attach diagnostics to the wrong worktree.",
+      "builder_discretion": "Define a versioned root_identity canonicalization algorithm and an idempotent migration with collision and rollback behavior.",
+      "feature_keys": ["root_identity", "worktree_lsp"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 568,
+          "line_end": 568,
+          "exact_quote": "LSP sessions are keyed by `(host_id, server_id, root_identity)`. When a file belongs to a worktree rather than the main project root, the LSP root_identity MUST use the canonical on-host worktree path, not a raw path copied across hosts.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I013",
+      "item_type": "gap",
+      "title": "Bridge network loss is not an app-level state transition",
+      "statement": "PM delegates TCP-only connectivity to a stdio bridge and only requires documentation. The core does not state how PM distinguishes a live bridge with a dead upstream socket from a healthy server, surfaces reconnect/offline state, handles queued requests, or bounds bridge-side buffering and replay.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "offline_network_loss_and_partial_failure",
+      "impact": "A bridge can stay alive while returning stale, buffered, or no results, leaving PM status and retry behavior misleading.",
+      "builder_discretion": "Require bridge health signaling or conservative timeout-to-degraded behavior with bounded queues, no unsafe replay, and explicit recovery tests.",
+      "feature_keys": ["tcp_bridge", "server_health"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 445,
+          "line_end": 445,
+          "exact_quote": "Most LSP servers use **stdio** (spawn process, stdin/stdout = JSON-RPC). Some use **TCP** (e.g. Godot's GDScript LSP on port 6005). Tools like OpenCode and Cursor typically expect stdio only, so TCP-only servers don't work without a bridge.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 456,
+          "line_end": 457,
+          "exact_quote": "- **MVP:** Client talks stdio only (spawn server process, or spawn a bridge that talks stdio to us and TCP/other to the real server).\n- **Native TCP/socket:** **Out of scope for MVP.** No implementation required. Implementer must document the bridge pattern only (e.g. Godot via godot-lsp-stdio-bridge). Later (optional): native TCP client for already-running servers; lower priority.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I014",
+      "item_type": "gap",
+      "title": "Cross-document routing has no conformance oracle",
+      "statement": "The core retires specific stale anchors and names current owner sections, yet it does not define an executable check that all consumers use the current anchors and payload contracts or how compatible pointers are versioned and removed. The requirement can regress silently as documents evolve.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "cross_document_seam_and_test_oracle",
+      "impact": "Implementers can follow dead anchors or conflicting owner prose even while this document remains internally consistent.",
+      "builder_discretion": "Add a validated owner/anchor registry and cross-document contract tests for referenced sections, payload fields, and compatibility aliases.",
+      "feature_keys": ["cross_document_routing"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 307,
+          "line_end": 310,
+          "exact_quote": "- Stale references to `FileManager.md §12.1.4`, `§12.1.4`, `§12.2.7`, `§12.4`, `§12.5`, `§12.6`, `§11`, `TOC`, and `Projects (§7.3)` / `§7.3` are legacy cross-reference residue. `FinalGUISpec` and FileManager consumers must route to the current FileManager §10 navigation/fallback contract or this LSPSupport section rather than keeping anchors that do not exist.\n- The semantic requirements formerly named `§12.1.4 Symbol search without LSP` and `§12.2.7 Symbol index staleness` are retained here as live obligations: fallback symbol search supports regex / heuristic outline and optional indexed-symbol paths; stale index labels, rebuild expectations, and remote degraded/unavailable interactions must be visible in the command palette, Go to symbol, Problems, Search, and chat consumers.\n- The LSP indexing/autodetect seam is research-locked around distinct GUI state layers. PM must keep `detected_languages` / project badges, selected preset, requested LSP enablement and server overrides, effective attached LSP sessions, and code index freshness/health separate in product language and state; a detected-language badge is advisory/project-scoped and must not collapse into \"LSP ready.\" Later re-detection happens on project add/open and later project-signal changes, but actual attach remains `/path/root/context-driven`, based on extension, requirement/availability, root discovery, and primary/supplementary conflict resolution. `/cross-reference` consumers must distinguish `/opening` detection from later refresh, optional tool-download guidance, and `/retrieval/index` freshness.\n- The FileManager editor-surface map is explicit for LSP consumers: `§10.1 Breadcrumbs / outline` owns the breadcrumb strip and outline, with LSP using `documentSymbol` and fallback using heuristic / regex outline; `§10.2 Go to symbol` owns command-palette and quick-open symbols, with LSP using `documentSymbol` and `workspace/symbol`, while the legacy `§12.1.4` name survives only as a compatibility pointer to this fallback rule. `§10.10 LSP support (MVP)` is the editor-side owner for diagnostics, hover, completion, signature help, inlay hints, code actions, code lens, semantic highlighting, definition/references, `/rename/applyEdit`, format, `document/workspace symbols`, editor/chat adjacency, and the finer `§10.10.5`, `§10.10.6`, `§10.10.7`, and `§10.10.8` responsibility split. FileManager remains the visible editor owner; LSPSupport owns the LSP protocol/client constraints.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I015",
+      "item_type": "explicit_non_gap",
+      "title": "Fallback state is forbidden from impersonating healthy LSP",
+      "statement": "The core explicitly separates fallback navigation from healthy semantic capability and prohibits fallback from claiming diagnostics, semantic features, or an attached-server state.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["fallback_gui_truth"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 299,
+          "line_end": 300,
+          "exact_quote": "- when LSP is unavailable, fallback navigation/index behavior is explicit and MUST NOT masquerade as healthy LSP state\n- remote-mode files reuse the same architecture with remote host identity; they are not a second LSP subsystem",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 306,
+          "line_end": 306,
+          "exact_quote": "- When LSP is unavailable, Puppet Master falls back to code index/text search, `/regex` or heuristic outline where available, and optional `/download` or install hints. The fallback path must not claim diagnostics, semantic features, or healthy attached-server state.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I016",
+      "item_type": "explicit_non_gap",
+      "title": "Mutating language actions are approval-gated and FileSafe-backed",
+      "statement": "The core explicitly keeps MVP chat language intelligence read-only and requires preview/confirmation plus the FileSafe-backed workspace edit path when a later workflow exposes a mutation; rename is separately approval-gated.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["destructive_actions", "rename", "workspace_edit"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 356,
+          "line_end": 356,
+          "exact_quote": "Diagnostic-to-chat pipeline behavior is a context-packaging contract, not a second diagnostics owner. The `to-chat` payload uses the same diagnostic entry shape as §17.2 (`path`, `line`, `character`, `severity`, `message`, `source`, optional `code`) plus refs to the originating LSP session and URI; severity mapping preserves `Error`, `Warning`, `Info`, and `Hint` labels when chat summarizes or filters diagnostics. Chat LSP remains read-only for MVP; when a separate later-phase chat workflow surfaces a quick fix, code action, rename, or workspace edit from this diagnostic context, it opens explicit preview/confirmation and applies only through FileSafe-backed `workspace/applyEdit`, preserving the code action approval flow rather than mutating directly from the message.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 441,
+          "line_end": 442,
+          "exact_quote": "- `rename` requires `path` + `position` + `newName`.\n- `rename` is approval-gated because it applies edits.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I017",
+      "item_type": "explicit_non_gap",
+      "title": "Registration precedes subprocess creation",
+      "statement": "The core directly closes the untracked-process window by requiring both the session record and the cancellable lifecycle handle to exist before subprocess or watcher creation, with failed handshakes represented or torn down.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["lsp_session_lifecycle"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 372,
+          "line_end": 374,
+          "exact_quote": "An LSP server MUST be registered in the session map (keyed by `(host_id, server_id, root_identity)`) before its process is spawned. Spawning before registration creates a window where the process exists but cannot be found, tracked, or shut down.\n\nAny asynchronous LSP startup goroutine or background initialization task is lifecycle-tracked BEFORE spawn: it must register a cancellable `lifecycle-tracker` handle before subprocess creation or watcher launch, and failed handshakes must either mark the existing record `failed` or tear the handle down.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001000-0002-I018",
+      "item_type": "unknown",
+      "title": "Referenced owner contracts were outside the blind window",
+      "statement": "This core repeatedly delegates detailed behavior to FileManager, FinalGUISpec, storage, assistant chat, GitHub integration, and wiring contracts. Because the assignment forbids unrelated source access, their current agreement with this window, including callers and consumers not named here, cannot be established from authorized evidence.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "cross_document_unknown",
+      "impact": "Additional contradictions, missing consumers, or stronger constraints may exist outside the authorized excerpt.",
+      "builder_discretion": "Resolve only in a later cross-document phase by checking the cited contracts against the owner and routing claims in this window.",
+      "feature_keys": ["cross_document_seams"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 554,
+          "line_end": 562,
+          "exact_quote": "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md\n\nCross-surface rules:\n- File Manager and editor consume LSP state for semantic affordances\n- Search remains the owner of text search and replace-in-files\n- Problems remains the owner of aggregated diagnostics display\n- status surfaces disclose freshness, health, and effective capability state rather than hiding degraded attach conditions\n\nContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "The status-only tool envelope lacks a caller-consumable result contract, and cross-document caller coverage has no conformance oracle.",
+      "evidence_item_ids": ["A005-001000-0002-I005", "A005-001000-0002-I014"]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Existing-key startup, crash-to-restart diagnostic state, and worktree removal transitions are incomplete.",
+      "evidence_item_ids": ["A005-001000-0002-I001", "A005-001000-0002-I002", "A005-001000-0002-I011"]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Concurrent session starts and worktree teardown versus background activity are not fenced.",
+      "evidence_item_ids": ["A005-001000-0002-I001", "A005-001000-0002-I011"]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Diagnostic loss, debounced-send failure, underspecified partial results, and bridge upstream loss lack complete contracts.",
+      "evidence_item_ids": ["A005-001000-0002-I002", "A005-001000-0002-I004", "A005-001000-0002-I005", "A005-001000-0002-I013"]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "Restart repopulation, queued-change recovery, teardown draining, and bridge recovery are not fully specified.",
+      "evidence_item_ids": ["A005-001000-0002-I002", "A005-001000-0002-I004", "A005-001000-0002-I011", "A005-001000-0002-I013"]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "Custom executable authority and chat/Assistant project-context authority are missing, despite an explicit approval boundary for rename.",
+      "evidence_item_ids": ["A005-001000-0002-I006", "A005-001000-0002-I007", "A005-001000-0002-I008", "A005-001000-0002-I016"]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Virtual chat documents, diagnostic context, custom-server environment data, and derived results have no bounded retention/redaction lifecycle.",
+      "evidence_item_ids": ["A005-001000-0002-I006", "A005-001000-0002-I007", "A005-001000-0002-I008"]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Custom commands/env/init/path inputs and chat code-to-URI mapping lack explicit hostile-input handling.",
+      "evidence_item_ids": ["A005-001000-0002-I006", "A005-001000-0002-I007"]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Fallback truth is explicitly protected, but clearing diagnostics on crash can still present false cleanliness.",
+      "evidence_item_ids": ["A005-001000-0002-I002", "A005-001000-0002-I015"]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "The stdio-to-TCP bridge pattern lacks a PM-visible upstream-loss and safe-recovery contract within the core.",
+      "evidence_item_ids": ["A005-001000-0002-I013"]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Document/root caps are examples rather than deterministic policy, and AI diagnostic ingestion is unbounded.",
+      "evidence_item_ids": ["A005-001000-0002-I003", "A005-001000-0002-I008"]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "The detailed registry GUI contract provides no accessibility behavior or acceptance criteria.",
+      "evidence_item_ids": ["A005-001000-0002-I009"]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "Literal status/action strings and catalog interactions have no localization, text expansion, RTL, or mixed-origin text contract.",
+      "evidence_item_ids": ["A005-001000-0002-I010"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Root-key migration/canonicalization and retirement of stale cross-document anchors are not executable or rollback-safe contracts.",
+      "evidence_item_ids": ["A005-001000-0002-I012", "A005-001000-0002-I014"]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Crash logging exists, but diagnostic freshness/repopulation and tool result provenance/retryability remain unobservable.",
+      "evidence_item_ids": ["A005-001000-0002-I002", "A005-001000-0002-I005"]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "addressed",
+      "summary": "Rename and later chat-initiated mutations require approval or explicit preview/confirmation and use FileSafe-backed workspace/applyEdit.",
+      "evidence_item_ids": ["A005-001000-0002-I016"]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "unknown",
+      "summary": "The core names owners and stale anchors, but authorized evidence cannot establish whether referenced documents agree; a conformance oracle is also missing here.",
+      "evidence_item_ids": ["A005-001000-0002-I014", "A005-001000-0002-I018"]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Caps, debounce ordering, result envelopes, accessibility, localization, and cross-document routing lack decisive boundary or conformance oracles.",
+      "evidence_item_ids": ["A005-001000-0002-I003", "A005-001000-0002-I004", "A005-001000-0002-I005", "A005-001000-0002-I009", "A005-001000-0002-I010", "A005-001000-0002-I014"]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "unknown",
+      "summary": "Additional negative space may exist in the cited owner contracts, which were correctly not accessed during this blind assignment.",
+      "evidence_item_ids": ["A005-001000-0002-I018"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

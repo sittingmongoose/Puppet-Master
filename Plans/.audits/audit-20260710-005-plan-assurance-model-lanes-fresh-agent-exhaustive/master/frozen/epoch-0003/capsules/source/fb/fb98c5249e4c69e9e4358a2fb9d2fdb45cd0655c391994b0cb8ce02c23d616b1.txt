@@ -1,0 +1,383 @@
+<<< CONTEXT_BEFORE 26216-26227 >>>
+          "requirement": "cmd.widget.move has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.widget_move.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.widget.move records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 26228-26581 >>>
+    "catalog.widget_remove": {
+      "ui_element_id": "catalog.widget_remove",
+      "ui_location": "Widget surface > Remove",
+      "ui_command_id": "cmd.widget.remove",
+      "handler_location": "handlers::widget::remove",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.widget.remove must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.widget.remove must expose projected state selector and disabled reason before dispatch",
+        "cmd.widget.remove dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.widget.remove must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.widget.remove must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.widget.remove; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.widget_remove.availability",
+      "disabled_reason_projection": "state.commands.widget_remove.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.widget.remove has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.widget.remove.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.widget_remove exposes a stable role/name/description matching cmd.widget.remove.",
+        "keyboard_access": "catalog.widget_remove is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.widget_remove preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.widget_remove surfaces state.commands.widget_remove.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.widget_remove.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.widget.remove reaches handlers::widget::remove with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.widget_remove.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.widget_remove.availability and disabled copy reads state.commands.widget_remove.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.widget_remove.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.widget.remove has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.widget_remove.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.widget.remove records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.widget_reset_layout": {
+      "ui_element_id": "catalog.widget_reset_layout",
+      "ui_location": "Widget surface > Reset Layout",
+      "ui_command_id": "cmd.widget.reset_layout",
+      "handler_location": "handlers::widget::reset_layout",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.widget.reset_layout must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.widget.reset_layout must expose projected state selector and disabled reason before dispatch",
+        "cmd.widget.reset_layout dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.widget.reset_layout must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.widget.reset_layout must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.widget.reset_layout; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.widget_reset_layout.availability",
+      "disabled_reason_projection": "state.commands.widget_reset_layout.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.widget.reset_layout has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.widget.reset_layout.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.widget_reset_layout exposes a stable role/name/description matching cmd.widget.reset_layout.",
+        "keyboard_access": "catalog.widget_reset_layout is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.widget_reset_layout preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.widget_reset_layout surfaces state.commands.widget_reset_layout.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.widget_reset_layout.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.widget.reset_layout reaches handlers::widget::reset_layout with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.widget_reset_layout.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.widget_reset_layout.availability and disabled copy reads state.commands.widget_reset_layout.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.widget_reset_layout.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.widget.reset_layout has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.widget_reset_layout.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.widget.reset_layout records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.widget_resize": {
+      "ui_element_id": "catalog.widget_resize",
+      "ui_location": "Widget surface > Resize",
+      "ui_command_id": "cmd.widget.resize",
+      "handler_location": "handlers::widget::resize",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.widget.resize must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.widget.resize must expose projected state selector and disabled reason before dispatch",
+        "cmd.widget.resize dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.widget.resize must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.widget.resize must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.widget.resize; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.widget_resize.availability",
+      "disabled_reason_projection": "state.commands.widget_resize.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.widget.resize has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.widget.resize.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.widget_resize exposes a stable role/name/description matching cmd.widget.resize.",
+        "keyboard_access": "catalog.widget_resize is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.widget_resize preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.widget_resize surfaces state.commands.widget_resize.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.widget_resize.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.widget.resize reaches handlers::widget::resize with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.widget_resize.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.widget_resize.availability and disabled copy reads state.commands.widget_resize.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.widget_resize.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.widget.resize has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.widget_resize.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.widget.resize records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "orchestrator.plan.compile.open_build": {
+      "ui_element_id": "orchestrator.plan.compile.open_build",
+      "ui_location": "Orchestrator > Plan Compile",
+      "ui_command_id": "cmd.plan_compile.open_build",
+      "handler_location": "handlers::plan_compile::open_build",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.plan_compile.open_build must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.plan_compile.open_build must expose projected state selector and disabled reason before dispatch",
+        "cmd.plan_compile.open_build dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and route/open receipt effect",
+        "cmd.plan_compile.open_build must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "Plan Compile command is pre-enable/design-only unless Plans/Plan_To_Node_Compilation.md, Executor_Protocol, and Goal_Runtime_System explicitly enable runtime activation; it must not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks.",
+        "Projection row reuses catalog.plan_compile_open_build as canonical command contract; it must not introduce separate handler, state, receipt, or build authority.",
+        "cmd.plan_compile.open_build must declare state selector, disabled reason, route/open receipt effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.plan_compile.open_build; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Disabled/pre-enable disposition: this row covers UI contract shape only and cannot certify runtime launch/build effects while PlanCompile runtime activation remains disabled. Projection/alias disposition: canonical evidence is catalog.plan_compile_open_build; this row only proves Orchestrator placement after render/control evidence exists.",
+      "state_selector": "state.commands.plan_compile_open_build.availability",
+      "disabled_reason_projection": "state.commands.plan_compile_open_build.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "route_open",
+        "description": "cmd.plan_compile.open_build opens the resulting build/artifact route when a build identity exists, or records a disabled route/open receipt while runtime activation remains blocked; it must not fabricate plan_compile.command_applied.",
+        "receipt_or_event_refs": [
+          "cmd.plan_compile.open_build.route_open_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "orchestrator.plan.compile.open_build exposes a stable role/name/description matching cmd.plan_compile.open_build.",
+        "keyboard_access": "orchestrator.plan.compile.open_build is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "orchestrator.plan.compile.open_build preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "orchestrator.plan.compile.open_build surfaces state.commands.plan_compile_open_build.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.orchestrator.plan.compile.open_build.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.plan_compile.open_build reaches handlers::plan_compile::open_build with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.orchestrator.plan.compile.open_build.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.plan_compile_open_build.availability and disabled copy reads state.commands.plan_compile_open_build.disabled_reason."
+        },
+        {
+          "test_id": "wiring.orchestrator.plan.compile.open_build.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.plan_compile.open_build opens the resulting build/artifact route when a build identity exists, or records a disabled route/open receipt while runtime activation remains blocked; it must not fabricate plan_compile.command_applied."
+        },
+        {
+          "test_id": "wiring.orchestrator.plan.compile.open_build.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.plan_compile.open_build records route/open receipt cmd.plan_compile.open_build.route_open_receipt and emits no fabricated plan_compile.command_applied event."
+      ]
+    },
+    "planning.wizard.final_review.approve_and_build": {
+      "ui_element_id": "planning.wizard.final_review.approve_and_build",
+      "ui_location": "Planning Wizard > Final Review",
+      "ui_command_id": "cmd.planning_wizard.approve_and_build",
+      "handler_location": "handlers::planning_wizard::approve_and_build",
+      "expected_event_types": [
+        "planning.approval_cas_receipt.written",
+        "planning.plan_approved",
+        "plan_compile.run_created_or_bound"
+      ],
+      "acceptance_checks": [
+        "Final-review CAS fields match the displayed ApprovedPlanPack, PlanningRun, topic map, index, testing policy, and audit/closure hashes",
+        "Duplicate idempotency key returns the same PlanCompileRun identity and does not create a second ordinary launch",
+        "Orchestrator Plan Compile opens pending-launch state and binds to durable PlanCompileRun without tab-switch-only success",
+        "cmd.planning_wizard.approve_and_build must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "Approve And Build creates or binds only the durable PlanCompileRun contract identity under pre-enable governance; executable runtime dispatch/build work remains disabled until PNC runtime activation gates pass.",
+        "Projection row reuses catalog.planning_wizard_approve_and_build as canonical command contract; it must not introduce duplicate launch authority.",
+        "cmd.planning_wizard.approve_and_build must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.planning_wizard.approve_and_build; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Pre-enable disposition: approval/wiring evidence must not be treated as executable build, WorkNode, queue, runtime dispatch, or production-build evidence. Projection/alias disposition: canonical evidence is catalog.planning_wizard_approve_and_build; this row only proves Final Review placement after render/control evidence exists.",
+      "state_selector": "state.planning_wizard.final_review.approve_and_build.availability",
+      "disabled_reason_projection": "state.planning_wizard.final_review.approve_and_build.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.planning_wizard.approve_and_build must emit the declared event types and record dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "planning.approval_cas_receipt.written",
+          "planning.plan_approved",
+          "plan_compile.run_created_or_bound"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "planning.wizard.final_review.approve_and_build exposes a stable role/name/description matching cmd.planning_wizard.approve_and_build.",
+        "keyboard_access": "planning.wizard.final_review.approve_and_build is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "planning.wizard.final_review.approve_and_build preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "planning.wizard.final_review.approve_and_build surfaces state.planning_wizard.final_review.approve_and_build.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.planning.wizard.final_review.approve_and_build.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.planning_wizard.approve_and_build reaches handlers::planning_wizard::approve_and_build with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.planning.wizard.final_review.approve_and_build.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.planning_wizard.final_review.approve_and_build.availability and disabled copy reads state.planning_wizard.final_review.approve_and_build.disabled_reason."
+        },
+        {
+          "test_id": "wiring.planning.wizard.final_review.approve_and_build.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.planning_wizard.approve_and_build must emit the declared event types and record dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.planning.wizard.final_review.approve_and_build.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.planning.wizard.final_review.approve_and_build.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.planning_wizard.approve_and_build emits expected event type planning.approval_cas_receipt.written with command_id, origin, correlation_id, and handler target.; Assert cmd.planning_wizard.approve_and_build emits expected event type planning.plan_approved with command_id, origin, correlation_id, and handler target.; Assert cmd.planning_wizard.approve_and_build emits expected event type plan_compile.run_created_or_bound with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.planning_wizard.approve_and_build emits expected event type planning.approval_cas_receipt.written with command_id, origin, correlation_id, and handler target.",
+        "Assert cmd.planning_wizard.approve_and_build emits expected event type planning.plan_approved with command_id, origin, correlation_id, and handler target.",
+        "Assert cmd.planning_wizard.approve_and_build emits expected event type plan_compile.run_created_or_bound with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "settings.testing.capability_policy": {
+      "ui_element_id": "settings.testing.capability_policy",
+      "ui_location": "Settings > Testing Capability",
+      "ui_command_id": "cmd.testing.capability_policy.set",
+      "handler_location": "handlers::testing::capability_policy_set",
+      "expected_event_types": [
+        "testing.capability_policy.updated"
+      ],
+      "acceptance_checks": [
+        "Auto/On/Off capability policy persists at global/project scope and appears in the effective testing policy snapshot",
+        "Disabled reasons cover unavailable test harness, explicit user Off, policy block, missing approval, and stale project context",
+        "Regression evidence proves inherited/effective policy display and no silent enablement when test capability is unavailable",
+        "cmd.testing.capability_policy.set must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.testing.capability_policy.set must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.testing.capability_policy.set; Production certification requires typed Automated Testing owner evidence for testing.capability_policy.updated, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.testing_capability_policy_set.availability",
+      "disabled_reason_projection": "state.commands.testing_capability_policy_set.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.testing.capability_policy.set must emit the declared event types and record dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "testing.capability_policy.updated"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "settings.testing.capability_policy exposes a stable role/name/description matching cmd.testing.capability_policy.set.",
+        "keyboard_access": "settings.testing.capability_policy is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "settings.testing.capability_policy preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "settings.testing.capability_policy surfaces state.commands.testing_capability_policy_set.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.settings.testing.capability_policy.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.testing.capability_policy.set reaches handlers::testing::capability_policy_set with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.settings.testing.capability_policy.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.testing_capability_policy_set.availability and disabled copy reads state.commands.testing_capability_policy_set.disabled_reason."
+        },
+        {
+          "test_id": "wiring.settings.testing.capability_policy.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.testing.capability_policy.set must emit the declared event types and record dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.settings.testing.capability_policy.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.settings.testing.capability_policy.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.testing.capability_policy.set emits expected event type testing.capability_policy.updated with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.testing.capability_policy.set emits expected event type testing.capability_policy.updated with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+
+<<< CONTEXT_AFTER 26582-26593 >>>
+    "settings.testing.visibility_policy": {
+      "ui_element_id": "settings.testing.visibility_policy",
+      "ui_location": "Settings > Testing Capability",
+      "ui_command_id": "cmd.testing.visibility_policy.set",
+      "handler_location": "handlers::testing::visibility_policy_set",
+      "expected_event_types": [
+        "testing.visibility_policy.updated"
+      ],
+      "acceptance_checks": [
+        "show_when_possible visibility policy persists at global/project scope and appears in the effective testing policy snapshot",
+        "Disabled reasons cover unavailable visual stream, redaction block, policy Off, missing approval, and stale project context",
+        "Regression evidence proves show_when_possible does not hide unavailable evidence or critical blockers",

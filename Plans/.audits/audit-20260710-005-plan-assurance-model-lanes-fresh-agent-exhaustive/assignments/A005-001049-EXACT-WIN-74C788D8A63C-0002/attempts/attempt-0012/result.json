@@ -1,0 +1,300 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001049-EXACT-WIN-74C788D8A63C-0002",
+  "attempt_id": "attempt-0012",
+  "task_thread_id": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001049_attempt_0012",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Tools.md",
+    "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca",
+    "core_sha256": "ac98ba8b96325bc9e84e85da3aa1c0cf7f8f3ad7236cc54463a7845e0160eb47",
+    "core_range": [398, 620]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "EXACT-001",
+      "item_type": "failure_recovery",
+      "title": "Read timeout is bounded and non-fabricating",
+      "statement": "A read uses a recommended ten-second default; timeout returns the prescribed timed_out envelope and must not invent unavailable lines.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 399, "line_end": 399, "exact_quote": "- Recommended default timeout: `10s` per read request.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 400, "line_end": 400, "exact_quote": "- On timeout, return `{ path, status: \"timed_out\", error: { code: \"timeout\" } }`; do not fabricate missing lines.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-002",
+      "item_type": "contract",
+      "title": "Grep input and output envelopes",
+      "statement": "Grep requires a pattern, defaults path to the workspace root and output_mode to files_with_matches, accepts filtering and modifier fields, and returns a mode-specific matches array.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 408, "line_end": 408, "exact_quote": "| `pattern` | string | yes | Regex or literal search expression. |", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 411, "line_end": 411, "exact_quote": "| `output_mode` | enum (`\"content\"` \\| `\"files_with_matches\"` \\| `\"count\"`) | no | Result shape selector. Default `files_with_matches`. |", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 416, "line_end": 416, "exact_quote": "`{ pattern, path, output_mode, matches }`", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 419, "line_end": 421, "exact_quote": "- `content`: array of `{ path, line_number?, line_text, context_before?, context_after? }`\n- `files_with_matches`: array of `{ path }`\n- `count`: array of `{ path, count }`", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-003",
+      "item_type": "failure_recovery",
+      "title": "Grep enumerates policy, backend, limit, and timeout failures",
+      "statement": "The grep contract distinguishes validation, policy, FileSafe, missing path, backend, result-limit, and timeout failures; timeout defaults to thirty seconds and permits partial results only with proof of fully verified hits.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 427, "line_end": 433, "exact_quote": "| `validation_error` | Invalid regex, incompatible flags, or malformed glob. |\n| `permission_denied` | `grep` denied by tool policy. |\n| `filesafe_blocked` | Search scope includes blocked or sensitive paths. |\n| `path_not_found` | Requested search root does not exist. |\n| `backend_unavailable` | Search backend (indexed or raw) could not be initialized. |\n| `result_limit_exceeded` | Match set exceeded the capped response window and was truncated. |\n| `timeout` | Search did not complete before the query ceiling. |", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 437, "line_end": 438, "exact_quote": "- Default timeout: `30s`.\n- On timeout, return `{ pattern, path, status: \"timed_out\", error: { code: \"timeout\" } }`. Implementations may include `partial: true` only when the runtime can prove returned hits were fully verified.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-004",
+      "item_type": "contract",
+      "title": "Glob contract is deterministic after filtering",
+      "statement": "Glob requires a pattern, defaults its root to the current workspace, returns normalized paths in deterministic order after ignore filtering, and defines validation, policy, FileSafe, missing-root, and timeout outcomes.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 446, "line_end": 447, "exact_quote": "| `pattern` | string | yes | Glob expression such as `**/*.md`. |\n| `path` | string | no | Search root. Default = current workspace root. |", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 451, "line_end": 453, "exact_quote": "`{ pattern, path, paths: string[] }`\n\nThe returned `paths` array contains normalized file paths in deterministic order after ignore-rule filtering.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 467, "line_end": 468, "exact_quote": "- Recommended default timeout: `10s`.\n- On timeout, return `{ pattern, path, status: \"timed_out\", error: { code: \"timeout\" } }`.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-005",
+      "item_type": "contract",
+      "title": "Provider create normalizes to canonical write",
+      "statement": "Provider-native create maps to write, requires a path and full file text, may create or overwrite only within policy, and reports success, creation state, byte count, and line count.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 472, "line_end": 472, "exact_quote": "Provider-native `create` maps to the canonical registry tool `write`.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 478, "line_end": 479, "exact_quote": "| `path` | string | yes | Target file path to create or overwrite, subject to write-scope policy. |\n| `file_text` | string | yes | Full text payload to persist. |", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 483, "line_end": 485, "exact_quote": "`{ status: \"success\", path, created: boolean, bytes_written, line_count }`\n\n`created = true` when the path did not previously exist; `false` when the tool overwrote an existing file under an allowed policy.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-006",
+      "item_type": "failure_recovery",
+      "title": "Write errors and atomic timeout",
+      "statement": "Write failures distinguish malformed input, permission and scope rejection, parent absence, forbidden overwrite, I/O failure, and timeout; timeout must fail atomically with the prescribed envelope.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 491, "line_end": 497, "exact_quote": "| `validation_error` | Missing parameters, invalid path, or disallowed text encoding. |\n| `permission_denied` | `write` / `create` denied by tool policy. |\n| `filesafe_blocked` | Write path rejected by FileSafe or out of allowed scope. |\n| `parent_missing` | Parent directory does not exist and auto-create is disabled. |\n| `already_exists` | Policy forbids overwriting an existing file. |\n| `io_error` | Underlying filesystem write failed. |\n| `timeout` | File write did not complete before the runner ceiling. |", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 501, "line_end": 502, "exact_quote": "- Recommended default timeout: `10s`.\n- On timeout, the write must fail atomically and return `{ status: \"timed_out\", path, error: { code: \"timeout\" } }`.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-007",
+      "item_type": "authority",
+      "title": "Skill runtime delegates to an owner contract",
+      "statement": "Tools exposes only a consumer pointer for skill-runtime metadata; the shared tool boundary owns richer resource references, while Agent Config owns runtime and permission behavior constrained by readiness and FileSafe rules.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 506, "line_end": 506, "exact_quote": "Canonical skill-runtime boundary: the tool registry may expose `skill-runtime` metadata only as a consumer-facing pointer back to `Plans/Skills_System.md`; richer runtime resource refs stay resolved through the shared tool-contract boundary rather than ad hoc skill-local schemas.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 512, "line_end": 512, "exact_quote": "- Skill runtime and permission behavior is locked to a structured skill tool envelope, discovery versus auto-invoke readiness rules, dynamic runtime tool descriptions, FileSafe-constrained resource access, and Agent Config ownership.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-008",
+      "item_type": "gap",
+      "title": "Skill envelope fields are not typed in this contract surface",
+      "statement": "The authoritative skill section lists field names and optional markers but does not bind types, requiredness for unmarked fields, a success envelope, status semantics, error outcomes, or timeout behavior; builders cannot implement the stated structured envelope from this surface alone.",
+      "gap_kind": "under_specified_contract",
+      "impact": "Adapters can diverge on validation, serialization, and failure behavior even while using the same field names.",
+      "builder_discretion": "A builder must consult the linked owner contract; inventing a skill-local envelope would violate the stated ownership boundary.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 514, "line_end": 523, "exact_quote": "Fields:\n- skill_id\n- arguments?\n- context?\n- content\n- source_type\n- resource_base_dir?\n- resource_entries_sample?\n- metadata?\n- ready_with_warnings", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-009",
+      "item_type": "contract",
+      "title": "Question uses a canonical multi-question envelope",
+      "statement": "Question is normalized to object-array options, canonical QuestionItem fields, answer arrays, and answer-source metadata; legacy single-question and string-answer callers are compatibility syntax that must normalize before validation, storage, or rendering.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 531, "line_end": 534, "exact_quote": "- The question tool contract is locked to a multi-question envelope, normalized output statuses, object-array options, included answer source, and top-level orchestrator ownership of user questioning.\n- The answer `source?` field is LOCKED and INCLUDED as an optional field with enum values `\"option\"`, `\"other\"`, and `\"freeform\"`.\n- `questionnaire` and `/questionnaire` mode use `options?: Array<{id, label, description?}>` for selectable answers; `string[]` options are backwards-compatible only for legacy `single_question` callers and must be normalized to object-array options before storage or multi-question rendering.\n- Question and questionnaire flows preserve bounded draft `/answer` state, submitted answer state, and answer-source metadata as tool payloads that storage persists; Tools owns the tool envelope while `Plans/storage-plan.md` owns the durable `chat.plan_todo_updated` and questionnaire projections.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 537, "line_end": 541, "exact_quote": "- Legacy `string-answer` and `answer: string` callers are compatibility-only; the already-decided canonical path is the multi-question envelope. Source shorthand `questions: [...]` is normalized to `questions: Array<QuestionItem>` before validation or question-card rendering.\n- Compatibility shorthand for source and adapter callers is `mode|header|prompt|questions[]`; the canonical item shape is `QuestionItem{question_id, question, options[], required, multi_select, allow_freeform, default_values}`.\n- `prompt` is envelope/header-only compatibility text; it is not the per-question field name, and each `QuestionItem` uses canonical `question` for the displayed prompt.\n- For question cards, the fields are cross-referenced: `default_values` are caller-supplied initial seed values for pre-defined option IDs, while `draft_value` is the runtime-side PM-managed in-progress freeform or draft answer text.\n- Clarification-request and question-resolution surfaces, including chain-wizard and progression gates, use the same question-flow rather than a parallel prompt format. Legacy single-question callers remain single-item syntactic sugar over `mode: \"single_question\" | \"questionnaire\"` with `header?`, `prompt?`, `placeholder?`, `questions: Array<QuestionItem>`, and output `status: \"answered\" | \"submitted\" | \"dismissed\" | \"timed_out\" | \"unavailable\"` plus `answers: Array<{ question_id, values: string[], source?: \"option\" | \"other\" | \"freeform\" }>` and optional backward-compat `answer_text?`.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-010",
+      "item_type": "gui_truth",
+      "title": "Question completion, pause, freeform, and access behavior",
+      "statement": "Required questions keep the shared card flow incomplete until answered, dismissal pauses explicitly, Other is the freeform route, headless use returns unavailable without GUI recovery, and subagents are denied question access by default.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 535, "line_end": 535, "exact_quote": "- Implementation-readiness for the shared question-flow / multi-question-flow requires question-card behavior to stay aligned across Assistant, Interviewer, and document-builder / visual-module flows: required-by-default items keep the flow incomplete until answered, dismiss-to-pause returns an explicit dismissed/paused status, and `Other` remains the freeform path rather than a fabricated option answer.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 551, "line_end": 553, "exact_quote": "- Headless/HITL-unavailable returns `headless_unavailable` with `status: \"unavailable\", reason: \"headless\"` and no GUI-only recovery action.\n- headless_unavailable\n- Subagent question tool access is DENIED by default", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-011",
+      "item_type": "gap",
+      "title": "QuestionItem text alias requiredness conflicts with canonical shape",
+      "statement": "One rule says every QuestionItem carries the legacy `text: string` alias at minimum, while the later canonical item shape omits `text`; the contract does not resolve whether canonical callers must provide it or normalization must synthesize it.",
+      "gap_kind": "internal_contract_ambiguity",
+      "impact": "Validators and adapters may disagree on whether otherwise canonical QuestionItems lacking `text` are valid.",
+      "builder_discretion": "Builders would have to choose whether `text` is required, optional, or generated.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 536, "line_end": 536, "exact_quote": "- The v1 input envelope accepts `mode?: \"single_question\" | \"questionnaire\"`, `header?`, `prompt?`, `placeholder?`, `questions: Array<QuestionItem>`, `allow_other?: boolean` as a legacy alias for `allow_freeform`, and `allow_multi_select?: boolean` as a legacy alias for `multi_select`; each `QuestionItem` carries at minimum `question_id`, canonical display `question`, legacy alias `text: string`, optional `description?: string`, `options?: Array<{ id, label, description? }>`, `required?` default true, `multi_select?` default false, `allow_freeform?` default true, `allow_other?` as the freeform legacy alias, `placeholder?`, `default_values?`, and response constraints. Legacy `answer: string` output is normalized into the canonical answer array.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 538, "line_end": 538, "exact_quote": "- Compatibility shorthand for source and adapter callers is `mode|header|prompt|questions[]`; the canonical item shape is `QuestionItem{question_id, question, options[], required, multi_select, allow_freeform, default_values}`.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-012",
+      "item_type": "gap",
+      "title": "Question output status transitions lack decision rules",
+      "statement": "The contract enumerates answered, submitted, dismissed, timed_out, and unavailable but does not define when answered versus submitted applies, how dismissal maps to paused state, or which states are terminal and retryable.",
+      "gap_kind": "under_specified_state_machine",
+      "impact": "Callers, persistence, and GUI flows may classify identical outcomes differently or apply inconsistent recovery behavior.",
+      "builder_discretion": "Builders must invent transition and terminality rules beyond the listed enum.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 541, "line_end": 541, "exact_quote": "- Clarification-request and question-resolution surfaces, including chain-wizard and progression gates, use the same question-flow rather than a parallel prompt format. Legacy single-question callers remain single-item syntactic sugar over `mode: \"single_question\" | \"questionnaire\"` with `header?`, `prompt?`, `placeholder?`, `questions: Array<QuestionItem>`, and output `status: \"answered\" | \"submitted\" | \"dismissed\" | \"timed_out\" | \"unavailable\"` plus `answers: Array<{ question_id, values: string[], source?: \"option\" | \"other\" | \"freeform\" }>` and optional backward-compat `answer_text?`.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 546, "line_end": 550, "exact_quote": "- status: \"answered\" | \"submitted\" | \"dismissed\" | \"timed_out\" | \"unavailable\"\n- answered|submitted|dismissed|timed_out|unavailable\n- answers: Array<{question_id, values: string[]}>\n- answer_text?\n- source?: \"option\" | \"other\" | \"freeform\"", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-013",
+      "item_type": "contract",
+      "title": "TODO is the shared execution-state authority",
+      "statement": "Plan and Deep Plan project to one normalized TODO model; persistence uses explicit revisions and durable events; ask/plan permissions allow TODO tools absent stricter presets; auto-use either silently creates under approval or exposes proposed items for approval; TODO is the SSOT across agent topologies and the sticky panel is the full GUI projection.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 577, "line_end": 583, "exact_quote": "- Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.\n- Plan/TODO persistence is locked to explicit revision states, structural-edit gating after approval, bounded revision history, and emission of `chat.plan_todo_updated` for durable TODO mutations.\n- TODO tool behavior is locked so todowrite and todoread use the normalized TODO schema, todowrite is not blanket auto-denied in ask/plan mode, and Deep Plan edits must resync the TODO projection before execution.\n- Ask/Plan presets must not carry inherited blanket-denies or a blanket-deny rule for `question`, `todowrite`, `todoread`, or the six web operation tools; the mode-dependent access matrix for plan-mode web tool access and Deep Plan mode availability must show these tools as available unless stricter explicit presets such as read-only or no-network deny them by policy.\n- `todowrite` auto-use on-trigger behavior is explicit: when the auto-use heuristic fires, the agent emits a `todowrite` tool call with proposed TODO items. If auto-approved by the resolved permission preset, the tool creates items silently; if ask-mode, the tool is held behind an approval prompt that lists the proposed TODO items before creation.\n- `chat.plan_todo_updated` must have an explicit owner-contract definition for durable normalized TODO mutation, and `todoread` must not survive as a `source_surface` mutation source.\n- TODO is the SSOT for plan execution state across single-agent, crew, and subagent runs. `/revise` creates an explicit new draft/revision instead of mutating approved history invisibly; sticky-panel-vs-inline-progress is a UI division, not a second TODO state model. The sticky-card / execution-tracker surface owns the full TODO list, status badges, focused item behavior, delegated owner display, and post-approval edit restrictions, while inline-progress chat messages stay compact and link back to the sticky panel.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-014",
+      "item_type": "acceptance_oracle",
+      "title": "TODO operations and pre-execution synchronization",
+      "statement": "Todowrite creates, reorders, and updates statuses or notes; todoread returns the active normalized list; crew and subagents consume it without translation; Deep Plan markdown edits must update the normalized projection before execution.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 607, "line_end": 612, "exact_quote": "- todowrite can create, reorder, update statuses/notes\n- todoread returns current normalized list for active thread/run\n- `todowrite` / `todoread` use the same normalized TODO schema as planning outputs.\n- Crew/subagent execution consumes the same TODO contract without translation.\n- Remove `todowrite` from blanket `ask/plan` mode auto-deny\n- editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-015",
+      "item_type": "gap",
+      "title": "TODO item and revision states lack a typed transition model",
+      "statement": "The section lists TODO item statuses and separate draft/approved/executing lifecycle labels, but does not type every field, bind each label to item versus revision/run scope, or define allowed transitions and terminal-state behavior.",
+      "gap_kind": "under_specified_state_machine",
+      "impact": "Storage, tools, GUI, and delegated execution can disagree on validation and legal state changes.",
+      "builder_discretion": "Builders must infer field types, state ownership, and transition guards.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 585, "line_end": 602, "exact_quote": "Fields:\n- Q&A loop\n- todo_id\n- title\n- summary\n- status\n- dependencies[]\n- owner_hint\n- verification_hint\n- order_index?\n- notes?\n- pending | in_progress | completed | blocked | skipped\n- superseded\n- draft\n- approved\n- executing\n- completed\n- blocked", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-016",
+      "item_type": "gap",
+      "title": "TODO tool request, response, and failure envelopes are absent",
+      "statement": "The authoritative TODO core specifies high-level write verbs and a read result concept, but no concrete request or response shapes, validation failures, permission/error envelopes, missing-active-run behavior, concurrency semantics, or timeout and recovery rules.",
+      "gap_kind": "under_specified_tool_contract",
+      "impact": "Tool adapters cannot implement interoperable mutation and read behavior or reliably recover from failed and concurrent operations.",
+      "builder_discretion": "Builders would have to invent tool envelopes and operational failure semantics.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 607, "line_end": 609, "exact_quote": "- todowrite can create, reorder, update statuses/notes\n- todoread returns current normalized list for active thread/run\n- `todowrite` / `todoread` use the same normalized TODO schema as planning outputs.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-017",
+      "item_type": "unknown",
+      "title": "Web operation contract begins beyond this core",
+      "statement": "The authoritative core introduces the Web operation family and asserts that this surface defines its canonical contract, but contains no Web operation rules before the assigned core ends; no Web behavior can be assessed from this core without consulting a forbidden adjacent window.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 618, "line_end": 620, "exact_quote": "### 3.5D Web operation family runtime contract\n\nThis section defines the canonical contract for this surface.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    },
+    {
+      "item_id": "EXACT-018",
+      "item_type": "explicit_non_gap",
+      "title": "Consequential implementation discretion is bounded",
+      "statement": "Implementations may emit partial grep timeout results only with proof, overwrite only under policy, and normalize legacy question shapes onto the canonical multi-question path; these are explicit bounds rather than open builder choices.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/Tools.md", "line_start": 438, "line_end": 438, "exact_quote": "- On timeout, return `{ pattern, path, status: \"timed_out\", error: { code: \"timeout\" } }`. Implementations may include `partial: true` only when the runtime can prove returned hits were fully verified.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 485, "line_end": 485, "exact_quote": "`created = true` when the path did not previously exist; `false` when the tool overwrote an existing file under an allowed policy.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"},
+        {"path": "Plans/Tools.md", "line_start": 537, "line_end": 537, "exact_quote": "- Legacy `string-answer` and `answer: string` callers are compatibility-only; the already-decided canonical path is the multi-question envelope. Source shorthand `questions: [...]` is normalized to `questions: Array<QuestionItem>` before validation or question-card rendering.", "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"}
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension": "behavior", "status": "addressed", "summary": "Concrete read, grep, glob, write, question, and TODO behaviors are stated.", "evidence_item_ids": ["EXACT-001", "EXACT-002", "EXACT-004", "EXACT-005", "EXACT-009", "EXACT-014"]},
+    {"dimension": "capabilities", "status": "addressed", "summary": "Search, enumeration, write, skill invocation, questioning, and normalized TODO capabilities are identified.", "evidence_item_ids": ["EXACT-002", "EXACT-004", "EXACT-005", "EXACT-007", "EXACT-009", "EXACT-013"]},
+    {"dimension": "inputs_outputs", "status": "gap_found", "summary": "Grep, glob, write, and question shapes are concrete, but skill and TODO tool envelopes are incomplete.", "evidence_item_ids": ["EXACT-002", "EXACT-004", "EXACT-005", "EXACT-008", "EXACT-009", "EXACT-016"]},
+    {"dimension": "contracts", "status": "gap_found", "summary": "Several canonical contracts are exact; the skill and TODO sections remain materially under-specified.", "evidence_item_ids": ["EXACT-002", "EXACT-004", "EXACT-005", "EXACT-008", "EXACT-009", "EXACT-015", "EXACT-016"]},
+    {"dimension": "states_transitions", "status": "gap_found", "summary": "Question and TODO state names exist, but transition and terminality rules are incomplete.", "evidence_item_ids": ["EXACT-012", "EXACT-013", "EXACT-015"]},
+    {"dimension": "authority", "status": "addressed", "summary": "Shared tool boundaries, Agent Config, Tools, storage, top-level orchestration, and TODO SSOT authority are assigned.", "evidence_item_ids": ["EXACT-007", "EXACT-009", "EXACT-010", "EXACT-013"]},
+    {"dimension": "ownership", "status": "addressed", "summary": "Skill, question, persistence, event, and GUI projection ownership is explicit at the relevant boundaries.", "evidence_item_ids": ["EXACT-007", "EXACT-009", "EXACT-013"]},
+    {"dimension": "consumers", "status": "addressed", "summary": "Question consumers and single-agent, crew, and subagent TODO consumers are named.", "evidence_item_ids": ["EXACT-009", "EXACT-010", "EXACT-013", "EXACT-014"]},
+    {"dimension": "gui_truth", "status": "addressed", "summary": "Question-card completion and freeform behavior plus sticky-panel versus inline TODO presentation are explicit.", "evidence_item_ids": ["EXACT-010", "EXACT-013"]},
+    {"dimension": "failures_recovery", "status": "gap_found", "summary": "Read, grep, glob, write, and headless question failures are addressed, but TODO failure and recovery behavior is absent.", "evidence_item_ids": ["EXACT-001", "EXACT-003", "EXACT-004", "EXACT-006", "EXACT-010", "EXACT-016"]},
+    {"dimension": "security_privacy", "status": "addressed", "summary": "Permission policy, FileSafe scope controls, write scope, headless restrictions, and default subagent denial are explicit.", "evidence_item_ids": ["EXACT-003", "EXACT-004", "EXACT-006", "EXACT-007", "EXACT-010"]},
+    {"dimension": "propagation", "status": "addressed", "summary": "Question state persistence, durable TODO events, shared agent consumption, and mandatory Deep Plan resynchronization describe propagation paths.", "evidence_item_ids": ["EXACT-009", "EXACT-013", "EXACT-014"]},
+    {"dimension": "operations", "status": "addressed", "summary": "Timeouts, deterministic enumeration, atomic write failure, permission gating, TODO auto-use, revisions, and synchronization provide operational rules.", "evidence_item_ids": ["EXACT-001", "EXACT-003", "EXACT-004", "EXACT-006", "EXACT-013", "EXACT-014"]},
+    {"dimension": "scale_performance", "status": "addressed", "summary": "Read, grep, glob, and write time ceilings plus grep result capping and partial-result proof address bounded execution.", "evidence_item_ids": ["EXACT-001", "EXACT-003", "EXACT-004", "EXACT-006"]},
+    {"dimension": "compatibility_migration", "status": "addressed", "summary": "Create-to-write mapping and legacy question shapes, aliases, and normalization rules are explicit.", "evidence_item_ids": ["EXACT-005", "EXACT-009", "EXACT-011", "EXACT-018"]},
+    {"dimension": "acceptance_oracles", "status": "addressed", "summary": "Non-fabrication, verified partial hits, deterministic ordering, atomic timeout failure, required-question completion, and pre-execution TODO resync are testable oracles.", "evidence_item_ids": ["EXACT-001", "EXACT-003", "EXACT-004", "EXACT-006", "EXACT-010", "EXACT-014"]},
+    {"dimension": "builder_discretion", "status": "gap_found", "summary": "Some discretion is tightly bounded, but skill and TODO envelope/state gaps still force consequential implementation choices.", "evidence_item_ids": ["EXACT-008", "EXACT-011", "EXACT-012", "EXACT-015", "EXACT-016", "EXACT-018"]},
+    {"dimension": "ambiguity_unknowns", "status": "gap_found", "summary": "Question alias and status semantics, skill and TODO contract gaps, and the out-of-core Web contract remain ambiguous or unknown within this assignment.", "evidence_item_ids": ["EXACT-008", "EXACT-011", "EXACT-012", "EXACT-015", "EXACT-016", "EXACT-017"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

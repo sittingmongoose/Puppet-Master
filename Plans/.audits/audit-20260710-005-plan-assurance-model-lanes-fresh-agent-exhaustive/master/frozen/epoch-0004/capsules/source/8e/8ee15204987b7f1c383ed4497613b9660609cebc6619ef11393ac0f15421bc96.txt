@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE 384-395 >>>
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Contracts_V0.md CV-315 owns governance runtime record schemas and state machines for corroboration, promotion, graph-patch, and projection_trust.
+- storage-plan.md SP-233 owns the durable storage keys and projection trust revalidation gates.
+- Crosswalk.md owns referenced /open contracts; this document preserves high-level feature-summary coverage only.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 396-790 >>>
+### N-007 - Broad Summary Compression Guard
+
+```yaml
+plan_unit_id: N-007
+unit_type: constraint
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  feature-list, feature-list.md, and newfeatures.md are broad drift amplifiers. Their summaries must stay aligned to
+  owner docs and cannot compress detailed rules, field schemas, examples, or operational policies into vague high-level
+  copy.
+gui_related: false
+gui_classification_reason: The unit is a documentation drift guard rather than GUI presentation.
+split_recommended: false
+depends_on:
+- N-002
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Broad summaries remain aligned to owner docs.
+- Detailed rules, field schemas, examples, and operational policies are not compressed into vague copy.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: broad_summary_drift
+reasoning_tier: standard
+context_scope: newfeatures_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: broad_summary_compression_guard
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0003
+preserved_exact_tokens:
+- feature-list
+- feature-list.md
+- newfeatures.md
+- broad drift amplifiers
+negative_constraints:
+- Broad summaries must not compress detailed rules, field schemas, examples, or operational policies into vague high-level copy.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Owner docs remain authoritative over detailed rules, field schemas, examples, and operational policies.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Orchestrator_Page.md'
+```
+
+### N-008 - Orchestration Governance Feature Themes
+
+```yaml
+plan_unit_id: N-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  The high-level feature themes preserve package-local governance through Package Overseer, seam-level integration
+  governance through Seam Overseer, and promotion, corroboration, concern, graph-patch, and recovery records as
+  first-class governance/runtime objects.
+gui_related: false
+gui_classification_reason: The unit summarizes governance/runtime object themes rather than GUI presentation.
+split_recommended: false
+depends_on:
+- N-003
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Package Overseer remains preserved as package-local governance.
+- Seam Overseer remains preserved as seam-level integration governance.
+- promotion, corroboration, concern, graph-patch, and recovery records remain first-class governance/runtime objects.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: governance_summary_drift
+reasoning_tier: standard
+context_scope: newfeatures_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: orchestration_governance_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0006
+preserved_exact_tokens:
+- Package Overseer
+- Seam Overseer
+- promotion
+- corroboration
+- concern
+- graph-patch
+- recovery records
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Detailed orchestration behavior remains owned by orchestration owner docs.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs: []
+```
+
+### N-009 - Runtime Identity And Provider Feature Themes
+
+```yaml
+plan_unit_id: N-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  Runtime identity and provider behavior summaries preserve requested/effective runtime identity across personas,
+  models, accounts, and execution roles, with multi-account switching tied to concrete account binding and durable
+  switch/pressure history.
+gui_related: false
+gui_classification_reason: The unit summarizes runtime identity and provider behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- N-003
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- requested/effective runtime identity remains preserved across personas, models, accounts, and roles.
+- Multi-account switching remains tied to concrete account binding.
+- Durable switch/pressure history remains preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: runtime_identity_summary_drift
+reasoning_tier: standard
+context_scope: newfeatures_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: runtime_identity_provider_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0007
+preserved_exact_tokens:
+- requested/effective runtime identity
+- personas
+- models
+- accounts
+- execution roles
+- multi-account switching
+- durable switch/pressure history
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Runtime identity detail remains owned by the runtime identity owner docs and Multi-Account contract.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs: []
+```
+
+### N-010 - UI Navigation Product Surface Summary
+
+```yaml
+plan_unit_id: N-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  UI and navigation summaries preserve tab-first Orchestrator, worktree-first Source Control, route/open primitives
+  shared across chat, runtime, usage, artifacts, and orchestration, and the coherent left-panel /product model as MVP.
+  Source Control, GitHub Actions, Docker Manager, Assistant/Chat, Files, Artifacts/Runtime, Usage, and Settings are
+  first-class owner surfaces, not individually listed /underdefined pieces.
+gui_related: true
+gui_classification_reason: The unit summarizes user-visible navigation, left-panel surfaces, and route/open GUI behavior.
+split_recommended: false
+depends_on:
+- N-003
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- tab-first Orchestrator remains preserved.
+- worktree-first Source Control remains preserved.
+- The coherent left-panel /product model remains MVP.
+- First-class owner surfaces are not reduced to /underdefined pieces.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: navigation_summary_drift
+reasoning_tier: standard
+context_scope: newfeatures_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: ui_navigation_product_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0008
+preserved_exact_tokens:
+- tab-first Orchestrator
+- worktree-first Source Control
+- route/open primitives
+- /product
+- Source Control
+- GitHub Actions
+- Docker Manager
+- Assistant/Chat
+- Files
+- Artifacts/Runtime
+- Usage
+- Settings
+- /underdefined
+negative_constraints:
+- First-class owner surfaces must not be reduced to a bag of individually listed /underdefined pieces.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Detailed surface behavior remains owned by the relevant surface owner docs.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs: []
+```
+
+### N-011 - Workbench Feature Cluster Requirements
+
+```yaml
+plan_unit_id: N-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  PM preserves competitive workbench feature clusters as product requirements: visible plans/tasks/artifacts/approval
+  state, multi-surface orchestration across editor, terminal, browser/preview, docs, and review, reusable diff/review
+  pipelines with hunk-level actions, project/framework autodetection, honest loading/indexing and degraded state,
+  durable tabs/splits/workspace recovery, reconnect/offline resilience with read-only/fallback messaging,
+  source-canonical rich previews, virtualized lazy file trees, background indexing/search, IME correctness, and
+  skepticism toward demo-friendly thin-wrapper UIs.
+gui_related: true
+gui_classification_reason: The unit summarizes user-visible workbench surfaces, previews, tabs, file trees, and UI resilience.
+split_recommended: true
+depends_on:
+- N-010
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Visible plans/tasks/artifacts/approval state remains preserved.
+- Multi-surface orchestration across editor, terminal, browser/preview, docs, and review remains preserved.
+- Durable tabs/splits/workspace recovery and reconnect/offline resilience remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: workbench_feature_cluster_drift
+reasoning_tier: standard
+context_scope: newfeatures_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: workbench_feature_cluster_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0009
+preserved_exact_tokens:
+- /tasks/artifacts/approval
+- browser/preview
+- hunk-level actions
+- /loading/indexing
+- /splits/workspace
+- /reconnect/offline
+- /read-only/fallback
+- source-canonical rich previews
+- virtualized lazy file trees
+- IME correctness
+negative_constraints:
+- PM must preserve skepticism toward demo-friendly thin-wrapper UIs.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Detailed workbench behavior remains owned by workbench and surface owner docs.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs: []
+split_recommendation_reason: newfeatures-S0009 mixes workbench product features with ownership and interop constraints.
+```
+
+### N-012 - Native Workbench Ownership And Interop Boundary
+
+```yaml
+plan_unit_id: N-012
+unit_type: constraint
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  PM may learn from file-heavy systems and delegated-backend container/control-plane products, but it must not become a
+  monolithic request layer or delegate core file-manager/diff/LSP, editor, storage, routing, or shell ownership to an
+  upstream IDE. A native Rust + Slint workbench keeps file-manager operations as typed services with policy/error
+  handling, treats remote/runtime orchestration as an explicit control-plane with bootstrap diagnostics, and bounds
+  external editor/workbench interop as a subsystem rather than the hidden owner.
+gui_related: true
+gui_classification_reason: The unit constrains visible workbench ownership, editor interop, and file-manager surface behavior.
+split_recommended: true
+depends_on:
+- N-011
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- PM does not become a monolithic request layer.
+- Core file-manager/diff/LSP, editor, storage, routing, and shell ownership are not delegated to an upstream IDE.
+- Native Rust + Slint /workbench remains preserved as the summary implementation direction.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ownership_boundary
+reasoning_tier: standard
+context_scope: newfeatures_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: native_workbench_ownership_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0009
+preserved_exact_tokens:
+- /container/control-plane
+- /file-manager/diff/LSP
+- /workbench
+- Rust + Slint
+- /bootstrap
+negative_constraints:
+- PM must not become a monolithic request layer.
+- PM must not delegate core /file-manager/diff/LSP, editor, storage, routing, or shell ownership to an upstream IDE.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- External editor/workbench interop is bounded as a subsystem rather than the hidden owner.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs: []
+split_recommendation_reason: newfeatures-S0009 mixes GUI workbench features, backend typed services, and owner-boundary constraints.
+```
+
+### N-013 - Recovery And Historical Truth Summary
+
+```yaml
+plan_unit_id: N-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  Recovery and historical truth summaries preserve blocked episodes as canonical recovery anchors, graph generations as
+  visible lineage, and historical runs as distinct from superseded objects unless explicit lineage says otherwise.
+gui_related: false
+gui_classification_reason: The unit summarizes recovery and lineage semantics rather than GUI presentation.
+split_recommended: false
+depends_on:
+- N-003
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Blocked episodes remain canonical recovery anchors.
+- Graph generations remain visible lineage.
+- Historical runs remain distinct from superseded objects unless explicit lineage says otherwise.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: recovery_lineage_summary
+reasoning_tier: standard
+context_scope: newfeatures_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: recovery_historical_truth_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0010
+preserved_exact_tokens:
+- blocked episodes
+- canonical recovery anchors
+- graph generations
+- visible lineage
+- historical runs
+- superseded objects
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Prompt_Pipeline.md, Plans/Executor_Protocol.md, and Plans/Contracts_V0.md own detailed recovery and runtime contract semantics.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md'
+```
+
+
+<<< CONTEXT_AFTER 791-802 >>>
+### N-014 - Browser Preview Summary And Debug Adapter Boundary
+
+```yaml
+plan_unit_id: N-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  The built-in browser preview is summarized as a live rendering surface for web content produced by the active project.
+  It participates in the product's visual-debugging and UI-validation loop, shared navigation, evidence capture, and
+  source-opening flows. Agents may drive it as a first-class web debug adapter for navigation, reproduction steps, and
+  visible client-side signal capture; it must not degrade into external-automation-only or paste-only workflows.

@@ -1,0 +1,318 @@
+<<< CONTEXT_BEFORE 2714-2725 >>>
+  - "Plans/requirements_quality_report.schema.json"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, ContractName:Plans/Project_Output_Artifacts.md"
+  - "ContractRef: SchemaID:pm.requirements_coverage.schema.v1"
+  - "ContractRef: SchemaID:pm.requirements_coverage.schema.v1, Gate:GATE-011"
+  - "ContractRef: SchemaID:pm.requirements_quality_report.schema.v1"
+  - "ContractRef: SchemaID:pm.requirements_quality_report.schema.v1, SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011"
+owner_hints:
+  - "Plans/Project_Output_Artifacts.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 2726-3014 >>>
+### POA-039 - Traceability Outputs Seglog Persistence
+
+```yaml
+plan_unit_id: POA-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Traceability outputs persist to seglog as requirements_quality_report, requirements_coverage_json, and requirements_coverage_md artifact types, with filesystem files regenerable from seglog.
+gui_related: false
+gui_classification_reason: This unit defines persistence for traceability outputs rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "POA-024"
+  - "POA-038"
+unblocks: []
+acceptance_criteria:
+  - "Traceability Outputs Seglog Persistence remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: traceability_seglog_persistence_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0043
+preserved_exact_tokens:
+  - "requirements_quality_report"
+  - "requirements_coverage_json"
+  - "requirements_coverage_md"
+  - "Contracts_V0.md#EventRecord"
+  - "Primitive:Seglog"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, Primitive:Seglog"
+owner_hints:
+  - "Plans/Project_Output_Artifacts.md"
+```
+
+### POA-040 - Optional Quickstart Derived Convenience Contract
+
+```yaml
+plan_unit_id: POA-040
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  quickstart.md is an optional derived convenience output and is noncanonical for planning and orchestration.
+gui_related: false
+gui_classification_reason: This unit defines human convenience output authority rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "POA-028"
+unblocks: []
+acceptance_criteria:
+  - "Optional Quickstart Derived Convenience Contract remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: quickstart_authority_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0044
+preserved_exact_tokens:
+  - ".puppet-master/project/quickstart.md"
+  - "derived convenience output"
+  - "non-canonical for planning and orchestration"
+negative_constraints:
+  - "AI correctness, planning correctness, and validator correctness must not depend on quickstart.md."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Project_Output_Artifacts.md, SchemaID:pm.acceptance_manifest.schema.v1"
+owner_hints:
+  - "Plans/Project_Output_Artifacts.md"
+```
+
+### POA-041 - Quickstart Deterministic Generation Rules
+
+```yaml
+plan_unit_id: POA-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  quickstart.md is generated deterministically from acceptance_manifest commands using manifest traversal order, fixed count and byte limits, verbatim command membership, and the exact truncation note.
+gui_related: false
+gui_classification_reason: This unit defines deterministic file generation rules rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "POA-040"
+unblocks: []
+acceptance_criteria:
+  - "Quickstart Deterministic Generation Rules remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: quickstart_generation_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0045
+preserved_exact_tokens:
+  - "nodes[].checks[].commands[].cmd"
+  - "no synthesis, normalization, aliasing, interpolation, or reformatting"
+  - "manifest traversal order"
+  - "max_commands = 20"
+  - "max_file_size_bytes = 16384"
+  - "... truncated; see .puppet-master/project/acceptance_manifest.json for complete checks"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, ContractName:Plans/Project_Output_Artifacts.md"
+owner_hints:
+  - "Plans/Project_Output_Artifacts.md"
+```
+
+### POA-042 - Quickstart Validation Rules
+
+```yaml
+plan_unit_id: POA-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  If quickstart.md is present, validators enforce file size, executable command count, verbatim command membership in acceptance_manifest, and absence of commands not present in the manifest command set.
+gui_related: false
+gui_classification_reason: This unit defines validation rules for a derived convenience file rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "POA-041"
+unblocks: []
+acceptance_criteria:
+  - "Quickstart Validation Rules remains addressable as a fine-grained Project Output Artifacts PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: quickstart_validation_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0046
+preserved_exact_tokens:
+  - "<= 16384 bytes"
+  - "<= 20"
+  - "nodes[].checks[].commands[].cmd"
+  - "no command appears that is absent from the manifest command set"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: SchemaID:pm.acceptance_manifest.schema.v1, ContractName:Plans/Project_Output_Artifacts.md"
+owner_hints:
+  - "Plans/Project_Output_Artifacts.md"
+```
+
+### POA-043 - Change Summary Source-Lineage Map
+
+```yaml
+plan_unit_id: POA-043
+unit_type: source_lineage_disposition
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  The change summary is source-lineage coverage only: it records historical additions for document packaging, traceability outputs, validation sweep hardening, validation_pass_report typing, sharded-only plan graph, noncanonical monolithic export, Project Plan Package SSOT replacement, seglog persistence, DRY contract references, and schema terminology alignment without overriding implementation-facing PlanUnits.
+gui_related: false
+gui_classification_reason: This unit preserves source lineage, runtime evidence, or validation artifact lineage rather than GUI implementation or visual presentation.
+split_recommended: false
+depends_on:
+  - "POA-011"
+  - "POA-018"
+  - "POA-024"
+  - "POA-032"
+  - "POA-038"
+  - "POA-042"
+unblocks: []
+acceptance_criteria:
+  - "Change Summary Source-Lineage Map remains addressable as a fine-grained Project Output Artifacts PlanUnit or disposition."
+  - "ContractRefs, anchors, exact tokens, negative constraints, owner/consumer boundaries, and source lineage remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: source_lineage_changelog_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: source_lineage_disposition
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0047
+preserved_exact_tokens:
+  - ".docset/"
+  - "pointer stub"
+  - "requirements_quality_report.json"
+  - "pm.requirements_quality_report.schema.v1"
+  - "orphaned_node_requirement_refs[].reason"
+  - "uncovered_acceptance[]"
+  - "single Auditor validation loop"
+  - "model_roles.auditor.*"
+  - "unresolved_findings[]"
+  - "validation_pass_report"
+  - "sharded-only"
+  - ".puppet-master/project/plan_graph/index.json"
+  - "plan_graph/exports/plan_graph.monolithic.json"
+  - "optional, non-canonical"
+  - ".puppet-master/project/**"
+  - "seglog"
+  - "ProjectContract:*"
+negative_constraints:
+  - "This changelog/source-lineage coverage must not override implementation-facing POA-002 through POA-042."
+preserved_contractrefs:
+  - "Cross-ref: Plans/Document_Packaging_Policy.md §7"
+  - "ContractRefs: SchemaID:pm.requirements_coverage.schema.v1, SchemaID:pm.project-plan-node.v1, SchemaID:pm.acceptance_manifest.schema.v1, Gate:GATE-011"
+owner_hints:
+  - "Plans/Project_Output_Artifacts.md"
+```
+
+### POA-044 - Runtime Evidence Projection Consumer Boundary
+
+```yaml
+plan_unit_id: POA-044
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Runtime evidence projections remain downstream consumers of the storage-owned receipt packet.
+gui_related: false
+gui_classification_reason: This unit preserves source lineage, runtime evidence, or validation artifact lineage rather than GUI implementation or visual presentation.
+split_recommended: false
+depends_on:
+  - "POA-006"
+  - "POA-024"
+unblocks: []
+acceptance_criteria:
+  - "Runtime Evidence Projection Consumer Boundary remains addressable as a fine-grained Project Output Artifacts PlanUnit or disposition."
+  - "ContractRefs, anchors, exact tokens, negative constraints, owner/consumer boundaries, and source lineage remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: runtime_evidence_projection_boundary_drift
+reasoning_tier: standard
+context_scope: project_output_artifacts
+implementation_surfaces:
+  - Plans/Project_Output_Artifacts.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Project_Output_Artifacts-S0048
+preserved_exact_tokens:
+  - "Runtime Evidence and Degradation Artifact Addendum (2026-03-08)"
+  - "Runtime evidence projections"
+  - "downstream consumers"
+  - "storage-owned receipt packet"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Project_Output_Artifacts.md"
+  - "Plans/storage-plan.md"
+```
+
+
+<<< CONTEXT_AFTER 3015-3026 >>>
+### POA-045 - Validation Artifact Lineage Required Fields
+
+```yaml
+plan_unit_id: POA-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Project_Output_Artifacts.md
+canonical_text: >-
+  Validation artifact lineage requires auditor_cycle_report, workflow_run_id, pass_verdict, phase_plan_ref, requirements_quality_report_ref, and any legacy validation_pass_report mirror to carry compatibility_only true plus cycle_report_ref; validation lineage stays concrete and inspectable, and report records remain upstream artifacts rather than local replacement identifiers.
+gui_related: false
+gui_classification_reason: This unit preserves source lineage, runtime evidence, or validation artifact lineage rather than GUI implementation or visual presentation.
+split_recommended: false

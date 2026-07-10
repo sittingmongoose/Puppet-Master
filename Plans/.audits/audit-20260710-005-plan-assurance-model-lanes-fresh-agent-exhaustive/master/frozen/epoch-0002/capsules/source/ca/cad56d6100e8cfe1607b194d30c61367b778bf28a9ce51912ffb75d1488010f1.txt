@@ -1,0 +1,377 @@
+<<< CONTEXT_BEFORE 1103-1114 >>>
+  - pldg-20260624-001-provider-updates:atom-0052
+  - pldg-20260624-001-provider-updates:atom-0119
+  - pldg-20260624-001-provider-updates:atom-0139
+source_atom_ids: [atom-0017, atom-0018, atom-0052, atom-0117, atom-0118, atom-0119, atom-0122, atom-0129, atom-0131, atom-0132, atom-0139, atom-0140]
+preserved_exact_tokens: ["requested_account", "effective_account", "requested provider/model/effort", "effective provider/model/effort", "fallback_used", "reasoning_effort", "thinking", "honored", "skipped", "clamped", "unsupported", "partially supported"]
+negative_constraints:
+  - Do not infer effective provider identity from model name alone.
+  - Do not silently drop unsupported thinking effort requests.
+  - Do not let GUI, usage, or artifact surfaces invent divergent requested/effective schemas.
+owner_hints: [Plans/Contracts_V0.md, Plans/Prompt_Pipeline.md, Plans/Multi-Account.md, Plans/Models_System.md]
+```
+
+
+<<< AUTHORITATIVE_CORE 1115-1462 >>>
+### CV-294 - Caller-Scoped Capability And Provider-Native Artifact Envelope
+
+```yaml
+plan_unit_id: CV-294
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Provider capabilities and provider-native artifacts are caller-scoped. Capability payloads must include enabled_on_instance, usable_now, blocked_reason, caller_scope, execution_role, provider_entry_id, account_profile_ref, model_id, media_route_id, permission_snapshot_id, redaction_profile, verification_state, artifact_refs, and source_confidence where applicable. Provider-native tools and secrets are mediated through PM permission custody; artifacts may reference provider receipts, streamed logs/events, generated media, model catalogs, route/probe evidence, and adoption/drift/blocked/repair states without storing secrets. Antigravity internal generated-image artifacts may reference non-secret route/probe evidence, model id `gemini-3.1-flash-image`, generated artifact refs, dimensions/hash, and support-state caveats, while public `agy` catalog artifacts remain model-capability evidence rather than generated-media receipts.
+gui_related: false
+gui_classification_reason: Shared capability/artifact schema and permission custody contract rather than visual presentation.
+depends_on: [CV-292, CV-293]
+unblocks: [RAP-032, RAP-033, T-164, PS-119, POA-050]
+acceptance_criteria:
+  - Capability availability is caller-scoped and cannot be inferred from global provider enablement alone.
+  - Provider-native tool execution and secret custody pass through PM permission contracts.
+  - Runtime artifacts preserve provider receipts, generated media refs, logs/events, model catalogs, route/probe evidence, and drift/blocked states by reference.
+  - Secret values, OAuth URLs, and local account material are never stored in artifacts.
+  - Antigravity generated-image artifact refs preserve internal-route caveats and never store OAuth/session material.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: provider_capability_artifact_drift
+reasoning_tier: high
+context_scope: caller_scoped_provider_capabilities
+implementation_surfaces: [Plans/Contracts_V0.md, Plans/Tools.md, Plans/Permissions_System.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
+node_compile_hint: {mode: caller_scoped_provider_capability_artifact_envelope, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0117
+  - pldg-20260624-001-provider-updates:atom-0120
+  - pldg-20260624-001-provider-updates:atom-0121
+  - pldg-20260624-001-provider-updates:atom-0142
+  - pldg-20260624-001-provider-updates:atom-0143
+source_atom_ids: [atom-0049, atom-0116, atom-0117, atom-0118, atom-0120, atom-0121, atom-0122, atom-0130, atom-0131, atom-0133, atom-0136, atom-0137, atom-0138, atom-0142, atom-0143]
+preserved_exact_tokens: ["enabled_on_instance", "usable_now", "blocked_reason", "caller_scope", "execution_role", "providerIdentifier: client", "toolName: pm_echo", "permission_snapshot_id", "redaction_profile", "provider-native", "generated media", "route/probe evidence", "gemini-3.1-flash-image", "1024x1024", "image/jpeg", "a60c8987f42ebb678426affb79d55f49f3efe8feebc8c09ba86772bfa91d9f5d"]
+negative_constraints:
+  - Do not infer `usable_now` from `enabled_on_instance`.
+  - Do not bypass PM permission custody for provider-native tools or secrets.
+  - Do not store provider secret material in artifact payloads.
+  - Do not store OAuth tokens, refresh tokens, account identifiers, local credential paths, full HTTP payload logs, or secrets in provider-native artifact payloads.
+owner_hints: [Plans/Contracts_V0.md, Plans/Tools.md, Plans/Permissions_System.md, Plans/Runtime_Artifacts_Panel.md, Plans/Project_Output_Artifacts.md]
+```
+
+Rules:
+- Writers SHOULD include `run_id` and `thread_id` whenever available, but `EventEnvelopeV1` does not require them.
+- Readers MUST tolerate both envelopes; projectors SHOULD upgrade in-memory to `EventRecord` form.
+
+ContractRef: ContractName:Plans/Contracts_V0.md#EventEnvelopeV1, PolicyRule:Decision_Policy.md§2
+
+---
+
+**Payload schema ownership:** `Contracts_V0.md` owns the canonical persisted envelope (`EventRecord`) and cross-cutting auth/event contracts. Concrete persisted event-type payload schemas are registered in `Plans/storage-plan.md` so writers, projectors, analytics, and generated docs share one payload SSOT.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord
+
+---
+
+## 2. Provider normalized stream (non-persisted contract)
+
+
+Providers emit a normalized stream for live UI consumption. Persistent storage remains governed by `EventRecord` in §1.
+
+**Normative:** See `Plans/CLI_Bridged_Providers.md` for the full schema (event envelope + event types). This contracts file only asserts the boundary: normalized provider stream events are transport-facing, while seglog events are persistence-facing.
+
+**Provider architecture constraints (normative):**
+- All providers (CLI-bridged, server-bridged, and direct-provider) MUST conform to the unified Provider facade/trait contract with capability flags and tool-policy inputs defined at the Provider boundary.
+- UI and orchestrator consumers MUST NOT special-case provider transport or provider brand beyond provider configuration fields (enablement, connection/auth inputs, model selection).
+- Provider-originated events and tool-call lifecycle signals MUST be normalized into the canonical provider event stream contract before reaching consumers or persistence mapping.
+- PM bundling and PM skill tool access are preserved regardless of provider transport; transport selection must not remove built-in PM tool availability.
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Tools.md
+
+---
+
+### 2.1 Provider transport taxonomy
+
+Provider and stream seams require explicit contract-version governance. A transport adapter must not invent adapter-local shadow fields for actor/account/trust categories; new fields require a contract-versioned owner path before persistence or UI projections consume them.
+
+Providers may use one of these transport classes. The normalized stream contract (§2) applies identically regardless of class:
+- **CLI-bridged:** local CLI subprocess transport (`stream-json`/ACP). Cursor and Claude Code are CLI-bridged only.
+- **Server-bridged:** HTTP REST + SSE to a local server process. OpenCode is server-bridged.
+- **Direct-provider:** direct provider endpoint calls with provider-native auth. Codex, Copilot, and Gemini Direct follow this class.
+- Provider support-state projections use the closed values `native`, `native_projected`, and `projected` so UI/help surfaces can distinguish provider-native support from PM-projected compatibility.
+- Direct-provider catalog candidates remain route-specific. Alibaba/Qwen, MiniMax, Z.AI/Zhipu, Kimi, and similar coding-plan rows use the latest owner PlanUnits for current support state: verified rows may be first-class, while unverified, regional, entitlement-gated, balance-gated, or disabled rows must not be promoted as green from catalog presence alone.
+- Legacy `CLI/runtime outputs + CLI auth/import` design notes are migration provenance; Codex and Copilot-facing contracts reconcile toward direct-provider auth/runtime semantics while preserving `/import`, `/runtime`, PM skill access, and the separate `copilot_github` auth realm.
+
+Canonical enum contract for implementation:
+```text
+ProviderTransport = CliBridge | DirectApi | ServerBridge
+```
+
+Mapping:
+- `CliBridge` → CLI-bridged
+- `DirectApi` → direct-provider
+- `ServerBridge` → server-bridged
+
+**Transport-specific notes:**
+- Server-bridged providers communicate via HTTP REST endpoints and SSE event streams (e.g., OpenCode; see `Plans/Provider_OpenCode.md`).
+- CLI-bridged providers communicate via CLI event outputs and adapter parsing (`Plans/CLI_Bridged_Providers.md`).
+- Direct-provider integrations may use provider HTTP/gRPC endpoints directly, but they MUST still emit the same normalized event types (`text_delta`, `tool_use`, `tool_result`, `usage`, `done`, etc.).
+- For `Gemini/Vertex`, PM owns the schema sanitizer and the post-tool loop rule: provider `finish_reason` alone is not sufficient evidence that tool execution, tool-result ingestion, or response continuation is complete.
+- OpenCode `EXEC` adapters enumerate handled terminal finish reasons before marking a stream complete: `FinishReasonContentFilter` and `FinishReasonSafety` are safety/content-filter terminals, while `FinishReasonUnknown` with empty content is an error path rather than normal completion.
+- Consumers MUST NOT branch on transport class. All provider output is consumed through the unified normalized stream.
+- Vocabulary-safe persisted contracts MUST NOT replace `requested_platform` or `effective_platform` with `provider_entry_id`; `provider_entry_id` is provider/account configuration metadata and may accompany, but not rewrite, requested/effective platform fields.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md
+
+---
+
+## 3. Tool events (persisted)
+Tool activity MUST be represented in the persisted event stream using the following `type` values.
+
+ContractRef: EventType:tool.invoked, EventType:tool.denied, ContractName:Plans/Contracts_V0.md
+
+**tool event contract** for `tool.invoked`.
+
+ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
+
+**runtime/tool/artifact attribution** must live in the authoritative payload shape itself.
+
+**Authoritative payload fields**
+
+| Field | Requirement |
+| --- | --- |
+| `node_id` | Runtime node identity for the tool invocation. |
+| `attempt_id` | Canonical local runtime anchor for the invocation attempt. |
+| `lane_id` | Lane identity associated with the invocation. |
+| `package_id` | Package identity associated with the invocation. |
+| `execution_role` | Effective execution-role disclosure for the tool attempt. |
+| `effective_account_id` | Effective account identity when the invocation is account-backed. |
+| `operational_identity` | External-operation identity carried for downstream attribution. |
+| `tool_use_id` | Stable tool-use identity for receipts and joins. |
+| `provider_attempt_ref` | Provider-side attempt/reference bridge that remains subordinate to `attempt_id`. |
+| `usage_event_ref` | Usage-side reference for accounting and evidence joins. |
+
+Rules:
+- Analytics-thin tool events are no longer sufficient.
+- `attempt_id` is the canonical local runtime anchor; bridge refs stay subordinate but explicit.
+- Policy-driven tool events may carry requested identity in addition to effective identity: `requested_account_id?`, `requested_account_binding?`, `actor_kind`, and `actor_ref?` preserve the request/actor envelope without replacing `effective_account_id` or `operational_identity`.
+- `package_id` is the canonical package identity field; `work_package_id` is accepted only as a compatibility alias and normalizes before persistence.
+**tool event contract** for `tool.denied`.
+
+ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)
+
+**runtime/tool/artifact attribution** must live in the authoritative denial payload shape itself.
+
+**Authoritative payload fields**
+
+| Field | Requirement |
+| --- | --- |
+| `node_id` | Runtime node identity for the denied tool action. |
+| `attempt_id` | Canonical local runtime anchor for the denied action. |
+| `lane_id` | Lane identity associated with the denial. |
+| `package_id` | Package identity associated with the denial. |
+| `execution_role` | Effective execution-role disclosure for the denied action. |
+| `effective_account_id` | Effective account identity when the denial is account-backed. |
+| `operational_identity` | External-operation identity carried for denial attribution. |
+| `tool_use_id` | Stable tool-use identity for denial receipts. |
+| `provider_attempt_ref` | Provider-side bridge reference that remains subordinate to `attempt_id`. |
+| `usage_event_ref` | Usage-side reference for accounting and evidence joins. |
+
+Rules:
+- Analytics-thin tool events are no longer sufficient.
+- `attempt_id` is the canonical local runtime anchor; bridge refs stay subordinate but explicit.
+- permission and denial surfaces must still expose effective actor and account identity.
+- Denial payloads that originate in requested account, permission, or policy routing preserve `requested_account_id?`, `requested_account_binding?`, `actor_kind`, and `actor_ref?` so consumers can explain the rejected request without inventing local actor fields.
+- `package_id` is the canonical package identity field; `work_package_id` is accepted only as a compatibility alias and normalizes before persistence.
+Requirements-quality workflow state uses stable persisted event shapes anchored to the canonical Auditor cycle report plus legacy **validation pass report** compatibility artifact and launch handoff lineage.
+
+ContractRef: Plans/Project_Output_Artifacts.md#POA-045, Plans/chain-wizard-flexibility.md#12. Auditor Invariant Loop (Mandatory Invariant Sweep)
+
+**Authoritative shared payload fields**
+
+| Field | Requirement |
+| --- | --- |
+| `auditor_cycle_report` | Canonical artifact family for the active persisted quality result. |
+| `validation_pass_report` | Legacy compatibility artifact family that may mirror Auditor cycle data for import/export/search. |
+| `workflow_run_id` | Workflow execution lineage for the Auditor loop. |
+| `cycle_number` | Ordered Auditor loop cycle index. |
+| `pass_number` | Legacy compatibility alias for imported/exported pass-shaped rows only. |
+| `pass_name` | Legacy compatibility name for imported/exported pass-shaped rows only. |
+| `pass_verdict` | Legacy verdict value for compatibility rows; active Auditor cycle reports record certified, blocked, pass, fail, or repaired state as applicable. |
+| `verdict_reason` | Structured reason for the emitted verdict. |
+| `provider` | Provider used for the validation step. |
+| `model` | Model used for the validation step. |
+| `wizard_id` | Wizard identity that owns the requirements workflow. |
+| `project_id` | Owning project identity. |
+| `thread_id` | Conversation or workflow thread identity. |
+| `phase_plan_ref` | Phase-plan lineage reference for launch handoff. |
+| `staged_bundle_ref` | Staged-bundle lineage reference for launch handoff. |
+| `requirements_quality_report_ref` | Stable reference to the quality report artifact. |
+| `execution_role` | Effective runtime identity that survives from validation into launch handoff. |
+| `effective_account_id` | Effective account identity that survives from validation into launch handoff. |
+| `run_id` | Run identity when a launch handoff is already bound to runtime state. |
+
+Rules:
+- Pass reports must stay upstream artifacts rather than masquerading as runtime attempts.
+- `pass_verdict` must support `skipped` where the flow needs it.
+- Accepted/final pass output must bridge into launched execution.
+- effective runtime identity must survive from validation into launch handoff.
+This section owns the payload-extension fields that stay attached to persisted events and records rather than becoming route payload surrogates.
+
+ContractRef: Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Contracts_V0.md#7.3 `route_target`
+
+**inspection refs**
+
+| Field | Requirement |
+| --- | --- |
+| `detail_ref` | Stable detail reference for a tool/event detail payload. |
+| `report_ref` | Stable report reference for emitted reports. |
+| `evidence_ref` | Stable evidence reference for linked evidence artifacts. |
+| `usage_event_ref` | Stable usage reference for accounting joins. |
+| `workflow_refs` | Workflow-specific reference bundle when workflow lineage is present. |
+| `docker_refs` | Container/runtime reference bundle when Docker lineage is present. |
+| `kubernetes_refs` | Cluster/workload reference bundle when Kubernetes lineage is present. |
+
+**navigation transport**
+
+| Field | Requirement |
+| --- | --- |
+| `resume_url` | Transport-only serialized resume/open handoff; it does not replace canonical route identity. |
+
+Rules:
+- Inspection/provenance refs stay in event and record payloads.
+- Route/open contracts own navigation identity.
+- Existing `detail_ref` and `*_ref` conventions are expanded by new record families, not replaced by route payload fields.
+- `resume_url` remains transport-only.
+- `detail_ref`, `report_ref`, and `resume_url` are not interchangeable open-this-thing fields: `detail_ref` and `report_ref` identify inspection/report payloads, while `resume_url` serializes a canonical `route_target` transport.
+
+### 3.4 Tool-specific payload extensions
+
+This section owns tool-specific payload extensions for `/Runtime`, `/web`, `/tools/chat`, and `/section` consumers. Transfer lineage for this contract family preserves `### 1.1 Assistant worktree seglog events`, `#### Common web output fields`, `#### Question schema and tool contract`, obligations `obl-043`, `obl-044`, `obl-054`, `obl-055`, `obl-056`, `obl-066`, `obl-068`, `obl-009`, `obl-021`, and `obl-040`; `/retire` lineage is retained only as evidence when stale aliases are replaced.
+
+The `/WebAction/web-output/error` carry-through family keeps question responses, WebAction output, and web error payloads aligned here: `answers[]` is compatibility shorthand for `answers: Array<{question_id, values: string[]}>`, and `answer_text?`, `value?: string`, `description?: string`, `tool_use_id`, and `adapter_id` remain canonical payload fields.
+
+#### Common web output fields
+
+Common web payloads carry `source_refs[]`, `citation_refs[]`, `provenance_refs[]`, `requested_provider`, `effective_provider`, `adapter_id`, `provider_attempt_ref?`, `cache_state`, `rate_limit_state` (`/rate-limit`), and support metadata for `/batch`, anti-bot, and `/stability` behavior when the provider exposes those facts. They also carry `execution_path?: string` so routing/audit consumers can distinguish `provider_search_native`, `provider_extract_native`, `pm_search_plus_site_reader`, `pm_site_reader`, `provider_firecrawl_scrape`, `pm_fetch_fallback`, `provider_firecrawl_agent`, and `pm_research_composed` without inferring execution from display labels. Firecrawl and other provider-backed adapters may report `credits_used`, provider request IDs, and provider-cache outcomes, but those fields stay subordinate to the PM web output contract. Firecrawl-specific subordinate fields are exactly `firecrawl_credits_used`, `firecrawl_cache_state`, and `firecrawl_scrape_id`; `firecrawl_credits_used?: number` is populated from provider response `creditsUsed`, `firecrawl_cache_state?: "hit" | "miss"` is populated from provider response `metadata.cacheState`, and `firecrawl_scrape_id?: string` is populated from provider response `data.metadata.scrapeId`, while legacy `scrape_id` is a retired incorrect alias. These fields are payload extensions under this contract, not a separate Firecrawl-owned event family.
+
+`result_quality_hint` is an optional common web output field with exact values `search_snippets_only`, `extracted_pages`, `site_reader_pages`, and `research_synthesis`. It describes the evidence depth behind the returned result so consumers can distinguish snippet-only search results, provider-extracted page bodies, PM Site Reader page reads, and synthesized multi-source research.
+
+`operation_input` is the structured object containing normalized web request/input facts used for routing, audit, replay, and provenance joins; it is not a preview string and must not be flattened into display text. Legacy `web_input` normalizes to `operation_input` at ingress and remains compatibility/source-lineage only. Web result payloads also carry `provenance_badge?: string`, with the canonical underscore values `site_reader`, `search_snippet`, `site_extract`, `research_synthesis`, `crawl_result`, and `map_result`; `provider_scrape` is retained as a provider-specific proposed extension pending Part P provenance-badge harmonization and must be marked as such wherever a narrowed locked set is required. Narrowed TypeScript-style consumers may render the owner-owned subset as `provenance_badge?: 'site_reader' | 'provider_scrape'` only when they also preserve that proposed-extension caveat. Underscore values are required for code-friendliness and stable joins across contracts, storage, and web activity displays.
+
+Prompt-based web action payloads use `prompt: string` for natural-language browser/research instructions, keep the action path agent-friendly, and record provider cost dimensions such as credits per `/min` or `/clicks/extracts` when the provider reports them.
+
+#### Question schema and tool contract
+
+Question and `/questionnaire` payloads share one lifecycle contract. Allowed flow states are `draft`, `incomplete`, `ready_to_submit`, `submitted`, and `paused`. Runtime state triggers are `pending` to `active` when the question is presented, `active` to `answered` or `submitted` when the user submits a response, `active` to `dismissed` when the user dismisses it, and `active` to `expired` when a configured timeout is reached. The UI lifecycle maps `pending` to `draft`, `active` with missing required answers to `incomplete`, `active` with all required answers present to `ready_to_submit`, submitted multi-question completion to `submitted`, and dismissed-but-resumable branches to `paused`; `answered`, `submitted`, `dismissed`, and `expired` remain terminal or explicitly restorable question outcomes according to the owning surface.
+
+Question responses use `answers: Array<{question_id, values: string[], source?: "option" | "other" | "freeform"}>` for structured multi-answer submission, may include `answer_text?` for free-form display text, and use runtime status exactly `"answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"`. Question item/action payload fields include `question_id`, `draft_value?`, `default_values?`, `response_kind`, `validation_state`, `value?: string`, `description?: string`, `tool_use_id`, `adapter_id`, and `adapter_selection_reason`. `response_kind?: "selection" | "freeform" | "mixed"` and `validation_state?: "valid" | "invalid" | "pending"` are both optional. Selectable question options use `options?: Array<{id, label, description?}>` in multi-question and `/questionnaire` payloads; `options` format is locked as `Array<{id: string, label: string, description?: string}>` object-array wire format. `string[]` remains backwards-compatible only for legacy `single_question` inputs and is auto-expanded to `{id: str, label: str}` before persistence or rendering.
+
+Both `draft_value?` and `default_values?` belong in this contract: `draft_value?` is PM-managed in-progress freeform or draft answer text, while `default_values?` seeds caller-provided option IDs. Chat renders and collects these fields, but does not own the contract itself, the canonical field list, or the resolution semantics.
+
+Question input envelopes carry `mode: "single_question" | "questionnaire"` and output `status: "answered" | "submitted" | "dismissed" | "timed_out" | "unavailable"`. `allow_other` is a deprecated alias for canonical `allow_freeform`; plain-text compatibility wording may say allow_other is a deprecated alias, but consumers may accept it only as a compatibility input and must normalize it before persistence, validation, or rendering.
+
+The persisted `requirements.clarification_requested` event is the requirements-quality clarification request event. It carries the same `wizard_id`, `thread_id`, and `question_ids[]` set represented by the blocked requirements report, and legacy single-question tool shapes (`header?: string`, `text: string`, `options?: string[]`, and `answer: string`) normalize into the questionnaire payload and `answers[]` contract before persistence or resolution.
+
+Subagents MUST NOT invoke the `question` tool to address users directly; they escalate to the parent orchestrator per `assistant-chat-design.md §15.2`, and the parent decides whether to surface the question to the user.
+
+#### Web operation event payloads
+
+Web operations MUST use the existing `tool.invoked` and `tool.denied` event families. `tool.invoked` records successful or attempted-completed web operations; `tool.denied` records policy/user-denied web operations. The `web.operation` / `web.operation.*` vocabulary is reserved for payload classification only; creating a parallel `web.operation.*` seglog event family is an explicit prohibition unless a future analytics contract explicitly introduces one. Web-specific fields live under `payload.meta` so tool, denial, usage, and audit joins remain consistent.
+
+For `tool.invoked.payload.meta`, common web fields are `web_operation`, `tool_id`, `operation_input_ref?`, `operation_input_preview?`, `invocation_source`, `agent_reason?`, source IDs when present, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `result_quality_hint?`, `warnings_count?: number`, and `error_code?: string` when `success = false`. Result-shape hints by operation remain lightweight: `websearch` may include `query_preview` and `results_count`; `webfetch`/semantic `read` may include `url`, `final_url?`, `status?`, `formats_returned?`, `content_ref?`, `page_representation_ref?`, `browser_session_id?`, `cache_state?`, `read_receipt_refs?`, and `citation_refs?`; `webextract` may include `url`, `content_format?`, `content_length_hint?`, `content_ref?`, `extract_receipt_ref?`, and `citation_refs?`; `webresearch` and `deep_research` may include `task_preview`, `research_run_ref?`, `sources_used_count?`, `read_receipt_refs?`, `citation_refs?`, `subagent_refs?`, `closure_state?`, and `answer_summary_ref?`; `webcrawl` may include `root_url`, `pages_visited_count?`, `pages_returned_count?`, `max_pages?`, and `max_depth?`; `webmap` may include `root_url`, `nodes_count?`, `edges_count?`, `max_pages?`, and `max_depth?`.
+
+For fallback caused by provider rate-limit or outage, `provider_fallback_summary?` records the failed provider, cause (`rate-limit` or `outage`), and next same-operation provider attempted. Audit wording must match the chat activity fallback disclosure rather than hiding the route behind `effective_adapter_id`.
+
+Web result and denial payloads use the same lightweight `/meta` shape. `tool.denied.payload.meta` for web operations may carry `web_operation?`, `tool_id?`, `operation_input_ref?`, `operation_input_preview?`, `invocation_source?`, `agent_reason?`, source IDs when present, `requested_adapter_id?`, `projection_freshness?`, `projection_health?`, `denial_reason_code?`, `allowed_action_ids[]?`, and `headless_denied?`. Legacy web child payload aliases `web_input`, `web_input_preview`, and `blocked_reason_code` normalize to `operation_input`, `operation_input_preview`, and `denial_reason_code`; only top-level runtime blocked payloads may keep the shared `blocked_reason_code`. Operation-specific inline meta includes URL/status/cache/read receipt refs for `webfetch`/semantic `read`; task preview, sources count, citation refs, closure state, and answer summary refs for `webresearch` and `deep_research`; `root_url`, `pages_visited_count?`, `pages_returned_count?`, `max_pages?`, and `max_depth?` for `webcrawl`; and `root_url`, `nodes_count?`, `edges_count?`, `max_pages?`, and `max_depth?` for `webmap`.
+
+Inline event/meta fields are short previews, counts, enum-like routing/provenance values, and stable error codes. Full extracted page bodies, long research synthesis notes, large source sets, crawl page inventories, and map graph payloads must move by ref or `/blob` rather than being duplicated into every event projection.
+
+Batch web operations preserve one parent audit event for the batch and child audit events per URL. The parent event carries the batch-level tool use, routing metadata, adapter selection, and aggregate status; each child event carries URL-level status, provider attempt refs, cache fields, and error/provenance metadata.
+
+#### Runtime snapshot and tool/chat payloads
+
+Tool payloads consumed by storage, tools, and chat carry `runtime_snapshot`, `task_id`, `subagent_type`, `resumed`, `chat.plan_todo_updated`, `/turn`, `/todo`, and `/tokens` when those fields participate in runtime or chat projection. Subagent lifecycle payloads use the canonical `subagent.*` event family without a `chat.` prefix: legacy `chat.subagent_*`, `chat.subagent_`, and `chat.subagent_spawned` references are retired aliases and normalize to `subagent.*`. Producer-specific request/completion names such as `subagent.spawn_requested` and `subagent.spawn_completed` preserve the same PM lineage envelope as `subagent.spawned` and `subagent.completed` instead of creating a parallel chat namespace. The PM lineage envelope includes `run_id`, `thread_id`, `agent_id`, `parent_run_id?`, `child_run_id?`, `parent_thread_id?`, and requested/effective runtime descriptors when they differ. Runtime snapshot fields remain cross-cutting payload extensions rather than local tool-result decorations.
+
+`chat.plan_todo_updated` minimal payload schema is `{ plan_id: string, todo_id: string, field: string, old_value: any, new_value: any, source: "agent" | "user" }` for durable TODO mutations. Structural item creation, removal, or reordering may emit one event per affected `todo_id`, but every event must retain `plan_id`, changed `field`, `old_value`, `new_value`, and the mutation source.
+
+Verbose investigation and browser evidence payloads are reference-first by default: raw logs, full trace payloads, full DOM dumps, request `/response` bodies, cookies, `/storage` values, and binary blobs must not auto-inline into model context unless an owner contract grants a bounded preview or explicit attachment path.
+
+#### Owner hint resolution payload
+
+`owner_hint` starts as advisory tool output. Crew or delegation resolution records `owner_hint_advisory` and `owner_hint_resolved`, including the concrete `/model/persona` mapping when resolution selects a provider, model, Persona, or role binding. The advisory-to-effective lifecycle trigger is delegation resolution, not a user action.
+
+### 3.4A Web error taxonomy and applicability (web-error)
+
+This section defines the canonical contract for this surface.
+
+Core rules:
+- The per-contract web error applicability table remains required canon and must stay aligned with provider-to-PM error mapping.
+- Firecrawl-specific HTTP and provider errors must map to PM canonical error codes exactly as specified.
+
+Fields:
+- HTTP 401/403 → `adapter_unavailable`
+- HTTP 429 → `rate_limited`
+- HTTP 402 → `rate_limited`
+- HTTP 500/502/503 → `adapter_unavailable`
+- Timeout → `timeout`
+- HTTP 404 → `content_not_found`
+- HTTP 400 → `invalid_input`
+- "Blocked by robots.txt" → `crawl_robots_blocked` or `content_blocked`
+- "Content too large" → `content_too_large`
+
+Legacy web-operation error aliases normalize into this canonical taxonomy instead of creating a parallel code family: `web_timeout` -> `timeout`; `web_dns_failure`, `web_connection_refused`, `web_tls_error` (`/SSL` lineage), and `web_provider_error` -> `adapter_unavailable`; `web_http_4xx` -> `invalid_input`, `content_not_found`, or `content_blocked` according to the response; `web_http_5xx` -> `adapter_unavailable`; `web_content_too_large` -> `content_too_large`; `web_content_blocked` (`/robots` lineage) -> `crawl_robots_blocked` or `content_blocked`; `web_auth_required` -> `adapter_unavailable` or permission recovery; `web_rate_limited` -> `rate_limited`; `web_parse_failure` -> `extraction_empty`, `extraction_schema_mismatch`, `schema_invalid`, or `schema_too_large`; `empty_result` -> `extraction_empty`; `projection_too_stale` -> `projection_freshness: "stale"` plus refresh-first/retry handling rather than a web error code; and `crawl_limit_reached` -> `crawl_depth_exceeded` when a depth cap stops traversal, or a structured warning with `pages_returned_count` / `max_pages` / `depth_limit` when the configured crawl cap is reached without an error.
+
+Web-specific legacy codes are deduplicated into the one canonical table rather than a parallel web-specific family. `no_eligible_adapter` normalizes to `adapter_unavailable` when no configured provider can perform the requested operation.
+
+`content_not_found` covers HTTP 404 or equivalent not-found URL responses. When `change_tracking` is requested with no previous cached fetch, the result is INFORMATIONAL: return `change_status: "new"` and `no_previous_version` in `warnings[]`, not `error_code`.
+
+Rules:
+- adapter_unavailable
+- unsupported_operation
+- content_blocked
+- content_not_found
+- unsupported_source
+- extraction_schema_mismatch
+- schema_too_large
+- schema_invalid
+- extraction_empty
+- autonomous_budget_exceeded
+- autonomous_unavailable
+- crawl_depth_exceeded
+- crawl_timeout
+- crawl_rate_limited
+- map_timeout
+- map_no_sitemap
+- map_robots_blocked
+- sitemap_parse_error
+- no_previous_version
+### 3.5 Debug investigation events
+
+Debug investigations use persisted `EventRecord` envelopes with the following stable `event_type` values. Collectively these rows define the `debug.investigation.*` event family; Assistant Chat consumes that family for status and visibility but does not duplicate its payload ownership.
+
+| Event type | Minimum payload |
+|---|---|
+| `debug.investigation.started` | `investigation_id`, `project_id`, `thread_id?`, `run_id?`, `initiator_surface`, `target_kind`, bounded `target_locator_summary`, `requested_mode_overlay`, `effective_mode_overlay`, `runtime_mode` |
+| `debug.investigation.state_changed` | `schema_version`, `investigation_id`, `previous_phase?`, `phase`, `state`, `attention_required_reason_code?`, `stop_reason_code?`, `budget_kind?`, `blocked_reason_code?`, `verification_strength?` |
+| `debug.investigation.target_bound` | `investigation_id`, `target_kind`, `target_bindings`, `binding_state` |
+| `debug.investigation.context_item_added` | `investigation_id`, `item_id`, `item_kind`, `source_surface`, `state`, bounded `summary`, `artifact_ref?`, `redaction_state` |
+| `debug.investigation.context_item_state_changed` | `investigation_id`, `item_id`, `previous_state`, `state`, `reason_code?` |
+| `debug.investigation.instrumentation_state_changed` | `investigation_id`, `instrumentation_id`, `scope_kind`, `state`, `rollback_state`, `detail_ref?` |
+| `debug.investigation.verification_recorded` | `investigation_id`, `verification_strength`, bounded `verification_summary`, `artifact_refs?` |
+| `debug.investigation.exported` | `investigation_id`, `bundle_id`, `schema_id`, `item_count`, `artifact_count`, `redaction_profile` |
+| `debug.investigation.imported` | `investigation_id`, `bundle_id`, `source_kind`, `schema_id`, `imported_target_kind` |
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
+
+`attention_reason_code?` is a compatibility alias only. New debug-state payloads emit `attention_required_reason_code?` and include `stop_reason_code?` or `budget_kind?` when the state change affects stop, retry, resume, or user attention.
+
+<<< CONTEXT_AFTER 1463-1474 >>>
+
+Event rules:
+- raw secrets, raw log dumps, raw trace blobs, and raw binary artifact bytes MUST NOT be duplicated inside these payloads
+- raw material is referenced through artifact or blob refs owned by the appropriate artifact system
+- bounded summaries must preserve redaction and omission state so downstream readers can tell what was intentionally trimmed or withheld
+
+ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Prompt_Pipeline.md
+
+---
+
+<a id="AuthState"></a>
+### 4.1 AuthState

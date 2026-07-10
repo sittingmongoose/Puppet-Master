@@ -1,0 +1,426 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3721-3732 >>>
+L00003721	impl SubagentSelector {
+L00003722	    // DRY:FN:select_with_dependency_context — Select subagents with dependency context
+L00003723	    // DRY REQUIREMENT: MUST use subagent_registry::get_subagent_for_language() — NEVER hardcode language → subagent mappings
+L00003724	    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
+L00003725	    /// Select subagents with dependency context
+L00003726	    pub fn select_with_dependency_context(
+L00003727	        &self,
+L00003728	        tier_node: &TierNode,
+L00003729	        completed_dependencies: &[TierNode],
+L00003730	        execution_unit_context: &ExecutionUnitContext,
+L00003731	    ) -> Vec<String> {
+L00003732	        let mut subagents = self.select_for_tier(tier_node.tier_type, execution_unit_context);
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3733-4129 >>>
+L00003733	
+L00003734	        // DRY REQUIREMENT: language_to_subagent MUST use subagent_registry::get_subagent_for_language()
+L00003735	        ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md
+L00003736	        // Inherit language/domain from completed dependencies
+L00003737	        for dep in completed_dependencies {
+L00003738	            if let Some(dep_context) = self.get_tier_context(dep) {
+L00003739	                // Inherit language if not already set
+L00003740	                if execution_unit_context.primary_language.is_none() {
+L00003741	                    if let Some(lang) = &dep_context.primary_language {
+L00003742	                        // DRY: Use subagent_registry — DO NOT call self.language_to_subagent which may hardcode mappings
+L00003743	                        if let Some(subagent) = subagent_registry::get_subagent_for_language(lang) {
+L00003744	                            if !subagents.contains(&subagent) {
+L00003745	                                subagents.insert(0, subagent); // Prioritize inherited language
+L00003746	                            }
+L00003747	                        }
+L00003748	                    }
+L00003749	                }
+L00003750	
+L00003751	                // Inherit domain if not already set
+L00003752	                if execution_unit_context.domain == ProjectDomain::Unknown {
+L00003753	                    // Use domain from dependency
+L00003754	                }
+L00003755	            }
+L00003756	        }
+L00003757	
+L00003758	        subagents
+L00003759	    }
+L00003760	}
+L00003761	```
+L00003762	
+L00003763	### Agent Coordination and Communication
+L00003764	
+L00003765	When multiple agents/subagents run concurrently (parallel subtasks, different tiers, or same tier with multiple subagents), they need **coordination** to avoid conflicts, understand what others are working on, and not "freak out" when code changes around them.
+L00003766	
+L00003767	This owner section defines both the canonical live coordination projection and the canonical attributable crew message-board contract used when agents need questions, decisions, warnings, or requests to survive beyond transient status updates.
+L00003768	
+L00003769	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00003770	
+L00003771	#### Canonical active-agent coordination records and projections
+L00003772	
+L00003773	Canonical durable coordination truth is the `EventRecord` stream plus redb projections owned by `Plans/storage-plan.md` and registered in `Plans/Contracts_V0.md`. `AgentCoordinator` is an append/projection consumer, not a JSON file store.
+L00003774	
+L00003775	Canonical seglog record families:
+L00003776	- `coordination.agent_registered` records agent registration before execution.
+L00003777	- `coordination.agent_status_updated` records lifecycle/status changes such as queued, running, awaiting_parent, blocked, complete, failed, or cancelled.
+L00003778	- `coordination.agent_operation_updated` records the current operation summary, progress note, and operation refs.
+L00003779	- `coordination.agent_file_ownership_updated` records file activity claims for coordination warnings; it is not a FileSafe lock or durable exclusive lease.
+L00003780	- `coordination.agent_unregistered` records normal completion or explicit unregister.
+L00003781	- `coordination.agent_crashed` records crash/heartbeat expiry resolution.
+L00003782	- `coordination.agent_aborted` records parent/user/runtime abort resolution.
+L00003783	- `coordination.debug_mirror_exported` records optional mirror export attempts and outcomes.
+L00003784	
+L00003785	Canonical redb projections:
+L00003786	- `coordination_agent_projection.v1:{project_id}:{agent_id}` for the latest agent lifecycle, status, runtime/platform identity, worktree binding, operation ref, and last applied coordination sequence.
+L00003787	- `coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id}` for current file-activity claims and conflict-warning inputs.
+L00003788	- `coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id}` for operation progress, current operation text, and related source refs.
+L00003789	- `coordination_snapshot_projection.v1:{project_id}:{projection_scope}` for the prompt-injection/read-model snapshot consumed by schedulers and agents.
+L00003790	- `projector.checkpoint.coordination:{project_id}` for the projector checkpoint that proves which seglog range the read model has consumed.
+L00003791	
+L00003792	Concurrency and atomicity rules:
+L00003793	- Up to 32 active agents across multiple worktrees update coordination by calling the PM-owned coordination append API; they do not read-modify-write canonical state files.
+L00003794	- A coordination mutation is admitted only as one append/CAS boundary: the writer checks the current `agent_revision` or `last_applied_event_id`, appends one EventRecord with an idempotency key, and the projector advances the redb projection plus checkpoint in one redb transaction.
+L00003795	- Lost updates are prevented by CAS on `agent_revision`/`last_applied_event_id`. A stale update returns a coordination conflict diagnostic; the caller reloads the projection and emits a new event instead of overwriting the old projection.
+L00003796	- Canonical scheduling, conflict prevention, prompt injection, and execution decisions read only the redb projections whose checkpoint covers the required seglog sequence. They never read `active-agents.json`, `agent-messages.json`, verification JSON, or handoff JSON as authority.
+L00003797	- Mirror writers run after canonical projection commits. If a mirror write fails, lags, or is corrupt, PM emits diagnostics and regenerates the mirror from seglog/redb; canonical scheduling and execution continue from projections only.
+L00003798	
+L00003799	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord, SchemaID:pm.event.v0
+L00003800	
+L00003801	#### Compatibility and debug mirror contract
+L00003802	
+L00003803	`.puppet-master/state/active-agents.json`, `.puppet-master/state/agent-messages.json`, `.puppet-master/state/verification-{node_id}-end.json`, and `.puppet-master/state/handoff-validation-{node_id}.json` are compatibility/debug/export artifacts only. They are written by PM-owned projection or export code after redb commits, may lag canonical storage, and may be absent in headless or clean-room runs.
+L00003804	
+L00003805	Mirror contract:
+L00003806	- **Writer:** only PM projector/exporter code writes mirrors; child agents, provider adapters, and platform hooks do not write them directly.
+L00003807	- **Lag:** mirrors may lag until the next projector/export tick and must expose source sequence/checkpoint metadata when present.
+L00003808	- **Corruption:** invalid JSON, partial writes, missing files, stale sequence ids, or disk-full failures are mirror failures. PM quarantines or overwrites the mirror from canonical seglog/redb and emits `coordination.debug_mirror_exported` with failure metadata.
+L00003809	- **Authority:** mirrors cannot drive scheduling, conflict prevention, execution admission, unregister/crash cleanup, or prompt-injection decisions. Consumers that need authority must read `coordination_snapshot_projection.v1` or the more specific redb projections.
+L00003810	
+L00003811	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md
+L00003812	
+L00003813	#### Canonical crew message-board contract
+L00003814	
+L00003815	PM-managed multi-agent collaboration uses the child-run/event-store coordination record family for attributable cross-agent coordination that cannot be reduced to live status projection alone. `.puppet-master/state/agent-messages.json` may exist as an optional debug or interoperability mirror, but it is not the canonical persistence store.
+L00003816	
+L00003817	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00003818	
+L00003819	The message board complements the active-agent coordination projection:
+L00003820	- active-agent state answers who is active, what files are in flight, and which operations are currently running
+L00003821	- the message board answers who asked, warned, decided, or requested something, who it targeted, and whether that exchange was resolved
+L00003822	
+L00003823	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md
+L00003824	
+L00003825	Canonical message schema:
+L00003826	- `message_id` (UUID)
+L00003827	- `from_agent_id`
+L00003828	- `from_platform`
+L00003829	- `to_agent_id?` for direct routing
+L00003830	- `to_agent_type?` for role-wide routing
+L00003831	- `to_node_id?` for node-wide routing
+L00003832	- `to_lane_id?` for lane-wide routing
+L00003833	- `message_type` = `Question | Answer | Update | Request | Decision | Warning | Announcement`
+L00003834	- `priority` = `low | normal | high | urgent`
+L00003835	- `subject`
+L00003836	- `content`
+L00003837	- `context` (execution_unit_context: files mentioned, operations mentioned, sender node, related message ids)
+L00003838	- `thread_id?`
+L00003839	- `in_reply_to?`
+L00003840	- `created_at`
+L00003841	- `read_by[]`
+L00003842	- `resolved`
+L00003843	
+L00003844	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Architecture_Invariants.md
+L00003845	
+L00003846	Routing rules:
+L00003847	- direct routing uses `to_agent_id`
+L00003848	- role-wide routing uses `to_agent_type`
+L00003849	- node-wide routing uses `to_node_id`
+L00003850	- lane-wide routing uses `to_lane_id`
+L00003851	- broadcast routing leaves all target selectors empty
+L00003852	- the orchestrator MUST be able to inspect every message regardless of agent-local visibility filters
+L00003853	- agent-local views MUST be filtered to direct messages, type-matched messages, node-matched messages, lane-matched messages, broadcast messages, and file-relevant messages for the agent's active work
+L00003854	
+L00003855	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+L00003856	
+L00003857	Priority and rate limits:
+L00003858	- `normal` is the default priority
+L00003859	- `high` and `urgent` are reserved for blockers, conflict warnings, or manager-requested escalations
+L00003860	- each agent is capped at **10 messages per minute** across all routing modes
+L00003861	- when an agent hits the cap, PM MUST emit a structured throttling diagnostic and require the sender to coalesce or defer additional messages rather than silently dropping them
+L00003862	
+L00003863	ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Architecture_Invariants.md
+L00003864	
+L00003865	Threading and lifecycle:
+L00003866	- `thread_id` groups related coordination exchanges
+L00003867	- `in_reply_to` links replies to the causal parent message
+L00003868	- messages move through created, read, replied, resolved, and expired/archive states
+L00003869	- unresolved blocker threads and unresolved coordination requests MUST remain visible until resolved or explicitly superseded, even when ordinary retention archives stale messages after 24 hours
+L00003870	
+L00003871	If orchestration surfaces document annotations in coordination messages, it must keep the document annotation lifecycle distinct from the crew message lifecycle. Document annotations retain the owner lifecycle `open -> addressed -> resolved` from the Crosswalk and assistant-chat contracts; coordination messages retain the created/read/replied/resolved/expired/archive states above.
+L00003872	
+L00003873	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
+L00003874	
+L00003875	**Benefits of coordination:**
+L00003876	
+L00003877	- **Conflict prevention:** Agents know what files/modules others are modifying, avoiding simultaneous edits
+L00003878	- **Context awareness:** Agents understand what other agents are working on, reducing confusion when seeing changes
+L00003879	- **Efficient collaboration:** Agents can build on each other's work, reference shared decisions, and avoid duplicate effort
+L00003880	- **Reduced errors:** Agents don't overwrite each other's changes or create conflicting implementations
+L00003881	- **Cross-platform coordination:** Agents from different platforms (Codex, Claude, Cursor, Gemini, Copilot) coordinate through the shared seglog/redb coordination projection; optional state files are debug/export mirrors only.
+L00003882	
+L00003883	**Coordination mechanisms:**
+L00003884	
+L00003885	1. **Source-lineage shared files (existing):** `progress.txt`, `AGENTS.md`, and `prd.json` may remain source-lineage or project-context inputs where a run explicitly imports them, but they do not provide canonical live coordination truth.
+L00003886	
+L00003887	2. **Real-time coordination state (new, cross-platform):** Add a canonical coordination projection, optionally mirrored to `.puppet-master/state/active-agents.json` for debugging, that tracks:
+L00003888	   - Which agents/subagents are currently active (including platform: "codex", "claude", "cursor", "gemini", "copilot")
+L00003889	   - What files/modules each agent is working on
+L00003890	   - What operations each agent is performing (e.g., "editing src/api.rs", "running tests")
+L00003891	   - Platform identifier (so agents know which platform other agents are using)
+L00003892	   - Timestamp of last update
+L00003893	
+L00003894	   **This projected coordination works across ALL platforms** -- a Codex agent can see what a Claude agent is doing, and vice versa. All platforms consume the same canonical coordination state even if a debug JSON mirror exists.
+L00003895	
+L00003896	3. **Attributable crew message board (canonical records):** Persist durable questions, answers, decisions, warnings, requests, and announcements through the child-run/event-store coordination record family; `.puppet-master/state/agent-messages.json` is an optional debug or interoperability mirror for those records.
+L00003897	
+L00003898	4. **Provider-bridge coordination (current):**
+L00003899	
+L00003900	   - No same-platform shared thread/session coordination path is active.
+L00003901	   - Codex and Copilot follow the same projected coordination contract as Cursor/Claude/Gemini.
+L00003902	   - Cross-platform and same-platform coordination both use canonical coordination state + prompt injection.
+L00003903	
+L00003904	5. **Cross-worktree awareness:** Even when agents run in separate worktrees, they can:
+L00003905	   - Read source-lineage/project-context inputs when a run imports them.
+L00003906	   - Read the projected active-agent state to see what others are doing (regardless of platform).
+L00003907	   - Append registration/status/operation/file-activity events before and during work.
+L00003908	   - Update coordination by appending events that the redb projector folds into the read model.
+L00003909	
+L00003910	6. **Prompt injection:** Inject coordination context into each agent's prompt:
+L00003911	   ```
+L00003912	   **Active Agents:**
+L00003913	   - rust-engineer (Codex) is editing src/api.rs (started 2 minutes ago)
+L00003914	   - test-automator (Claude Code) is running tests in tests/api_test.rs (started 1 minute ago)
+L00003915	
+L00003916	   **Files Being Modified:**
+L00003917	   - src/api.rs (by rust-engineer on Codex)
+L00003918	   - tests/api_test.rs (by test-automator on Claude Code)
+L00003919	
+L00003920	   **Your Task:** Implement authentication middleware. Avoid editing src/api.rs until rust-engineer finishes.
+L00003921	   ```
+L00003922	
+L00003923	**Cross-platform coordination example:**
+L00003924	
+L00003925	When a Codex agent and a Claude Code agent work simultaneously:
+L00003926	
+L00003927	```
+L00003928	1. Codex agent (rust-engineer) starts Subtask A:
+L00003929	   - Appends `coordination.agent_registered`:
+L00003930	     {
+L00003931	       "agent_id": "rust-engineer-1.1.1",
+L00003932	       "platform": "codex",
+L00003933	       "node_id": "1.1.1",
+L00003934	       "current_operation": "Starting API implementation",
+L00003935	       "files_being_edited": []
+L00003936	     }
+L00003937	
+L00003938	2. Claude Code agent (test-automator) starts Subtask B (parallel):
+L00003939	   - Reads `coordination_snapshot_projection.v1` before starting
+L00003940	   - Sees: "rust-engineer (Codex) is working on Subtask A"
+L00003941	   - Appends `coordination.agent_registered` for itself:
+L00003942	     {
+L00003943	       "agent_id": "test-automator-1.1.2",
+L00003944	       "platform": "claude",
+L00003945	       "node_id": "1.1.2",
+L00003946	       "current_operation": "Starting test implementation",
+L00003947	       "files_being_edited": []
+L00003948	     }
+L00003949	
+L00003950	3. Codex agent begins editing src/api.rs:
+L00003951	   - Appends `coordination.agent_file_ownership_updated` and `coordination.agent_operation_updated`:
+L00003952	     {
+L00003953	       "agent_id": "rust-engineer-1.1.1",
+L00003954	       "platform": "codex",
+L00003955	       "files_being_edited": ["src/api.rs"],
+L00003956	       "current_operation": "Editing src/api.rs to add POST /users endpoint"
+L00003957	     }
+L00003958	
+L00003959	4. Claude Code agent reads `coordination_snapshot_projection.v1` (periodic check):
+L00003960	   - Sees: "rust-engineer (Codex) is editing src/api.rs"
+L00003961	   - Prompt includes: "**Active Agents:** rust-engineer (Codex) is editing src/api.rs. **Your Task:** Add tests for POST /users endpoint. Wait for rust-engineer to finish src/api.rs before adding tests."
+L00003962	   - Agent understands context and avoids editing src/api.rs
+L00003963	
+L00003964	5. Codex agent completes:
+L00003965	   - Appends `coordination.agent_unregistered`
+L00003966	   - Claude Code agent can now safely edit src/api.rs for tests
+L00003967	```
+L00003968	
+L00003969	**Platform field in coordination state:**
+L00003970	
+L00003971	The coordination projection includes a `platform` field so agents know which platform other agents are using:
+L00003972	
+L00003973	```json
+L00003974	{
+L00003975	  "active_agents": {
+L00003976	    "rust-engineer-1.1.1": {
+L00003977	      "agent_id": "rust-engineer-1.1.1",
+L00003978	      "platform": "codex",
+L00003979	      "node_id": "1.1.1",
+L00003980	      "worktree_path": ".puppet-master/worktrees/1.1.1",
+L00003981	      "files_being_edited": ["src/api.rs"],
+L00003982	      "current_operation": "Editing src/api.rs",
+L00003983	      "started_at": "2026-02-18T10:00:00Z",
+L00003984	      "last_update": "2026-02-18T10:02:00Z"
+L00003985	    },
+L00003986	    "test-automator-1.1.2": {
+L00003987	      "agent_id": "test-automator-1.1.2",
+L00003988	      "platform": "claude",
+L00003989	      "node_id": "1.1.2",
+L00003990	      "worktree_path": ".puppet-master/worktrees/1.1.2",
+L00003991	      "files_being_edited": ["tests/api_test.rs"],
+L00003992	      "current_operation": "Writing tests for API endpoint",
+L00003993	      "started_at": "2026-02-18T10:01:00Z",
+L00003994	      "last_update": "2026-02-18T10:03:00Z"
+L00003995	    }
+L00003996	  },
+L00003997	  "last_updated": "2026-02-18T10:03:00Z"
+L00003998	}
+L00003999	```
+L00004000	
+L00004001	This allows agents to see not just what others are doing, but also which platform they're using, which can be useful context (e.g., "Codex agent is working on this, Claude agent is working on that").
+L00004002	
+L00004003	**Canonical implementation shape:**
+L00004004	
+L00004005	```rust
+L00004006	// src/core/agent_coordination.rs (new module)
+L00004007	
+L00004008	pub struct AgentCoordinator {
+L00004009	    store: CoordinationStore,
+L00004010	}
+L00004011	
+L00004012	impl AgentCoordinator {
+L00004013	    pub async fn register_agent(&self, input: RegisterAgent) -> Result<AppendReceipt> {
+L00004014	        self.store.append_coordination_event("coordination.agent_registered", input).await
+L00004015	    }
+L00004016	
+L00004017	    pub async fn update_status(&self, input: AgentStatusUpdate) -> Result<AppendReceipt> {
+L00004018	        self.store.append_coordination_event("coordination.agent_status_updated", input).await
+L00004019	    }
+L00004020	
+L00004021	    pub async fn update_operation(&self, input: AgentOperationUpdate) -> Result<AppendReceipt> {
+L00004022	        self.store.append_coordination_event("coordination.agent_operation_updated", input).await
+L00004023	    }
+L00004024	
+L00004025	    pub async fn update_file_ownership(&self, input: AgentFileOwnershipUpdate) -> Result<AppendReceipt> {
+L00004026	        self.store.append_coordination_event("coordination.agent_file_ownership_updated", input).await
+L00004027	    }
+L00004028	
+L00004029	    pub async fn unregister_agent(&self, input: AgentTerminalUpdate) -> Result<AppendReceipt> {
+L00004030	        self.store.append_coordination_event("coordination.agent_unregistered", input).await
+L00004031	    }
+L00004032	
+L00004033	    pub async fn get_coordination_context(&self, scope: CoordinationScope) -> Result<CoordinationSnapshot> {
+L00004034	        self.store.read_coordination_snapshot(scope).await
+L00004035	    }
+L00004036	}
+L00004037	```
+L00004038	
+L00004039	The legacy `state_file: .puppet-master/state/active-agents.json` sketch is source-lineage only. Implementations must not use it as the canonical mutation path.
+L00004040	
+L00004041	**Integration with orchestrator:**
+L00004042	
+L00004043	In `src/core/orchestrator.rs`, before executing a node:
+L00004044	
+L00004045	```rust
+L00004046	// Before node execution
+L00004047	let coordinator = AgentCoordinator::new(self.coordination_store.clone());
+L00004048	
+L00004049	// Register this agent/subagent as active (includes platform for cross-platform coordination)
+L00004050	coordinator.register_agent(RegisterAgent {
+L00004051	    agent_id: format!("{}-{}", subagent_name, node_id),
+L00004052	    agent_type: subagent_name.to_string(),
+L00004053	    platform: node_config.platform, // Include platform so other agents know which platform this agent uses
+L00004054	    node_id: node_id.to_string(),
+L00004055	    lane_id: None,
+L00004056	    run_id: run_id.to_string(),
+L00004057	    worktree_path: self.get_node_worktree(node_id),
+L00004058	    files_being_edited: Vec::new(), // Will update as agent works
+L00004059	    current_operation: format!("Starting node {}", node_id),
+L00004060	    started_at: Utc::now(),
+L00004061	    last_update: Utc::now(),
+L00004062	    expected_agent_revision: None,
+L00004063	    idempotency_key: coordination_idempotency_key,
+L00004064	}).await?;
+L00004065	
+L00004066	// Get coordination context and inject into prompt
+L00004067	let coordination_context = coordinator.get_coordination_context().await?;
+L00004068	let enhanced_prompt = if !coordination_context.is_empty() {
+L00004069	    format!"{}\n\n{}", prompt, coordination_context)
+L00004070	} else {
+L00004071	    prompt
+L00004072	};
+L00004073	
+L00004074	// During execution, update status periodically (e.g., when agent edits files)
+L00004075	// This requires parsing agent output or using platform-specific hooks
+L00004076	// For now, update on node completion
+L00004077	
+L00004078	// After node execution
+L00004079	coordinator.unregister_agent(&format!("{}-{}", subagent_name, node_id)).await?;
+L00004080	```
+L00004081	
+L00004082	**Provider coordination model (Codex/Copilot included):**
+L00004083	
+L00004084	- **Canonical mode:** Coordination projection for all platforms, optionally mirrored to `active-agents.json` for debugging.
+L00004085	- **Scope:** Works for same-platform and cross-platform crews using the same coordination event/projection schema.
+L00004086	- **Runtime path:** Direct-provider invocation via direct provider calls (no local CLI bridge); no SDK threads/sessions.
+L00004087	- **Prompt contract:** Every subagent receives coordination context built from the canonical coordination snapshot projection.
+L00004088	
+L00004089	**When to use coordination modes:**
+L00004090	
+L00004091	- **Seglog/redb coordination (canonical):** Always on for orchestrator-managed runs. All platforms (Codex, Claude, Cursor, Gemini, Copilot) append coordination events and read the same redb coordination projections.
+L00004092	- **Debug/export mirrors (optional):** `active-agents.json` and related `.puppet-master/state/*.json` files may be emitted after projection commits for debugging or interoperability, but they are not read by schedulers or agents as authority.
+L00004093	- **Platform-native hooks (optional enrichments):** Use hook events where available to improve update fidelity, but keep hooks as producers of normalized coordination events rather than a replacement for canonical seglog/redb state.
+L00004094	
+L00004095	**Benefits:**
+L00004096	
+L00004097	- **Reduced conflicts:** Agents know what files others are editing, avoiding simultaneous modifications. Coordination context warns agents: "rust-engineer is editing src/api.rs -- avoid this file."
+L00004098	- **Better context:** Agents understand what others are working on, reducing confusion when seeing changes. Agent sees: "test-automator is running tests -- these test failures are expected."
+L00004099	- **Efficient collaboration:** Agents can reference shared decisions and avoid duplicate work. Agent sees: "architect-reviewer established pattern X -- use this pattern."
+L00004100	- **No "freaking out":** Agents see coordination context explaining why code is changing, who is changing it, and what they're doing. Reduces false alarms and confusion.
+L00004101	- **Platform-neutral:** one coordination contract across providers keeps behavior deterministic and replayable.
+L00004102	
+L00004103	**Coordination event updates:**
+L00004104	
+L00004105	- **Before execution:** Agent appends `coordination.agent_registered` with initial operation description.
+L00004106	- **During execution:** Agent appends status, operation, and file-activity events periodically (e.g., every 30 seconds or when file operations occur):
+L00004107	  - Files being edited (extracted from agent output or platform hooks)
+L00004108	  - Current operation (e.g., "editing src/api.rs", "running cargo test")
+L00004109	  - Progress updates
+L00004110	- **After execution:** Agent appends `coordination.agent_unregistered`, `coordination.agent_crashed`, or `coordination.agent_aborted`.
+L00004111	
+L00004112	**Extracting file operations from agent output:**
+L00004113	
+L00004114	- **Parse agent output:** Use output parser to detect file paths mentioned in agent responses (e.g., "I'm editing src/api.rs" or file paths in diffs).
+L00004115	- **Platform hooks:** For platforms with native hooks (Cursor, Claude, Gemini), use `PreToolUse`/`PostToolUse` hooks to detect file operations in real-time.
+L00004116	- **Provider event adapters:** For Codex/Copilot, use normalized CLI stream/tool events to detect file operations in real time.
+L00004117	
+L00004118	**Example coordination flow (cross-platform):**
+L00004119	
+L00004120	```
+L00004121	1. Agent A (rust-engineer, Codex) starts Subtask A: registers in the coordination projection
+L00004122	   - agent_id: "rust-engineer-1.1.1"
+L00004123	   - platform: "codex"
+L00004124	   - current_operation: "Starting implementation of API endpoint"
+L00004125	   - files_being_edited: []
+L00004126	
+L00004127	2. Agent A begins editing: appends coordination events
+L00004128	   - files_being_edited: ["src/api.rs"]
+L00004129	   - current_operation: "Editing src/api.rs to add POST /users endpoint"
+
+<<< CONTEXT_AFTER canonical_document_lines=4130-4141 >>>
+L00004130	
+L00004131	3. Agent B (test-automator, Claude Code) starts Subtask B (parallel): reads `coordination_snapshot_projection.v1`
+L00004132	   - Sees: "rust-engineer (Codex) is editing src/api.rs"
+L00004133	   - Prompt includes: "**Active Agents:** rust-engineer (Codex) is editing src/api.rs (started 1 minute ago). **Your Task:** Add tests for POST /users endpoint. Wait for rust-engineer to finish src/api.rs before adding tests."
+L00004134	
+L00004135	4. Agent B (Claude Code) waits or works on other files, then proceeds when Agent A (Codex) finishes
+L00004136	   - Cross-platform coordination: Claude agent sees Codex agent's status via the shared coordination projection
+L00004137	
+L00004138	5. Agent A (Codex) completes: appends `coordination.agent_unregistered`
+L00004139	   - Agent B (Claude Code) can now safely edit src/api.rs for tests
+L00004140	```
+L00004141	

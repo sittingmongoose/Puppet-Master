@@ -1,0 +1,22 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "luna-independent-retry-pre-dispatch-v1",
+  "status": "pass",
+  "wave_id": "blind-wave-0003-c-retry",
+  "epoch_id": "epoch-0010",
+  "controller_lane_thread_id": "019f4d26-0582-7f71-8aa9-57bcfc354488",
+  "controller_lane_turn_id": "019f4e03-a5da-73f3-a8d9-3d219fda69bd",
+  "fresh_child_thread_id": "019f4e03-cdbb-7001-8db0-b9649984693c",
+  "fresh_child_required": true,
+  "read_only": true,
+  "assignment_count": 8,
+  "attempt_id": "attempt-0010",
+  "authority_coverage_floor": 22,
+  "assignment_outputs_empty": true,
+  "absolute_audit_root_refs_confirmed": true,
+  "prior_misdirected_receipts_preserved": 4,
+  "repo_root_misdirected_receipts_present": 0,
+  "canonical_plan_or_product_writes_detected": false,
+  "error_count": 0,
+  "errors": []
+}

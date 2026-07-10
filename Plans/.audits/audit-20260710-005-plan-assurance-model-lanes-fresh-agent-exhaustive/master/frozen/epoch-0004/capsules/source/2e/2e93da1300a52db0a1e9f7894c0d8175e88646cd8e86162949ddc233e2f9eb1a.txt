@@ -1,0 +1,409 @@
+<<< CONTEXT_BEFORE 9423-9434 >>>
+- 'blocked cards'
+- 'run receipts'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- 'Mutation authority, safe-point restore rules, compare target calculation, and persisted SCM evidence remain owned by Plans/WorktreeGitImprovement.md, Plans/storage-plan.md, and Plans/Contracts_V0.md.'
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 9435-9814 >>>
+### OSI-055 - Compatibility Retirement Targets
+
+```yaml
+plan_unit_id: OSI-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  TierContext, tier_id, TierType, Tiers, Phase-Task-Subtask runtime canon, allowed_actions[], reason_code, recovery_options[], and approve_continue are retirement targets; this subsection is retirement-only and leaves sibling runtime-context and worktree-allocation rules canonical.
+gui_related: false
+gui_classification_reason: This unit covers terminology retirement, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples, command lines, and test paths are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: compatibility_retirement_targets
+node_compile_hint:
+  mode: compatibility_retirement_targets
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0027
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:7
+- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:10
+preserved_exact_tokens:
+- 'TierContext'
+- 'tier_id'
+- 'TierType'
+- 'Tiers'
+- 'Phase-Task-Subtask'
+- 'allowed_actions[]'
+- 'reason_code'
+- 'recovery_options[]'
+- 'approve_continue'
+negative_constraints:
+- 'This subsection is retirement-only; canonical runtime-context rules and worktree-allocation rules remain in sibling subsections.'
+compatibility_only_notes:
+- 'Compatibility retirement is preserved as source disposition.'
+stale_retired_dispositions:
+- TierContext/tier_id/TierType/Tiers/Phase-Task-Subtask runtime canon are retired.
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-056 - Child Timeout Outcome Taxonomy
+
+```yaml
+plan_unit_id: OSI-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Child timeout, budget, and /time supervision reuse the corrected Plans/Run_Modes.md kill/done /outcome taxonomy: pre-dispatch budget denial is kill.budget_exceeded, post-response overrun after durable usage recording is done.budget_exceeded, and child effective authority must not invent a local stop-state dialect.
+gui_related: false
+gui_classification_reason: This unit covers runtime outcome taxonomy, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples, command lines, and test paths are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: child_timeout_outcome_taxonomy
+node_compile_hint:
+  mode: child_timeout_outcome_taxonomy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0028
+preserved_exact_tokens:
+- '/time'
+- '/outcome'
+- 'stop.*'
+- 'kill.*'
+- 'kill.budget_exceeded'
+- 'done.budget_exceeded'
+- 'child effective authority'
+negative_constraints:
+- 'Child effective authority must surface the resulting outcome without inventing a local stop-state dialect.'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- 'The pre-fix mixed stop.* / kill.* vocabulary is retired for child supervision.'
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractName:Plans/Run_Modes.md'
+```
+
+### OSI-057 - Child Timeout Envelope And Shell Isolation
+
+```yaml
+plan_unit_id: OSI-057
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The child timeout envelope carries timeout_ms, request identity, /response identity, parent remaining-budget snapshot, and the clamped child deadline; /propagation records child timeout clamping, and shell-isolation is contract-level behavior owned by each child execution boundary.
+gui_related: false
+gui_classification_reason: This unit covers runtime timeout envelope and shell isolation, not GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-056
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples, command lines, and test paths are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: child_timeout_envelope_shell_isolation
+node_compile_hint:
+  mode: child_timeout_envelope_shell_isolation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0028
+preserved_exact_tokens:
+- 'timeout_ms'
+- '/response'
+- 'parent remaining-budget snapshot'
+- 'clamped child deadline'
+- '/propagation'
+- 'shell-isolation'
+- 'shell scope lifecycle'
+- 'teardown'
+- 'leak prevention'
+negative_constraints:
+- 'shell-isolation is contract-level behavior, not governance-level guidance.'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-058 - Subagent Adaptation Benefit Intent
+
+```yaml
+plan_unit_id: OSI-058
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The subagent integration benefit intent is dynamic adaptation, language awareness, domain expertise, error handling, specialization, and inheritance across tier hierarchy, including source examples for Rust, Swift, backend/frontend domains, and debugger invocation on errors.
+gui_related: false
+gui_classification_reason: This unit covers product intent and selection benefits, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples, command lines, and test paths are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: subagent_adaptation_benefit_intent
+node_compile_hint:
+  mode: subagent_adaptation_benefit_intent
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0029
+preserved_exact_tokens:
+- 'Dynamic Adaptation'
+- 'Language Awareness'
+- 'Domain Expertise'
+- 'Error Handling'
+- 'Specialization'
+- 'Inheritance'
+- 'Rust'
+- 'Swift'
+- 'backend/frontend'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-059 - Phase 1 Project Context Detection Backlog
+
+```yaml
+plan_unit_id: OSI-059
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The implementation-phase source backlog preserves Phase 1 Project Context Detection work: ProjectContext detection, language detection from codebase files, framework detection, and domain inference from task descriptions.
+gui_related: false
+gui_classification_reason: This unit covers backlog/source planning tokens, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples, command lines, and test paths are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: phase1_project_context_detection_backlog
+node_compile_hint:
+  mode: phase1_project_context_detection_backlog
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0030
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0031
+preserved_exact_tokens:
+- 'Implementation Phases'
+- 'ProjectContext'
+- 'Language detection from codebase files'
+- 'Framework detection'
+- 'Domain inference from task descriptions'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-060 - Phase 2 Subagent Selector Backlog
+
+```yaml
+plan_unit_id: OSI-060
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The implementation-phase source backlog preserves Phase 2 Subagent Selector work: SubagentSelector, tier-level selection logic, language-to-subagent mapping, framework-to-subagent mapping, and domain-to-subagent mapping.
+gui_related: false
+gui_classification_reason: This unit covers backlog/source planning tokens, not GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-043
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples, command lines, and test paths are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: phase2_subagent_selector_backlog
+node_compile_hint:
+  mode: phase2_subagent_selector_backlog
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0030
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0032
+preserved_exact_tokens:
+- 'SubagentSelector'
+- 'tier-level selection logic'
+- 'Language-to-subagent mapping'
+- 'Framework-to-subagent mapping'
+- 'Domain-to-subagent mapping'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-061 - Phase 3 Orchestrator Integration Backlog
+
+```yaml
+plan_unit_id: OSI-061
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The implementation-phase source backlog preserves Phase 3 Orchestrator Integration work: adding subagent selection to orchestrator, building tier context from tier nodes, invoking subagents via platform runners, and handling subagent responses.
+gui_related: false
+gui_classification_reason: This unit covers backlog/source planning tokens, not GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-041
+- OSI-046
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples, command lines, and test paths are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: phase3_orchestrator_integration_backlog
+node_compile_hint:
+  mode: phase3_orchestrator_integration_backlog
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0030
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0033
+preserved_exact_tokens:
+- 'Add subagent selection to orchestrator'
+- 'Build tier context from tier nodes'
+- 'Invoke subagents via platform runners'
+- 'Handle subagent responses'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 9815-9826 >>>
+### OSI-062 - Phase 4 Error Pattern Detection Backlog
+
+```yaml
+plan_unit_id: OSI-062
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The implementation-phase source backlog preserves Phase 4 Error Pattern Detection work: detecting error patterns from iteration outputs, automatically invoking debugger/security-auditor/etc., and pattern-based subagent selection.
+gui_related: false
+gui_classification_reason: This unit covers backlog/source planning tokens, not GUI behavior.
+split_recommended: false

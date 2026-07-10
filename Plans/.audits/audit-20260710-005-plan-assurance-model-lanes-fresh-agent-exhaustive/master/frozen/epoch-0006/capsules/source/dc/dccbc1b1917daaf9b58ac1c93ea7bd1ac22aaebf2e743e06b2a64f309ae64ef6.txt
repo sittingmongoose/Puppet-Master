@@ -1,0 +1,373 @@
+<<< CONTEXT_BEFORE canonical_document_lines=25368-25379 >>>
+L00025368	owner_hints:
+L00025369	  - Plans/FinalGUISpec.md
+L00025370	  - Plans/Orchestrator_Page.md
+L00025371	```
+L00025372	
+L00025373	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Models_System.md, ContractName:Plans/Automated_Testing_System.md
+L00025374	
+L00025375	
+L00025376	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00025377	
+L00025378	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00025379	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=25380-25723 >>>
+L00025380	### F3-398 - PRD Builder And Planning Wizard GUI Surfaces
+L00025381	
+L00025382	```yaml
+L00025383	plan_unit_id: F3-398
+L00025384	unit_type: requirement
+L00025385	status: accepted
+L00025386	owner_doc: Plans/FinalGUISpec.md
+L00025387	canonical_text: 'The finished-product feature formerly called Requirements Doc Builder is named PRD Builder everywhere in user-facing UI and canonical product documentation. The canonical product name is Planning Wizard; Chain Wizard and Plan Wizard are stale names that must be retired from active product prose, UI, commands, events, and contracts. A user with no source documents can start in PRD Builder chat; the agent asks discovery questions, updates the PRD ledger every turn, and continuously renders the PRD projection. A user can upload existing requirements material and have PRD Builder preserve, parse, extract, reconcile, and normalize it into the standard PRD and PRD Pack. Uploads and conversation may be combined at any time in one PRD Builder workspace so users can clarify, correct, extend, override, and source newly introduced requirements without restarting. Ask questions in digestible batches, use existing ledger
+L00025388	  answers before asking, avoid repetition, and prefer questions whose answers materially change the PRD. The primary PRD contains Summary, Problem or Opportunity, Goals, Users or Actors, Scope, Non-Goals, Functional Requirements, Non-Functional Requirements, UX Expectations, Data or Integration or Environment Constraints, Acceptance Criteria, Assumptions, Risks and Dependencies, Open Questions, and Source Notes. The default workspace emphasizes one primary PRD while exposing supporting assumptions and constraints, open questions, source traceability, and quality/readiness views without making users manage many equal documents. The PRD Builder final action is labeled Approve PRD for Planning Wizard and creates the immutable handoff snapshot; the Planning Wizard consumes a specific approved version rather than mutable editor state. Highlight, comment, ask, request change, replace, remove, move to non-goal, mark unclear, show source, and challenge
+L00025389	  source actions create durable context or annotation records bound to document version and text anchors. When revisions invalidate a highlighted span, mark the anchor stale, attempt evidence-backed remapping, preserve the original selected text, and ask the user only when safe remapping is impossible. PRD Builder exposes Ready, Ready with Warnings, and Blocked based on source extraction, required sections, blocking conflicts, annotations, quality findings, and approval-snapshot ability; accepted warnings carry into Planning Wizard. Planning Wizard derives an initial topic graph from the input pack, project/repository context, work intent, risk, and known defaults rather than enforcing a fixed list of sections. The controller can add, split, merge, rename, defer, reopen, reorder, and mark topics impacted, recording the reason, source refs, dependencies, user-visible origin, and resulting invalidations. The GUI suggests a next topic and
+L00025390	  conversational sequence while the underlying topic map preserves dependencies and allows safe navigation, reopening, and parallel background work. A later decision that changes a prior topic''s assumptions or outputs marks affected topic drafts stale_due_to_dependency_change, stale_due_to_new_scope, or requires_recompile/requires_reaudit and propagates impact through typed topic dependencies. A topic becomes Ready after successful conversion and audit; users may review or reopen any topic, but ordinary flow does not require a user confirmation after every topic. Final planning review uses the shared live document preview, selection context menu, comments, source inspection, challenge, targeted revision, and annotation status system used by PRD Builder. Planning intake can attach an existing local directory, Git repository, optional GitHub repository, or remote SSH host and project root, recording host, path, repository identity, currentness,
+L00025391	  and permissions. Testing capability policy is configurable globally and per project, with project settings inheriting or overriding global values and the effective policy snapshot carried into Planning Wizard, Plan Compile, Executor, and Orchestrator. Each testing capability family supports Auto, On, and Off: Auto discovers and selects or installs within authority; On is required and blocks or asks for authority when unavailable; Off prohibits use and installation for that capability without implying a pass. Settings cover online capability research, automated installation, built-in browser, headed browser, visible browser automation, hot reload, live preview, desktop GUI testing, simulator or emulator, physical device, screenshot or visual comparison, accessibility, API or contract, database, console or network, performance, and security testing. The default testing visibility policy is show_when_possible: when a meaningful headed or visual
+L00025392	  surface exists, expose the active test session rather than hiding all verification in background logs. For web work, open the built-in browser or headed browser view and visibly show navigation, clicks, form input, assertions, screenshots, console and network evidence, and pass/fail progression when supported. For Swift and other native work, show the appropriate live preview, hot-reload surface, simulator, emulator, device stream, application window, interaction trace, screenshots, and relevant logs when available and permitted. The Planning Wizard final approval button and command label is exactly Approve And Build. After Approve And Build succeeds locally, the application automatically switches to the Orchestrator page and opens the Plan Compile tab so the user sees launch reconciliation and compilation starting. If PlanApproved publication or PlanCompileRun identity has not yet reconciled, the Plan Compile tab shows a pending launch
+L00025393	  shell tied to the approval command and then binds to the durable compile identity without creating a duplicate. Planning Wizard GUI shows a collapsible parent named for the plan or project with child topic threads, dynamically added topics, final integration, final review, and attached audit/repair activity. The user remains in one Planning Wizard workspace with topic map, active Assistant Chat panel, live plan preview, source/annotation/readiness panels, and bounded backend child threads loaded as selected. Topic cards represent not_started, active, ledger_syncing, ledger_synced, compiling, auditing, repairing, ready, impacted, reopened, deferred, and blocked, with clear dependency and origin badges. Long-running topic conversion, audit, repair, final integration, and final audit display active stage, progress counts, assignment counts, findings fixed, current pass, and user-relevant status so the interface never appears stalled.   Audit and repair children are attached under their topic or final Plan Pack and summarized in activity/progress views; detailed agent traces and evidence may be expanded without cluttering the default thread tree. Orchestrator Plan Compile tab shows immutable source pack, current stage, stage timeline, subagent assignments, PlanUnit coverage, NodeSeed candidates, WorkGraph status, WorkNodeRequest count, testing/model/source-control readiness, audit/repair cycles, blockers, receipts, and handoff status. Plan Compile tab owns compilation and handoff progress; after BuildStarted, Orchestrator execution views own WorkNode dispatch, code changes, live testing, repairs, safe points, and completion while Plan Compile remains a historical launch view with an Open Build action. Commands for topic navigation, reopen, defer, annotation revision, approve PRD, Approve And Build, pause, cancel, resume, retry, inspect blocker, inspect evidence, inspect assignment, request
+L00025394	  bounded recompile, and open resulting build define permission, enablement, disabled reason, idempotency, stale-projection behavior, receipt effect, and recovery. Approve And Build intentionally navigates to Orchestrator Plan Compile, but later transitions present strong Open Build and status actions rather than forcibly moving the user whenever state changes. FinalGUISpec, using only PMConcept-derived visual/source-lineage details already reconciled through owner docs and production wiring, replaces the old fixed Project Setup through Start Chain sequence with PRD Builder intake, dynamic Planning Run topics, live topic and plan projections, audits, Approve And Build, and Orchestrator Plan Compile navigation. Reuse and formalize existing role styling, collapsible navigation, phase rows, live document panes, thread differentiation, activity indicators, worktree context, and selection-based chat context where compatible with the new architecture.'
+L00025395	gui_related: true
+L00025396	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00025397	depends_on: []
+L00025398	unblocks: []
+L00025399	acceptance_criteria:
+L00025400	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00025401	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00025402	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00025403	validation_surfaces:
+L00025404	- python3 scripts/pm-plan-index.py validate
+L00025405	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00025406	risk_class: owner_drift
+L00025407	reasoning_tier: high
+L00025408	context_scope: ledger_to_plans_compile
+L00025409	implementation_surfaces:
+L00025410	- Plans/FinalGUISpec.md
+L00025411	- Plans/PRD_Builder.md
+L00025412	- Plans/00-plans-index.md
+L00025413	- Plans/Planning_Wizard.md
+L00025414	- Plans/assistant-chat-design.md
+L00025415	- Plans/Plan_Document_System.md
+L00025416	- Plans/UI_Command_Catalog.md
+L00025417	- Plans/Contracts_V0.md
+L00025418	- Plans/GitHub_Integration.md
+L00025419	- Plans/FileSafe.md
+L00025420	- Plans/Permissions_System.md
+L00025421	- Plans/Automated_Testing_System.md
+L00025422	- Plans/Multi-Account.md
+L00025423	- Plans/Orchestrator_Page.md
+L00025424	- Plans/Run_Graph_View.md
+L00025425	- Plans/Commands_System.md
+L00025426	node_compile_hint:
+L00025427	  mode: canonical_planunit_from_bootstrap_ledger
+L00025428	  create_worknodes: false
+L00025429	  create_nodeseeds: false
+L00025430	source_lineage:
+L00025431	- pldg-20260618-001-prd-planning-wizard:atom-0001
+L00025432	- pldg-20260618-001-prd-planning-wizard:atom-0002
+L00025433	- pldg-20260618-001-prd-planning-wizard:atom-0017
+L00025434	- pldg-20260618-001-prd-planning-wizard:atom-0018
+L00025435	- pldg-20260618-001-prd-planning-wizard:atom-0019
+L00025436	- pldg-20260618-001-prd-planning-wizard:atom-0021
+L00025437	- pldg-20260618-001-prd-planning-wizard:atom-0024
+L00025438	- pldg-20260618-001-prd-planning-wizard:atom-0026
+L00025439	- pldg-20260618-001-prd-planning-wizard:atom-0028
+L00025440	- pldg-20260618-001-prd-planning-wizard:atom-0036
+L00025441	- pldg-20260618-001-prd-planning-wizard:atom-0037
+L00025442	- pldg-20260618-001-prd-planning-wizard:atom-0038
+L00025443	- pldg-20260618-001-prd-planning-wizard:atom-0046
+L00025444	- pldg-20260618-001-prd-planning-wizard:atom-0048
+L00025445	- pldg-20260618-001-prd-planning-wizard:atom-0049
+L00025446	- pldg-20260618-001-prd-planning-wizard:atom-0055
+L00025447	- pldg-20260618-001-prd-planning-wizard:atom-0061
+L00025448	- pldg-20260618-001-prd-planning-wizard:atom-0064
+L00025449	- pldg-20260618-001-prd-planning-wizard:atom-0068
+L00025450	- pldg-20260618-001-prd-planning-wizard:atom-0089
+L00025451	- pldg-20260618-001-prd-planning-wizard:atom-0090
+L00025452	- pldg-20260618-001-prd-planning-wizard:atom-0091
+L00025453	- pldg-20260618-001-prd-planning-wizard:atom-0092
+L00025454	- pldg-20260618-001-prd-planning-wizard:atom-0093
+L00025455	- pldg-20260618-001-prd-planning-wizard:atom-0094
+L00025456	- pldg-20260618-001-prd-planning-wizard:atom-0101
+L00025457	- pldg-20260618-001-prd-planning-wizard:atom-0107
+L00025458	- pldg-20260618-001-prd-planning-wizard:atom-0108
+L00025459	- pldg-20260618-001-prd-planning-wizard:atom-0147
+L00025460	- pldg-20260618-001-prd-planning-wizard:atom-0148
+L00025461	- pldg-20260618-001-prd-planning-wizard:atom-0149
+L00025462	- pldg-20260618-001-prd-planning-wizard:atom-0150
+L00025463	- pldg-20260618-001-prd-planning-wizard:atom-0151
+L00025464	- pldg-20260618-001-prd-planning-wizard:atom-0152
+L00025465	- pldg-20260618-001-prd-planning-wizard:atom-0153
+L00025466	- pldg-20260618-001-prd-planning-wizard:atom-0154
+L00025467	- pldg-20260618-001-prd-planning-wizard:atom-0155
+L00025468	- pldg-20260618-001-prd-planning-wizard:atom-0156
+L00025469	- pldg-20260618-001-prd-planning-wizard:atom-0157
+L00025470	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/01-naming-and-boundaries.md#SRC-NAMING
+L00025471	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD
+L00025472	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+L00025473	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md#SRC-PROJECT
+L00025474	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+L00025475	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/06-approve-build-plan-compile-worknodes.md#SRC-COMPILE
+L00025476	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md#SRC-GUI
+L00025477	source_atom_ids:
+L00025478	- atom-0001
+L00025479	- atom-0002
+L00025480	- atom-0017
+L00025481	- atom-0018
+L00025482	- atom-0019
+L00025483	- atom-0021
+L00025484	- atom-0024
+L00025485	- atom-0026
+L00025486	- atom-0028
+L00025487	- atom-0036
+L00025488	- atom-0037
+L00025489	- atom-0038
+L00025490	- atom-0046
+L00025491	- atom-0048
+L00025492	- atom-0049
+L00025493	- atom-0055
+L00025494	- atom-0061
+L00025495	- atom-0064
+L00025496	- atom-0068
+L00025497	- atom-0089
+L00025498	- atom-0090
+L00025499	- atom-0091
+L00025500	- atom-0092
+L00025501	- atom-0093
+L00025502	- atom-0094
+L00025503	- atom-0101
+L00025504	- atom-0107
+L00025505	- atom-0108
+L00025506	- atom-0147
+L00025507	- atom-0148
+L00025508	- atom-0149
+L00025509	- atom-0150
+L00025510	- atom-0151
+L00025511	- atom-0152
+L00025512	- atom-0153
+L00025513	- atom-0154
+L00025514	- atom-0155
+L00025515	- atom-0156
+L00025516	- atom-0157
+L00025517	decision_refs:
+L00025518	- dec-0001
+L00025519	- dec-0006
+L00025520	- dec-0007
+L00025521	- dec-0008
+L00025522	- dec-0010
+L00025523	- dec-0018
+L00025524	- dec-0019
+L00025525	- dec-0020
+L00025526	correction_refs:
+L00025527	- corr-0001
+L00025528	- corr-0002
+L00025529	- corr-0015
+L00025530	- corr-0014
+L00025531	- corr-0011
+L00025532	- corr-0012
+L00025533	- corr-0005
+L00025534	- corr-0006
+L00025535	preserved_exact_tokens:
+L00025536	- PRD Builder
+L00025537	- Requirements Doc Builder
+L00025538	- Planning Wizard
+L00025539	- Chain Wizard
+L00025540	- Plan Wizard
+L00025541	- conversation-first
+L00025542	- import-first
+L00025543	- normalize
+L00025544	- hybrid
+L00025545	- uploads and conversation
+L00025546	- digestible batches
+L00025547	- gap-driven
+L00025548	- Functional Requirements
+L00025549	- Non-Functional Requirements
+L00025550	- Acceptance Criteria
+L00025551	- Open Questions
+L00025552	- Source Notes
+L00025553	- primary PRD
+L00025554	- supporting artifacts
+L00025555	- Approve PRD for Planning Wizard
+L00025556	- highlight
+L00025557	- annotation
+L00025558	- text anchor
+L00025559	- stale anchor
+L00025560	- remapping
+L00025561	- Ready
+L00025562	- Ready with Warnings
+L00025563	- Blocked
+L00025564	- dynamic topic map
+L00025565	- topic graph
+L00025566	- add_topic
+L00025567	- split_topic
+L00025568	- merge_topics
+L00025569	- mark_topic_impacted
+L00025570	- suggested order
+L00025571	- dependency graph
+L00025572	- stale_due_to_dependency_change
+L00025573	- requires_recompile
+L00025574	- requires_reaudit
+L00025575	- live document preview
+L00025576	- selection context menu
+L00025577	- local path
+L00025578	- Git repository
+L00025579	- GitHub
+L00025580	- SSH
+L00025581	- global settings
+L00025582	- per-project settings
+L00025583	- effective policy snapshot
+L00025584	- Auto
+L00025585	- 'On'
+L00025586	- 'Off'
+L00025587	- built-in browser
+L00025588	- visible browser automation
+L00025589	- hot reload
+L00025590	- simulator
+L00025591	- accessibility
+L00025592	- performance
+L00025593	- security
+L00025594	- show_when_possible
+L00025595	- clicks
+L00025596	- form input
+L00025597	- assertions
+L00025598	- Swift
+L00025599	- live preview
+L00025600	- emulator
+L00025601	- device stream
+L00025602	- Approve And Build
+L00025603	- Orchestrator
+L00025604	- Plan Compile tab
+L00025605	- pending launch
+L00025606	- compile identity
+L00025607	- collapsible
+L00025608	- Planning Run
+L00025609	- child topic
+L00025610	- one Planning Wizard page
+L00025611	- active chat panel
+L00025612	- ledger_syncing
+L00025613	- compiling
+L00025614	- auditing
+L00025615	- repairing
+L00025616	- impacted
+L00025617	- progress counts
+L00025618	- audit pass
+L00025619	- attached audit child
+L00025620	- collapsed
+L00025621	- stage timeline
+L00025622	- subagent assignments
+L00025623	- WorkNodeRequest count
+L00025624	- Open Build
+L00025625	- BuildStarted
+L00025626	- pause
+L00025627	- cancel
+L00025628	- resume
+L00025629	- inspect evidence
+L00025630	- Start Chain
+L00025631	- collapsible navigation
+L00025632	- live document pane
+L00025633	- selection context
+L00025634	negative_constraints:
+L00025635	- Do not preserve Requirements Doc Builder as a current product feature name except in explicitly historical migration notes.
+L00025636	- Do not use Chain Wizard or Plan Wizard as current terminology.
+L00025637	- Do not force users to choose permanently between upload and chat.
+L00025638	- Do not re-ask answered questions or overwhelm the user with one giant questionnaire.
+L00025639	- Do not leave a topic marked Ready after a material dependency change.
+L00025640	- Do not treat Off as successful verification.
+L00025641	- Do not present every backend subagent or audit thread as a separate top-level app surface.
+L00025642	- Do not mix ongoing WorkNode execution into Plan Compile stage progress.
+L00025643	- Do not retain the old nine-step linear wizard as canonical UX.
+L00025644	stale_retired_dispositions:
+L00025645	- Requirements Doc Builder, Chain Wizard, Plan Wizard, and Start Chain are preserved here only as source-lineage tokens; active product prose uses PRD Builder, Planning Wizard, and Approve And Build.
+L00025646	owner_hints:
+L00025647	- Plans/PRD_Builder.md
+L00025648	- Plans/FinalGUISpec.md
+L00025649	- Plans/00-plans-index.md
+L00025650	- Plans/Planning_Wizard.md
+L00025651	- Plans/assistant-chat-design.md
+L00025652	- Plans/Plan_Document_System.md
+L00025653	- Plans/UI_Command_Catalog.md
+L00025654	- Plans/Contracts_V0.md
+L00025655	- Plans/GitHub_Integration.md
+L00025656	- Plans/FileSafe.md
+L00025657	- Plans/Permissions_System.md
+L00025658	- Plans/Automated_Testing_System.md
+L00025659	- Plans/Multi-Account.md
+L00025660	- Plans/Orchestrator_Page.md
+L00025661	- Plans/Run_Graph_View.md
+L00025662	- Plans/Commands_System.md
+L00025663	- Concepts/PMConcept.html
+L00025664	```
+L00025665	
+L00025666	## Ledger Compile Addendum - pldg-20260622-001-fff
+L00025667	
+L00025668	### F3-399 - Shared Discovery GUI States And Route Migration
+L00025669	
+L00025670	```yaml
+L00025671	plan_unit_id: F3-399
+L00025672	unit_type: requirement
+L00025673	status: accepted
+L00025674	owner_doc: Plans/FinalGUISpec.md
+L00025675	canonical_text: >-
+L00025676	  GUI path/context discovery surfaces route through the shared DiscoveryService while preserving established user-facing names and shortcuts. Quick Open, command palette fuzzy search, Search path narrowing, Assistant Chat file mentions, File Manager type-ahead, Planning Wizard source picker, and PRD Builder source picker expose loading, indexing/warming, stale, fallback, denied, no-results, hidden-by-policy, disabled, unsupported, over-budget/backpressure, rank explanation, disclosed local sort/filter, settings, and reset states. GUI surfaces preserve DiscoveryService ranking order unless they disclose a local sort/filter, and coarse rank explanations may show path match, recent in this project, current context, stale cache, or fallback without exposing raw private frecency/query/open history or blocked path details.
+L00025677	gui_related: true
+L00025678	gui_classification_reason: This defines user-visible GUI states, controls, ranking presentation, and route migration.
+L00025679	depends_on: [T-160, T-161, T-163, CV-291, F2-191, SP-217]
+L00025680	unblocks: [ACD-423, UCC-099, F-072, PWIZ-015, PRDB-009, ATS-011]
+L00025681	acceptance_criteria:
+L00025682	  - GUI discovery surfaces preserve established command names and shortcuts.
+L00025683	  - Hidden-by-policy is distinct from ordinary no-results.
+L00025684	  - Local sort/filter behavior is disclosed when it changes visible order.
+L00025685	  - Rank explanations are coarse and no-leak.
+L00025686	validation_surfaces:
+L00025687	  - python3 scripts/pm-plan-index.py validate
+L00025688	  - Future GUI/agent ranking parity tests.
+L00025689	  - Future GUI stale/fallback/denied/no-results/hidden-by-policy state tests.
+L00025690	risk_class: gui_discovery_route_drift
+L00025691	reasoning_tier: standard
+L00025692	context_scope: gui_discovery_surfaces
+L00025693	implementation_surfaces: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md, Plans/FileManager.md, Plans/assistant-chat-design.md, Plans/Planning_Wizard.md, Plans/PRD_Builder.md]
+L00025694	node_compile_hint: {mode: gui_discovery_consumer_contract, create_worknodes: false, create_nodeseeds: false}
+L00025695	source_lineage:
+L00025696	  - pldg-20260622-001-fff:atom-0013
+L00025697	  - pldg-20260622-001-fff:atom-0021
+L00025698	  - pldg-20260622-001-fff:atom-0044
+L00025699	  - pldg-20260622-001-fff:atom-0056
+L00025700	  - pldg-20260622-001-fff:atom-0059
+L00025701	  - pldg-20260622-001-fff:atom-0063
+L00025702	  - pldg-20260622-001-fff:atom-0078
+L00025703	  - pldg-20260622-001-fff:atom-0081
+L00025704	  - pldg-20260622-001-fff:atom-0084
+L00025705	  - pldg-20260622-001-fff:atom-0087
+L00025706	  - pldg-20260622-001-fff:atom-0089
+L00025707	  - pldg-20260622-001-fff:atom-0090
+L00025708	  - pldg-20260622-001-fff:atom-0093
+L00025709	  - pldg-20260622-001-fff:state/doc_impact_matrix.json#DIM-008
+L00025710	source_atom_ids: [atom-0013, atom-0021, atom-0044, atom-0056, atom-0059, atom-0063, atom-0078, atom-0081, atom-0084, atom-0087, atom-0089, atom-0090, atom-0093]
+L00025711	preserved_exact_tokens: ["Quick Open", "command palette fuzzy search", "Search path narrowing", "Assistant Chat file mentions", "File Manager type-ahead", "Planning Wizard source picker", "PRD Builder source picker", "hidden-by-policy", "over-budget/backpressure", "rank explanation", "local sort/filter disclosed"]
+L00025712	negative_constraints:
+L00025713	  - Do not conflate hidden-by-policy with ordinary no-results.
+L00025714	  - Do not rename established GUI commands or shortcuts as part of discovery routing.
+L00025715	  - Do not run an undisclosed second ranking pass that changes shared DiscoveryService order.
+L00025716	owner_hints: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md, Plans/FileManager.md, Plans/assistant-chat-design.md, Plans/Planning_Wizard.md, Plans/PRD_Builder.md]
+L00025717	```
+L00025718	
+L00025719	
+L00025720	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00025721	
+L00025722	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00025723	
+
+<<< CONTEXT_AFTER canonical_document_lines=25724-25735 >>>
+L00025724	### F3-402 - History And Vision GUI Concept Alignment
+L00025725	
+L00025726	```yaml
+L00025727	plan_unit_id: F3-402
+L00025728	unit_type: requirement
+L00025729	status: accepted
+L00025730	owner_doc: Plans/FinalGUISpec.md
+L00025731	canonical_text: History and vision bridge GUI planning may use Concepts/PMConcept.html as directional source-lineage
+L00025732	  for a dense PM workbench with page tabs, table/detail panels, compact chips, activity cards, status strips, runtime
+L00025733	  popovers, and Assistant Chat artifact patterns. PMConcept is not final UI canon and its HTML/CSS, colors, demo
+L00025734	  data, and class names must not be copied into product spec or implementation. History remains an Orchestrator
+L00025735	  History workbench surface; vision bridge artifacts and controls should feel first-party in Assistant Chat and

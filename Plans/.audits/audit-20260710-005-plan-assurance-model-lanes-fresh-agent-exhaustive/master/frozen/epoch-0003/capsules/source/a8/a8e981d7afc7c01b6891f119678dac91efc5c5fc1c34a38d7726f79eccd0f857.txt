@@ -1,0 +1,140 @@
+<<< CONTEXT_BEFORE 16659-16670 >>>
+- `governance_record.v1:{project_id}:corroboration:{corroboration_id}`
+- `governance_record.v1:{project_id}:promotion:{promotion_id}`
+- `governance_record.v1:{project_id}:graph_patch:{graph_patch_id}`
+- `projection_trust_record.v1:{project_id}:{projection_id}`
+
+Storage rules:
+- records are append-verified through seglog before redb projection updates
+- redb projections may expose current summaries, but mutation authority requires either `projection_trust.status = current` or direct canonical revalidation
+- `projection_freshness` and `projection_health` remain the storage-owned trust fields; `trust-state` is a compatibility alias for the combined `projection_trust` record
+- graph-patch application history preserves `graph_generation_id`, `decision_ref`, and `state_transition_report_ref` so previous generations remain historical rather than erased
+- promotion, corroboration, graph-patch, and projection-trust records can reference concern records, but they do not replace concern lifecycle ownership
+
+
+<<< AUTHORITATIVE_CORE 16671-16795 >>>
+### SP-233 - Governance Runtime Record Storage Binding
+
+```yaml
+plan_unit_id: SP-233
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Storage binds governance runtime records from Contracts_V0 CV-315 to durable keys for corroboration, promotion,
+  graph_patch, and projection_trust. Seglog remains the source of truth; redb projections expose current summaries.
+  trust-state is a compatibility alias for projection_trust, and non-current trust states require direct canonical
+  revalidation before mutation/export authority.
+gui_related: false
+gui_classification_reason: Defines backend storage keys and projection trust, not visual layout.
+depends_on: [CV-315]
+unblocks: [N-006, RGV-008]
+acceptance_criteria:
+  - Corroboration, promotion, graph_patch, and projection_trust have versioned storage keys.
+  - Seglog is the source of truth and redb projections are derived.
+  - Stale, degraded, or unavailable projection trust blocks mutation/export authority until direct canonical revalidation.
+  - The storage binding creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, final manifests, or PNC-019 evidence.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+risk_class: governance_runtime_storage_gap
+reasoning_tier: high
+context_scope: fable_newfeatures_governance_records
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: governance_runtime_record_storage_binding
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md:1179
+  - Plans/.audits/fable-20260706/final_fable_action_state.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "corroboration"
+  - "promotion"
+  - "graph-patch"
+  - "trust state"
+negative_constraints:
+  - Do not treat these storage keys as runtime lifecycle certification or clean-room proof.
+  - Do not create implementation files, WorkNodes, NodeSeeds, queues, runtime launches, final manifests, or production build tasks.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+```
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+
+These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+- `registry_line 119` (repaired; source line 550; `sfk-a1de91e6d5aa62a6816874f1`): kv.json/prompt-history.jsonl decision repaired: product path is migration to canonical seglog/redb families; atomic file write/locking is transitional debug/export mirror protection only. Source summary: - [HIGH] L2003: `kv.json`/`prompt-history.jsonl` "must either be migrated or protected by atomic write" unresolved either/or, no target key FIX: pick one path now.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+
+## Usage GUI Propagation Addendum - 2026-07-09
+
+This addendum binds Usage projection storage and alias handling for GUI consumers. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated storage registry rows, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+
+### SP-234 - Usage Projection Storage And Alias Contract
+
+```yaml
+plan_unit_id: SP-234
+unit_type: storage_contract
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: >-
+  Storage owns the durable projection joins that let GUI surfaces recover UsageRecord identity and route/open state without recomputing accounting. Usage projection records and runtime-artifact projector families carry usage_record_id, usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, projection_freshness, projection_health, checkpoint cursor, and rebuild provenance. Compatibility aliases such as usage_id, input_tokens, output_tokens, cache_read_tokens, cache_creation_input_tokens, cost_usd, usage_source_kind, UnifiedUsageRecord, estimated_cost_microdollars, and final_cost_microdollars are migration/display inputs only and normalize to UF-085 fields before persistence, aggregation, or GUI projection. `usage_event_ref` remains a usage/storage join and normalizes through route_target.object_kind = usage_event for route/open; it does not become a separate route selector.
+gui_related: false
+gui_classification_reason: Storage projection fields support GUI consumers but are backend persistence contracts.
+depends_on: [SP-230, SP-231, UF-087, CV-316, RAP-044]
+unblocks: []
+acceptance_criteria:
+  - Usage projection records persist usage_record_id, usage_event_ref, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, projection_freshness, projection_health, checkpoint cursor, and rebuild provenance when available.
+  - Runtime artifact projector records can join cost_usage and tool_llm_trace artifacts to Usage, Ledger, Context Detail Pane, Run Graph, and Orchestrator without timestamp/run/thread/tier primary routing.
+  - Compatibility aliases normalize to UF-085 fields before persistence or GUI projection and cannot become a competing UsageRecord schema.
+  - Redaction records preserve raw_payload_ref, redaction_status, provider_payload_hash, omitted counts, and permission state while excluding credentials, account identifiers, and local paths.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future usage projection storage fixture suite
+risk_class: usage_projection_storage_alias_drift
+reasoning_tier: high
+context_scope: usage_projection_storage
+implementation_surfaces:
+  - Plans/storage-plan.md
+  - Plans/usage-feature.md
+  - Plans/Contracts_V0.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: usage_projection_storage_alias_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - "Plans/storage-plan.md:53-109"
+  - "Plans/storage-plan.md:651-690"
+  - "Plans/storage-plan.md:1606-1800"
+  - "Plans/usage-feature.md:514-522"
+  - "Plans/usage-feature.md:5412-5605"
+  - "Plans/Runtime_Artifacts_Panel.md:288-316"
+preserved_exact_tokens:
+  - usage_record_id
+  - usage_event_ref
+  - provider_attempt_ref
+  - projection_freshness
+  - projection_health
+  - checkpoint cursor
+  - usage_id
+  - cost_usd
+  - UnifiedUsageRecord
+negative_constraints:
+  - Do not hand-edit generated storage registry rows for this PlanUnit.
+  - Do not keep compatibility aliases as canonical persisted authority fields.
+  - Do not use usage_event_ref as a route selector that bypasses object_kind/object_id normalization.
+  - Do not persist unredacted provider payloads, credentials, account identifiers, or local paths.
+owner_hints:
+  - Plans/storage-plan.md
+  - Plans/usage-feature.md
+  - Plans/Contracts_V0.md
+```

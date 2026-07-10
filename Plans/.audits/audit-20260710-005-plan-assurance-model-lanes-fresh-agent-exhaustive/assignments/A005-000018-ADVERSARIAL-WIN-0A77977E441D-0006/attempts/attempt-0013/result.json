@@ -1,0 +1,690 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000018-ADVERSARIAL-WIN-0A77977E441D-0006",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0006_c_capacity_dispatcher_epoch_0013/a005_000018_adversarial_win_0006",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/storage_value_registry.json",
+    "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
+    "core_sha256": "fa62591f876d54d968934bac2847e28f1bdb0781255e0ac626f56553cf58b53a",
+    "core_range": [1773, 2161]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "ADV-0001",
+      "item_type": "gap",
+      "title": "Accepted decisions are not conditioned on proof completeness",
+      "statement": "The schema permits final_certifier_decision=accepted while validator_outputs, evidence_refs, child/worknode receipt refs, and unresolved_risks are empty arrays. No conditional invariant distinguishes a valid acceptance from an unsupported one.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "A syntactically valid receipt can falsely certify completion or buildability without validator or evidence support.",
+      "builder_discretion": "Define conditional acceptance invariants and a machine-checkable certifier oracle.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1897,
+          "line_end": 1897,
+          "exact_quote": "          \"final_certifier_decision\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1873,
+          "line_end": 1874,
+          "exact_quote": "          \"validator_outputs\": {\n            \"type\": \"array\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1891,
+          "line_end": 1892,
+          "exact_quote": "          \"unresolved_risks\": {\n            \"type\": \"array\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0002",
+      "item_type": "gap",
+      "title": "Reference arrays accept empty, duplicate, and malformed values",
+      "statement": "Validator, child receipt, worknode receipt, evidence, and risk arrays constrain each member only as a string and do not require non-empty values, canonical reference syntax, uniqueness, bounded length, or resolvability.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "untrusted_inputs",
+      "impact": "Malformed or adversarial refs can pass schema validation, amplify storage, poison joins, or make replay and evidence resolution ambiguous.",
+      "builder_discretion": "Specify reference formats, uniqueness, cardinality limits, target-family validation, and unresolved-ref behavior.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1905,
+          "line_end": 1909,
+          "exact_quote": "          \"evidence_refs\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"string\"\n            }",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0003",
+      "item_type": "gap",
+      "title": "Receipt kind and certification tier are uncontrolled authority tokens",
+      "statement": "receipt_kind and certification_tier accept any non-empty string, so misspellings, invented tiers, and future values can enter an authority-bearing receipt without explicit compatibility or rejection semantics.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authority_boundaries",
+      "impact": "Producers and consumers can disagree on the meaning or authority of a receipt while all data remains schema-valid.",
+      "builder_discretion": "Use governed enums or versioned registries and define unknown-value handling.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1865,
+          "line_end": 1867,
+          "exact_quote": "          \"receipt_kind\": {\n            \"type\": \"string\",\n            \"minLength\": 1",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1869,
+          "line_end": 1871,
+          "exact_quote": "          \"certification_tier\": {\n            \"type\": \"string\",\n            \"minLength\": 1",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0004",
+      "item_type": "gap",
+      "title": "Key identity is not bound to value identity",
+      "statement": "The key embeds project_id and receipt_id, but the value schema only checks non-empty strings and expresses no invariant that those fields equal the key components. The goal_id and optional goal_run_id are also not bound to an authoritative lineage.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authority_boundaries",
+      "impact": "A receipt can be stored under one project or receipt identity while asserting another, enabling cross-project leakage, incorrect joins, and authority confusion.",
+      "builder_discretion": "Require transactional key/value identity checks and project-scoped reference authorization.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1778,
+          "line_end": 1778,
+          "exact_quote": "      \"key_shape\": \"goal_receipt.v1:{project_id}:{receipt_id}\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1853,
+          "line_end": 1855,
+          "exact_quote": "          \"project_id\": {\n            \"type\": \"string\",\n            \"minLength\": 1",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0005",
+      "item_type": "gap",
+      "title": "Append-only replay has no overwrite or concurrency contract",
+      "statement": "Replay is described as append-only, but this value family supplies no create-only write rule, idempotency token, collision behavior, compare-and-swap version, ordering field, or duplicate-producer resolution for the redb key.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_races",
+      "impact": "Concurrent certifiers or retries can overwrite, fork, or nondeterministically replace a receipt and make replay disagree with the durable record.",
+      "builder_discretion": "Define atomic create semantics, collision rejection, idempotent retry rules, and canonical ordering.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1821,
+          "line_end": 1821,
+          "exact_quote": "      \"replay_behavior\": \"Goal state replay consumes append-only goal events plus goal receipts; projections are disposable and stale projections cannot certify completion.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0006",
+      "item_type": "gap",
+      "title": "Partial-write and recovery behavior is unspecified",
+      "statement": "The materialized receipt contract does not define behavior for interrupted serialization, transaction failure, corruption, missing referenced receipts, validator timeout, or recovery after a crash between evidence production and receipt commit.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "partial_failure",
+      "impact": "A crash or unavailable dependency can leave ambiguous certification state with no deterministic retry, quarantine, rollback, or repair path.",
+      "builder_discretion": "Specify transaction boundaries, failure states, retry idempotency, corruption detection, quarantine, and repair receipts.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1776,
+          "line_end": 1776,
+          "exact_quote": "      \"status\": \"materialized\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1822,
+          "line_end": 1822,
+          "exact_quote": "      \"migration\": \"Goal receipts lacking schema_version, certification tier, validator outputs, or final decision are invalid for buildability proof.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0007",
+      "item_type": "gap",
+      "title": "Retention anchors do not define destructive-action governance",
+      "statement": "The retention sentence lists receipt categories but gives no retention duration, legal/privacy deletion override, tombstone behavior, compaction safety proof, delete authorization, or treatment of references when a target is removed.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "destructive_actions",
+      "impact": "Operators cannot prove whether deletion or compaction preserves replay, evidence integrity, privacy obligations, and dependent references.",
+      "builder_discretion": "Define retention classes, authorized deletion, tombstones, reference-safe compaction, and auditable purge receipts.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1823,
+          "line_end": 1823,
+          "exact_quote": "      \"retention_compaction\": \"Retain completion, degraded, stopped, blocked, child-goal, recovery, evidence, and certification receipts under Goal Runtime retention anchors.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0008",
+      "item_type": "gap",
+      "title": "Redaction profile is declarative rather than enforced",
+      "statement": "The record can declare no_secrets or redacted_refs_only, but the schema cannot verify that free-form strings or referenced targets are secret-free, project-authorized, access-controlled, or deleted when their underlying evidence expires.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Sensitive data can be embedded in IDs or references while the receipt appears compliant, and referenced data lifecycle can diverge from receipt retention.",
+      "builder_discretion": "Add validated opaque reference types, authorization checks, secret scanning, target lifecycle rules, and redaction attestations with provenance.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1824,
+          "line_end": 1824,
+          "exact_quote": "      \"redaction_no_secret_rule\": \"Receipts store validator/evidence refs and decisions only; provider output and local evidence bodies are ref-only/redacted.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1915,
+          "line_end": 1920,
+          "exact_quote": "          \"redaction_profile\": {\n            \"type\": \"string\",\n            \"enum\": [\n              \"no_secrets\",\n              \"redacted_refs_only\"\n            ]",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0009",
+      "item_type": "gap",
+      "title": "Consumers lack missing, stale, and invalid receipt semantics",
+      "statement": "The consumer list identifies replay, GUI panels, and the readiness gate, but does not define which validates references, how missing or invalid receipts propagate, whether stale results are rejected, or which consumer is authoritative.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_callers_consumers",
+      "impact": "Different consumers can render or gate on the same receipt differently, including showing accepted while replay or readiness rejects it.",
+      "builder_discretion": "Specify per-consumer validation, propagation, stale/missing states, and authority precedence.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1785,
+          "line_end": 1789,
+          "exact_quote": "      \"consumers\": [\n        \"Goal Runtime state replay\",\n        \"Orchestrator receipt panels\",\n        \"implementation-readiness gate\"\n      ],",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0010",
+      "item_type": "gap",
+      "title": "GUI can present certification without freshness or evidence health",
+      "statement": "The Orchestrator receipt panels consume the record, but the record has no verification status, evidence-resolution health, supersession state, expiry, or user-facing reason contract. A panel can therefore truthfully display stored fields yet misleadingly imply current certification.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "gui_misleading_states",
+      "impact": "Users can act on an accepted label whose evidence is missing, stale, inaccessible, superseded, or semantically invalid.",
+      "builder_discretion": "Expose explicit verified, stale, unresolved, superseded, and invalid states with reason and last-checked metadata.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1787,
+          "line_end": 1787,
+          "exact_quote": "        \"Orchestrator receipt panels\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1911,
+          "line_end": 1913,
+          "exact_quote": "          \"created_at_utc\": {\n            \"type\": \"string\",\n            \"format\": \"date-time\"",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0011",
+      "item_type": "gap",
+      "title": "Offline and network-loss states are absent",
+      "statement": "Evidence and validator outputs are references, yet the receipt has no resolution state, cached-verification marker, retry schedule, partial availability state, or rule for certifying while remote or local targets are unavailable.",
+      "severity": "medium",
+      "confidence": "medium",
+      "gap_kind": "offline_network_loss",
+      "impact": "Network loss can be mistaken for missing evidence, silently ignored, or cause consumer-specific behavior with no durable recovery semantics.",
+      "builder_discretion": "Define offline resolution states, cached trust bounds, retry behavior, and whether acceptance is fail-closed.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1800,
+          "line_end": 1805,
+          "exact_quote": "        \"validator_outputs\",\n        \"child_receipt_refs\",\n        \"worknode_receipt_refs\",\n        \"unresolved_risks\",\n        \"final_certifier_decision\",\n        \"evidence_refs\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0012",
+      "item_type": "gap",
+      "title": "Receipt cardinality and payload size are unbounded",
+      "statement": "All receipt arrays lack maxItems and member-length limits, while identifier strings lack maximum lengths. A valid receipt can consume unbounded storage, encoding time, replay work, panel rendering cost, and resolver fan-out.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "scale_limits",
+      "impact": "Large or malicious receipts can cause denial of service or non-deterministic practical limits across producers and consumers.",
+      "builder_discretion": "Set byte, string, array, depth, and resolver fan-out limits with rejection behavior.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1879,
+          "line_end": 1883,
+          "exact_quote": "          \"child_receipt_refs\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"string\"\n            }",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0013",
+      "item_type": "gap",
+      "title": "Invalid legacy receipts have no migration or quarantine procedure",
+      "statement": "The contract declares older goal receipts invalid when fields are missing but does not specify detection, quarantine, re-certification, reader version negotiation, rollback, or how invalid historical receipts affect replay and readiness.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "compatibility_migration",
+      "impact": "Upgrades can strand historical state or produce inconsistent replay and readiness decisions across versions.",
+      "builder_discretion": "Define versioned reader behavior, migration receipts, quarantine, re-certification, rollback, and mixed-version tests.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1822,
+          "line_end": 1822,
+          "exact_quote": "      \"migration\": \"Goal receipts lacking schema_version, certification tier, validator outputs, or final decision are invalid for buildability proof.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0014",
+      "item_type": "gap",
+      "title": "Certifier provenance and operational diagnostics are missing",
+      "statement": "The receipt identifies a final decision and creation time but not certifier identity/version, policy version, input digest, trace or correlation identity, failure reason code, verification time, or superseding receipt.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "observability_support",
+      "impact": "Support cannot reproduce, attribute, compare, revoke, or diagnose certification decisions from the durable receipt alone.",
+      "builder_discretion": "Persist bounded provenance, policy/input digests, structured reason codes, correlation identity, and supersession lineage.",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1804,
+          "line_end": 1807,
+          "exact_quote": "        \"final_certifier_decision\",\n        \"evidence_refs\",\n        \"created_at_utc\",\n        \"redaction_profile\"",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0015",
+      "item_type": "explicit_non_gap",
+      "title": "Deferred legacy families are explicitly non-authoritative",
+      "statement": "The legacy run, node, receipt, attempt, and concern families are consistently marked deferred_not_build_blocking and later_gui_or_feature_projection, reducing the risk that their skeletal schemas are mistaken for launch-critical implementation authority.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["run_record_legacy_baseline", "node_record_legacy_baseline", "receipt_record_baseline", "attempt_record", "concern_record"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1952,
+          "line_end": 1953,
+          "exact_quote": "      \"status\": \"deferred_not_build_blocking\",\n      \"tier\": \"later_gui_or_feature_projection\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2129,
+          "line_end": 2130,
+          "exact_quote": "      \"status\": \"deferred_not_build_blocking\",\n      \"tier\": \"later_gui_or_feature_projection\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0016",
+      "item_type": "gap",
+      "title": "Legacy migration readers have no falsifiable source-shape contract",
+      "statement": "The run, node, and generic receipt baselines name migration readers and require only schema_version, but define neither accepted historical fields nor malformed-record handling, crosswalk determinism, provenance, completion criteria, or rollback.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "Migration reader implementations cannot be proven complete or interoperable and may silently discard or mis-map legacy data.",
+      "builder_discretion": "Before reopening, freeze legacy fixtures, accepted shapes, deterministic crosswalk oracles, error classes, and rollback tests.",
+      "feature_keys": ["run_record_legacy_baseline", "node_record_legacy_baseline", "receipt_record_baseline"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1961,
+          "line_end": 1967,
+          "exact_quote": "      \"consumers\": [\n        \"migration readers\"\n      ],\n      \"schema_version\": \"1.0.0\",\n      \"encoding\": \"messagepack_canonical\",\n      \"required_fields\": [\n        \"schema_version\"",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1974,
+          "line_end": 1975,
+          "exact_quote": "      \"replay_behavior\": \"Migration-read only until a current run-record owner materializes a v1 value schema.\",\n      \"migration\": \"Must crosswalk into versioned runtime/receipt families before implementation authority.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0017",
+      "item_type": "gap",
+      "title": "Execution-unit storage seam lacks wrapper and key-binding behavior",
+      "statement": "The row delegates packet shape to another schema and says storage does not redefine it, but does not state how execution_unit_id in the redb key is checked against the referenced or embedded packet, how missing schema refs fail, or which document owns persistence transaction behavior.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "cross_document_seams",
+      "impact": "A conforming packet can still be stored under the wrong execution unit or become unreadable when the external schema/version seam changes.",
+      "builder_discretion": "Define key/packet identity validation, schema resolution failure, transactional ownership, and cross-document conformance fixtures.",
+      "feature_keys": ["execution_unit_context_store"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2022,
+          "line_end": 2025,
+          "exact_quote": "      \"key_shape\": \"execution_unit:<execution_unit_id>\",\n      \"value_schema_id\": \"pm.execution_unit_context\",\n      \"value_schema_ref\": \"Plans/execution_unit_context.schema.json\",\n      \"owner_doc\": \"Plans/Executor_Protocol.md#5.0-execution_unit_context-canonical-contract\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2042,
+          "line_end": 2042,
+          "exact_quote": "      \"replay_behavior\": \"Use the canonical execution_unit_context schema by ref; storage does not redefine the packet here.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0018",
+      "item_type": "gap",
+      "title": "Attempt key identity is optional in the eventual value contract",
+      "statement": "attempt_record keys require project_id, node_id, and attempt_number, but the row makes all three optional and requires only schema_version. If reopened without a stronger schema, valid values cannot prove their key identity or attempt lineage.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "unknown_unknowns",
+      "impact": "Attempt records can be mis-keyed, collide, or join to the wrong run and receipt without schema detection.",
+      "builder_discretion": "On reopen, require key identity fields, constrain attempt_number, bind run and attempt IDs, and test collision and replay behavior.",
+      "feature_keys": ["attempt_record"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2090,
+          "line_end": 2090,
+          "exact_quote": "      \"key_shape\": \"attempt_record.v1:{project_id}:{node_id}:{attempt_number}\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2103,
+          "line_end": 2112,
+          "exact_quote": "      \"required_fields\": [\n        \"schema_version\"\n      ],\n      \"optional_fields\": [\n        \"project_id\",\n        \"node_id\",\n        \"attempt_number\",\n        \"run_id\",\n        \"attempt_id\",\n        \"execution_unit_context_ref\"",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0019",
+      "item_type": "gap",
+      "title": "Concern lifecycle semantics are not represented by the row",
+      "statement": "The concern row says migration must preserve four lifecycle states, but status is optional and the row supplies no enum, transition graph, actor authority, concurrency rule, timestamps, or resolution and dismissal audit trail.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "A reopened concern store could accept missing or invented states and lose causality or authority across acknowledge, resolve, dismiss, and reopen races.",
+      "builder_discretion": "On reopen, materialize the state enum, transition authority, optimistic concurrency, timestamps, reason codes, and transition fixtures.",
+      "feature_keys": ["concern_record"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2147,
+          "line_end": 2150,
+          "exact_quote": "      \"optional_fields\": [\n        \"concern_id\",\n        \"project_id\",\n        \"status\"",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2154,
+          "line_end": 2154,
+          "exact_quote": "      \"migration\": \"Must preserve active/acknowledged/resolved/dismissed semantics.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0020",
+      "item_type": "explicit_non_gap",
+      "title": "Storage contract is not the localization or accessibility authority",
+      "statement": "Within this window the registry stores stable machine values and delegates user-visible presentation to named consumers; no localized label or assistive interaction contract is asserted here. Accessibility and localization are therefore not applicable to this storage-schema window, while GUI truth remains covered separately.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["goal_receipt", "attempt_record", "concern_record"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1790,
+          "line_end": 1791,
+          "exact_quote": "      \"schema_version\": \"1.0.0\",\n      \"encoding\": \"messagepack_canonical\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1787,
+          "line_end": 1787,
+          "exact_quote": "        \"Orchestrator receipt panels\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0021",
+      "item_type": "explicit_non_gap",
+      "title": "Materialization is explicitly separated from lifecycle closure",
+      "statement": "Although goal_receipt is materialized and launch-critical, the crosswalk sentence explicitly says this row does not close the Goal Runtime lifecycle blocker. This prevents schema presence alone from claiming runtime lifecycle completion.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["goal_receipt"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1825,
+          "line_end": 1825,
+          "exact_quote": "      \"legacy_canonical_crosswalk_status\": \"Canonical Goal Runtime receipt row for Tier 0C-2; does not close Goal Runtime lifecycle blocker.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Named consumers lack validation, propagation, and authority semantics.",
+      "evidence_item_ids": ["ADV-0009"]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Accepted goal receipts and deferred concern records admit semantically invalid states.",
+      "evidence_item_ids": ["ADV-0001", "ADV-0019"]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Append-only intent lacks atomic create, collision, retry, and ordering rules.",
+      "evidence_item_ids": ["ADV-0005", "ADV-0018", "ADV-0019"]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Interrupted commits and unavailable or corrupt dependencies have no durable state contract.",
+      "evidence_item_ids": ["ADV-0006", "ADV-0011"]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "No quarantine, repair, rollback, or idempotent recovery protocol is specified.",
+      "evidence_item_ids": ["ADV-0006", "ADV-0013"]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "Uncontrolled tier tokens and missing key/value bindings leave certification and project authority ambiguous.",
+      "evidence_item_ids": ["ADV-0003", "ADV-0004", "ADV-0014"]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Redaction declarations and retention anchors are not mechanically enforced across referenced data.",
+      "evidence_item_ids": ["ADV-0007", "ADV-0008"]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Free-form and unbounded strings and references admit malformed or adversarial data.",
+      "evidence_item_ids": ["ADV-0002", "ADV-0003", "ADV-0012"]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Panels have no receipt freshness, evidence-health, supersession, or invalid-state truth contract.",
+      "evidence_item_ids": ["ADV-0009", "ADV-0010"]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "Reference resolution under offline or unavailable conditions has no state or retry semantics.",
+      "evidence_item_ids": ["ADV-0011"]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "No string, array, payload, or resolver fan-out bounds are present.",
+      "evidence_item_ids": ["ADV-0002", "ADV-0012"]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "not_applicable",
+      "summary": "This storage window asserts machine encoding, not assistive interaction behavior; GUI truth is assessed independently.",
+      "evidence_item_ids": ["ADV-0020"]
+    },
+    {
+      "dimension": "localization",
+      "status": "not_applicable",
+      "summary": "This storage window asserts stable machine values, not localized presentation copy.",
+      "evidence_item_ids": ["ADV-0020"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Invalid historical receipts and skeletal legacy readers lack executable migration, quarantine, mixed-version, and rollback rules.",
+      "evidence_item_ids": ["ADV-0013", "ADV-0015", "ADV-0016"]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Certifier provenance, policy/input digests, structured reasons, correlation, and supersession are absent.",
+      "evidence_item_ids": ["ADV-0014"]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "Deletion and compaction authority, tombstones, and reference-safe purge behavior are unspecified.",
+      "evidence_item_ids": ["ADV-0007"]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "External schema ownership lacks key binding, resolver failure, transaction ownership, and conformance fixtures.",
+      "evidence_item_ids": ["ADV-0017"]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Semantic acceptance and legacy migration claims lack executable oracles and fixtures.",
+      "evidence_item_ids": ["ADV-0001", "ADV-0016", "ADV-0019"]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "gap_found",
+      "summary": "The optional attempt identity fields expose a latent key/value contradiction that becomes dangerous when the deferred family reopens.",
+      "evidence_item_ids": ["ADV-0018", "ADV-0021"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

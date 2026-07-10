@@ -1,0 +1,388 @@
+<<< CONTEXT_BEFORE 3809-3820 >>>
+- cmd.github.actions.open_in_github
+- cmd.github.actions.open_run_diff
+- cmd.github.actions.open_run_in_browser
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+
+<<< AUTHORITATIVE_CORE 3821-4179 >>>
+### UCC-048 - Github Actions Correlation And Legacy Alias Rules
+
+```yaml
+plan_unit_id: UCC-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: GitHub Actions commands carry workflow/run/job/step/check/log identity for route-open pivots, preserve source-control correlation, and treat legacy cmd.github_actions.* and cmd.actions pin/unpin names as compatibility aliases rather than a second namespace.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-048 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_189
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: github_actions_correlation_legacy_alias_rules
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0029
+preserved_exact_tokens:
+- workflow_id
+- run_id
+- job_id
+- step_id
+- check_suite_id
+- log_cursor
+- source_control_ref
+- route_open
+- cmd.github_actions.show
+- cmd.github_actions.switch_subview
+- cmd.github_actions.rerun_workflow
+- cmd.github_actions.cancel_workflow
+- cmd.github_actions.pin_workflow
+- cmd.github_actions.open_run_log
+- cmd.github_actions.open_run_diff
+- none
+- —
+negative_constraints:
+- cmd.github_actions.* must not become a second primary namespace.
+preserved_contractrefs: []
+compatibility_only_notes:
+- Legacy underscore commands normalize to current GitHub Actions route/show, switch_subview, rerun, cancel, pin, logs, and diff commands.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-049 - Docker Build Bake Container Rows
+
+```yaml
+plan_unit_id: UCC-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Docker Manager command rows define build, bake, container inspect/logs/shell/restart/stop/delete, image inspect/delete/tag/open Dockerfile, context select, and compatibility aliases for build/logs/exec/inspect.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-049 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_189
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: docker_build_bake_container_rows
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0030
+preserved_exact_tokens:
+- cmd.docker.build.image
+- cmd.docker.build.compose
+- cmd.docker.build.bake
+- cmd.docker.build
+- cmd.docker.container.inspect
+- cmd.docker.container.view_logs
+- cmd.docker.container.attach_shell
+- cmd.docker.container.restart
+- cmd.docker.container.stop
+- cmd.docker.container.delete
+- cmd.docker.image.inspect
+- cmd.docker.image.delete
+- cmd.docker.image.tag
+- cmd.docker.open_dockerfile
+- cmd.docker.context.select
+- cmd.docker.logs
+- cmd.docker.exec
+- cmd.docker.inspect
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
+compatibility_only_notes:
+- cmd.docker.build/logs/exec/inspect are compatibility aliases for selected canonical Docker paths.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-050 - Docker Compose Scenario Rows And Alias Boundary
+
+```yaml
+plan_unit_id: UCC-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Docker compose command rows define compose up/down subset, scenario save/run/edit/delete, and shell/view-state wrappers while grouped scenario tokens and legacy Docker rows normalize to concrete canonical Docker Manager rows without new payload shapes.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-050 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_189
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: docker_compose_scenario_alias_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0030
+preserved_exact_tokens:
+- cmd.docker.compose_up
+- cmd.docker.compose_down
+- cmd.docker.compose.up_subset
+- cmd.docker.compose.down_subset
+- cmd.docker.compose.scenario.save
+- cmd.docker.compose.scenario.run
+- cmd.docker.compose.scenario.edit
+- cmd.docker.compose.scenario.delete
+- cmd.docker.compose.scenario.save/run/edit/delete
+- cmd.docker.show
+- cmd.docker.switch_subview
+negative_constraints:
+- Legacy Docker rows MUST NOT introduce new payload shapes.
+- cmd.docker.show and cmd.docker.switch_subview do not replace concrete Docker Manager domain-action rows.
+preserved_contractrefs: []
+compatibility_only_notes:
+- Grouped scenario command token denotes the scenario command family; payloads use concrete IDs.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-051 - Docker Registry Publish Drift Cleanup Authority Split
+
+```yaml
+plan_unit_id: UCC-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Docker registry publish, repository creation confirmation, artifact promotion, tag push, image push, drift comparison, cleanup scan, and prune commands preserve the Orchestrator after-build versus Docker Manager registry authority split and shared permission/account/receipt/lineage checks.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-051 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_189
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: docker_registry_publish_drift_cleanup_authority_split
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0030
+preserved_exact_tokens:
+- cmd.docker.create_repository
+- cmd.docker.create_repository.confirm
+- cmd.docker.create_repository.cancel
+- cmd.docker.registry.promote
+- cmd.docker.registry.tag_push
+- cmd.docker.image.push
+- cmd.docker.drift.compare
+- cmd.docker.cleanup.scan
+- cmd.docker.cleanup.prune
+- cmd.orchestrator.push_image
+- permission
+- account
+- receipt
+- lineage
+negative_constraints:
+- Docker Manager registry publish commands must share permission, account, receipt, and lineage checks rather than claiming a separate event family.
+preserved_contractrefs: []
+compatibility_only_notes:
+- cmd.docker.image.push is a compatibility alias for approved image push through Docker Manager registry authority.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-052 - Docker Kubernetes Rows And Namespace Alias Boundary
+
+```yaml
+plan_unit_id: UCC-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Docker Manager Kubernetes command rows define apply, diff, logs, exec, port-forward, context/namespace selection, Helm preview/install, and canonical grouped cmd.docker.k8s.* namespace behavior.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-052 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_189
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: docker_kubernetes_rows_namespace_alias_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0031
+preserved_exact_tokens:
+- cmd.docker.k8s.apply
+- cmd.docker.k8s.diff
+- cmd.docker.k8s.logs
+- cmd.docker.k8s.exec
+- cmd.docker.k8s.port_forward
+- cmd.docker.k8s.select_context
+- cmd.docker.k8s.select_namespace
+- cmd.docker.k8s.helm_preview
+- cmd.docker.k8s.helm_install
+- cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace
+- cmd.k8s.*
+- set_context
+- set_namespace
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Tools.md'
+compatibility_only_notes:
+- Existing cmd.k8s.*, set_context, and set_namespace rows are compatibility aliases until migrated.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-053 - Docker Kubernetes Disabled State Approval Receipt Lineage
+
+```yaml
+plan_unit_id: UCC-053
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Docker/Kubernetes availability copy uses shared disabled-state taxonomy from runtime projection state, side effects use domain-bound approval scoping, receipts retain docker_refs and kubernetes_refs lineage, and drift/trust blockers refresh effective capability before mutation.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-053 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_189
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: docker_kubernetes_disabled_approval_receipts
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0031
+preserved_exact_tokens:
+- Unsupported
+- Not configured
+- Unauthorized
+- Unreachable
+- Degraded
+- Partial capability
+- /UX-state
+- cmd.container.*
+- registry/namespace/repository
+- digest/tag target
+- selected context
+- namespace
+- workload/resource
+- docker_refs
+- kubernetes_refs
+- /trust/proxy
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Legacy cmd.container.* references are retired to active cmd.docker.* and cmd.docker.k8s.* namespaces.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+
+<<< CONTEXT_AFTER 4180-4191 >>>
+### UCC-054 - Project Scope Worktree Command Set And Thread Boundary
+
+```yaml
+plan_unit_id: UCC-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Project-scope git worktree commands own repository-level inventory, selection, open/focus, compare, create/remove/prune/reuse/recover, lineage focus, release, lock/unlock, and switch aliases while complementing but not replacing assistant thread-scoped worktree wrappers.
+gui_related: false
+gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+split_recommended: false
+depends_on:

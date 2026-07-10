@@ -1,0 +1,384 @@
+<<< CONTEXT_BEFORE 715-726 >>>
+  - "ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-001"
+owner_hints:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+  - "Plans/DRY_Rules.md"
+  - "Plans/CLI_Bridged_Providers.md"
+  - "Plans/Architecture_Invariants.md"
+  - "Plans/Glossary.md"
+  - "Plans/Project_Output_Artifacts.md"
+  - "Plans/Decision_Policy.md"
+  - "Plans/human-in-the-loop.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 727-1081 >>>
+### PSMERA-007 - V0 Event Type Whitelist
+
+```yaml
+plan_unit_id: PSMERA-007
+unit_type: runtime_contract
+status: accepted
+owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+canonical_text: >-
+  External bridge mappings may emit only the existing V0 event types text_delta, thinking_delta, tool_use,
+  tool_result, usage, auth_state, diagnostic, error, and done; this document introduces no new event types and
+  defers authoritative payload fields to CLI_Bridged_Providers.
+gui_related: false
+gui_classification_reason: "This unit defines provider stream event types rather than visual presentation."
+split_recommended: false
+depends_on:
+  - "PDS-003"
+  - "PDS-004"
+  - "PNC-001"
+  - "BPM-004"
+  - "CBP-007"
+unblocks: []
+acceptance_criteria:
+  - "V0 Event Type Whitelist remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: provider_stream_mapping_drift
+reasoning_tier: standard
+context_scope: provider_stream_mapping
+implementation_surfaces:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+node_compile_hint:
+  mode: provider_stream_event_whitelist
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0007"
+preserved_exact_tokens:
+  - "V0-safe primitives used"
+  - "No new event types are introduced"
+  - "text_delta"
+  - "thinking_delta"
+  - "tool_use"
+  - "tool_result"
+  - "usage"
+  - "auth_state"
+  - "diagnostic"
+  - "error"
+  - "done"
+  - "emit only these types"
+  - "authoritative payload-field definitions live in `Plans/CLI_Bridged_Providers.md`"
+negative_constraints:
+  - "This document introduces no new V0 event types."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, Gate:GATE-009"
+owner_hints:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+  - "Plans/CLI_Bridged_Providers.md"
+```
+
+### PSMERA-008 - Diagnostic Categories And Namespacing
+
+```yaml
+plan_unit_id: PSMERA-008
+unit_type: runtime_contract
+status: accepted
+owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+canonical_text: >-
+  Provider-specific diagnostics must use type diagnostic with only reserved category values, required details
+  keys, and provider/source context under diagnostic.details.source; adapters must not invent new categories,
+  and tier_boundary remains preserved as compatibility-sensitive stream-schema evidence.
+gui_related: false
+gui_classification_reason: "This unit defines diagnostic category and details semantics rather than visual presentation."
+split_recommended: false
+depends_on:
+  - "PDS-003"
+  - "PDS-004"
+  - "PNC-001"
+  - "BPM-004"
+  - "PSMERA-007"
+  - "CBP-007"
+  - "AI-003"
+unblocks: []
+acceptance_criteria:
+  - "Diagnostic Categories And Namespacing remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: provider_stream_mapping_drift
+reasoning_tier: standard
+context_scope: provider_stream_mapping
+implementation_surfaces:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+node_compile_hint:
+  mode: diagnostic_category_contract
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0008"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0009"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0010"
+preserved_exact_tokens:
+  - "type: \"diagnostic\""
+  - "category"
+  - "diagnostic.details.source"
+  - "external_ref_native"
+  - "a2a"
+  - "run_started"
+  - "run_finished"
+  - "step_started"
+  - "step_finished"
+  - "tier_boundary"
+  - "handoff"
+  - "input_required"
+  - "input_provided"
+  - "artifact_update"
+  - "artifact_data_part"
+  - "artifact_file_part"
+  - "raw_observation"
+  - "overseer_audit_started"
+  - "overseer_reviewer_spawned"
+  - "overseer_reviewer_verdict"
+  - "overseer_audit_consensus"
+  - "overseer_audit_verdict"
+  - "Adapters MUST NOT invent new categories"
+negative_constraints:
+  - "Provider/source-specific diagnostics must be namespaced via diagnostic.details.source."
+  - "Adapters must not invent new diagnostic categories."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-001, Gate:GATE-009"
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Glossary.md, ContractName:Plans/Executor_Protocol.md, Gate:GATE-009"
+  - "ContractRef: ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts, Gate:GATE-009"
+compatibility_only_notes:
+  - "`tier_boundary` remains compatibility-sensitive because it embeds Phase/Task/Subtask/Iteration details in a reserved diagnostic category."
+stale_retired_dispositions:
+  - "`tier_boundary` is compatibility/stale-sensitive until owner docs replace or version the stream category."
+owner_hints:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+  - "Plans/CLI_Bridged_Providers.md"
+  - "Plans/Architecture_Invariants.md"
+  - "Plans/Glossary.md"
+  - "Plans/Executor_Protocol.md"
+  - "Plans/DRY_Rules.md"
+```
+
+### PSMERA-009 - Native Content Usage And Error Mappings
+
+```yaml
+plan_unit_id: PSMERA-009
+unit_type: provider_adapter_contract
+status: accepted
+owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+canonical_text: >-
+  Native external-framework text, stream, usage, termination, run-completion, and error events map to V0
+  text_delta, usage, diagnostic, error, and done outputs without schema expansion; terminal diagnostics derive
+  outcome and done status from upstream completion evidence.
+gui_related: false
+gui_classification_reason: "This unit maps native provider content, usage, terminal, and error events rather than visual presentation."
+split_recommended: true
+depends_on:
+  - "PDS-003"
+  - "PDS-004"
+  - "PNC-001"
+  - "BPM-004"
+  - "PSMERA-007"
+  - "PSMERA-008"
+unblocks: []
+acceptance_criteria:
+  - "Native Content Usage And Error Mappings remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: provider_stream_mapping_drift
+reasoning_tier: standard
+context_scope: provider_stream_mapping
+implementation_surfaces:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+node_compile_hint:
+  mode: native_content_usage_mapping
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0011"
+preserved_exact_tokens:
+  - "BaseEvent"
+  - "wrap_event"
+  - "StreamEvent"
+  - "TextEvent"
+  - "UsageSummaryEvent"
+  - "TerminationEvent"
+  - "ErrorEvent"
+  - "RunCompletionEvent"
+  - "text_delta"
+  - "usage"
+  - "diagnostic"
+  - "error"
+  - "done"
+  - "payload.text"
+  - "prompt_tokens"
+  - "completion_tokens"
+  - "total_cost"
+  - "termination_reason"
+  - "upstream_error"
+  - "done.status"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-001, Gate:GATE-009"
+owner_hints:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+  - "Plans/CLI_Bridged_Providers.md"
+  - "Plans/Contracts_V0.md"
+  - "Plans/usage-feature.md"
+```
+
+### PSMERA-010 - Native Tool Lifecycle Mappings
+
+```yaml
+plan_unit_id: PSMERA-010
+unit_type: provider_adapter_contract
+status: accepted
+owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+canonical_text: >-
+  Native ToolCallEvent, ToolResponseEvent, FunctionCallEvent, and FunctionResponseEvent map to correlated
+  tool_use and tool_result lifecycles; legacy FunctionCallEvent duplicates are retained as raw_observation
+  when ToolCallEvent already represents the logical call.
+gui_related: false
+gui_classification_reason: "This unit maps tool lifecycle events rather than visual presentation."
+split_recommended: true
+depends_on:
+  - "PDS-003"
+  - "PDS-004"
+  - "PNC-001"
+  - "BPM-004"
+  - "PSMERA-007"
+  - "PSMERA-008"
+  - "CBP-008"
+  - "CBP-009"
+  - "AI-003"
+unblocks: []
+acceptance_criteria:
+  - "Native Tool Lifecycle Mappings remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: provider_stream_mapping_drift
+reasoning_tier: standard
+context_scope: provider_stream_mapping
+implementation_surfaces:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+node_compile_hint:
+  mode: native_tool_lifecycle_mapping
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0011"
+preserved_exact_tokens:
+  - "ToolCallEvent"
+  - "ToolResponseEvent"
+  - "FunctionCallEvent"
+  - "FunctionResponseEvent"
+  - "tool_use"
+  - "tool_result"
+  - "tool_calls"
+  - "ToolCall.id"
+  - "ToolCall.function.name"
+  - "ToolCall.function.arguments"
+  - "tool_call_id"
+  - "<unknown>"
+  - "raw_observation"
+  - "avoid double-emitting tool lifecycles"
+negative_constraints:
+  - "Legacy FunctionCallEvent must not double-emit a tool lifecycle when ToolCallEvent is already observed for the same logical call."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-001, Gate:GATE-009"
+owner_hints:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+  - "Plans/Tools.md"
+  - "Plans/FileSafe.md"
+  - "Plans/CLI_Bridged_Providers.md"
+```
+
+### PSMERA-011 - Native HITL Handoff And Raw Observation Mappings
+
+```yaml
+plan_unit_id: PSMERA-011
+unit_type: provider_adapter_contract
+status: accepted
+owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+canonical_text: >-
+  Native InputRequestEvent and InputResponseEvent map to input_required and input_provided diagnostics,
+  transition events map to handoff diagnostics, and selection/code/function execution observations remain
+  raw_observation diagnostics rather than first-class V0 steps or tools.
+gui_related: false
+gui_classification_reason: "This unit maps lifecycle diagnostics rather than visual presentation."
+split_recommended: true
+depends_on:
+  - "PDS-003"
+  - "PDS-004"
+  - "PNC-001"
+  - "BPM-004"
+  - "PSMERA-008"
+unblocks: []
+acceptance_criteria:
+  - "Native HITL Handoff And Raw Observation Mappings remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: provider_stream_mapping_drift
+reasoning_tier: standard
+context_scope: provider_stream_mapping
+implementation_surfaces:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+node_compile_hint:
+  mode: native_lifecycle_hitl_handoff_mapping
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0011"
+preserved_exact_tokens:
+  - "InputRequestEvent"
+  - "InputResponseEvent"
+  - "AfterWorksTransitionEvent"
+  - "OnContextConditionTransitionEvent"
+  - "OnConditionLLMTransitionEvent"
+  - "ReplyResultTransitionEvent"
+  - "SelectSpeakerEvent"
+  - "ExecuteCodeBlockEvent"
+  - "ExecuteFunctionEvent"
+  - "input_required"
+  - "input_provided"
+  - "handoff"
+  - "after_work"
+  - "on_context_condition"
+  - "on_condition"
+  - "reply_result"
+  - "raw_observation"
+  - "not treated as a first-class step boundary"
+  - "not mapped to `tool_use`"
+negative_constraints:
+  - "SelectSpeakerEvent is not treated as a first-class step boundary in V0."
+  - "ExecuteCodeBlockEvent is not mapped to tool_use; code execution goes through Puppet Master tool policy."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-001, Gate:GATE-009"
+owner_hints:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+  - "Plans/human-in-the-loop.md"
+  - "Plans/Executor_Protocol.md"
+  - "Plans/Tools.md"
+```
+
+
+<<< CONTEXT_AFTER 1082-1093 >>>
+### PSMERA-012 - A2A Discovery Task Identity And Cache Boundary
+
+```yaml
+plan_unit_id: PSMERA-012
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+canonical_text: >-
+  A2A AgentCard, Task, Message, Part, and Artifact concepts remain external bridge evidence: AgentCard cannot
+  replace PM registries or capability contracts, terminal A2A Tasks are immutable, A2A transports remain
+  provider transport variants, and cross-task prompt cache reuse requires explicit provider evidence within a
+  PM-owned session or adapter-continuity boundary.

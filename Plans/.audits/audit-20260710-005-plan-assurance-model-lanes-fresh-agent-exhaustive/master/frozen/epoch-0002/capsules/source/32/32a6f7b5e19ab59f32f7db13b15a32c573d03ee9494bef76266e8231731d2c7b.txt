@@ -1,0 +1,389 @@
+<<< CONTEXT_BEFORE 5889-5900 >>>
+- "artifacts"
+- "run_debug"
+- "Canonical side-panel descriptions"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md"
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 5901-6260 >>>
+### F3-043 - GitHub Actions Side Panel Owner Boundary
+
+```yaml
+plan_unit_id: F3-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  GitHub Actions is the github_actions side-panel owner for shell entry, label, command-palette
+  surface ID, detachable state, and route-open behavior while GitHub_Integration owns hosted
+  workflow and admin semantics.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: github_actions_side_panel_owner_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0037"
+preserved_exact_tokens:
+- "github_actions"
+- "Current Branch"
+- "Workflows"
+- "Settings"
+- "Plans/GitHub_Integration.md"
+- "shell-surface owner-boundary"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-044 - Run And Debug Side Panel Owner Boundary
+
+```yaml
+plan_unit_id: F3-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Run & Debug is the run_debug side-panel owner for runtime diagnostics entry and reveal/focus
+  behavior for Problems, Output, Debug Console, and Ports without creating duplicate runtime
+  records.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: run_and_debug_side_panel_owner_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0038"
+preserved_exact_tokens:
+- "run_debug"
+- "Problems"
+- "Output"
+- "Debug Console"
+- "Ports"
+- "no duplicate runtime records"
+- "bottom runtime zone panes"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-045 - Search Panel UI And Result Routing
+
+```yaml
+plan_unit_id: F3-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Search is a one-visible-at-a-time side-panel occupant with explicit open-focus behavior,
+  user/content search UI, grep-style result rows, replace-in-files, and shared OpenFile path/range
+  routing.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: search_panel_ui_and_result_routing
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0039"
+preserved_exact_tokens:
+- "/open-focus"
+- "/user-search"
+- "/content-search"
+- "/word/regex"
+- "OpenFile"
+- "FinalGUISpec.md §15.3"
+- "replace-in-files"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-046 - Search Indexing Control And Freshness
+
+```yaml
+plan_unit_id: F3-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Search owns indexing controls for enable/disable, rebuild, large-file threshold default 10 MB,
+  generated-file exclusions, follow-symlinks, visible freshness states, cancellation, and remote
+  watcher freshness copy without duplicate watcher setup.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: search_indexing_control_and_freshness
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0039"
+preserved_exact_tokens:
+- "search-owner"
+- "10 MB"
+- "CancellationToken"
+- "indexed/stale/unindexed/fallback"
+- "follow-symlinks"
+- "no duplicate watcher"
+- "GitHub_Integration.md"
+negative_constraints:
+- "The GUI must not imply duplicate watcher setup for remote search freshness."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-047 - Object Record Search Results
+
+```yaml
+plan_unit_id: F3-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Tantivy full-text indexing is not enough for Orchestrator search; rows targeting
+  Orchestrator-owned content expose object/record identity and record routes so inspectors and
+  audit views land on canonical runtime objects.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: object_record_search_results
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0039"
+preserved_exact_tokens:
+- "Tantivy"
+- "object/record identity"
+- "/record"
+- "canonical runtime object"
+- "Orchestrator search"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-048 - Search Ownership Taxonomy And IDs
+
+```yaml
+plan_unit_id: F3-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Search ownership is divided across command-palette fuzzy search, FileManager local tree search,
+  assistant chat-domain search, Tools project codesearch, LSP semantic search, and Search-panel
+  content/find/replace results with explicit state and command IDs.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: search_ownership_taxonomy_and_ids
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0039"
+preserved_exact_tokens:
+- "fuzzy-search"
+- "Chat History Search"
+- "chatsearch"
+- "codesearch"
+- "logsearch"
+- "search_panel_state"
+- "cmd.search.*"
+- "find-in-files"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-049 - Panel Concept And Alias Reconciliation
+
+```yaml
+plan_unit_id: F3-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Historical concept labels map to canonical side panels: GitHub Actions, Docker Manager, and
+  Source Control remain separate, DOCKER MANAGE migrates to Docker Manager, Unraid focuses Docker
+  Manager Publish / Unraid, and aliases use canonical side-panel IDs.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: panel_concept_and_alias_reconciliation
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0039"
+preserved_exact_tokens:
+- "Concepts/PuppetMasterDashComp.html"
+- "DOCKER MANAGE"
+- "UNRAID"
+- "cmd.panel.switch"
+- "Publish / Unraid"
+- "source_control"
+- "github_actions"
+negative_constraints:
+- "The activity bar MUST NOT expose a Git icon that opens GITHUB ACTIONS."
+- "unraid does not survive as a first-class panel ID or first-class shell shortcut."
+compatibility_only_notes:
+- "Older combined Git/GitHub docs are migration evidence only."
+stale_retired_dispositions:
+- "Concept artifact labels are historical design evidence, not live owner paths."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 6261-6272 >>>
+### F3-050 - Account Help Copy And Pinning Propagation
+
+```yaml
+plan_unit_id: F3-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Account-switch propagation is visible at shell boundaries, namespace help/copy inventory is
+  authored by namespace, and GitHub Actions workflow pinning owns pin/unpin state, badges,
+  provenance, stale-pin warnings, and over-pinning tradeoffs.
+gui_related: true

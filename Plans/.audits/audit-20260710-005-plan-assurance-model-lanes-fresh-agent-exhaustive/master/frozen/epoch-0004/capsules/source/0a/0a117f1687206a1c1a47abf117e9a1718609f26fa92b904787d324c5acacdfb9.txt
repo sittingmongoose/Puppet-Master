@@ -1,0 +1,393 @@
+<<< CONTEXT_BEFORE 2830-2841 >>>
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0028
+preserved_exact_tokens:
+  - "structured build results"
+  - "artifacts"
+  - "logs"
+  - "image identity"
+negative_constraints: []
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+
+<<< AUTHORITATIVE_CORE 2842-3205 >>>
+### CRAU-034 - Run Preview Control Actions
+
+```yaml
+plan_unit_id: CRAU-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Puppet Master can deploy and run project containers for testing workflows and
+  exposes user-visible controls to start and stop preview/run, open an exposed
+  web UI or endpoint when available, open logs, inspect health status, and show
+  the resolved access URL or port.
+gui_related: true
+gui_classification_reason: Preview controls, logs, health, endpoint open action, and URL/port display are visible Docker Manager behavior.
+split_recommended: false
+depends_on: [CRAU-011, CRAU-013]
+unblocks: [CRAU-035, CRAU-036]
+acceptance_criteria:
+  - Start and stop preview/run actions exist for project containers.
+  - Open endpoint, open logs, inspect health, and show resolved URL/port actions are available when their prerequisites exist.
+  - Actions disable or degrade rather than guessing when runtime facts are unavailable.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: runtime_action_drift
+reasoning_tier: standard
+context_scope: run_preview_control_actions
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: runtime_preview_surface
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0029
+preserved_exact_tokens:
+  - "start preview/run"
+  - "stop preview/run"
+  - "open exposed web UI or endpoint"
+  - "show resolved access URL/port"
+negative_constraints: []
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-035 - Runtime Access URL Resolution
+
+```yaml
+plan_unit_id: CRAU-035
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Runtime access URL resolution checks explicit project override first, then the
+  first published host-port mapping from compose or container inspect preferring
+  ports 443, 80, 3000, and 8080, then known web-UI metadata or label, then no
+  access URL; when none exists Docker Manager shows No direct access URL detected
+  and disables open instead of guessing.
+gui_related: true
+gui_classification_reason: URL resolution order, disabled open action, and the no-URL copy are visible runtime access behavior.
+split_recommended: false
+depends_on: [CRAU-034]
+unblocks: [CRAU-057]
+acceptance_criteria:
+  - Access URL resolution preserves the exact source order.
+  - Port preference order is 443, 80, 3000, 8080, then the next published port.
+  - No access URL shows No direct access URL detected and disables open rather than guessing.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: unsafe_url_guess
+reasoning_tier: high
+context_scope: runtime_access_url_resolution
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: url_resolution_guardrail
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0030
+preserved_exact_tokens:
+  - "`443`"
+  - "`80`"
+  - "`3000`"
+  - "`8080`"
+  - "`No direct access URL detected`"
+negative_constraints:
+  - "Docker Manager must disable open rather than guessing when no access URL is available."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-036 - Runtime Stream Port Forward And Crash Gap Continuity
+
+```yaml
+plan_unit_id: CRAU-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Persisted stream intent applies to Actions logs, container logs, Kubernetes
+  logs, and Orchestrator activity using follow, paused_snapshot, and
+  historical_view states; restart restores follow only after source revalidation,
+  port-forward target drift creates a new session id, old sessions remain
+  historical, browser tabs are never silently rebound across target changes, and
+  crash evidence distinguishes flushed-and-persisted, buffered unflushed, and
+  unknown gap interval.
+gui_related: true
+gui_classification_reason: Stream modes, degraded browser tabs, historical sessions, and crash-gap rendering are user-visible runtime evidence behavior.
+split_recommended: true
+split_recommendation_reason: Source span S0031 also includes alert ownership and trust-policy continuity split into CRAU-037.
+depends_on: [CRAU-013, CRAU-014]
+unblocks: [CRAU-037]
+acceptance_criteria:
+  - Stream surfaces distinguish follow, paused_snapshot, and historical_view.
+  - Follow intent after restart requires source revalidation and a new stream session.
+  - Port-forward target drift, changed target, or unavailable local port keeps the old session historical and issues a new session id.
+  - Previously opened browser tabs never silently rebind across target changes.
+  - UI renders unknown gap interval explicitly rather than implying complete evidence.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: runtime_session_misleading_state
+reasoning_tier: high
+context_scope: runtime_stream_port_forward_crash_gap
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: runtime_session_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0031
+preserved_exact_tokens:
+  - "`follow`"
+  - "`paused_snapshot`"
+  - "`historical_view`"
+  - "`flushed-and-persisted`"
+  - "`unknown gap interval`"
+negative_constraints:
+  - "Previously opened browser tabs are never silently rebound across target changes."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-037 - Runtime Alert Ownership And Trust Continuity
+
+```yaml
+plan_unit_id: CRAU-037
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Docker Manager is the primary owner for runtime and Kubernetes alert
+  actionability while Dashboard and Orchestrator mirror attention state, and
+  runtime plus GitHub-hosted links consume shared github_host_policy and
+  /network/trust policy for enterprise host allowance, proxy mode, proxy
+  credential source, per-domain/per-surface opt-out, OS trust store, custom CA
+  bundle, per-host CA override, and validation/expiry reporting.
+gui_related: true
+gui_classification_reason: Alert ownership, mirrored attention, disabled-state UX, and trust reporting are user-visible cross-surface behavior.
+split_recommended: true
+split_recommendation_reason: Source span S0031 mixes stream/session continuity with alert ownership and trust-policy continuity.
+depends_on: [CRAU-015, CRAU-036]
+unblocks: [CRAU-038]
+acceptance_criteria:
+  - Docker Manager keeps unhealthy containers, restart loops, failed readiness, failed rollouts, and port-forward failures actionable.
+  - Dashboard and Orchestrator mirror attention state without taking Docker Manager ownership.
+  - github_host_policy distinguishes github.com_only and enterprise_allowed; GHES receives deterministic disabled-state UX when MVP is github.com_only.
+  - Shared /network/trust policy preserves proxy modes, OS credential-store proxy credentials, per-domain/per-surface opt-outs, and CA validation/expiry reporting.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: owner_mirror_or_trust_drift
+reasoning_tier: high
+context_scope: runtime_alert_ownership_trust_continuity
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/Orchestrator_Page.md
+  - Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: owner_mirror_trust_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0031
+preserved_exact_tokens:
+  - "`github_host_policy`"
+  - "`github.com_only`"
+  - "`enterprise_allowed`"
+  - "`GHES`"
+  - "`/network/trust`"
+  - "`system`"
+  - "`manual`"
+  - "`off`"
+negative_constraints:
+  - "Trust policy is separate from Unraid metadata."
+consumer_hints:
+  - Dashboard and Orchestrator mirror attention state.
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-038 - Enterprise Registry And Kubernetes Host Policy
+
+```yaml
+plan_unit_id: CRAU-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Enterprise registry and Kubernetes policy use registry_hosts[] and
+  k8s_host_policy: registry hosts record host policy, trust/proxy inheritance,
+  capability snapshot, and default push target, Kubernetes host policy records
+  allowed contexts, clusters, namespaces, and verbs, and hosted/runtime surfaces
+  distinguish offline_cached, network_blocked_by_policy, host_unreachable, and
+  host_untrusted while surfacing cached read-only state or canonical
+  blocked/preflight state.
+gui_related: true
+gui_classification_reason: Host-policy state drives visible Docker Manager command availability, cached-state rendering, and blocked/preflight UX.
+split_recommended: true
+split_recommendation_reason: Source span S0032 mixes policy model with visible cached/blocked rendering.
+depends_on: [CRAU-014, CRAU-037]
+unblocks: [CRAU-039, CRAU-040]
+acceptance_criteria:
+  - registry_hosts[] entries include registry host, host policy, trust/proxy inheritance, capability snapshot, and default push target.
+  - k8s_host_policy includes allowed contexts/clusters/namespaces and verbs apply, exec, port_forward, and logs.
+  - UI command availability and Docker Manager subviews consume policy rather than redefining it.
+  - offline_cached, network_blocked_by_policy, host_unreachable, and host_untrusted states remain distinct.
+  - Policy-denied but otherwise valid actions surface canonical blocked/preflight state, not generic network failure.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: host_policy_drift
+reasoning_tier: high
+context_scope: enterprise_registry_k8s_host_policy
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/Permissions_System.md
+  - Plans/Contracts_V0.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: host_policy_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0032
+preserved_exact_tokens:
+  - "`registry_hosts[]`"
+  - "`k8s_host_policy`"
+  - "`apply`"
+  - "`exec`"
+  - "`port_forward`"
+  - "`logs`"
+  - "`offline_cached`"
+  - "`network_blocked_by_policy`"
+  - "`host_unreachable`"
+  - "`host_untrusted`"
+negative_constraints:
+  - "Host policy must not be conflated with transient reachability."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/Permissions_System.md
+  - Plans/Contracts_V0.md
+```
+
+### CRAU-039 - Mutation Preflight Before Approval
+
+```yaml
+plan_unit_id: CRAU-039
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Docker, registry, Unraid, and Kubernetes mutations run preflight before
+  approval prompts; preflight resolves target identity, runtime/tool
+  availability, host/trust/proxy policy, repository or cluster capability, and
+  current drift/freshness, unresolved facts emit blocked_preflight without
+  asking approval, approval binds to the preflight snapshot and exact action
+  scope, retry/resume re-runs preflight when relevant facts may have changed, and
+  policy-denied outcomes emit blocked/governance payloads rather than *.failed.
+gui_related: false
+gui_classification_reason: This unit defines mutation ordering, preflight snapshots, and approval semantics rather than visual layout.
+split_recommended: false
+depends_on: [CRAU-031, CRAU-038]
+unblocks: [CRAU-043, CRAU-045]
+acceptance_criteria:
+  - Mutations run preflight before approval prompts.
+  - Unresolved facts emit blocked_preflight and do not ask the user to approve an unknowable operation.
+  - Approval binds to the preflight snapshot and exact action scope.
+  - Retry/resume re-runs preflight when target, permission snapshot, host policy, or governance state may have changed.
+  - Policy-denied outcomes after preflight or approval emit blocked/governance payloads with policy source and reason-code family rather than *.failed.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: approval_bypass
+reasoning_tier: high
+context_scope: mutation_preflight_before_approval
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+  - Plans/Permissions_System.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: preflight_approval_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0033
+preserved_exact_tokens:
+  - "`blocked_preflight`"
+  - "`*.failed`"
+negative_constraints:
+  - "Puppet Master must not ask the user to approve an unknowable operation."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+### CRAU-040 - Kubernetes Enablement And Doctor Checks
+
+```yaml
+plan_unit_id: CRAU-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Kubernetes is enabled as a project-focused Docker Manager subview only when
+  manifests, Helm artifacts, kube-linked receipts, active workload refs, or
+  explicit project settings indicate relevance; Kubernetes doctor checks verify
+  kubectl reachability, kubeconfig/context availability, namespace access,
+  project-focused workload scope, Helm availability when selected, and allowed
+  verbs for apply, diff, logs, exec, and port_forward while keeping manifest
+  editing and cached inspection available when possible.
+gui_related: true
+gui_classification_reason: Kubernetes subview enablement, doctor checks, editing/cached inspection availability, and explicit blocked outcomes are visible Docker Manager behavior.
+split_recommended: true
+split_recommendation_reason: Source span S0034 mixes enablement signals with doctor-check preflight behavior.
+depends_on: [CRAU-014, CRAU-038]
+unblocks: [CRAU-041]
+acceptance_criteria:
+  - Kubernetes subview enablement requires project relevance signals or explicit project settings.
+  - Doctor checks verify kubectl, kubeconfig/context, namespace access, project-focused workload scope, Helm when selected, and allowed verbs.
+  - Failed checks keep manifest editing and cached inspection available when possible.
+  - Failed checks block mutation, exec, logs, or port-forward actions with explicit preflight/permission outcomes.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: k8s_scope_creep
+reasoning_tier: high
+context_scope: kubernetes_enablement_doctor_checks
+implementation_surfaces:
+  - Plans/Containers_Registry_and_Unraid.md
+node_compile_hint:
+  mode: k8s_doctor_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0034
+preserved_exact_tokens:
+  - "`kubectl`"
+  - "`apply`"
+  - "`diff`"
+  - "`logs`"
+  - "`exec`"
+  - "`port_forward`"
+negative_constraints:
+  - "Failed doctor checks must not silently hide the Kubernetes subview when cached inspection or manifest editing can remain available."
+owner_hints:
+  - Plans/Containers_Registry_and_Unraid.md
+```
+
+
+<<< CONTEXT_AFTER 3206-3217 >>>
+### CRAU-041 - Active Docker Manager Operation Anchors
+
+```yaml
+plan_unit_id: CRAU-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Registry promotion, drift detection, access intelligence, and project-focused
+  K8s deep linkage are active Docker Manager contract areas. They require typed
+  operation identity, status/result payloads, preflight and permission outcomes,
+  review/failure fields where applicable, and GUI action derivation from structured

@@ -1,0 +1,383 @@
+<<< CONTEXT_BEFORE 17587-17598 >>>
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0142
+preserved_exact_tokens:
+  - "EnhanceRewriteAdd"
+  - "project-setup review path"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+
+<<< AUTHORITATIVE_CORE 17599-17952 >>>
+### ACD-313 - Wizard Imported Context Before Interview
+
+```yaml
+plan_unit_id: ACD-313
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The interviewer must not start cold: imported context is available before the
+  first question, imported plan context may be opened, and the mandatory scope
+  probe still runs without bypassing phase 0.
+gui_related: false
+gui_classification_reason: Interview start-state and phase gating are workflow constraints.
+depends_on: [ACD-312]
+unblocks: []
+acceptance_criteria:
+  - Imported context is available before the first interview question.
+  - Imported plans may be opened as additional interviewer context.
+  - Mandatory scope probe still runs and imported context does not bypass phase 0.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: wizard_launch
+reasoning_tier: high
+context_scope: interview
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/chain-wizard-flexibility.md
+node_compile_hint:
+  mode: wizard_imported_context_before_interview
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0142
+preserved_exact_tokens:
+  - "The interviewer must not start cold"
+  - "mandatory scope probe"
+  - "phase 0"
+negative_constraints:
+  - "Imported context does not bypass phase 0."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/chain-wizard-flexibility.md
+```
+
+### ACD-314 - Mode And Wizard Acceptance
+
+```yaml
+plan_unit_id: ACD-314
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Acceptance requires natural-language Ask/Plan/Deep Plan resolution, wizard
+  recommendation from chat and Deep Plan, imported assistant context/plan
+  artifact handoff, visible/auditable handoff, and no silent repo-file creation.
+gui_related: true
+gui_classification_reason: Acceptance includes visible mode resolution, recommendation, and handoff behavior.
+depends_on: [ACD-302, ACD-304, ACD-306, ACD-308, ACD-311, ACD-312]
+unblocks: []
+acceptance_criteria:
+  - Ask, Plan, and Deep Plan are reachable through natural-language requests.
+  - Assistant chat and Deep Plan can recommend Planning Wizard when appropriate.
+  - Accepting a recommendation opens Planning Wizard / Interview with imported assistant context and plan artifact references when present.
+  - Handoff remains visible/auditable and does not silently create a repo file.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: mode_wizard_acceptance
+reasoning_tier: high
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/chain-wizard-flexibility.md
+node_compile_hint:
+  mode: mode_wizard_acceptance
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0143
+preserved_exact_tokens:
+  - "Ask mode"
+  - "Plan"
+  - "Deep Plan"
+  - "does not silently create a repo file"
+negative_constraints:
+  - "The imported handoff remains visible/auditable and does not silently create a repo file."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-315 - Blocked State Compatibility Disposition
+
+```yaml
+plan_unit_id: ACD-315
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Canonical thread blocked surfaces reuse the shared blocked packet instead of
+  local ask-flow tuples; earlier overlapping blocked-state addenda are
+  historical transfer notes and not peer recovery guidance.
+gui_related: false
+gui_classification_reason: Blocked-state compatibility disposition concerns canonical packet ownership and retired local tuples.
+depends_on: []
+unblocks: [ACD-316, ACD-317]
+acceptance_criteria:
+  - Thread blocked surfaces reuse the shared blocked packet.
+  - Earlier overlapping blocked-state addenda remain historical transfer notes.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: blocked_state
+reasoning_tier: high
+context_scope: compatibility
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: blocked_state_compatibility_disposition
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0144
+preserved_exact_tokens:
+  - "shared blocked packet"
+  - "local ask-flow tuples"
+  - "historical transfer notes"
+negative_constraints:
+  - "Earlier overlapping blocked-state addenda must not be read as peer recovery guidance."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-316 - Blocked Packet Required Fields
+
+```yaml
+plan_unit_id: ACD-316
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: The shared blocked packet required fields are `blocked_notice`, `blocked_sequence`, `approval_scope_key`, and `allowed_action_ids[]`.
+gui_related: false
+gui_classification_reason: Blocked packet field requirements are data-contract behavior.
+depends_on: [ACD-315]
+unblocks: [ACD-317]
+acceptance_criteria:
+  - Shared blocked packets include `blocked_notice`.
+  - Shared blocked packets include `blocked_sequence`, `approval_scope_key`, and `allowed_action_ids[]`.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: blocked_state
+reasoning_tier: high
+context_scope: blocked_packet
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: blocked_packet_required_fields
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0144
+preserved_exact_tokens:
+  - "blocked_notice"
+  - "blocked_sequence"
+  - "approval_scope_key"
+  - "allowed_action_ids[]"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Executor_Protocol.md
+```
+
+### ACD-317 - Blocked Episode Display
+
+```yaml
+plan_unit_id: ACD-317
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Each `blocked_notice` renders as its own system message;
+  `validation_blocked` and `remediation_ceiling_exceeded` remain ordinary
+  blocked taxonomy members; chat buttons render from ordered
+  `allowed_action_ids[]`; resolving one blocked episode does not collapse
+  siblings.
+gui_related: true
+gui_classification_reason: Blocked notices, system messages, and action buttons are visible chat UI.
+depends_on: [ACD-316]
+unblocks: []
+acceptance_criteria:
+  - Each blocked notice renders as its own system message.
+  - Blocked taxonomy members stay ordinary taxonomy members.
+  - Chat action buttons render from ordered `allowed_action_ids[]`.
+  - Resolving one blocked episode does not collapse sibling blocked episodes.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: blocked_state
+reasoning_tier: standard
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: blocked_episode_display
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0145
+preserved_exact_tokens:
+  - "blocked_notice"
+  - "validation_blocked"
+  - "remediation_ceiling_exceeded"
+  - "allowed_action_ids[]"
+negative_constraints:
+  - "Resolving one blocked episode does not collapse sibling blocked episodes."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-318 - Worktrees In Assistant Scope
+
+```yaml
+plan_unit_id: ACD-318
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Worktrees in Assistant covers the W.1-W.17 thread-level worktree binding
+  feature: chat header worktree button, thread selector icon, merge-back flow,
+  pre-merge test gate, lifecycle, data model, events, commands, settings, and
+  errors.
+gui_related: true
+gui_classification_reason: Worktree button, thread selector icon, merge-back flow, and related errors are visible Assistant Chat UI.
+depends_on: []
+unblocks: [ACD-319]
+acceptance_criteria:
+  - Assistant worktree scope covers W.1-W.17 thread-level worktree binding.
+  - Scope includes header/thread selector UI, merge-back, pre-merge test gate, lifecycle, data model, events, commands, settings, and error handling.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: worktree_assistant
+reasoning_tier: high
+context_scope: worktrees
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/GitHub_Integration.md
+  - Plans/storage-plan.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: worktrees_in_assistant_scope
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0146
+preserved_exact_tokens:
+  - "W.1-W.17"
+  - "thread-level worktree binding"
+  - "pre-merge test gate"
+  - "ContractName:Plans/WorktreeGitImprovement.md"
+  - "ContractName:Plans/GitHub_Integration.md"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+```
+
+### ACD-319 - Source Control Worktree Ownership Boundary
+
+```yaml
+plan_unit_id: ACD-319
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Assistant chat deep-links into Source Control without owning accordion layout; Source Control owns the Worktrees row layout and filters Assistant links to.
+gui_related: false
+gui_classification_reason: This unit defines Assistant as a Source Control consumer, not the UI layout owner.
+depends_on: [ACD-318]
+unblocks: [ACD-320, ACD-321]
+acceptance_criteria:
+  - Assistant chat deep-links into Source Control.
+  - Source Control retains ownership of accordion layout, Worktrees row layout, and filters.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: owner_boundary
+reasoning_tier: high
+context_scope: source_control
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+  - Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: source_control_worktree_ownership_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0147
+preserved_exact_tokens:
+  - "Source Control consumer state"
+  - "without owning its accordion layout"
+  - "Source Control owns the Worktrees row layout"
+negative_constraints:
+  - "Assistant Chat does not own Source Control accordion layout."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/WorktreeGitImprovement.md
+```
+
+### ACD-320 - Source Control Accordion State
+
+```yaml
+plan_unit_id: ACD-320
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Per-project Source Control accordion open/close state persists at
+  `config:project:{pid}:source_control.accordion_state` using the JSON shape `{
+  "Changes": true, "Worktrees": false, "Branches/Stash": false, "History":
+  false, "Graph": false }`, and inline diagnostics may render the same object.
+gui_related: false
+gui_classification_reason: Accordion state persistence is storage/config behavior.
+depends_on: [ACD-319]
+unblocks: [ACD-321]
+acceptance_criteria:
+  - Source Control accordion open/close state persists per project at the specified config key.
+  - Persisted accordion state uses the specified JSON shape.
+  - Inline diagnostics may render the same persisted object.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: source_control_state
+reasoning_tier: standard
+context_scope: source_control
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: source_control_accordion_state
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0147
+preserved_exact_tokens:
+  - "config:project:{pid}:source_control.accordion_state"
+  - "{\"Changes\": true, \"Worktrees\": false, \"Branches/Stash\": false, \"History\": false, \"Graph\": false}"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 17953-17964 >>>
+### ACD-321 - Source Control Worktree Filter State
+
+```yaml
+plan_unit_id: ACD-321
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Source Control section order is Changes, Worktrees, Branches/Stash, History,
+  Graph; scroll position is not persisted; each project state is independent;
+  expanded sections may scroll internally while the outer accordion scrolls;
+  Worktrees filter is `All | Threads | Orchestrator | Manual`, persists as

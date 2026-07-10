@@ -1,0 +1,390 @@
+<<< CONTEXT_BEFORE canonical_document_lines=11229-11240 >>>
+L00011229	- single_question
+L00011230	- unavailable
+L00011231	- dismissed
+L00011232	negative_constraints:
+L00011233	- Questionnaire persistence must not invent chat-local aliases.
+L00011234	preserved_contractrefs: []
+L00011235	compatibility_only_notes: []
+L00011236	stale_retired_dispositions: []
+L00011237	owner_hints:
+L00011238	- Plans/storage-plan.md
+L00011239	```
+L00011240	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=11241-11601 >>>
+L00011241	### SP-154 - Question Card Composer Control Persistence Boundary
+L00011242	
+L00011243	```yaml
+L00011244	plan_unit_id: SP-154
+L00011245	unit_type: requirement
+L00011246	status: accepted
+L00011247	owner_doc: Plans/storage-plan.md
+L00011248	canonical_text: Shared question-card persistence covers single and multi-question flows with draft, incomplete, ready_to_submit, submitted, and paused states; composer send/resend controls remain UI controls while storage records state transition and active-run linkage.
+L00011249	gui_related: true
+L00011250	gui_classification_reason: This unit preserves user-visible question-card and composer control persistence boundaries.
+L00011251	split_recommended: false
+L00011252	depends_on:
+L00011253	- PDS-003
+L00011254	- PDS-004
+L00011255	- PDS-005
+L00011256	- PNC-001
+L00011257	unblocks: []
+L00011258	acceptance_criteria:
+L00011259	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00011260	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00011261	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00011262	validation_surfaces:
+L00011263	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011264	- python3 scripts/pm-plan-index.py validate
+L00011265	risk_class: storage_plan_drift
+L00011266	reasoning_tier: standard
+L00011267	context_scope: storage_batch_178_chat_runtime_state
+L00011268	implementation_surfaces:
+L00011269	- Plans/storage-plan.md
+L00011270	node_compile_hint:
+L00011271	  mode: question_card_composer_control_persistence_boundary
+L00011272	  create_worknodes: false
+L00011273	source_lineage:
+L00011274	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0092
+L00011275	preserved_exact_tokens:
+L00011276	- Shared question-card persistence
+L00011277	- single-question
+L00011278	- multi-question
+L00011279	- draft
+L00011280	- /draft
+L00011281	- incomplete
+L00011282	- ready_to_submit
+L00011283	- submitted
+L00011284	- paused
+L00011285	- /send
+L00011286	- /resend
+L00011287	- state transition
+L00011288	- active-run linkage
+L00011289	- rewind later work
+L00011290	- pause follow
+L00011291	- restore jump-to-latest context
+L00011292	negative_constraints: []
+L00011293	preserved_contractrefs: []
+L00011294	compatibility_only_notes:
+L00011295	- Composer controls may expose /send and /resend, but storage records only state transition and active-run linkage.
+L00011296	stale_retired_dispositions: []
+L00011297	owner_hints:
+L00011298	- Plans/storage-plan.md
+L00011299	```
+L00011300	
+L00011301	### SP-155 - Plan Deep Plan Normalized TODO Projection Contract
+L00011302	
+L00011303	```yaml
+L00011304	plan_unit_id: SP-155
+L00011305	unit_type: requirement
+L00011306	status: accepted
+L00011307	owner_doc: Plans/storage-plan.md
+L00011308	canonical_text: Plan and Deep Plan project to a normalized TODO list with a named Q&A loop, locked TODO schema/status, explicit revision states, structural-edit gating after approval, bounded revision history, and chat.plan_todo_updated for durable TODO mutations.
+L00011309	gui_related: true
+L00011310	gui_classification_reason: This unit preserves user-visible Plan/Deep Plan TODO projection and panel behavior.
+L00011311	split_recommended: false
+L00011312	depends_on:
+L00011313	- PDS-003
+L00011314	- PDS-004
+L00011315	- PDS-005
+L00011316	- PNC-001
+L00011317	unblocks: []
+L00011318	acceptance_criteria:
+L00011319	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00011320	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00011321	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00011322	validation_surfaces:
+L00011323	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011324	- python3 scripts/pm-plan-index.py validate
+L00011325	risk_class: storage_plan_drift
+L00011326	reasoning_tier: standard
+L00011327	context_scope: storage_batch_178_chat_runtime_state
+L00011328	implementation_surfaces:
+L00011329	- Plans/storage-plan.md
+L00011330	node_compile_hint:
+L00011331	  mode: plan_deep_plan_normalized_todo_projection_contract
+L00011332	  create_worknodes: false
+L00011333	source_lineage:
+L00011334	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0093
+L00011335	preserved_exact_tokens:
+L00011336	- Plan
+L00011337	- Deep Plan
+L00011338	- normalized TODO list
+L00011339	- Q&A loop
+L00011340	- locked TODO item schema/status set
+L00011341	- revision states
+L00011342	- structural-edit gating after approval
+L00011343	- bounded revision history
+L00011344	- chat.plan_todo_updated
+L00011345	- todoread
+L00011346	- todowrite
+L00011347	- ask/plan mode
+L00011348	- Deep Plan edits
+L00011349	negative_constraints:
+L00011350	- chat.plan_todo_updated must have an explicit owner-contract definition for durable normalized TODO mutation.
+L00011351	- todoread must not survive as a source_surface mutation source.
+L00011352	preserved_contractrefs:
+L00011353	- 'ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events'
+L00011354	compatibility_only_notes: []
+L00011355	stale_retired_dispositions: []
+L00011356	owner_hints:
+L00011357	- Plans/storage-plan.md
+L00011358	```
+L00011359	
+L00011360	### SP-156 - TODO Schema Status Revision And Legacy Progress Vocabulary
+L00011361	
+L00011362	```yaml
+L00011363	plan_unit_id: SP-156
+L00011364	unit_type: requirement
+L00011365	status: accepted
+L00011366	owner_doc: Plans/storage-plan.md
+L00011367	canonical_text: TODO storage preserves item schema fields, item status enum, plan-level superseded state, structural edit meaning, TODO tool behavior, Deep Plan resync rule, and legacy XV2 inline progress strings as plan-level visibility labels rather than TODO item statuses.
+L00011368	gui_related: false
+L00011369	gui_classification_reason: This unit preserves backend TODO schema, status, revision, and legacy label semantics.
+L00011370	split_recommended: false
+L00011371	depends_on:
+L00011372	- PDS-003
+L00011373	- PDS-004
+L00011374	- PDS-005
+L00011375	- PNC-001
+L00011376	unblocks: []
+L00011377	acceptance_criteria:
+L00011378	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00011379	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00011380	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00011381	validation_surfaces:
+L00011382	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011383	- python3 scripts/pm-plan-index.py validate
+L00011384	risk_class: storage_plan_drift
+L00011385	reasoning_tier: standard
+L00011386	context_scope: storage_batch_178_chat_runtime_state
+L00011387	implementation_surfaces:
+L00011388	- Plans/storage-plan.md
+L00011389	node_compile_hint:
+L00011390	  mode: todo_schema_status_revision_and_legacy_progress_vocabulary
+L00011391	  create_worknodes: false
+L00011392	source_lineage:
+L00011393	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0093
+L00011394	preserved_exact_tokens:
+L00011395	- todo_id
+L00011396	- title
+L00011397	- summary
+L00011398	- status
+L00011399	- dependencies[]
+L00011400	- order_index
+L00011401	- owner_hint
+L00011402	- verification_hint
+L00011403	- notes
+L00011404	- pending | in_progress | completed | blocked | skipped
+L00011405	- superseded (plan-level only)
+L00011406	- draft
+L00011407	- approved
+L00011408	- executing
+L00011409	- Structural edits = adding / removing / reordering TODO items
+L00011410	- todowrite can create, reorder, update statuses/notes
+L00011411	- todoread returns current normalized list for active thread/run
+L00011412	- Remove todowrite from blanket ask/plan mode auto-deny
+L00011413	- editing Deep Plan markdown
+L00011414	- BEFORE execution begins
+L00011415	- Superseded TODO N/M
+L00011416	- Superseded TODO 5/5
+L00011417	negative_constraints: []
+L00011418	preserved_contractrefs:
+L00011419	- 'ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events'
+L00011420	compatibility_only_notes:
+L00011421	- Legacy XV2 inline progress strings are plan-level visibility labels for superseded plans, not TODO item statuses.
+L00011422	stale_retired_dispositions: []
+L00011423	owner_hints:
+L00011424	- Plans/storage-plan.md
+L00011425	```
+L00011426	
+L00011427	### SP-157 - TODO Panel Verification And Compact Progress Boundary
+L00011428	
+L00011429	```yaml
+L00011430	plan_unit_id: SP-157
+L00011431	unit_type: requirement
+L00011432	status: accepted
+L00011433	owner_doc: Plans/storage-plan.md
+L00011434	canonical_text: The Assistant chat TODO panel shows verification_hint per item, compact inline progress examples, and durable plan refresh behavior so auto-use heuristic changes emit chat.plan_todo_updated before execution and do not silently replace the current panel.
+L00011435	gui_related: true
+L00011436	gui_classification_reason: This unit preserves visible TODO panel verification hints and compact progress behavior.
+L00011437	split_recommended: false
+L00011438	depends_on:
+L00011439	- PDS-003
+L00011440	- PDS-004
+L00011441	- PDS-005
+L00011442	- PNC-001
+L00011443	unblocks: []
+L00011444	acceptance_criteria:
+L00011445	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00011446	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00011447	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00011448	validation_surfaces:
+L00011449	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011450	- python3 scripts/pm-plan-index.py validate
+L00011451	risk_class: storage_plan_drift
+L00011452	reasoning_tier: standard
+L00011453	context_scope: storage_batch_178_chat_runtime_state
+L00011454	implementation_surfaces:
+L00011455	- Plans/storage-plan.md
+L00011456	node_compile_hint:
+L00011457	  mode: todo_panel_verification_and_compact_progress_boundary
+L00011458	  create_worknodes: false
+L00011459	source_lineage:
+L00011460	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0093
+L00011461	preserved_exact_tokens:
+L00011462	- verification_hint
+L00011463	- plan-level summary
+L00011464	- Inline progress
+L00011465	- Started TODO 2/5
+L00011466	- Completed TODO 2/5
+L00011467	- Blocked TODO 3/5
+L00011468	- Skipped TODO 4/5
+L00011469	- Superseded TODO 5/5
+L00011470	- auto-use heuristic
+L00011471	- draft or refreshed plan state
+L00011472	- chat.plan_todo_updated
+L00011473	- current plan panel
+L00011474	- durable event
+L00011475	negative_constraints:
+L00011476	- Inline progress must not duplicate the full checklist on every turn.
+L00011477	- Auto-use heuristic changes must not silently replace the current plan panel without a durable event.
+L00011478	preserved_contractrefs:
+L00011479	- 'ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events'
+L00011480	compatibility_only_notes: []
+L00011481	stale_retired_dispositions: []
+L00011482	owner_hints:
+L00011483	- Plans/storage-plan.md
+L00011484	```
+L00011485	
+L00011486	### SP-158 - Durable TODO Mutation Event And Source-Of-Truth Boundary
+L00011487	
+L00011488	```yaml
+L00011489	plan_unit_id: SP-158
+L00011490	unit_type: requirement
+L00011491	status: accepted
+L00011492	owner_doc: Plans/storage-plan.md
+L00011493	canonical_text: Durable TODO mutation events persist plan/todo ids, changed field, old/new values, and mutation source, while the Assistant chat plan panel remains the visible source-of-truth and storage owns durable normalized TODO projection consumed by related surfaces.
+L00011494	gui_related: true
+L00011495	gui_classification_reason: This unit preserves visible TODO source-of-truth behavior and backend durable mutation event payloads.
+L00011496	split_recommended: false
+L00011497	depends_on:
+L00011498	- PDS-003
+L00011499	- PDS-004
+L00011500	- PDS-005
+L00011501	- PNC-001
+L00011502	unblocks: []
+L00011503	acceptance_criteria:
+L00011504	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00011505	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00011506	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00011507	validation_surfaces:
+L00011508	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011509	- python3 scripts/pm-plan-index.py validate
+L00011510	risk_class: storage_plan_drift
+L00011511	reasoning_tier: standard
+L00011512	context_scope: storage_batch_178_chat_runtime_state
+L00011513	implementation_surfaces:
+L00011514	- Plans/storage-plan.md
+L00011515	node_compile_hint:
+L00011516	  mode: durable_todo_mutation_event_and_source_of_truth_boundary
+L00011517	  create_worknodes: false
+L00011518	source_lineage:
+L00011519	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0093
+L00011520	preserved_exact_tokens:
+L00011521	- chat.plan_todo_updated
+L00011522	- '{ plan_id: string, todo_id: string, field: string, old_value: any, new_value: any, source: "agent" | "user" }'
+L00011523	- 'source: "agent" | "user"'
+L00011524	- /source-of-truth
+L00011525	- /todo/tool
+L00011526	- todoread
+L00011527	- todowrite
+L00011528	- question cards
+L00011529	- web activity cards
+L00011530	- assistant runtime disclosures
+L00011531	- /consumer
+L00011532	- pre-approval structural changes
+L00011533	- new TODO revision event
+L00011534	negative_constraints:
+L00011535	- After execution begins, reorder or status corrections create a new TODO revision event instead of mutating the approved plan in place.
+L00011536	preserved_contractrefs:
+L00011537	- 'ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events'
+L00011538	compatibility_only_notes: []
+L00011539	stale_retired_dispositions: []
+L00011540	owner_hints:
+L00011541	- Plans/storage-plan.md
+L00011542	```
+L00011543	
+L00011544	### SP-159 - Activity Transparency Bridge And Blocked Payload Owner
+L00011545	
+L00011546	```yaml
+L00011547	plan_unit_id: SP-159
+L00011548	unit_type: requirement
+L00011549	status: accepted
+L00011550	owner_doc: Plans/storage-plan.md
+L00011551	canonical_text: Activity transparency payloads carry canonical runtime bridge fields and receipt refs; storage owns blocked/denied payload persistence, adapter-selection payloads, approval scope linkage, and immutable historical snapshots without allowing chat, GUI, or web-tool local variants.
+L00011552	gui_related: true
+L00011553	gui_classification_reason: This unit preserves visible activity transparency payloads and blocked/denied recovery context.
+L00011554	split_recommended: false
+L00011555	depends_on:
+L00011556	- PDS-003
+L00011557	- PDS-004
+L00011558	- PDS-005
+L00011559	- PNC-001
+L00011560	unblocks: []
+L00011561	acceptance_criteria:
+L00011562	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00011563	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00011564	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00011565	validation_surfaces:
+L00011566	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00011567	- python3 scripts/pm-plan-index.py validate
+L00011568	risk_class: storage_plan_drift
+L00011569	reasoning_tier: standard
+L00011570	context_scope: storage_batch_178_chat_runtime_state
+L00011571	implementation_surfaces:
+L00011572	- Plans/storage-plan.md
+L00011573	node_compile_hint:
+L00011574	  mode: activity_transparency_bridge_and_blocked_payload_owner
+L00011575	  create_worknodes: false
+L00011576	source_lineage:
+L00011577	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0094
+L00011578	preserved_exact_tokens:
+L00011579	- Activity transparency payloads
+L00011580	- canonical runtime bridge fields
+L00011581	- receipt refs
+L00011582	- blocked_reason_code
+L00011583	- allowed_action_ids[]
+L00011584	- approval scope linkage
+L00011585	- immutable historical snapshots
+L00011586	- Adapter-selection payloads
+L00011587	- requested/effective adapter identity
+L00011588	- adapter_selection_reason
+L00011589	- subordinate provider bridge refs
+L00011590	- chat, GUI, or web-tool consumers
+L00011591	- local variants
+L00011592	negative_constraints:
+L00011593	- Chat, GUI, and web-tool consumers must not invent local variants for adapter-selection payloads.
+L00011594	preserved_contractrefs:
+L00011595	- 'ContractRef: Plans/Tools.md#8.0 Event payloads (seglog), Plans/Runtime_Artifacts_Panel.md#Cross-Surface Operation Receipt Linkage Addendum (2026-03-12)'
+L00011596	compatibility_only_notes: []
+L00011597	stale_retired_dispositions: []
+L00011598	owner_hints:
+L00011599	- Plans/storage-plan.md
+L00011600	```
+L00011601	
+
+<<< CONTEXT_AFTER canonical_document_lines=11602-11613 >>>
+L00011602	### SP-160 - Long-Running Progress And Question TODO Carry-Through
+L00011603	
+L00011604	```yaml
+L00011605	plan_unit_id: SP-160
+L00011606	unit_type: requirement
+L00011607	status: accepted
+L00011608	owner_doc: Plans/storage-plan.md
+L00011609	canonical_text: Long-running activity transparency persists progress_event payloads and cancellation fields, while question/TODO/runtime state, source-route lineage, runtime receipts, and activity payloads carry through storage rather than stale consumer-only variants.
+L00011610	gui_related: true
+L00011611	gui_classification_reason: This unit preserves user-visible long-running progress, cancellation, and question/TODO activity state.
+L00011612	split_recommended: false
+L00011613	depends_on:

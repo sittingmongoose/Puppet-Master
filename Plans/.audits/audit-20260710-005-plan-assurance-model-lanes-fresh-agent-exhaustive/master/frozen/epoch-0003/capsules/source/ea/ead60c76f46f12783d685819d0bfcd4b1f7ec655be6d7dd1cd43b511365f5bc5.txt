@@ -1,0 +1,394 @@
+<<< CONTEXT_BEFORE 2754-2765 >>>
+- terminal-only messaging
+negative_constraints:
+- The feature does not rely on terminal-only messaging.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/UI_Command_Catalog.md
+- Plans/Wiring_Matrix.md
+```
+
+
+<<< AUTHORITATIVE_CORE 2766-3130 >>>
+### SMPFS-035 - Branch Restore Boundary And Lineage
+
+```yaml
+plan_unit_id: SMPFS-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Branching conversations always start from a restore point or equivalent preserved state boundary, create a new thread/session identity linked to the source branch and restore point, and leave the source thread intact.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- ACD-008
+- SP-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-035 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: branch_restore_lineage_drift
+reasoning_tier: standard
+context_scope: branching_conversations
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: branch_restore_boundary_lineage
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0025
+preserved_exact_tokens:
+- Branching Conversations (Restore Then Fork)
+- restore point
+- preserved state boundary
+- new thread/session identity
+- source branch
+- source thread remains intact
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/assistant-chat-design.md
+- Plans/storage-plan.md
+```
+
+### SMPFS-036 - Branch Navigation And Confirmation UI
+
+```yaml
+plan_unit_id: SMPFS-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Branch labels, source-origin lineage, branch origin time, and dirty or active thread confirmation are visible in history and navigation surfaces before branching from risky source state.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- ACD-008
+- UCC-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-036 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: branch_navigation_ui_drift
+reasoning_tier: standard
+context_scope: branching_gui
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: branch_navigation_confirmation_ui
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0025
+preserved_exact_tokens:
+- branch labels
+- source-origin lineage
+- branch origin time
+- history/navigation surfaces
+- dirty or active thread
+- confirmation
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/assistant-chat-design.md
+- Plans/UI_Command_Catalog.md
+```
+
+### SMPFS-037 - Project Instructions Runtime Source Boundary
+
+```yaml
+plan_unit_id: SMPFS-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: The in-app project instructions editor writes the same AGENTS-style guidance, project rules, or equivalent instruction files that the runtime consumes, without creating a shadow runtime source.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- SP-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-037 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: instructions_source_boundary_drift
+reasoning_tier: standard
+context_scope: project_instructions
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: project_instructions_runtime_source_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0026
+preserved_exact_tokens:
+- In-App Project Instructions Editor
+- project-rules/instruction files
+- AGENTS-style guidance
+- project rules
+- shadow runtime source
+negative_constraints:
+- Editing AGENTS-style guidance, project rules, or equivalent instruction files cannot create a shadow runtime source.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/storage-plan.md
+```
+
+### SMPFS-038 - Project Instructions Editor UI
+
+```yaml
+plan_unit_id: SMPFS-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: The project instructions editor exposes path, scope, validation or lint feedback, and dirty state for runtime-consumed instruction files.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- UCC-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-038 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: instructions_editor_ui_drift
+reasoning_tier: standard
+context_scope: project_instructions_gui
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: project_instructions_editor_ui
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0026
+preserved_exact_tokens:
+- path
+- scope
+- validation/lint feedback
+- dirty state
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/UI_Command_Catalog.md
+```
+
+### SMPFS-039 - Mention Picker Sources
+
+```yaml
+plan_unit_id: SMPFS-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: The @ mention picker is rooted in the active project context and supports recent files, modified files, symbol-aware results when available, folder navigation, and Assistant plus Interview chat surfaces.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- UCC-001
+- ACD-008
+unblocks: []
+acceptance_criteria:
+- SMPFS-039 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: mention_picker_source_drift
+reasoning_tier: standard
+context_scope: mention_picker_gui
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: mention_picker_sources
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0027
+preserved_exact_tokens:
+- '@'
+- active project context
+- recent files
+- modified files
+- symbol-aware results
+- folder navigation
+- Assistant
+- Interview chat
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/UI_Command_Catalog.md
+- Plans/assistant-chat-design.md
+```
+
+### SMPFS-040 - Mention Result Identity
+
+```yaml
+plan_unit_id: SMPFS-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Mention results preserve the identity required by prompt assembly and click-to-open behavior across Assistant and Interview chat surfaces.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- ACD-008
+- UCC-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-040 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: mention_identity_drift
+reasoning_tier: standard
+context_scope: mention_identity
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: mention_result_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0027
+preserved_exact_tokens:
+- mention result
+- prompt assembly
+- click-to-open behavior
+- Assistant
+- Interview chat
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/assistant-chat-design.md
+- Plans/UI_Command_Catalog.md
+```
+
+### SMPFS-041 - Stream Timing Identity
+
+```yaml
+plan_unit_id: SMPFS-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Stream timing is tied to canonical assistant message or run identity and can be aggregated later without recomputing from rendered text.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- ACD-008
+- UF-001
+unblocks: []
+acceptance_criteria:
+- SMPFS-041 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: stream_timing_identity_drift
+reasoning_tier: standard
+context_scope: stream_timing
+implementation_surfaces:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: stream_timing_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0028
+preserved_exact_tokens:
+- Stream Timers and Segment Durations
+- assistant turn/segment
+- event stream
+- canonical message/run identity
+- aggregated later
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Section15_MVP_Promoted_Features_Spec.md
+- Plans/assistant-chat-design.md
+- Plans/usage-feature.md
+```
+
+
+<<< CONTEXT_AFTER 3131-3142 >>>
+### SMPFS-042 - Lightweight Timer UI
+
+```yaml
+plan_unit_id: SMPFS-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+canonical_text: Timer UI remains lightweight, visible per assistant turn or segment when supported, and must avoid reflow or flicker in long threads.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:

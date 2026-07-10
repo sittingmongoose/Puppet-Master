@@ -1,0 +1,405 @@
+<<< CONTEXT_BEFORE canonical_document_lines=22704-22715 >>>
+L00022704	preserved_exact_tokens: ["@file", "assistant_chat_file_mention", "file mention autocomplete", "preserve service ranking order", "stale/fallback/remote/SSH state", "hidden-by-policy", "exact verification"]
+L00022705	negative_constraints:
+L00022706	  - Do not run a second undisclosed fuzzysort that changes shared ranking.
+L00022707	  - Do not leak blocked paths through mention candidates, counts, or rank gaps.
+L00022708	owner_hints: [Plans/assistant-chat-design.md, Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
+L00022709	```
+L00022710	
+L00022711	
+L00022712	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00022713	
+L00022714	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00022715	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=22716-23091 >>>
+L00022716	### ACD-425 - Assistant Chat Vision Bridge Controls
+L00022717	
+L00022718	```yaml
+L00022719	plan_unit_id: ACD-425
+L00022720	unit_type: requirement
+L00022721	status: accepted
+L00022722	owner_doc: Plans/assistant-chat-design.md
+L00022723	canonical_text: 'Assistant Chat surfaces vision bridge use with first-party controls and labels: selected image/source
+L00022724	  chip, bridge-derived description artifact, provider/model used, requested/effective model disclosure, freshness/cache
+L00022725	  state, permission/degraded state, inspect, rerun with question, copy description, attach result, and manage remembered
+L00022726	  permission. Screenshot to Chat, composer chips, activity cards, runtime artifact/detail panels, and requested/effective
+L00022727	  model chips are directional PMConcept lineage only, not copied HTML/CSS.'
+L00022728	gui_related: true
+L00022729	gui_classification_reason: Defines Assistant Chat composer chips, artifact chips, controls, and model/source disclosure
+L00022730	  for vision bridge.
+L00022731	depends_on:
+L00022732	- T-165
+L00022733	- RAP-035
+L00022734	- UCC-101
+L00022735	unblocks:
+L00022736	- ATS-013
+L00022737	acceptance_criteria:
+L00022738	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00022739	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00022740	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00022741	  are created by this compile.
+L00022742	validation_surfaces:
+L00022743	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00022744	- python3 scripts/pm-plan-index.py validate
+L00022745	- git diff --check
+L00022746	risk_class: vision_bridge_chat_opacity
+L00022747	reasoning_tier: standard
+L00022748	context_scope: assistant_chat_vision_bridge
+L00022749	implementation_surfaces:
+L00022750	- Plans/assistant-chat-design.md
+L00022751	- future Assistant Chat composer and artifact controls
+L00022752	node_compile_hint:
+L00022753	  mode: assistant_chat_vision_bridge_controls
+L00022754	  create_worknodes: false
+L00022755	  create_nodeseeds: false
+L00022756	source_lineage:
+L00022757	- pldg-20260626-001-feature-name:atom-0075
+L00022758	- pldg-20260626-001-feature-name:atom-0078
+L00022759	- pldg-20260626-001-feature-name:atom-0082
+L00022760	- pldg-20260626-001-feature-name:atom-0153
+L00022761	- Plans/Runtime_Artifacts_Panel.md
+L00022762	- Plans/Prompt_Pipeline.md
+L00022763	- chat:vision-bridge-defaults-answer
+L00022764	- external:github.com/alfaoz/opencode-see-image@cde1615f6dfc9039c58da6813112ee53391b5b49
+L00022765	- chat:opencode-see-image-request
+L00022766	- chat:vision-pressure-test-request
+L00022767	- chat:vision-pressure-test-defaults-answer
+L00022768	- Plans/FileSafe.md
+L00022769	- chat:pmconcept-gui-reference
+L00022770	- Concepts/PMConcept.html#Screenshot-to-Chat
+L00022771	- Concepts/PMConcept.html#composer-chip
+L00022772	- Concepts/PMConcept.html#activity-card
+L00022773	- Concepts/PMConcept.html#requested-effective-model
+L00022774	source_atom_ids:
+L00022775	- atom-0075
+L00022776	- atom-0078
+L00022777	- atom-0082
+L00022778	- atom-0153
+L00022779	decision_refs:
+L00022780	- dec-0014
+L00022781	- dec-0015
+L00022782	- dec-0016
+L00022783	- dec-0017
+L00022784	- dec-0024
+L00022785	preserved_exact_tokens:
+L00022786	- chat attachments
+L00022787	- runtime artifacts
+L00022788	- screenshots
+L00022789	- project files
+L00022790	- clipboard
+L00022791	- recent OS screenshots
+L00022792	- FileSafe
+L00022793	- 3. not deferred
+L00022794	- GUI
+L00022795	- provider/model used
+L00022796	- derived description
+L00022797	- source image/artifact link
+L00022798	- freshness/cache state
+L00022799	- inspect
+L00022800	- rerun with a question
+L00022801	- copy description
+L00022802	- attach result
+L00022803	- always accept
+L00022804	- stops asking
+L00022805	- current-turn attachment
+L00022806	- selected artifact
+L00022807	- project file allowed by FileSafe
+L00022808	- clipboard image
+L00022809	- recent OS screenshot picker
+L00022810	- ambiguous
+L00022811	- hidden Desktop/Downloads scraping
+L00022812	- 'yes'
+L00022813	- Screenshot to Chat
+L00022814	- composer-chip
+L00022815	- activity-card
+L00022816	- Requested Model
+L00022817	- Effective Model
+L00022818	- inspect/rerun
+L00022819	- provider/model disclosure
+L00022820	negative_constraints:
+L00022821	- Do not defer clipboard or recent OS screenshot support out of MVP.
+L00022822	- Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default without PM-owned permission
+L00022823	  and ingestion rules.
+L00022824	- Do not bypass FileSafe or artifact access policy when resolving project images.
+L00022825	- Do not inline raw screenshots into prompts when artifact refs plus bounded summaries are required.
+L00022826	- Do not hide bridge outputs inside opaque provider logs only.
+L00022827	- Do not show the non-vision model's answer as if it directly saw the image when it consumed a derived description.
+L00022828	- Do not omit failure/denial states from the user-visible surface.
+L00022829	- Do not omit a user-visible way to inspect or reset remembered always-accept behavior.
+L00022830	- Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default.
+L00022831	- Do not choose among ambiguous recent screenshots without user-visible selection or clear recency evidence.
+L00022832	- Do not bypass FileSafe or artifact permissions for project-file image sources.
+L00022833	- Do not make vision bridge artifacts feel like detached plugin output.
+L00022834	- Do not hide requested/effective model or fallback state when the bridge uses a separate vision-capable route.
+L00022835	- Do not replace accepted PM-owned permission/disclosure behavior with PMConcept demo-only controls.
+L00022836	owner_hints:
+L00022837	- Plans/Runtime_Artifacts_Panel.md
+L00022838	- Plans/Project_Output_Artifacts.md
+L00022839	- Plans/FileSafe.md
+L00022840	- Plans/Prompt_Pipeline.md
+L00022841	- Plans/assistant-chat-design.md
+L00022842	- Plans/FinalGUISpec.md
+L00022843	- Plans/UI_Command_Catalog.md
+L00022844	- Plans/Orchestrator_Page.md
+L00022845	- Plans/Permissions_System.md
+L00022846	- Plans/Media_Generation_and_Capabilities.md
+L00022847	- Plans/Models_System.md
+L00022848	```
+L00022849	
+L00022850	### ACD-426 - Teach Teacher Threaded Guidance Workflow
+L00022851	
+L00022852	```yaml
+L00022853	plan_unit_id: ACD-426
+L00022854	unit_type: requirement
+L00022855	status: accepted
+L00022856	owner_doc: Plans/assistant-chat-design.md
+L00022857	canonical_text: Teach is the feature and Teacher is the Persona used inside it. Teacher runs as a normal Assistant
+L00022858	  Chat thread/persona mode, launched by help icons, /teach, or natural-language summons, with current-surface context,
+L00022859	  role/persona badge, model/context/source chips, thread summary/state, activity cards, and handoff disclosure.
+L00022860	  Teach durable memory capture stays distinct from one-off Teacher-guided instruction; eligible answers may offer
+L00022861	  Save as taught memory through an explicit capture card with scope, source, secret-safety, conflict/supersession,
+L00022862	  Save/Cancel, and later inspect/narrow/supersede/revoke/unlock actions.
+L00022863	gui_related: true
+L00022864	gui_classification_reason: Defines Teacher-in-chat threads, help launches, activity cards, capture UI, and thread
+L00022865	  states.
+L00022866	depends_on:
+L00022867	- P-055
+L00022868	- MS-117
+L00022869	- PP-056
+L00022870	unblocks:
+L00022871	- G-026
+L00022872	- ATS-014
+L00022873	acceptance_criteria:
+L00022874	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00022875	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00022876	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00022877	  are created by this compile.
+L00022878	validation_surfaces:
+L00022879	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00022880	- python3 scripts/pm-plan-index.py validate
+L00022881	- git diff --check
+L00022882	risk_class: teach_threaded_guidance_gap
+L00022883	reasoning_tier: high
+L00022884	context_scope: assistant_chat_teach_teacher
+L00022885	implementation_surfaces:
+L00022886	- Plans/assistant-chat-design.md
+L00022887	- future Assistant Chat Teacher threads
+L00022888	node_compile_hint:
+L00022889	  mode: teach_teacher_threaded_guidance
+L00022890	  create_worknodes: false
+L00022891	  create_nodeseeds: false
+L00022892	source_lineage:
+L00022893	- pldg-20260626-001-feature-name:atom-0090
+L00022894	- pldg-20260626-001-feature-name:atom-0093
+L00022895	- pldg-20260626-001-feature-name:atom-0094
+L00022896	- pldg-20260626-001-feature-name:atom-0097
+L00022897	- pldg-20260626-001-feature-name:atom-0099
+L00022898	- pldg-20260626-001-feature-name:atom-0103
+L00022899	- pldg-20260626-001-feature-name:atom-0104
+L00022900	- pldg-20260626-001-feature-name:atom-0107
+L00022901	- pldg-20260626-001-feature-name:atom-0139
+L00022902	- pldg-20260626-001-feature-name:atom-0141
+L00022903	- pldg-20260626-001-feature-name:atom-0145
+L00022904	- pldg-20260626-001-feature-name:atom-0146
+L00022905	- pldg-20260626-001-feature-name:atom-0151
+L00022906	- chat:teacher-feature-initial-framing
+L00022907	- chat:teach-teacher-correction
+L00022908	- Plans/Personas.md#RESERVED-PERSONAS
+L00022909	- Plans/Personas.md#CORE-PERSONA-CATALOG
+L00022910	- Plans/assistant-chat-design.md#6-Teach
+L00022911	- Plans/Personas.md#11.8-teacher
+L00022912	- Plans/FinalGUISpec.md
+L00022913	- Plans/UI_Command_Catalog.md#2.6A-Chat-thread-lifecycle-commands
+L00022914	- memory:MEMORY.md:365
+L00022915	- Plans/assistant-chat-design.md
+L00022916	- chat:teach-visual-specificity-challenge
+L00022917	- chat:work-through-teach-gaps
+L00022918	- Plans/FinalGUISpec.md#F3-016-help-and-contextual-affordances
+L00022919	- chat:teach-bundle-accepted-pmconcept-reference
+L00022920	- Plans/FinalGUISpec.md#19.5-runtime-display-requirements
+L00022921	- Plans/Runtime_Artifacts_Panel.md#artifact-audit-visibility
+L00022922	- Plans/assistant-chat-design.md#6-teach
+L00022923	- chat:assistant-chat-threads-modeled-in-concept
+L00022924	- Concepts/PMConcept.html#chat-panel
+L00022925	- Concepts/PMConcept.html#chat-thread-sidebar
+L00022926	- Concepts/PMConcept.html#switchToChatThread
+L00022927	source_atom_ids:
+L00022928	- atom-0090
+L00022929	- atom-0093
+L00022930	- atom-0094
+L00022931	- atom-0097
+L00022932	- atom-0099
+L00022933	- atom-0103
+L00022934	- atom-0104
+L00022935	- atom-0107
+L00022936	- atom-0139
+L00022937	- atom-0141
+L00022938	- atom-0145
+L00022939	- atom-0146
+L00022940	- atom-0151
+L00022941	decision_refs:
+L00022942	- dec-0018
+L00022943	- dec-0019
+L00022944	- dec-0020
+L00022945	- dec-0021
+L00022946	- dec-0022
+L00022947	- dec-0023
+L00022948	- dec-0024
+L00022949	correction_refs:
+L00022950	- corr-0001
+L00022951	- corr-0002
+L00022952	preserved_exact_tokens:
+L00022953	- Teach feature
+L00022954	- Teacher persona
+L00022955	- Teacher is also a persona(used for the teacher feature)
+L00022956	- requested_persona
+L00022957	- effective_persona
+L00022958	- implimentation ready
+L00022959	- know everything in PM
+L00022960	- how it works
+L00022961	- all the capabilities of PM
+L00022962	- how the user interacts with it
+L00022963	- teacher can control the Gui
+L00022964	- help icon
+L00022965	- new thread
+L00022966	- Teach
+L00022967	- Teacher
+L00022968	- remember that...
+L00022969	- for this repo always...
+L00022970	- please prefer...
+L00022971	- ordinary one-off chat instructions do not become taught knowledge unless the user explicitly confirms persistence
+L00022972	- clicked
+L00022973	- brings the user to the assistant chat window
+L00022974	- opens a new thread
+L00022975	- assistant chat threads
+L00022976	- show what its doing
+L00022977	- blocked
+L00022978	- skipped
+L00022979	- requires confirmation
+L00022980	- handoff
+L00022981	- how it will look
+L00022982	- major page/panel headers
+L00022983	- tooltip
+L00022984	- new Teacher thread
+L00022985	- current surface
+L00022986	- assistant chat window
+L00022987	- persona badge
+L00022988	- context chip
+L00022989	- low-end/fast model
+L00022990	- How it will show the user
+L00022991	- Opening Settings > Models
+L00022992	- Highlighting
+L00022993	- Waiting for confirmation
+L00022994	- Blocked
+L00022995	- Handing off
+L00022996	- Teacher mode
+L00022997	- Teacher badge
+L00022998	- model chip
+L00022999	- source disclosure
+L00023000	- Teacher mode header
+L00023001	- requested/effective Persona
+L00023002	- current surface/context chip
+L00023003	- Teach capture availability
+L00023004	- Start guided walkthrough
+L00023005	- Show sources
+L00023006	- Save as taught memory
+L00023007	- Hand off
+L00023008	- Teacher activity
+L00023009	- source lookups
+L00023010	- permission waits
+L00023011	- model fallback
+L00023012	- missing coverage
+L00023013	- memory save prompts
+L00023014	- handoffs
+L00023015	- collapsible detail
+L00023016	- normalized fact
+L00023017	- scope selector
+L00023018	- thread
+L00023019	- project
+L00023020	- user
+L00023021	- source message/thread
+L00023022	- secret-safety warning
+L00023023	- conflict/supersession preview
+L00023024	- Save/Cancel
+L00023025	- inspect
+L00023026	- narrow
+L00023027	- supersede
+L00023028	- revoke
+L00023029	- unlock
+L00023030	- The assistant chat window and threads are modeled in the concept too.
+L00023031	- Assistant Chat
+L00023032	- persona
+L00023033	negative_constraints:
+L00023034	- Do not introduce `requested_persona_id` or `effective_persona_id` as canonical fields; those are stale aliases
+L00023035	  in Personas.md.
+L00023036	- Do not make Teacher a hidden subagent for this feature; existing Plans say `teacher` is user-facing and not subagent-only.
+L00023037	- Do not call Teach implementation-ready while Teacher-guided PM help and GUI-control behavior remain underspecified.
+L00023038	- Do not assume the existing durable Teach memory-capture section alone satisfies the user-facing teaching feature.
+L00023039	- Do not make Teacher-guided instruction automatically persist memory.
+L00023040	- Do not make durable Teach capture a closed mode overlay detached from the current thread runtime/mode selection.
+L00023041	- Do not weaken existing `user-locked` Teach records through automated cleanup or summarization.
+L00023042	- Do not reuse an unrelated active chat thread when the help-icon contract says to open a new teaching conversation.
+L00023043	- Do not launch Teacher without preserving current surface context needed for useful help.
+L00023044	- Do not replace Teacher launch with static help pages only.
+L00023045	- Do not let Teacher silently manipulate or navigate the GUI with no chat-visible activity trail.
+L00023046	- Do not hide blocked/skipped reasons or requested/effective Persona/model state when they affect the teaching flow.
+L00023047	- Do not let a low-end Teacher model continue silently when the task has become implementation/build work requiring
+L00023048	  handoff.
+L00023049	- Do not bury Teach behind only slash commands.
+L00023050	- Do not add a loud or decorative help affordance that competes with primary workflow controls.
+L00023051	- Do not launch Teacher without current-surface context.
+L00023052	- Do not create a detached Teacher-only shell that hides standard Assistant Chat controls.
+L00023053	- Do not omit requested/effective persona or model disclosure from the Teacher thread.
+L00023054	- Do not make Teacher launch a modal that blocks normal navigation as the only path.
+L00023055	- Do not make GUI guidance silent or invisible in the chat thread.
+L00023056	- Do not show vague activity text when PM knows the route/control/action.
+L00023057	- Do not hide blocked, skipped, fallback, or handoff state.
+L00023058	- Do not silently mutate an existing non-Teacher thread into Teacher mode.
+L00023059	- Do not lose the originating surface/control context during launch.
+L00023060	- Do not require users to know `/teach` before discovering help.
+L00023061	- Do not invent a separate chat product surface for Teacher.
+L00023062	- Do not hide requested/effective Persona/model state.
+L00023063	- Do not show Save as taught memory unless the content is eligible and user confirmation is still required.
+L00023064	- Do not make Teacher GUI actions silent.
+L00023065	- Do not hide blocked/degraded activity rows after the immediate step passes.
+L00023066	- Do not force users into raw traces for normal teaching transparency.
+L00023067	- Do not auto-save one-off Teacher guidance as taught memory.
+L00023068	- Do not persist secrets, tokens, passwords, or credentials.
+L00023069	- Do not allow conflicting teachings to silently overwrite prior locked records.
+L00023070	- Do not invent a separate Teach-only chat surface when the Assistant Chat thread model can carry Teacher.
+L00023071	- Do not lose Teacher persona/model/source/context disclosure when launching from a help icon or summon phrase.
+L00023072	- Do not hide thread state such as working, unread, blocked, degraded, draft, archived, or handoff state when relevant.
+L00023073	owner_hints:
+L00023074	- Plans/assistant-chat-design.md
+L00023075	- Plans/Personas.md
+L00023076	- Plans/Prompt_Pipeline.md
+L00023077	- Plans/Contracts_V0.md
+L00023078	- Plans/Models_System.md
+L00023079	- Plans/FinalGUISpec.md
+L00023080	- Plans/UI_Command_Catalog.md
+L00023081	- Plans/Commands_System.md
+L00023082	- Plans/Automated_Testing_System.md
+L00023083	- Plans/storage-plan.md
+L00023084	- Plans/Runtime_Artifacts_Panel.md
+L00023085	- Plans/Glossary.md
+L00023086	```
+L00023087	
+L00023088	## Ledger Compile Addendum - pldg-20260627-001-feature-intake
+L00023089	
+L00023090	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260627-001-feature-intake` into Assistant Chat owner canon. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00023091	
+
+<<< CONTEXT_AFTER canonical_document_lines=23092-23103 >>>
+L00023092	### ACD-427 - Inline Visualizer V2 Stream And Host Bridge
+L00023093	
+L00023094	```yaml
+L00023095	plan_unit_id: ACD-427
+L00023096	unit_type: requirement
+L00023097	status: accepted
+L00023098	owner_doc: Plans/assistant-chat-design.md
+L00023099	canonical_text: >-
+L00023100	  Inline visualizer v2 uses PM-native host-fed streaming: the host detects `visualize(title=…)`,
+L00023101	  `@@@VIZ-START`, and `@@@VIZ-END` envelopes outside tool_calls, reasoning, code_execution, and code fences,
+L00023102	  feeds sanitized progressive fragments to the sandboxed inline visual module over PM-controlled postMessage,
+L00023103	  and renders via safe-cut partial HTML parsing, append-only reconciliation, serialized script execution,

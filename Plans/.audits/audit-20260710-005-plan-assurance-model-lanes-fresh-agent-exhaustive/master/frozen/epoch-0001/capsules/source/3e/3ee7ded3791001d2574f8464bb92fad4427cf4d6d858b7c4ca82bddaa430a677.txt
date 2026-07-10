@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE 4501-4512 >>>
+        node_id: "1.0".to_string(),
+        related_messages: vec![],
+    },
+    thread_id: None,
+    in_reply_to: None,
+    created_at: Utc::now(),
+    read_by: vec![],
+    resolved: false,
+}).await?;
+```
+
+**Example 3: Agent warning about conflicts**
+
+<<< AUTHORITATIVE_CORE 4513-4910 >>>
+
+```rust
+// Agent warns about file conflict
+coordinator.post_message(AgentMessage {
+    message_id: uuid::Uuid::new_v4().to_string(),
+    from_agent_id: "test-automator-1.1.2".to_string(),
+    from_platform: Platform::Claude,
+    to_agent_id: Some("rust-engineer-1.1.1".to_string()), // Direct message
+    message_type: MessageType::Warning,
+    subject: "File conflict: src/api.rs".to_string(),
+    content: "I'm about to add tests for src/api.rs. Are you still editing it? I'll wait if you need more time.".to_string(),
+    context: MessageContext {
+        files_mentioned: vec![PathBuf::from("src/api.rs")],
+        operations_mentioned: vec!["adding tests".to_string()],
+        node_id: "1.1.2".to_string(),
+        related_messages: vec![],
+    },
+    thread_id: None,
+    in_reply_to: None,
+    created_at: Utc::now(),
+    read_by: vec![],
+    resolved: false,
+}).await?;
+```
+
+**Integration with orchestrator:**
+
+The orchestrator monitors all messages and can:
+- **Track agent communication:** See which agents are talking to each other
+- **Detect blockers:** Identify when agents are stuck or need help
+- **Monitor decisions:** Track architectural decisions and ensure consistency
+- **Detect conflicts:** See warnings about file conflicts before they happen
+- **Provide insights:** Show communication patterns in GUI
+
+**Integration with agent prompts:**
+
+Messages are injected into agent prompts as part of coordination context:
+
+```rust
+// In orchestrator, before executing agent
+let coordination_context = coordinator.get_coordination_context().await?;
+let messages = coordinator.get_messages_for_agent(&agent_id, &node_id).await?;
+let message_context = coordinator.format_messages_for_prompt(&messages)?;
+
+let enhanced_prompt = format!(
+    "{}\n\n{}\n\n**Messages from other agents:**\n{}",
+    prompt,
+    coordination_context,
+    message_context
+);
+```
+
+**Message filtering:**
+
+Agents only see messages relevant to them:
+- Messages addressed to their agent_id
+- Messages addressed to their agent type
+- Messages addressed to their node_id
+- Broadcast messages
+- Messages mentioning files they're working on
+
+**Message threading:**
+
+Messages can be threaded (conversations):
+- `thread_id`: Groups related messages together
+- `in_reply_to`: Links reply to original message
+- Agents can follow threads to see conversation history
+
+**Message lifecycle:**
+
+- **Created:** Agent posts message
+- **Read:** Agent reads message (tracked in `read_by`)
+- **Replied:** Agent replies (creates new message with `in_reply_to`)
+- **Resolved:** Message marked as resolved (e.g., question answered, request fulfilled)
+- **Expired:** Old messages (>24 hours) are archived or deleted
+
+**Canonical implementation shape:**
+
+```rust
+// src/core/agent_communication.rs
+
+// DRY:DATA:AgentCommunicator — Agent-to-agent message communication
+pub struct AgentCommunicator {
+    store: CoordinationStore,
+    coordinator: AgentCoordinator,
+}
+
+impl AgentCommunicator {
+    // DRY:FN:post_message — Post a message to the message board
+    // DRY REQUIREMENT: Validate agent_id using subagent_registry::is_valid_subagent_name() if it's a subagent name
+    /// Post a message to the message board
+    pub async fn post_message(&self, message: AgentMessage) -> Result<AppendReceipt> {
+        self.store.append_coordination_event("crew.board_message_posted", message).await
+    }
+
+    /// Get messages relevant to an agent
+    pub async fn get_messages_for_agent(
+        &self,
+        agent_id: &str,
+        node_id: &str,
+        agent_type: Option<&str>,
+    ) -> Result<Vec<AgentMessage>> {
+        self.store.read_crew_board_projection(agent_id, node_id, agent_type).await
+    }
+
+    /// Format messages for prompt injection
+    pub fn format_messages_for_prompt(&self, messages: &[AgentMessage]) -> Result<String> {
+        if messages.is_empty() {
+            return Ok(String::new());
+        }
+
+        let mut formatted = String::new();
+        formatted.push_str("**Recent Messages from Other Agents:**\n\n");
+
+        for msg in messages.iter().take(10) { // Limit to 10 most recent
+            // DRY REQUIREMENT: Platform display name MUST use platform_specs::display_name_for() — NEVER hardcode platform names
+            ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Models_System.md
+            let platform_display = platform_specs::display_name_for(msg.from_platform);
+            let from_info = format!("{} ({})", msg.from_agent_id, platform_display);
+            let message_type_str = match msg.message_type {
+                MessageType::Question => "❓ Question",
+                MessageType::Answer => "✅ Answer",
+                MessageType::Update => "📢 Update",
+                MessageType::Request => "🙏 Request",
+                MessageType::Decision => "🎯 Decision",
+                MessageType::Warning => "⚠️ Warning",
+                MessageType::Announcement => "📣 Announcement",
+            };
+
+            formatted.push_str(&format!(
+                "- **{}** from {}: {}\n  {}\n",
+                message_type_str,
+                from_info,
+                msg.subject,
+                msg.content
+            ));
+
+            if !msg.context.files_mentioned.is_empty() {
+                formatted.push_str(&format!(
+                    "  Files: {}\n",
+                    msg.context.files_mentioned.iter()
+                        .map(|f| f.display().to_string())
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                ));
+            }
+        }
+
+        Ok(formatted)
+    }
+
+    /// Mark message as read
+    pub async fn mark_message_read(&self, message_id: &str, agent_id: &str) -> Result<AppendReceipt> {
+        self.store.append_coordination_event("crew.board_message_read", BoardMessageRead {
+            message_id: message_id.to_string(),
+            agent_id: agent_id.to_string(),
+        }).await
+    }
+
+    /// Archive old messages (>24 hours)
+    pub async fn archive_old_messages(&self, scope: CrewBoardArchiveScope) -> Result<AppendReceipt> {
+        self.store.append_coordination_event("crew.board_messages_archived", scope).await
+    }
+}
+```
+
+The legacy `message_board_file` / `agent-messages.json` sketch is source-lineage only. PM may export that mirror from the canonical crew-board projection, but agents and schedulers must not use it as the durable board store.
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+
+**Integration with agent execution:**
+
+Agents can post messages during execution:
+
+```rust
+// In orchestrator, during agent execution
+// Parse agent output for message commands
+if agent_output.contains("@message") || agent_output.contains("@ask") {
+    // Extract message from agent output
+    let message = parse_message_from_output(&agent_output)?;
+    communicator.post_message(message).await?;
+}
+
+// Before agent execution, inject messages into prompt
+let messages = communicator.get_messages_for_agent(&agent_id, &node_id, Some(&agent_type)).await?;
+let message_context = communicator.format_messages_for_prompt(&messages)?;
+```
+
+**Orchestrator monitoring:**
+
+The orchestrator can monitor all messages for insights:
+
+```rust
+// In orchestrator
+pub struct OrchestratorInsights {
+    pub active_conversations: Vec<ConversationThread>,
+    pub pending_questions: Vec<AgentMessage>,
+    pub recent_decisions: Vec<AgentMessage>,
+    pub conflict_warnings: Vec<AgentMessage>,
+}
+
+impl OrchestratorInsights {
+    pub async fn analyze_communication(&self, communicator: &AgentCommunicator) -> Result<Self> {
+        let board = communicator.load_message_board().await?;
+
+        // Analyze messages for insights
+        // ...
+    }
+}
+```
+
+**Benefits:**
+
+1. **Cross-platform:** Works for all providers, even without native teams/fleets
+2. **Orchestrator visibility:** Boss agent can see all subagent communication
+3. **Enhanced coordination:** Agents can ask for help, share decisions, warn about conflicts
+4. **File-based:** No API calls, pure file-based (fits Puppet Master architecture)
+5. **Flexible routing:** Messages can be direct, by type, by tier, or broadcast
+6. **Threaded conversations:** Supports multi-turn conversations
+7. **Integration:** Works seamlessly with existing coordination state
+
+**Potential issues and mitigations:**
+
+- **Message spam:** Limit message rate per agent (max 10 messages/minute)
+- **Large message board:** Archive old messages, limit message history
+- **File locking:** Use same locking mechanism as coordination state
+- **Message parsing:** Agents may not always format messages correctly -- provide clear instructions in prompts
+- **Orphaned messages:** Messages from crashed agents -- mark as resolved after agent unregisters
+
+**Next steps:**
+
+1. Add message board to coordination state
+2. Implement `AgentCommunicator` with message posting/reading
+3. Integrate message injection into agent prompts
+4. Add orchestrator monitoring/insights
+5. Add GUI visualization of agent communication
+6. Test with multiple agents across different platforms
+### Gaps and Potential Issues for Agent Coordination
+
+**Gap #28: File locking and concurrent writes**
+
+**Issue:** Legacy/source-lineage mirror writers that directly update `active-agents.json` can race, corrupt JSON, or lose updates. Canonical coordination avoids this class by prohibiting read-modify-write on files and admitting updates only through seglog append plus redb projection CAS.
+
+**Mitigation:**
+- **Canonical append/CAS:** Each update appends one coordination EventRecord with an idempotency key and expected agent revision; stale expected revisions fail with a conflict diagnostic.
+- **Projection transaction:** The coordination projector writes all affected redb rows and the checkpoint in one transaction. It does not advance the checkpoint on partial failure.
+- **Mirror-only atomic writes:** Optional mirrors use same-directory temp files, fsync, and rename. Mirror failure is a debug/export failure, not a canonical coordination failure.
+- **No fail-open scheduling:** Lock timeout, mirror write failure, or mirror corruption must never authorize scheduling or execution from stale mirror data.
+
+```rust
+// Legacy mirror-only source-lineage sketch. Do not use for canonical coordination mutation.
+// src/core/agent_coordination.rs (enhanced)
+
+use std::fs::File;
+use std::io::{Read, Write};
+use std::os::unix::fs::FileExt; // For file locking on Unix
+
+impl AgentCoordinator {
+    async fn save_state_with_lock(&self, state: &AgentCoordinationState) -> Result<()> {
+        let lock_file = self.state_file.with_extension("lock");
+        let mut attempts = 0;
+        const MAX_ATTEMPTS: u32 = 3;
+
+        loop {
+            // Try to acquire lock
+            match self.acquire_lock(&lock_file).await {
+                Ok(_) => break,
+                Err(e) if attempts < MAX_ATTEMPTS => {
+                    attempts += 1;
+                    tokio::time::sleep(tokio::time::Duration::from_millis(100 * attempts)).await;
+                    continue;
+                }
+                Err(e) => {
+                    // Lock timeout — log warning but proceed
+                    tracing::warn!("Could not acquire coordination lock after {} attempts: {}. Proceeding without lock.", MAX_ATTEMPTS, e);
+                    break;
+                }
+            }
+        }
+
+        // Write to temp file first
+        let temp_file = self.state_file.with_extension("tmp");
+        let json = serde_json::to_string_pretty(state)?;
+        std::fs::write(&temp_file, json)?;
+
+        // Atomic rename
+        std::fs::rename(&temp_file, &self.state_file)?;
+
+        // Release lock
+        let _ = std::fs::remove_file(&lock_file);
+
+        Ok(())
+    }
+
+    async fn acquire_lock(&self, lock_file: &Path) -> Result<()> {
+        // Create lock file with PID
+        let pid = std::process::id();
+        let lock_content = format!("{}\n", pid);
+
+        // Try to create lock file exclusively
+        match std::fs::OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .open(lock_file)
+        {
+            Ok(mut file) => {
+                file.write_all(lock_content.as_bytes())?;
+                Ok(())
+            }
+            Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => {
+                // Check if lock is stale (process no longer exists)
+                if let Ok(content) = std::fs::read_to_string(lock_file) {
+                    if let Ok(lock_pid) = content.trim().parse::<u32>() {
+                        // Check if process exists (Unix-specific)
+                        if !self.process_exists(lock_pid) {
+                            // Stale lock — remove it
+                            let _ = std::fs::remove_file(lock_file);
+                            return self.acquire_lock(lock_file).await;
+                        }
+                    }
+                }
+                Err(anyhow!("Lock file exists"))
+            }
+            Err(e) => Err(anyhow!("Failed to create lock: {}", e)),
+        }
+    }
+
+    fn process_exists(&self, pid: u32) -> bool {
+        // Unix-specific: check if process exists
+        #[cfg(unix)]
+        {
+            use std::process::Command;
+            Command::new("kill")
+                .args(&["-0", &pid.to_string()])
+                .output()
+                .map(|o| o.status.success())
+                .unwrap_or(false)
+        }
+        #[cfg(not(unix))]
+        {
+            // Windows: use different approach
+            true // Assume exists for now
+        }
+    }
+}
+```
+
+**Gap #29: Error handling and file corruption recovery**
+
+**Issue:** If the optional `active-agents.json` mirror becomes corrupted (invalid JSON, partial write, disk full), debug/interoperability views can be stale or unreadable.
+
+**Mitigation:**
+- **Authority fallback:** Read canonical `coordination_snapshot_projection.v1` and specific redb projections; do not parse a corrupt mirror for authority.
+- **Mirror regeneration:** Quarantine or overwrite the mirror by replaying seglog/redb projection state from the last valid coordination checkpoint.
+- **Diagnostic event:** Emit `coordination.debug_mirror_exported` with failure metadata when mirror recovery is needed.
+- **No empty canonical state fallback:** A corrupt mirror must not create an empty canonical active-agent set or unregister agents by implication.
+
+```rust
+// Legacy mirror-only source-lineage sketch. Do not use for canonical coordination reads.
+async fn load_state(&self) -> Result<AgentCoordinationState> {
+    if self.state_file.exists() {
+        let json = match std::fs::read_to_string(&self.state_file) {
+            Ok(json) => json,
+            Err(e) => {
+                tracing::error!("Failed to read coordination state: {}. Using empty state.", e);
+                return Ok(AgentCoordinationState::default());
+            }
+        };
+
+        // Try to parse JSON
+        match serde_json::from_str::<AgentCoordinationState>(&json) {
+            Ok(state) => {
+                // Validate schema (check required fields)
+                self.validate_state(&state)?;
+                Ok(state)
+            }
+            Err(e) => {
+                // Try backup
+                let backup_file = self.state_file.with_extension("bak");
+                if backup_file.exists() {
+                    tracing::warn!("Coordination state corrupted. Attempting backup recovery.");
+                    if let Ok(backup_json) = std::fs::read_to_string(&backup_file) {
+                        if let Ok(backup_state) = serde_json::from_str(&backup_json) {
+                            tracing::info!("Recovered coordination state from backup.");
+                            return Ok(backup_state);
+                        }
+                    }
+                }
+
+                // Last resort: empty state
+                tracing::error!("Coordination state corrupted and backup recovery failed: {}. Using empty state.", e);
+                Ok(AgentCoordinationState::default())
+            }
+        }
+    } else {
+        Ok(AgentCoordinationState::default())
+    }
+}
+
+<<< CONTEXT_AFTER 4911-4922 >>>
+
+fn validate_state(&self, state: &AgentCoordinationState) -> Result<()> {
+    // Validate schema: check that all agents have required fields
+    for (agent_id, agent) in &state.active_agents {
+        if agent.agent_id.is_empty() {
+            return Err(anyhow!("Invalid agent: empty agent_id"));
+        }
+        if agent.node_id.is_empty() {
+            return Err(anyhow!("Invalid agent {}: empty node_id", agent_id));
+        }
+        // Check for reasonable timestamps (not in future, not too old)
+        let now = Utc::now();

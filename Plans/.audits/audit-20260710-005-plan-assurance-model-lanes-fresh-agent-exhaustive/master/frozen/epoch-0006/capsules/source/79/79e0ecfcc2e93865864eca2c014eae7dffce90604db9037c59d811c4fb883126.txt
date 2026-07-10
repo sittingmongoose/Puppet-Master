@@ -1,0 +1,388 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1467-1478 >>>
+L00001467	negative_constraints:
+L00001468	- "provider_account_id is subordinate provider-native metadata, not canonical account identity."
+L00001469	- "OpenCode session IDs must move to provider-native correlation fields instead of canonical thread_id."
+L00001470	preserved_contractrefs: []
+L00001471	compatibility_only_notes: []
+L00001472	stale_retired_dispositions: []
+L00001473	owner_hints:
+L00001474	- "Plans/Permissions_System.md"
+L00001475	- "Plans/Contracts_V0.md"
+L00001476	- "Plans/CLI_Bridged_Providers.md"
+L00001477	```
+L00001478	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1479-1837 >>>
+L00001479	### PS-005 - Actor Lane Approval Scope Key Boundary
+L00001480	
+L00001481	```yaml
+L00001482	plan_unit_id: PS-005
+L00001483	unit_type: constraint
+L00001484	status: accepted
+L00001485	owner_doc: Plans/Permissions_System.md
+L00001486	canonical_text: "Approval scope is actor/lane-aware across actor, run, lane, account, package/seam context, shared runtime identity, HITL, and blocked-overlay flow; session-centric and tier-boundary approval language is compatibility-only."
+L00001487	gui_related: false
+L00001488	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00001489	split_recommended: false
+L00001490	depends_on:
+L00001491	- PS-004
+L00001492	unblocks: []
+L00001493	acceptance_criteria:
+L00001494	- "PS-005 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00001495	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00001496	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00001497	validation_surfaces:
+L00001498	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001499	- python3 scripts/pm-plan-index.py validate
+L00001500	risk_class: permission_system_drift
+L00001501	reasoning_tier: standard
+L00001502	context_scope: permissions_system_batch_205
+L00001503	implementation_surfaces:
+L00001504	- Plans/Permissions_System.md
+L00001505	node_compile_hint:
+L00001506	  mode: approval_scope_key_boundary
+L00001507	  create_worknodes: false
+L00001508	source_lineage:
+L00001509	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0009
+L00001510	preserved_exact_tokens:
+L00001511	- "P5 permission authority recovery"
+L00001512	- "/actor/lane"
+L00001513	- "/account"
+L00001514	- "/lane/run/account"
+L00001515	- "shared-runtime"
+L00001516	- "actor"
+L00001517	- "lane"
+L00001518	- "run"
+L00001519	- "account"
+L00001520	- "package/seam"
+L00001521	- "ask -> deny unless HITL at current tier boundary"
+L00001522	negative_constraints:
+L00001523	- "The permission layer must not mix tier-boundary governance with tool-level HITL approval semantics."
+L00001524	preserved_contractrefs: []
+L00001525	compatibility_only_notes:
+L00001526	- "Session-scoped approval logic, permission session cache, reject cascade, and OpenCode SSE/session isolation must resolve through actor/lane-aware boundaries."
+L00001527	stale_retired_dispositions:
+L00001528	- "ask -> deny unless HITL at current tier boundary is deprecated tier-era behavior."
+L00001529	owner_hints:
+L00001530	- "Plans/Permissions_System.md"
+L00001531	```
+L00001532	
+L00001533	### PS-006 - Execution Entity Approval Snapshot And Carryover
+L00001534	
+L00001535	```yaml
+L00001536	plan_unit_id: PS-006
+L00001537	unit_type: requirement
+L00001538	status: accepted
+L00001539	owner_doc: Plans/Permissions_System.md
+L00001540	canonical_text: "Permission resolution, approval carryover, and approval cascade are execution-entity scoped, with lane, package, lane/account, effective-account, and effective account identity facts preserved in approval snapshots and blocked-card explanations."
+L00001541	gui_related: false
+L00001542	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00001543	split_recommended: false
+L00001544	depends_on:
+L00001545	- PS-005
+L00001546	unblocks: []
+L00001547	acceptance_criteria:
+L00001548	- "PS-006 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00001549	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00001550	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00001551	validation_surfaces:
+L00001552	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001553	- python3 scripts/pm-plan-index.py validate
+L00001554	risk_class: permission_system_drift
+L00001555	reasoning_tier: standard
+L00001556	context_scope: permissions_system_batch_205
+L00001557	implementation_surfaces:
+L00001558	- Plans/Permissions_System.md
+L00001559	node_compile_hint:
+L00001560	  mode: execution_entity_approval_snapshot
+L00001561	  create_worknodes: false
+L00001562	source_lineage:
+L00001563	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0009
+L00001564	preserved_exact_tokens:
+L00001565	- "execution-entity scoped"
+L00001566	- "Lane"
+L00001567	- "package"
+L00001568	- "/lane/account"
+L00001569	- "effective-account"
+L00001570	- "/identity"
+L00001571	- "approval snapshot"
+L00001572	- "/cascade"
+L00001573	- "reject-cascade"
+L00001574	negative_constraints:
+L00001575	- "Approval carryover must not silently become same-session when lanes are parallel."
+L00001576	preserved_contractrefs: []
+L00001577	compatibility_only_notes: []
+L00001578	stale_retired_dispositions: []
+L00001579	owner_hints:
+L00001580	- "Plans/Permissions_System.md"
+L00001581	```
+L00001582	
+L00001583	### PS-007 - Runtime Artifact Drill Through And Permission State Hooks
+L00001584	
+L00001585	```yaml
+L00001586	plan_unit_id: PS-007
+L00001587	unit_type: requirement
+L00001588	status: accepted
+L00001589	owner_doc: Plans/Permissions_System.md
+L00001590	canonical_text: "Runtime artifact permission drill-through preserves runtime artifact ownership and hook vocabulary so permission cards and blocked-state records share blocked_reason_code, allowed_action_ids, failure_class, permission_snapshot_id, and provider_attempt_ref."
+L00001591	gui_related: true
+L00001592	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+L00001593	split_recommended: false
+L00001594	depends_on:
+L00001595	- PS-005
+L00001596	- PS-006
+L00001597	unblocks: []
+L00001598	acceptance_criteria:
+L00001599	- "PS-007 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00001600	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00001601	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00001602	validation_surfaces:
+L00001603	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001604	- python3 scripts/pm-plan-index.py validate
+L00001605	risk_class: permission_system_drift
+L00001606	reasoning_tier: standard
+L00001607	context_scope: permissions_system_batch_205
+L00001608	implementation_surfaces:
+L00001609	- Plans/Permissions_System.md
+L00001610	node_compile_hint:
+L00001611	  mode: runtime_artifact_permission_drillthrough
+L00001612	  create_worknodes: false
+L00001613	source_lineage:
+L00001614	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0009
+L00001615	preserved_exact_tokens:
+L00001616	- "Plans/Runtime_Artifacts_Panel.md"
+L00001617	- "/Runtime_Artifacts_Panel.md"
+L00001618	- "/schema-family"
+L00001619	- "attempt-key"
+L00001620	- "envelope family"
+L00001621	- "blocked_reason_code"
+L00001622	- "allowed_action_ids[]"
+L00001623	- "failure_class"
+L00001624	- "permission_snapshot_id"
+L00001625	- "provider_attempt_ref"
+L00001626	negative_constraints:
+L00001627	- "Permission cards and blocked-state records must not fork the hook vocabulary."
+L00001628	preserved_contractrefs: []
+L00001629	compatibility_only_notes: []
+L00001630	stale_retired_dispositions: []
+L00001631	owner_hints:
+L00001632	- "Plans/Permissions_System.md"
+L00001633	- "Plans/Runtime_Artifacts_Panel.md"
+L00001634	- "Plans/Contracts_V0.md"
+L00001635	- "Plans/storage-plan.md"
+L00001636	```
+L00001637	
+L00001638	### PS-008 - Blocked Action Identity And Cross Owner Policy Routing
+L00001639	
+L00001640	```yaml
+L00001641	plan_unit_id: PS-008
+L00001642	unit_type: constraint
+L00001643	status: accepted
+L00001644	owner_doc: Plans/Permissions_System.md
+L00001645	canonical_text: "Blocked-state approval actions map from canonical allowed_action_ids while graph approval actions target request_id; worktree and decision-policy routing remain lineage-aware without splitting blocked-state authority away from request identity."
+L00001646	gui_related: false
+L00001647	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00001648	split_recommended: false
+L00001649	depends_on:
+L00001650	- PS-005
+L00001651	unblocks: []
+L00001652	acceptance_criteria:
+L00001653	- "PS-008 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00001654	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00001655	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00001656	validation_surfaces:
+L00001657	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001658	- python3 scripts/pm-plan-index.py validate
+L00001659	risk_class: permission_system_drift
+L00001660	reasoning_tier: standard
+L00001661	context_scope: permissions_system_batch_205
+L00001662	implementation_surfaces:
+L00001663	- Plans/Permissions_System.md
+L00001664	node_compile_hint:
+L00001665	  mode: blocked_action_identity_policy_route
+L00001666	  create_worknodes: false
+L00001667	source_lineage:
+L00001668	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0009
+L00001669	preserved_exact_tokens:
+L00001670	- "allowed_action_ids[]"
+L00001671	- "allowed_action_ids"
+L00001672	- "request_id"
+L00001673	- "Plans/WorktreeGitImprovement.md"
+L00001674	- "/WorktreeGitImprovement.md"
+L00001675	- "lane pools"
+L00001676	- "parallel toggles"
+L00001677	- "Plans/Decision_Policy.md"
+L00001678	- "/storage/runtime"
+L00001679	negative_constraints:
+L00001680	- "Consumer surfaces must not split blocked-state authority away from request identity."
+L00001681	preserved_contractrefs: []
+L00001682	compatibility_only_notes:
+L00001683	- "Per-subtask worktree references are lineage until lane pools and parallel toggles are reconciled."
+L00001684	stale_retired_dispositions: []
+L00001685	owner_hints:
+L00001686	- "Plans/Permissions_System.md"
+L00001687	- "Plans/WorktreeGitImprovement.md"
+L00001688	- "Plans/Decision_Policy.md"
+L00001689	```
+L00001690	
+L00001691	### PS-009 - Mode Override And Remote Side Effect Authority
+L00001692	
+L00001693	```yaml
+L00001694	plan_unit_id: PS-009
+L00001695	unit_type: constraint
+L00001696	status: accepted
+L00001697	owner_doc: Plans/Permissions_System.md
+L00001698	canonical_text: "Mode override semantics reconcile ask/plan to deny, approval, external_publish_side_effect, side-effect, and non-bypassable remote publication approval so mutating remote side effects cannot diverge by surface or mode."
+L00001699	gui_related: false
+L00001700	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+L00001701	split_recommended: false
+L00001702	depends_on:
+L00001703	- PS-005
+L00001704	unblocks: []
+L00001705	acceptance_criteria:
+L00001706	- "PS-009 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00001707	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00001708	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00001709	validation_surfaces:
+L00001710	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001711	- python3 scripts/pm-plan-index.py validate
+L00001712	risk_class: permission_system_drift
+L00001713	reasoning_tier: standard
+L00001714	context_scope: permissions_system_batch_205
+L00001715	implementation_surfaces:
+L00001716	- Plans/Permissions_System.md
+L00001717	node_compile_hint:
+L00001718	  mode: mode_override_remote_side_effect
+L00001719	  create_worknodes: false
+L00001720	source_lineage:
+L00001721	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0009
+L00001722	preserved_exact_tokens:
+L00001723	- "ask/plan -> deny"
+L00001724	- "/plan"
+L00001725	- "/approval"
+L00001726	- "external_publish_side_effect"
+L00001727	- "side-effect"
+L00001728	- "non-bypassable approval"
+L00001729	negative_constraints:
+L00001730	- "Mutating remote publication cannot diverge by surface or mode."
+L00001731	preserved_contractrefs: []
+L00001732	compatibility_only_notes: []
+L00001733	stale_retired_dispositions: []
+L00001734	owner_hints:
+L00001735	- "Plans/Permissions_System.md"
+L00001736	```
+L00001737	
+L00001738	### PS-010 - Provider Gap And Requested Effective Disclosure
+L00001739	
+L00001740	```yaml
+L00001741	plan_unit_id: PS-010
+L00001742	unit_type: requirement
+L00001743	status: accepted
+L00001744	owner_doc: Plans/Permissions_System.md
+L00001745	canonical_text: "Provider-gap disclosure remains distinct from overrides, and requested/effective permission display may stay compact only when requested equals effective and no control was skipped or clamped."
+L00001746	gui_related: true
+L00001747	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+L00001748	split_recommended: false
+L00001749	depends_on:
+L00001750	- PS-009
+L00001751	unblocks: []
+L00001752	acceptance_criteria:
+L00001753	- "PS-010 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00001754	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00001755	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00001756	validation_surfaces:
+L00001757	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001758	- python3 scripts/pm-plan-index.py validate
+L00001759	risk_class: permission_system_drift
+L00001760	reasoning_tier: standard
+L00001761	context_scope: permissions_system_batch_205
+L00001762	implementation_surfaces:
+L00001763	- Plans/Permissions_System.md
+L00001764	node_compile_hint:
+L00001765	  mode: provider_gap_requested_effective_disclosure
+L00001766	  create_worknodes: false
+L00001767	source_lineage:
+L00001768	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0009
+L00001769	preserved_exact_tokens:
+L00001770	- "Provider-gap disclosure"
+L00001771	- "honored"
+L00001772	- "skipped"
+L00001773	- "clamped"
+L00001774	- "requested == effective"
+L00001775	- "/clamped"
+L00001776	- "/disclose"
+L00001777	negative_constraints:
+L00001778	- "Provider-gap states must not be collapsed into generic override wording."
+L00001779	preserved_contractrefs: []
+L00001780	compatibility_only_notes: []
+L00001781	stale_retired_dispositions: []
+L00001782	owner_hints:
+L00001783	- "Plans/Permissions_System.md"
+L00001784	```
+L00001785	
+L00001786	### PS-011 - Permission Trust And Projection Health Disclosure
+L00001787	
+L00001788	```yaml
+L00001789	plan_unit_id: PS-011
+L00001790	unit_type: requirement
+L00001791	status: accepted
+L00001792	owner_doc: Plans/Permissions_System.md
+L00001793	canonical_text: "Degraded-trust and projection-health are permission-visible trust inputs consumed by permission cards, approval surfaces, Orchestrator, Usage, widgets, and provider surfaces; stale, degraded, and restricted-trust render states cannot appear as fresh authority."
+L00001794	gui_related: true
+L00001795	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+L00001796	split_recommended: false
+L00001797	depends_on:
+L00001798	- PS-007
+L00001799	- PS-010
+L00001800	unblocks: []
+L00001801	acceptance_criteria:
+L00001802	- "PS-011 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00001803	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00001804	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00001805	validation_surfaces:
+L00001806	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001807	- python3 scripts/pm-plan-index.py validate
+L00001808	risk_class: permission_system_drift
+L00001809	reasoning_tier: standard
+L00001810	context_scope: permissions_system_batch_205
+L00001811	implementation_surfaces:
+L00001812	- Plans/Permissions_System.md
+L00001813	node_compile_hint:
+L00001814	  mode: permission_trust_projection_disclosure
+L00001815	  create_worknodes: false
+L00001816	source_lineage:
+L00001817	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0009
+L00001818	preserved_exact_tokens:
+L00001819	- "degraded-trust"
+L00001820	- "projection-health"
+L00001821	- "permission-visible trust inputs"
+L00001822	- "attempt_id"
+L00001823	- "/file"
+L00001824	- "read-only"
+L00001825	- "historical"
+L00001826	- "restricted-trust"
+L00001827	- "fresh authority"
+L00001828	negative_constraints:
+L00001829	- "Stale, degraded, or restricted-trust render states cannot masquerade as fresh authority."
+L00001830	preserved_contractrefs: []
+L00001831	compatibility_only_notes: []
+L00001832	stale_retired_dispositions:
+L00001833	- "Stale or degraded projections do not become authoritative just because they are visible in the UI."
+L00001834	owner_hints:
+L00001835	- "Plans/Permissions_System.md"
+L00001836	```
+L00001837	
+
+<<< CONTEXT_AFTER canonical_document_lines=1838-1849 >>>
+L00001838	### PS-012 - Route Search And Target Approval Facts
+L00001839	
+L00001840	```yaml
+L00001841	plan_unit_id: PS-012
+L00001842	unit_type: requirement
+L00001843	status: accepted
+L00001844	owner_doc: Plans/Permissions_System.md
+L00001845	canonical_text: "Permission cards approve the exact route, search, subject-open, output, file, navigation, line, range, and editor-group facts they display instead of collapsing them into generic file-open prompts."
+L00001846	gui_related: true
+L00001847	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+L00001848	split_recommended: false
+L00001849	depends_on:

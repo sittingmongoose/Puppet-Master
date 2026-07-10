@@ -1,0 +1,411 @@
+<<< CONTEXT_BEFORE canonical_document_lines=23680-23691 >>>
+L00023680	- GitHub/web tools
+L00023681	negative_constraints:
+L00023682	- Research crews must not imply full source coverage when comparator source availability is mixed or limited.
+L00023683	compatibility_only_notes: []
+L00023684	stale_retired_dispositions: []
+L00023685	owner_boundary_notes:
+L00023686	- Research evidence policy must preserve coverage limits and source availability caveats.
+L00023687	owner_hints:
+L00023688	- Plans/orchestrator-subagent-integration.md
+L00023689	preserved_contractrefs: []
+L00023690	```
+L00023691	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=23692-24073 >>>
+L00023692	### OSI-295 - Interview Crews Are Separate From Execution-Tier Crews
+L00023693	
+L00023694	```yaml
+L00023695	plan_unit_id: OSI-295
+L00023696	unit_type: requirement
+L00023697	status: accepted
+L00023698	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023699	canonical_text: Interview crews are separate from orchestrator-initiated crews for execution tiers.
+L00023700	gui_related: false
+L00023701	gui_classification_reason: This unit covers orchestration boundary semantics rather than GUI presentation.
+L00023702	split_recommended: false
+L00023703	depends_on:
+L00023704	- OSI-293
+L00023705	unblocks: []
+L00023706	acceptance_criteria:
+L00023707	- Covered source line remains losslessly available for exact-text audit.
+L00023708	- Interview crew behavior remains separate from execution-tier crew behavior.
+L00023709	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023710	validation_surfaces:
+L00023711	- >-
+L00023712	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023713	- python3 scripts/pm-plan-index.py validate
+L00023714	reasoning_tier: standard
+L00023715	context_scope: orchestrator_subagent_standardization
+L00023716	implementation_surfaces:
+L00023717	- Plans/orchestrator-subagent-integration.md
+L00023718	risk_class: interview_crews_separate_from_execution_tier_crews
+L00023719	node_compile_hint:
+L00023720	  mode: interview_crews_separate_from_execution_tier_crews
+L00023721	  create_worknodes: false
+L00023722	source_lineage:
+L00023723	- >-
+L00023724	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023725	preserved_exact_tokens:
+L00023726	- separate from orchestrator-initiated crews
+L00023727	- execution tiers
+L00023728	- Interview crews are for interview flow only
+L00023729	negative_constraints:
+L00023730	- Do not merge interview-flow crew behavior with execution-tier crew canon.
+L00023731	compatibility_only_notes: []
+L00023732	stale_retired_dispositions: []
+L00023733	owner_boundary_notes:
+L00023734	- Interview crew behavior and execution-tier crew behavior retain separate owner contexts.
+L00023735	owner_hints:
+L00023736	- Plans/orchestrator-subagent-integration.md
+L00023737	preserved_contractrefs: []
+L00023738	```
+L00023739	
+L00023740	### OSI-296 - Crew Value Rationale
+L00023741	
+L00023742	```yaml
+L00023743	plan_unit_id: OSI-296
+L00023744	unit_type: requirement
+L00023745	status: accepted
+L00023746	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023747	canonical_text: >-
+L00023748	  The source preserves rationale for cross-platform communication, orchestrator visibility, platform-agnostic behavior,
+L00023749	  enhanced coordination, and a unified interface across supported providers.
+L00023750	gui_related: false
+L00023751	gui_classification_reason: This unit preserves rationale text rather than GUI presentation.
+L00023752	split_recommended: false
+L00023753	depends_on:
+L00023754	- OSI-279
+L00023755	- OSI-245
+L00023756	unblocks: []
+L00023757	acceptance_criteria:
+L00023758	- Covered rationale remains losslessly available for exact-text audit.
+L00023759	- Rationale examples are not promoted into executable work.
+L00023760	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023761	validation_surfaces:
+L00023762	- >-
+L00023763	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023764	- python3 scripts/pm-plan-index.py validate
+L00023765	reasoning_tier: standard
+L00023766	context_scope: orchestrator_subagent_standardization
+L00023767	implementation_surfaces:
+L00023768	- Plans/orchestrator-subagent-integration.md
+L00023769	risk_class: crew_value_rationale
+L00023770	node_compile_hint:
+L00023771	  mode: crew_value_rationale
+L00023772	  create_worknodes: false
+L00023773	source_lineage:
+L00023774	- >-
+L00023775	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023776	preserved_exact_tokens:
+L00023777	- Cross-platform communication
+L00023778	- Orchestrator visibility
+L00023779	- Platform-agnostic
+L00023780	- Enhanced coordination
+L00023781	- Unified interface
+L00023782	negative_constraints: []
+L00023783	compatibility_only_notes:
+L00023784	- Rationale evidence only.
+L00023785	stale_retired_dispositions: []
+L00023786	owner_boundary_notes: []
+L00023787	owner_hints:
+L00023788	- Plans/orchestrator-subagent-integration.md
+L00023789	preserved_contractrefs: []
+L00023790	```
+L00023791	
+L00023792	### OSI-297 - Native Teams/Fleets Comparison Evidence
+L00023793	
+L00023794	```yaml
+L00023795	plan_unit_id: OSI-297
+L00023796	unit_type: requirement
+L00023797	status: accepted
+L00023798	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023799	canonical_text: >-
+L00023800	  The source preserves comparison tokens for Claude Code Teams, Copilot Fleets, Puppet Master Communication, cross-platform
+L00023801	  support, orchestrator visibility, agent-to-agent messaging, file-based operation, and CLI-only operation.
+L00023802	gui_related: false
+L00023803	gui_classification_reason: This unit preserves comparison evidence rather than GUI presentation.
+L00023804	split_recommended: false
+L00023805	depends_on:
+L00023806	- OSI-296
+L00023807	unblocks: []
+L00023808	acceptance_criteria:
+L00023809	- Covered comparison table remains losslessly available for exact-text audit.
+L00023810	- External-product comparison evidence is not treated as external product canon.
+L00023811	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023812	validation_surfaces:
+L00023813	- >-
+L00023814	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023815	- python3 scripts/pm-plan-index.py validate
+L00023816	reasoning_tier: standard
+L00023817	context_scope: orchestrator_subagent_standardization
+L00023818	implementation_surfaces:
+L00023819	- Plans/orchestrator-subagent-integration.md
+L00023820	risk_class: native_teams_fleets_comparison_evidence
+L00023821	node_compile_hint:
+L00023822	  mode: native_teams_fleets_comparison_evidence
+L00023823	  create_worknodes: false
+L00023824	source_lineage:
+L00023825	- >-
+L00023826	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023827	preserved_exact_tokens:
+L00023828	- Claude Code Teams
+L00023829	- Copilot Fleets
+L00023830	- Puppet Master Communication
+L00023831	- Cross-platform
+L00023832	- Orchestrator visibility
+L00023833	- Agent-to-agent messaging
+L00023834	- File-based (no API)
+L00023835	- Works with CLI-only
+L00023836	negative_constraints: []
+L00023837	compatibility_only_notes:
+L00023838	- Comparison table is source evidence only and not external product canon.
+L00023839	stale_retired_dispositions: []
+L00023840	owner_boundary_notes: []
+L00023841	owner_hints:
+L00023842	- Plans/orchestrator-subagent-integration.md
+L00023843	preserved_contractrefs: []
+L00023844	```
+L00023845	
+L00023846	### OSI-298 - Agent Message Board Architecture Example
+L00023847	
+L00023848	```yaml
+L00023849	plan_unit_id: OSI-298
+L00023850	unit_type: requirement
+L00023851	status: accepted
+L00023852	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023853	canonical_text: >-
+L00023854	  The communication system example extends coordination state with a message board/queue, preserving `.puppet-master/state/active-agents.json`
+L00023855	  as an optional debug mirror and `.puppet-master/state/agent-messages.json` as an optional debug or interoperability mirror
+L00023856	  for agent-to-agent message records.
+L00023857	gui_related: false
+L00023858	gui_classification_reason: This unit covers backend coordination-state architecture rather than GUI presentation.
+L00023859	split_recommended: false
+L00023860	depends_on:
+L00023861	- OSI-245
+L00023862	- OSI-246
+L00023863	unblocks: []
+L00023864	acceptance_criteria:
+L00023865	- Covered architecture example remains losslessly available for exact-text audit.
+L00023866	- This duplicate-era example does not narrow prior canonical message-board coverage.
+L00023867	- This example must not promote active-agents.json or agent-messages.json into canonical persistence.
+L00023868	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023869	validation_surfaces:
+L00023870	- >-
+L00023871	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023872	- python3 scripts/pm-plan-index.py validate
+L00023873	reasoning_tier: standard
+L00023874	context_scope: orchestrator_subagent_standardization
+L00023875	implementation_surfaces:
+L00023876	- Plans/orchestrator-subagent-integration.md
+L00023877	risk_class: agent_message_board_architecture_example
+L00023878	node_compile_hint:
+L00023879	  mode: agent_message_board_architecture_example
+L00023880	  create_worknodes: false
+L00023881	source_lineage:
+L00023882	- >-
+L00023883	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023884	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8
+L00023885	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15
+L00023886	preserved_exact_tokens:
+L00023887	- .puppet-master/state/
+L00023888	- active-agents.json
+L00023889	- Optional debug mirror
+L00023890	- agent-messages.json
+L00023891	- agent-to-agent messages
+L00023892	negative_constraints:
+L00023893	- The optional active-agents debug mirror must not become the coordination source of truth.
+L00023894	- The optional agent-messages mirror must not become the canonical persistence store.
+L00023895	compatibility_only_notes:
+L00023896	- Duplicate message-board architecture example; do not narrow OSI-245.
+L00023897	- "`.puppet-master/state/agent-messages.json` is compatibility/debug mirror lineage."
+L00023898	stale_retired_dispositions: []
+L00023899	owner_boundary_notes:
+L00023900	- Storage owns durable schema semantics; orchestrator owns coordination use.
+L00023901	owner_hints:
+L00023902	- Plans/orchestrator-subagent-integration.md
+L00023903	preserved_contractrefs: []
+L00023904	```
+L00023905	
+L00023906	### OSI-299 - AgentMessage Structure Example
+L00023907	
+L00023908	```yaml
+L00023909	plan_unit_id: OSI-299
+L00023910	unit_type: requirement
+L00023911	status: accepted
+L00023912	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023913	canonical_text: >-
+L00023914	  The source preserves `AgentMessage` fields including `message_id`, `from_agent_id`, `from_platform`, `to_agent_id`,
+L00023915	  `to_agent_type`, `to_node_id`, `message_type`, `subject`, `content`, `context`, `thread_id`, `in_reply_to`, `created_at`,
+L00023916	  `read_by`, and `resolved`.
+L00023917	gui_related: false
+L00023918	gui_classification_reason: This unit covers a backend message schema example rather than GUI presentation.
+L00023919	split_recommended: false
+L00023920	depends_on:
+L00023921	- OSI-247
+L00023922	unblocks: []
+L00023923	acceptance_criteria:
+L00023924	- Covered Rust structure example remains losslessly available for exact-text audit.
+L00023925	- The example must not narrow the canonical message schema already covered by earlier PlanUnits.
+L00023926	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023927	validation_surfaces:
+L00023928	- >-
+L00023929	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023930	- python3 scripts/pm-plan-index.py validate
+L00023931	reasoning_tier: standard
+L00023932	context_scope: orchestrator_subagent_standardization
+L00023933	implementation_surfaces:
+L00023934	- Plans/orchestrator-subagent-integration.md
+L00023935	risk_class: agentmessage_structure_example
+L00023936	node_compile_hint:
+L00023937	  mode: agentmessage_structure_example
+L00023938	  create_worknodes: false
+L00023939	source_lineage:
+L00023940	- >-
+L00023941	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023942	preserved_exact_tokens:
+L00023943	- AgentMessage
+L00023944	- message_id
+L00023945	- from_agent_id
+L00023946	- from_platform
+L00023947	- to_agent_id
+L00023948	- to_agent_type
+L00023949	- to_node_id
+L00023950	- read_by
+L00023951	- resolved
+L00023952	negative_constraints:
+L00023953	- The Rust snippet must not narrow canonical message-board schema coverage.
+L00023954	compatibility_only_notes:
+L00023955	- Rust snippet is evidence only.
+L00023956	stale_retired_dispositions: []
+L00023957	owner_boundary_notes:
+L00023958	- Earlier canonical message-board PlanUnits retain lane/priority and lifecycle semantics not repeated by this example.
+L00023959	owner_hints:
+L00023960	- Plans/orchestrator-subagent-integration.md
+L00023961	preserved_contractrefs: []
+L00023962	```
+L00023963	
+L00023964	### OSI-300 - MessageType Enum Example
+L00023965	
+L00023966	```yaml
+L00023967	plan_unit_id: OSI-300
+L00023968	unit_type: requirement
+L00023969	status: accepted
+L00023970	owner_doc: Plans/orchestrator-subagent-integration.md
+L00023971	canonical_text: >-
+L00023972	  The source preserves message type variants `Question`, `Answer`, `Update`, `Request`, `Decision`, `Warning`, and
+L00023973	  `Announcement`.
+L00023974	gui_related: false
+L00023975	gui_classification_reason: This unit covers a backend enum example rather than GUI presentation.
+L00023976	split_recommended: false
+L00023977	depends_on:
+L00023978	- OSI-247
+L00023979	unblocks: []
+L00023980	acceptance_criteria:
+L00023981	- Covered enum example remains losslessly available for exact-text audit.
+L00023982	- The enum snippet is not created as implementation code by this batch.
+L00023983	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00023984	validation_surfaces:
+L00023985	- >-
+L00023986	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00023987	- python3 scripts/pm-plan-index.py validate
+L00023988	reasoning_tier: standard
+L00023989	context_scope: orchestrator_subagent_standardization
+L00023990	implementation_surfaces:
+L00023991	- Plans/orchestrator-subagent-integration.md
+L00023992	risk_class: messagetype_enum_example
+L00023993	node_compile_hint:
+L00023994	  mode: messagetype_enum_example
+L00023995	  create_worknodes: false
+L00023996	source_lineage:
+L00023997	- >-
+L00023998	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00023999	preserved_exact_tokens:
+L00024000	- MessageType
+L00024001	- Question
+L00024002	- Answer
+L00024003	- Update
+L00024004	- Request
+L00024005	- Decision
+L00024006	- Warning
+L00024007	- Announcement
+L00024008	negative_constraints:
+L00024009	- The enum snippet must not be treated as created implementation code.
+L00024010	compatibility_only_notes:
+L00024011	- Enum snippet is evidence only.
+L00024012	stale_retired_dispositions: []
+L00024013	owner_boundary_notes: []
+L00024014	owner_hints:
+L00024015	- Plans/orchestrator-subagent-integration.md
+L00024016	preserved_contractrefs: []
+L00024017	```
+L00024018	
+L00024019	### OSI-301 - MessageContext And Board Example
+L00024020	
+L00024021	```yaml
+L00024022	plan_unit_id: OSI-301
+L00024023	unit_type: requirement
+L00024024	status: accepted
+L00024025	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024026	canonical_text: >-
+L00024027	  The source preserves `MessageContext` fields `files_mentioned`, `operations_mentioned`, `node_id`, and `related_messages`,
+L00024028	  plus `AgentMessageBoard` fields `messages`, `last_updated`, and `schema_version`.
+L00024029	gui_related: false
+L00024030	gui_classification_reason: This unit covers backend message context and board structure rather than GUI presentation.
+L00024031	split_recommended: false
+L00024032	depends_on:
+L00024033	- OSI-247
+L00024034	- OSI-250
+L00024035	unblocks: []
+L00024036	acceptance_criteria:
+L00024037	- Covered structure examples remain losslessly available for exact-text audit.
+L00024038	- Storage ownership of durable schema semantics is preserved.
+L00024039	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00024040	validation_surfaces:
+L00024041	- >-
+L00024042	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00024043	- python3 scripts/pm-plan-index.py validate
+L00024044	reasoning_tier: standard
+L00024045	context_scope: orchestrator_subagent_standardization
+L00024046	implementation_surfaces:
+L00024047	- Plans/orchestrator-subagent-integration.md
+L00024048	risk_class: messagecontext_and_board_example
+L00024049	node_compile_hint:
+L00024050	  mode: messagecontext_and_board_example
+L00024051	  create_worknodes: false
+L00024052	source_lineage:
+L00024053	- >-
+L00024054	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0153
+L00024055	preserved_exact_tokens:
+L00024056	- MessageContext
+L00024057	- files_mentioned
+L00024058	- operations_mentioned
+L00024059	- node_id
+L00024060	- related_messages
+L00024061	- AgentMessageBoard
+L00024062	- schema_version
+L00024063	negative_constraints: []
+L00024064	compatibility_only_notes:
+L00024065	- Structure snippets are evidence only.
+L00024066	stale_retired_dispositions: []
+L00024067	owner_boundary_notes:
+L00024068	- Storage owns durable message-board schema semantics.
+L00024069	owner_hints:
+L00024070	- Plans/orchestrator-subagent-integration.md
+L00024071	preserved_contractrefs: []
+L00024072	```
+L00024073	
+
+<<< CONTEXT_AFTER canonical_document_lines=24074-24085 >>>
+L00024074	### OSI-302 - Message Routing Modes
+L00024075	
+L00024076	```yaml
+L00024077	plan_unit_id: OSI-302
+L00024078	unit_type: requirement
+L00024079	status: accepted
+L00024080	owner_doc: Plans/orchestrator-subagent-integration.md
+L00024081	canonical_text: >-
+L00024082	  Messages route direct by `to_agent_id`, by type through `to_agent_type`, by node through `to_node_id`, or as broadcast
+L00024083	  when `to_agent_id`, `to_agent_type`, and `to_node_id` are all `None`.
+L00024084	gui_related: false
+L00024085	gui_classification_reason: This unit covers routing semantics rather than GUI presentation.

@@ -1,0 +1,410 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3364-3375 >>>
+L00003364	- "session-approval semantics"
+L00003365	- "stale Ask UI links"
+L00003366	negative_constraints:
+L00003367	- "Web tool permission keys, approval-card summary templates, and session-approval semantics must not be re-invented from thin tool descriptions or stale Ask UI links."
+L00003368	preserved_contractrefs:
+L00003369	- "ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget"
+L00003370	compatibility_only_notes: []
+L00003371	stale_retired_dispositions: []
+L00003372	owner_hints:
+L00003373	- "Plans/Permissions_System.md"
+L00003374	```
+L00003375	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3376-3756 >>>
+L00003376	### PS-040 - Ask Flow Preset Carry Through
+L00003377	
+L00003378	```yaml
+L00003379	plan_unit_id: PS-040
+L00003380	unit_type: requirement
+L00003381	status: accepted
+L00003382	owner_doc: Plans/Permissions_System.md
+L00003383	canonical_text: "Ask flow preset behavior carries TODO, plan-mode web, batch webfetch, four-tier approval ladder, web tool visibility, strict read_only/no-network options, blocked/unavailable payload fields, and skill/lsp/question/todo/web keys through permission presets."
+L00003384	gui_related: true
+L00003385	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+L00003386	split_recommended: false
+L00003387	depends_on:
+L00003388	- PS-038
+L00003389	- PS-039
+L00003390	unblocks: []
+L00003391	acceptance_criteria:
+L00003392	- "PS-040 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00003393	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003394	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003395	validation_surfaces:
+L00003396	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003397	- python3 scripts/pm-plan-index.py validate
+L00003398	risk_class: permission_system_drift
+L00003399	reasoning_tier: standard
+L00003400	context_scope: permissions_system_batch_206
+L00003401	implementation_surfaces:
+L00003402	- Plans/Permissions_System.md
+L00003403	node_compile_hint:
+L00003404	  mode: ask_flow_preset_carrythrough
+L00003405	  create_worknodes: false
+L00003406	source_lineage:
+L00003407	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0034
+L00003408	preserved_exact_tokens:
+L00003409	- "todowrite"
+L00003410	- "todoread"
+L00003411	- "blanket-denied"
+L00003412	- "Batch webfetch canon"
+L00003413	- "four-tier approval ladder"
+L00003414	- "question default allow only when HITL is available"
+L00003415	- "six web tools"
+L00003416	- "read_only/no-network"
+L00003417	- "skill"
+L00003418	- "lsp"
+L00003419	- "question"
+L00003420	- "todo"
+L00003421	- "web"
+L00003422	negative_constraints:
+L00003423	- "Plan-mode permission behavior removes web tools from any blanket deny."
+L00003424	preserved_contractrefs: []
+L00003425	compatibility_only_notes:
+L00003426	- "TODO behavior is locked so todowrite and todoread use the normalized TODO schema."
+L00003427	stale_retired_dispositions: []
+L00003428	owner_hints:
+L00003429	- "Plans/Permissions_System.md"
+L00003430	```
+L00003431	
+L00003432	### PS-041 - Approval Ladder Durable Always Path
+L00003433	
+L00003434	```yaml
+L00003435	plan_unit_id: PS-041
+L00003436	unit_type: requirement
+L00003437	status: accepted
+L00003438	owner_doc: Plans/Permissions_System.md
+L00003439	canonical_text: "Approval UI preserves deny, once, for session, and always; once approves only the current invocation, for session creates an ephemeral session-cache allow under approval_scope_key, and always creates a revocable project or global rule through canonical permissions storage."
+L00003440	gui_related: true
+L00003441	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+L00003442	split_recommended: false
+L00003443	depends_on:
+L00003444	- PS-019
+L00003445	- PS-023
+L00003446	- PS-027
+L00003447	unblocks: []
+L00003448	acceptance_criteria:
+L00003449	- "PS-041 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00003450	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003451	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003452	validation_surfaces:
+L00003453	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003454	- python3 scripts/pm-plan-index.py validate
+L00003455	risk_class: permission_system_drift
+L00003456	reasoning_tier: standard
+L00003457	context_scope: permissions_system_batch_206
+L00003458	implementation_surfaces:
+L00003459	- Plans/Permissions_System.md
+L00003460	node_compile_hint:
+L00003461	  mode: approval_ladder_durable_always
+L00003462	  create_worknodes: false
+L00003463	source_lineage:
+L00003464	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0035
+L00003465	preserved_exact_tokens:
+L00003466	- "Approval UX, recovery, and audit visibility"
+L00003467	- "deny"
+L00003468	- "once"
+L00003469	- "for session"
+L00003470	- "always"
+L00003471	- "approval_scope_key"
+L00003472	- "Project"
+L00003473	- "Global"
+L00003474	- "canonical permissions storage"
+L00003475	- "FileSafe allowlists"
+L00003476	- "one-off UI side effects"
+L00003477	negative_constraints:
+L00003478	- "Durable approval must not be implemented through ad-hoc FileSafe allowlists or one-off UI side effects."
+L00003479	preserved_contractrefs: []
+L00003480	compatibility_only_notes: []
+L00003481	stale_retired_dispositions: []
+L00003482	owner_hints:
+L00003483	- "Plans/Permissions_System.md"
+L00003484	```
+L00003485	
+L00003486	### PS-042 - Blocked Recovery Payload Routing
+L00003487	
+L00003488	```yaml
+L00003489	plan_unit_id: PS-042
+L00003490	unit_type: requirement
+L00003491	status: accepted
+L00003492	owner_doc: Plans/Permissions_System.md
+L00003493	canonical_text: "Blocked-action recovery uses blocked_reason_code plus ordered allowed_action_ids and surfaces only canonical actions for permission policy, FileSafe, unavailable MCP, unavailable providers/services, and headless ask denial."
+L00003494	gui_related: true
+L00003495	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+L00003496	split_recommended: false
+L00003497	depends_on:
+L00003498	- PS-008
+L00003499	unblocks: []
+L00003500	acceptance_criteria:
+L00003501	- "PS-042 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00003502	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003503	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003504	validation_surfaces:
+L00003505	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003506	- python3 scripts/pm-plan-index.py validate
+L00003507	risk_class: permission_system_drift
+L00003508	reasoning_tier: standard
+L00003509	context_scope: permissions_system_batch_206
+L00003510	implementation_surfaces:
+L00003511	- Plans/Permissions_System.md
+L00003512	node_compile_hint:
+L00003513	  mode: blocked_recovery_action_routing
+L00003514	  create_worknodes: false
+L00003515	source_lineage:
+L00003516	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0035
+L00003517	preserved_exact_tokens:
+L00003518	- "Blocked-action recovery"
+L00003519	- "blocked_reason_code"
+L00003520	- "allowed_action_ids[]"
+L00003521	- "FileSafe"
+L00003522	- "unavailable MCP"
+L00003523	- "unavailable providers"
+L00003524	- "headless ask denial"
+L00003525	- "open_permissions"
+L00003526	- "open_filesafe_settings"
+L00003527	- "approve_once"
+L00003528	- "filesafe_add_rule"
+L00003529	negative_constraints:
+L00003530	- "Blocked recovery must be direct rather than a passive error string."
+L00003531	- "UI surfaces render only canonical allowed actions."
+L00003532	preserved_contractrefs: []
+L00003533	compatibility_only_notes: []
+L00003534	stale_retired_dispositions: []
+L00003535	owner_hints:
+L00003536	- "Plans/Permissions_System.md"
+L00003537	- "Plans/FileSafe.md"
+L00003538	- "Plans/FinalGUISpec.md"
+L00003539	```
+L00003540	
+L00003541	### PS-043 - Permission Evidence Audit Visibility
+L00003542	
+L00003543	```yaml
+L00003544	plan_unit_id: PS-043
+L00003545	unit_type: requirement
+L00003546	status: accepted
+L00003547	owner_doc: Plans/Permissions_System.md
+L00003548	canonical_text: "Permission prompts, denials, approvals, and blocked outcomes write operational evidence to the audit stream and appear in both concise collapsible thread transparency and a dedicated log/audit inspector."
+L00003549	gui_related: true
+L00003550	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+L00003551	split_recommended: false
+L00003552	depends_on:
+L00003553	- PS-007
+L00003554	unblocks: []
+L00003555	acceptance_criteria:
+L00003556	- "PS-043 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00003557	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003558	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003559	validation_surfaces:
+L00003560	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003561	- python3 scripts/pm-plan-index.py validate
+L00003562	risk_class: permission_system_drift
+L00003563	reasoning_tier: standard
+L00003564	context_scope: permissions_system_batch_206
+L00003565	implementation_surfaces:
+L00003566	- Plans/Permissions_System.md
+L00003567	node_compile_hint:
+L00003568	  mode: permission_audit_visibility
+L00003569	  create_worknodes: false
+L00003570	source_lineage:
+L00003571	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0035
+L00003572	preserved_exact_tokens:
+L00003573	- "Permission prompts"
+L00003574	- "denials"
+L00003575	- "approvals"
+L00003576	- "blocked outcomes"
+L00003577	- "audit stream"
+L00003578	- "concise, collapsible in-thread transparency"
+L00003579	- "dedicated log/audit inspector"
+L00003580	- "search"
+L00003581	- "filtering"
+L00003582	- "drill-down"
+L00003583	- "on-demand payload reads"
+L00003584	negative_constraints:
+L00003585	- "Chat transparency must not be the only place to inspect operational history."
+L00003586	- "The dedicated inspector must not replace lightweight thread transparency."
+L00003587	preserved_contractrefs: []
+L00003588	compatibility_only_notes: []
+L00003589	stale_retired_dispositions: []
+L00003590	owner_hints:
+L00003591	- "Plans/Permissions_System.md"
+L00003592	```
+L00003593	
+L00003594	### PS-044 - Question TODO Task Permission Boundary
+L00003595	
+L00003596	```yaml
+L00003597	plan_unit_id: PS-044
+L00003598	unit_type: constraint
+L00003599	status: accepted
+L00003600	owner_doc: Plans/Permissions_System.md
+L00003601	canonical_text: "Question, todowrite, todoread, user-facing task behavior, and todo-tool availability keep schemas in their owner contracts while Permissions owns allow/ask/deny posture, inherited ceilings, blocked/unavailable payloads, and audit visibility."
+L00003602	gui_related: false
+L00003603	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+L00003604	split_recommended: false
+L00003605	depends_on:
+L00003606	- PS-040
+L00003607	unblocks: []
+L00003608	acceptance_criteria:
+L00003609	- "PS-044 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00003610	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003611	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003612	validation_surfaces:
+L00003613	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003614	- python3 scripts/pm-plan-index.py validate
+L00003615	risk_class: permission_system_drift
+L00003616	reasoning_tier: standard
+L00003617	context_scope: permissions_system_batch_206
+L00003618	implementation_surfaces:
+L00003619	- Plans/Permissions_System.md
+L00003620	node_compile_hint:
+L00003621	  mode: question_todo_task_permission_boundary
+L00003622	  create_worknodes: false
+L00003623	source_lineage:
+L00003624	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0035
+L00003625	preserved_exact_tokens:
+L00003626	- "question"
+L00003627	- "todowrite"
+L00003628	- "todoread"
+L00003629	- "task"
+L00003630	- "todo-tool"
+L00003631	- "Deep Plan markdown"
+L00003632	- "normalized TODO projection"
+L00003633	- "active thread/run"
+L00003634	negative_constraints:
+L00003635	- "The permission layer must not redefine question, TODO, or task schemas locally."
+L00003636	preserved_contractrefs:
+L00003637	- "ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events"
+L00003638	compatibility_only_notes: []
+L00003639	stale_retired_dispositions: []
+L00003640	owner_hints:
+L00003641	- "Plans/Permissions_System.md"
+L00003642	- "Plans/assistant-chat-design.md"
+L00003643	- "Plans/storage-plan.md"
+L00003644	- "Plans/Contracts_V0.md"
+L00003645	```
+L00003646	
+L00003647	### PS-045 - Batch Web Approval Inputs And Timeout
+L00003648	
+L00003649	```yaml
+L00003650	plan_unit_id: PS-045
+L00003651	unit_type: requirement
+L00003652	status: accepted
+L00003653	owner_doc: Plans/Permissions_System.md
+L00003654	canonical_text: "Batch web approval preserves domain prompt semantics, required URL list bounds, concurrency limits, continue_on_error default, For Session domain grants, and locked batch timeout formula individual_timeout times min(url_count, 5) capped at 600 seconds."
+L00003655	gui_related: true
+L00003656	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+L00003657	split_recommended: false
+L00003658	depends_on:
+L00003659	- PS-031
+L00003660	unblocks: []
+L00003661	acceptance_criteria:
+L00003662	- "PS-045 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00003663	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003664	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003665	validation_surfaces:
+L00003666	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003667	- python3 scripts/pm-plan-index.py validate
+L00003668	risk_class: permission_system_drift
+L00003669	reasoning_tier: standard
+L00003670	context_scope: permissions_system_batch_206
+L00003671	implementation_surfaces:
+L00003672	- Plans/Permissions_System.md
+L00003673	node_compile_hint:
+L00003674	  mode: batch_web_approval_timeout
+L00003675	  create_worknodes: false
+L00003676	source_lineage:
+L00003677	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0035
+L00003678	preserved_exact_tokens:
+L00003679	- "single confirmation prompt showing all unique domains in the batch"
+L00003680	- "urls: string[]"
+L00003681	- "min 1, max 50"
+L00003682	- "concurrency?: number"
+L00003683	- "default 3"
+L00003684	- "max 10"
+L00003685	- "continue_on_error?: boolean"
+L00003686	- "default true"
+L00003687	- "For Session grants all listed domains for that session"
+L00003688	- "individual_timeout × min(url_count, 5)"
+L00003689	- "cap 600s"
+L00003690	negative_constraints:
+L00003691	- "Batch timeout formula is locked and must not be silently replaced."
+L00003692	preserved_contractrefs: []
+L00003693	compatibility_only_notes: []
+L00003694	stale_retired_dispositions: []
+L00003695	owner_hints:
+L00003696	- "Plans/Permissions_System.md"
+L00003697	```
+L00003698	
+L00003699	### PS-046 - HITL Approval Scope Fields And Labels
+L00003700	
+L00003701	```yaml
+L00003702	plan_unit_id: PS-046
+L00003703	unit_type: requirement
+L00003704	status: accepted
+L00003705	owner_doc: Plans/Permissions_System.md
+L00003706	canonical_text: "Shared HITL approval ladder alignment carries approval_scope_key, blocked_sequence, execution_entity_id, lane_id, package_id, account_id, Deny/Once/For session/Always labels, and ordered allowed actions without same-session widening."
+L00003707	gui_related: true
+L00003708	gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+L00003709	split_recommended: false
+L00003710	depends_on:
+L00003711	- PS-005
+L00003712	- PS-042
+L00003713	unblocks: []
+L00003714	acceptance_criteria:
+L00003715	- "PS-046 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+L00003716	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00003717	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00003718	validation_surfaces:
+L00003719	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003720	- python3 scripts/pm-plan-index.py validate
+L00003721	risk_class: permission_system_drift
+L00003722	reasoning_tier: standard
+L00003723	context_scope: permissions_system_batch_206
+L00003724	implementation_surfaces:
+L00003725	- Plans/Permissions_System.md
+L00003726	node_compile_hint:
+L00003727	  mode: hitl_approval_scope_fields
+L00003728	  create_worknodes: false
+L00003729	source_lineage:
+L00003730	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0035
+L00003731	preserved_exact_tokens:
+L00003732	- "Shared approval-ladder alignment"
+L00003733	- "approval_scope_key"
+L00003734	- "blocked_sequence"
+L00003735	- "execution_entity_id"
+L00003736	- "lane_id"
+L00003737	- "package_id"
+L00003738	- "account_id"
+L00003739	- "Deny"
+L00003740	- "Once"
+L00003741	- "For session"
+L00003742	- "Always"
+L00003743	- "ordered `allowed_action_ids[]`"
+L00003744	- "lane/package/account scope"
+L00003745	negative_constraints:
+L00003746	- "Approval scope must not silently become same-session if lanes are parallel."
+L00003747	- "Session-wide approval policy must remain distinct from blocked-episode approval."
+L00003748	preserved_contractrefs:
+L00003749	- "ContractRef: Plans/human-in-the-loop.md#Shared approval-ladder alignment (2026-04-04)"
+L00003750	compatibility_only_notes: []
+L00003751	stale_retired_dispositions: []
+L00003752	owner_hints:
+L00003753	- "Plans/Permissions_System.md"
+L00003754	- "Plans/human-in-the-loop.md"
+L00003755	```
+L00003756	
+
+<<< CONTEXT_AFTER canonical_document_lines=3757-3768 >>>
+L00003757	### PS-047 - Plan Mode And Read Only Default Split
+L00003758	
+L00003759	```yaml
+L00003760	plan_unit_id: PS-047
+L00003761	unit_type: constraint
+L00003762	status: accepted
+L00003763	owner_doc: Plans/Permissions_System.md
+L00003764	canonical_text: "Plan mode and Read-only are distinct permission concepts: Plan may allow information-gathering read/search/question/web operations while denying mutation, and strict read_only/no-network may deny web operations explicitly."
+L00003765	gui_related: false
+L00003766	gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+L00003767	split_recommended: false
+L00003768	depends_on:

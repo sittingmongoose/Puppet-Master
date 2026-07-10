@@ -1,0 +1,411 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-396 >>>
+L00000001	# Formatters System (Canonical SSOT)
+L00000002	
+L00000003	
+L00000004	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000005	
+L00000006	## 0. Scope and SSOT status
+L00000007	
+L00000008	This document is the **single canonical source of truth** for the Puppet Master formatter system — how formatters run, when they trigger, how they are configured, and how formatting changes are tracked. All other plan documents MUST reference this document by anchor (e.g., `Plans/Formatters_System.md#FORMATTER-CONFIG`) rather than restating formatter definitions or lifecycle rules.
+L00000009	
+L00000010	Support-system SSOTs must surface runtime and safety gaps instead of hiding them: `Plans/Formatters_System.md` / `/Formatters_System.md` owns `format.*` event registration, HTE formatter delivery, and formatter `/schema`; `Plans/Plugins_System.md` / `/Plugins_System.md` owns `mutation_capable`, in-process execution, subprocess-sandbox expectations, and prompt `/param` hooks; `Plans/Skills_System.md` / `/Skills_System.md` owns DAE `/bundling`, runtime skills `/listing`, and HTE reachability; `/FileSafe` owns file-safety boundaries when formatter subprocesses touch project files. Under-specified gaps must be visible in the owning SSOTs before implementation treats them as safe defaults.
+L00000011	
+L00000012	ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
+L00000013	
+L00000014	### SSOT references (DRY)
+L00000015	- Locked decisions: `Plans/Spec_Lock.json`
+L00000016	- Canonical contracts (events/tools/auth): `Plans/Contracts_V0.md`
+L00000017	- DRY + ContractRef rule: `Plans/DRY_Rules.md`
+L00000018	- Canonical terms: `Plans/Glossary.md`
+L00000019	- Deterministic ambiguity handling: `Plans/Decision_Policy.md` + `Plans/auto_decisions.jsonl`
+L00000020	- Tool registry + tool semantics: `Plans/Tools.md`
+L00000021	- Run modes (HTE/DAE): `Plans/Run_Modes.md`
+L00000022	- Plugin system: `Plans/Plugins_System.md`
+L00000023	- OpenCode baseline (formatters): `Plans/OpenCode_Deep_Extraction.md` §7E
+L00000024	- GUI specification: `Plans/FinalGUISpec.md`
+L00000025	- Document packaging: `Plans/Document_Packaging_Policy.md` / `/Document_Packaging_Policy.md`
+L00000026	- File safety: `Plans/FileSafe.md` / `/FileSafe.md`
+L00000027	- Formatter owner path: `Plans/Formatters_System.md` / `/Formatters_System.md`
+L00000028	
+L00000029	---
+L00000030	
+L00000031	## 1. Definitions
+L00000032	
+L00000033	<a id="DEF-FORMATTER"></a>
+L00000034	### 1.1 Formatter
+L00000035	
+L00000036	A **Formatter** is an external command that transforms a file's content to conform to a style or convention. Puppet Master invokes formatters after file-write/edit operations during Hosted Tool Execution (HTE). Formatters are stateless; they read a file, transform it in-place, and exit.
+L00000037	
+L00000038	<a id="DEF-FORMATTER-EVENT"></a>
+L00000039	### 1.2 Formatter trigger event
+L00000040	
+L00000041	The formatter trigger event is an internal event equivalent to `File.Edited` — emitted whenever a hosted tool (`write`, `edit`, `patch`, `multiedit`) successfully modifies a file. This event carries the file path and extension.
+L00000042	
+L00000043	ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Run_Modes.md#STRATEGY-HTE
+L00000044	
+L00000045	---
+L00000046	
+L00000047	## 2. Lifecycle
+L00000048	
+L00000049	<a id="LIFECYCLE"></a>
+L00000050	
+L00000051	### 2.1 When formatters run
+L00000052	
+L00000053	Formatters run **after every file write/edit performed by hosted tools** (HTE strategy only). When a tool modifies a file:
+L00000054	
+L00000055	1. The tool completes and emits a `File.Edited` event with the file path.
+L00000056	2. The formatter engine determines the file extension and finds matching enabled formatters (§3, §4).
+L00000057	3. Matching formatters are invoked **sequentially** in registration order.
+L00000058	4. The formatted file replaces the tool's output on disk.
+L00000059	
+L00000060	Rule: Formatters MUST NOT run during Delegated Agent Execution (DAE). In DAE mode, the provider CLI manages its own formatting; Puppet Master performs no post-hoc formatting.
+L00000061	
+L00000062	DAE analytics and `/blocked` truth still require a post-hoc `tool-event` story in the provider/run-mode event owners; the formatter subsystem records only HTE formatter events and must not synthesize DAE tool-event history after the fact.
+L00000063	
+L00000064	ContractRef: ContractName:Plans/Run_Modes.md#STRATEGY-HTE, ContractName:Plans/Run_Modes.md#STRATEGY-DAE
+L00000065	
+L00000066	### 2.2 Formatting changes in diffs and evidence
+L00000067	
+L00000068	
+L00000069	When a formatter modifies a file beyond whitespace-only changes, the diff between the tool's output and the formatted output is recorded in the evidence ledger as a `format.applied` event:
+L00000070	
+L00000071	```
+L00000072	{
+L00000073	  "event_type": "format.applied",
+L00000074	  "formatter_id": "rustfmt",
+L00000075	  "file_path": "src/main.rs",
+L00000076	  "diff_bytes": 142,
+L00000077	  "timestamp": "..."
+L00000078	}
+L00000079	```
+L00000080	
+L00000081	This ensures reviewers can distinguish agent-authored changes from formatter-applied changes.
+L00000082	
+L00000083	ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord
+L00000084	
+L00000085	### 2.3 Error handling
+L00000086	
+L00000087	If a formatter command exits with a non-zero status:
+L00000088	- The original tool output is **preserved** (the file is not corrupted).
+L00000089	- A `format.error` event is logged with the formatter ID, file path, exit code, and stderr.
+L00000090	- The pipeline continues; formatter failures do not block the run.
+L00000091	
+L00000092	ContractRef: PolicyRule:Decision_Policy.md§2
+L00000093	
+L00000094	---
+L00000095	
+L00000096	## 3. Built-in formatters
+L00000097	
+L00000098	<a id="BUILT-IN-FORMATTERS"></a>
+L00000099	
+L00000100	The following formatters are available out of the box. Each has an **auto-detection** check that runs once per session (or per project switch) to determine availability.
+L00000101	
+L00000102	Rule: Built-in formatters are enabled by default when their detection check passes. Users can disable any formatter via config (§4).
+L00000103	
+L00000104	ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+L00000105	
+L00000106	| Formatter | Extensions | Detection |
+L00000107	|-----------|-----------|-----------|
+L00000108	| `prettier` | .js, .jsx, .ts, .tsx, .html, .css, .json, .yaml, .md | `prettier` in package.json dependencies |
+L00000109	| `biome` | .js, .jsx, .ts, .tsx, .json, .css, .html | `biome.json` or `biome.jsonc` exists |
+L00000110	| `rustfmt` | .rs | `rustfmt` binary on PATH |
+L00000111	| `gofmt` | .go | `gofmt` binary on PATH |
+L00000112	| `ruff` | .py, .pyi | `ruff` binary on PATH + config present |
+L00000113	| `shfmt` | .sh, .bash | `shfmt` binary on PATH |
+L00000114	| `clang-format` | .c, .cpp, .h, .hpp | `.clang-format` file exists |
+L00000115	| `dart` | .dart | `dart` binary on PATH |
+L00000116	| `mix` | .ex, .exs, .eex | `mix` binary on PATH |
+L00000117	| `zig` | .zig, .zon | `zig` binary on PATH |
+L00000118	| `ktlint` | .kt, .kts | `ktlint` binary on PATH |
+L00000119	| `rubocop` | .rb, .rake | `rubocop` binary on PATH |
+L00000120	| `standardrb` | .rb, .rake | `standardrb` binary on PATH |
+L00000121	| `pint` | .php | `laravel/pint` in composer.json |
+L00000122	| `ocamlformat` | .ml, .mli | `ocamlformat` binary + `.ocamlformat` exists |
+L00000123	| `nixfmt` | .nix | `nixfmt` binary on PATH |
+L00000124	| `ormolu` | .hs | `ormolu` binary on PATH |
+L00000125	| `terraform` | .tf, .tfvars | `terraform` binary on PATH |
+L00000126	| `latexindent` | .tex | `latexindent` binary on PATH |
+L00000127	| `gleam` | .gleam | `gleam` binary on PATH |
+L00000128	| `cljfmt` | .clj, .cljs | `cljfmt` binary on PATH |
+L00000129	
+L00000130	---
+L00000131	
+L00000132	## 4. Configuration
+L00000133	
+L00000134	<a id="FORMATTER-CONFIG"></a>
+L00000135	
+L00000136	### 4.1 Global disable
+L00000137	
+L00000138	Setting `config.formatters.enabled = false` disables **all** formatters globally. No formatters run regardless of per-formatter config.
+L00000139	
+L00000140	ContractRef: PolicyRule:Decision_Policy.md§2
+L00000141	
+L00000142	### 4.2 Per-formatter config
+L00000143	
+L00000144	Each formatter can be individually configured:
+L00000145	
+L00000146	```toml
+L00000147	[formatter.rustfmt]
+L00000148	disabled = false
+L00000149	command = ["rustfmt", "--edition", "2021", "$FILE"]
+L00000150	environment = { RUST_LOG = "warn" }
+L00000151	extensions = [".rs"]
+L00000152	```
+L00000153	
+L00000154	| Field | Type | Default | Description |
+L00000155	|-------|------|---------|-------------|
+L00000156	| `disabled` | `bool` | `false` | When `true`, this formatter is skipped even if detected. |
+L00000157	| `command` | `string[]` | Built-in default | Command and arguments. `$FILE` is replaced with the file path at execution time. If empty (`[]`), the formatter is skipped. |
+L00000158	| `environment` | `map<string, string>` | `{}` | Environment variables set when running the formatter command. |
+L00000159	| `extensions` | `string[]` | Built-in default | File extensions this formatter handles. Overrides the built-in extension list. |
+L00000160	
+L00000161	### 4.3 `$FILE` placeholder
+L00000162	
+L00000163	The literal string `$FILE` in the `command` array is replaced with the absolute path of the file being formatted at execution time. If `$FILE` does not appear in the command, the file path is appended as the last argument.
+L00000164	
+L00000165	### 4.4 Custom formatters
+L00000166	
+L00000167	Users can define custom formatters by adding entries to the config with `command` and `extensions`. Custom formatters have no auto-detection; their `enabled()` check is always `true` (unless `disabled = true`).
+L00000168	
+L00000169	```toml
+L00000170	[formatter.my-custom-formatter]
+L00000171	command = ["my-fmt", "--fix", "$FILE"]
+L00000172	extensions = [".xyz", ".abc"]
+L00000173	```
+L00000174	
+L00000175	### 4.5 Config persistence
+L00000176	
+L00000177	Formatter config is stored in:
+L00000178	- **Global:** `~/.config/puppet-master/config.toml` under the `[formatter]` section.
+L00000179	- **Project:** `.puppet-master/config.toml` under the `[formatter]` section (overrides global per-formatter).
+L00000180	
+L00000181	ContractRef: ContractName:Plans/Plugins_System.md#PLUGIN-CONFIG
+L00000182	
+L00000183	---
+L00000184	
+L00000185	## 5. GUI requirements
+L00000186	
+L00000187	<a id="GUI-FORMATTERS"></a>
+L00000188	
+L00000189	The Formatters settings screen is a tab in the unified Settings page (`Plans/FinalGUISpec.md` §7.4).
+L00000190	
+L00000191	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md
+L00000192	
+L00000193	### 5.1 Formatters tab
+L00000194	
+L00000195	A dedicated **Formatters** tab in Settings MUST provide:
+L00000196	
+L00000197	1. **Global disable toggle:** "Enable formatters" toggle (default on). When off, all formatters are skipped.
+L00000198	
+L00000199	2. **Formatter list:** Table of all formatters (built-in + custom). Columns: Name, Extensions (truncated), Status (detected/not found/disabled/custom), Enable/Disable toggle. Built-in formatters that fail detection show "(not found)" in Status.
+L00000200	
+L00000201	3. **Formatter detail (expand row):** Expanding a row shows:
+L00000202	   - **Command:** Editable command array (text input or tag list). `$FILE` placeholder highlighted.
+L00000203	   - **Environment:** Key-value editor for environment variables.
+L00000204	   - **Extensions:** Editable extension list.
+L00000205	   - "Reset to defaults" per field (for built-in formatters).
+L00000206	
+L00000207	4. **Add custom formatter:** "Add formatter" button with fields: Name (ID), Command, Extensions, Environment. Validates: name unique, command non-empty, at least one extension.
+L00000208	
+L00000209	5. **Remove:** Remove button for custom formatters. Built-in formatters can only be disabled, not removed.
+L00000210	
+L00000211	6. **Scope selector:** Toggle between Global and Project config (same pattern as Permissions tab in `Plans/Permissions_System.md` §10.8).
+L00000212	
+L00000213	### 5.2 ELI5/Expert copy
+L00000214	
+L00000215	Formatter UI elements follow the app-level Interaction Mode (Expert/ELI5) toggle per `Plans/FinalGUISpec.md` §7.4.0. Tooltip keys: `tooltip.formatters.*` prefix.
+L00000216	
+L00000217	- **ELI5:** Simplified view showing formatter list with enable/disable toggles only. Command, environment, and extension editing are hidden.
+L00000218	- **Expert:** Full view with all sections visible.
+L00000219	
+L00000220	---
+L00000221	
+L00000222	## 6. OpenCode baseline and Puppet Master deltas
+L00000223	
+L00000224	<a id="BASELINE-DELTAS"></a>
+L00000225	
+L00000226	Per `Plans/OpenCode_Deep_Extraction.md` §7E and §9E:
+L00000227	
+L00000228	### 6.1 Baseline
+L00000229	
+L00000230	OpenCode formatters run automatically after every `File.Event.Edited` bus event. Built-in formatters auto-detect availability via binary checks and config file presence. Config `formatter: false` disables all. Per-formatter config: `{ disabled, command, environment, extensions }`. `$FILE` placeholder in command arrays. Custom formatters added via config with `command` and `extensions`.
+L00000231	
+L00000232	### 6.2 Puppet Master deltas
+L00000233	
+L00000234	1. **Event-driven trigger in Rust:** OpenCode uses a TypeScript bus event system. Puppet Master implements the trigger via internal event dispatch after hosted tool write/edit operations.
+L00000235	2. **Formatter auto-detection in Rust:** OpenCode uses `BunProc.which()` for binary detection. Puppet Master uses `which` crate or PATH search via `path_utils::resolve_executable`.
+L00000236	3. **Evidence tracking:** OpenCode does not explicitly track formatting diffs. Puppet Master records `format.applied` events with diff metadata in the evidence ledger.
+L00000237	4. **HTE-only enforcement:** OpenCode runs formatters regardless of execution strategy. Puppet Master restricts formatters to HTE mode only; DAE delegates formatting to the provider CLI.
+L00000238	5. **GUI settings:** OpenCode has no GUI. Puppet Master provides a dedicated Formatters settings tab with per-formatter config editing.
+L00000239	
+L00000240	ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+L00000241	
+L00000242	---
+L00000243	
+L00000244	## 7. Acceptance criteria
+L00000245	
+L00000246	<a id="ACCEPTANCE"></a>
+L00000247	
+L00000248	These criteria are testable assertions that MUST hold for any conforming implementation.
+L00000249	
+L00000250	ContractRef: ContractName:Plans/Formatters_System.md, ContractName:Plans/Progression_Gates.md
+L00000251	
+L00000252	<a id="AC-FMT01"></a>
+L00000253	**AC-FMT01:** Formatters MUST run after every file write/edit performed by hosted tools in HTE mode. Formatters MUST NOT run in DAE mode.
+L00000254	
+L00000255	<a id="AC-FMT02"></a>
+L00000256	**AC-FMT02:** Setting `config.formatters.enabled = false` MUST disable all formatters globally.
+L00000257	
+L00000258	<a id="AC-FMT03"></a>
+L00000259	**AC-FMT03:** Per-formatter `disabled = true` MUST prevent that formatter from running, even if auto-detection passes.
+L00000260	
+L00000261	<a id="AC-FMT04"></a>
+L00000262	**AC-FMT04:** The `$FILE` placeholder in command arrays MUST be replaced with the actual file path at execution time.
+L00000263	
+L00000264	<a id="AC-FMT05"></a>
+L00000265	**AC-FMT05:** Formatter errors (non-zero exit) MUST NOT corrupt the file. The original tool output MUST be preserved.
+L00000266	
+L00000267	<a id="AC-FMT06"></a>
+L00000268	**AC-FMT06:** Formatting changes MUST be recorded as `format.applied` events in the evidence ledger with diff metadata.
+L00000269	
+L00000270	<a id="AC-FMT07"></a>
+L00000271	**AC-FMT07:** The GUI Formatters tab MUST display all formatters with enable/disable toggles, and support per-formatter command/environment/extension editing.
+L00000272	
+L00000273	---
+L00000274	
+L00000275	*Document created for planning only; no code changes.*
+L00000276	
+L00000277	## Owner / Consumer Map
+L00000278	
+L00000279	`Plans/Formatters_System.md` remains the owner doc for formatter scope, definitions, HTE lifecycle, formatter evidence, built-in and custom formatter configuration, formatter Settings UI requirements, and OpenCode formatter deltas. Cross-doc consumers must continue to use the anchors and ContractRefs in the source body instead of restating formatter behavior.
+L00000280	
+L00000281	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000282	
+L00000283	## PlanUnits
+L00000284	
+L00000285	### FS-002 - Formatter Scope, SSOT, And Support Boundaries
+L00000286	
+L00000287	```yaml
+L00000288	plan_unit_id: FS-002
+L00000289	unit_type: requirement
+L00000290	status: accepted
+L00000291	owner_doc: Plans/Formatters_System.md
+L00000292	canonical_text: Formatters_System.md is the canonical formatter SSOT for formatter execution, trigger timing, configuration, evidence tracking, format.* event registration, HTE formatter delivery, and formatter /schema, while Plugins_System, Skills_System, and FileSafe retain their own subprocess, skill-delivery, prompt-hook, and file-safety boundaries.
+L00000293	gui_related: false
+L00000294	gui_classification_reason: This unit defines formatter ownership and cross-document boundaries, not GUI presentation; SSOT references to GUI docs are routing references only.
+L00000295	split_recommended: false
+L00000296	depends_on: []
+L00000297	unblocks: []
+L00000298	acceptance_criteria:
+L00000299	- The covered source span remains losslessly available for exact-text audit.
+L00000300	- The behavior is addressable through this fine-grained PlanUnit instead of broad FS-001 coverage.
+L00000301	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000302	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000303	validation_surfaces:
+L00000304	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000305	- python3 scripts/pm-plan-index.py validate
+L00000306	risk_class: formatter_drift
+L00000307	reasoning_tier: standard
+L00000308	context_scope: formatters_standardization
+L00000309	implementation_surfaces:
+L00000310	- Plans/Formatters_System.md
+L00000311	node_compile_hint:
+L00000312	  mode: formatter_scope_ssot_support_boundaries
+L00000313	  create_worknodes: false
+L00000314	source_lineage:
+L00000315	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0001
+L00000316	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0002
+L00000317	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0003
+L00000318	preserved_exact_tokens:
+L00000319	- Formatters System (Canonical SSOT)
+L00000320	- single canonical source of truth
+L00000321	- Plans/Formatters_System.md#FORMATTER-CONFIG
+L00000322	- format.*
+L00000323	- HTE formatter delivery
+L00000324	- formatter /schema
+L00000325	- mutation_capable
+L00000326	- /param
+L00000327	- /FileSafe
+L00000328	negative_constraints:
+L00000329	- All other plan documents MUST reference this document by anchor rather than restating formatter definitions or lifecycle rules.
+L00000330	- Under-specified gaps must be visible in the owning SSOTs before implementation treats them as safe defaults.
+L00000331	compatibility_only_notes: []
+L00000332	stale_retired_dispositions: []
+L00000333	owner_boundary_notes:
+L00000334	- Plans/Formatters_System.md owns formatter lifecycle, config, evidence, event registration, HTE delivery, and formatter /schema.
+L00000335	- Plans/Plugins_System.md owns mutation_capable, in-process execution, subprocess-sandbox expectations, and prompt /param hooks.
+L00000336	- Plans/Skills_System.md owns DAE /bundling, runtime skills /listing, and HTE reachability.
+L00000337	- Plans/FileSafe.md owns file-safety boundaries when formatter subprocesses touch project files.
+L00000338	owner_hints:
+L00000339	- Plans/Formatters_System.md
+L00000340	preserved_contractrefs:
+L00000341	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+L00000342	```
+L00000343	
+L00000344	### FS-003 - Formatter Definitions And Trigger Event
+L00000345	
+L00000346	```yaml
+L00000347	plan_unit_id: FS-003
+L00000348	unit_type: requirement
+L00000349	status: accepted
+L00000350	owner_doc: Plans/Formatters_System.md
+L00000351	canonical_text: A Formatter is a stateless external command that transforms a file in place after hosted file-write/edit tools succeed, and the formatter trigger event is the File.Edited-equivalent internal event carrying file path and extension for write, edit, patch, and multiedit operations.
+L00000352	gui_related: false
+L00000353	gui_classification_reason: This unit defines runtime formatter and event semantics, not GUI presentation.
+L00000354	split_recommended: false
+L00000355	depends_on: []
+L00000356	unblocks: []
+L00000357	acceptance_criteria:
+L00000358	- The covered source span remains losslessly available for exact-text audit.
+L00000359	- The behavior is addressable through this fine-grained PlanUnit instead of broad FS-001 coverage.
+L00000360	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000361	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000362	validation_surfaces:
+L00000363	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000364	- python3 scripts/pm-plan-index.py validate
+L00000365	risk_class: formatter_drift
+L00000366	reasoning_tier: standard
+L00000367	context_scope: formatters_standardization
+L00000368	implementation_surfaces:
+L00000369	- Plans/Formatters_System.md
+L00000370	node_compile_hint:
+L00000371	  mode: formatter_definitions_and_trigger_event
+L00000372	  create_worknodes: false
+L00000373	source_lineage:
+L00000374	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0004
+L00000375	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0005
+L00000376	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Formatters_System-S0006
+L00000377	preserved_exact_tokens:
+L00000378	- DEF-FORMATTER
+L00000379	- DEF-FORMATTER-EVENT
+L00000380	- Formatter
+L00000381	- File.Edited
+L00000382	- write
+L00000383	- edit
+L00000384	- patch
+L00000385	- multiedit
+L00000386	- file path and extension
+L00000387	negative_constraints: []
+L00000388	compatibility_only_notes: []
+L00000389	stale_retired_dispositions: []
+L00000390	owner_boundary_notes: []
+L00000391	owner_hints:
+L00000392	- Plans/Formatters_System.md
+L00000393	preserved_contractrefs:
+L00000394	- 'ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Run_Modes.md#STRATEGY-HTE'
+L00000395	```
+L00000396	
+
+<<< CONTEXT_AFTER canonical_document_lines=397-408 >>>
+L00000397	### FS-004 - HTE Formatter Lifecycle And DAE Exclusion
+L00000398	
+L00000399	```yaml
+L00000400	plan_unit_id: FS-004
+L00000401	unit_type: requirement
+L00000402	status: accepted
+L00000403	owner_doc: Plans/Formatters_System.md
+L00000404	canonical_text: In HTE mode, formatters run after every hosted-tool file write/edit by resolving matching enabled formatters from file extension and invoking them sequentially in registration order; formatters never run during DAE, where provider CLIs own their formatting behavior.
+L00000405	gui_related: false
+L00000406	gui_classification_reason: This unit constrains runtime lifecycle and execution-strategy boundaries, not GUI presentation.
+L00000407	split_recommended: false
+L00000408	depends_on: []

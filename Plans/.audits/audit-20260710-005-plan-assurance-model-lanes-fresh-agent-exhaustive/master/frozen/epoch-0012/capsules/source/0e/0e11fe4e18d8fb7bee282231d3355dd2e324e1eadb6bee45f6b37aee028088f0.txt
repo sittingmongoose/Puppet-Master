@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1169-1180 >>>
+L00001169	- Seam Overseer
+L00001170	- Package Overseer
+L00001171	- /layout/help/glossary
+L00001172	negative_constraints:
+L00001173	- Projection-backed actions must not mutate runtime objects without health/freshness context.
+L00001174	compatibility_only_notes: []
+L00001175	stale_retired_dispositions: []
+L00001176	owner_boundary_notes: []
+L00001177	owner_hints:
+L00001178	- Plans/Executor_Protocol.md
+L00001179	```
+L00001180	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1181-1546 >>>
+L00001181	### EP-007 - Canonical Node State Readiness Source
+L00001182	
+L00001183	```yaml
+L00001184	plan_unit_id: EP-007
+L00001185	unit_type: requirement
+L00001186	status: accepted
+L00001187	owner_doc: Plans/Executor_Protocol.md
+L00001188	canonical_text: Overseer reads execution state from canonical node documents in self-build or user-project sharded graph storage and must not infer execution state from index metadata alone.
+L00001189	gui_related: false
+L00001190	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001191	split_recommended: false
+L00001192	depends_on: []
+L00001193	unblocks: []
+L00001194	acceptance_criteria:
+L00001195	- The covered source span remains losslessly available for exact-text audit.
+L00001196	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001197	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001198	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001199	validation_surfaces:
+L00001200	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001201	- python3 scripts/pm-plan-index.py validate
+L00001202	risk_class: executor_protocol_drift
+L00001203	reasoning_tier: standard
+L00001204	context_scope: executor_protocol_standardization
+L00001205	implementation_surfaces:
+L00001206	- Plans/Executor_Protocol.md
+L00001207	node_compile_hint:
+L00001208	  mode: canonical_node_state_readiness_source
+L00001209	  create_worknodes: false
+L00001210	source_lineage:
+L00001211	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0014
+L00001212	preserved_exact_tokens:
+L00001213	- Plans/plan_graph.json.nodes[]
+L00001214	- .puppet-master/project/plan_graph/nodes/<node_id>.json
+L00001215	- Overseer MUST NOT infer execution state from index metadata alone
+L00001216	- 'ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/project_plan_graph_index.schema.json'
+L00001217	negative_constraints:
+L00001218	- Overseer must not infer execution state from index metadata alone.
+L00001219	compatibility_only_notes: []
+L00001220	stale_retired_dispositions: []
+L00001221	owner_boundary_notes: []
+L00001222	owner_hints:
+L00001223	- Plans/Executor_Protocol.md
+L00001224	```
+L00001225	
+L00001226	### EP-008 - Ready Predicate And Spec Lock Matching
+L00001227	
+L00001228	```yaml
+L00001229	plan_unit_id: EP-008
+L00001230	unit_type: requirement
+L00001231	status: accepted
+L00001232	owner_doc: Plans/Executor_Protocol.md
+L00001233	canonical_text: A node is ready only when queued, all blockers are done, Spec Lock schema_versions exactly match, and tie-breaking chooses the lexicographically smallest node_id.
+L00001234	gui_related: false
+L00001235	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001236	split_recommended: false
+L00001237	depends_on: []
+L00001238	unblocks: []
+L00001239	acceptance_criteria:
+L00001240	- The covered source span remains losslessly available for exact-text audit.
+L00001241	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001242	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001243	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001244	validation_surfaces:
+L00001245	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001246	- python3 scripts/pm-plan-index.py validate
+L00001247	risk_class: executor_protocol_drift
+L00001248	reasoning_tier: standard
+L00001249	context_scope: executor_protocol_standardization
+L00001250	implementation_surfaces:
+L00001251	- Plans/Executor_Protocol.md
+L00001252	node_compile_hint:
+L00001253	  mode: ready_predicate_and_spec_lock_matching
+L00001254	  create_worknodes: false
+L00001255	source_lineage:
+L00001256	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0014
+L00001257	preserved_exact_tokens:
+L00001258	- status == "queued"
+L00001259	- blockers[]
+L00001260	- status == "done"
+L00001261	- spec_lock_requirements.schema_versions
+L00001262	- Plans/Spec_Lock.json.schema_versions
+L00001263	- lexicographically smallest `node_id`
+L00001264	- 'ContractRef: PolicyRule:Decision_Policy.md§3, ContractName:Plans/Spec_Lock.json'
+L00001265	negative_constraints: []
+L00001266	compatibility_only_notes: []
+L00001267	stale_retired_dispositions: []
+L00001268	owner_boundary_notes: []
+L00001269	owner_hints:
+L00001270	- Plans/Executor_Protocol.md
+L00001271	```
+L00001272	
+L00001273	### EP-009 - Blocker Integrity Rule
+L00001274	
+L00001275	```yaml
+L00001276	plan_unit_id: EP-009
+L00001277	unit_type: requirement
+L00001278	status: accepted
+L00001279	owner_doc: Plans/Executor_Protocol.md
+L00001280	canonical_text: Every blockers[] entry resolves to an existing canonical node document; unresolved blocker IDs are invalid graph input and keep the node not ready.
+L00001281	gui_related: false
+L00001282	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001283	split_recommended: false
+L00001284	depends_on: []
+L00001285	unblocks: []
+L00001286	acceptance_criteria:
+L00001287	- The covered source span remains losslessly available for exact-text audit.
+L00001288	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001289	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001290	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001291	validation_surfaces:
+L00001292	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001293	- python3 scripts/pm-plan-index.py validate
+L00001294	risk_class: executor_protocol_drift
+L00001295	reasoning_tier: standard
+L00001296	context_scope: executor_protocol_standardization
+L00001297	implementation_surfaces:
+L00001298	- Plans/Executor_Protocol.md
+L00001299	node_compile_hint:
+L00001300	  mode: blocker_integrity_rule
+L00001301	  create_worknodes: false
+L00001302	source_lineage:
+L00001303	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0014
+L00001304	preserved_exact_tokens:
+L00001305	- Every `blockers[]` entry MUST resolve
+L00001306	- existing canonical node document
+L00001307	- unresolved blocker ID
+L00001308	- invalid graph input
+L00001309	- not ready
+L00001310	- 'ContractRef: ContractName:Plans/Spec_Lock.json, ContractName:Plans/Project_Output_Artifacts.md'
+L00001311	negative_constraints:
+L00001312	- User-project nodes must not invent ad-hoc schema-version key names.
+L00001313	compatibility_only_notes: []
+L00001314	stale_retired_dispositions: []
+L00001315	owner_boundary_notes: []
+L00001316	owner_hints:
+L00001317	- Plans/Executor_Protocol.md
+L00001318	```
+L00001319	
+L00001320	### EP-010 - Canonical Node Status Lifecycle
+L00001321	
+L00001322	```yaml
+L00001323	plan_unit_id: EP-010
+L00001324	unit_type: requirement
+L00001325	status: accepted
+L00001326	owner_doc: Plans/Executor_Protocol.md
+L00001327	canonical_text: Canonical status lifecycle is queued -> in_progress -> verify_pending -> verified -> done for success and verify_pending -> failed for failure; done and failed are terminal and out-of-order transitions are rejected.
+L00001328	gui_related: false
+L00001329	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001330	split_recommended: false
+L00001331	depends_on: []
+L00001332	unblocks: []
+L00001333	acceptance_criteria:
+L00001334	- The covered source span remains losslessly available for exact-text audit.
+L00001335	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001336	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001337	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001338	validation_surfaces:
+L00001339	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001340	- python3 scripts/pm-plan-index.py validate
+L00001341	risk_class: executor_protocol_drift
+L00001342	reasoning_tier: standard
+L00001343	context_scope: executor_protocol_standardization
+L00001344	implementation_surfaces:
+L00001345	- Plans/Executor_Protocol.md
+L00001346	node_compile_hint:
+L00001347	  mode: canonical_node_status_lifecycle
+L00001348	  create_worknodes: false
+L00001349	source_lineage:
+L00001350	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0015
+L00001351	preserved_exact_tokens:
+L00001352	- queued -> in_progress -> verify_pending -> verified -> done
+L00001353	- verify_pending -> failed
+L00001354	- done
+L00001355	- failed
+L00001356	- terminal states
+L00001357	- reject out-of-order transitions
+L00001358	- 'ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Executor_Protocol.md'
+L00001359	negative_constraints: []
+L00001360	compatibility_only_notes: []
+L00001361	stale_retired_dispositions: []
+L00001362	owner_boundary_notes: []
+L00001363	owner_hints:
+L00001364	- Plans/Executor_Protocol.md
+L00001365	```
+L00001366	
+L00001367	### EP-011 - Run-Local UI/Orchestrator Status Overlays
+L00001368	
+L00001369	```yaml
+L00001370	plan_unit_id: EP-011
+L00001371	unit_type: requirement
+L00001372	status: accepted
+L00001373	owner_doc: Plans/Executor_Protocol.md
+L00001374	canonical_text: UI and orchestrator labels such as waiting_approval, needs_review, cancelled, or complete_with_warnings are run-local overlay or CTA states, not canonical node status values, and must persist separately.
+L00001375	gui_related: true
+L00001376	gui_classification_reason: This unit governs user-visible runtime projections, routes, CTAs, or operational surfaces.
+L00001377	split_recommended: false
+L00001378	depends_on: []
+L00001379	unblocks: []
+L00001380	acceptance_criteria:
+L00001381	- The covered source span remains losslessly available for exact-text audit.
+L00001382	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001383	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001384	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001385	validation_surfaces:
+L00001386	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001387	- python3 scripts/pm-plan-index.py validate
+L00001388	risk_class: executor_protocol_drift
+L00001389	reasoning_tier: standard
+L00001390	context_scope: executor_protocol_standardization
+L00001391	implementation_surfaces:
+L00001392	- Plans/Executor_Protocol.md
+L00001393	node_compile_hint:
+L00001394	  mode: run_local_ui_orchestrator_status_overlays
+L00001395	  create_worknodes: false
+L00001396	source_lineage:
+L00001397	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0015
+L00001398	preserved_exact_tokens:
+L00001399	- waiting_approval
+L00001400	- needs_review
+L00001401	- cancelled
+L00001402	- complete_with_warnings
+L00001403	- run-local overlays / CTA states
+L00001404	- canonical node `status` values
+L00001405	- persisted as separate events or projections
+L00001406	negative_constraints:
+L00001407	- Run-local overlays must not replace the canonical status lifecycle.
+L00001408	compatibility_only_notes: []
+L00001409	stale_retired_dispositions: []
+L00001410	owner_boundary_notes: []
+L00001411	owner_hints:
+L00001412	- Plans/Executor_Protocol.md
+L00001413	```
+L00001414	
+L00001415	### EP-012 - Verifier Auto-Marking And Verified Transition
+L00001416	
+L00001417	```yaml
+L00001418	plan_unit_id: EP-012
+L00001419	unit_type: requirement
+L00001420	status: accepted
+L00001421	owner_doc: Plans/Executor_Protocol.md
+L00001422	canonical_text: Verifier evidence with pass outcome moves status through verified before done; the verified state is schema-enforced, manual mark-complete is not required, and fail outcome sets failed.
+L00001423	gui_related: false
+L00001424	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001425	split_recommended: false
+L00001426	depends_on: []
+L00001427	unblocks: []
+L00001428	acceptance_criteria:
+L00001429	- The covered source span remains losslessly available for exact-text audit.
+L00001430	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001431	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001432	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001433	validation_surfaces:
+L00001434	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001435	- python3 scripts/pm-plan-index.py validate
+L00001436	risk_class: executor_protocol_drift
+L00001437	reasoning_tier: standard
+L00001438	context_scope: executor_protocol_standardization
+L00001439	implementation_surfaces:
+L00001440	- Plans/Executor_Protocol.md
+L00001441	node_compile_hint:
+L00001442	  mode: verifier_auto_marking_and_verified_transition
+L00001443	  create_worknodes: false
+L00001444	source_lineage:
+L00001445	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0016
+L00001446	preserved_exact_tokens:
+L00001447	- evidence_pointer
+L00001448	- verifier_result
+L00001449	- verifier_result.outcome == "pass"
+L00001450	- status = "verified"
+L00001451	- status = "done"
+L00001452	- outcome == "pass"
+L00001453	- timestamp_utc
+L00001454	- SHALL NOT skip it
+L00001455	- Manual mark-complete action MUST NOT be required
+L00001456	- verifier_result.outcome == "fail"
+L00001457	- status = "failed"
+L00001458	- 'ContractRef: ContractName:Plans/Progression_Gates.md#GATE-005, ContractName:Plans/evidence.schema.json'
+L00001459	negative_constraints: []
+L00001460	compatibility_only_notes: []
+L00001461	stale_retired_dispositions: []
+L00001462	owner_boundary_notes: []
+L00001463	owner_hints:
+L00001464	- Plans/Executor_Protocol.md
+L00001465	```
+L00001466	
+L00001467	### EP-013 - Execution Unit Context Field Contract
+L00001468	
+L00001469	```yaml
+L00001470	plan_unit_id: EP-013
+L00001471	unit_type: requirement
+L00001472	status: accepted
+L00001473	owner_doc: Plans/Executor_Protocol.md
+L00001474	canonical_text: The canonical dispatch/runtime packet carries the Executor-owned execution_unit_context contract with schema_id pm.execution_unit_context, schema_version 1.0.0, closed required and optional field sets, closed enums, persistence/replay rules, redaction requirements, and consumer-reference-only boundaries; stale persona names are compatibility inputs only.
+L00001475	gui_related: false
+L00001476	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001477	split_recommended: false
+L00001478	depends_on: []
+L00001479	unblocks: []
+L00001480	acceptance_criteria:
+L00001481	- The covered source span remains losslessly available for exact-text audit.
+L00001482	- The covered behavior is addressable through this fine-grained PlanUnit instead of EP-001.
+L00001483	- ContractRefs, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain traceable.
+L00001484	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001485	validation_surfaces:
+L00001486	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001487	- python3 scripts/pm-plan-index.py validate
+L00001488	risk_class: executor_protocol_drift
+L00001489	reasoning_tier: standard
+L00001490	context_scope: executor_protocol_standardization
+L00001491	implementation_surfaces:
+L00001492	- Plans/Executor_Protocol.md
+L00001493	node_compile_hint:
+L00001494	  mode: execution_unit_context_field_contract
+L00001495	  create_worknodes: false
+L00001496	source_lineage:
+L00001497	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0016
+L00001498	preserved_exact_tokens:
+L00001499	- execution_unit_context
+L00001500	- run_id
+L00001501	- node_id
+L00001502	- attempt_id
+L00001503	- lane_id
+L00001504	- package_id
+L00001505	- seam_id
+L00001506	- worktree_id
+L00001507	- execution_role
+L00001508	- requested_account_id
+L00001509	- requested_account_binding
+L00001510	- requested_account_policy
+L00001511	- effective_account_id
+L00001512	- operational_identity
+L00001513	- blocked_sequence
+L00001514	- allowed_action_ids[]
+L00001515	- schema_id
+L00001516	- schema_version
+L00001517	- execution_unit_type
+L00001518	- execution_unit_id
+L00001519	- approval_scope_key
+L00001520	- requested_persona_id
+L00001521	- effective_persona_id
+L00001522	- _persona_id
+L00001523	- /values
+L00001524	- assistant
+L00001525	- interviewer
+L00001526	- requirements_builder
+L00001527	- prd_builder
+L00001528	- package_overseer
+L00001529	- seam_overseer
+L00001530	- node_worker
+L00001531	- reviewer
+L00001532	- corroborator
+L00001533	- recovery_actor
+L00001534	- 'ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Crosswalk.md#3.1 Runtime orchestration ownership'
+L00001535	negative_constraints:
+L00001536	- No consumer may redefine the execution_unit_context required or optional field set.
+L00001537	- No persisted execution_unit_context payload is valid without schema_version.
+L00001538	- execution_unit_context must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
+L00001539	compatibility_only_notes:
+L00001540	- Stale local worker identity names and persona slots are compatibility inputs only.
+L00001541	stale_retired_dispositions: []
+L00001542	owner_boundary_notes: []
+L00001543	owner_hints:
+L00001544	- Plans/Executor_Protocol.md
+L00001545	```
+L00001546	
+
+<<< CONTEXT_AFTER canonical_document_lines=1547-1558 >>>
+L00001547	### EP-014 - DispatchContext Required Projection
+L00001548	
+L00001549	```yaml
+L00001550	plan_unit_id: EP-014
+L00001551	unit_type: requirement
+L00001552	status: accepted
+L00001553	owner_doc: Plans/Executor_Protocol.md
+L00001554	canonical_text: DispatchContext is a projection over the Executor-owned execution_unit_context schema and reads required fields, optional fields, nullability, enum values, and persistence rules from Plans/execution_unit_context.schema.json instead of defining a second required-field list.
+L00001555	gui_related: false
+L00001556	gui_classification_reason: This unit defines runtime/governance execution behavior, not GUI presentation.
+L00001557	split_recommended: false
+L00001558	depends_on: []

@@ -1,0 +1,340 @@
+<<< CONTEXT_BEFORE canonical_document_lines=18226-18237 >>>
+L00018226	negative_constraints:
+L00018227	  - Do not merge DiscoveryRequest.target_kind with route_target.target_kind.
+L00018228	  - Do not expose raw selected paths or blocked counts through receipt payloads.
+L00018229	  - Do not store or display SSH secret material in cache keys, receipts, diagnostics, or prompts.
+L00018230	owner_hints: [Plans/Contracts_V0.md, Plans/Tools.md, Plans/FileSafe.md, Plans/Permissions_System.md]
+L00018231	```
+L00018232	
+L00018233	
+L00018234	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00018235	
+L00018236	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00018237	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=18238-18548 >>>
+L00018238	### CV-295 - History Identity Projection And Action Envelope
+L00018239	
+L00018240	```yaml
+L00018241	plan_unit_id: CV-295
+L00018242	unit_type: requirement
+L00018243	status: accepted
+L00018244	owner_doc: Plans/Contracts_V0.md
+L00018245	canonical_text: History row, compare, export, open, reopen, send-forward, resume, retry, clone, rebuild, artifact,
+L00018246	  and evidence flows use identity-native refs such as artifact_id, run_id, thread_id, attempt_id, PlanningRun or
+L00018247	  pack identity, receipt refs, source record refs, manifest refs, archive state, and current-project scope. The
+L00018248	  History projection carries action availability and stale/degraded state but never becomes authority for immutable
+L00018249	  source records.
+L00018250	gui_related: false
+L00018251	gui_classification_reason: Shared identity/action envelopes are contract data shapes, not GUI.
+L00018252	depends_on: []
+L00018253	unblocks:
+L00018254	- OP-027
+L00018255	- UCC-100
+L00018256	- POA-051
+L00018257	acceptance_criteria:
+L00018258	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00018259	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00018260	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00018261	  are created by this compile.
+L00018262	validation_surfaces:
+L00018263	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00018264	- python3 scripts/pm-plan-index.py validate
+L00018265	- git diff --check
+L00018266	risk_class: history_contract_identity_drift
+L00018267	reasoning_tier: high
+L00018268	context_scope: history_identity_contracts
+L00018269	implementation_surfaces:
+L00018270	- Plans/Contracts_V0.md
+L00018271	- future history row/action envelopes
+L00018272	node_compile_hint:
+L00018273	  mode: history_contract_envelope
+L00018274	  create_worknodes: false
+L00018275	  create_nodeseeds: false
+L00018276	source_lineage:
+L00018277	- pldg-20260626-001-feature-name:atom-0012
+L00018278	- pldg-20260626-001-feature-name:atom-0035
+L00018279	- pldg-20260626-001-feature-name:atom-0039
+L00018280	- pldg-20260626-001-feature-name:atom-0047
+L00018281	- pldg-20260626-001-feature-name:atom-0048
+L00018282	- pldg-20260626-001-feature-name:atom-0049
+L00018283	- pldg-20260626-001-feature-name:atom-0051
+L00018284	- pldg-20260626-001-feature-name:atom-0052
+L00018285	- pldg-20260626-001-feature-name:atom-0053
+L00018286	- pldg-20260626-001-feature-name:atom-0054
+L00018287	- Plans/Runtime_Artifacts_Panel.md
+L00018288	- Plans/Orchestrator_Page.md
+L00018289	- Plans/Project_Output_Artifacts.md
+L00018290	- chat:history-columns-toggle-deep-compare-answers
+L00018291	- chat:history-export-granularity-answer
+L00018292	- chat:history-source-index-answer
+L00018293	- chat:history-projection-lifecycle-answer
+L00018294	source_atom_ids:
+L00018295	- atom-0012
+L00018296	- atom-0035
+L00018297	- atom-0039
+L00018298	- atom-0047
+L00018299	- atom-0048
+L00018300	- atom-0049
+L00018301	- atom-0051
+L00018302	- atom-0052
+L00018303	- atom-0053
+L00018304	- atom-0054
+L00018305	decision_refs:
+L00018306	- dec-0002
+L00018307	- dec-0005
+L00018308	- dec-0006
+L00018309	- dec-0008
+L00018310	- dec-0009
+L00018311	preserved_exact_tokens:
+L00018312	- Runtime-artifact route-state answers "where should the user land," not "how should every panel be laid out when
+L00018313	  they get there."
+L00018314	- artifact_id
+L00018315	- run_id
+L00018316	- thread_id
+L00018317	- attempt_id
+L00018318	- identity-based open
+L00018319	- History versus Ledger
+L00018320	- deeper is mvp
+L00018321	- Compare versions
+L00018322	- immutable historical records
+L00018323	- manifest
+L00018324	- all of thodse
+L00018325	- current project
+L00018326	- documents
+L00018327	- runs
+L00018328	- artifacts
+L00018329	- evidence
+L00018330	- lineage
+L00018331	- 'yes'
+L00018332	- project-scoped unified History index/projection
+L00018333	- source-of-truth shape
+L00018334	- immutable wizard, run, artifact, evidence, and lineage records
+L00018335	- History surface
+L00018336	- filters
+L00018337	- exports
+L00018338	- compare
+L00018339	- artifact
+L00018340	- rebuildable from immutable source records
+L00018341	- wizard
+L00018342	- run
+L00018343	- wizard save/approval
+L00018344	- run lifecycle
+L00018345	- artifact/evidence write
+L00018346	- archive/unarchive
+L00018347	- lineage/manifest events
+L00018348	- stale/out-of-sync state detected and surfaced
+L00018349	- History
+L00018350	- rebuildable
+L00018351	- immutable source records
+L00018352	- approved/final outputs
+L00018353	negative_constraints:
+L00018354	- Do not use shell-state, current tab, filesystem path, or timestamp heuristics as the primary identity for historical
+L00018355	  documents or runs.
+L00018356	- Do not mint shadow IDs for manifest-backed bundles or receipt-like historical objects.
+L00018357	- Do not compare by path or title alone when canonical document/package IDs exist.
+L00018358	- Do not let comparison mutate or merge historical records.
+L00018359	- Do not export history in a way that strips document/run/artifact identities.
+L00018360	- Do not let exported bundles appear cross-project when the History surface is locked to the current project.
+L00018361	- Do not treat exported copies as mutable source records.
+L00018362	- Do not implement the History surface as fragile cross-subsystem ad hoc scans at view time.
+L00018363	- Do not make the History read model global or cross-project by default.
+L00018364	- Do not duplicate mutable source-of-truth content into the projection as if it were authoritative.
+L00018365	- Do not lose canonical IDs or lineage refs when projecting History rows.
+L00018366	- Do not mutate historical records through projection updates.
+L00018367	- Do not let UI rows, exports, or compare flows drift into different identity models.
+L00018368	- Do not open or export stale copies without resolving preserved source refs and currentness/authority checks where
+L00018369	  required.
+L00018370	- Do not make the projection the only copy of historical truth.
+L00018371	- Do not make projection corruption unrecoverable when source records remain valid.
+L00018372	- Do not rely on view-time scanning as the primary way to discover normal History changes.
+L00018373	- Do not omit archive/unarchive or lineage/manifest updates from the projection lifecycle.
+L00018374	- Do not let stale projection state silently drive History, export, or compare behavior without detection.
+L00018375	- Do not hide projection corruption/out-of-sync status in logs only.
+L00018376	- Do not repair the projection by rewriting immutable source history.
+L00018377	- Do not mutate approved/final wizard outputs in place during projection rebuild.
+L00018378	- Do not erase source refs when rebuilding.
+L00018379	owner_hints:
+L00018380	- Plans/Runtime_Artifacts_Panel.md
+L00018381	- Plans/storage-plan.md
+L00018382	- Plans/Contracts_V0.md
+L00018383	- Plans/Orchestrator_Page.md
+L00018384	- Plans/Project_Output_Artifacts.md
+L00018385	- Plans/UI_Command_Catalog.md
+L00018386	- Plans/Planning_Wizard.md
+L00018387	- Plans/PRD_Builder.md
+L00018388	- Plans/FinalGUISpec.md
+L00018389	```
+L00018390	
+L00018391	### CV-296 - Vision Bridge Result Envelope
+L00018392	
+L00018393	```yaml
+L00018394	plan_unit_id: CV-296
+L00018395	unit_type: requirement
+L00018396	status: accepted
+L00018397	owner_doc: Plans/Contracts_V0.md
+L00018398	canonical_text: A VisionBridgeResult records source image ref/hash, prompt/question, requested language/detail mode,
+L00018399	  structured description/answer, uncertainty, notable text/OCR when available, limitations, safety/redaction notes,
+L00018400	  bridge provider/model/account/version, permission scope, cache/freshness state, usage_event_ref when available,
+L00018401	  and failure/degraded reason when dispatch is denied or unavailable. Non-vision models consume the structured derived
+L00018402	  result and source refs, not raw image bytes.
+L00018403	gui_related: false
+L00018404	gui_classification_reason: The result envelope is a shared contract shape; GUI owners render it separately.
+L00018405	depends_on:
+L00018406	- PS-121
+L00018407	unblocks:
+L00018408	- RAP-035
+L00018409	- ACD-425
+L00018410	acceptance_criteria:
+L00018411	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00018412	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00018413	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00018414	  are created by this compile.
+L00018415	validation_surfaces:
+L00018416	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00018417	- python3 scripts/pm-plan-index.py validate
+L00018418	- git diff --check
+L00018419	risk_class: vision_result_contract_drift
+L00018420	reasoning_tier: high
+L00018421	context_scope: vision_bridge_result_contract
+L00018422	implementation_surfaces:
+L00018423	- Plans/Contracts_V0.md
+L00018424	- future vision_bridge result records
+L00018425	node_compile_hint:
+L00018426	  mode: vision_bridge_contract_envelope
+L00018427	  create_worknodes: false
+L00018428	  create_nodeseeds: false
+L00018429	source_lineage:
+L00018430	- pldg-20260626-001-feature-name:atom-0076
+L00018431	- pldg-20260626-001-feature-name:atom-0077
+L00018432	- pldg-20260626-001-feature-name:atom-0084
+L00018433	- pldg-20260626-001-feature-name:atom-0085
+L00018434	- pldg-20260626-001-feature-name:atom-0086
+L00018435	- pldg-20260626-001-feature-name:atom-0087
+L00018436	- Plans/Runtime_Artifacts_Panel.md
+L00018437	- Plans/Prompt_Pipeline.md
+L00018438	- chat:vision-bridge-defaults-answer
+L00018439	- Plans/Tools.md
+L00018440	- external:github.com/alfaoz/opencode-see-image@cde1615f6dfc9039c58da6813112ee53391b5b49
+L00018441	- chat:vision-pressure-test-request
+L00018442	- chat:vision-pressure-test-defaults-answer
+L00018443	- Plans/FileSafe.md
+L00018444	- Plans/Models_System.md
+L00018445	- Plans/Media_Generation_and_Capabilities.md
+L00018446	source_atom_ids:
+L00018447	- atom-0076
+L00018448	- atom-0077
+L00018449	- atom-0084
+L00018450	- atom-0085
+L00018451	- atom-0086
+L00018452	- atom-0087
+L00018453	decision_refs:
+L00018454	- dec-0014
+L00018455	- dec-0015
+L00018456	- dec-0016
+L00018457	- dec-0017
+L00018458	preserved_exact_tokens:
+L00018459	- runtime artifact
+L00018460	- tool/LLM trace
+L00018461	- source image ref/hash
+L00018462	- prompt/question
+L00018463	- provider/model/account
+L00018464	- cost/usage
+L00018465	- cached
+L00018466	- newly generated
+L00018467	- 4. Yes
+L00018468	- local images
+L00018469	- screenshots
+L00018470	- vision provider
+L00018471	- project policy
+L00018472	- permissions
+L00018473	- redaction
+L00018474	- sensitivity_state
+L00018475	- degraded
+L00018476	- reject
+L00018477	- accept
+L00018478	- always accept
+L00018479	- doesnt have to be that exact wording
+L00018480	- when you do always, it stops asking
+L00018481	- source image content hash
+L00018482	- source ref
+L00018483	- bridge prompt/question
+L00018484	- provider/model/version
+L00018485	- redaction/sensitivity class
+L00018486	- rerunnable
+L00018487	- stale
+L00018488	- superseded/deleted
+L00018489	- 'yes'
+L00018490	- sensitivity/redaction policy
+L00018491	- disclosure destination
+L00018492	- explicit user override
+L00018493	- redaction/omission details
+L00018494	- derived artifact manifest
+L00018495	- secrets
+L00018496	- structured prompt/output contract
+L00018497	- bounded question/task
+L00018498	- uncertainty
+L00018499	- notable text/OCR
+L00018500	- limitations
+L00018501	- safety/redaction notes
+L00018502	- source refs
+L00018503	- not raw image bytes
+L00018504	- never guess image contents
+L00018505	- requested/effective provider/model/account
+L00018506	- usage/cost refs
+L00018507	- bounded transient failures
+L00018508	- falls back
+L00018509	- policy permits
+L00018510	- disclosure permission covers the destination
+L00018511	negative_constraints:
+L00018512	- Do not make the derived description invisible or unauditable.
+L00018513	- Do not lose source lineage between the image and the generated text description.
+L00018514	- Do not reuse a cached description when the source image, question, or bridge model changed without marking freshness.
+L00018515	- Do not silently send screenshots containing secrets or sensitive local/project context to another provider route.
+L00018516	- Do not bypass the existing tool permission model just because the bridge is model-assistive.
+L00018517	- Do not serialize revoked, blocked, expired, or omitted image artifacts as successful prompt content.
+L00018518	- Do not make always-accept global, irreversible, hidden, or impossible to revoke.
+L00018519	- Do not reuse a cached description after the source image, prompt/question, bridge model/version, redaction class,
+L00018520	  or permission scope changes without marking freshness.
+L00018521	- Do not hide cache reuse from the user.
+L00018522	- Do not mutate old derived descriptions in place when rerun creates a new version.
+L00018523	- Do not silently send sensitive screenshots or images to another provider without policy evaluation.
+L00018524	- Do not claim redaction happened without recording redaction/omission metadata.
+L00018525	- Do not expose secret material in manifests, receipts, GUI previews, or exports.
+L00018526	- Do not pass raw image bytes into non-vision model context when artifact refs plus bounded derived text are the
+L00018527	  contract.
+L00018528	- Do not omit uncertainty or limitations from bridge output when the image is ambiguous or low-confidence.
+L00018529	- Do not let image text/OCR become hidden, unsourced prompt material.
+L00018530	- Do not silently reroute an image to a different provider/account than the user allowed.
+L00018531	- Do not treat provider catalog visibility as proof that a route can currently process image input.
+L00018532	- Do not hide usage/cost attribution when the bridge uses a separate model route.
+L00018533	owner_hints:
+L00018534	- Plans/Runtime_Artifacts_Panel.md
+L00018535	- Plans/Tools.md
+L00018536	- Plans/usage-feature.md
+L00018537	- Plans/Contracts_V0.md
+L00018538	- Plans/storage-plan.md
+L00018539	- Plans/Permissions_System.md
+L00018540	- Plans/FileSafe.md
+L00018541	- Plans/Prompt_Pipeline.md
+L00018542	- Plans/FinalGUISpec.md
+L00018543	- Plans/Project_Output_Artifacts.md
+L00018544	- Plans/assistant-chat-design.md
+L00018545	- Plans/Models_System.md
+L00018546	- Plans/Media_Generation_and_Capabilities.md
+L00018547	```
+L00018548	
+
+<<< CONTEXT_AFTER canonical_document_lines=18549-18560 >>>
+L00018549	### CV-297 - Teacher Guided Help Activity Envelope
+L00018550	
+L00018551	```yaml
+L00018552	plan_unit_id: CV-297
+L00018553	unit_type: requirement
+L00018554	status: accepted
+L00018555	owner_doc: Plans/Contracts_V0.md
+L00018556	canonical_text: Teacher guided-help records carry launch source, current surface context, summon phrase or help-icon
+L00018557	  route, source groups used, source confidence/currentness state, missing coverage state, guided action kind, target
+L00018558	  surface/object refs, permission or mutation confirmation requirement, activity status, sequence/timestamp, collapsible
+L00018559	  detail payload, and handoff destination/context when Teacher leaves teaching/help mode.
+L00018560	gui_related: false

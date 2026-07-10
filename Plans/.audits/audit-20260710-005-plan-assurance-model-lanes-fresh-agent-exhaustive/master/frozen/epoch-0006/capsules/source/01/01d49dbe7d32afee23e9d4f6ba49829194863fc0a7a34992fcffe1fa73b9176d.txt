@@ -1,0 +1,81 @@
+<<< CONTEXT_BEFORE canonical_document_lines=5082-5093 >>>
+L00005082	```
+L00005083	
+L00005084	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00005085	
+L00005086	This addendum repairs non-runtime multi-account rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+L00005087	
+L00005088	- Repairs `sfk-d6c43e2aa2b0e8de032cbe43`: account/profile rows support click and keyboard activation through `cmd.account.select_profile`. Empty state copy id is `accounts.empty.no_profiles`. Per-action disabled reasons are `auth_missing`, `auth_expired`, `profile_locked`, `provider_unavailable`, and `policy_denied`.
+L00005089	
+L00005090	## Usage GUI Propagation Addendum - 2026-07-09
+L00005091	
+L00005092	This addendum binds account/provider settings usage displays to the canonical UsageRecord projection. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+L00005093	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=5094-5159 >>>
+L00005094	### MA-069 - Provider Usage State Settings Display Contract
+L00005095	
+L00005096	```yaml
+L00005097	plan_unit_id: MA-069
+L00005098	unit_type: requirement
+L00005099	status: accepted
+L00005100	owner_doc: Plans/Multi-Account.md
+L00005101	canonical_text: >-
+L00005102	  Multi-Account provider and account rows display usage, quota, credits, billing visibility, and provider pressure only from normalized UsageRecord, CredentialRouteEpoch, and ProviderCapabilityEpoch projections. Rows expose source_class, source_confidence, source_authority, quota_state, credits_state, cost_status, pricing snapshot/custom price row refs when relevant, and stale/degraded/unknown reasons. Antigravity CLI remains a separate provider route with provider_id `antigravity_cli` and route `agy`; missing `/stats`, `/usage`, `/quota`, and `/credits` render stats unavailable, usage unknown, quota not exposed, and credits not exposed. Disabled Models & Quota buckets render disabled, and G1 credits remain credits only. BYOK and subscription/provider-plan cost display suppression preserves usage identity while avoiding fake token-cost display.
+L00005103	gui_related: true
+L00005104	gui_classification_reason: Provider/account settings rows and readiness displays are user-visible GUI.
+L00005105	depends_on: [MA-067, MA-068, UF-087, UF-088, CBP-027]
+L00005106	unblocks: []
+L00005107	acceptance_criteria:
+L00005108	  - Provider/account rows display source_class, source_confidence, source_authority, cost_status, quota_state, credits_state, projection_freshness, and degraded reason beside usage-adjacent values.
+L00005109	  - Antigravity account fixtures cover missing `/stats`, `/usage`, `/quota`, `/credits`, disabled bucket, statusline-context-only signal, and G1 credits enabled/disabled.
+L00005110	  - BYOK and subscription-hidden fixtures preserve usage_event_ref and provider_attempt_ref while suppressing per-token cost display.
+L00005111	  - Custom-provider price rows show pricing_snapshot_id or custom_provider_price_row_ref before cost estimates are marked pricing_estimated.
+L00005112	  - Settings rows never infer quotas, credits, reset countdowns, or costs from login status, model name, or provider availability alone.
+L00005113	validation_surfaces:
+L00005114	  - python3 scripts/pm-plan-index.py validate
+L00005115	  - python3 scripts/pm-plans-verify.py run-gates
+L00005116	  - future provider settings Usage fixture suite
+L00005117	risk_class: provider_settings_usage_state_drift
+L00005118	reasoning_tier: high
+L00005119	context_scope: multi_account_usage_display
+L00005120	implementation_surfaces:
+L00005121	  - Plans/Multi-Account.md
+L00005122	  - Plans/Models_System.md
+L00005123	  - Plans/usage-feature.md
+L00005124	  - Plans/CLI_Bridged_Providers.md
+L00005125	node_compile_hint:
+L00005126	  mode: provider_usage_state_settings_contract
+L00005127	  create_worknodes: false
+L00005128	  create_nodeseeds: false
+L00005129	source_lineage:
+L00005130	  - "Plans/Multi-Account.md:421-532"
+L00005131	  - "Plans/Models_System.md:293-310"
+L00005132	  - "Plans/usage-feature.md:5412-5605"
+L00005133	  - "Plans/CLI_Bridged_Providers.md:1429-1510"
+L00005134	  - "uploaded:antigravity-cli-main/CHANGELOG.md:122-136"
+L00005135	  - "uploaded:antigravity-cli-main/examples/statusline/README.md:8-14"
+L00005136	  - "https://github.com/google-antigravity/antigravity-cli/issues/46"
+L00005137	  - "https://github.com/google-antigravity/antigravity-cli/issues/74"
+L00005138	preserved_exact_tokens:
+L00005139	  - antigravity_cli
+L00005140	  - agy
+L00005141	  - /stats
+L00005142	  - /usage
+L00005143	  - /quota
+L00005144	  - /credits
+L00005145	  - Models & Quota
+L00005146	  - G1 credits
+L00005147	  - source_confidence
+L00005148	  - hidden_byok
+L00005149	  - hidden_subscription
+L00005150	negative_constraints:
+L00005151	  - Do not alias Gemini CLI, gemini_cli, or GEMINI_CLI_HOME to Antigravity CLI.
+L00005152	  - Do not render missing quota, disabled bucket, unknown usage, hidden cost, or missing credits as zero.
+L00005153	  - Do not treat G1 credits as tokens, cost, quota, or provider_total.
+L00005154	  - Do not infer provider route identity from model names.
+L00005155	owner_hints:
+L00005156	  - Plans/Multi-Account.md
+L00005157	  - Plans/Models_System.md
+L00005158	  - Plans/CLI_Bridged_Providers.md
+L00005159	```

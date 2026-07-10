@@ -1,0 +1,422 @@
+<<< CONTEXT_BEFORE 1486-1497 >>>
+  - "retry, reroute, resume, and replacement semantics"
+  - "completed disposable children"
+negative_constraints:
+  - "OpenCode child-session behavior is not evidence for native peer-to-peer subagent messaging or PM message-board behavior."
+  - "Completed disposable children are not durable reusable actors merely because OpenCode can reopen session history."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md"
+  - "ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/assistant-chat-design.md"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 1498-1890 >>>
+### PO-016 - Normalized Event SSE Stream Mapping
+
+```yaml
+plan_unit_id: PO-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode response parts and SSE bus events map into PM normalized provider events for text_delta, thinking_delta, tool_use, tool_result, usage, error, and done, with PM subscribing to GET /event after prompt_async and emitting done when the session reaches completed or failed.
+gui_related: false
+gui_classification_reason: This unit defines event normalization rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PO-011"
+  - "CBP-003"
+  - "CV-090"
+unblocks: []
+acceptance_criteria:
+  - "Normalized Event SSE Stream Mapping remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_sse_event_mapping
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0024"
+preserved_exact_tokens:
+  - "text_delta"
+  - "thinking_delta"
+  - "tool_use"
+  - "tool_result"
+  - "usage"
+  - "input_tokens"
+  - "output_tokens"
+  - "error"
+  - "done"
+  - "success"
+  - "failed"
+  - "GET /event"
+  - "prompt_async"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-009"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+```
+
+### PO-017 - Auth State Failover Mapping
+
+```yaml
+plan_unit_id: PO-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode emits canonical auth_state events from server and provider auth realms, maps health and provider auth failures to LoggedOut, LoggedIn, AuthFailed, or AuthExpired as appropriate, and uses PM failover reason codes without expanding the auth state enum.
+gui_related: false
+gui_classification_reason: This unit defines auth state and failover mappings rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PO-009"
+  - "CV-125"
+unblocks: []
+acceptance_criteria:
+  - "Auth State Failover Mapping remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_auth_state_failover_mapping
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0025"
+preserved_exact_tokens:
+  - "auth_state"
+  - "LoggedOut"
+  - "LoggedIn"
+  - "AuthFailed"
+  - "AuthExpired"
+  - "GET /global/health"
+  - "ProviderAuthError"
+  - "rate_limited"
+  - "provider_outage_or_network"
+  - "hard_exhaustion_failover"
+  - "rate_limit_failover"
+  - "auth_failure_failover"
+  - "provider_outage_failover"
+  - "transport_failure_failover"
+negative_constraints:
+  - "Upstream rate-limit/outage errors must not expand the auth state enum."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md#AuthState"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+```
+
+### PO-018 - Adapter Policy And Copilot Constraints
+
+```yaml
+plan_unit_id: PO-018
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode-specific adapter behavior preserves PM requested/effective runtime and capability disclosure, keeps provider-native agent files and invocation syntax in the interoperability lane, supports additive provider correlation, preserves prompt-cache separation, avoids fake-user replay continuity, and keeps Copilot-sensitive billing/classification metadata from weakening PM strict-deny policy.
+gui_related: false
+gui_classification_reason: This unit defines adapter policy and routing constraints rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PO-011"
+  - "PO-014"
+unblocks: []
+acceptance_criteria:
+  - "Adapter Policy And Copilot Constraints remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_adapter_policy_constraints
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0026"
+preserved_exact_tokens:
+  - "provider-native agent files"
+  - "provider-native invocation syntax"
+  - "interoperability lane"
+  - "prompt-cache-friendly separation"
+  - "OpenCode PR #14203"
+  - "x-initiator"
+  - "Copilot-sensitive requests"
+  - "strict-deny rule"
+  - "Copilot-compatible"
+negative_constraints:
+  - "Adapter-specific billing or caching evidence from OpenCode does not satisfy the Copilot TOS constraint."
+  - "OpenCode-specific behavior must preserve PM policy constraints rather than silently overriding them."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/CLI_Bridged_Providers.md"
+  - "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+```
+
+### PO-019 - Dynamic Model Discovery Source
+
+```yaml
+plan_unit_id: PO-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  Puppet Master discovers OpenCode models through GET /provider, including all/default/connected provider data, and preserves OpenCode compound model IDs in providerID/modelID format as the source for dynamic model discovery.
+gui_related: false
+gui_classification_reason: This unit defines model discovery source data rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PO-006"
+unblocks: []
+acceptance_criteria:
+  - "Dynamic Model Discovery Source remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_dynamic_model_discovery
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0027"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0028"
+preserved_exact_tokens:
+  - "GET /provider"
+  - "all"
+  - "default"
+  - "connected"
+  - "anthropic"
+  - "openai"
+  - "providerID/modelID"
+  - "anthropic/claude-sonnet-4-5-20250514"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+```
+
+### PO-020 - OpenCode Model Picker Behavior
+
+```yaml
+plan_unit_id: PO-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  The OpenCode model picker fetches models on provider enable and refresh, displays only models from connected providers, groups by OpenCode provider, caches with a configurable five-minute default TTL, and uses the shared Provider-contract model selection UI without OpenCode-specific picker logic beyond the discovered source.
+gui_related: true
+gui_classification_reason: This unit defines GUI model picker behavior.
+split_recommended: false
+depends_on:
+  - "PO-019"
+unblocks: []
+acceptance_criteria:
+  - "OpenCode Model Picker Behavior remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_model_picker
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0029"
+preserved_exact_tokens:
+  - "model picker"
+  - "GET /provider"
+  - "connected"
+  - "Group models by OpenCode provider"
+  - "default: 5 minutes"
+  - "Provider-contract model selection UI surface"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, CodePath:puppet-master-rs/src/platforms/platform_specs.rs"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+```
+
+### PO-021 - ACP Effort Capability Gate
+
+```yaml
+plan_unit_id: PO-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  ACP model listings may supply IDs, names, and descriptions, but PM must obtain or infer effort capability from the shared provider capability matrix before presenting effort controls as supported.
+gui_related: true
+gui_classification_reason: This unit governs visible effort-control eligibility.
+split_recommended: false
+depends_on:
+  - "PO-020"
+unblocks: []
+acceptance_criteria:
+  - "ACP Effort Capability Gate remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_effort_capability_gate
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0029"
+preserved_exact_tokens:
+  - "ACP model listing"
+  - "IDs/names/descriptions"
+  - "effort-capability"
+  - "shared provider capability matrix"
+  - "effort controls"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+```
+
+### PO-022 - ACP Usage Update Mapping
+
+```yaml
+plan_unit_id: PO-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  When ACP agent streams emit usage_update, PM maps it into the shared provider usage event shape with input/output/reasoning/cache token breakdown plus cost while preserving ACP as the source protocol rather than an OpenCode-only GUI counter.
+gui_related: false
+gui_classification_reason: This unit defines usage event normalization rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PO-020"
+unblocks: []
+acceptance_criteria:
+  - "ACP Usage Update Mapping remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_acp_usage_mapping
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0029"
+preserved_exact_tokens:
+  - "usage_update"
+  - "input/output/reasoning/cache"
+  - "cost"
+  - "shared provider usage event shape"
+  - "OpenCode-only GUI counter"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/usage-feature.md"
+  - "Plans/storage-plan.md"
+  - "Plans/Contracts_V0.md"
+```
+
+### PO-023 - No Hardcoded Fallback Models
+
+```yaml
+plan_unit_id: PO-023
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  If dynamic OpenCode model discovery fails because the server is unreachable, PM must not hardcode fallback OpenCode models and instead surfaces the configured discovery error because available models depend entirely on user OpenCode configuration and authenticated providers.
+gui_related: false
+gui_classification_reason: This unit defines discovery failure behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PO-019"
+unblocks: []
+acceptance_criteria:
+  - "No Hardcoded Fallback Models remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_no_fallback_models
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0030"
+preserved_exact_tokens:
+  - "Cannot discover models — OpenCode server unreachable."
+  - "DRY_Rules.md#2-dont-duplicate-canonical-contracts"
+  - "Decision_Policy.md§4"
+negative_constraints:
+  - "Puppet Master MUST NOT hardcode fallback models for OpenCode."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts, PolicyRule:Decision_Policy.md§4"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+```
+
+
+<<< CONTEXT_AFTER 1891-1902 >>>
+### PO-024 - Capability SSOT And Mode Agent Mapping
+
+```yaml
+plan_unit_id: PO-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode capability flags are consumed from shared provider/model contracts rather than legacy platform_specs; transport remains HTTP server-bridged, plan mode uses the read-only OpenCode plan agent, execute mode uses the build agent, and OpenCode-native capability aliases normalize into shared provider capability fields before routing or model-effort UI consumption.
+gui_related: false
+gui_classification_reason: This unit defines capability metadata and mode-agent mapping rather than visual presentation.
+split_recommended: false

@@ -1,0 +1,404 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1115-1126 >>>
+L00001115	- The Debug target registry records the selected target shape, including launch config, URL, attach PID, browser session, or imported evidence bundle; PM routes each registered target to the collector through log sink, built-in browser session plus agent tools, DAP adapter, or manual attach intake as applicable.
+L00001116	- The grounded PM Debug core is **H + I + J + E + A**: H points PM at a target; I keeps debug inside the overlay/runtime architecture instead of creating a new runtime mode; J sends evidence through the existing runtime-artifact and seglog pipeline; E covers assistant/session inspection in a Copilot-like way; and A allows temporary instrumentation in MVP only under an explicit instrumentation contract. For MVP web/debug repro, the preferred path is **PM built-in browser + `automation_session`**; process/test/dev-server correlation uses `dev_session_id` / existing `output-problems-ports` linkage, including `/test/dev-server` loops. Classical DAP debugging remains a separate related adapter/surface rather than the primary web repro mode. Cursor-like temporary instrumentation remains in MVP only when the instrumentation contract covers visibility, cleanup, rollback, failure handling, evidence routing, and failed-cleanup escalation.
+L00001117	- Research-grade adapters are explicit advanced options: DAP/session tools with debugger perturbation in the InspectCoder direction, and execution trace to LLM analysis in the snooper-style direction. They are useful evidence and remediation accelerators, but higher novelty and implementation risk keep them behind normal target-registry and policy checks.
+L00001118	- Browser/session automation defaults to an ephemeral automation profile/session. If a target requires authentication and no valid automation session exists, Debug moves to `attention_required` rather than silently reusing an unrelated user profile.
+L00001119	- External Playwright or Browser MCP tooling remains documented for newtools, interview-subagent-integration, interview, test strategy, and generic tool discovery; it is orthogonal to the promoted named-action browser contract unless a product surface explicitly bridges it.
+L00001120	- tool-emitted debug evidence enters chat only through a bounded, user-visible attach model. Ordinary browser capture remains explicit-user-attach, while active Debug investigations may attach agent/session traces and runtime bundles automatically or semi-automatically only when the visible debug-context rules allow it.
+L00001121	
+L00001122	#### Enterprise host/trust policy, host declaration preflight, and governance denials
+L00001123	
+L00001124	Debug, MCP, custom-plugin, networked-tool, `/shell/debugger`, and `/tunnel/browser` actions run through shared `/trust/proxy/governance` preflight before execution. Every `/custom/plugin/networked` tool profile declares contacted hosts and `/domains` before dispatch; if a run expands to an undeclared host, domain, proxy target, or remote authority, the action returns `blocked_preflight` rather than silently broadening the session permission. Governance denials preserve a machine-readable `deny-code` family for GitHub, registry, Kubernetes, and runtime host-policy checks, while the older permission-era source wording is lineage only. Host/trust decisions that are meant to survive restart must be explicit `/durable` permission or trust records, not inferred from a transient debug run.
+L00001125	
+L00001126	#### Debug automation profile instrumentation scope
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1127-1501 >>>
+L00001127	
+L00001128	The Debug automation profile classifies temporary instrumentation scope as exactly `env_config_activation`, `ephemeral_tool_install`, `wrapper_launcher`, `temporary_source_patch`, and `debugger_or_profiler_attach`. Each scope records whether the change is temporary or durable, the expected cleanup path, the sensitive-runtime impact, and the recovery behavior if cleanup fails. `wrapper_launcher` and `debugger_or_profiler_attach` are stricter than read-only inspection because they can perturb process timing, credentials, environment, or attach permissions; `temporary_source_patch` requires a revert path before execution; `ephemeral_tool_install` requires an install location, provenance, and cleanup path before dispatch.
+L00001129	
+L00001130	Required discovery outputs are:
+L00001131	- preferred local or remote dev/test runner
+L00001132	- browser automation stack and visibility mode support
+L00001133	- structured log and trace collectors
+L00001134	- source-map or symbolization support where relevant
+L00001135	- DAP adapter availability for the target language/runtime
+L00001136	- temporary instrumentation install / rollback path when framework-native tracing is missing
+L00001137	- target discovery / environment preparation capability that detects stack/runtime, prepares dev session, browser session, debugger attach, or imported bundle intake, and installs/activates tracers or debug tooling when required by the selected policy
+L00001138	
+L00001139	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md
+L00001140	
+L00001141	Selection order:
+L00001142	- project-native or repo-declared tooling first
+L00001143	- already-installed environment tooling second
+L00001144	- temporary, investigation-scoped tooling /install only when a cleanup path exists and policy allows it
+L00001145	- imported evidence bundles and manual attach remain fallback inputs, not the primary happy path
+L00001146	- escalation continues through non-invasive readback/capture, permitted non-invasive tracers or debugger attachments, temporary instrumentation patches only after lower tiers are insufficient, tentative durable fix, automated verification, and instrumentation removal; unresolved cleanup enters explicit cleanup-recovery before any new mutation-capable loop starts
+L00001147	
+L00001148	ContractRef: ContractName:Plans/MiscPlan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md
+L00001149	
+L00001150	Additional doctor checks for Debug Mode:
+L00001151	
+L00001152	| Check ID | Scope | Required signal | Failure behavior |
+L00001153	|---|---|---|---|
+L00001154	| `doctor.debug.browser-runtime` | web/debug | Browser runtime and visible automation path are available | keep Debug usable, but hide browser-target automation and explain fallback |
+L00001155	| `doctor.debug.dap-adapter` | debugger | Target DAP adapter or equivalent inspect bridge is reachable | keep investigation usable, but mark classical debugger attach unavailable |
+L00001156	| `doctor.debug.log-trace-pipeline` | evidence | Structured log or trace capture path is readable and bounded | keep run usable, but mark evidence degraded with explicit reason |
+L00001157	| `doctor.debug.instrumentation-scope` | instrumentation | Temporary instrumentation can be written and later removed within declared scope | block instrumentation step and fall back to non-invasive evidence capture |
+L00001158	| `doctor.debug.remote-host` | remote | Remote host satisfies required CLI / tracer / permission prerequisites for PM-managed debug actions | keep thread usable, but block remote debug execution and show remediation |
+L00001159	
+L00001160	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+L00001161	
+L00001162	## 15. References
+L00001163	
+L00001164	- **AGENTS.md:** DRY Method, widget catalog, platform_specs, Pre-Completion Verification Checklist; headless rendering (tiny-skia), automation (headless runner, action catalog); Context7 MCP; platform CLI commands.
+L00001165	- **Plans/interview-subagent-integration.md:** Interview phases (Testing & Verification), test strategy, `generate_playwright_requirements`, Phase 5 document generation, DRY for interview code (§5.2).
+L00001166	- **Plans/orchestrator-subagent-integration.md:** Interview config wiring, test strategy loading in prompts; CLI-native subagent invocation and platform capability manager (§Strategy 4, Subagent Invoker).
+L00001167	- **puppet-master-rs/src/interview/test_strategy_generator.rs:** TestStrategyConfig, TestItem, write_test_strategy, test-strategy.md / test-strategy.json.
+L00001168	- **puppet-master-rs/src/core/prompt_builder.rs:** Load test strategy into iteration context.
+L00001169	- **puppet-master-rs/src/automation/:** Headless runner, action catalog, evidence (timeline, summary).
+L00001170	- **MCP / Context7:** Context7 API keys (https://context7.com/docs/howto/api-keys): Bearer token in `Authorization` header. Cursor CLI MCP (https://cursor.com/docs/cli/mcp); Claude Code MCP (https://code.claude.com/docs/en/mcp); Codex MCP (https://developers.openai.com/codex/mcp). Puppet Master owns MCP centrally per §8.2; `DirectApi` providers do not rely on provider-side MCP config files.
+L00001171	- **[C1] Playwright video persistence and modes:** https://github.com/microsoft/playwright.dev/blob/main/nodejs/versioned_docs/version-stable/videos.mdx
+L00001172	- **[C2] Playwright tracing + show-trace:** https://github.com/microsoft/playwright.dev/blob/main/nodejs/versioned_docs/version-stable/trace-viewer-intro.mdx
+L00001173	- **[C3] MCP typed content (image/resource) and tool outputs:** https://modelcontextprotocol.io/specification/2025-11-25/server/tools
+L00001174	- **[C4] HTML video with multi-source + fallback link:** https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/video/index.md
+L00001175	- **[C5] CommonMark image syntax (`![alt](url)`):** https://spec.commonmark.org/0.31.2/index
+L00001176	- **[C6] `img` alt/fallback behavior:** https://github.com/mdn/content/blob/main/files/en-us/web/html/reference/elements/img/index.md
+L00001177	- **[C7] Playwright test attachments (`testInfo.attach`, contentType/path):** https://github.com/microsoft/playwright.dev/blob/main/nodejs/versioned_docs/version-stable/api/class-testinfo.mdx
+L00001178	- **[LV1] Context7 MCP - Playwright docs (`--headed`, screenshots/videos/traces):** https://github.com/microsoft/playwright.dev/blob/main/nodejs/versioned_docs/version-stable/running-tests.mdx
+L00001179	- **[LV2] Context7 MCP - Playwright BrowserType launch/headed API:** https://github.com/microsoft/playwright.dev/blob/main/nodejs/versioned_docs/version-stable/api/class-browsertype.mdx
+L00001180	- **[LV3] Context7 MCP - Appium desktop setup (`appium setup desktop`, `mac2`, screenshot API):** https://github.com/appium/appium/blob/master/packages/appium/docs/en/reference/api/webdriver.md
+L00001181	- **[LV4] Context7 MCP - Appium Windows driver (`app`, `appTopLevelWindow` attach):** https://github.com/appium/appium-windows-driver/blob/master/README.md
+L00001182	- **[LV5] Context7 MCP - Appium XCUITest simulator capability sets + screen recording:** https://appium.github.io/appium-xcuitest-driver/latest/reference/execute-methods
+L00001183	- **[LV6] Apple Developer - Xcode previews:** https://developer.apple.com/documentation/xcode/previewing-your-apps-interface-in-xcode
+L00001184	- **[LV7] Context7 MCP - Appium UiAutomator2 emulator capabilities + MediaProjection recording:** https://github.com/appium/appium-uiautomator2-driver/blob/master/README.md
+L00001185	- **[LV8] Android Developers - emulator command line:** https://developer.android.com/studio/run/emulator-commandline
+L00001186	- **[MOB1] Apple SwiftUI docs (`#Preview`, `@Previewable`, previews in Xcode):** https://developer.apple.com/documentation/SwiftUI/documentation/swiftui/preview%28_%3Abody%3A%29 ; https://developer.apple.com/documentation/swiftui/previewable%28%29 ; https://developer.apple.com/documentation/SwiftUI/documentation/swiftui/previews-in-xcode
+L00001187	- **[MOB2] XCTest basics and CLI selection (Context7: swift-corelibs-xctest):** https://context7.com/swiftlang/swift-corelibs-xctest/llms.txt ; https://github.com/swiftlang/swift-corelibs-xctest/blob/main/README.md
+L00001188	- **[MOB3] Appium XCUITest driver capabilities and WDA attach guidance:** https://appium.github.io/appium-xcuitest-driver/latest/reference/capabilities ; https://appium.github.io/appium-xcuitest-driver/latest/guides/attach-to-running-wda
+L00001189	- **[MOB4] Jetpack Compose testing (synchronization, semantics, APIs):** https://developer.android.com/develop/ui/compose/testing/synchronization ; https://developer.android.com/develop/ui/compose/testing/common-patterns ; https://developer.android.com/develop/ui/compose/testing/apis
+L00001190	- **[MOB5] Android testing samples (Espresso + UiAutomator):** https://github.com/android/testing-samples/blob/main/README.md
+L00001191	- **[MOB6] Expo dev/build workflows (`expo start`, `expo run:*`):** https://docs.expo.dev/develop/development-builds/use-development-builds ; https://docs.expo.dev/develop/development-builds/expo-go-to-dev-build ; https://docs.expo.dev/bare/using-expo-cli
+L00001192	- **[MOB7] Detox artifacts and simulator/emulator run configs:** https://github.com/wix/detox/blob/master/docs/config/artifacts.mdx ; https://github.com/wix/detox/blob/master/docs/guide/developing-while-writing-tests.md
+L00001193	- **[MOB8] Maestro cloud/CI + flow screenshot capture:** https://github.com/mobile-dev-inc/maestro-docs/blob/main/cli/cloud.md ; https://context7.com/mobile-dev-inc/maestro-docs/llms.txt
+L00001194	- **[MOB9] Appium screenshot/screen-record APIs and mobile execute commands:** https://github.com/appium/appium/blob/master/packages/appium/docs/zh/guides/migrating-2-to-3.md ; https://context7.com/appium/appium/llms.txt
+L00001195	- **[DOCKER1] Docker Build and Push Action (`build-push-action`):** https://github.com/docker/build-push-action
+L00001196	- **[DOCKER2] Docker Login Action (`login-action`):** https://github.com/docker/login-action
+L00001197	- **[DOCKER3] Docker Setup Buildx Action (`setup-buildx-action`):** https://github.com/docker/setup-buildx-action
+L00001198	- **[DOCKER4] Docker Scout Action (`scout-action`):** https://github.com/docker/scout-action
+L00001199	- **[DOCKER5] Docker CLI reference:** https://docs.docker.com/reference/cli/docker/
+L00001200	- **[DOCKER6] Docker VS Code extension (reference patterns only):** https://github.com/docker/vscode-extension
+L00001201	
+L00001202	### 14.7A DockerHub browser auth, repository management, and Unraid publishing addendum
+L00001203	#### Validation and side-effect boundary matrix
+L00001204	
+L00001205	This subsection is authoritative for Build vs Push vs Unraid follow-on behavior.
+L00001206	
+L00001207	- `doctor.docker.engine`, `doctor.docker.compose`, `doctor.docker.buildx`, and `doctor.dockerhub.auth.capability` block local Docker build/publish entry points when failing.
+L00001208	- `doctor.dockerhub.repo.access` blocks remote image push when the selected namespace/repository cannot be read or created as required.
+L00001209	- `doctor.unraid.template-repo` does **not** block local Docker image push; it blocks only managed template-repo update / commit / push stages.
+L00001210	- `doctor.unraid.ca-profile` in `needs_review` state does **not** block local Docker image push; it blocks auto-push of the managed template repo and requires visible remediation.
+L00001211	- `push_policy = after_build` MUST dispatch `cmd.orchestrator.push_image` as a separate remote side-effect step after a successful local build result exists.
+L00001212	- Permission-guard or confirmation blocks MUST resolve to `*.blocked` outcomes, not `*.failed`, so runtime failure remains distinct from intentional non-execution.
+L00001213	
+L00001214	#### Normative override for §14.7
+L00001215	
+L00001216	This subsection is authoritative wherever §14.7 still reads like a PAT-only contract.
+L00001217	
+L00001218	- Supported `requested_auth_mode` values are at least `browser` and `pat`.
+L00001219	- Validation MUST resolve requested auth into:
+L00001220	  - `effective_auth_provider_state`
+L00001221	  - `effective_capabilities[]`
+L00001222	  - validated account identity
+L00001223	  - degraded reason when capability is partial
+L00001224	- Namespace/repository discovery and repository creation MUST use the validated effective capability set; the app MUST NOT assume browser login or PAT implies full management access.
+L00001225	- If publish is requested and the target repository does not exist, repository creation MUST be guarded by an explicit confirmation that shows namespace, repository, and privacy. This confirmation is mandatory and cannot be bypassed by YOLO/autonomy behavior.
+L00001226	- Successful publish produces `docker_publish_result`; successful follow-on XML generation / template repo update produces `unraid_template_result`.
+L00001227	
+L00001228	#### Canonical doctor / preflight additions for DockerHub + Unraid
+L00001229	
+L00001230	#### Canonical doctor ID and action-scope override
+L00001231	
+L00001232	- `doctor.registry.auth` is deprecated for DockerHub-specific flows and MUST be treated as an alias of `doctor.dockerhub.auth.capability` only until old references are removed.
+L00001233	- Build-only actions require `doctor.docker.engine` and `doctor.docker.buildx`; they do not require `doctor.docker.compose` or runtime port-availability checks unless the selected build path depends on compose.
+L00001234	- Run/preview actions require `doctor.docker.compose` when compose is the selected runtime path and require port-availability checks only when a user-facing access URL is expected.
+L00001235	- Publish requires `doctor.dockerhub.auth.capability` and `doctor.dockerhub.repo.access`; publish MUST NOT fail solely because compose validation is irrelevant to the selected publish path.
+L00001236	
+L00001237	| Check ID | Scope | Required signal | Failure behavior |
+L00001238	|---|---|---|---|
+L00001239	| `doctor.docker.buildx` | docker build | Buildx reachable and usable for the selected build path | Block container build/publish; show remediation |
+L00001240	| `doctor.dockerhub.auth.capability` | docker auth | Requested auth validates into effective capability set and account identity | Block repo browsing/creation/publish; show degraded reason |
+L00001241	| `doctor.dockerhub.repo.access` | docker publish | Selected namespace/repository can be read or created as required | Block publish; preserve local build result |
+L00001242	| `doctor.unraid.template-repo` | unraid managed publishing | Template repo path/remote/branch settings validate and working copy state is safe | Block managed follow-on push/update; keep local publish result |
+L00001243	| `doctor.unraid.ca-profile` | unraid maintainer metadata | `ca_profile.xml` exists or can be generated and any missing public metadata is surfaced as review-required | Allow local generation with warning; block auto-push while review is required |
+L00001244	
+L00001245	#### Result payload minima
+L00001246	
+L00001247	- `docker_auth_result` MUST include: `requested_auth_mode`, `effective_auth_provider_state`, `effective_capabilities[]`, `effective_account_identity`, `last_validation_timestamp`, `last_validation_host`, `degraded_reason?`
+L00001248	- `docker_publish_result` MUST include: `publish_result_id`, `registry_host`, `namespace`, `repository`, `tags[]`, `digests[]`, `platforms[]`, `sanitized_logs_path`
+L00001249	- `unraid_template_result` MUST include: `publish_result_id`, `template_xml_path`, `template_repo_id`, `maintainer_slug`, `commit_status`, `push_status`, `ca_profile_state`, `review_state`
+L00001250	
+L00001251	`unraid_template_result.commit_status` enum:
+L00001252	- `not_attempted`
+L00001253	- `committed`
+L00001254	- `skipped_review_required`
+L00001255	- `skipped_unrelated_changes`
+L00001256	- `failed`
+L00001257	
+L00001258	`unraid_template_result.push_status` enum:
+L00001259	- `not_attempted`
+L00001260	- `skipped_auto_push_disabled`
+L00001261	- `push_in_progress`
+L00001262	- `completed`
+L00001263	- `failed`
+L00001264	
+L00001265	`unraid_template_result.review_state` enum:
+L00001266	- `clean`
+L00001267	- `needs_review`
+L00001268	
+L00001269	`unraid_template_result.ca_profile_state` enum:
+L00001270	- `existing_user_managed`
+L00001271	- `auto_generated_needs_review`
+L00001272	- `project_override_active`
+L00001273	
+L00001274	This addendum expands §14.7 so Docker support is first-class rather than limited to basic runtime defaults.
+L00001275	
+L00001276	**Normative separation of responsibilities:**
+L00001277	- Use Docker CLI / Buildx for local runtime, image build, login, and push execution.
+L00001278	- Use Docker Hub API only for namespace/repository discovery and repository creation when Puppet Master needs app-managed listing/creation behavior.
+L00001279	- Do not treat DockerHub as a storage location for Unraid XML.
+L00001280	
+L00001281	**Expanded runtime/publish flow:**
+L00001282	1. Detect whether the active project is Docker-related.
+L00001283	2. Resolve `requested_auth_mode` and validate `effective_capabilities`.
+L00001284	3. Allow browser/device login or PAT-based auth, with PAT remaining the recommended explicit path.
+L00001285	4. If push is requested and the target repository is missing, gate repository creation behind a mandatory confirmation dialog that shows namespace, repository name, and privacy. This step cannot be bypassed by YOLO/autonomy modes.
+L00001286	5. Build with `docker buildx build`.
+L00001287	6. Run containers for preview/testing when requested and surface user-facing access points when available.
+L00001288	7. Push to DockerHub using the selected namespace/repository/tag set.
+L00001289	8. After successful publish, generate/update Unraid XML by default unless the user disabled it.
+L00001290	9. If managed template-repo workflow is enabled, update the template repo, auto-commit by default, and expose a one-click push UI action while keeping auto-push disabled by default.
+L00001291	
+L00001292	**Doctor/preflight additions required by this addendum:**
+L00001293	- `doctor.docker.buildx` — Buildx reachable and usable for the selected build path.
+L00001294	- `doctor.dockerhub.auth.capability` — requested auth validated into effective capability set.
+L00001295	- `doctor.dockerhub.repo.access` — selected namespace/repository can be read, selected, or created as required.
+L00001296	- `doctor.unraid.template-repo` — template repo configuration is valid when managed template publishing is enabled.
+L00001297	- `doctor.unraid.ca-profile` — `ca_profile.xml` exists or can be generated and is surfaced as needing review when auto-generated.
+L00001298	
+L00001299	**Evidence/result contract additions:**
+L00001300	- `docker_auth_result` records requested mode, effective capability set, account identity, validation timestamp, and degraded reason if any.
+L00001301	- `docker_publish_result` records registry host, namespace, repository, pushed tags, digest(s), platform list, and sanitized logs path.
+L00001302	- `unraid_template_result` records XML output path, target template repo, maintainer folder, commit status, push status, and whether `ca_profile.xml` was auto-generated or user-edited.
+L00001303	
+L00001304	ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md, PolicyRule:no_secrets_in_storage, SchemaID:evidence.schema.json
+L00001305	
+L00001306	## Owner / Consumer Map
+L00001307	
+L00001308	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/newtools.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00001309	
+L00001310	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00001311	
+L00001312	## PlanUnits
+L00001313	
+L00001314	### N2-002 - Plan-Only GUI Testing Scope
+L00001315	
+L00001316	```yaml
+L00001317	plan_unit_id: N2-002
+L00001318	unit_type: requirement
+L00001319	status: accepted
+L00001320	owner_doc: Plans/newtools.md
+L00001321	canonical_text: Plans/newtools.md is a plan document only for interviewer GUI/testing tool discovery, headless GUI testing/debug logs, and test strategy integration. The single rollout includes Doctor platform versions, MCP Doctor check, and catalog version coverage.
+L00001322	gui_related: true
+L00001323	gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
+L00001324	split_recommended: false
+L00001325	depends_on: []
+L00001326	unblocks: []
+L00001327	acceptance_criteria:
+L00001328	- Covered source spans remain losslessly available for exact-text audit.
+L00001329	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00001330	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001331	validation_surfaces:
+L00001332	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001333	- python3 scripts/pm-plan-index.py validate
+L00001334	risk_class: plan_only_gui_testing_scope
+L00001335	reasoning_tier: standard
+L00001336	context_scope: newtools_standardization
+L00001337	implementation_surfaces:
+L00001338	- Plans/newtools.md
+L00001339	node_compile_hint:
+L00001340	  mode: plan_only_gui_testing_scope
+L00001341	  create_worknodes: false
+L00001342	source_lineage:
+L00001343	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0002
+L00001344	preserved_exact_tokens:
+L00001345	- PLAN DOCUMENT ONLY
+L00001346	- Doctor platform versions
+L00001347	- MCP Doctor check
+L00001348	- catalog version
+L00001349	negative_constraints: []
+L00001350	compatibility_only_notes: []
+L00001351	stale_retired_dispositions: []
+L00001352	owner_boundary_notes: []
+L00001353	owner_hints:
+L00001354	- Plans/newtools.md
+L00001355	preserved_contractrefs: []
+L00001356	```
+L00001357	
+L00001358	### N2-003 - Rewrite Tool Registry And Event Alignment
+L00001359	
+L00001360	```yaml
+L00001361	plan_unit_id: N2-003
+L00001362	unit_type: requirement
+L00001363	status: accepted
+L00001364	owner_doc: Plans/newtools.md
+L00001365	canonical_text: Tool discovery, permissions, validation, execution results, storage, latency, errors, analytics, and dashboard rollups align to the central tool registry, policy engine, unified event model, and seglog -> projections through redb/Tantivy.
+L00001366	gui_related: false
+L00001367	gui_classification_reason: The unit covers backend, policy, schema, or owner-boundary behavior rather than GUI presentation.
+L00001368	split_recommended: false
+L00001369	depends_on: []
+L00001370	unblocks: []
+L00001371	acceptance_criteria:
+L00001372	- Covered source spans remain losslessly available for exact-text audit.
+L00001373	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00001374	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001375	validation_surfaces:
+L00001376	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001377	- python3 scripts/pm-plan-index.py validate
+L00001378	risk_class: rewrite_tool_registry_event_alignment
+L00001379	reasoning_tier: standard
+L00001380	context_scope: newtools_standardization
+L00001381	implementation_surfaces:
+L00001382	- Plans/newtools.md
+L00001383	node_compile_hint:
+L00001384	  mode: rewrite_tool_registry_event_alignment
+L00001385	  create_worknodes: false
+L00001386	source_lineage:
+L00001387	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0003
+L00001388	preserved_exact_tokens:
+L00001389	- central tool registry + policy engine
+L00001390	- unified event model
+L00001391	- seglog -> projections (redb/Tantivy)
+L00001392	negative_constraints: []
+L00001393	compatibility_only_notes: []
+L00001394	stale_retired_dispositions: []
+L00001395	owner_boundary_notes: []
+L00001396	owner_hints:
+L00001397	- Plans/newtools.md
+L00001398	preserved_contractrefs:
+L00001399	- 'ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD'
+L00001400	```
+L00001401	
+L00001402	### N2-004 - Slint Delivery And Provider Auth Alignment
+L00001403	
+L00001404	```yaml
+L00001405	plan_unit_id: N2-004
+L00001406	unit_type: requirement
+L00001407	status: accepted
+L00001408	owner_doc: Plans/newtools.md
+L00001409	canonical_text: UI wiring is Slint-era only, no legacy Iced runtime wiring is required. Subscription-first auth preserves Gemini Direct gemini, Antigravity CLI as the active Google-owned CLI-runtime route, key-exception semantics where supported, and gemini_cli only as retired/source-lineage vocabulary while retiring stale one-provider mixed-account Gemini wording.
+L00001410	gui_related: true
+L00001411	gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
+L00001412	split_recommended: false
+L00001413	depends_on: []
+L00001414	unblocks: []
+L00001415	acceptance_criteria:
+L00001416	- Covered source spans remain losslessly available for exact-text audit.
+L00001417	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00001418	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001419	validation_surfaces:
+L00001420	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001421	- python3 scripts/pm-plan-index.py validate
+L00001422	risk_class: slint_provider_auth_alignment
+L00001423	reasoning_tier: standard
+L00001424	context_scope: newtools_standardization
+L00001425	implementation_surfaces:
+L00001426	- Plans/newtools.md
+L00001427	node_compile_hint:
+L00001428	  mode: slint_provider_auth_alignment
+L00001429	  create_worknodes: false
+L00001430	source_lineage:
+L00001431	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0003
+L00001432	preserved_exact_tokens:
+L00001433	- Slint
+L00001434	- no legacy Iced runtime wiring
+L00001435	- Gemini Direct
+L00001436	- gemini
+L00001437	- Antigravity CLI
+L00001438	- Gemini CLI
+L00001439	- gemini_cli
+L00001440	- key-exception
+L00001441	- mixed-account
+L00001442	negative_constraints:
+L00001443	- Legacy Iced runtime wiring is not required for this task.
+L00001444	- Do not preserve Gemini CLI or gemini_cli as an active provider route.
+L00001445	compatibility_only_notes:
+L00001446	- Deliverables remain Plans-folder documentation updates for the Slint rebuild.
+L00001447	- Gemini CLI and gemini_cli are retained only as retired/source-lineage vocabulary.
+L00001448	stale_retired_dispositions:
+L00001449	- Stale one-provider mixed-account Gemini wording is retired in favor of Gemini Direct plus Antigravity CLI, with Gemini CLI active-provider wording retired.
+L00001450	owner_boundary_notes: []
+L00001451	owner_hints:
+L00001452	- Plans/newtools.md
+L00001453	preserved_contractrefs:
+L00001454	- 'ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD'
+L00001455	```
+L00001456	
+L00001457	### N2-005 - Route/View-State Target Identity Boundary
+L00001458	
+L00001459	```yaml
+L00001460	plan_unit_id: N2-005
+L00001461	unit_type: requirement
+L00001462	status: accepted
+L00001463	owner_doc: Plans/newtools.md
+L00001464	canonical_text: cmd.source_control.switch_subview remains a /view-state command. Repo, worktree, /worktree/compare, route/open target identity, and the runtime object envelope remain the operational target identity owners.
+L00001465	gui_related: true
+L00001466	gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
+L00001467	split_recommended: false
+L00001468	depends_on: []
+L00001469	unblocks: []
+L00001470	acceptance_criteria:
+L00001471	- Covered source spans remain losslessly available for exact-text audit.
+L00001472	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00001473	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001474	validation_surfaces:
+L00001475	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001476	- python3 scripts/pm-plan-index.py validate
+L00001477	risk_class: route_view_state_target_identity_boundary
+L00001478	reasoning_tier: standard
+L00001479	context_scope: newtools_standardization
+L00001480	implementation_surfaces:
+L00001481	- Plans/newtools.md
+L00001482	node_compile_hint:
+L00001483	  mode: route_view_state_target_identity_boundary
+L00001484	  create_worknodes: false
+L00001485	source_lineage:
+L00001486	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0004
+L00001487	preserved_exact_tokens:
+L00001488	- cmd.source_control.switch_subview
+L00001489	- /view-state
+L00001490	- /worktree/compare
+L00001491	- route/open contract
+L00001492	negative_constraints:
+L00001493	- Tooling summaries must not let shell view commands become target identity owners.
+L00001494	compatibility_only_notes: []
+L00001495	stale_retired_dispositions: []
+L00001496	owner_boundary_notes: []
+L00001497	owner_hints:
+L00001498	- Plans/newtools.md
+L00001499	preserved_contractrefs: []
+L00001500	```
+L00001501	
+
+<<< CONTEXT_AFTER canonical_document_lines=1502-1513 >>>
+L00001502	### N2-006 - Open-Resolution And Automation Defaults
+L00001503	
+L00001504	```yaml
+L00001505	plan_unit_id: N2-006
+L00001506	unit_type: requirement
+L00001507	status: accepted
+L00001508	owner_doc: Plans/newtools.md
+L00001509	canonical_text: Open-resolution focus resolves through shared object/surface routing. regular, visual_mode, visual_mode = auto, optional HITL, and /HTE-by-default remain one automation-first mode policy with compact status chips, icons, detail, deep-link pivots, surface identity, and sub-selection focus.
+L00001510	gui_related: true
+L00001511	gui_classification_reason: The unit covers GUI/user-visible testing, settings, or evidence behavior.
+L00001512	split_recommended: false
+L00001513	depends_on: []

@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE 3668-3679 >>>
+- `ready_to_submit → submitted` = user confirms submit
+- `submitted → [terminal]` = no further transitions
+
+Compatibility/source-lineage disposition: this extract preserves question-flow payload fields, display labels, aliases, and lifecycle rules. `questionnaire`, `single_question`, `unavailable`, `dismissed`, and `sendPrompt` constraints are typed through the question-flow Core rules rather than merged into one schema list.
+### 15.6 Mermaid and inline visualizer widgets
+
+
+### 15.6A Visualizer runtime contract
+
+This section defines the canonical contract for this surface.
+
+ContractRef: Plans/assistant-chat-design.md#28.2 Inline visualizer bridge
+
+<<< AUTHORITATIVE_CORE 3680-4077 >>>
+
+Core rules:
+- Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target.
+- Native Mermaid remains source-text-first, while richer `HTML/JS` or `/JS` visuals render as sandboxed `visual-module` cards with `/design` tokens, sizing `/auto-height`, an `open-link` bridge, and local `in-module` state only.
+- Inline visualizer iframe embeds MUST set `sandbox="allow-scripts"`; the exact minimum attribute is `sandbox='allow-scripts'`. They MUST NOT include `allow-same-origin`, `allow-forms`, `allow-popups`, or `allow-top-navigation`; those tokens are explicitly DENIED, and the widget communicates with PM only through the `postMessage` bridge for all cross-boundary communication.
+- Non-iframe Markdown, Mermaid, HTML, and SVG rendering follows the sanitizer baseline in `Plans/assistant-chat-design.md`: standard HTML5 safe subset per DOMPurify `DEFAULT_ALLOWED_TAGS`, approved URL-bearing attributes only, and no raw `<script>`, `<iframe>`, `<object>`, `<embed>`, or `<style>` with external URL references.
+- The visualizer host bridge is limited to async-safe `sendPrompt(text: string): void`, `openLink(url: string, target?: "_blank" | "_self"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`. `_blank` opens a new tab, `_self` navigation is blocked in sandboxed cards, and resize requests remain host-constrained. For question-flow embedded visual modules, the host omits `sendPrompt` from the bridge and exposes only the narrowed PM-managed question-draft bridge, so visuals cannot bypass PM draft state by queueing chat messages.
+- Decision #10 is resolved for the Final GUI consumer: visualizer theme-token injection is locked for MVP as CSS custom properties on the inline `style` attribute of the visualizer container. MVP tokens are `--pm-viz-bg`, `--pm-viz-fg`, `--pm-viz-accent`, `--pm-viz-border`, `--pm-viz-font-family`, and `--pm-viz-font-size`; visualizer fragments MUST use those tokens and hardcoded replacement colors are prohibited.
+- Bridge calls preserve exact GUI host semantics: `sendPrompt(text)` queues into the active thread composer outside question-flow contexts; question-flow embedded visuals do not receive `sendPrompt` and write draft answers only through the narrowed question bridge; `openLink(url)` routes through `cmd.browser.open_detached_preview` or the system browser when external; theme injection pushes the CSS custom property bundle on mount and theme change; resize reporting sends `{ height: px }` to the host, which adjusts the visual card height within host constraints.
+- PM visual-runtime script loading is closed by default: a `/third-party-library` may execute inside the inline `visual-runtime` only when it is bundled, version-pinned, integrity-recorded, declared in the artifact metadata, and loaded inside the existing sandboxed runtime. Remote CDN scripts, dynamic network import, same-origin escalation, popup/form/top-navigation permissions, and undeclared runtime script injection are not valid MVP paths.
+- Generated visual modules render as PM visual cards and follow the stricter MVP allowlist stance: the default allowlist is empty, so external libraries cannot execute unless a versioned allowlist entry exists. Each allowed entry must name the package and version, bundled asset, integrity record, license/security review, performance budget, rendering capability scope, fallback behavior, upgrade/removal policy, and owner approval path. D3, Chart.js, and Three.js are examples only when curated, pinned, bundled, and explicitly allowed; CDN fetches, dynamic network import, and unvetted network requests from within the visual module are prohibited.
+- Inline visualizer logging is audit-oriented and bounded: PM records render errors, sandbox violations, bridge messages, export actions, and detached-preview opens as structured activity metadata or refs. These persistence/logging/export expectations must not log arbitrary DOM contents, user secrets, or full visual payloads unless the selected export/evidence profile explicitly permits them.
+- Visualizer persistence keeps rendered output references, source data, and metadata; it must not persist transient rendering state, animation positions, scroll offsets, or ephemeral JS variables.
+- Visualizer and provider-disclosure consumer controls carry `status: "unavailable"`, `proxy_mode`, `basic`, `enhanced`, `auto`, Fire Engine limitation copy, `Copy source`, `Open in editor`, `Open detached preview`, and `Export diagram` as display fields, with audit-field logging refs rather than local owner state.
+- The Final GUI remains a live consumer for blocked-state, visualizer, provider, question, planning, and audit-field canon; stale widget wording retires in place rather than downgrading unresolved owner propagation to verify-only guidance.
+
+Rules:
+- Copy source
+- Open in editor
+- Open detached preview
+- Export diagram
+- must NOT execute arbitrary HTML
+- allowlisted tags/attributes only
+- sendPrompt(text)
+- openLink(url)
+- copyToClipboard(text)
+- requestResize(width?, height?)
+
+Compatibility/source-lineage disposition: this extract preserves visualizer display actions and bridge method tokens. `Copy source`, `Open detached preview`, `sendPrompt(text)`, and sandbox restrictions remain typed display/action/bridge/rule tokens through the visualizer runtime contract, not GUI-owned payload fields.
+### 15.7 Permission approval card widget
+
+This section consumes the linked owner contract and stays aligned with it.
+
+ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget
+
+Core rules:
+- Web tool permission keys, approval-card summary templates, session-approval semantics, and their exact approval-card cross-reference target remain canonical in Permissions_System and must not be re-invented from thin tool descriptions or stale Ask UI links.
+- Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools independently visible and ask-gated in plan presets, allow strict read_only/no-network presets to deny them, and carry the blocked/unavailable payload fields through to permission-card consumers.
+- Permission defaults consume allow/deny/ask from Permissions_System; web tools remain ask-gated unless preset policy resolves otherwise.
+- In-chat approval cards MUST NOT mutate Persona profiles; approval outcomes write only to the session approval cache or canonical permissions project/global rule storage, and Persona profile edits remain owned by the Personas management surface.
+- A `todowrite` auto-use approval prompt in ask-mode lists the proposed TODO items before creation; auto-approved `todowrite` creates items silently and surfaces the resulting plan-panel update.
+
+Permission rules:
+- deny
+- once
+- for session
+- always
+- blocked_reason_code
+- allowed_action_ids[]
+- status: "unavailable"
+
+Rules:
+- websearch summary shows tool name + query preview
+- webfetch/webextract summary shows tool name + target host/URL
+- webresearch summary shows tool name + task summary + estimated source count when available
+- webcrawl/webmap summary shows tool name + root URL + page/depth caps
+- `Once` approves only this invocation.
+- `For Session` for search/research approves the current web tool for the current session with suggested pattern `*`.
+- `For Session` for fetch/extract/crawl/map approves the host/site for the current session with suggested pattern `https://host.example/*`.
+- `Deny` rejects this invocation and other pending asks in the same session that share the same approval ask.
+- Session approval scope is host-scoped for fetch/extract/crawl/map; example URL pattern `https://docs.example.com/*` normalizes to host `//docs.example.com/` for display, and approving crawl may share the same host-scoped pattern across `/crawl/map/fetch` without becoming tool-wide.
+- Approving webcrawl For Session auto-approves crawl/map/extract/fetch for the same host pattern and same tool-key semantics
+- Approving webresearch For Session does NOT create broad allow for unrelated tools
+- Search/research session approval remains tool-wide only for the current web tool/session.
+- MVP uses wildcard session approval for search/research; advanced query-pattern support is future only
+- question default `allow` only when HITL is available
+- read_only
+- plan
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/FinalGUISpec.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### F3-002 - Owner Section Scope
+
+```yaml
+plan_unit_id: F3-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  FinalGUISpec owner-section requirements are canonical live specification text for preserving
+  product, runtime, storage, UI, and governance details in owner-section form.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: owner_section_scope
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0002"
+preserved_exact_tokens:
+- "canonical live specification text"
+- "product"
+- "runtime"
+- "storage"
+- "UI"
+- "governance"
+- "owner document"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec.md owns these GUI specification sections."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-003 - Object-First Concern Search
+
+```yaml
+plan_unit_id: F3-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Global and Orchestrator search distinguish local tab filtering from object-first cross-tab
+  route-aware search so concern, evidence, history, ledger, and graph results land on canonical
+  object routes.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: object-first_concern_search
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0004"
+preserved_exact_tokens:
+- "Search in this tab"
+- "Search Orchestrator"
+- "Orchestrator search"
+- "tab-local search"
+- "/filtering"
+- "object-first"
+- "cross-tab"
+- "route-aware"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-004 - Concern Surface Record Schema
+
+```yaml
+plan_unit_id: F3-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Concern surfaces expose Progress, Seams, Evidence, History, and Ledger views over concern-linked
+  evidence, package rollups, exact source references, split/supersession, and canonical concern
+  record schema fields.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: concern_surface_record_schema
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0005"
+preserved_exact_tokens:
+- "Progress"
+- "Seams"
+- "Evidence"
+- "History"
+- "Ledger"
+- "/evidence"
+- "/package"
+- "/routing"
+- "/blocked/remediation"
+- "/corroboration/graph"
+- "/recovery"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Concern record surfaces expose canonical record schema rather than a flattened summary row."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-005 - Concern Lineage And Guided Actions
+
+```yaml
+plan_unit_id: F3-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Concern lineage transitions use merge, split, and superseded with retained lineage refs,
+  redirects, and guided flows for structural actions instead of one-click menus or free-text
+  history.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: concern_lineage_and_guided_actions
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0005"
+preserved_exact_tokens:
+- "merge"
+- "split"
+- "superseded"
+- "resolution_kind = split"
+- "/redirect"
+- "merged-away"
+- "/newer"
+- "/split/supersession"
+- "guided flows"
+negative_constraints:
+- "Object-specific context menus must not expose mutation actions merely because a generic shell menu has a matching verb."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-006 - Projection Trust Grammar
+
+```yaml
+plan_unit_id: F3-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Projection-backed surfaces display projection_freshness and projection_health as runtime trust
+  grammar, keep trust_tier under browser/preview semantics, and expose trust state and last
+  updated as first-class UI fields.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: projection_trust_grammar
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0006"
+preserved_exact_tokens:
+- "projection_freshness"
+- "projection_health"
+- "trust_tier"
+- "/browser"
+- "/degraded"
+- "/trust"
+- "trust state"
+- "last updated"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-007 - Shared Attention Labels
+
+```yaml
+plan_unit_id: F3-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Shared attention labels carry owner route, projection state, and account or provider context for
+  approval, seam blocking, graph patches, recovery, provider/account pressure, and projection
+  degradation.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: shared_attention_labels
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0006"
+preserved_exact_tokens:
+- "Waiting on user approval"
+- "Seam integration blocked"
+- "Graph patch required"
+- "Recovery in progress"
+- "Provider/account pressure"
+- "Projection trust degraded"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 4078-4089 >>>
+### F3-008 - Freshness Gated Mutations
+
+```yaml
+plan_unit_id: F3-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Projection-backed surfaces use freshness_state values current, refreshing, stale, degraded, and
+  unavailable, and stale or degraded states narrow, disable, or require canonical/current
+  revalidation before mutation-bearing actions.
+gui_related: true

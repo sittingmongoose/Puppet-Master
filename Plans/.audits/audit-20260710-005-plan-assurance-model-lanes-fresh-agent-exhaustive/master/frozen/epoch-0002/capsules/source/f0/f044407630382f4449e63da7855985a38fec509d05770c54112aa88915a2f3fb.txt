@@ -1,0 +1,396 @@
+<<< CONTEXT_BEFORE 5152-5163 >>>
+- "Run & Debug"
+- "Assistant Debug Mode"
+- "SSH remote editing"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md"
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 5164-5530 >>>
+### F3-029 - Core Stack Technologies
+
+```yaml
+plan_unit_id: F3-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The core GUI stack uses Rust, Slint markup compiled by slint_build, winit plus Skia with
+  FemtoVG-wgpu and software fallbacks, redb for layout persistence, seglog for events, and Tantivy
+  for search.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: core_stack_technologies
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0024"
+preserved_exact_tokens:
+- "Rust"
+- "Slint 1.17.1"
+- "slint_build"
+- "winit + Skia"
+- "winit + FemtoVG-wgpu"
+- "Software renderer"
+- "redb"
+- "seglog"
+- "Tantivy"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-030 - GUI Technology Exclusion
+
+```yaml
+plan_unit_id: F3-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The native desktop GUI does not use React, Tauri, JavaScript/TypeScript, HTML/CSS, or DOM-rendered
+  product UI; it is Rust + Slint `.slint` markup. The Slint/WASM web target may use only minimal
+  HTML/canvas bootstrap and generated/minimal JavaScript glue to load the Slint WASM canvas client,
+  attach assets and canvas, and connect to approved local services; it must not become an HTML/CSS/JS
+  product shell.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "Native desktop GUI source remains Rust + Slint `.slint` markup and does not use React, Tauri, JavaScript/TypeScript, HTML/CSS, or DOM-rendered product UI."
+- "Slint/WASM web GUI source uses only minimal HTML/canvas bootstrap and generated/minimal JavaScript glue needed to load the WASM canvas client, attach assets and canvas, and connect to approved local services."
+- "HTML/CSS/JS product shell, React product UI, Tauri product UI, and DOM-rendered product UI remain forbidden for both native desktop and web product surfaces."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+- "python3 scripts/pm-plans-verify.py validate-gui-asset-policy"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: gui_technology_exclusion
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0025"
+preserved_exact_tokens:
+- "No React/Tauri/DOM-rendered product UI"
+- "minimal HTML/canvas bootstrap"
+- "generated/minimal JavaScript glue"
+- "HTML/CSS/JS product shell"
+- "Rust + Slint `.slint` markup"
+negative_constraints:
+- "React, Tauri, DOM-rendered product UI, and HTML/CSS/JS product shells are not used for the GUI implementation."
+- "The Slint/WASM web target may not expand its bootstrap HTML/canvas and generated/minimal JavaScript glue into a product UI shell."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-031 - Slint Build Integration
+
+```yaml
+plan_unit_id: F3-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Slint build integration compiles ui/app.slint via build.rs using CompilerConfiguration with
+  cosmic style, while visual differences come from a Theme global rather than base style changes.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: slint_build_integration
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0026"
+preserved_exact_tokens:
+- "build.rs"
+- "CompilerConfiguration"
+- "cosmic"
+- "ui/app.slint"
+- "slint_build::compile_with_config"
+- "Theme global"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-032 - Provider Backend Eligibility Boundary
+
+```yaml
+plan_unit_id: F3-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Provider CLI backend eligibility remains separate from Slint renderer selection, and Cursor CLI
+  must be re-evaluated as an ACP-capable first-class CLI backend before GUI diagnostics classify
+  it as legacy stream transport.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines terminology, owner-boundary, runtime, storage, or governance behavior rather
+  than visual presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: provider_backend_eligibility_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0027"
+preserved_exact_tokens:
+- "Provider CLI backend eligibility"
+- "Slint renderer selection"
+- "Cursor CLI"
+- "ACP-capable"
+- "first-class CLI backend"
+- "legacy stream transport"
+negative_constraints: []
+compatibility_only_notes:
+- "Cursor CLI legacy stream classification is deferred until ACP-capable backend eligibility is re-evaluated."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-033 - Slint Backend Selection Diagnostics
+
+```yaml
+plan_unit_id: F3-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Slint backend selection uses SLINT_BACKEND, persisted app preference, compiled default order,
+  deterministic fallback, startup diagnostics, and setup surfaces that show the selected backend.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: slint_backend_selection_diagnostics
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0027"
+preserved_exact_tokens:
+- "SLINT_BACKEND"
+- "slint::BackendSelector"
+- "winit + Skia"
+- "winit + FemtoVG-wgpu"
+- "emergency software renderer"
+- "startup diagnostic"
+- "selected backend"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-034 - IDE Shell Structure Diagram
+
+```yaml
+plan_unit_id: F3-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The master layout uses a fixed title bar, activity bar, primary content area, right side panel,
+  collapsible bottom panel, and status bar with the dimensions and roles shown by the IDE shell
+  diagram.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: ide_shell_structure_diagram
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0029"
+preserved_exact_tokens:
+- "TITLE BAR"
+- "ACT BAR"
+- "PRIMARY CONTENT AREA"
+- "SIDE PANEL"
+- "BOTTOM PANEL"
+- "STATUS BAR"
+- "48px"
+- "240-480px"
+- "120-300px"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-035 - Structural Zones And Side Panel Rule
+
+```yaml
+plan_unit_id: F3-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  FinalGUISpec structural zones use Slint layouts with fixed title/activity/status bars, flexible
+  primary content, a 240-480px side panel, collapsible bottom panel, and right-hand side-panel
+  occupants rather than separate page surfaces.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines user-visible GUI surface, shell, copy, control, or projection behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: structural_zones_and_side_panel_rule
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0030"
+preserved_exact_tokens:
+- "HorizontalLayout"
+- "VerticalLayout"
+- "240-480px"
+- "Activity Bar surface slot"
+- "/File"
+- "/Source"
+- "/GitHub"
+- "/etc"
+- "migration labels"
+negative_constraints:
+- "Legacy labels such as /File, /Source, /GitHub, and /etc must not bypass the right-hand side-panel model."
+compatibility_only_notes:
+- "Legacy labels /File, /Source, /GitHub, and /etc are migration labels for occupants or groups."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md"
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 5531-5542 >>>
+### F3-036 - Status Bar Indexing Indicator
+
+```yaml
+plan_unit_id: F3-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The status bar shows project-sensitive sparse n-gram index build or refresh progress only when
+  useful, while Search results own the unindexed annotation for true raw-ripgrep fallback.
+gui_related: true
+gui_classification_reason: >-

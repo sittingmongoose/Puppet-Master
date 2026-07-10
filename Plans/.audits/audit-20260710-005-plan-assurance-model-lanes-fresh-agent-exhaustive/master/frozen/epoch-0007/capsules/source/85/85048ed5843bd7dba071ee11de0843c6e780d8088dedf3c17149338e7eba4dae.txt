@@ -1,0 +1,400 @@
+<<< CONTEXT_BEFORE canonical_document_lines=20599-20610 >>>
+L00020599	negative_constraints:
+L00020600	- This illustrative example does not transfer GUI implementation ownership to this document.
+L00020601	compatibility_only_notes:
+L00020602	- Frontend/UI selection is example evidence only.
+L00020603	stale_retired_dispositions: []
+L00020604	owner_boundary_notes:
+L00020605	- GUI implementation owner docs remain authoritative for GUI requirements.
+L00020606	owner_hints:
+L00020607	- Plans/orchestrator-subagent-integration.md
+L00020608	preserved_contractrefs: []
+L00020609	```
+L00020610	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=20611-20981 >>>
+L00020611	### OSI-239 - Registry-Backed Selector Validation
+L00020612	
+L00020613	```yaml
+L00020614	plan_unit_id: OSI-239
+L00020615	unit_type: requirement
+L00020616	status: accepted
+L00020617	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020618	canonical_text: >-
+L00020619	  Subagent selection in parallel subtasks must use subagent_selector backed by subagent_registry and validate selected names
+L00020620	  with subagent_registry::is_valid_subagent_name(), never hardcoding subagent names.
+L00020621	gui_related: false
+L00020622	gui_classification_reason: >-
+L00020623	  This unit covers backend DRY selector validation rather than GUI presentation.
+L00020624	split_recommended: false
+L00020625	depends_on:
+L00020626	- OSI-212
+L00020627	- OSI-213
+L00020628	unblocks: []
+L00020629	acceptance_criteria:
+L00020630	- Covered source spans remain losslessly available for exact-text audit.
+L00020631	- Selector validation preserves DRY registry ownership for subagent names.
+L00020632	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+L00020633	validation_surfaces:
+L00020634	- >-
+L00020635	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020636	- python3 scripts/pm-plan-index.py validate
+L00020637	reasoning_tier: standard
+L00020638	context_scope: orchestrator_subagent_standardization
+L00020639	implementation_surfaces:
+L00020640	- Plans/orchestrator-subagent-integration.md
+L00020641	risk_class: registry_backed_selector_validation
+L00020642	node_compile_hint:
+L00020643	  mode: registry_backed_selector_validation
+L00020644	  create_worknodes: false
+L00020645	source_lineage:
+L00020646	- >-
+L00020647	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0139
+L00020648	preserved_exact_tokens:
+L00020649	- NEVER hardcode subagent names
+L00020650	- subagent_selector
+L00020651	- subagent_registry::is_valid_subagent_name()
+L00020652	- Primitive:DRYRules
+L00020653	negative_constraints:
+L00020654	- Never hardcode subagent names in this selection path.
+L00020655	compatibility_only_notes: []
+L00020656	stale_retired_dispositions: []
+L00020657	owner_boundary_notes: []
+L00020658	owner_hints:
+L00020659	- Plans/orchestrator-subagent-integration.md
+L00020660	preserved_contractrefs:
+L00020661	- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md'
+L00020662	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7'
+L00020663	```
+L00020664	
+L00020665	### OSI-240 - Platform-Specific Invocation Boundary
+L00020666	
+L00020667	```yaml
+L00020668	plan_unit_id: OSI-240
+L00020669	unit_type: requirement
+L00020670	status: accepted
+L00020671	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020672	canonical_text: >-
+L00020673	  execute_tier_with_subagents must use platform_specs for platform-specific invocation when running selected subagents for a
+L00020674	  tier.
+L00020675	gui_related: false
+L00020676	gui_classification_reason: >-
+L00020677	  This unit covers backend platform invocation boundaries rather than GUI presentation.
+L00020678	split_recommended: false
+L00020679	depends_on:
+L00020680	- OSI-215
+L00020681	unblocks: []
+L00020682	acceptance_criteria:
+L00020683	- Covered source spans remain losslessly available for exact-text audit.
+L00020684	- Platform-specific invocation stays routed through platform_specs and executor protocol ownership.
+L00020685	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+L00020686	validation_surfaces:
+L00020687	- >-
+L00020688	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020689	- python3 scripts/pm-plan-index.py validate
+L00020690	reasoning_tier: standard
+L00020691	context_scope: orchestrator_subagent_standardization
+L00020692	implementation_surfaces:
+L00020693	- Plans/orchestrator-subagent-integration.md
+L00020694	risk_class: platform_specific_invocation_boundary
+L00020695	node_compile_hint:
+L00020696	  mode: platform_specific_invocation_boundary
+L00020697	  create_worknodes: false
+L00020698	source_lineage:
+L00020699	- >-
+L00020700	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0139
+L00020701	preserved_exact_tokens:
+L00020702	- execute_tier_with_subagents
+L00020703	- platform_specs
+L00020704	negative_constraints: []
+L00020705	compatibility_only_notes: []
+L00020706	stale_retired_dispositions: []
+L00020707	owner_boundary_notes: []
+L00020708	owner_hints:
+L00020709	- Plans/orchestrator-subagent-integration.md
+L00020710	preserved_contractrefs:
+L00020711	- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md'
+L00020712	```
+L00020713	
+L00020714	### OSI-241 - Dependency Context Selector API
+L00020715	
+L00020716	```yaml
+L00020717	plan_unit_id: OSI-241
+L00020718	unit_type: requirement
+L00020719	status: accepted
+L00020720	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020721	canonical_text: >-
+L00020722	  select_with_dependency_context accepts a current tier node, completed dependencies, and ExecutionUnitContext, then returns
+L00020723	  selected subagents after considering dependency context.
+L00020724	gui_related: false
+L00020725	gui_classification_reason: >-
+L00020726	  This unit covers backend selector API behavior rather than GUI presentation.
+L00020727	split_recommended: false
+L00020728	depends_on:
+L00020729	- OSI-213
+L00020730	unblocks: []
+L00020731	acceptance_criteria:
+L00020732	- Covered source spans remain losslessly available for exact-text audit.
+L00020733	- Rust snippets are preserved as plan examples unless contract text makes a rule normative.
+L00020734	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+L00020735	validation_surfaces:
+L00020736	- >-
+L00020737	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020738	- python3 scripts/pm-plan-index.py validate
+L00020739	reasoning_tier: standard
+L00020740	context_scope: orchestrator_subagent_standardization
+L00020741	implementation_surfaces:
+L00020742	- Plans/orchestrator-subagent-integration.md
+L00020743	risk_class: dependency_context_selector_api
+L00020744	node_compile_hint:
+L00020745	  mode: dependency_context_selector_api
+L00020746	  create_worknodes: false
+L00020747	source_lineage:
+L00020748	- >-
+L00020749	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0140
+L00020750	preserved_exact_tokens:
+L00020751	- select_with_dependency_context
+L00020752	- completed_dependencies
+L00020753	- ExecutionUnitContext
+L00020754	- Select subagents with dependency context
+L00020755	negative_constraints: []
+L00020756	compatibility_only_notes:
+L00020757	- Rust implementation block is plan evidence, not direct source-code output.
+L00020758	stale_retired_dispositions: []
+L00020759	owner_boundary_notes: []
+L00020760	owner_hints:
+L00020761	- Plans/orchestrator-subagent-integration.md
+L00020762	preserved_contractrefs: []
+L00020763	```
+L00020764	
+L00020765	### OSI-242 - Registry-Backed Inherited Language Priority
+L00020766	
+L00020767	```yaml
+L00020768	plan_unit_id: OSI-242
+L00020769	unit_type: requirement
+L00020770	status: accepted
+L00020771	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020772	canonical_text: >-
+L00020773	  Inherited language selection must use subagent_registry::get_subagent_for_language(), must not hardcode language-to-subagent
+L00020774	  mappings, must not call self.language_to_subagent when it may hardcode mappings, and prioritizes inherited language by
+L00020775	  inserting the inherited subagent first.
+L00020776	gui_related: false
+L00020777	gui_classification_reason: >-
+L00020778	  This unit covers backend DRY selector inheritance rather than GUI presentation.
+L00020779	split_recommended: false
+L00020780	depends_on:
+L00020781	- OSI-212
+L00020782	- OSI-241
+L00020783	unblocks: []
+L00020784	acceptance_criteria:
+L00020785	- Covered source spans remain losslessly available for exact-text audit.
+L00020786	- Inherited language routing remains backed by subagent_registry.
+L00020787	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+L00020788	validation_surfaces:
+L00020789	- >-
+L00020790	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020791	- python3 scripts/pm-plan-index.py validate
+L00020792	reasoning_tier: standard
+L00020793	context_scope: orchestrator_subagent_standardization
+L00020794	implementation_surfaces:
+L00020795	- Plans/orchestrator-subagent-integration.md
+L00020796	risk_class: registry_backed_inherited_language_priority
+L00020797	node_compile_hint:
+L00020798	  mode: registry_backed_inherited_language_priority
+L00020799	  create_worknodes: false
+L00020800	source_lineage:
+L00020801	- >-
+L00020802	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0140
+L00020803	preserved_exact_tokens:
+L00020804	- NEVER hardcode language
+L00020805	- subagent_registry::get_subagent_for_language()
+L00020806	- DO NOT call self.language_to_subagent
+L00020807	- insert(0, subagent)
+L00020808	negative_constraints:
+L00020809	- Never hardcode language to subagent mappings in this path.
+L00020810	compatibility_only_notes: []
+L00020811	stale_retired_dispositions: []
+L00020812	owner_boundary_notes: []
+L00020813	owner_hints:
+L00020814	- Plans/orchestrator-subagent-integration.md
+L00020815	preserved_contractrefs:
+L00020816	- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Contracts_V0.md'
+L00020817	```
+L00020818	
+L00020819	### OSI-243 - Dependency Domain Inheritance Fallback
+L00020820	
+L00020821	```yaml
+L00020822	plan_unit_id: OSI-243
+L00020823	unit_type: requirement
+L00020824	status: accepted
+L00020825	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020826	canonical_text: >-
+L00020827	  Dependency domain may be inherited from completed dependencies when the current execution context domain is
+L00020828	  ProjectDomain::Unknown.
+L00020829	gui_related: false
+L00020830	gui_classification_reason: >-
+L00020831	  This unit covers backend selector fallback behavior rather than GUI presentation.
+L00020832	split_recommended: false
+L00020833	depends_on:
+L00020834	- OSI-241
+L00020835	unblocks: []
+L00020836	acceptance_criteria:
+L00020837	- Covered source spans remain losslessly available for exact-text audit.
+L00020838	- Domain inheritance remains a fallback only when the current domain is unknown.
+L00020839	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+L00020840	validation_surfaces:
+L00020841	- >-
+L00020842	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020843	- python3 scripts/pm-plan-index.py validate
+L00020844	reasoning_tier: standard
+L00020845	context_scope: orchestrator_subagent_standardization
+L00020846	implementation_surfaces:
+L00020847	- Plans/orchestrator-subagent-integration.md
+L00020848	risk_class: dependency_domain_inheritance_fallback
+L00020849	node_compile_hint:
+L00020850	  mode: dependency_domain_inheritance_fallback
+L00020851	  create_worknodes: false
+L00020852	source_lineage:
+L00020853	- >-
+L00020854	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0140
+L00020855	preserved_exact_tokens:
+L00020856	- ProjectDomain::Unknown
+L00020857	- Inherit domain
+L00020858	- Use domain from dependency
+L00020859	negative_constraints: []
+L00020860	compatibility_only_notes: []
+L00020861	stale_retired_dispositions: []
+L00020862	owner_boundary_notes: []
+L00020863	owner_hints:
+L00020864	- Plans/orchestrator-subagent-integration.md
+L00020865	preserved_contractrefs: []
+L00020866	```
+L00020867	
+L00020868	### OSI-244 - Coordination Owner Boundary
+L00020869	
+L00020870	```yaml
+L00020871	plan_unit_id: OSI-244
+L00020872	unit_type: requirement
+L00020873	status: accepted
+L00020874	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020875	canonical_text: >-
+L00020876	  Agent Coordination and Communication defines the live coordination projection and the attributable crew message-board
+L00020877	  contract needed so concurrent agents understand active work, conflicts, questions, decisions, warnings, and requests that
+L00020878	  survive transient status updates.
+L00020879	gui_related: false
+L00020880	gui_classification_reason: >-
+L00020881	  This unit covers backend coordination owner boundaries rather than GUI presentation.
+L00020882	split_recommended: false
+L00020883	depends_on:
+L00020884	- OSI-225
+L00020885	- OSI-227
+L00020886	unblocks: []
+L00020887	acceptance_criteria:
+L00020888	- Covered source spans remain losslessly available for exact-text audit.
+L00020889	- Coordination projection and durable message-board responsibilities remain distinct.
+L00020890	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+L00020891	validation_surfaces:
+L00020892	- >-
+L00020893	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020894	- python3 scripts/pm-plan-index.py validate
+L00020895	reasoning_tier: standard
+L00020896	context_scope: orchestrator_subagent_standardization
+L00020897	implementation_surfaces:
+L00020898	- Plans/orchestrator-subagent-integration.md
+L00020899	risk_class: coordination_owner_boundary
+L00020900	node_compile_hint:
+L00020901	  mode: coordination_owner_boundary
+L00020902	  create_worknodes: false
+L00020903	source_lineage:
+L00020904	- >-
+L00020905	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0141
+L00020906	preserved_exact_tokens:
+L00020907	- not "freak out"
+L00020908	- canonical live coordination projection
+L00020909	- canonical attributable crew message-board contract
+L00020910	negative_constraints: []
+L00020911	compatibility_only_notes: []
+L00020912	stale_retired_dispositions: []
+L00020913	owner_boundary_notes:
+L00020914	- >-
+L00020915	  This owner section consumes assistant chat, storage, and contract owners for user-visible message surfaces and durable
+L00020916	  records.
+L00020917	owner_hints:
+L00020918	- Plans/orchestrator-subagent-integration.md
+L00020919	preserved_contractrefs:
+L00020920	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md'
+L00020921	```
+L00020922	
+L00020923	### OSI-245 - Crew Board Coordination Surface And Persistence Boundary
+L00020924	
+L00020925	```yaml
+L00020926	plan_unit_id: OSI-245
+L00020927	unit_type: requirement
+L00020928	status: accepted
+L00020929	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020930	canonical_text: >-
+L00020931	  PM-managed multi-agent collaboration uses the child-run/event-store coordination record family for durable attributable
+L00020932	  crew-board coordination that cannot be reduced to live status projection alone; `.puppet-master/state/agent-messages.json`
+L00020933	  may be an optional debug or interoperability mirror, but it is not the canonical persistence store.
+L00020934	gui_related: false
+L00020935	gui_classification_reason: >-
+L00020936	  This unit covers backend durable coordination records rather than GUI presentation.
+L00020937	split_recommended: false
+L00020938	depends_on:
+L00020939	- OSI-244
+L00020940	unblocks: []
+L00020941	acceptance_criteria:
+L00020942	- Covered source spans remain losslessly available for exact-text audit.
+L00020943	- The crew message board is represented as durable attributable coordination, not active-status projection.
+L00020944	- "`.puppet-master/state/agent-messages.json` is optional mirror lineage and not canonical persistence."
+L00020945	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, or implementation files are created.
+L00020946	validation_surfaces:
+L00020947	- >-
+L00020948	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00020949	- python3 scripts/pm-plan-index.py validate
+L00020950	reasoning_tier: standard
+L00020951	context_scope: orchestrator_subagent_standardization
+L00020952	implementation_surfaces:
+L00020953	- Plans/orchestrator-subagent-integration.md
+L00020954	risk_class: crew_board_persistence_truth_split
+L00020955	node_compile_hint:
+L00020956	  mode: crew_board_persistence_boundary
+L00020957	  create_worknodes: false
+L00020958	source_lineage:
+L00020959	- >-
+L00020960	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0142
+L00020961	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:8
+L00020962	- Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:15
+L00020963	preserved_exact_tokens:
+L00020964	- .puppet-master/state/agent-messages.json
+L00020965	- canonical file-backed message board
+L00020966	- file-backed message board
+L00020967	- durable questions, answers, decisions, warnings, requests, and announcements
+L00020968	negative_constraints:
+L00020969	- .puppet-master/state/agent-messages.json must not be treated as the canonical persistence store.
+L00020970	compatibility_only_notes:
+L00020971	- Batch 131 covers S0142 only through source line 3828; the S0142 tail remains residual after line 3828.
+L00020972	stale_retired_dispositions:
+L00020973	- File-backed side-file persistence is retired as canonical truth; child-run/event-store coordination records are canonical.
+L00020974	owner_boundary_notes:
+L00020975	- Contracts_V0 owns child-run and side-file retirement; storage-plan owns seglog/redb persistence.
+L00020976	owner_hints:
+L00020977	- Plans/orchestrator-subagent-integration.md
+L00020978	preserved_contractrefs:
+L00020979	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md'
+L00020980	```
+L00020981	
+
+<<< CONTEXT_AFTER canonical_document_lines=20982-20993 >>>
+L00020982	### OSI-246 - Projection Versus Message-Board Responsibility Split
+L00020983	
+L00020984	```yaml
+L00020985	plan_unit_id: OSI-246
+L00020986	unit_type: requirement
+L00020987	status: accepted
+L00020988	owner_doc: Plans/orchestrator-subagent-integration.md
+L00020989	canonical_text: >-
+L00020990	  Active-agent state answers who is active, what files are in flight, and which operations are running, while the message
+L00020991	  board answers who asked, warned, decided, or requested something, who it targeted, and whether that exchange was resolved.
+L00020992	gui_related: false
+L00020993	gui_classification_reason: >-

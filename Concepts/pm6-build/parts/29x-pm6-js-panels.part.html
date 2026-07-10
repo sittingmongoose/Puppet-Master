@@ -445,24 +445,8 @@
     } catch (e) {}
   }
 
-  /* ================= breadcrumb ================= */
-  var BC = {
-    dashboard: ['Home', 'Mission Control'],
-    projects: ['Home', 'Projects'],
-    wizard: ['Work', 'Planning Wizard'],
-    orchestrator: ['Work', 'Orchestrator'],
-    usage: ['System', 'Usage'],
-    settings: ['System', 'Settings']
-  };
-  function setBreadcrumb(pageId, subTab) {
-    var bc = byId('pm6ShellBreadcrumb');
-    if (!bc) return;
-    var pair = BC[pageId] || ['Home', pageId || ''];
-    var g = bc.querySelector('.pm6-bc-group');
-    var p = byId('pm6BcPage');
-    if (g) g.textContent = pair[0];
-    if (p) p.textContent = pair[1] + (subTab ? ' ▸ ' + String(subTab).replace(/_/g, ' ') : '');
-  }
+  /* ================= breadcrumb (strip removed; stub kept for call sites) ================= */
+  function setBreadcrumb() {}
 
   /* ================= activity bar: page icons + Ctrl+1..8 ================= */
   function wireActivityBar() {

@@ -1,0 +1,408 @@
+<<< CONTEXT_BEFORE 10183-10194 >>>
+- 'Platform CLI smoke'
+- 'Subagent-invocation integration'
+- 'Plan mode CLI verification'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 10195-10573 >>>
+### OSI-069 - Cursor Invocation Builder Example
+
+```yaml
+plan_unit_id: OSI-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The Cursor invocation builder example preserves DRY platform_specs usage for binary names and invocation format, subagent/task replacement tokens, optional model handling, current_dir workspace assignment, and the ignored cursor_subagent_invocation test.
+gui_related: false
+gui_classification_reason: This unit covers example test code, not GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-067
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples, command lines, and test paths are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: cursor_invocation_builder_example
+node_compile_hint:
+  mode: cursor_invocation_builder_example
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0038
+preserved_exact_tokens:
+- 'build_cursor_subagent_command'
+- 'platform_specs::cli_binary_names()'
+- 'platform_specs::get_subagent_invocation_format()'
+- 'NEVER hardcode "agent" or "cursor-agent"'
+- 'NEVER hardcode "/{subagent} {prompt}"'
+- '{subagent}'
+- '{task}'
+- 'code-reviewer'
+- 'INVOKED'
+negative_constraints:
+- 'DRY requirement: must use platform_specs::cli_binary_names() — never hardcode "agent" or "cursor-agent"'
+- 'DRY requirement: must use platform_specs::get_subagent_invocation_format() — never hardcode "/{subagent} {prompt}" format'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-070 - Plan Mode CLI Scope And Gating
+
+```yaml
+plan_unit_id: OSI-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Plan mode CLI verification confirms CLI-bridged Cursor CLI and Claude Code CLI accept and honor plan mode flags, while Direct providers are verified through PM runtime-policy and provider-integration tests, with RUN_PLAN_MODE_CLI_TESTS gating and ignored integration tests.
+gui_related: false
+gui_classification_reason: This unit covers CLI verification strategy, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples, command lines, and test paths are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: plan_mode_cli_scope_gating
+node_compile_hint:
+  mode: plan_mode_cli_scope_gating
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0039
+preserved_exact_tokens:
+- 'Cursor CLI'
+- 'Claude Code CLI'
+- '--mode=plan'
+- '--permission-mode plan'
+- 'RUN_PLAN_MODE_CLI_TESTS=1'
+- 'plan_mode_cli_verification.rs'
+- 'cursor_plan_mode_cli'
+- 'claude_plan_mode_cli'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-071 - Plan Mode CLI Commands And Assertions
+
+```yaml
+plan_unit_id: OSI-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Plan mode CLI tests preserve exact per-platform command examples, success and non-empty/parseable-output assertions, command-line plan-mode flag checks, optional evidence capture, and relationship to smoke and subagent-invocation tests.
+gui_related: false
+gui_classification_reason: This unit covers CLI verification assertions, not GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-070
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples, command lines, and test paths are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: plan_mode_cli_commands_assertions
+node_compile_hint:
+  mode: plan_mode_cli_commands_assertions
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0039
+preserved_exact_tokens:
+- 'agent -p "Reply with only: PLAN_OK" --mode plan --output-format json'
+- 'claude -p "Reply with only: PLAN_OK" --permission-mode plan --no-session-persistence --output-format text'
+- 'stdout non-empty'
+- 'parseable JSON'
+- 'command-line flag assertion'
+- '.puppet-master/evidence/plan-mode-cli-<platform>.log'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-072 - Cursor Plan Mode Example And Runner Parity
+
+```yaml
+plan_unit_id: OSI-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The Cursor plan mode example preserves binary lookup, ignored test gating, plan-mode args matching CursorRunner when request.plan_mode is true, PLAN_OK output checks, and optional no-file-writes assertion.
+gui_related: false
+gui_classification_reason: This unit covers example test code, not GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-070
+- OSI-071
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples, command lines, and test paths are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: cursor_plan_mode_example_runner_parity
+node_compile_hint:
+  mode: cursor_plan_mode_example_runner_parity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0039
+preserved_exact_tokens:
+- 'which_binary("agent")'
+- 'cursor-agent'
+- 'Same flags as CursorRunner when request.plan_mode == true'
+- 'PLAN_OK'
+- 'Optional: assert --mode plan was honored'
+- 'no file writes'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-073 - Ask Plan Delegated Child Authority Ceiling
+
+```yaml
+plan_unit_id: OSI-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  In ask and plan modes, delegated child runs may launch only for read-only research or analysis, required planning dependencies may still be read-only child runs, parent mode is a hard ceiling, and Plan remains read-only until execution with first-class clarifying questions and visible plan/TODO artifacts.
+gui_related: false
+gui_classification_reason: This unit covers delegated child authority policy, not GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-005
+- OSI-006
+- OSI-009
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples, command lines, and test paths are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: ask_plan_delegated_child_authority_ceiling
+node_compile_hint:
+  mode: ask_plan_delegated_child_authority_ceiling
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0040
+preserved_exact_tokens:
+- 'ask'
+- 'plan'
+- 'read-only research or analysis'
+- 'parent mode is a hard ceiling'
+- 'todowrite'
+- 'question'
+- 'Plan remains read-only'
+- 'clarifying questions are first-class'
+- 'plan plus TODO'
+negative_constraints:
+- 'The orchestrator must not silently widen a read-only planning run into execution authority.'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- 'Planning-flow behavior is PM-native and must not be justified solely by analogy to OpenCode defaults.'
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md'
+```
+
+### OSI-074 - Planning Child Required Optional Classification
+
+```yaml
+plan_unit_id: OSI-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Planning children should be classified as required or optional so planning completion and summarization behave deterministically.
+gui_related: false
+gui_classification_reason: This unit covers planning-flow orchestration metadata, not GUI behavior.
+split_recommended: false
+depends_on:
+- OSI-073
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Source examples, command lines, and test paths are preserved as plan evidence and do not create production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: planning_child_required_optional_classification
+node_compile_hint:
+  mode: planning_child_required_optional_classification
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0040
+preserved_exact_tokens:
+- 'required'
+- 'optional'
+- 'planning completion'
+- 'summarization'
+- 'deterministically'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md'
+```
+
+### OSI-075 - GUI Backend Scope Now In Scope
+
+```yaml
+plan_unit_id: OSI-075
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  All previously optional or later plan-mode and subagent GUI/backend items are in scope now and must specify frontend and backend behavior so they work end-to-end; the implementation-checklist boundary is coverage material attached to this scope.
+gui_related: true
+gui_classification_reason: This unit covers GUI/backend scope and user-visible implementation scope.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- Section-only headings and checklist boundary spans in this window are preserved as coverage material attached to adjacent
+  units, not as standalone implementation tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: gui_backend_scope_now_in_scope
+node_compile_hint:
+  mode: gui_backend_scope_now_in_scope
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0041
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0048
+preserved_exact_tokens:
+- 'GUI and Backend Scope (All In-Scope Now)'
+- 'in scope now'
+- 'frontend and backend'
+- 'end-to-end'
+- 'Implementation Checklist (GUI & Backend -- Add/Expand)'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 10574-10585 >>>
+### OSI-076 - Plan Mode Defaults And Global GuiConfig State
+
+```yaml
+plan_unit_id: OSI-076
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Plan mode defaults remain migration-safe false across tier defaults and YAML unless explicitly overridden, while GuiConfig owns use_plan_mode_all_tiers, optional last_per_tier_plan_mode as HashMap<String, bool>, write-through tier syncing, redb persistence at config:gui.use_plan_mode_all_tiers, and no settings.json storage for this setting.
+gui_related: false
+gui_classification_reason: This unit covers backend/config state and persistence defaults, not GUI presentation.
+split_recommended: false

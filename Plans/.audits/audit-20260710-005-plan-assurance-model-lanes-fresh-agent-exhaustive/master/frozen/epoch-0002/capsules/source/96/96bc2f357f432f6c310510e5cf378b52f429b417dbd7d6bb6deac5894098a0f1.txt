@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE 10997-11008 >>>
+          "requirement": "cmd.docker.k8s.exec has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_exec.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.k8s.exec records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 11009-11393 >>>
+    "catalog.docker_k8s_helm_install": {
+      "ui_element_id": "catalog.docker_k8s_helm_install",
+      "ui_location": "Docker Manager > K8S > Helm Install",
+      "ui_command_id": "cmd.docker.k8s.helm_install",
+      "handler_location": "handlers::docker::k8s_helm_install",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.k8s.helm_install must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.k8s.helm_install must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.k8s.helm_install dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.k8s.helm_install must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.k8s.helm_install must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.k8s.helm_install; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_k8s_helm_install.availability",
+      "disabled_reason_projection": "state.commands.docker_k8s_helm_install.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.k8s.helm_install has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.k8s.helm_install.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_k8s_helm_install exposes a stable role/name/description matching cmd.docker.k8s.helm_install.",
+        "keyboard_access": "catalog.docker_k8s_helm_install is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_k8s_helm_install preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_k8s_helm_install surfaces state.commands.docker_k8s_helm_install.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_k8s_helm_install.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.k8s.helm_install reaches handlers::docker::k8s_helm_install with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_helm_install.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_k8s_helm_install.availability and disabled copy reads state.commands.docker_k8s_helm_install.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_helm_install.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.k8s.helm_install has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_helm_install.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.k8s.helm_install records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.docker_k8s_helm_preview": {
+      "ui_element_id": "catalog.docker_k8s_helm_preview",
+      "ui_location": "Docker Manager > K8S > Helm Preview",
+      "ui_command_id": "cmd.docker.k8s.helm_preview",
+      "handler_location": "handlers::docker::k8s_helm_preview",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.k8s.helm_preview must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.k8s.helm_preview must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.k8s.helm_preview dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.k8s.helm_preview must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.k8s.helm_preview must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.k8s.helm_preview; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_k8s_helm_preview.availability",
+      "disabled_reason_projection": "state.commands.docker_k8s_helm_preview.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.k8s.helm_preview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.k8s.helm_preview.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_k8s_helm_preview exposes a stable role/name/description matching cmd.docker.k8s.helm_preview.",
+        "keyboard_access": "catalog.docker_k8s_helm_preview is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_k8s_helm_preview preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_k8s_helm_preview surfaces state.commands.docker_k8s_helm_preview.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_k8s_helm_preview.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.k8s.helm_preview reaches handlers::docker::k8s_helm_preview with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_helm_preview.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_k8s_helm_preview.availability and disabled copy reads state.commands.docker_k8s_helm_preview.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_helm_preview.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.k8s.helm_preview has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_helm_preview.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.k8s.helm_preview records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.docker_k8s_logs": {
+      "ui_element_id": "catalog.docker_k8s_logs",
+      "ui_location": "Docker Manager > K8S > Logs",
+      "ui_command_id": "cmd.docker.k8s.logs",
+      "handler_location": "handlers::docker::k8s_logs",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.k8s.logs must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.k8s.logs must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.k8s.logs dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.k8s.logs must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.k8s.logs must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.k8s.logs; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_k8s_logs.availability",
+      "disabled_reason_projection": "state.commands.docker_k8s_logs.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.k8s.logs has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.k8s.logs.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_k8s_logs exposes a stable role/name/description matching cmd.docker.k8s.logs.",
+        "keyboard_access": "catalog.docker_k8s_logs is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_k8s_logs preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_k8s_logs surfaces state.commands.docker_k8s_logs.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_k8s_logs.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.k8s.logs reaches handlers::docker::k8s_logs with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_logs.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_k8s_logs.availability and disabled copy reads state.commands.docker_k8s_logs.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_logs.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.k8s.logs has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_logs.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.k8s.logs records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.docker_k8s_port_forward": {
+      "ui_element_id": "catalog.docker_k8s_port_forward",
+      "ui_location": "Docker Manager > K8S > Port Forward",
+      "ui_command_id": "cmd.docker.k8s.port_forward",
+      "handler_location": "handlers::docker::k8s_port_forward",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.k8s.port_forward must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.k8s.port_forward must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.k8s.port_forward dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.k8s.port_forward must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.k8s.port_forward must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.k8s.port_forward; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_k8s_port_forward.availability",
+      "disabled_reason_projection": "state.commands.docker_k8s_port_forward.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.k8s.port_forward has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.k8s.port_forward.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_k8s_port_forward exposes a stable role/name/description matching cmd.docker.k8s.port_forward.",
+        "keyboard_access": "catalog.docker_k8s_port_forward is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_k8s_port_forward preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_k8s_port_forward surfaces state.commands.docker_k8s_port_forward.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_k8s_port_forward.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.k8s.port_forward reaches handlers::docker::k8s_port_forward with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_port_forward.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_k8s_port_forward.availability and disabled copy reads state.commands.docker_k8s_port_forward.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_port_forward.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.k8s.port_forward has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_port_forward.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.k8s.port_forward records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.docker_k8s_select_context": {
+      "ui_element_id": "catalog.docker_k8s_select_context",
+      "ui_location": "Docker Manager > K8S > Select Context",
+      "ui_command_id": "cmd.docker.k8s.select_context",
+      "handler_location": "handlers::docker::k8s_select_context",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.k8s.select_context must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.k8s.select_context must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.k8s.select_context dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.k8s.select_context must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.k8s.select_context must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.k8s.select_context; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_k8s_select_context.availability",
+      "disabled_reason_projection": "state.commands.docker_k8s_select_context.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.k8s.select_context has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.k8s.select_context.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_k8s_select_context exposes a stable role/name/description matching cmd.docker.k8s.select_context.",
+        "keyboard_access": "catalog.docker_k8s_select_context is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_k8s_select_context preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_k8s_select_context surfaces state.commands.docker_k8s_select_context.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_k8s_select_context.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.k8s.select_context reaches handlers::docker::k8s_select_context with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_select_context.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_k8s_select_context.availability and disabled copy reads state.commands.docker_k8s_select_context.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_select_context.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.k8s.select_context has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_select_context.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.k8s.select_context records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.docker_k8s_select_namespace": {
+      "ui_element_id": "catalog.docker_k8s_select_namespace",
+      "ui_location": "Docker Manager > K8S > Select Namespace",
+      "ui_command_id": "cmd.docker.k8s.select_namespace",
+      "handler_location": "handlers::docker::k8s_select_namespace",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.k8s.select_namespace must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.k8s.select_namespace must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.k8s.select_namespace dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.k8s.select_namespace must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.k8s.select_namespace must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.k8s.select_namespace; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_k8s_select_namespace.availability",
+      "disabled_reason_projection": "state.commands.docker_k8s_select_namespace.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.k8s.select_namespace has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.k8s.select_namespace.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_k8s_select_namespace exposes a stable role/name/description matching cmd.docker.k8s.select_namespace.",
+        "keyboard_access": "catalog.docker_k8s_select_namespace is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_k8s_select_namespace preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_k8s_select_namespace surfaces state.commands.docker_k8s_select_namespace.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_k8s_select_namespace.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.k8s.select_namespace reaches handlers::docker::k8s_select_namespace with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_select_namespace.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_k8s_select_namespace.availability and disabled copy reads state.commands.docker_k8s_select_namespace.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_select_namespace.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.k8s.select_namespace has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_k8s_select_namespace.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.k8s.select_namespace records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.docker_logs": {
+      "ui_element_id": "catalog.docker_logs",
+      "ui_location": "Docker Manager > Logs",
+      "ui_command_id": "cmd.docker.logs",
+      "handler_location": "handlers::docker::logs",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.logs must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.logs must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.logs dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.logs must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.logs must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.docker.logs; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.docker_logs.availability",
+      "disabled_reason_projection": "state.commands.docker_logs.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.docker.logs has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.docker.logs.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.docker_logs exposes a stable role/name/description matching cmd.docker.logs.",
+        "keyboard_access": "catalog.docker_logs is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.docker_logs preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.docker_logs surfaces state.commands.docker_logs.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.docker_logs.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.docker.logs reaches handlers::docker::logs with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.docker_logs.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.docker_logs.availability and disabled copy reads state.commands.docker_logs.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.docker_logs.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.docker.logs has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.docker_logs.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.docker.logs records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< CONTEXT_AFTER 11394-11405 >>>
+    "catalog.docker_network": {
+      "ui_element_id": "catalog.docker_network",
+      "ui_location": "Docker Manager > Network",
+      "ui_command_id": "cmd.docker.network",
+      "handler_location": "handlers::docker::network",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.docker.network must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.docker.network must expose projected state selector and disabled reason before dispatch",
+        "cmd.docker.network dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.docker.network must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.docker.network must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

@@ -1,0 +1,414 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-399 >>>
+L00000001	# Personas (Canonical SSOT)
+L00000002	
+L00000003	
+L00000004	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000005	
+L00000006	## 0. Scope and SSOT status
+L00000007	
+L00000008	This document is the **single canonical source of truth** for the Puppet Master Persona system. All other plan documents MUST reference this document by anchor (e.g., `Plans/Personas.md#PERSONA-SCHEMA`) rather than restating Persona definitions, storage layout, schema, or selection rules.
+L00000009	
+L00000010	ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
+L00000011	
+L00000012	### SSOT references (DRY)
+L00000013	- Locked decisions: `Plans/Spec_Lock.json`
+L00000014	- Canonical contracts (events/tools/auth): `Plans/Contracts_V0.md`
+L00000015	- DRY + ContractRef rule: `Plans/DRY_Rules.md`
+L00000016	- Canonical terms: `Plans/Glossary.md`
+L00000017	- Deterministic ambiguity handling: `Plans/Decision_Policy.md` + `Plans/auto_decisions.jsonl`
+L00000018	- Subagent registry (canonical name list): `Plans/orchestrator-subagent-integration.md` §4 (`DRY:DATA:subagent_registry`)
+L00000019	- Run modes: `Plans/Run_Modes.md`
+L00000020	- Tool permissions: `Plans/Tools.md`
+L00000021	- OpenCode baseline (agents/subagents): `Plans/OpenCode_Deep_Extraction.md` §7B
+L00000022	- Permissions system: `Plans/Permissions_System.md`
+L00000023	- Plugin system: `Plans/Plugins_System.md`
+L00000024	- Models system: `Plans/Models_System.md`
+L00000025	- Skills system: `Plans/Skills_System.md`
+L00000026	
+L00000027	---
+L00000028	
+L00000029	## 1. Definitions
+L00000030	
+L00000031	<a id="DEF-AGENT"></a>
+L00000032	### 1.1 Agent
+L00000033	
+L00000034	An **Agent** is a running AI execution unit. It is a concrete instance within a Puppet Master run — a provider process that receives a compiled context (system prompt, instructions, conversation history) and produces a response stream. The Orchestrator spawns Agents for each node in the run graph. An Agent is ephemeral; it exists only for the duration of its run.
+L00000035	
+L00000036	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+L00000037	### 1.2 Subagent
+L00000038	
+L00000039	A subagent is a child run that resolves a Persona for the child task. It is not merely “the parent Persona, but smaller,” and it is not defined by provider-native agent-file syntax.
+L00000040	
+L00000041	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/CLI_Bridged_Providers.md
+L00000042	
+L00000043	Rules:
+L00000044	- the child Persona may differ materially from the parent Persona.
+L00000045	- the child Persona does not auto-inherit from the parent.
+L00000046	- provider-native agent files may seed or export Persona content, but PM Persona storage remains canonical.
+L00000047	- OpenCode evidence that child sessions with `session.parentID` and compaction requests are force-marked as `agent` is adapter classification evidence only; it does not redefine PM Persona identity or child-run semantics.
+L00000048	- crew mode may reuse the same Persona across many members while varying the model/provider selection.
+L00000049	
+L00000050	ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+L00000051	### 1.3 Persona (canonical term)
+L00000052	
+L00000053	A **Persona** is the assigned role definition that shapes an Agent's or Subagent's behavior. It is a static, declarative artifact — a YAML-frontmatter Markdown file — that acts as a **behavior-and-runtime contract**. In addition to identity, instructions, default permissions, and skill references, a Persona MAY declare provider/model/variant preferences, optional runtime control preferences, tool-usage guidance, aliases, and UI-facing metadata. When the Orchestrator or Interview phase manager selects a Persona for a run, the Persona's content and runtime metadata feed both the Agent's compiled context and the effective runtime resolution flow.
+L00000054	
+L00000055	Expanded scope note: §10.2 is normative and extends this definition without replacing it.
+L00000056	
+L00000057	**Key distinctions:**
+L00000058	
+L00000059	| Concept | What it is | Lifetime | Mutability |
+L00000060	|---------|-----------|----------|------------|
+L00000061	| **Persona** | A role definition (file on disk) | Persistent until user deletes | User-editable via GUI |
+L00000062	| **Agent** | A running AI process assigned a Persona | Ephemeral (one run) | Immutable once spawned |
+L00000063	| **Subagent** | An Agent spawned by another Agent | Ephemeral (one delegated task) | Immutable once spawned |
+L00000064	
+L00000065	ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Tools.md
+L00000066	
+L00000067	<a id="DEF-PROVIDER-NATIVE"></a>
+L00000068	### 1.4 Separation from provider-native concepts
+L00000069	
+L00000070	A Persona is **not** a provider-native "agent" (e.g., OpenCode's `Agent.Info`, Cursor's agent definitions under `.cursor/agents/`). Provider-native agent configs are consumed by the Provider facade (`Plans/CLI_Bridged_Providers.md`) as transport-level concerns. Personas are a Puppet Master abstraction that sits above the provider layer.
+L00000071	
+L00000072	A Persona is **not** a provider-native "skill" or "plugin." Skills (`Plans/Skills_System.md`) are invocable context-injection units. Plugins (`Plans/Plugins_System.md`) are extension modules with hook-based lifecycle. A Persona MAY reference skills via `default_skill_refs` but does not contain skill logic itself.
+L00000073	
+L00000074	ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/OpenCode_Deep_Extraction.md
+L00000075	
+L00000076	---
+L00000077	
+L00000078	## 2. Storage layout
+L00000079	
+L00000080	<a id="STORAGE-LAYOUT"></a>
+L00000081	
+L00000082	Persona files are stored in a deterministic two-tier layout. Project-local Personas override global Personas by `persona_id`.
+L00000083	
+L00000084	ContractRef: PolicyRule:Decision_Policy.md§2
+L00000085	
+L00000086	### 2.1 Project-local
+L00000087	
+L00000088	```
+L00000089	.puppet-master/personas/<persona_id>/PERSONA.md
+L00000090	```
+L00000091	
+L00000092	Scoped to the project workspace root. These Personas are available only when that project is active.
+L00000093	
+L00000094	### 2.2 Global
+L00000095	
+L00000096	```
+L00000097	~/.config/puppet-master/personas/<persona_id>/PERSONA.md
+L00000098	```
+L00000099	
+L00000100	Available across all projects. Overridden by a project-local Persona with the same `persona_id`.
+L00000101	
+L00000102	### 2.3 Resolution order
+L00000103	
+L00000104	When resolving a Persona by `persona_id`:
+L00000105	1. If `persona_id` is a protected built-in ID from §6, resolve the PM-owned bundled `PERSONA.md` definition first. User-created project or global files may not shadow protected built-ins.
+L00000106	2. Check `.puppet-master/personas/<persona_id>/PERSONA.md` in the active project root.
+L00000107	3. If not found, check `~/.config/puppet-master/personas/<persona_id>/PERSONA.md`.
+L00000108	4. If not found, the Persona is unresolved. The Orchestrator MUST fall back to a bare-context run (no Persona-specific instructions injected) and log a warning.
+L00000109	
+L00000110	**Folder-name invariant:** The folder name MUST match the `id` field in the PERSONA.md frontmatter. A mismatch is a validation error.
+L00000111	
+L00000112	ContractRef: ContractName:Plans/Personas.md#PERSONA-VALIDATION
+L00000113	### 2.4 Built-in scope
+L00000114	
+L00000115	Protected built-ins and bundled first-party specialties use the same `PERSONA.md` schema as user Personas, but their source scope is different:
+L00000116	- protected core built-ins are PM-owned, user-immutable, and not deletable or disableable by the user.
+L00000117	- bundled first-party specialty Personas are PM-owned defaults that users may customize, disable, and restore to the shipped default.
+L00000118	- PM may update shipped protected and bundled definitions across product versions; user immutability does not mean the product definition is permanently frozen.
+L00000119	- imported provider-native agent files are seed/import sources only and never become the runtime source of truth.
+L00000120	
+L00000121	ContractRef: ContractName:Plans/Personas.md#RESERVED-PERSONAS, ContractName:Plans/FinalGUISpec.md
+L00000122	
+L00000123	---
+L00000124	
+L00000125	## 3. Persona format (schema)
+L00000126	
+L00000127	<a id="PERSONA-SCHEMA"></a>
+L00000128	
+L00000129	A Persona file (`PERSONA.md`) consists of YAML frontmatter followed by a Markdown body containing the Persona's system instructions.
+L00000130	
+L00000131	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/DRY_Rules.md
+L00000132	
+L00000133	### 3.1 YAML frontmatter
+L00000134	
+L00000135	```yaml
+L00000136	---
+L00000137	id: "rust-engineer"
+L00000138	name: "Rust Engineer"
+L00000139	description: "Expert Rust developer specializing in systems programming, memory safety, and zero-cost abstractions."
+L00000140	default_mode: "regular"
+L00000141	default_platform: null
+L00000142	default_permissions_profile: null
+L00000143	default_model: null
+L00000144	default_variant: null
+L00000145	temperature: null
+L00000146	top_p: null
+L00000147	reasoning_effort: null
+L00000148	talkativeness: "model_default"
+L00000149	default_skill_refs: []
+L00000150	disabled_plugins: []
+L00000151	preferred_tools: []
+L00000152	discouraged_tools: []
+L00000153	tool_usage_guidance: ""
+L00000154	tags: ["language", "rust", "systems"]
+L00000155	aliases: []
+L00000156	---
+L00000157	```
+L00000158	
+L00000159	### 3.2 Field definitions
+L00000160	
+L00000161	| Field | Required | Type | Description |
+L00000162	|-------|----------|------|-------------|
+L00000163	| `id` | **Required** | `string` | Unique Persona identifier. See §3.3 for validation rules. |
+L00000164	| `name` | **Required** | `string` | Human-readable display name. Max 100 characters. |
+L00000165	| `description` | **Required** | `string` | One-paragraph description of the Persona's expertise. Max 500 characters. |
+L00000166	| `default_mode` | Recommended | `string` enum | Default run mode (`ask`, `plan`, `regular`, `yolo`) per `Plans/Run_Modes.md`. If omitted, inherits from run config. |
+L00000167	| `default_platform` | Optional | `string` or `null` | Preferred provider/platform for this Persona. Runtime resolution and fallback semantics are defined in `Plans/Models_System.md`. |
+L00000168	| `default_permissions_profile` | Recommended | `string` or `null` | Named permissions profile to apply when this Persona is active. References a profile defined in the Permissions system (`Plans/Permissions_System.md`). `null` means inherit from run config. |
+L00000169	| `default_model` | Optional | `string` or `null` | Default model identifier (`provider_id/model_id`) for this Persona. Selection priority and validation per `Plans/Models_System.md`. `null` means inherit. |
+L00000170	| `default_variant` | Optional | `string` or `null` | Default variant name for this Persona (e.g., `"fast"`, `"powerful"`). Variant semantics per `Plans/Models_System.md`. `null` means inherit. |
+L00000171	| `temperature` | Optional | `number` or `null` | Preferred sampling temperature when the active provider transport supports it. Unsupported values are recorded as skipped, not silently applied. |
+L00000172	| `top_p` | Optional | `number` or `null` | Preferred nucleus sampling value when supported by the active provider transport. |
+L00000173	| `reasoning_effort` | Optional | `string` or `null` | Preferred provider-specific effort/reasoning level when supported. |
+L00000174	| `talkativeness` | Optional | `string` enum | Persona-level verbosity/collaboration preference. Allowed values: `talk_a_lot_more`, `talk_more`, `talk_a_little_more`, `model_default`, `talk_a_little_less`, `talk_less`. This is a behavior/instruction control, not a provider sampling knob. |
+L00000175	| `default_skill_refs` | Recommended | `string[]` | List of skill IDs to auto-load when this Persona is active. References skills per `Plans/Skills_System.md`. Empty array means no auto-loaded skills. |
+L00000176	| `disabled_plugins` | Optional | `string[]` | List of plugin IDs to silence during hook dispatch when this Persona is active. Plugins listed here are not unloaded, only skipped during hook invocation. Semantics per `Plans/Plugins_System.md` §7.3. Empty array means no plugins disabled. |
+L00000177	| `preferred_tools` | Optional | `string[]` | Tool IDs the Persona should proactively prefer when planning execution. Guidance only by default; it does not override Permissions allow/ask/deny enforcement. |
+L00000178	| `discouraged_tools` | Optional | `string[]` | Tool IDs the Persona should avoid unless needed. Guidance only by default. |
+L00000179	| `tool_usage_guidance` | Optional | `string` | Freeform tool-planning guidance for this Persona. |
+L00000180	| `tags` | Recommended | `string[]` | Categorization tags for filtering and search. Values from: `phase`, `task`, `subtask`, `iteration`, `cross-phase`, `language`, `domain`, `framework`, and freeform tags. |
+L00000181	| `aliases` | Optional | `string[]` | Natural-language invocation aliases and display synonyms used during Persona resolution. |
+L00000182	
+L00000183	### 3.3 Validation rules
+L00000184	
+L00000185	Persona validation MUST enforce:
+L00000186	- `id` uses lower-case kebab-case (`[a-z0-9]+(-[a-z0-9]+)*`) and matches the storage folder name.
+L00000187	- `id` is globally unique within its source scope after project/global resolution.
+L00000188	- user-created project/global Personas may not use or shadow protected core IDs from §6.
+L00000189	- imported provider-native files that collide with protected IDs are imported only as non-authoritative seed material or saved under a non-reserved ID chosen by the user/import flow.
+L00000190	- `name` and `description` are required and must stay within the limits in §3.2.
+L00000191	- enum fields must use the canonical values from their owner systems.
+L00000192	- provider/model/runtime-control preferences are validated against `Plans/Models_System.md` at resolution time; unsupported controls are recorded as skipped or clamped, not silently applied.
+L00000193	- `default_skill_refs`, plugin IDs, and tool IDs must reference known registries when those registries are available; unresolved refs are displayed as readiness warnings rather than hidden.
+L00000194	- protected core built-ins are read-only to user edit flows, cannot be deleted or disabled, and cannot be project-overridden.
+L00000195	
+L00000196	ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Skills_System.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Permissions_System.md
+L00000197	
+L00000198	### 3.3A Field naming alignment with runtime identity
+L00000199	
+L00000200	Persona-related runtime identity fields align to the shared owner contract:
+L00000201	- `requested_persona`
+L00000202	- `effective_persona`
+L00000203	
+L00000204	ContractRef: ContractName:Plans/Contracts_V0.md
+L00000205	
+L00000206	`_id` variants are retired from canonical runtime payload examples.
+L00000207	### 3.4 Markdown body
+L00000208	
+L00000209	The Markdown body following the frontmatter contains the Persona's system instructions. This content is injected into the Agent's compiled context (see §5). There are no structural constraints on the body beyond valid Markdown. Recommended sections: expertise areas, behavioral guidelines, output format preferences.
+L00000210	
+L00000211	---
+L00000212	
+L00000213	## 4. GUI requirements
+L00000214	
+L00000215	<a id="GUI-PERSONAS"></a>
+L00000216	
+L00000217	The primary Persona management surface is **Agent Config > Personas**. Settings remains a routing/help surface for policy-bearing controls and may link into Agent Config, but Settings is not the main Persona prompt browser or editor.
+L00000218	
+L00000219	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md
+L00000220	
+L00000221	### 4.1 Personas library and editor (Agent Config > Personas)
+L00000222	
+L00000223	Agent Config > Personas MUST provide:
+L00000224	
+L00000225	1. **Library view:** Table of all resolved Personas grouped by protected core, bundled specialty, project-local, global, imported seed, disabled, and advanced/internal where applicable. Columns: Name, ID, Scope, Chat selectable, Child/subagent eligible, Tags, Description (truncated), Readiness, and Source. Sorted alphabetically by display name inside each group; project-local entries sort before global when IDs match.
+L00000226	
+L00000227	2. **Create:** "New Persona" opens an editor form with fields for `id`, `name`, `description`, `default_mode` (dropdown), `default_platform`, `default_permissions_profile` (dropdown or null), `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`, `talkativeness`, `default_skill_refs` (multi-select from skill registry), `preferred_tools`, `discouraged_tools`, `tool_usage_guidance`, `aliases`, `tags` (tag input), and a Markdown body editor. Scope selector: project-local or global. `talkativeness` uses the fixed GUI labels `Talk a lot more`, `Talk more`, `Talk a little more`, `Model default`, `Talk a little less`, and `Talk less`, persisted as the enum values from §3.2. Provider support-state gating for runtime controls is defined in `Plans/Models_System.md#PERSONA-CAPABILITY-MATRIX`; `talkativeness` is Persona-instruction-level behavior and therefore follows normal Persona prompt injection rather than provider runtime-control gating.
+L00000228	
+L00000229	3. **Prompt visibility:** Selecting a row shows a prompt preview pane and an effective runtime/control summary. The editor must expose the stored Markdown body and a requested/effective compiled prompt preview when enough runtime context is available. Unsupported or skipped controls are shown as skipped, disabled, or clamped rather than silently accepted.
+L00000230	
+L00000231	4. **Edit:** Row click or edit opens the same editor pre-populated. Editing a global Persona while a project is active offers "Save as project override" (creates project-local copy) or "Save globally." Protected core built-ins are read-only in the editor; users can duplicate them under a non-reserved ID but cannot modify or shadow the protected ID.
+L00000232	
+L00000233	5. **Disable and restore:** Bundled first-party specialty Personas can be disabled and restored to the shipped default after user customization. Protected core built-ins cannot be disabled. User-created and imported Personas can be deleted with confirmation.
+L00000234	
+L00000235	6. **Delete:** Delete button with confirmation modal. Deleting a project-local Persona that overrides a global one reveals the global version. Deleting a global Persona with no project override removes it entirely. Delete is not shown for protected core built-ins.
+L00000236	
+L00000237	7. **Schema validation on save:** On every save, validate the PERSONA.md against the schema (§3). Display inline errors for: invalid `id` format, reserved `id` usage, name/description length violations, invalid `default_mode`, folder-name mismatch, and attempted protected-ID shadowing. Block save until errors are resolved.
+L00000238	
+L00000239	ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA, ContractName:Plans/Personas.md#PERSONA-VALIDATION
+L00000240	
+L00000241	### 4.2 Permission profile editing
+L00000242	
+L00000243	When editing a Persona, the `default_permissions_profile` field allows selecting from named permission profiles defined in the Permissions system (`Plans/Permissions_System.md`). The Personas GUI does not define permission profiles itself — it references them. The dropdown is populated from that registry.
+L00000244	
+L00000245	ContractRef: ContractName:Plans/Personas.md#GUI-PERSONAS
+L00000246	
+L00000247	### 4.3 Skill/plugin references
+L00000248	
+L00000249	The `default_skill_refs` field presents a multi-select populated from the skill registry (`Plans/Skills_System.md`). Skills not yet installed show as "(not installed)" with a link to the Catalog (§7.4.3 in `Plans/FinalGUISpec.md`).
+L00000250	
+L00000251	### 4.4 No mutation of external agent files
+L00000252	
+L00000253	Editing Personas in the Puppet Master GUI MUST NOT mutate files under `.claude/`, `.github/`, `.cursor/`, or any other provider-native agent directory. Personas are stored exclusively in the Puppet Master Persona storage layout (§2). Provider-native agent files may be read as a seed source for initial Persona creation (one-time import), but subsequent edits are isolated to Puppet Master's own storage.
+L00000254	
+L00000255	ContractRef: ContractName:Plans/Personas.md#STORAGE-LAYOUT
+L00000256	
+L00000257	### 4.5 ELI5/Expert copy
+L00000258	
+L00000259	Persona management UI elements follow the app-level Interaction Mode (Expert/ELI5) toggle per `Plans/FinalGUISpec.md` §7.4.0. Tooltip keys: `tooltip.personas.*` prefix. Both Expert and ELI5 variants are required.
+L00000260	
+L00000261	---
+L00000262	
+L00000263	## 5. Integration: Persona application to a run
+L00000264	
+L00000265	<a id="PERSONA-INJECTION"></a>
+L00000266	
+L00000267	### 5.1 Selection
+L00000268	
+L00000269	Persona selection must be deterministic and must not silently collapse child roles into the parent Persona.
+L00000270	
+L00000271	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md
+L00000272	
+L00000273	Canonical child Persona resolution order:
+L00000274	1. explicitly requested child Persona
+L00000275	2. child subagent type or child task-type mapping
+L00000276	3. weak parent Persona hint only when compatible and still ambiguous
+L00000277	4. safe general-purpose fallback
+L00000278	
+L00000279	Compatibility guard:
+L00000280	- the weak parent hint cannot override the requested child task.
+L00000281	- it cannot override runtime/provider restrictions.
+L00000282	- it cannot be used to widen permissions or mode.
+L00000283	- if no specialized match is safe, the fallback is a general child Persona, not a copy of the parent Persona.
+L00000284	
+L00000285	Crew default:
+L00000286	- crew members normally share the same task framing.
+L00000287	- they often share the same Persona.
+L00000288	- model/provider diversity, not Persona diversity, is the default defining behavior of crew mode.
+L00000289	
+L00000290	ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/orchestrator-subagent-integration.md
+L00000291	### 5.2 Context injection
+L00000292	
+L00000293	Persona injection for child runs operates on a reconstructed handoff bundle, not on a blind copy of the parent prompt state.
+L00000294	
+L00000295	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/storage-plan.md
+L00000296	
+L00000297	Child Persona context rules:
+L00000298	- inject the effective child Persona content resolved from PM Persona storage.
+L00000299	- include current task, working context, required constraints, and requested/effective runtime state.
+L00000300	- include the current effective context-shaping state without making a lossy child copy the only truth.
+L00000301	- do not forward Assistant memory to child runs.
+L00000302	- child runs inherit only the effective compatible subset of parent-allowed tools, skills, plugins, and MCP capabilities.
+L00000303	
+L00000304	ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Permissions_System.md
+L00000305	### 5.3 Run-mode interaction
+L00000306	
+L00000307	The Persona's `default_mode` field interacts with the run mode system (`Plans/Run_Modes.md`) as follows:
+L00000308	
+L00000309	| Source | Priority | Description |
+L00000310	|--------|----------|-------------|
+L00000311	| Explicit run-envelope `mode` | Highest | User- or Orchestrator-specified mode for this run. |
+L00000312	| Persona `default_mode` | Lower | Applied only if the run envelope does not specify a mode. |
+L00000313	| System default (`regular`) | Lowest | Applied if neither run envelope nor Persona specifies a mode. |
+L00000314	
+L00000315	ContractRef: ContractName:Plans/Run_Modes.md
+L00000316	
+L00000317	### 5.4 Cross-references to SSOT subsystems
+L00000318	
+L00000319	The following integrations are specified by their subsystem SSOTs and MUST NOT be restated here:
+L00000320	
+L00000321	- **Permissions:** Persona `default_permissions_profile` → `Plans/Permissions_System.md`.
+L00000322	- **Skills:** Persona `default_skill_refs` → `Plans/Skills_System.md`.
+L00000323	- **Plugins:** Plugin hooks that transform Persona context → `Plans/Plugins_System.md`.
+L00000324	- **Models/runtime controls:** Per-Persona platform/model/variant/runtime preferences (`default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`) → `Plans/Models_System.md`.
+L00000325	- **Behavior controls:** Per-Persona `talkativeness` instruction behavior and effective-state emission → `Plans/Prompt_Pipeline.md`.
+L00000326	- **Prompt/runtime observability:** Effective Persona/runtime resolution record and provider capability filtering → `Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD` and `Plans/Prompt_Pipeline.md#PROVIDER-CAPABILITY-FILTERING`.
+L00000327	- **Tool guidance:** Persona tool-preference fields remain guidance; hard enforcement stays in `Plans/Permissions_System.md`.
+L00000328	
+L00000329	---
+L00000330	
+L00000331	## 6. Reserved Personas
+L00000332	
+L00000333	<a id="RESERVED-PERSONAS"></a>
+L00000334	
+L00000335	The following Persona IDs are **protected Puppet Master core built-in IDs**. They MUST NOT be used for user-created Personas and MUST NOT be shadowed by project-local or global Persona files. When the corresponding built-in `PERSONA.md` definitions are present, they remain selectable and assignable according to the eligibility table below.
+L00000336	
+L00000337	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Personas.md#PERSONA-VALIDATION
+L00000338	
+L00000339	| Reserved ID | Display label | Planned purpose | Chat selectable | Child/subagent eligible | Mutability |
+L00000340	|-------------|---------------|-----------------|-----------------|-------------------------|------------|
+L00000341	| `assistant` | Assistant | Default direct-chat Persona with broad capability and a warm, collaborative, helpful style. | Yes, default for chat | No | Protected core built-in |
+L00000342	| `general-purpose` | General | Broad work-first execution Persona for complex multi-step work that combines inspection, action, and verification. | Yes | Yes | Protected core built-in |
+L00000343	| `overseer` | Overseer | Governance/conductor Persona for delegation, completeness, review, promotion, corroboration, weak-integration detection, and auditable remediation judgment. | Yes | Yes, for governance child roles | Protected core built-in |
+L00000344	| `bash` | Bash | Terminal-execution Persona for command-heavy work and concise command-output reduction. | No | Yes, subagent-only | Protected core built-in |
+L00000345	| `teacher` | Teacher | Warm, highly explanatory help and teaching Persona for PM usage, settings, concepts, and adjacent developer tooling. | Yes | No | Protected core built-in |
+L00000346	| `collaborator` | Collaborator | User-facing planning, clarification, ideation, and collaborative shaping Persona. | Yes | Yes | Protected core built-in |
+L00000347	| `researcher` | Researcher | Read-only research Persona that combines local codebase evidence with current external sources. | Yes | Yes | Protected core built-in |
+L00000348	| `deep-researcher` | Deep Researcher | Read-only high-effort research Persona for broader source coverage, comparison, and synthesis. | Yes | Yes | Protected core built-in |
+L00000349	| `explorer` | Explorer | Fast, read-only codebase investigation Persona for finding files, tracing symbols, and returning evidence-rich local findings. | No | Yes, subagent-only | Protected core built-in |
+L00000350	
+L00000351	**Enforcement:** The Persona validation logic (§3.3) MUST reject creation of user Personas with these IDs. If a built-in Persona with one of these IDs exists in canonical Persona storage, `select_for_node()` and surface-specific resolvers MAY return it only when the target surface is compatible with its eligibility. Imported provider-native agent files MUST NOT overwrite these IDs; collisions are handled per §10.5/§10.8.
+L00000352	
+L00000353	**Display normalization:** Natural-language forms such as `Assistant`, `General`, `Overseer`, `Bash`, `Teacher`, `deep researcher`, and `general purpose` normalize to the canonical IDs above. `Document Writer` is legacy/source-lineage wording and MUST NOT resolve to a protected core Persona unless a later owner decision explicitly reopens it. `_id` runtime field names remain stale aliases; the runtime identity fields are `requested_persona` and `effective_persona`.
+L00000354	
+L00000355	ContractRef: ContractName:Plans/Personas.md#PERSONA-VALIDATION, ContractName:Plans/orchestrator-subagent-integration.md
+L00000356	## 7. Relationship to the Persona registry and delegated-subagent registry
+L00000357	
+L00000358	The split between `persona_registry` and `subagent_registry` is mandatory.
+L00000359	
+L00000360	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Tools.md
+L00000361	
+L00000362	### 7.1 Canonical `persona_registry`
+L00000363	
+L00000364	`persona_registry` owns runtime Persona definitions and Persona IDs used for selection, storage, GUI management, and prompt injection.
+L00000365	
+L00000366	### 7.2 Canonical `subagent_registry`
+L00000367	
+L00000368	`subagent_registry` owns launchable delegated child-run types. It validates names used by `task`, orchestrator routing, interview routing, and command subtasks.
+L00000369	
+L00000370	### 7.3 Required relationship rules
+L00000371	
+L00000372	- a launchable subagent type may resolve to a Persona, but the registries are not the same structure.
+L00000373	- Interview stage configuration must persist canonical Persona-oriented field names; legacy `phase_subagents` and `phase_secondary_subagents` are migration aliases only.
+L00000374	- provider-native command names such as `/subagent`, `/agent`, `/fleet`, `/delegate`, or `/replace` are not registry IDs.
+L00000375	- new content must use the requested/effective runtime naming already established elsewhere; stale `*_persona_id` drift should be normalized during reconciliation.
+L00000376	
+L00000377	ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Commands_System.md, ContractName:Plans/Contracts_V0.md
+L00000378	## 8. OpenCode baseline and Puppet Master deltas
+L00000379	
+L00000380	<a id="BASELINE-DELTAS"></a>
+L00000381	
+L00000382	Per `Plans/OpenCode_Deep_Extraction.md` §7B and §9B:
+L00000383	
+L00000384	### 8.1 Baseline
+L00000385	
+L00000386	OpenCode defines agents via `Agent.Info` schema with fields: `name`, `description`, `mode`, `prompt`, `permission`, `model`, `steps`, etc. User-defined agents override via config. Subagents are invoked via the `task` tool. The explore agent is a read-only subagent with a dedicated prompt.
+L00000387	
+L00000388	### 8.2 Puppet Master deltas
+L00000389	
+L00000390	1. **Persona as file artifact:** OpenCode stores agent definitions in code (`agent.ts`) and config. Puppet Master stores Personas as files on disk (`PERSONA.md`) in a deterministic layout, enabling user editing, project-level overrides, and GUI management without code changes.
+L00000391	2. **Separation from provider-native agents:** OpenCode agents are tightly coupled to the OpenCode runtime. Puppet Master Personas are provider-agnostic; the Provider facade translates Persona instructions into provider-specific invocation.
+L00000392	3. **No in-code persona content:** Puppet Master does not hardcode Persona descriptions/prompts in source code. All Persona content lives in `PERSONA.md` files resolved at runtime.
+L00000393	4. **Reserved-ID enforcement:** OpenCode has no concept of reserved agent names. Puppet Master reserves IDs for planned future Personas (§6).
+L00000394	5. **Provider-native reusable agents:** `Claude Code CLI` native reusable-agent/subagent support is real (`--agent`, `--agents`, and the `agents` command). PM treats that as a native-specialized-agent projection path for Personas when applicable, not as plain prompt stuffing and not as the same primitive as the PM Persona registry.
+L00000395	
+L00000396	ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+L00000397	
+L00000398	---
+L00000399	
+
+<<< CONTEXT_AFTER canonical_document_lines=400-411 >>>
+L00000400	## 9. Acceptance criteria
+L00000401	
+L00000402	<a id="ACCEPTANCE"></a>
+L00000403	
+L00000404	These criteria are testable assertions that MUST hold for any conforming implementation.
+L00000405	
+L00000406	ContractRef: ContractName:Plans/Personas.md, ContractName:Plans/Progression_Gates.md
+L00000407	
+L00000408	<a id="AC-P01"></a>
+L00000409	**AC-P01:** Every `PERSONA.md` file loaded by the runtime MUST pass schema validation (§3). Invalid files MUST be skipped with a warning log entry.
+L00000410	
+L00000411	<a id="AC-P02"></a>

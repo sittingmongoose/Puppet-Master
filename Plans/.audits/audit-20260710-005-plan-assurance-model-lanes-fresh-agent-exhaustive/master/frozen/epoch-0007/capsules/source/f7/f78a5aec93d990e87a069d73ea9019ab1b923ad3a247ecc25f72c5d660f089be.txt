@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE canonical_document_lines=20990-21001 >>>
+L00020990	          "requirement": "cmd.prd_builder.annotation.upsert records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00020991	        },
+L00020992	        {
+L00020993	          "test_id": "wiring.catalog.prd_builder_annotation_upsert.accessibility",
+L00020994	          "evidence_kind": "accessibility_regression",
+L00020995	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00020996	        }
+L00020997	      ],
+L00020998	      "event_test_requirements": [
+L00020999	        "Assert cmd.prd_builder.annotation.upsert records dispatch receipt cmd.prd_builder.annotation.upsert.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00021000	      ]
+L00021001	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=21002-21396 >>>
+L00021002	    "catalog.prd_builder_answer_upsert": {
+L00021003	      "ui_element_id": "catalog.prd_builder_answer_upsert",
+L00021004	      "ui_location": "PRD Builder workspace",
+L00021005	      "ui_command_id": "cmd.prd_builder.answer.upsert",
+L00021006	      "handler_location": "handlers::prd_builder::answer_upsert",
+L00021007	      "expected_event_types": [],
+L00021008	      "acceptance_checks": [
+L00021009	        "cmd.prd_builder.answer.upsert must be registered in the UICommand dispatcher with typed args and result contract",
+L00021010	        "cmd.prd_builder.answer.upsert must expose projected state selector and disabled reason before dispatch",
+L00021011	        "cmd.prd_builder.answer.upsert dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00021012	        "cmd.prd_builder.answer.upsert must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00021013	        "cmd.prd_builder.answer.upsert must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00021014	      ],
+L00021015	      "evidence_required": "Production wiring contract for cmd.prd_builder.answer.upsert; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00021016	      "state_selector": "state.commands.prd_builder_answer_upsert.availability",
+L00021017	      "disabled_reason_projection": "state.commands.prd_builder_answer_upsert.disabled_reason",
+L00021018	      "effect_contract": {
+L00021019	        "effect_kind": "receipt",
+L00021020	        "description": "cmd.prd_builder.answer.upsert records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00021021	        "receipt_or_event_refs": [
+L00021022	          "cmd.prd_builder.answer.upsert.dispatch_receipt"
+L00021023	        ]
+L00021024	      },
+L00021025	      "accessibility_contract": {
+L00021026	        "role_or_semantics": "catalog.prd_builder_answer_upsert exposes a stable role/name/description matching cmd.prd_builder.answer.upsert.",
+L00021027	        "keyboard_access": "catalog.prd_builder_answer_upsert is reachable and activatable by keyboard where the control is visible.",
+L00021028	        "focus_management": "catalog.prd_builder_answer_upsert preserves visible focus and returns focus deterministically after dispatch or error.",
+L00021029	        "disabled_announcement": "catalog.prd_builder_answer_upsert surfaces state.commands.prd_builder_answer_upsert.disabled_reason to assistive technology when unavailable."
+L00021030	      },
+L00021031	      "test_evidence": [
+L00021032	        {
+L00021033	          "test_id": "wiring.catalog.prd_builder_answer_upsert.dispatcher",
+L00021034	          "evidence_kind": "dispatcher_fixture",
+L00021035	          "requirement": "Dispatching cmd.prd_builder.answer.upsert reaches handlers::prd_builder::answer_upsert with typed args/result contract."
+L00021036	        },
+L00021037	        {
+L00021038	          "test_id": "wiring.catalog.prd_builder_answer_upsert.state_projection",
+L00021039	          "evidence_kind": "state_projection",
+L00021040	          "requirement": "Availability reads state.commands.prd_builder_answer_upsert.availability and disabled copy reads state.commands.prd_builder_answer_upsert.disabled_reason."
+L00021041	        },
+L00021042	        {
+L00021043	          "test_id": "wiring.catalog.prd_builder_answer_upsert.effect",
+L00021044	          "evidence_kind": "receipt_or_event_assertion",
+L00021045	          "requirement": "cmd.prd_builder.answer.upsert records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00021046	        },
+L00021047	        {
+L00021048	          "test_id": "wiring.catalog.prd_builder_answer_upsert.accessibility",
+L00021049	          "evidence_kind": "accessibility_regression",
+L00021050	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00021051	        }
+L00021052	      ],
+L00021053	      "event_test_requirements": [
+L00021054	        "Assert cmd.prd_builder.answer.upsert records dispatch receipt cmd.prd_builder.answer.upsert.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00021055	      ]
+L00021056	    },
+L00021057	    "catalog.prd_builder_approve_for_planning_wizard": {
+L00021058	      "ui_element_id": "catalog.prd_builder_approve_for_planning_wizard",
+L00021059	      "ui_location": "PRD Builder workspace",
+L00021060	      "ui_command_id": "cmd.prd_builder.approve_for_planning_wizard",
+L00021061	      "handler_location": "handlers::prd_builder::approve_for_planning_wizard",
+L00021062	      "expected_event_types": [
+L00021063	        "prd_builder.approval_snapshot.created",
+L00021064	        "prd_builder.prd_pack_approved"
+L00021065	      ],
+L00021066	      "acceptance_checks": [
+L00021067	        "cmd.prd_builder.approve_for_planning_wizard must be registered in the UICommand dispatcher with typed args and result contract",
+L00021068	        "cmd.prd_builder.approve_for_planning_wizard must expose projected state selector and disabled reason before dispatch",
+L00021069	        "cmd.prd_builder.approve_for_planning_wizard dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00021070	        "cmd.prd_builder.approve_for_planning_wizard must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00021071	        "cmd.prd_builder.approve_for_planning_wizard must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00021072	      ],
+L00021073	      "evidence_required": "Production wiring contract for cmd.prd_builder.approve_for_planning_wizard; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00021074	      "state_selector": "state.commands.prd_builder_approve_for_planning_wizard.availability",
+L00021075	      "disabled_reason_projection": "state.commands.prd_builder_approve_for_planning_wizard.disabled_reason",
+L00021076	      "effect_contract": {
+L00021077	        "effect_kind": "event",
+L00021078	        "description": "cmd.prd_builder.approve_for_planning_wizard must emit the declared event types and record dispatch correlation evidence.",
+L00021079	        "receipt_or_event_refs": [
+L00021080	          "prd_builder.approval_snapshot.created",
+L00021081	          "prd_builder.prd_pack_approved"
+L00021082	        ]
+L00021083	      },
+L00021084	      "accessibility_contract": {
+L00021085	        "role_or_semantics": "catalog.prd_builder_approve_for_planning_wizard exposes a stable role/name/description matching cmd.prd_builder.approve_for_planning_wizard.",
+L00021086	        "keyboard_access": "catalog.prd_builder_approve_for_planning_wizard is reachable and activatable by keyboard where the control is visible.",
+L00021087	        "focus_management": "catalog.prd_builder_approve_for_planning_wizard preserves visible focus and returns focus deterministically after dispatch or error.",
+L00021088	        "disabled_announcement": "catalog.prd_builder_approve_for_planning_wizard surfaces state.commands.prd_builder_approve_for_planning_wizard.disabled_reason to assistive technology when unavailable."
+L00021089	      },
+L00021090	      "test_evidence": [
+L00021091	        {
+L00021092	          "test_id": "wiring.catalog.prd_builder_approve_for_planning_wizard.dispatcher",
+L00021093	          "evidence_kind": "dispatcher_fixture",
+L00021094	          "requirement": "Dispatching cmd.prd_builder.approve_for_planning_wizard reaches handlers::prd_builder::approve_for_planning_wizard with typed args/result contract."
+L00021095	        },
+L00021096	        {
+L00021097	          "test_id": "wiring.catalog.prd_builder_approve_for_planning_wizard.state_projection",
+L00021098	          "evidence_kind": "state_projection",
+L00021099	          "requirement": "Availability reads state.commands.prd_builder_approve_for_planning_wizard.availability and disabled copy reads state.commands.prd_builder_approve_for_planning_wizard.disabled_reason."
+L00021100	        },
+L00021101	        {
+L00021102	          "test_id": "wiring.catalog.prd_builder_approve_for_planning_wizard.effect",
+L00021103	          "evidence_kind": "receipt_or_event_assertion",
+L00021104	          "requirement": "cmd.prd_builder.approve_for_planning_wizard must emit the declared event types and record dispatch correlation evidence."
+L00021105	        },
+L00021106	        {
+L00021107	          "test_id": "wiring.catalog.prd_builder_approve_for_planning_wizard.accessibility",
+L00021108	          "evidence_kind": "accessibility_regression",
+L00021109	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00021110	        },
+L00021111	        {
+L00021112	          "test_id": "wiring.catalog.prd_builder_approve_for_planning_wizard.events",
+L00021113	          "evidence_kind": "event_test",
+L00021114	          "requirement": "Assert cmd.prd_builder.approve_for_planning_wizard emits expected event type prd_builder.approval_snapshot.created with command_id, origin, correlation_id, and handler target.; Assert cmd.prd_builder.approve_for_planning_wizard emits expected event type prd_builder.prd_pack_approved with command_id, origin, correlation_id, and handler target."
+L00021115	        }
+L00021116	      ],
+L00021117	      "event_test_requirements": [
+L00021118	        "Assert cmd.prd_builder.approve_for_planning_wizard emits expected event type prd_builder.approval_snapshot.created with command_id, origin, correlation_id, and handler target.",
+L00021119	        "Assert cmd.prd_builder.approve_for_planning_wizard emits expected event type prd_builder.prd_pack_approved with command_id, origin, correlation_id, and handler target."
+L00021120	      ]
+L00021121	    },
+L00021122	    "catalog.prd_builder_conflict_resolve": {
+L00021123	      "ui_element_id": "catalog.prd_builder_conflict_resolve",
+L00021124	      "ui_location": "PRD Builder workspace",
+L00021125	      "ui_command_id": "cmd.prd_builder.conflict.resolve",
+L00021126	      "handler_location": "handlers::prd_builder::conflict_resolve",
+L00021127	      "expected_event_types": [],
+L00021128	      "acceptance_checks": [
+L00021129	        "cmd.prd_builder.conflict.resolve must be registered in the UICommand dispatcher with typed args and result contract",
+L00021130	        "cmd.prd_builder.conflict.resolve must expose projected state selector and disabled reason before dispatch",
+L00021131	        "cmd.prd_builder.conflict.resolve dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00021132	        "cmd.prd_builder.conflict.resolve must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00021133	        "cmd.prd_builder.conflict.resolve must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00021134	      ],
+L00021135	      "evidence_required": "Production wiring contract for cmd.prd_builder.conflict.resolve; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00021136	      "state_selector": "state.commands.prd_builder_conflict_resolve.availability",
+L00021137	      "disabled_reason_projection": "state.commands.prd_builder_conflict_resolve.disabled_reason",
+L00021138	      "effect_contract": {
+L00021139	        "effect_kind": "receipt",
+L00021140	        "description": "cmd.prd_builder.conflict.resolve records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00021141	        "receipt_or_event_refs": [
+L00021142	          "cmd.prd_builder.conflict.resolve.dispatch_receipt"
+L00021143	        ]
+L00021144	      },
+L00021145	      "accessibility_contract": {
+L00021146	        "role_or_semantics": "catalog.prd_builder_conflict_resolve exposes a stable role/name/description matching cmd.prd_builder.conflict.resolve.",
+L00021147	        "keyboard_access": "catalog.prd_builder_conflict_resolve is reachable and activatable by keyboard where the control is visible.",
+L00021148	        "focus_management": "catalog.prd_builder_conflict_resolve preserves visible focus and returns focus deterministically after dispatch or error.",
+L00021149	        "disabled_announcement": "catalog.prd_builder_conflict_resolve surfaces state.commands.prd_builder_conflict_resolve.disabled_reason to assistive technology when unavailable."
+L00021150	      },
+L00021151	      "test_evidence": [
+L00021152	        {
+L00021153	          "test_id": "wiring.catalog.prd_builder_conflict_resolve.dispatcher",
+L00021154	          "evidence_kind": "dispatcher_fixture",
+L00021155	          "requirement": "Dispatching cmd.prd_builder.conflict.resolve reaches handlers::prd_builder::conflict_resolve with typed args/result contract."
+L00021156	        },
+L00021157	        {
+L00021158	          "test_id": "wiring.catalog.prd_builder_conflict_resolve.state_projection",
+L00021159	          "evidence_kind": "state_projection",
+L00021160	          "requirement": "Availability reads state.commands.prd_builder_conflict_resolve.availability and disabled copy reads state.commands.prd_builder_conflict_resolve.disabled_reason."
+L00021161	        },
+L00021162	        {
+L00021163	          "test_id": "wiring.catalog.prd_builder_conflict_resolve.effect",
+L00021164	          "evidence_kind": "receipt_or_event_assertion",
+L00021165	          "requirement": "cmd.prd_builder.conflict.resolve records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00021166	        },
+L00021167	        {
+L00021168	          "test_id": "wiring.catalog.prd_builder_conflict_resolve.accessibility",
+L00021169	          "evidence_kind": "accessibility_regression",
+L00021170	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00021171	        }
+L00021172	      ],
+L00021173	      "event_test_requirements": [
+L00021174	        "Assert cmd.prd_builder.conflict.resolve records dispatch receipt cmd.prd_builder.conflict.resolve.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00021175	      ]
+L00021176	    },
+L00021177	    "catalog.prd_builder_pack_reopen": {
+L00021178	      "ui_element_id": "catalog.prd_builder_pack_reopen",
+L00021179	      "ui_location": "PRD Builder workspace",
+L00021180	      "ui_command_id": "cmd.prd_builder.pack.reopen",
+L00021181	      "handler_location": "handlers::prd_builder::pack_reopen",
+L00021182	      "expected_event_types": [],
+L00021183	      "acceptance_checks": [
+L00021184	        "cmd.prd_builder.pack.reopen must be registered in the UICommand dispatcher with typed args and result contract",
+L00021185	        "cmd.prd_builder.pack.reopen must expose projected state selector and disabled reason before dispatch",
+L00021186	        "cmd.prd_builder.pack.reopen dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00021187	        "cmd.prd_builder.pack.reopen must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00021188	        "cmd.prd_builder.pack.reopen must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00021189	      ],
+L00021190	      "evidence_required": "Production wiring contract for cmd.prd_builder.pack.reopen; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00021191	      "state_selector": "state.commands.prd_builder_pack_reopen.availability",
+L00021192	      "disabled_reason_projection": "state.commands.prd_builder_pack_reopen.disabled_reason",
+L00021193	      "effect_contract": {
+L00021194	        "effect_kind": "receipt",
+L00021195	        "description": "cmd.prd_builder.pack.reopen records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00021196	        "receipt_or_event_refs": [
+L00021197	          "cmd.prd_builder.pack.reopen.dispatch_receipt"
+L00021198	        ]
+L00021199	      },
+L00021200	      "accessibility_contract": {
+L00021201	        "role_or_semantics": "catalog.prd_builder_pack_reopen exposes a stable role/name/description matching cmd.prd_builder.pack.reopen.",
+L00021202	        "keyboard_access": "catalog.prd_builder_pack_reopen is reachable and activatable by keyboard where the control is visible.",
+L00021203	        "focus_management": "catalog.prd_builder_pack_reopen preserves visible focus and returns focus deterministically after dispatch or error.",
+L00021204	        "disabled_announcement": "catalog.prd_builder_pack_reopen surfaces state.commands.prd_builder_pack_reopen.disabled_reason to assistive technology when unavailable."
+L00021205	      },
+L00021206	      "test_evidence": [
+L00021207	        {
+L00021208	          "test_id": "wiring.catalog.prd_builder_pack_reopen.dispatcher",
+L00021209	          "evidence_kind": "dispatcher_fixture",
+L00021210	          "requirement": "Dispatching cmd.prd_builder.pack.reopen reaches handlers::prd_builder::pack_reopen with typed args/result contract."
+L00021211	        },
+L00021212	        {
+L00021213	          "test_id": "wiring.catalog.prd_builder_pack_reopen.state_projection",
+L00021214	          "evidence_kind": "state_projection",
+L00021215	          "requirement": "Availability reads state.commands.prd_builder_pack_reopen.availability and disabled copy reads state.commands.prd_builder_pack_reopen.disabled_reason."
+L00021216	        },
+L00021217	        {
+L00021218	          "test_id": "wiring.catalog.prd_builder_pack_reopen.effect",
+L00021219	          "evidence_kind": "receipt_or_event_assertion",
+L00021220	          "requirement": "cmd.prd_builder.pack.reopen records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00021221	        },
+L00021222	        {
+L00021223	          "test_id": "wiring.catalog.prd_builder_pack_reopen.accessibility",
+L00021224	          "evidence_kind": "accessibility_regression",
+L00021225	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00021226	        }
+L00021227	      ],
+L00021228	      "event_test_requirements": [
+L00021229	        "Assert cmd.prd_builder.pack.reopen records dispatch receipt cmd.prd_builder.pack.reopen.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00021230	      ]
+L00021231	    },
+L00021232	    "catalog.prd_builder_source_import": {
+L00021233	      "ui_element_id": "catalog.prd_builder_source_import",
+L00021234	      "ui_location": "PRD Builder workspace",
+L00021235	      "ui_command_id": "cmd.prd_builder.source.import",
+L00021236	      "handler_location": "handlers::prd_builder::source_import",
+L00021237	      "expected_event_types": [],
+L00021238	      "acceptance_checks": [
+L00021239	        "cmd.prd_builder.source.import must be registered in the UICommand dispatcher with typed args and result contract",
+L00021240	        "cmd.prd_builder.source.import must expose projected state selector and disabled reason before dispatch",
+L00021241	        "cmd.prd_builder.source.import dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00021242	        "cmd.prd_builder.source.import must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00021243	        "cmd.prd_builder.source.import must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00021244	      ],
+L00021245	      "evidence_required": "Production wiring contract for cmd.prd_builder.source.import; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00021246	      "state_selector": "state.commands.prd_builder_source_import.availability",
+L00021247	      "disabled_reason_projection": "state.commands.prd_builder_source_import.disabled_reason",
+L00021248	      "effect_contract": {
+L00021249	        "effect_kind": "receipt",
+L00021250	        "description": "cmd.prd_builder.source.import records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00021251	        "receipt_or_event_refs": [
+L00021252	          "cmd.prd_builder.source.import.dispatch_receipt"
+L00021253	        ]
+L00021254	      },
+L00021255	      "accessibility_contract": {
+L00021256	        "role_or_semantics": "catalog.prd_builder_source_import exposes a stable role/name/description matching cmd.prd_builder.source.import.",
+L00021257	        "keyboard_access": "catalog.prd_builder_source_import is reachable and activatable by keyboard where the control is visible.",
+L00021258	        "focus_management": "catalog.prd_builder_source_import preserves visible focus and returns focus deterministically after dispatch or error.",
+L00021259	        "disabled_announcement": "catalog.prd_builder_source_import surfaces state.commands.prd_builder_source_import.disabled_reason to assistive technology when unavailable."
+L00021260	      },
+L00021261	      "test_evidence": [
+L00021262	        {
+L00021263	          "test_id": "wiring.catalog.prd_builder_source_import.dispatcher",
+L00021264	          "evidence_kind": "dispatcher_fixture",
+L00021265	          "requirement": "Dispatching cmd.prd_builder.source.import reaches handlers::prd_builder::source_import with typed args/result contract."
+L00021266	        },
+L00021267	        {
+L00021268	          "test_id": "wiring.catalog.prd_builder_source_import.state_projection",
+L00021269	          "evidence_kind": "state_projection",
+L00021270	          "requirement": "Availability reads state.commands.prd_builder_source_import.availability and disabled copy reads state.commands.prd_builder_source_import.disabled_reason."
+L00021271	        },
+L00021272	        {
+L00021273	          "test_id": "wiring.catalog.prd_builder_source_import.effect",
+L00021274	          "evidence_kind": "receipt_or_event_assertion",
+L00021275	          "requirement": "cmd.prd_builder.source.import records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00021276	        },
+L00021277	        {
+L00021278	          "test_id": "wiring.catalog.prd_builder_source_import.accessibility",
+L00021279	          "evidence_kind": "accessibility_regression",
+L00021280	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00021281	        }
+L00021282	      ],
+L00021283	      "event_test_requirements": [
+L00021284	        "Assert cmd.prd_builder.source.import records dispatch receipt cmd.prd_builder.source.import.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00021285	      ]
+L00021286	    },
+L00021287	    "catalog.project_add_existing": {
+L00021288	      "ui_element_id": "catalog.project_add_existing",
+L00021289	      "ui_location": "Project surface > Add Existing",
+L00021290	      "ui_command_id": "cmd.project.add_existing",
+L00021291	      "handler_location": "handlers::project::add_existing",
+L00021292	      "expected_event_types": [],
+L00021293	      "acceptance_checks": [
+L00021294	        "cmd.project.add_existing must be registered in the UICommand dispatcher with typed args and result contract",
+L00021295	        "cmd.project.add_existing must expose projected state selector and disabled reason before dispatch",
+L00021296	        "cmd.project.add_existing dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00021297	        "cmd.project.add_existing must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00021298	        "cmd.project.add_existing must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00021299	      ],
+L00021300	      "evidence_required": "Production wiring contract for cmd.project.add_existing; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00021301	      "state_selector": "state.commands.project_add_existing.availability",
+L00021302	      "disabled_reason_projection": "state.commands.project_add_existing.disabled_reason",
+L00021303	      "effect_contract": {
+L00021304	        "effect_kind": "receipt",
+L00021305	        "description": "cmd.project.add_existing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00021306	        "receipt_or_event_refs": [
+L00021307	          "cmd.project.add_existing.dispatch_receipt"
+L00021308	        ]
+L00021309	      },
+L00021310	      "accessibility_contract": {
+L00021311	        "role_or_semantics": "catalog.project_add_existing exposes a stable role/name/description matching cmd.project.add_existing.",
+L00021312	        "keyboard_access": "catalog.project_add_existing is reachable and activatable by keyboard where the control is visible.",
+L00021313	        "focus_management": "catalog.project_add_existing preserves visible focus and returns focus deterministically after dispatch or error.",
+L00021314	        "disabled_announcement": "catalog.project_add_existing surfaces state.commands.project_add_existing.disabled_reason to assistive technology when unavailable."
+L00021315	      },
+L00021316	      "test_evidence": [
+L00021317	        {
+L00021318	          "test_id": "wiring.catalog.project_add_existing.dispatcher",
+L00021319	          "evidence_kind": "dispatcher_fixture",
+L00021320	          "requirement": "Dispatching cmd.project.add_existing reaches handlers::project::add_existing with typed args/result contract."
+L00021321	        },
+L00021322	        {
+L00021323	          "test_id": "wiring.catalog.project_add_existing.state_projection",
+L00021324	          "evidence_kind": "state_projection",
+L00021325	          "requirement": "Availability reads state.commands.project_add_existing.availability and disabled copy reads state.commands.project_add_existing.disabled_reason."
+L00021326	        },
+L00021327	        {
+L00021328	          "test_id": "wiring.catalog.project_add_existing.effect",
+L00021329	          "evidence_kind": "receipt_or_event_assertion",
+L00021330	          "requirement": "cmd.project.add_existing has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00021331	        },
+L00021332	        {
+L00021333	          "test_id": "wiring.catalog.project_add_existing.accessibility",
+L00021334	          "evidence_kind": "accessibility_regression",
+L00021335	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00021336	        }
+L00021337	      ],
+L00021338	      "event_test_requirements": [
+L00021339	        "Assert cmd.project.add_existing records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00021340	      ]
+L00021341	    },
+L00021342	    "catalog.project_chain_wizard_open_deferred": {
+L00021343	      "ui_element_id": "catalog.project_chain_wizard_open_deferred",
+L00021344	      "ui_location": "Compatibility/source-lineage routing only",
+L00021345	      "ui_command_id": "cmd.project.chain_wizard_open_deferred",
+L00021346	      "handler_location": "handlers::planning_wizard::chain_wizard_open_deferred_compatibility_alias",
+L00021347	      "expected_event_types": [],
+L00021348	      "acceptance_checks": [
+L00021349	        "cmd.project.chain_wizard_open_deferred is retired/source-lineage compatibility only and must route to current PRD Builder or Planning Wizard owners when a legacy route is encountered",
+L00021350	        "No active Chain Wizard surface, handler authority, runtime dispatch, or production command coverage may be inferred from this compatibility row",
+L00021351	        "Disabled reason must name the retired Chain Wizard lineage and the current Planning Wizard or PRD Builder recovery route",
+L00021352	        "Regression evidence must prove legacy Chain Wizard links do not resurrect retired Chain Wizard canon",
+L00021353	        "cmd.project.chain_wizard_open_deferred must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00021354	      ],
+L00021355	      "evidence_required": "Compatibility-only wiring contract for retired cmd.project.chain_wizard_open_deferred. Production certification requires a legacy-route fixture proving normalization to current PRD Builder or Planning Wizard owners without resurrecting Chain Wizard as active production coverage.",
+L00021356	      "state_selector": "state.commands.project_chain_wizard_open_deferred.availability",
+L00021357	      "disabled_reason_projection": "state.commands.project_chain_wizard_open_deferred.disabled_reason",
+L00021358	      "effect_contract": {
+L00021359	        "effect_kind": "receipt",
+L00021360	        "description": "cmd.project.chain_wizard_open_deferred has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00021361	        "receipt_or_event_refs": [
+L00021362	          "cmd.project.chain_wizard_open_deferred.dispatch_receipt"
+L00021363	        ]
+L00021364	      },
+L00021365	      "accessibility_contract": {
+L00021366	        "role_or_semantics": "catalog.project_chain_wizard_open_deferred exposes a stable role/name/description matching cmd.project.chain_wizard_open_deferred.",
+L00021367	        "keyboard_access": "catalog.project_chain_wizard_open_deferred is reachable and activatable by keyboard where the control is visible.",
+L00021368	        "focus_management": "catalog.project_chain_wizard_open_deferred preserves visible focus and returns focus deterministically after dispatch or error.",
+L00021369	        "disabled_announcement": "catalog.project_chain_wizard_open_deferred surfaces state.commands.project_chain_wizard_open_deferred.disabled_reason to assistive technology when unavailable."
+L00021370	      },
+L00021371	      "test_evidence": [
+L00021372	        {
+L00021373	          "test_id": "wiring.catalog.project_chain_wizard_open_deferred.dispatcher",
+L00021374	          "evidence_kind": "dispatcher_fixture",
+L00021375	          "requirement": "Dispatching cmd.project.chain_wizard_open_deferred reaches handlers::planning_wizard::chain_wizard_open_deferred_compatibility_alias with typed args/result contract."
+L00021376	        },
+L00021377	        {
+L00021378	          "test_id": "wiring.catalog.project_chain_wizard_open_deferred.state_projection",
+L00021379	          "evidence_kind": "state_projection",
+L00021380	          "requirement": "Availability reads state.commands.project_chain_wizard_open_deferred.availability and disabled copy reads state.commands.project_chain_wizard_open_deferred.disabled_reason."
+L00021381	        },
+L00021382	        {
+L00021383	          "test_id": "wiring.catalog.project_chain_wizard_open_deferred.effect",
+L00021384	          "evidence_kind": "receipt_or_event_assertion",
+L00021385	          "requirement": "cmd.project.chain_wizard_open_deferred has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00021386	        },
+L00021387	        {
+L00021388	          "test_id": "wiring.catalog.project_chain_wizard_open_deferred.accessibility",
+L00021389	          "evidence_kind": "accessibility_regression",
+L00021390	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00021391	        }
+L00021392	      ],
+L00021393	      "event_test_requirements": [
+L00021394	        "Assert cmd.project.chain_wizard_open_deferred records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00021395	      ]
+L00021396	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=21397-21408 >>>
+L00021397	    "catalog.project_new_github_repo": {
+L00021398	      "ui_element_id": "catalog.project_new_github_repo",
+L00021399	      "ui_location": "Project creation and GitHub integration surface",
+L00021400	      "ui_command_id": "cmd.project.new_github_repo",
+L00021401	      "handler_location": "handlers::github::project_new_repo",
+L00021402	      "expected_event_types": [
+L00021403	        "github.repo.create_requested",
+L00021404	        "project.github_repo_bound"
+L00021405	      ],
+L00021406	      "acceptance_checks": [
+L00021407	        "cmd.project.new_github_repo routes through GitHub_Integration and project owners with typed repo/project payload and result contract",
+L00021408	        "Auth, permission, organization/owner selection, remote side-effect approval, and duplicate-repo disabled reasons are exposed before dispatch",

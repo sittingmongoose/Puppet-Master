@@ -1,0 +1,357 @@
+<<< CONTEXT_BEFORE 17586-17597 >>>
+- Timeout
+- 30 minutes
+negative_constraints: []
+compatibility_only_notes:
+- parent-tier wording is preserved as source text and should route through current remediation lineage.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< AUTHORITATIVE_CORE 17598-17925 >>>
+### OSI-189 - Memory Persistence Conflict And Staleness Retired-Source Disposition
+
+```yaml
+plan_unit_id: OSI-189
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Memory-file persistence conflict and staleness heuristics are preserved as source-lineage tokens only unless remapped to
+  canonical runtime storage retention, including timestamp, recency, conflict, pruning, persistence, size limit, rotation,
+  and archive examples.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
+  behavior rather than GUI presentation.
+split_recommended: true
+depends_on:
+- OSI-173
+- OSI-174
+unblocks: []
+acceptance_criteria:
+- Covered source spans or source lines remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- >-
+  Source examples, tables, YAML snippets, and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds,
+  executable queues, final node manifests, or production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: memory_persistence_conflict_staleness_retired_source_disposition
+node_compile_hint:
+  mode: memory_persistence_conflict_staleness_retired_source_disposition
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0119
+preserved_exact_tokens:
+- 'Gap #18'
+- timestamp
+- last 30 days
+- '"Rust + Actix" vs "Python + FastAPI"'
+- 90 days
+- persistent
+- 10MB
+- Rotate or archive
+negative_constraints: []
+compatibility_only_notes:
+- Memory-file heuristics are source-lineage only unless remapped to canonical runtime storage retention.
+stale_retired_dispositions:
+- >-
+  Memory files may become stale/conflicting/unbounded is retained as retired source framing, not promoted above canonical
+  runtime storage.
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-190 - Active-Subagent Tracking Accuracy Source-Of-Truth Partial
+
+```yaml
+plan_unit_id: OSI-190
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  The first part of the active-subagent tracking accuracy gap records inaccurate tracking risk from mid-tier selection changes
+  or platform-native overrides and requires ExecutionUnitContext.active_subagent to be set by BeforeUnit hook and updated
+  by platform-native hooks.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
+  behavior rather than GUI presentation.
+split_recommended: true
+depends_on:
+- OSI-175
+unblocks: []
+acceptance_criteria:
+- Covered source spans or source lines remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- >-
+  Source examples, tables, YAML snippets, and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds,
+  executable queues, final node manifests, or production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: active_subagent_tracking_accuracy_source_truth_partial
+node_compile_hint:
+  mode: active_subagent_tracking_accuracy_source_truth_partial
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0119
+preserved_exact_tokens:
+- 'Gap #19'
+- Active subagent tracking accuracy
+- subagent selection changes mid-tier
+- platform-native hooks override selection
+- ExecutionUnitContext.active_subagent
+- BeforeUnit hook
+- must update ExecutionUnitContext
+negative_constraints: []
+compatibility_only_notes:
+- >-
+  This PlanUnit covers only S0119 source lines 3215-3220; the S0119 tail remains residual for the next bounded window.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-191 - Active-Subagent Tracking Validation And Inference Fallback
+
+```yaml
+plan_unit_id: OSI-191
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  AfterUnit validation checks that tracked subagent identity matches actual execution using platform logs or output, and if
+  tracking fails may infer subagent identity from output patterns such as rust-engineer or Rust-specific markers.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend orchestration, hook, lifecycle, validation, parser, remediation, continuity, or storage-boundary
+  behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-175
+- OSI-190
+unblocks: []
+acceptance_criteria:
+- Covered source lines remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- >-
+  Source examples, JSON snippets, Rust snippets, and blank boundary lines are preserved as plan evidence or attached coverage
+  and do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: active_subagent_tracking_validation_inference_fallback
+node_compile_hint:
+  mode: active_subagent_tracking_validation_inference_fallback
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0119
+preserved_exact_tokens:
+- AfterUnit hook
+- platform logs
+- output
+- subagent name
+- Fallback
+- rust-engineer
+- Rust-specific patterns
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-192 - Safe Hook Wrapping Performance Budget
+
+```yaml
+plan_unit_id: OSI-192
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  safe_hook_main wrapping is scoped by performance budget: only hooks and verification functions that may panic or fail unpredictably
+  require wrapping, trusted simple getters can avoid wrapping, Result types are preferred where possible, and overhead above
+  5 percent on hot paths triggers optimization or removal.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend orchestration, hook, lifecycle, validation, parser, remediation, continuity, or storage-boundary
+  behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-176
+- OSI-177
+- OSI-138
+- OSI-145
+- OSI-146
+unblocks: []
+acceptance_criteria:
+- Covered source lines remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- >-
+  Source examples, JSON snippets, Rust snippets, and blank boundary lines are preserved as plan evidence or attached coverage
+  and do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: safe_hook_wrapping_performance_budget
+node_compile_hint:
+  mode: safe_hook_wrapping_performance_budget
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0119
+preserved_exact_tokens:
+- 'Gap #20'
+- safe_hook_main
+- Selective wrapping
+- Result
+- panics
+- overhead > 5%
+- hot paths
+negative_constraints:
+- Do not wrap trusted/simple getters unnecessarily.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+### OSI-193 - Lazy Lifecycle State Directory Permission Fallback
+
+```yaml
+plan_unit_id: OSI-193
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Lazy verification state directory creation checks write permissions, logs errors and continues when persistence is unavailable,
+  may try a fallback location such as /tmp/puppet-master-<user>/, and reports clear user instructions for permission repair.
+gui_related: false
+gui_classification_reason: >-
+  This unit covers backend orchestration, hook, lifecycle, validation, parser, remediation, continuity, or storage-boundary
+  behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+- OSI-178
+- OSI-179
+- SP-001
+unblocks: []
+acceptance_criteria:
+- Covered source lines remain losslessly available for exact-text audit.
+- >-
+  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- >-
+  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+  retain their own contracts.
+- >-
+  Source examples, JSON snippets, Rust snippets, and blank boundary lines are preserved as plan evidence or attached coverage
+  and do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- >-
+  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+reasoning_tier: standard
+context_scope: orchestrator_subagent_standardization
+implementation_surfaces:
+- Plans/orchestrator-subagent-integration.md
+risk_class: lazy_lifecycle_state_directory_permission_fallback
+node_compile_hint:
+  mode: lazy_lifecycle_state_directory_permission_fallback
+  create_worknodes: false
+source_lineage:
+- >-
+  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0119
+preserved_exact_tokens:
+- .puppet-master/verification/
+- Permission check
+- log error and continue
+- /tmp/puppet-master-<user>/
+- 'Cannot create state directory. Run: chmod 755 .puppet-master'
+negative_constraints: []
+compatibility_only_notes:
+- Fallback paths are source examples and must remain aligned with canonical storage/security policy.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/orchestrator-subagent-integration.md
+preserved_contractrefs: []
+```
+
+
+<<< CONTEXT_AFTER 17926-17937 >>>
+### OSI-194 - Structured Handoff Prompt-Injection Enforcement And Retry Feedback
+
+```yaml
+plan_unit_id: OSI-194
+unit_type: requirement
+status: accepted
+owner_doc: Plans/orchestrator-subagent-integration.md
+canonical_text: >-
+  Structured handoff prompt enforcement includes explicit JSON schema examples for structured-capable providers, markdown
+  examples for Copilot text-only output, validation-error feedback in retry prompts, and best-effort partial output with warnings
+  after retry failure.
+gui_related: false

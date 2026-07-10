@@ -1,0 +1,380 @@
+<<< CONTEXT_BEFORE 12789-12800 >>>
+  - "`parent_run_id`"
+  - "`billing_entity_id`"
+  - "`entitlement_class`"
+  - "ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md"
+negative_constraints:
+  - "Provider-native display metadata must not replace stable account identity."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+  - Plans/Models_System.md
+```
+
+
+<<< AUTHORITATIVE_CORE 12801-13151 >>>
+### CV-200 - Usage Source Window And Cache Metadata
+
+```yaml
+plan_unit_id: CV-200
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Usage attribution preserves source_class, source_confidence, source_authority,
+  window_label, closed window_scope values, cache_hit, cache_strategy, and maps
+  the display phrase usage-record to the canonical usage_record object; legacy
+  usage_source_kind and provider_usage_source_kind normalize into the source
+  fields before storage or display.
+gui_related: false
+gui_classification_reason: This unit defines usage attribution metadata rather than visual presentation.
+split_recommended: false
+depends_on: [CV-199]
+unblocks: []
+acceptance_criteria:
+  - "window_scope is closed to provider, account, account+model, org, and server_profile."
+  - "source_class/source_confidence/source_authority distinguish local_estimated, API-key-derived, OAuth-quota-derived, combined API/OAuth attribution, provider_reported, provider_header, cli_reported, pricing_estimated, and unknown states."
+  - "usage_source_kind, provider_usage_source_kind, and provider_signal_confidence remain compatibility/migration aliases only."
+  - "cache_hit and cache_strategy remain available where they affect attribution."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_source_metadata_loss
+reasoning_tier: high
+context_scope: usage_source_window_cache_metadata
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: usage_source_window_cache_metadata
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0070
+preserved_exact_tokens:
+  - "`usage_source_kind`"
+  - "`window_label`"
+  - "`window_scope`"
+  - "`cache_hit?`"
+  - "`cache_strategy?`"
+  - "`usage_record`"
+  - "`provider | account | account+model | org | server_profile`"
+  - "`local-estimated`"
+  - "API-key-derived"
+  - "OAuth-quota-derived"
+negative_constraints:
+  - "Usage source and window metadata must not collapse all usage into one projection."
+  - "Compatibility source aliases must not replace source_class, source_confidence, or source_authority."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+```
+
+### CV-201 - Attribution Tuple And Consumer Coherence
+
+```yaml
+plan_unit_id: CV-201
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Usage attribution is keyed by the tuple provider_id, model_id, account_id,
+  billing_entity_id, and entitlement_class when those dimensions are known, and
+  node-level consumers must not restate or conflict with the requested/effective
+  account model.
+gui_related: false
+gui_classification_reason: This unit defines attribution and consumer contract boundaries rather than visual presentation.
+split_recommended: false
+depends_on: [CV-199]
+unblocks: [CV-202, CV-203, CV-213]
+acceptance_criteria:
+  - "Attribution uses the provider, model, account, billing entity, and entitlement tuple when known."
+  - "Orchestrator, Run Graph, and Models consumers stay coherent with the requested/effective account model."
+  - "billing_entity_id alone is not a sufficient substitute when account or entitlement context exists."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: attribution_tuple_collapse
+reasoning_tier: high
+context_scope: usage_attribution_tuple_consumer_coherence
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Orchestrator_Page.md
+  - Plans/Run_Graph_View.md
+  - Plans/Models_System.md
+node_compile_hint:
+  mode: attribution_tuple_consumer_coherence
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0070
+preserved_exact_tokens:
+  - "`(provider_id, model_id, account_id?, billing_entity_id?, entitlement_class?)`"
+  - "`billing_entity_id`"
+  - "requested/effective account model"
+  - "Plans/Orchestrator_Page.md"
+  - "Plans/Run_Graph_View.md"
+  - "Plans/Models_System.md"
+negative_constraints:
+  - "Attribution must not collapse to billing_entity_id alone when account or entitlement context exists."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+```
+
+### CV-202 - Gemini OAuth API-Key Auth Surface Boundary
+
+```yaml
+plan_unit_id: CV-202
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Gemini usage and account wording keeps OAuth bucket semantics distinct from
+  API-key semantics; provider-settings and auth UI expose OAuth login,
+  re-auth/logout, status, what each mode unlocks, which bucket each mode uses,
+  and precedence when both are present.
+gui_related: true
+gui_classification_reason: This unit defines provider-settings and auth UI copy/surfaces.
+split_recommended: false
+depends_on: [CV-201]
+unblocks: []
+acceptance_criteria:
+  - "OAuth and API key modes remain distinct in usage and account wording."
+  - "Provider-settings/auth UI exposes OAuth login, re-auth/logout, status, unlocks, bucket use, and precedence."
+  - "GUI/spec copy does not over-focus API key or under-specify OAuth."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: gemini_auth_surface_drift
+reasoning_tier: high
+context_scope: gemini_oauth_api_key_boundary
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+  - Plans/Models_System.md
+node_compile_hint:
+  mode: gemini_auth_surface_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0070
+preserved_exact_tokens:
+  - "OAuth"
+  - "API key"
+  - "`/re-auth/logout`"
+  - "OAuth bucket semantics"
+  - "API-key semantics"
+negative_constraints:
+  - "GUI/spec copy must not over-focus API key or under-specify OAuth as a distinct surface."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/FinalGUISpec.md
+```
+
+### CV-203 - Usage Lineage And Bridge Enforcement Fields
+
+```yaml
+plan_unit_id: CV-203
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Bridge adapters, storage snapshots, analytics rollups, and UI projections
+  preserve attribution tuple fields; background/helper usage carries the same
+  tuple and parent_run_id, and bridge-visible spending fields round-trip through
+  the normalized stream.
+gui_related: false
+gui_classification_reason: This unit defines bridge, storage, and analytics usage lineage behavior.
+split_recommended: false
+depends_on: [CV-199, CV-201]
+unblocks: []
+acceptance_criteria:
+  - "Bridge adapters, storage snapshots, analytics rollups, and UI projections preserve tuple fields."
+  - "Background and helper usage keep the same attribution tuple and parent_run_id."
+  - "Bridge-visible spending-limit fields remain aligned with Run_Modes and CLI_Bridged_Providers."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_lineage_bridge_field_loss
+reasoning_tier: high
+context_scope: usage_lineage_bridge_enforcement
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Run_Modes.md
+  - Plans/CLI_Bridged_Providers.md
+node_compile_hint:
+  mode: usage_lineage_bridge_enforcement_fields
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0070
+preserved_exact_tokens:
+  - "bridge adapters"
+  - "storage snapshots"
+  - "analytics rollups"
+  - "UI projections"
+  - "`parent_run_id`"
+  - "Plans/Run_Modes.md"
+  - "Plans/CLI_Bridged_Providers.md"
+negative_constraints:
+  - "Background/helper usage must not invent a second attribution model."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/CLI_Bridged_Providers.md
+```
+
+### CV-204 - Legacy Run Completed Usage Compatibility
+
+```yaml
+plan_unit_id: CV-204
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  run.completed.usage snapshots must not use the legacy tokens_in, tokens_out,
+  cost, thread_id tuple as the persisted contract; compatibility import maps
+  legacy fields into canonical token buckets, microdollar cost fields,
+  attribution tuple, and runtime lineage.
+gui_related: false
+gui_classification_reason: This unit defines compatibility import and persisted usage contract behavior.
+split_recommended: false
+depends_on: [CV-196, CV-199]
+unblocks: []
+acceptance_criteria:
+  - "New run.completed.usage snapshots do not persist the legacy tuple."
+  - "Compatibility import maps legacy tokens and cost into canonical buckets and microdollars."
+  - "Compatibility import preserves attribution tuple and runtime lineage."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: legacy_usage_tuple_revival
+reasoning_tier: high
+context_scope: run_completed_usage_compatibility
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: legacy_usage_tuple_compatibility_disposition
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0070
+preserved_exact_tokens:
+  - "`run.completed.usage`"
+  - "`(tokens_in, tokens_out, cost, thread_id)`"
+  - "`tokens_in`"
+  - "`tokens_out`"
+  - "`cost`"
+compatibility_only_notes:
+  - "Compatibility import of legacy usage fields is separate from already-fixed root-precedence rules."
+negative_constraints:
+  - "`run.completed.usage` snapshots MUST NOT use the legacy `(tokens_in, tokens_out, cost, thread_id)` tuple as the persisted contract."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+```
+
+### CV-205 - Cost Accumulation Monotonic Adjustments
+
+```yaml
+plan_unit_id: CV-205
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Cost accumulation is monotonic, non-decreasing, and non-negative across a
+  cumulative session; model-switch sign flips or provider corrections that
+  would produce negative raw cost are recorded as adjustment or clamp events
+  instead of retroactively decreasing prior displayed usage.
+gui_related: false
+gui_classification_reason: This unit defines cost accounting invariants rather than visual presentation.
+split_recommended: false
+depends_on: [CV-189]
+unblocks: [CV-206]
+acceptance_criteria:
+  - "Cumulative-session cost remains monotonic, non-decreasing, and non-negative."
+  - "Negative raw cost corrections become adjustment or clamp events."
+  - "Prior displayed usage is not retroactively decreased."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: cost_monotonicity_violation
+reasoning_tier: high
+context_scope: cumulative_session_cost_accounting
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: cost_monotonic_adjustment_constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0070
+preserved_exact_tokens:
+  - "`/non-negative`"
+  - "negative-raw-cost"
+  - "`/adjustment`"
+  - "clamp event"
+negative_constraints:
+  - "Cost corrections must not retroactively decrease prior displayed usage."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+```
+
+### CV-206 - Cost USD Presentation Precision
+
+```yaml
+plan_unit_id: CV-206
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  cost_usd is presentation-only and derived from stored microdollars; sub-cent
+  display uses adaptive precision including less-than-one-cent values at six
+  decimals, and negative-cost display requires an explicit adjustment record.
+gui_related: true
+gui_classification_reason: This unit defines visible cost presentation precision.
+split_recommended: false
+depends_on: [CV-189, CV-205]
+unblocks: []
+acceptance_criteria:
+  - "cost_usd is derived from stored microdollars and is presentation-only."
+  - "Sub-cent display uses adaptive precision including six decimals below one cent."
+  - "Negative-cost display is backed by an explicit adjustment record."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: cost_display_precision_drift
+reasoning_tier: standard
+context_scope: cost_usd_presentation
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: cost_usd_presentation_precision
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0070
+preserved_exact_tokens:
+  - "`cost_usd`"
+  - "`<$0.01 => 6 decimals`"
+  - "integer microdollars"
+  - "adjustment record"
+negative_constraints:
+  - "Negative-cost display must never be backed by mutating prior usage."
+owner_hints:
+  - Plans/Contracts_V0.md
+  - Plans/usage-feature.md
+```
+
+
+<<< CONTEXT_AFTER 13152-13163 >>>
+### CV-207 - Executor Consumer Anchors And Legacy Audit Closure
+
+```yaml
+plan_unit_id: CV-207
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 owns the shared usage attribution tuple while Executor Protocol
+  owns classified outcome, doom-loop, signal/lifecycle, and blocked/retry prose;
+  legacy LF-004 and LF-008 audit contradictions are closed by conditional
+  omission rules, and audit verdict words are not schema states.

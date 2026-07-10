@@ -1,0 +1,400 @@
+<<< CONTEXT_BEFORE 2247-2258 >>>
+negative_constraints:
+- "Plugin-registered tools must not bypass the central tool registry or permission policy engine."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md#DEFAULTS"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/Tools.md"
+- "Plans/Permissions_System.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 2259-2629 >>>
+### PLUG-033 - Core-Surface Extensibility Boundary
+
+```yaml
+plan_unit_id: PLUG-033
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Plugin-added subviews, cards, and actions may extend core surfaces but must not replace reserved surface IDs, panel routes, command-family meaning, or deep-link target meaning, and navigation into core surfaces must use target-surface canonical context payloads."
+gui_related: true
+gui_classification_reason: "This unit defines plugin UI, user-visible approval, GUI references, or interface-facing extensibility behavior."
+split_recommended: false
+depends_on:
+- PLUG-032
+unblocks: []
+acceptance_criteria:
+- "PLUG-033 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_209
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: core_surface_extensibility
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0043
+preserved_exact_tokens:
+- "/cards/actions"
+- "core surfaces"
+- "reserved surface IDs"
+- "panel routes"
+- "command-family meaning"
+- "deep-link target meaning"
+- "canonical context payloads"
+negative_constraints:
+- "Plugin-added subviews/cards/actions MUST NOT replace reserved surface IDs, panel routes, command-family meaning, or deep-link target meaning."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/UI_Command_Catalog.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/UI_Command_Catalog.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PLUG-034 - Extensibility Host Policy Inheritance
+
+```yaml
+plan_unit_id: PLUG-034
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Plugin-added tools, hooks, MCP bridges, and other /extensibility capabilities that contact external hosts, registry hosts, or Kubernetes clusters must declare contacted domains and hosts and inherit registry_hosts[], k8s_host_policy, /network/trust, proxy, and permission policy checks."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-032
+unblocks: []
+acceptance_criteria:
+- "PLUG-034 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_209
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: host_policy_inheritance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0043
+preserved_exact_tokens:
+- "/extensibility"
+- "external hosts"
+- "registry hosts"
+- "Kubernetes clusters"
+- "declare contacted domains/hosts"
+- "registry_hosts[]"
+- "k8s_host_policy"
+- "/network/trust"
+- "proxy"
+- "host-policy blocked reasons"
+- "ordered allowed_action_ids[]"
+negative_constraints:
+- "Host policy denial must use canonical host-policy blocked reasons and ordered allowed_action_ids[], not plugin-private recovery semantics."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/UI_Command_Catalog.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/Permissions_System.md"
+- "Plans/Containers_Registry_and_Unraid.md"
+```
+
+### PLUG-035 - Protected Routing Revalidation
+
+```yaml
+plan_unit_id: PLUG-035
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Hooks must not silently rewrite protected routing fields, including remote host, base URL, registry host, kube context, namespace, and receipt identity keys; protected-field changes trigger permission revalidation and may be blocked with canonical /denied outcomes."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-019
+- PLUG-034
+unblocks: []
+acceptance_criteria:
+- "PLUG-035 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_209
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: protected_routing_revalidation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0043
+preserved_exact_tokens:
+- "protected routing fields"
+- "remote host/base URL"
+- "registry host"
+- "kube context"
+- "namespace"
+- "receipt identity keys"
+- "revalidated through the permission engine"
+- "canonical /denied outcomes"
+negative_constraints:
+- "Hooks must not silently rewrite protected routing fields."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/UI_Command_Catalog.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/Permissions_System.md"
+- "Plans/Containers_Registry_and_Unraid.md"
+```
+
+### PLUG-036 - Plugin Configuration Section Boundary
+
+```yaml
+plan_unit_id: PLUG-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "The Plugin configuration section boundary preserves the PLUGIN-CONFIG anchor and marks that concrete configuration schema behavior begins after the first batch window."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-002
+unblocks: []
+acceptance_criteria:
+- "PLUG-036 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_209
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: section_anchor_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0044
+preserved_exact_tokens:
+- "PLUGIN-CONFIG"
+- "Plugin configuration"
+- "7. Plugin configuration"
+- "config shape"
+- "Config body begins after this batch"
+negative_constraints:
+- "The Plugin configuration section boundary must not be treated as complete configuration behavior without the following config-shape spans."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+```
+
+### PLUG-037 - Config Shape
+
+```yaml
+plan_unit_id: PLUG-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Plugin configuration schema preserves TOML [plugins] fields for hook_timeout_ms, allow_tool_override, config-sourced packages, and per-plugin disabled state."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-036
+- PLUG-008
+- PLUG-029
+- PLUG-031
+unblocks: []
+acceptance_criteria:
+- "PLUG-037 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_210
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: plugin_config_schema
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0045
+preserved_exact_tokens:
+- "7.1 Config shape"
+- "[plugins]"
+- "hook_timeout_ms = 5000"
+- "allow_tool_override = false"
+- "packages"
+- "puppet-master-lint-hook@0.1.0"
+- "file:///home/user/my-local-plugin"
+- "[plugins.disabled]"
+- "noisy-plugin"
+negative_constraints:
+- "Config schema fields must not imply executable plugin load approval without the no-auto-load gate."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/Tools.md"
+- "Plans/Permissions_System.md"
+```
+
+### PLUG-038 - Plugin Disable Persistence
+
+```yaml
+plan_unit_id: PLUG-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Individual plugins can be disabled by config.plugins.disabled.<plugin_id> = true, causing disabled plugins not to load and preserving that disable state across sessions."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-037
+- PLUG-014
+unblocks: []
+acceptance_criteria:
+- "PLUG-038 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_210
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: plugin_disable_config
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0046
+preserved_exact_tokens:
+- "7.2 Enable/disable"
+- "config.plugins.disabled.<plugin_id> = true"
+- "Disabled plugins are not loaded"
+- "persists across sessions"
+negative_constraints:
+- "Disabled plugins must not be loaded while the persisted disabled config remains true."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/storage-plan.md"
+```
+
+### PLUG-039 - Child-Run Plugin And MCP Compatibility Ceiling
+
+```yaml
+plan_unit_id: PLUG-039
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Child runs inherit plugin and MCP effects only as an effective compatible subset, never as a blind copy of the parent environment or a backdoor that widens child permissions or tool authority; requested versus effective dropped capability details remain visible for debugging."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PLUG-032
+- PLUG-034
+- PLUG-035
+unblocks: []
+acceptance_criteria:
+- "PLUG-039 remains addressable as a fine-grained Plugins System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: plugins_system_drift
+reasoning_tier: standard
+context_scope: plugins_system_batch_210
+implementation_surfaces:
+- Plans/Plugins_System.md
+node_compile_hint:
+  mode: child_run_compatible_subset
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Plugins_System-S0048
+preserved_exact_tokens:
+- "7.4 Child-run plugin and MCP inheritance"
+- "effective compatible subset"
+- "blind copy"
+- "parent environment"
+- "child-visible plugin behavior"
+- "child runtime path"
+- "parent effectively allowed it"
+- "backdoor"
+- "widens child permissions"
+- "tool authority"
+- "MCP availability"
+- "parent-ceiling"
+- "compatibility-subset"
+- "requested versus effective dropped capability details"
+negative_constraints:
+- "Plugin behavior must not function as a backdoor that widens child permissions or tool authority."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md, ContractName:Plans/Models_System.md"
+- "ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md"
+compatibility_only_notes:
+- "MCP availability follows the same parent-ceiling and compatibility-subset rule."
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Plugins_System.md"
+- "Plans/Permissions_System.md"
+- "Plans/Tools.md"
+- "Plans/Models_System.md"
+- "Plans/Skills_System.md"
+```
+
+
+<<< CONTEXT_AFTER 2630-2641 >>>
+### PLUG-040 - Per-Persona Plugin Disable Overrides
+
+```yaml
+plan_unit_id: PLUG-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Plugins_System.md
+canonical_text: "Persona plugin overrides use the disabled_plugins field in PERSONA.md frontmatter, and when a Persona is active, matching plugin ids are skipped during hook dispatch without unloading the plugin."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:

@@ -1,0 +1,410 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4783-4794 >>>
+L00004783	            "blocked"
+L00004784	          ]
+L00004785	        },
+L00004786	        "mitigation": {
+L00004787	          "type": "string"
+L00004788	        },
+L00004789	        "evidence_refs": {
+L00004790	          "$ref": "#/$defs/ref_list"
+L00004791	        }
+L00004792	      }
+L00004793	    }
+L00004794	  },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4795-5175 >>>
+L00004795	  "allOf": [
+L00004796	    {
+L00004797	      "if": {
+L00004798	        "properties": {
+L00004799	          "artifact_kind": {
+L00004800	            "const": "handoff_matrix"
+L00004801	          }
+L00004802	        },
+L00004803	        "required": [
+L00004804	          "artifact_kind"
+L00004805	        ]
+L00004806	      },
+L00004807	      "then": {
+L00004808	        "properties": {
+L00004809	          "payload": {
+L00004810	            "$ref": "#/$defs/handoff_matrix"
+L00004811	          }
+L00004812	        }
+L00004813	      }
+L00004814	    },
+L00004815	    {
+L00004816	      "if": {
+L00004817	        "properties": {
+L00004818	          "artifact_kind": {
+L00004819	            "const": "handoff_row"
+L00004820	          }
+L00004821	        },
+L00004822	        "required": [
+L00004823	          "artifact_kind"
+L00004824	        ]
+L00004825	      },
+L00004826	      "then": {
+L00004827	        "properties": {
+L00004828	          "payload": {
+L00004829	            "$ref": "#/$defs/handoff_row"
+L00004830	          }
+L00004831	        }
+L00004832	      }
+L00004833	    },
+L00004834	    {
+L00004835	      "if": {
+L00004836	        "properties": {
+L00004837	          "artifact_kind": {
+L00004838	            "const": "plan_compile_run"
+L00004839	          }
+L00004840	        },
+L00004841	        "required": [
+L00004842	          "artifact_kind"
+L00004843	        ]
+L00004844	      },
+L00004845	      "then": {
+L00004846	        "properties": {
+L00004847	          "payload": {
+L00004848	            "$ref": "#/$defs/plan_compile_run"
+L00004849	          }
+L00004850	        }
+L00004851	      }
+L00004852	    },
+L00004853	    {
+L00004854	      "if": {
+L00004855	        "properties": {
+L00004856	          "artifact_kind": {
+L00004857	            "const": "source_control_receipt"
+L00004858	          }
+L00004859	        },
+L00004860	        "required": [
+L00004861	          "artifact_kind"
+L00004862	        ]
+L00004863	      },
+L00004864	      "then": {
+L00004865	        "properties": {
+L00004866	          "payload": {
+L00004867	            "$ref": "#/$defs/source_control_receipt"
+L00004868	          }
+L00004869	        }
+L00004870	      }
+L00004871	    },
+L00004872	    {
+L00004873	      "if": {
+L00004874	        "properties": {
+L00004875	          "artifact_kind": {
+L00004876	            "const": "stage_card"
+L00004877	          }
+L00004878	        },
+L00004879	        "required": [
+L00004880	          "artifact_kind"
+L00004881	        ]
+L00004882	      },
+L00004883	      "then": {
+L00004884	        "properties": {
+L00004885	          "payload": {
+L00004886	            "$ref": "#/$defs/stage_card"
+L00004887	          }
+L00004888	        }
+L00004889	      }
+L00004890	    },
+L00004891	    {
+L00004892	      "if": {
+L00004893	        "properties": {
+L00004894	          "artifact_kind": {
+L00004895	            "const": "worknode_dispatch_receipt"
+L00004896	          }
+L00004897	        },
+L00004898	        "required": [
+L00004899	          "artifact_kind"
+L00004900	        ]
+L00004901	      },
+L00004902	      "then": {
+L00004903	        "properties": {
+L00004904	          "payload": {
+L00004905	            "$ref": "#/$defs/worknode_dispatch_receipt"
+L00004906	          }
+L00004907	        }
+L00004908	      }
+L00004909	    },
+L00004910	    {
+L00004911	      "if": {
+L00004912	        "properties": {
+L00004913	          "artifact_kind": {
+L00004914	            "const": "compile_worklist"
+L00004915	          }
+L00004916	        },
+L00004917	        "required": [
+L00004918	          "artifact_kind"
+L00004919	        ]
+L00004920	      },
+L00004921	      "then": {
+L00004922	        "properties": {
+L00004923	          "payload": {
+L00004924	            "$ref": "#/$defs/compile_worklist"
+L00004925	          }
+L00004926	        }
+L00004927	      }
+L00004928	    },
+L00004929	    {
+L00004930	      "if": {
+L00004931	        "properties": {
+L00004932	          "artifact_kind": {
+L00004933	            "const": "worknode_completion_receipt"
+L00004934	          }
+L00004935	        },
+L00004936	        "required": [
+L00004937	          "artifact_kind"
+L00004938	        ]
+L00004939	      },
+L00004940	      "then": {
+L00004941	        "properties": {
+L00004942	          "payload": {
+L00004943	            "$ref": "#/$defs/worknode_completion_receipt"
+L00004944	          }
+L00004945	        }
+L00004946	      }
+L00004947	    },
+L00004948	    {
+L00004949	      "if": {
+L00004950	        "properties": {
+L00004951	          "artifact_kind": {
+L00004952	            "const": "auditor_cycle_report"
+L00004953	          }
+L00004954	        },
+L00004955	        "required": [
+L00004956	          "artifact_kind"
+L00004957	        ]
+L00004958	      },
+L00004959	      "then": {
+L00004960	        "properties": {
+L00004961	          "payload": {
+L00004962	            "$ref": "#/$defs/auditor_cycle_report"
+L00004963	          }
+L00004964	        }
+L00004965	      }
+L00004966	    },
+L00004967	    {
+L00004968	      "if": {
+L00004969	        "properties": {
+L00004970	          "artifact_kind": {
+L00004971	            "const": "auditor_verification_receipt"
+L00004972	          }
+L00004973	        },
+L00004974	        "required": [
+L00004975	          "artifact_kind"
+L00004976	        ]
+L00004977	      },
+L00004978	      "then": {
+L00004979	        "properties": {
+L00004980	          "payload": {
+L00004981	            "$ref": "#/$defs/auditor_verification_receipt"
+L00004982	          }
+L00004983	        }
+L00004984	      }
+L00004985	    },
+L00004986	    {
+L00004987	      "if": {
+L00004988	        "properties": {
+L00004989	          "artifact_kind": {
+L00004990	            "const": "repair_attempt_receipt"
+L00004991	          }
+L00004992	        },
+L00004993	        "required": [
+L00004994	          "artifact_kind"
+L00004995	        ]
+L00004996	      },
+L00004997	      "then": {
+L00004998	        "properties": {
+L00004999	          "payload": {
+L00005000	            "$ref": "#/$defs/repair_attempt_receipt"
+L00005001	          }
+L00005002	        }
+L00005003	      }
+L00005004	    },
+L00005005	    {
+L00005006	      "if": {
+L00005007	        "properties": {
+L00005008	          "artifact_kind": {
+L00005009	            "const": "validation_pass_report"
+L00005010	          }
+L00005011	        },
+L00005012	        "required": [
+L00005013	          "artifact_kind"
+L00005014	        ]
+L00005015	      },
+L00005016	      "then": {
+L00005017	        "properties": {
+L00005018	          "payload": {
+L00005019	            "$ref": "#/$defs/validation_pass_report"
+L00005020	          }
+L00005021	        }
+L00005022	      }
+L00005023	    },
+L00005024	    {
+L00005025	      "if": {
+L00005026	        "properties": {
+L00005027	          "artifact_kind": {
+L00005028	            "const": "node_seed_candidate"
+L00005029	          }
+L00005030	        },
+L00005031	        "required": [
+L00005032	          "artifact_kind"
+L00005033	        ]
+L00005034	      },
+L00005035	      "then": {
+L00005036	        "properties": {
+L00005037	          "payload": {
+L00005038	            "$ref": "#/$defs/node_seed_candidate"
+L00005039	          }
+L00005040	        }
+L00005041	      }
+L00005042	    },
+L00005043	    {
+L00005044	      "if": {
+L00005045	        "properties": {
+L00005046	          "artifact_kind": {
+L00005047	            "const": "node_seed_review"
+L00005048	          }
+L00005049	        },
+L00005050	        "required": [
+L00005051	          "artifact_kind"
+L00005052	        ]
+L00005053	      },
+L00005054	      "then": {
+L00005055	        "properties": {
+L00005056	          "payload": {
+L00005057	            "$ref": "#/$defs/node_seed_review"
+L00005058	          }
+L00005059	        }
+L00005060	      }
+L00005061	    },
+L00005062	    {
+L00005063	      "if": {
+L00005064	        "properties": {
+L00005065	          "artifact_kind": {
+L00005066	            "const": "workgraph_draft"
+L00005067	          }
+L00005068	        },
+L00005069	        "required": [
+L00005070	          "artifact_kind"
+L00005071	        ]
+L00005072	      },
+L00005073	      "then": {
+L00005074	        "properties": {
+L00005075	          "payload": {
+L00005076	            "$ref": "#/$defs/workgraph_draft"
+L00005077	          }
+L00005078	        }
+L00005079	      }
+L00005080	    },
+L00005081	    {
+L00005082	      "if": {
+L00005083	        "properties": {
+L00005084	          "artifact_kind": {
+L00005085	            "const": "worknode_request"
+L00005086	          }
+L00005087	        },
+L00005088	        "required": [
+L00005089	          "artifact_kind"
+L00005090	        ]
+L00005091	      },
+L00005092	      "then": {
+L00005093	        "properties": {
+L00005094	          "payload": {
+L00005095	            "$ref": "#/$defs/worknode_request"
+L00005096	          }
+L00005097	        }
+L00005098	      }
+L00005099	    },
+L00005100	    {
+L00005101	      "if": {
+L00005102	        "properties": {
+L00005103	          "artifact_kind": {
+L00005104	            "const": "compiler_model_routing"
+L00005105	          }
+L00005106	        },
+L00005107	        "required": [
+L00005108	          "artifact_kind"
+L00005109	        ]
+L00005110	      },
+L00005111	      "then": {
+L00005112	        "properties": {
+L00005113	          "payload": {
+L00005114	            "$ref": "#/$defs/compiler_model_routing"
+L00005115	          }
+L00005116	        }
+L00005117	      }
+L00005118	    },
+L00005119	    {
+L00005120	      "if": {
+L00005121	        "properties": {
+L00005122	          "artifact_kind": {
+L00005123	            "const": "codex_work_package"
+L00005124	          }
+L00005125	        },
+L00005126	        "required": [
+L00005127	          "artifact_kind"
+L00005128	        ]
+L00005129	      },
+L00005130	      "then": {
+L00005131	        "properties": {
+L00005132	          "payload": {
+L00005133	            "$ref": "#/$defs/codex_work_package"
+L00005134	          }
+L00005135	        }
+L00005136	      }
+L00005137	    },
+L00005138	    {
+L00005139	      "if": {
+L00005140	        "properties": {
+L00005141	          "artifact_kind": {
+L00005142	            "const": "codex_external_gui_agent_request"
+L00005143	          }
+L00005144	        },
+L00005145	        "required": [
+L00005146	          "artifact_kind"
+L00005147	        ]
+L00005148	      },
+L00005149	      "then": {
+L00005150	        "properties": {
+L00005151	          "payload": {
+L00005152	            "$ref": "#/$defs/codex_external_gui_agent_request"
+L00005153	          }
+L00005154	        }
+L00005155	      }
+L00005156	    },
+L00005157	    {
+L00005158	      "if": {
+L00005159	        "properties": {
+L00005160	          "artifact_kind": {
+L00005161	            "const": "plan_compile_receipt"
+L00005162	          }
+L00005163	        },
+L00005164	        "required": [
+L00005165	          "artifact_kind"
+L00005166	        ]
+L00005167	      },
+L00005168	      "then": {
+L00005169	        "properties": {
+L00005170	          "payload": {
+L00005171	            "$ref": "#/$defs/plan_compile_receipt"
+L00005172	          }
+L00005173	        }
+L00005174	      }
+L00005175	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=5176-5187 >>>
+L00005176	    {
+L00005177	      "if": {
+L00005178	        "properties": {
+L00005179	          "artifact_kind": {
+L00005180	            "const": "test_capability_report"
+L00005181	          }
+L00005182	        },
+L00005183	        "required": [
+L00005184	          "artifact_kind"
+L00005185	        ]
+L00005186	      },
+L00005187	      "then": {

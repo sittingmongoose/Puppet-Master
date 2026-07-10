@@ -1,0 +1,384 @@
+<<< CONTEXT_BEFORE 10484-10495 >>>
+  - "`persona_display_icon`"
+  - "`persona_system_prompt_sha`"
+  - "`mode_overlay_runtime_mode`"
+  - "`mode_overlay_ceiling`"
+compatibility_only_notes:
+  - "Legacy source labels are source-lineage aliases only."
+negative_constraints:
+  - "Legacy snapshot vocabulary must not be revived in live payloads."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< AUTHORITATIVE_CORE 10496-10850 >>>
+### CV-154 - Execution Unit Context Consumer Envelope
+
+```yaml
+plan_unit_id: CV-154
+unit_type: consumer_requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Contracts_V0 consumes the Executor-owned execution_unit_context runtime
+  snapshot packet from Plans/Executor_Protocol.md and
+  Plans/execution_unit_context.schema.json for shared envelope and join behavior;
+  it does not redefine required fields, optional fields, enum values,
+  nullability, schema_version, redaction rules, or lifecycle ownership.
+gui_related: false
+gui_classification_reason: This unit defines the runtime execution-unit context packet.
+split_recommended: true
+depends_on: [CV-060, CV-145]
+unblocks: []
+acceptance_criteria:
+  - "execution_unit_context remains owned by Executor_Protocol."
+  - "Required and optional context fields are read from Plans/execution_unit_context.schema.json."
+  - "Contracts_V0 preserves account, action, tool-use, and attribution joins as envelope consumers."
+  - "Requested and effective account state stays explicit across runtime, approval, and usage surfaces."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: execution_unit_context_field_loss
+reasoning_tier: high
+context_scope: execution_unit_context_packet
+implementation_surfaces:
+  - Plans/Executor_Protocol.md
+  - Plans/execution_unit_context.schema.json
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: execution_unit_context_consumer_envelope
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0053
+preserved_exact_tokens:
+  - "`execution_unit_context`"
+  - "`schema_id`"
+  - "`schema_version`"
+  - "`run_id`"
+  - "`node_id`"
+  - "`attempt_id`"
+  - "`lane_id`"
+  - "`package_id`"
+  - "`seam_id`"
+  - "`worktree_id`"
+  - "`execution_role`"
+  - "`operational_identity`"
+  - "`tool_use_id`"
+negative_constraints:
+  - "Contracts_V0 must not redefine execution_unit_context required fields, optional fields, enum values, or nullability."
+  - "Persisted envelopes must not embed execution_unit_context without schema_version."
+  - "execution_unit_context must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets."
+owner_hints:
+  - Plans/Executor_Protocol.md
+  - Plans/execution_unit_context.schema.json
+  - Plans/Contracts_V0.md
+```
+
+### CV-155 - HITL Runtime Blocked Episode Identity
+
+```yaml
+plan_unit_id: CV-155
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  HITL approval and recovery anchor to runtime blocked episodes with run_id,
+  node_id, blocked_sequence, attempt_id?, blocked_reason_code,
+  allowed_action_ids[], approval_scope_key, approver_identity?, detail_ref?,
+  and report_ref?.
+gui_related: false
+gui_classification_reason: This unit defines HITL runtime blocked episode identity.
+split_recommended: true
+depends_on: [CV-029, CV-053]
+unblocks: [CV-156, CV-157, CV-158]
+acceptance_criteria:
+  - "Blocked episode identity preserves run_id, node_id, blocked_sequence, and attempt_id?."
+  - "HITL request payloads preserve blocked_reason_code, allowed_action_ids[], approval_scope_key, approver_identity?, detail_ref?, and report_ref?."
+  - "blocked_sequence is the canonical approval anchor."
+  - "Pre-attempt blocked episodes do not invent attempt_id."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: hitl_blocked_episode_identity_loss
+reasoning_tier: high
+context_scope: hitl_runtime_blocked_episode_identity
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/human-in-the-loop.md
+  - Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: hitl_blocked_episode_identity_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0054
+preserved_exact_tokens:
+  - "`run_id`"
+  - "`node_id`"
+  - "`blocked_sequence`"
+  - "`attempt_id?`"
+  - "`blocked_reason_code`"
+  - "`allowed_action_ids[]`"
+  - "`approval_scope_key`"
+  - "ContractRef: Plans/human-in-the-loop.md#Canonical HITL request contract, Plans/Executor_Protocol.md#Worktree-aware execution unit context"
+negative_constraints:
+  - "Pre-attempt blocked episodes must not invent attempt_id."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-156 - HITL Labels And Approval UI Actions
+
+```yaml
+plan_unit_id: CV-156
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  HITL user-facing states use the labels Blocked, Waiting approval, and Action
+  Required, and chat/GUI action buttons derive from ordered allowed_action_ids[].
+gui_related: true
+gui_classification_reason: This unit affects user-visible HITL labels and approval action buttons.
+split_recommended: true
+depends_on: [CV-030, CV-155]
+unblocks: []
+acceptance_criteria:
+  - "HITL labels preserve Blocked, Waiting approval, and Action Required."
+  - "Chat and GUI action buttons derive from ordered allowed_action_ids[]."
+  - "Ordered allowed_action_ids[] survive into approval UI."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: hitl_ui_action_order_loss
+reasoning_tier: high
+context_scope: hitl_labels_approval_ui_actions
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/FinalGUISpec.md
+  - Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: hitl_ui_action_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0054
+preserved_exact_tokens:
+  - "Blocked"
+  - "Waiting approval"
+  - "Action Required"
+  - "`allowed_action_ids[]`"
+negative_constraints:
+  - "Approval UI must not synthesize unordered local action sets."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-157 - HITL Scope Persistence And Failed Approval History
+
+```yaml
+plan_unit_id: CV-157
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Approval scope remains blocked-episode-scoped, unresolved blocked episodes
+  survive restart and are rehydrated, and failed approval attempts or failed
+  recovery action switches remain historically material in records and history.
+gui_related: false
+gui_classification_reason: This unit defines HITL approval scope, persistence, and history rules.
+split_recommended: true
+depends_on: [CV-155]
+unblocks: [CV-158]
+acceptance_criteria:
+  - "Approvals bind to run_id, node_id, blocked_sequence, and attempt_id?."
+  - "A blocked-episode approval does not imply broader policy approval unless approval_scope_key says so explicitly."
+  - "Unresolved blocked episodes survive restart and are rehydrated rather than reminted opportunistically."
+  - "Failed approval attempts or failed recovery-action switches persist in records/history."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: hitl_scope_persistence_loss
+reasoning_tier: high
+context_scope: hitl_scope_persistence_history
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Decision_Policy.md
+  - Plans/Progression_Gates.md
+node_compile_hint:
+  mode: hitl_scope_persistence_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0054
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0055
+preserved_exact_tokens:
+  - "`approval_scope_key`"
+  - "rehydrated"
+  - "failed approval attempt"
+  - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Progression_Gates.md"
+negative_constraints:
+  - "Blocked-episode approval does not imply session-global policy approval."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-158 - HITL Request ID Compatibility Boundary
+
+```yaml
+plan_unit_id: CV-158
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Older request-centric payloads may carry request_id for lineage and migration,
+  but any consumer that mutates runtime state must resolve through the
+  blocked-episode identity model.
+gui_related: false
+gui_classification_reason: This unit defines HITL compatibility identity boundaries.
+split_recommended: false
+depends_on: [CV-155, CV-157]
+unblocks: []
+acceptance_criteria:
+  - "request_id may continue only for lineage and migration."
+  - "Runtime-state mutation resolves through blocked-episode identity."
+  - "Blocked-episode identity uses run_id, node_id, blocked_sequence, and attempt_id?."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: hitl_request_id_identity_revival
+reasoning_tier: high
+context_scope: hitl_request_id_compatibility
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Run_Graph_View.md
+  - Plans/Orchestrator_Page.md
+node_compile_hint:
+  mode: hitl_request_id_compatibility_disposition
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0056
+preserved_exact_tokens:
+  - "`request_id`"
+  - "blocked-episode identity model"
+  - "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md"
+compatibility_only_notes:
+  - "request_id is lineage and migration compatibility only."
+negative_constraints:
+  - "request_id is not canonical mutation identity."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-159 - Assistant Worktree UICommand Registrations
+
+```yaml
+plan_unit_id: CV-159
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Six assistant worktree UICommand registrations are canonical with their
+  command IDs, labels, icons, chat category, when clauses, and shared guard
+  activeThreadExists && projectIsGitRepo && !projectIsRemoteNonSSH.
+gui_related: true
+gui_classification_reason: This unit defines user-visible command registrations for assistant worktree actions.
+split_recommended: true
+depends_on: [CV-031, CV-052]
+unblocks: [CV-160, CV-161, CV-162]
+acceptance_criteria:
+  - "The six assistant worktree command IDs are preserved."
+  - "Command labels, icons, category, and extra when clauses are preserved."
+  - "All six commands require activeThreadExists && projectIsGitRepo && !projectIsRemoteNonSSH."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: assistant_worktree_command_registration_loss
+reasoning_tier: high
+context_scope: assistant_worktree_uicommand_registrations
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Commands_System.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: assistant_worktree_uicommand_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0057
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0058
+preserved_exact_tokens:
+  - "`cmd.chat.worktree.create`"
+  - "`cmd.chat.worktree.unbind`"
+  - "`cmd.chat.worktree.remove`"
+  - "`cmd.chat.worktree.merge`"
+  - "`cmd.chat.worktree.pr`"
+  - "`cmd.chat.worktree.info`"
+  - "`activeThreadExists && projectIsGitRepo && !projectIsRemoteNonSSH`"
+  - "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Commands_System.md, ContractName:Plans/assistant-chat-design.md"
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-160 - Assistant Worktree Command Alias Disposition
+
+```yaml
+plan_unit_id: CV-160
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Compatibility aliases for assistant worktree commands may route to the
+  canonical assistant worktree command IDs, but they are not replacements for
+  the canonical six command IDs.
+gui_related: false
+gui_classification_reason: This unit defines command alias compatibility.
+split_recommended: true
+depends_on: [CV-159]
+unblocks: []
+acceptance_criteria:
+  - "cmd.chat.worktree.bind_existing, cmd.chat.worktree.open_files, and cmd.chat.worktree.create_pr may route to canonical assistant worktree commands."
+  - "Aliases normalize through canonical command IDs."
+  - "Aliases are not replacements for the canonical six command IDs."
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: assistant_worktree_command_alias_replacement
+reasoning_tier: standard
+context_scope: assistant_worktree_command_aliases
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: assistant_worktree_command_alias_disposition
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0058
+preserved_exact_tokens:
+  - "`cmd.chat.worktree.bind_existing`"
+  - "`cmd.chat.worktree.open_files`"
+  - "`cmd.chat.worktree.create_pr`"
+  - "`alias_of_command_id`"
+compatibility_only_notes:
+  - "Compatibility aliases may route to canonical assistant worktree commands."
+negative_constraints:
+  - "Compatibility aliases are not replacements for the canonical six command IDs."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< CONTEXT_AFTER 10851-10862 >>>
+### CV-161 - UICommand Envelope Fields And Closed Kinds
+
+```yaml
+plan_unit_id: CV-161
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  UICommand is the canonical command envelope with command_id, command_kind,
+  args, context?, normalization?, and closed command_kind and normalization
+  values, with normalization.kind required.
+gui_related: false

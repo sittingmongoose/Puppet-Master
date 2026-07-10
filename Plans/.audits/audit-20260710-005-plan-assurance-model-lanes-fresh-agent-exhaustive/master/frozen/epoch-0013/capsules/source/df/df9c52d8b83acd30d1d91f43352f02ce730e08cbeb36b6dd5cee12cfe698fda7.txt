@@ -1,0 +1,325 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-310 >>>
+L00000001	# Orchestrator Page -- Single-Page Seven-Tab Specification
+L00000002	
+L00000003	
+L00000004	## Canonical owner-section requirements
+L00000005	
+L00000006	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000007	
+L00000008	Owner-section marker list:
+L00000009	- Owner-first canonicalization order
+L00000010	- Shared governance/runtime record envelope
+L00000011	- Concern record family definition
+L00000012	- Concern lifecycle and resolution kinds
+L00000013	- Concern routing and object-first search behavior
+L00000014	- Concern action policy and authority model
+L00000015	- Concern linkage to adjacent families
+L00000016	- Promotion classes and gate evidence
+L00000017	- Focused run and historical routing contract
+L00000018	- Source Control and worktree handshake
+L00000019	- Projection trust and action gating
+L00000020	- Progress-only widget hostability
+L00000021	- Shared escalation ladder
+L00000022	- Action-surface policy
+L00000023	- Glossary and help governance
+L00000024	- Notification routing policy
+L00000025	- Project summary projection
+L00000026	- Project attention projection
+L00000027	- Account switch and pressure history
+L00000028	- Coverage blocker concern lifecycle owner section
+L00000029	- Concern owner vs creator vs resolver separation
+L00000030	- Concern source-event vs record vs projection split
+L00000031	- Dismissed vs resolved rationale enforcement
+L00000032	- Concern update heuristics
+L00000033	- Help entry template and related-concept clusters
+L00000034	- Blocked-owner eight-kind taxonomy and escalation ladder surfaces
+L00000035	- Artifact envelope routing preference
+L00000036	- Recommended minimum concern record shape
+L00000037	- Concern ownership / authority direction
+L00000038	
+L00000039	
+L00000040	## 1. Scope and canonical model
+L00000041	
+L00000042	Orchestrator is the core scheduling, concern tracking, blocked-state handling, and runtime-identity management system. It is not the UI, CLI, or external provider.
+L00000043	
+L00000044	The /page-shell is a seven-tab single-page surface with canonical tabs `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`. Node Graph Display remains a native Orchestrator view over `Plans/Orchestrator_Page.md`, `Plans/orchestrator-subagent-integration.md`, `/Orchestrator_Page.md`, and `/orchestrator-subagent-integration.md`; `Plan Compile` is a dedicated compile projection tab, and `Tiers` plus tier-era tab labels survive only as compatibility/search aliases while the canonical runtime model is node/package/seam/lane aware.
+L00000045	
+L00000046	### GUI / PMConcept Plan Compile launch repair (2026-07-02)
+L00000047	
+L00000048	Orchestrator Plan Compile consumes the Planning Wizard `Approve And Build` approval transaction; it does not create a second ordinary build launch. When `cmd.planning_wizard.approve_and_build` succeeds locally, Orchestrator opens `Plan Compile` with either the returned durable `plan_compile_run_id` or a pending-launch projection tied to the approval command and idempotency key. If `PlanApproved` publication or projection reconciliation lags, the tab displays pending-launch status and then binds to the durable `PlanCompileRun` without creating a duplicate.
+L00000049	
+L00000050	The Orchestrator GUI must not expose `START`, `BUILD`, or `Approve & Continue` as ordinary launch controls for the same approval inputs. Retained controls use scoped commands: `Open Plan Compile` focuses the Plan Compile tab, `Open Build` is disabled until `BuildStarted` or a resulting build identity exists, and HITL continuation uses `cmd.runtime.approve` or another blocked-action command with approval scope, disabled reason, and receipt evidence. Stale `tiers` tab ids are compatibility/search aliases only; active route payloads use `tab_id = plan_compile`.
+L00000051	
+L00000052	Blocked and HITL routing records preserve `/blocking/HITL`, `/model/effort/persona/account`, `/target`, `/display`, `/snapshot`, field-shape, resolution_thread, `/severity/blocking`, `/review/corroboration`, `/chat`, `/result`, `/package`, `/fallback`, safe-point, lane, review, attempt, and promotion fields so blocked decisions remain reconstructable from the displayed page state.
+L00000053	
+L00000054	Runtime artifact schema references preserve schema-family, `Plans/Runtime_Artifacts_Panel.md`, `/Runtime_Artifacts_Panel.md`, and `/project` when Orchestrator points into artifact panels or project-scoped artifact records.
+L00000055	
+L00000056	Stale widget compatibility is explicit: stale-spec, widget-card, widget.tier_tree, Orchestrator single-page with 6 tabs, tier/session, `Plans/feature-list.md`, `/feature-list.md`, tier_id, `/session`, `/orchestrator`, `/task/subtask`, widget.current_task, widget.progress_bars, and Tiers are legacy compatibility inputs rather than the current ownership model.
+L00000057	
+L00000058	Attention routing classifies concern records with attention-card-worthy, seam.*, node.*, package.*, account.*, recovery.*, promotion.*, history-only, badge-worthy, graph_patch.*, corroboration.*, action-required, chat-thread-worthy, `/UI`, graph_patch, and user-facing flags.
+L00000059	
+L00000060	Concern actions expose audit_fields and action metadata: resulting_status_or_lineage, confirmation_level, rationale_required, allowed_actor_kinds, and reversibility are mandatory fields for action audit and display.
+L00000061	
+L00000062	Projection freshness can be actor-driven or user-driven. projection-freshness, `/account`, trust_tier, switch-history, and concrete-account details must remain visible when account state or projection trust affects Orchestrator behavior.
+L00000063	
+L00000064	Worktree and branch context preserves base-branch, `Plans/WorktreeGitImprovement.md`, and `/WorktreeGitImprovement.md` whenever Orchestrator displays or routes worktree state.
+L00000065	
+L00000066	Concern state rows preserve `/user`, `/governance`, active, resolved, dismissed, and acknowledged as canonical state and ownership context.
+L00000067	
+L00000068	ownership-signaling supports noise-control and supersede behavior without collapsing resolution_kind values: merge, split, dismiss, resolve, and acknowledge remain separate action families.
+L00000069	
+L00000070	Recovery patch decisions preserve `/recovery/patch`, compensating_action_only, strong, supersede, accepted_risk, none, light, merge, split, active, reopen, resolve, dismiss, reopened, and acknowledge outcomes.
+L00000071	
+L00000072	Operational summaries use operational-summary, project_state:v1:{project_id}, project_id, project_state, project_summary, and projects:v1 records for project-level Orchestrator projection state.
+L00000073	
+L00000074	Promotion-gate visibility is canonical Orchestrator data: lane_to_package, package_to_seam_available, seam_complete, package-level, package-overseer, `/review`, `/runtime`, `/remediation`, `/critical`, seam-consumable, and GUI readiness must be visible as separate gate facts rather than collapsed into a generic promotion state.
+L00000075	
+L00000076	Live page field naming may expose live-status labels, but live-status remains bound to canonical `/storage` and runtime contracts instead of page-local authority.
+L00000077	
+L00000078	Runtime and `/overseer` actors may propose actor-driven concern-state transitions, but accepted_risk, dismissed, and acknowledged outcomes retain explicit authority checks and audit lineage.
+L00000079	
+L00000080	Prompt and defaulting references preserve `Plans/Prompt_Pipeline.md`, Prompt_Pipeline, tier_id, plan_or_tier_default, and `/package/node/lane` compatibility while the active Orchestrator authority model remains package, node, and lane scoped.
+L00000081	
+L00000082	Orchestrator ownership is limited to page layout and controls, view-model/projections, and run control intents; canonical runtime enums, event semantics, and scheduler truth remain owned by runtime, storage, and scheduler contracts instead of page-local prose.
+L00000083	
+L00000084	Worktree projection rows preserve `Plans/WorktreeGitImprovement.md`, `/WorktreeGitImprovement.md`, and `/lane-aware` vocabulary whenever Orchestrator displays worktree state or routes worktree decisions.
+L00000085	
+L00000086	Approval identity and blocked-state keying preserve `Plans/human-in-the-loop.md`, `/human-in-the-loop.md`, request_id, blocked_sequence, and `/keying` so restart and concurrency behavior cannot conflate a request identity with a sequence identity.
+L00000087	
+L00000088	Dense blocked-owner views preserve `Plans/Orchestrator_Page.md`, `/Orchestrator_Page.md`, `/aging`, blocked-owner, `/switch`, dense-tab, saved-view, sort-default, and historical-mode behavior as explicit display and filtering rules.
+L00000089	
+L00000090	Blocking review policy is automation-first by default, with `/HITL/critical-decision`, `/seam/other`, multi-surface notification, HITL boundaries, chat-thread-based resolution, and `/review` evidence required when package, seam, or governance policy asks for human resolution.
+L00000091	
+L00000092	Primary schemas may model node-level facts, but Orchestrator must disclose where GUI, package, feature seam, lane, promotion class, contamination state, resolution thread, or effective account identity are outside node-level schema coverage.
+L00000093	
+L00000094	Promotion records preserve lane_to_package, package_to_seam, seam_completion, `/reopen`, `/corroboration`, blocking refs, concern refs, review refs, decision outcome, and revocation/reopen lineage as first-class decision fields.
+L00000095	
+L00000096	Bulk concern actions include `/concerns`, `/remove`, History, Evidence, and Ledger targets; selected items must keep routeable object identity when acknowledging, archiving, removing, or opening retained views.
+L00000097	
+L00000098	Noise and degraded-state handling preserves `/disclosure`, `/noise`, `/degraded`, attention_required, and blocked so Orchestrator can suppress low-value alerts without hiding degraded or blocking state.
+L00000099	
+L00000100	Account switch display splits account_switch_reason into current-state and historical-state facts: pressure cause, switch outcome, and historical lineage are separate fields rather than one overloaded reason string.
+L00000101	
+L00000102	Worktree/source-control authority is rewrite-native: `/source-control`, `/worktree`, under-owned emitters, blocked worktree reasons, lane/worktree binding, Source Control state, and Orchestrator receipt lineage must identify one canonical owner for current state while preserving historical lineage.
+L00000103	
+L00000104	Executor compatibility references preserve `Plans/Executor_Protocol.md`, Executor_Protocol, `/seam`, `/lane`, top-level, and first-class package/seam governance vocabulary so legacy scheduler addenda do not keep singular-overseer semantics alive.
+L00000105	
+L00000106	Storage projection audits track downstream-assumed families from `storage-plan.md`: project summary, attention items, concern records/projections, account pressure, switch history, projection freshness, `/health`, `/projections`, and storage-plan ownership.
+L00000107	
+L00000108	Alert levels separate Info, Warning, Attention, and Action Required; Dashboard summarizes `/urgency`, Orchestrator provides operational alert context, and a chat thread is reserved for situations that need user `/decision` rather than general warnings.
+L00000109	
+L00000110	Acknowledgement policy preserves acknowledged as distinct from resolved and dismissed; it is for advisory `/minor/non-blocking` concerns the user has explicitly seen or `/accepted`, and blockers that require action cannot be acknowledged in place of resolution.
+L00000111	
+L00000112	Projection fallback prefers projection-backed current surfaces; when trust drops, the surface stays open with last-updated, degraded reason, refresh/recover action, and a fallback to `/record`, record-backed History, Ledger, and direct evidence inspectors.
+L00000113	
+L00000114	Search results carry canonical route targets rather than highlight-only matches: focused_run_id, destination tab, selected object id, optional filter payload, optional inspector `/detail`, and detail target must be reconstructable from the result.
+L00000115	
+L00000116	Search and command-palette routing remains `/object-first`: results preserve exact run identity, avoid collapsing similarly named seams, `/packages/nodes`, or work packages across unrelated runs, and use the shared record-envelope route payload rather than highlight-only matches.
+L00000117	
+L00000118	Concern is a high-level first-class Orchestrator object. The lifecycle includes active, acknowledged, resolved, and dismissed; runtime, package overseer, seam overseer, corroboration outcome, and graph patch logic may create canonical concerns, while workers nominate concerns rather than minting canonical concern records directly.
+L00000119	
+L00000120	Runtime account examples preserve their literal display shape: `Account policy: Auto switch (Project policy)`, `Effective account: gemini-oauth-2`, `Switch reason: rate_limit_pressure`, gemini-oauth-2, and rate_limit_pressure.
+L00000121	
+L00000122	Interaction policy binds concern state to escalation, blocked-owner to message routing, and stale or `/degraded` trust to notification suppression or qualification so stale/degraded trust never emits unqualified action messages.
+L00000123	
+L00000124	Blocked-owner summaries identify the primary blocked owner or attention owner instead of only saying blocked; canonical examples include Run, Concern, Source Control, GitHub, Auth, Usage pressure, Wizard, and Recovery.
+L00000125	
+L00000126	Trust-qualified routing distinguishes strong canonical inputs from projection-derived warnings: canonical blocked episodes, approval waits, persisted thread states, and `/wizard` states may drive strong routing, while projection-derived rows must carry trust qualification.
+L00000127	
+L00000128	Worktree legacy compatibility is explicit: `WorktreeGitImprovement.md`, `/tier`, `/node`, tier_id, `/storage`, `/package`, `/worktree`, get_tier_worktree, get_tier_worktree(tier_id), owner run/tier, tier-keyed, tier-based branch/worktree naming, and older `Progress, Tiers, History, and Node Graph` labels are retained as compatibility fields, not execution-canonical authority over lane/package/node attempts. The active shell remains `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`.
+L00000129	
+L00000130	Runtime cross-cutting authority records preserve command namespace promotion, capability-state ownership, cleanup/remediation lineage, packaging lineage, container publish authority, actor-scope, `/rules`, and `/remediation` ownership rather than leaving these concerns under generic runtime policy.
+L00000131	
+L00000132	The concern action-model keeps user-facing GUI actions narrow: open, focus, open evidence, open history, open ledger, acknowledge, dismiss where allowed, open resolution thread, and approve/reject only for true `/HITL` boundaries; runtime `/overseer` actions remain non-generic and cover request corroboration, route to remediation, request graph patch, severity `/owner` mutation, merge `/split`, and true resolution.
+L00000133	
+L00000134	Stale projection fallback degrades from summary `/projection` surfaces to direct record-backed inspection; Ledger and direct record views are the trust anchor under degraded projection health, and only current `/generation-matched` direct records may support action.
+L00000135	
+L00000136	Promotion state transitions are explicit runtime state, not implicit side effects: automation-first remains the default, optional HITL may pause an otherwise-valid promotion, and `/HITL/critical` promotion states must surface on Dashboard, Orchestrator, and a spawned chat thread.
+L00000137	
+L00000138	Tier authority is compatibility state only: tiers may remain first-class in widgets, breadcrumbs, HITL boundaries, and state displays, but `/package/seam`, node, package, seam, and lane authority determine canonical execution input.
+L00000139	
+L00000140	Every mutating action is classified by confirmation level and reversibility so the UI can separate low-risk navigation from irreversible or high-confirmation mutations.
+L00000141	
+L00000142	Notification mapping sends everything chronologically to History; Progress and Dashboard show active warnings, attention, blocked states, `/severity` markers, and badges; `/thread`, chat, or `/input` surfaces are reserved for user decisions, while system notifications stay high-value and sparse.
+L00000143	
+L00000144	Escalation examples preserve owner-specific routing: User may receive `/chat`, `/Progress` CtA, Dashboard CtA, or system notification; Package Overseer, Seam Overseer, and Corroboration use operational surfaces first; Runtime, Recovery, and Graph Patch often route to `/History/Node` and Progress/History/Node Graph; External Resource usually starts as `/banner` before system notification.
+L00000145	
+L00000146	Concern notification alignment preserves acknowledged as reminder-noise reduction, active plus execution impact as escalation input, and dismissed as presentation suppression without clearing canonical blocked episodes that remain active.
+L00000147	
+L00000148	Reconciliation risk is modeled as authority semantics as much as storage or `/schema` drift, so Orchestrator must preserve owner authority alongside schema-facing projection records.
+L00000149	
+L00000150	Native surface ownership preserves `Widget_System.md`, Widget_System, `Orchestrator_Page.md`, Orchestrator_Page, widget-composed, widget-heavy, and Progress compatibility: only Progress remains widget-heavy, while Plan Compile, Node Graph, Seams, Evidence, History, and Ledger are native Orchestrator surfaces.
+L00000151	
+L00000152	The canonical concern action matrix spans confirmation level, rationale requirements, who may perform the action, reversibility model, and lineage side effects for every action family.
+L00000153	
+L00000154	Lane and worktree help is intentionally asymmetric across surfaces: Orchestrator explains lane as the operational object, while Source Control explains worktree as the concrete Git object.
+L00000155	
+L00000156	Concern and trust ownership distinguishes remediation-linked finding_refs[] and finding_refs from non-remediation concern posture, projection freshness, and degraded-action gating; these must have a canonical owner rather than only node rendering.
+L00000157	
+L00000158	Cross-doc account ownership remains open for `Multi-Account.md` references: design-open questions are not closed while requested concrete account, switch history, conversational actor fields, and trust behavior still cross-doc ownership boundaries.
+L00000159	
+L00000160	Project summaries preserve project_summary, project_id, activity_state, attention_state, health_state, primary_owner_kind, primary_reason_code, primary_attention_item_id, primary_object_ref, active_run_count, background_run_count, blocked_run_count, attention_item_count, historical_run_count, projection_trust_state, summary_generated_at_utc, and last_activity_at_utc.
+L00000161	
+L00000162	Usage and multi-account surface split is explicit: Projects shows coarse `/usage` and `/account` pressure, Dashboard shows cross-project pressure, Orchestrator shows execution-specific provider/account pressure, and the Usage page owns account-level breakdown, role usage view, switch history, and `/multi-account` redesign scope.
+L00000163	
+L00000164	Concern lifecycle remains active, acknowledged, resolved, and dismissed; duplicate lifecycle references must preserve the same four states rather than introduce alternate terminal vocabulary.
+L00000165	
+L00000166	Review records preserve review_id, review kind, package review, seam review, verifier/reviewer review, target scope refs, requested `/effective` `/reviewer` identity, review criteria `/profile`, findings summary, finding refs, concern refs, verdict, decision, linked artifacts `/evidence`, and timestamps.
+L00000167	
+L00000168	Historical state rules distinguish blocked episodes, concern resolution, and annotation workflow: a blocked episode can become historical after resolution, concern can resolve through accepted_risk or superseded as well as fixed, and annotation resolved is workflow completion rather than proof that the runtime problem disappeared.
+L00000169	
+L00000170	Repeated lifecycle evidence keeps active, acknowledged, resolved, and dismissed as the canonical concern lifecycle for both earlier and later references.
+L00000171	
+L00000172	Provider pressure and account switches support both provider-wide and account-specific views so account pressure episodes and switch events can aggregate by provider while preserving concrete account lineage.
+L00000173	
+L00000174	Governance/runtime records use a shared record-envelope plus a family payload block. Concern payloads carry severity, category, owner, lifecycle, and resolution_kind; promotion payloads carry promotion_class, source_scope, target_scope, canonical verdict, and revoked `/reopened` lineage; recovery payloads carry blocked episode refs, action ids, preconditions, results, and safe-point refs; review payloads carry review scope, findings counts, unresolved findings, verdict, and canonical findings summary refs. Corroboration, promotion, graph-patch, and projection-trust records consume the `CV-315` / `SP-233` contract-storage owner pair for payload fields, state transitions, durable keys, and revalidation gates. Family payloads remain structured records distinct from artifacts or rendered summaries.
+L00000175	
+L00000176	Open owner-decision guardrails remain explicit rather than hidden: requested concrete account, operational identity / actor role, switch-history and pressure timeline, projection-freshness naming/ownership, and concern-transition authority splits retain design-open status until their owning docs close them. Usage and account projections stay project-scoped by default; multi-project aggregation is a separate later concern, and per-project Orchestrator storage `/projection` remains the active direction.
+L00000177	
+L00000178	Authority presentation must not collapse back to one monolithic Puppet Master center. Seam/package overseer scopes, `/package` authority, blocked-owner attribution, and `/system/user` separation stay visible, and GitHub auth `/scope/rate-limit` failures raise concern-aware hooks without turning blocked-owner semantics into generic error banners.
+L00000179	
+L00000180	Reconciliation readiness is classified instead of treated as one undifferentiated blocker: still-structural gaps, spec-integrity failures, and plain reconciliation cleanup are separate `/owner` buckets for retargeting owner docs, stale consumers, and mirror/checklist followers.
+L00000181	
+L00000182	### Search, routing, and action policy
+L00000183	
+L00000184	#### Concern routing and object-first search behavior
+L00000185	- Concern search results route as run-aware, object-first results with focused-run and target-tab context.
+L00000186	- Concern drill-down preserves the selected `concern_id` and related object context.
+L00000187	
+L00000188	#### Concern action policy and authority model
+L00000189	- Concern actions define actor authority, confirmation, rationale, reversibility, and audit fields.
+L00000190	- `acknowledged`, `dismissed`, `resolved`, and structural lineage edits remain distinct actions.
+L00000191	
+L00000192	#### Projection trust and action gating
+L00000193	- Orchestrator surfaces use the projection states `current`, `refreshing`, `stale`, `degraded`, and `unavailable`.
+L00000194	- Sensitive actions require `current` data or direct canonical revalidation; degraded mode falls back to record-backed views.
+L00000195	- `/weak-integration/freshness` is a concern-backed projection guard: `category = weak_integration` applies when an owner record, consumer projection, or corroborating source for a seam is missing, stale, degraded, or mutually inconsistent.
+L00000196	- Freshness is buildable state: mutation-capable projections carry `projection_state`, `last_observed_at`, `source_event_ref`, and `revalidation_route`; `stale`, `degraded`, and `unavailable` disable mutation unless the owner surface performs current direct revalidation first.
+L00000197	
+L00000198	#### Temporal wait and stale-observation presentation
+L00000199	- Orchestrator renders wait and timeout semantics from canonical runtime/storage projections rather than guessing from elapsed wall-clock time.
+L00000200	- A scheduled workflow with no fresh observation displays a stale-observation or refresh-needed state, not `skipped/failed`, until the owner source reports a missed run or a configured overdue threshold is reached.
+L00000201	- Known future-timestamp waits, environment wait timers, approval waits, queue waits, and other long-governance-wait states do not produce stall banners and do not invoke auto-pause behavior meant for `deadlock/stall`.
+L00000202	- When a timer actually expires, the visible card shows the retained `timeout_class` (`hard execution timeout`, `inactivity timeout`, `polling timeout`, `reconnect timeout`, or `user-visible wait timer expiry`) and routes recovery through the stored blocked episode or receipt.
+L00000203	- Surfaces may show waiting-until or next-observation-due copy, but that copy remains presentation; it does not create a new blocked reason, failure class, or receipt identity.
+L00000204	
+L00000205	#### Progress-only widget hostability
+L00000206	- Widget-composed Orchestrator content is restricted to `Progress`.
+L00000207	- `orchestrator:progress` persists separately from Dashboard and Usage layouts.
+L00000208	
+L00000209	#### Action-surface policy
+L00000210	- Every affordance is classified by navigation vs mutation, palette visibility, shortcut eligibility, multi-target safety, and confirmation/reversibility.
+L00000211	- Bulk actions default to navigation and triage rather than live execution mutation.
+L00000212	
+L00000213	#### Progress widget catalog and drill mappings
+L00000214	- Orchestrator consumes the same 13-widget Progress catalog from FinalGUISpec Appendix C:
+L00000215	  1. `progress.run-overview` → Execution unit tree scoped to `focused_run_id`
+L00000216	  2. `progress.current-task` → Node inspector for the active execution unit
+L00000217	  3. `progress.lane-health` → Lane row filtered to the selected lane/worktree
+L00000218	  4. `progress.node-throughput` → Dense node list filtered to slow or blocked nodes
+L00000219	  5. `progress.blocked-concerns` → Concern lane filtered to `blocked` or `attention_required`
+L00000220	  6. `progress.approval-queue` → Concern inspector showing pending approvals
+L00000221	  7. `progress.recovery-status` → Recovery timeline for the selected concern or blocked episode
+L00000222	  8. `progress.artifact-receipts` → Artifact browser filtered to receipt-linked runtime artifacts
+L00000223	  9. `progress.worktree-state` → Source Control worktree row with lane/package/run refs
+L00000224	  10. `progress.account-pressure` → Historical `account_pressure_episode` list
+L00000225	  11. `progress.account-switches` → Historical `account_switch_event` list
+L00000226	  12. `progress.escalation-stack` → Project attention view focused on the shared escalation ladder
+L00000227	  13. `progress.attention-summary` → `project_attention_item.primary_route_payload` list
+L00000228	- Progress labels/taxonomy transfer with the catalog: state labels `queued|running|attention_required|blocked|recovering|degraded|complete`; action labels `Inspect|Focus run|Open evidence|Request approval|Acknowledge|Dismiss|Resolve|Retry recovery`; alert taxonomy `advisory|attention_required|blocked|escalated|degraded_projection`; event taxonomy `run_started|node_started|node_completed|concern_opened|approval_requested|approval_decided|recovery_started|recovery_completed|artifact_published|account_switched`; condition-aging keeps advisory warnings quietable, resurfaces `attention_required`, and never auto-quiets `blocked` or `escalated`.
+L00000229	- Tiers-first compatibility must not govern Progress widgets: phase-grouped run-graph presets, single-current-task widgets, tier-shaped correlation, and active-tier terminal selection are compatibility views only. The base-struct and prose-table layers must catch up to node/package/seam/lane runtime identity, `/package/seam` authority, and record-backed summaries.
+L00000230	
+L00000231	#### Artifact envelope routing preference
+L00000232	- Cost-bearing artifact routing prefers `usage_event_ref` instead of timestamp heuristics when linking to Usage and Ledger.
+L00000233	- Runtime artifacts that summarize external operations must carry receipt linkage.
+L00000234	- Orchestrator may self-initiate read-only web/search/fetch/extract/research/deep-research/crawl/map work only when orchestration needs current or external source verification, issue/PR/docs currentness, or visual/dynamic browser evidence. These calls route through the PM WebOperation/BrowserAction dispatcher, not through slash-help-only command discovery, and use `websearch`, `webfetch`, `webextract`, `webresearch`, `webcrawl`, `webmap`, or `BrowserAction/Site Reader` with `invocation_source = goal`, required `agent_reason`, permission/capability gates, visible operation cards, and `orchestrator_evidence_receipts`. Orchestrator web evidence does not create WorkNodes, NodeSeeds, runtime queues, implementation files, or build tasks; it records source/evidence receipts for the current GoalRun or blocked-state decision.
+L00000235	
+L00000236	#### External runtime receipt and blocked-state pivots
+L00000237	- Orchestrator remains the page-level recovery owner for blocked flows, while Source Control, GitHub Actions, Docker Manager, and Docker Manager Kubernetes views mirror the same blocked episode, same `blocked_reason_code`, same ordered `allowed_action_ids[]`, same requested/effective state, and same explanation text.
+L00000238	- Run history and blocked cards expose publish-capable chains directly: build result, Docker publish result, `publish_result_id`, template repo status/id, follow-on event refs, deployment refs, and workload refs. Missing downstream links are shown as `missing-link` explanations with `not-attempted`, blocked, failed, stale, or unknown state rather than being omitted.
+L00000239	- `Open running container` resolves into Docker Manager `Containers` only when a real container exists. If container URL, port, health, logs, shell, or stats discovery is uncertain, the Orchestrator card opens the Docker Manager asset row with the same uncertainty and recommended validation action.
+L00000240	- External side-effect receipts distinguish local-vs-remote and vs-remote outcomes. `indeterminate_remote_outcome` records `requested`, `transport_lost`, and later `reconciled` state plus a `Refresh remote state` CTA. Capability-level degradation and the local-vs-remote degraded-mode split keep local work available where safe: local Git can continue during hosted-degraded GitHub state, Docker local runtime can continue during registry outage, and manifest editing can continue while cluster access is offline.
+L00000241	- Mutable targets owned by an active run carry `owned_by_run`; manual mutation of owned worktrees, preview containers, or rollout-associated workloads blocks, requires explicit override, or forks control explicitly. Receipts record the override source and resulting ownership.
+L00000242	- Terminal-state precedence rules for cancel/complete races are explicit; examples: cancel requested after a remote run already completed, container stop requested after the container already exited or restarted, and rollout cancel requested after a new revision already became ready. The receipt reconciles to an informational terminal state such as `completed_before_cancel`, `already_stopped`, or `already_replaced` instead of overwriting the completed outcome as failed.
+L00000243	- The seven-tab Orchestrator page remains central but is not the owner for every remediation surface. SCM/Actions/Docker/Kubernetes lineage receipts, blocked-state recovery pivots, and exact deep-link contracts route to Source Control, GitHub Actions, Docker Manager, and Kubernetes owner surfaces rather than duplicating panel-local remediation.
+L00000244	- Feature-complete blocked-state wiring uses domain payload schemas. SCM blocked payloads include `dirty_worktree` and `worktree_conflict`; Actions payloads include auth expired, missing scope, no GitHub remote, rate-limited, and environment waiting for review; Docker/Kubernetes payloads include runtime unavailable, repo missing, Buildx/Bake unavailable, compose invalid, cluster unreachable, and namespace/workload missing. Actions health/failures/readiness blockers have a Dashboard/Orchestrator widget contract that carries workflow/job/step correlation, code pivots, `/job/step`, `/failures/readiness`, and `Replay from last known good` context into GitHub Actions rather than leaving Orchestrator with panel-local summaries. Orchestrator must not dispatch an Actions-dependent step from a stale readiness snapshot; it revalidates or routes to GitHub Actions before the mutation.
+L00000245	
+L00000246	#### Owner-surface command routing
+L00000247	
+L00000248	Orchestrator UICommand exposure for recovery and navigation is delegated to `Plans/UI_Command_Catalog.md`. Orchestrator may surface `cmd.orchestrator.open_in_source_control`, `cmd.orchestrator.open_in_github_actions`, `cmd.orchestrator.open_in_docker_manager`, `cmd.orchestrator.open_kubernetes`, and `cmd.orchestrator.open_receipt` only as route-open pivots into owner surfaces with the same `run_id`, `node_id?`, `blocked_sequence?`, `receipt_ref?`, and target owner context carried by the blocked episode or artifact receipt. Runtime mutation recovery still maps through ordered `allowed_action_ids[]` to `cmd.runtime.*`; Orchestrator MUST NOT mint panel-local mutation semantics for Source Control, GitHub Actions, Docker Manager, Kubernetes, evidence, or artifact actions.
+L00000249	
+L00000250	### Current vs historical run behavior
+L00000251	
+L00000252	#### Focused run and historical routing contract
+L00000253	- Orchestrator uses `active_run_id` / `focused_run_id` together with `focus_mode = live | historical`.
+L00000254	- Cross-tab deep links and search pivots stay coherent on the focused run rather than jumping back to the active run implicitly.
+L00000255	
+L00000256	#### Debug resume target revalidation
+L00000257	- Before Orchestrator resumes a Debug investigation, it revalidates the linked `dev_session_id`, `browser_session_id`, DAP session identity, and remote authority against the stored route and runtime identity. If any linked identity is stale but recoverable, the run stays in `attention_required` with `attention_required_reason_code = session_reconnect_required`; if the linked identity no longer exists and no deterministic rebinding target exists, it stays in `attention_required` with `attention_required_reason_code = target_selection_required`. Orchestrator must not silently mint or infer a different target identity to continue execution.
+L00000258	
+L00000259	#### Account switch and pressure history
+L00000260	- Orchestrator stores append-only `account_pressure_episode` and `account_switch_event` families.
+L00000261	- Usage, History, Ledger, and Orchestrator all consume the same durable event family.
+L00000262	
+L00000263	### Concern and notification model
+L00000264	
+L00000265	#### Concern linkage to adjacent families
+L00000266	- Concerns expose `review_refs`, `corroboration_refs`, `graph_patch_refs`, `recovery_refs`, `blocked_episode_refs`, and `promotion_refs`.
+L00000267	- Blocked episodes may reference concerns without replacing concern identity.
+L00000268	
+L00000269	#### Notification routing policy
+L00000270	- Notifications route by severity, execution impact, blocked owner, persistence, and projection trust.
+L00000271	- Quiet windows are allowed for advisory warnings, but never for canonical blocked episodes.
+L00000272	
+L00000273	#### Dismissed vs resolved rationale enforcement
+L00000274	- Dismissal requires dismissal rationale and resolution requires resolution rationale.
+L00000275	- `accepted_risk` is a resolution path rather than a dismissal.
+L00000276	
+L00000277	#### Concern update heuristics
+L00000278	- Repeated sightings use source/scope/category/lineage-aware heuristics to decide whether to update an existing concern or mint a new concern record.
+L00000279	
+L00000280	### Project summary, attention, and escalation
+L00000281	
+L00000282	#### Shared escalation ladder
+L00000283	- One escalation ladder is shared across Orchestrator, Dashboard, thread badges, and notifications.
+L00000284	- `attention_required` remains distinct from `blocked`, and persistent blockers resurface on meaningful change or persistence.
+L00000285	
+L00000286	#### Orchestrator-wide scale contract
+L00000287	- Slice-based loading, virtualization, lazy expansion, and demand-loaded inspectors are mandatory across dense tabs.
+L00000288	- Scale is a cross-tab contract rather than a graph-tab-only concern.
+L00000289	
+L00000290	#### Project summary projection
+L00000291	- `project_summary` contains `activity_state`, `attention_state`, `health_state`, `owner`, and projection-trust disclosure.
+L00000292	- Canonical blocked episodes override weaker derived warnings in summary rollups.
+L00000293	
+L00000294	#### Project attention projection
+L00000295	- `project_attention_item` carries a primary route payload and projection-trust disclosure.
+L00000296	- The same attention row is consumable across Orchestrator, Dashboard, and notifications.
+L00000297	
+L00000298	#### Help architecture and project status taxonomy
+L00000299	- Help uses a dedicated help-entry architecture with related-concept linking.
+L00000300	- Project taxonomy defines `activity_state`, `attention_state`, blocked-owner taxonomy, escalation ladder, and resurfacing/aging rules.
+L00000301	
+L00000302	#### Blocked-owner eight-kind taxonomy and escalation ladder surfaces
+L00000303	- Blocked-owner kinds are exactly `Runtime`, `Package Overseer`, `Seam Overseer`, `Corroboration`, `Graph Patch`, `Recovery`, `User`, and `External Resource`.
+L00000304	- Escalation levels are `info`, `watch`, `attention_required`, `blocked`, and `escalated`, with surface mapping across Orchestrator banners, Dashboard summaries, thread badges, and notifications.
+L00000305	
+L00000306	### Source Control boundary
+L00000307	
+L00000308	Orchestrator remains the lane-pool operational truth, while Source Control is the concrete repo/worktree operator.
+L00000309	
+L00000310	Source Control's unified worktree inventory includes assistant-owned worktrees alongside orch-owned worktrees. Rows preserve the owning thread, package, lane, run, and worktree refs available for each owner class, so this boundary is a shared ownership statement rather than exclusive orch ownership.
+
+<<< CONTEXT_AFTER canonical_document_lines=311-322 >>>
+L00000311	
+L00000312	Rules:
+L00000313	- Worktree rows display owning package, lane, and run refs together with lifecycle state and blocked/recovery state.
+L00000314	- run detail can open review mode scoped to that run's commit range or worktree, preserving run, lane, package, and worktree identity in the route payload.
+L00000315	- blocked worktree cards should include affected file list and an `Open Conflict Assistant` action that routes to the `Source Control > Changes` conflict group through `cmd.source_control.open_conflict`.
+L00000316	- SCM lineage acceptance is explicit for Orchestrator surfaces: every mutation-capable attempt resolves to `repo/worktree/branch/head`; every `dirty_worktree` or `worktree_conflict` blocked episode shows the exact worktree, affected files summary, safe-point relation, and recovery target; and every run with SCM side effects shows at least partial receipts instead of opaque generic history rows.
+L00000317	- Cross-surface deep links from Orchestrator to Source Control, GitHub Actions, Docker Manager, or Kubernetes owner panels must reopen with stable context after restart. When lineage is incomplete, Orchestrator labels the view as partial lineage; it must never silently omit missing hops or invent repo, worktree, branch, head, receipt, or recovery targets.
+L00000318	
+L00000319	ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+L00000320	
+L00000321	
+L00000322	#### Promotion classes and gate evidence

@@ -1,0 +1,48 @@
+{
+  "assignment_id": "A005-000996-ADVERSARIAL-WIN-7220CD9E2066-0001",
+  "attempt_id": "attempt-0004",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [],
+  "core_range": [
+    1,
+    1
+  ],
+  "core_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6",
+  "document_path": "Plans/runtime_artifact_screenshot.schema.json",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/c4/c47d50c54548db68d096c99efbd041a2a9d9bbc578497b1aa2b90cf1d17622c5.txt",
+  "source_excerpt_sha256": "c47d50c54548db68d096c99efbd041a2a9d9bbc578497b1aa2b90cf1d17622c5",
+  "source_sha256": "d2856a81c5de509b47f8c8ee205dee44436d67d43566e7793b6177d256f6c6b6",
+  "window_id": "WIN-7220CD9E2066-0001"
+}

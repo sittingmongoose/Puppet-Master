@@ -1,0 +1,402 @@
+<<< CONTEXT_BEFORE 9608-9619 >>>
+- include_images
+- include_raw_content
+- chunks_per_source
+- provider priority ordering
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 9620-9992 >>>
+### T-138 - Tavily Search-Then-Extract Economics
+
+```yaml
+plan_unit_id: T-138
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tavily search returns candidate URLs/snippets first and may enrich later, but Tavily extract does not replace
+  native Site Reader in MVP.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- '`include_raw_content` defaults conservative/false for discovery.'
+- Free-tier/PAYG economics and `ultra-fast/fast/basic/advanced` values are preserved.
+- Extract remains additive future enrichment only.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tavily_search_extract_economics
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0103
+preserved_exact_tokens:
+- free tier = 1,000 credits/month
+- $0.008/credit PAYG
+- ultra-fast/fast/basic/advanced
+- search-then-extract
+- include_raw_content
+- 'false'
+- Tavily extract must NOT replace native Site Reader
+- ADDITIVE
+- not MVP
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-139 - Support Tier Vocabulary
+
+```yaml
+plan_unit_id: T-139
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Support tiers are canonical capability labels and `pm-composed` is display/source-lineage alias for stored
+  `pm_composed`.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- All eight tier labels survive.
+- Site Reader primacy remains routing posture, not capability erasure.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: support_tier_vocabulary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0104
+preserved_exact_tokens:
+- native
+- native (model)
+- native-ish
+- near-native
+- pm_composed
+- pm-composed
+- fallback-only
+- partial
+- unsupported
+- Site Reader primacy
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/assistant-chat-design.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-140 - Provider Operation Capability Matrix
+
+```yaml
+plan_unit_id: T-140
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: The Exa/Tavily/Firecrawl/Anthropic-OpenAI/Google/DDG operation matrix is canonical for `websearch` through
+  `webmap`.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-139
+unblocks: []
+acceptance_criteria:
+- Matrix row values remain exact.
+- '`fallback-only` cannot replace real fetch capability.'
+- Unsupported map/crawl branches keep PM-composed conditions.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: provider_operation_capability_matrix
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0105
+preserved_exact_tokens:
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+- partial native-ish / pm_composed
+- unsupported unless PM composes it
+- provider-native
+- /deep-research
+- search_and_crawl
+- fallback-only
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-141 - Model-Native Auth And Tool-Key Boundary
+
+```yaml
+plan_unit_id: T-141
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Model-native web search reuses configured provider account, auth, and model; `web_search` remains provider
+  convention, not the PM tool key.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+  provider disclosure surfaces.
+split_recommended: false
+depends_on:
+- T-140
+unblocks: []
+acceptance_criteria:
+- No second auth silo is created for model-native search.
+- Settings shows provider, effective account, model, auth, and rate-limit summary.
+- PM tool key remains `websearch`.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: model_native_auth_tool_key_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0105
+preserved_exact_tokens:
+- web_search
+- websearch
+- enabled toggle
+- capability badges
+- effective account label
+- effective model
+- auth state
+- rate-limit summary
+- second auth silo
+- model-native
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-142 - Web Routing Selection And Recovery
+
+```yaml
+plan_unit_id: T-142
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Routing normalizes operation/input, checks permissions and capability registry, chooses an eligible same-operation
+  adapter, and returns setup guidance or `adapter_unavailable` when exhausted.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-140
+unblocks: []
+acceptance_criteria:
+- '`search_provider` is not exposed as a tool parameter.'
+- Fallback records `provider_fallback_occurred` and `provider_fallback_summary`.
+- All-provider failure returns `adapter_unavailable`, not a success-shaped fallback.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: web_routing_selection_recovery
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0106
+preserved_exact_tokens:
+- capability-unavailable terminal branch
+- 'Step 1: NORMALIZE OPERATION'
+- 'Step 5: QUERY CAPABILITY MATRIX'
+- search_provider
+- NOT exposed
+- adapter_unavailable
+- provider_fallback_occurred
+- provider_fallback_summary
+- /rate-limit/outage
+- /unconfigured
+- success-shaped fallback
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4
+  Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context'
+- 'ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4
+  Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-143 - Site Reader Identity And Browser Labels
+
+```yaml
+plan_unit_id: T-143
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: '`Reading Site: <url>` is reserved exclusively for PM-native Site Reader with browser interaction metadata,
+  while provider fetch uses `Fetching Site: <url> (via <provider>)`.'
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+  provider disclosure surfaces.
+split_recommended: false
+depends_on:
+- T-142
+unblocks: []
+acceptance_criteria:
+- Provider-routed fetch never reuses Site Reader identity.
+- Browser interaction is metadata/sub-annotation, not a new activity label.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: site_reader_identity_browser_labels
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0106
+preserved_exact_tokens:
+- 'Reading Site: <url>'
+- 'Fetching Site: <url> (via <provider>)'
+- reserved EXCLUSIVELY
+- real browser-interaction capability
+- 'interaction: true'
+- (with browser interaction)
+- seventh web activity label
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4
+  Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context'
+- 'ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4
+  Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-144 - Web Provenance And Citation Strength
+
+```yaml
+plan_unit_id: T-144
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Final claims cite the actual read/extract/research/crawl/map path, with search snippets allowed only as visibly
+  snippet-level provenance.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+  provider disclosure surfaces.
+split_recommended: false
+depends_on:
+- T-142
+- T-143
+unblocks: []
+acceptance_criteria:
+- Strongest provenance order is preserved.
+- Repeated URLs and mapped page sets dedupe without losing strongest provenance badge.
+- Snippet-only citations are labeled as snippet-level provenance.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: web_provenance_citation_strength
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0106
+preserved_exact_tokens:
+- 'Searching Web: <query>'
+- 'Extracting Site: <url>'
+- 'Researching Web: <task>'
+- 'Crawling Site: <url>'
+- 'Mapping Site: <url>'
+- site_reader
+- site_extract
+- research_synthesis
+- crawl_result
+- map_result
+- search_snippet
+- raw search snippets alone are not enough provenance
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4
+  Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context'
+- 'ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4
+  Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 9993-10004 >>>
+### T-145 - Cost-Aware Routing And Completion Audit
+
+```yaml
+plan_unit_id: T-145
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Routing is cost-aware when providers are similar and completion records output, cache/diff, and audit metadata.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+  provider disclosure surfaces.
+split_recommended: false

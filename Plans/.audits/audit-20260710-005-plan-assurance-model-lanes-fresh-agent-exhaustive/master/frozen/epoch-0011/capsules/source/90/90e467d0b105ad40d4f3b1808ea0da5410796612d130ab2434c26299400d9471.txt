@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE canonical_document_lines=7739-7750 >>>
+L00007739	  - Do not create a separate user-facing Plan Compiler Model unless later added as advanced override.
+L00007740	  - Do not expose legacy Pass 1 / Pass 2 / Pass 3 Plan Wizard model settings or active stages; those names may survive only as legacy compatibility aliases.
+L00007741	  - Do not call the deterministic scheduler a model-backed Executor agent.
+L00007742	stale_retired_dispositions:
+L00007743	  - "Plan Wizard conversation is retained only as a legacy source token from the plans-to-code handoff cycle; current model-setting prose uses Planning Wizard."
+L00007744	owner_hints:
+L00007745	  - Plans/Models_System.md
+L00007746	  - Plans/FinalGUISpec.md
+L00007747	  - Plans/Executor_Protocol.md
+L00007748	  - Plans/Goal_Runtime_System.md
+L00007749	```
+L00007750	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=7751-8107 >>>
+L00007751	### MS-111 - Plans-To-Code Model Resolution Receipt
+L00007752	
+L00007753	```yaml
+L00007754	plan_unit_id: MS-111
+L00007755	unit_type: requirement
+L00007756	status: accepted
+L00007757	owner_doc: Plans/Models_System.md
+L00007758	canonical_text: >-
+L00007759	  Every dispatched WorkNode and every plans-to-code role resolution records a model resolution receipt with requested_lane, requested_model_profile, effective_model_profile, fallback_used, fallback_reason, and capability_checks. WorkNode requests carry work_type, gui_related, frontend_related, effort class, reasoning tier, context size, validation cost, risk class, authority risk, user-visible risk, and capability lane metadata so native routing can choose Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, Auditor Model, or Overseer Model without exposing Codex-only external GUI-agent CLI bridge settings in built Puppet Master.
+L00007760	  The receipt is the native provider/model routing proof for built Puppet Master and preserves effort_class and capability_lane in the canonical routing body.
+L00007761	gui_related: false
+L00007762	gui_classification_reason: This unit defines backend model-resolution receipts and routing metadata; visible labels are consumed by FinalGUISpec.
+L00007763	depends_on: [MS-110]
+L00007764	unblocks: [EP-100, PNC-013, RAP-029, CV-289]
+L00007765	acceptance_criteria:
+L00007766	  - WorkNode dispatch and plans-to-code roles emit requested/effective model profile, fallback, and capability check evidence.
+L00007767	  - GUI/frontend and high-effort routing use native model lanes in built Puppet Master.
+L00007768	  - Codex bootstrap external GUI-agent CLI request artifacts remain bootstrap-only and are not exposed as built product Settings.
+L00007769	validation_surfaces:
+L00007770	  - python3 scripts/pm-plans-verify.py run-gates
+L00007771	  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+L00007772	risk_class: model_resolution_opacity
+L00007773	reasoning_tier: high
+L00007774	context_scope: worknode_model_resolution
+L00007775	implementation_surfaces: [Plans/Models_System.md, Plans/plans_to_code_handoff.schema.json, Plans/Executor_Protocol.md, Plans/Runtime_Artifacts_Panel.md]
+L00007776	node_compile_hint: {mode: model_resolution_receipt_contract, create_worknodes: false}
+L00007777	source_lineage:
+L00007778	  - pldg-20260617-001-plans-to-code-handoff:atom-0012
+L00007779	  - pldg-20260617-001-plans-to-code-handoff:atom-0017
+L00007780	  - pldg-20260617-001-plans-to-code-handoff:atom-0024
+L00007781	  - pldg-20260617-001-plans-to-code-handoff:dec-0009
+L00007782	  - pldg-20260617-001-plans-to-code-handoff:dec-0010
+L00007783	  - pldg-20260617-001-plans-to-code-handoff:corr-0004
+L00007784	preserved_exact_tokens:
+L00007785	  - "GUI / Frontend Worker Model"
+L00007786	  - "native provider/model routing"
+L00007787	  - "requested_model_profile"
+L00007788	  - "effective_model_profile"
+L00007789	  - "fallback_used"
+L00007790	  - "capability_checks"
+L00007791	  - "capability_lane"
+L00007792	negative_constraints:
+L00007793	  - No Antigravity/Claude Code/Cursor/OpenCode CLI bridge setting in built Puppet Master.
+L00007794	owner_hints:
+L00007795	  - Plans/Models_System.md
+L00007796	  - Plans/Executor_Protocol.md
+L00007797	  - Plans/Runtime_Artifacts_Panel.md
+L00007798	```
+L00007799	
+L00007800	ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Executor_Protocol.md
+L00007801	
+L00007802	
+L00007803	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00007804	
+L00007805	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00007806	
+L00007807	### MS-112 - Planning Product Role Routing Consumers
+L00007808	
+L00007809	```yaml
+L00007810	plan_unit_id: MS-112
+L00007811	unit_type: requirement
+L00007812	status: accepted
+L00007813	owner_doc: Plans/Models_System.md
+L00007814	canonical_text: 'Use Overseer for ledger-to-PRD, ledger-to-topic-plan, cross-topic integration, and compilation supervision; Auditor for audit, repair verification, and certification; High-Effort Worker for bounded difficult or repository-wide analysis; controller remains sole canonical writer.'
+L00007815	gui_related: false
+L00007816	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00007817	depends_on: []
+L00007818	unblocks: []
+L00007819	acceptance_criteria:
+L00007820	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00007821	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00007822	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00007823	validation_surfaces:
+L00007824	- python3 scripts/pm-plan-index.py validate
+L00007825	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00007826	risk_class: owner_drift
+L00007827	reasoning_tier: standard
+L00007828	context_scope: ledger_to_plans_compile
+L00007829	implementation_surfaces:
+L00007830	- Plans/Models_System.md
+L00007831	- Plans/Personas.md
+L00007832	- Plans/PRD_Builder.md
+L00007833	- Plans/Planning_Wizard.md
+L00007834	- Plans/Plan_To_Node_Compilation.md
+L00007835	node_compile_hint:
+L00007836	  mode: canonical_planunit_from_bootstrap_ledger
+L00007837	  create_worknodes: false
+L00007838	  create_nodeseeds: false
+L00007839	source_lineage:
+L00007840	- pldg-20260618-001-prd-planning-wizard:atom-0015
+L00007841	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+L00007842	source_atom_ids:
+L00007843	- atom-0015
+L00007844	decision_refs:
+L00007845	- dec-0005
+L00007846	correction_refs: []
+L00007847	preserved_exact_tokens:
+L00007848	- Overseer
+L00007849	- Auditor
+L00007850	- High-Effort Worker
+L00007851	- sole canonical writer
+L00007852	negative_constraints:
+L00007853	- Do not let read-only subagents mutate canonical ledgers, PRDs, Plans, WorkGraphs, or runtime records.
+L00007854	owner_hints:
+L00007855	- Plans/Personas.md
+L00007856	- Plans/Models_System.md
+L00007857	- Plans/PRD_Builder.md
+L00007858	- Plans/Planning_Wizard.md
+L00007859	- Plans/Plan_To_Node_Compilation.md
+L00007860	```
+L00007861	
+L00007862	
+L00007863	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00007864	
+L00007865	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00007866	
+L00007867	### MS-116 - Vision Bridge Requested Effective Route Resolution
+L00007868	
+L00007869	```yaml
+L00007870	plan_unit_id: MS-116
+L00007871	unit_type: requirement
+L00007872	status: accepted
+L00007873	owner_doc: Plans/Models_System.md
+L00007874	canonical_text: Vision bridge route resolution selects an eligible vision-capable provider/model/account from PM
+L00007875	  capability records and project/account policy. PM shows requested/effective provider, model, and account; records
+L00007876	  usage/cost refs when available; retries only bounded transient failures; and falls back to another eligible route
+L00007877	  only when policy permits and disclosure permission covers the destination. Catalog visibility or HTTP availability
+L00007878	  alone is not proof that a route currently supports image input.
+L00007879	gui_related: true
+L00007880	gui_classification_reason: Requested/effective provider/model/account states are user-visible model-route disclosure
+L00007881	  for image understanding.
+L00007882	depends_on:
+L00007883	- PS-121
+L00007884	unblocks:
+L00007885	- T-165
+L00007886	- RAP-035
+L00007887	acceptance_criteria:
+L00007888	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00007889	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00007890	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00007891	  are created by this compile.
+L00007892	validation_surfaces:
+L00007893	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00007894	- python3 scripts/pm-plan-index.py validate
+L00007895	- git diff --check
+L00007896	risk_class: vision_model_route_drift
+L00007897	reasoning_tier: high
+L00007898	context_scope: vision_bridge_model_resolution
+L00007899	implementation_surfaces:
+L00007900	- Plans/Models_System.md
+L00007901	- future model route resolver
+L00007902	node_compile_hint:
+L00007903	  mode: vision_bridge_model_resolution
+L00007904	  create_worknodes: false
+L00007905	  create_nodeseeds: false
+L00007906	source_lineage:
+L00007907	- pldg-20260626-001-feature-name:atom-0074
+L00007908	- pldg-20260626-001-feature-name:atom-0087
+L00007909	- Plans/Media_Generation_and_Capabilities.md
+L00007910	- Plans/Provider_OpenCode.md
+L00007911	- chat:vision-bridge-defaults-answer
+L00007912	- external:github.com/alfaoz/opencode-see-image@cde1615f6dfc9039c58da6813112ee53391b5b49
+L00007913	- chat:vision-pressure-test-request
+L00007914	- chat:vision-pressure-test-defaults-answer
+L00007915	- Plans/Models_System.md
+L00007916	source_atom_ids:
+L00007917	- atom-0074
+L00007918	- atom-0087
+L00007919	decision_refs:
+L00007920	- dec-0014
+L00007921	- dec-0015
+L00007922	- dec-0016
+L00007923	- dec-0017
+L00007924	preserved_exact_tokens:
+L00007925	- provider/model capability matrix
+L00007926	- project/account policy
+L00007927	- media_input
+L00007928	- image input
+L00007929	- support-state
+L00007930	- opencode-go
+L00007931	- mimo-v2.5-free
+L00007932	- 2. yes
+L00007933	- requested/effective provider/model/account
+L00007934	- usage/cost refs
+L00007935	- bounded transient failures
+L00007936	- falls back
+L00007937	- policy permits
+L00007938	- disclosure permission covers the destination
+L00007939	- 'yes'
+L00007940	negative_constraints:
+L00007941	- Do not hardcode OpenCode `opencode-go` or `mimo-v2.5-free` as PM's bridge defaults.
+L00007942	- Do not flatten route-specific media state into a single provider-level boolean.
+L00007943	- Do not clear a route as vision-capable without current provider/model capability evidence.
+L00007944	- Do not depend on OpenCode `auth.json`, OpenCode DB, Bun, or OpenCode CLI dependency for PM bridge routing.
+L00007945	- Do not silently reroute an image to a different provider/account than the user allowed.
+L00007946	- Do not treat provider catalog visibility as proof that a route can currently process image input.
+L00007947	- Do not hide usage/cost attribution when the bridge uses a separate model route.
+L00007948	owner_hints:
+L00007949	- Plans/Models_System.md
+L00007950	- Plans/Media_Generation_and_Capabilities.md
+L00007951	- Plans/Provider_OpenCode.md
+L00007952	- Plans/usage-feature.md
+L00007953	- Plans/Contracts_V0.md
+L00007954	- Plans/Runtime_Artifacts_Panel.md
+L00007955	- Plans/Permissions_System.md
+L00007956	```
+L00007957	
+L00007958	### MS-117 - Teach Teacher Low End Model Setting
+L00007959	
+L00007960	```yaml
+L00007961	plan_unit_id: MS-117
+L00007962	unit_type: requirement
+L00007963	status: accepted
+L00007964	owner_doc: Plans/Models_System.md
+L00007965	canonical_text: Teach/Teacher defaults to a low-end/fast model and exposes a GUI-adjustable scoped model setting.
+L00007966	  Teacher threads disclose requested and effective model, fallback/clamp state, setting source, and whether a stronger
+L00007967	  model is recommended for handoff. Setting states cover default, user override, unavailable route, capability clamp,
+L00007968	  policy denial, inherited project/account default, and temporary fallback; Teach model defaults are explained in
+L00007969	  Help/Glossary content.
+L00007970	gui_related: true
+L00007971	gui_classification_reason: Defines visible settings, model chips, fallback states, and requested/effective model
+L00007972	  disclosure for Teach/Teacher.
+L00007973	depends_on:
+L00007974	- P-055
+L00007975	unblocks:
+L00007976	- ATS-014
+L00007977	acceptance_criteria:
+L00007978	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00007979	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00007980	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00007981	  are created by this compile.
+L00007982	validation_surfaces:
+L00007983	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00007984	- python3 scripts/pm-plan-index.py validate
+L00007985	- git diff --check
+L00007986	risk_class: teach_model_setting_drift
+L00007987	reasoning_tier: standard
+L00007988	context_scope: teach_teacher_model_setting
+L00007989	implementation_surfaces:
+L00007990	- Plans/Models_System.md
+L00007991	- future Teach settings row
+L00007992	- future Teacher thread model chips
+L00007993	node_compile_hint:
+L00007994	  mode: teach_teacher_model_setting
+L00007995	  create_worknodes: false
+L00007996	  create_nodeseeds: false
+L00007997	source_lineage:
+L00007998	- pldg-20260626-001-feature-name:atom-0091
+L00007999	- pldg-20260626-001-feature-name:atom-0092
+L00008000	- pldg-20260626-001-feature-name:atom-0100
+L00008001	- pldg-20260626-001-feature-name:atom-0108
+L00008002	- pldg-20260626-001-feature-name:atom-0127
+L00008003	- pldg-20260626-001-feature-name:atom-0136
+L00008004	- pldg-20260626-001-feature-name:atom-0141
+L00008005	- chat:teacher-feature-initial-framing
+L00008006	- Plans/Models_System.md#PERSONA-MODEL-OVERRIDES
+L00008007	- Plans/Models_System.md#7.2-Settings--Models
+L00008008	- Plans/assistant-chat-design.md#1.1-Chat-controls-platform-model-and-reasoningeffort
+L00008009	- Plans/Models_System.md#2
+L00008010	- Plans/Models_System.md#5-Per-Persona-runtime-preferences
+L00008011	- chat:teach-visual-specificity-challenge
+L00008012	- chat:teach-gap-fill-correction
+L00008013	- q-0028
+L00008014	- chat:teach-bundle-accepted-pmconcept-reference
+L00008015	- chat:work-through-teach-gaps
+L00008016	- Plans/FinalGUISpec.md#19.5-runtime-display-requirements
+L00008017	- Plans/FinalGUISpec.md#19.7-provider-gap-disclosure-rule
+L00008018	source_atom_ids:
+L00008019	- atom-0091
+L00008020	- atom-0092
+L00008021	- atom-0100
+L00008022	- atom-0108
+L00008023	- atom-0127
+L00008024	- atom-0136
+L00008025	- atom-0141
+L00008026	decision_refs:
+L00008027	- dec-0018
+L00008028	- dec-0019
+L00008029	- dec-0020
+L00008030	- dec-0021
+L00008031	- dec-0022
+L00008032	- dec-0023
+L00008033	- dec-0024
+L00008034	correction_refs:
+L00008035	- corr-0002
+L00008036	- corr-0003
+L00008037	preserved_exact_tokens:
+L00008038	- default to a low end model
+L00008039	- low end model
+L00008040	- fast
+L00008041	- Smallest/cheapest available model
+L00008042	- setting too in the gui to adjust the model
+L00008043	- Settings > Models
+L00008044	- current defaults and their source
+L00008045	- model precedence chain
+L00008046	- default_model
+L00008047	- default_variant
+L00008048	- requested/effective
+L00008049	- fallback
+L00008050	- warning
+L00008051	- Auto/fast default
+L00008052	- selected override
+L00008053	- Reset to Auto
+L00008054	- Teacher persona
+L00008055	- low-end model
+L00008056	- low-end/fast model
+L00008057	- requested model
+L00008058	- effective model
+L00008059	- provider availability
+L00008060	- fallback reason
+L00008061	- Teacher persona details
+L00008062	- setting too in the gui
+L00008063	- Teacher mode header
+L00008064	- requested/effective Persona
+L00008065	- current surface/context chip
+L00008066	- Teach capture availability
+L00008067	- Start guided walkthrough
+L00008068	- Show sources
+L00008069	- Save as taught memory
+L00008070	- Hand off
+L00008071	negative_constraints:
+L00008072	- Do not silently default Teach/Teacher to a high-cost or high-effort model when the user has not asked for it.
+L00008073	- Do not hardcode one provider-specific low-end model as universal PM canon.
+L00008074	- Do not block Teach if the preferred low-end model is unavailable; follow Models_System fallback and disclosure
+L00008075	  rules.
+L00008076	- Do not hide the Teach/Teacher model default in an uneditable shipped Persona file only.
+L00008077	- Do not let the GUI setting imply a model is applied when provider capability filtering skipped or fell back from
+L00008078	  it.
+L00008079	- Do not duplicate generic Chat model picker behavior without clarifying Teach/Teacher default scope.
+L00008080	- Do not make Teach/Teacher model settings ambiguous about scope or precedence.
+L00008081	- Do not show unavailable low-end preferences as applied when runtime fallback selected something else.
+L00008082	- Do not add a seventh broad user-facing automation model setting when a Teach/Teacher-specific Persona/surface
+L00008083	  override is enough.
+L00008084	- Do not make Teach model configuration invisible in a raw PERSONA.md file only.
+L00008085	- Do not create a broad new automation model class when a scoped Teach/Teacher row is sufficient.
+L00008086	- Do not show fallback model choice as if the requested low-end setting was applied.
+L00008087	- Do not hide fallback from requested model to effective model.
+L00008088	- Do not make Teach model configuration raw-file only.
+L00008089	- Do not reuse a broad automation model setting when a scoped Teach/Teacher setting is intended.
+L00008090	- Do not hide requested/effective model differences.
+L00008091	- Do not let Settings imply a provider honored a Teacher model preference when it was skipped or clamped.
+L00008092	- Do not create a broad seventh automation model setting for Teach.
+L00008093	- Do not invent a separate chat product surface for Teacher.
+L00008094	- Do not hide requested/effective Persona/model state.
+L00008095	- Do not show Save as taught memory unless the content is eligible and user confirmation is still required.
+L00008096	owner_hints:
+L00008097	- Plans/Models_System.md
+L00008098	- Plans/Personas.md
+L00008099	- Plans/Prompt_Pipeline.md
+L00008100	- Plans/FinalGUISpec.md
+L00008101	- Plans/assistant-chat-design.md
+L00008102	```
+L00008103	
+L00008104	## Ledger Compile Addendum - pldg-20260629-001-feature-name
+L00008105	
+L00008106	This addendum compiles the Free Models ledger into Models_System ownership. It preserves the ledger as source lineage only, keeps Provider_OpenCode adjacent/reference-only, and does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+L00008107	
+
+<<< CONTEXT_AFTER canonical_document_lines=8108-8119 >>>
+L00008108	### MS-118 - Free Models Wrapper Catalog And Route Readiness Identity
+L00008109	
+L00008110	```yaml
+L00008111	plan_unit_id: MS-118
+L00008112	unit_type: requirement
+L00008113	status: accepted
+L00008114	owner_doc: Plans/Models_System.md
+L00008115	canonical_text: >-
+L00008116	  PM exposes a single direct-provider grouping named `Free Models` for supported active free/free-limited upstream entries, while preserving the underlying provider, model, account/profile, auth surface, billing/entitlement, transport, quota, and source identity. The wrapper must not rewrite canonical stored provider/model ids into `free_models/*`; it must retain `provider_entry_id`, `provider_family_id`, `model_provider_id`, canonical provider/model ids, stable PM imported ids, hidden subprovider/auth/quota metadata, source refs, and alias/rename/provider-move mappings. Catalog presence or freshness does not prove `usable_now`, quota health, routing readiness, capability support, or policy eligibility.
+L00008117	gui_related: true
+L00008118	gui_classification_reason: Defines the user-visible `Free Models` provider grouping, catalog rows, badges, and model-selector eligibility states.
+L00008119	depends_on: []

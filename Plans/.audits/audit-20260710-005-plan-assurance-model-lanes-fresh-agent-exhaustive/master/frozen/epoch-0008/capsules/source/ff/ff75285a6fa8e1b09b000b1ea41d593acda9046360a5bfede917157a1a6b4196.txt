@@ -1,0 +1,280 @@
+<<< CONTEXT_BEFORE canonical_document_lines=7922-7933 >>>
+L00007922	- App-level-only tool permission scope is insufficient for the promoted project-switch/MCP/browser model.
+L00007923	preserved_contractrefs:
+L00007924	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00007925	compatibility_only_notes: []
+L00007926	stale_retired_dispositions:
+L00007927	- App-level-only permission scope is explicitly non-canonical after promotion.
+L00007928	owner_hints:
+L00007929	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007930	- Plans/Permissions_System.md
+L00007931	- Plans/Tools.md
+L00007932	```
+L00007933	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=7934-8184 >>>
+L00007934	### SMPFS-123 - Persona Tier Selector Stale Disposition
+L00007935	
+L00007936	```yaml
+L00007937	plan_unit_id: SMPFS-123
+L00007938	unit_type: requirement
+L00007939	status: accepted
+L00007940	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007941	canonical_text: Stale Persona/tier selectors from Personas.md, Contracts_V0, and Contracts_V0.md, including _persona_id and select_for_tier(), are not canonical promoted-shell fields; Section 15 consumers use requested/effective Persona identity and runtime owner scope instead.
+L00007942	gui_related: false
+L00007943	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00007944	split_recommended: false
+L00007945	depends_on:
+L00007946	- PDS-003
+L00007947	- PDS-004
+L00007948	- PDS-005
+L00007949	- PNC-001
+L00007950	- CV-215
+L00007951	unblocks: []
+L00007952	acceptance_criteria:
+L00007953	- SMPFS-123 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00007954	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00007955	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00007956	validation_surfaces:
+L00007957	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00007958	- python3 scripts/pm-plan-index.py validate
+L00007959	risk_class: section15_tail_drift
+L00007960	reasoning_tier: standard
+L00007961	context_scope: section15_tail
+L00007962	implementation_surfaces:
+L00007963	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007964	node_compile_hint:
+L00007965	  mode: persona_tier_selector_stale_disposition
+L00007966	  create_worknodes: false
+L00007967	source_lineage:
+L00007968	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0050
+L00007969	preserved_exact_tokens:
+L00007970	- Persona/tier selectors
+L00007971	- Personas.md
+L00007972	- Contracts_V0
+L00007973	- _persona_id
+L00007974	- select_for_tier()
+L00007975	- requested/effective Persona identity
+L00007976	- runtime owner scope
+L00007977	negative_constraints:
+L00007978	- Stale Persona/tier selectors are not canonical promoted-shell fields.
+L00007979	preserved_contractrefs:
+L00007980	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00007981	compatibility_only_notes: []
+L00007982	stale_retired_dispositions:
+L00007983	- _persona_id and select_for_tier() are stale/retired promoted-shell fields.
+L00007984	owner_hints:
+L00007985	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007986	- Plans/Contracts_V0.md
+L00007987	```
+L00007988	
+L00007989	### SMPFS-001 - Section 15 Retired Source-Preserving Bridge
+L00007990	
+L00007991	```yaml
+L00007992	plan_unit_id: SMPFS-001
+L00007993	unit_type: compatibility_disposition
+L00007994	status: retired
+L00007995	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00007996	canonical_text: SMPFS-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 170. Section15_MVP_Promoted_Features_Spec-S0001 through S0050 are covered by fine-grained PlanUnits SMPFS-002 through SMPFS-123 or explicit structural coverage, while S0051, S0052, and S0054 are generated structural/audit dispositions and S0053 is retired bridge lineage. SMPFS-001 must not re-own or override implementation-facing PlanUnits and must not use source_preserving_planunit compile mode.
+L00007997	gui_related: false
+L00007998	gui_classification_reason: The live retired bridge is migration/audit metadata only; historical GUI-related bridge tokens remain preserved by span_map and coverage_map.
+L00007999	split_recommended: false
+L00008000	depends_on:
+L00008001	- SMPFS-002
+L00008002	- SMPFS-003
+L00008003	- SMPFS-004
+L00008004	- SMPFS-005
+L00008005	- SMPFS-006
+L00008006	- SMPFS-007
+L00008007	- SMPFS-008
+L00008008	- SMPFS-009
+L00008009	- SMPFS-010
+L00008010	- SMPFS-011
+L00008011	- SMPFS-012
+L00008012	- SMPFS-013
+L00008013	- SMPFS-014
+L00008014	- SMPFS-015
+L00008015	- SMPFS-016
+L00008016	- SMPFS-017
+L00008017	- SMPFS-018
+L00008018	- SMPFS-019
+L00008019	- SMPFS-020
+L00008020	- SMPFS-021
+L00008021	- SMPFS-022
+L00008022	- SMPFS-023
+L00008023	- SMPFS-024
+L00008024	- SMPFS-025
+L00008025	- SMPFS-026
+L00008026	- SMPFS-027
+L00008027	- SMPFS-028
+L00008028	- SMPFS-029
+L00008029	- SMPFS-030
+L00008030	- SMPFS-031
+L00008031	- SMPFS-032
+L00008032	- SMPFS-033
+L00008033	- SMPFS-034
+L00008034	- SMPFS-035
+L00008035	- SMPFS-036
+L00008036	- SMPFS-037
+L00008037	- SMPFS-038
+L00008038	- SMPFS-039
+L00008039	- SMPFS-040
+L00008040	- SMPFS-041
+L00008041	- SMPFS-042
+L00008042	- SMPFS-043
+L00008043	- SMPFS-044
+L00008044	- SMPFS-045
+L00008045	- SMPFS-046
+L00008046	- SMPFS-047
+L00008047	- SMPFS-048
+L00008048	- SMPFS-049
+L00008049	- SMPFS-050
+L00008050	- SMPFS-051
+L00008051	- SMPFS-052
+L00008052	- SMPFS-053
+L00008053	- SMPFS-054
+L00008054	- SMPFS-055
+L00008055	- SMPFS-056
+L00008056	- SMPFS-057
+L00008057	- SMPFS-058
+L00008058	- SMPFS-059
+L00008059	- SMPFS-060
+L00008060	- SMPFS-061
+L00008061	- SMPFS-062
+L00008062	- SMPFS-063
+L00008063	- SMPFS-064
+L00008064	- SMPFS-065
+L00008065	- SMPFS-066
+L00008066	- SMPFS-067
+L00008067	- SMPFS-068
+L00008068	- SMPFS-069
+L00008069	- SMPFS-070
+L00008070	- SMPFS-071
+L00008071	- SMPFS-072
+L00008072	- SMPFS-073
+L00008073	- SMPFS-074
+L00008074	- SMPFS-075
+L00008075	- SMPFS-076
+L00008076	- SMPFS-077
+L00008077	- SMPFS-078
+L00008078	- SMPFS-079
+L00008079	- SMPFS-080
+L00008080	- SMPFS-081
+L00008081	- SMPFS-082
+L00008082	- SMPFS-083
+L00008083	- SMPFS-084
+L00008084	- SMPFS-085
+L00008085	- SMPFS-086
+L00008086	- SMPFS-087
+L00008087	- SMPFS-088
+L00008088	- SMPFS-089
+L00008089	- SMPFS-090
+L00008090	- SMPFS-091
+L00008091	- SMPFS-092
+L00008092	- SMPFS-093
+L00008093	- SMPFS-094
+L00008094	- SMPFS-095
+L00008095	- SMPFS-096
+L00008096	- SMPFS-097
+L00008097	- SMPFS-098
+L00008098	- SMPFS-099
+L00008099	- SMPFS-100
+L00008100	- SMPFS-101
+L00008101	- SMPFS-102
+L00008102	- SMPFS-103
+L00008103	- SMPFS-104
+L00008104	- SMPFS-105
+L00008105	- SMPFS-106
+L00008106	- SMPFS-107
+L00008107	- SMPFS-108
+L00008108	- SMPFS-109
+L00008109	- SMPFS-110
+L00008110	- SMPFS-111
+L00008111	- SMPFS-112
+L00008112	- SMPFS-113
+L00008113	- SMPFS-114
+L00008114	- SMPFS-115
+L00008115	- SMPFS-116
+L00008116	- SMPFS-117
+L00008117	- SMPFS-118
+L00008118	- SMPFS-119
+L00008119	- SMPFS-120
+L00008120	- SMPFS-121
+L00008121	- SMPFS-122
+L00008122	- SMPFS-123
+L00008123	unblocks: []
+L00008124	acceptance_criteria:
+L00008125	- Section15_MVP_Promoted_Features_Spec-S0001 through S0050 remain mapped to fine-grained PlanUnits SMPFS-002 through SMPFS-123 or structural coverage rather than SMPFS-001.
+L00008126	- Section15_MVP_Promoted_Features_Spec-S0051, S0052, and S0054 are structurally dispositioned as generated migration metadata.
+L00008127	- Section15_MVP_Promoted_Features_Spec-S0053 is explicitly dispositioned as retired generated bridge lineage.
+L00008128	- SMPFS-001 no longer uses node_compile_hint.mode=source_preserving_planunit.
+L00008129	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00008130	validation_surfaces:
+L00008131	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008132	- python3 scripts/pm-plan-index.py validate
+L00008133	risk_class: residual_bridge_overreach
+L00008134	reasoning_tier: standard
+L00008135	context_scope: section15_retired_bridge
+L00008136	implementation_surfaces:
+L00008137	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008138	node_compile_hint:
+L00008139	  mode: retired_migration_bridge
+L00008140	  create_worknodes: false
+L00008141	source_lineage:
+L00008142	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0051
+L00008143	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0052
+L00008144	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0053
+L00008145	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0054
+L00008146	preserved_exact_tokens:
+L00008147	- Owner / Consumer Map
+L00008148	- PlanUnits
+L00008149	- Migration Coverage
+L00008150	- SMPFS-001
+L00008151	- source_preserving_planunit
+L00008152	- retired_migration_bridge
+L00008153	- Section15_MVP_Promoted_Features_Spec-S0051
+L00008154	- Section15_MVP_Promoted_Features_Spec-S0054
+L00008155	negative_constraints:
+L00008156	- SMPFS-001 must not provide product implementation coverage for Section15_MVP_Promoted_Features_Spec-S0001 through S0050.
+L00008157	- SMPFS-001 must not override SMPFS-002 through SMPFS-123 or structural dispositions.
+L00008158	- SMPFS-001 must not use source_preserving_planunit compile mode after Phase 2B batch 170.
+L00008159	preserved_contractrefs:
+L00008160	- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+L00008161	compatibility_only_notes:
+L00008162	- The retired bridge remains only as migration-lineage compatibility metadata; historical ContractRefs, negative constraints, compatibility notes, stale/retired evidence, and GUI-related bridge markers remain preserved in span_map and coverage_map.
+L00008163	stale_retired_dispositions:
+L00008164	- source_preserving_planunit retired for Section 15 after Phase 2B batch 170.
+L00008165	owner_hints:
+L00008166	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008167	```
+L00008168	
+L00008169	## Migration Coverage
+L00008170	
+L00008171	Original hash: `8ae652cad15d3b8183532cfe5df3b3b36c9f904eff957a4c91632a038ad1cacf`.
+L00008172	
+L00008173	Run-scoped proof artifacts:
+L00008174	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00008175	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00008176	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00008177	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00008178	
+L00008179	Phase 2B batch 168 atomized `Section15_MVP_Promoted_Features_Spec-S0001` through `Section15_MVP_Promoted_Features_Spec-S0020` into fine-grained PlanUnits `SMPFS-002` through `SMPFS-028`. Phase 2B batch 169 atomized `Section15_MVP_Promoted_Features_Spec-S0021` through `Section15_MVP_Promoted_Features_Spec-S0048` into fine-grained PlanUnits `SMPFS-029` through `SMPFS-102` with `Section15_MVP_Promoted_Features_Spec-S0023` retained as structural section organization. Phase 2B batch 170 atomized `Section15_MVP_Promoted_Features_Spec-S0049` and `Section15_MVP_Promoted_Features_Spec-S0050` into fine-grained PlanUnits `SMPFS-103` through `SMPFS-123`, structurally dispositioned generated tail spans `Section15_MVP_Promoted_Features_Spec-S0051`, `S0052`, and `S0054`, and retired `Section15_MVP_Promoted_Features_Spec-S0053` as the `SMPFS-001` bridge lineage. `SMPFS-001` is migration-lineage compatibility only and no longer uses `source_preserving_planunit` compile mode. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and they did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+L00008180	
+L00008181	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00008182	
+L00008183	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00008184	
+
+<<< CONTEXT_AFTER canonical_document_lines=8185-8196 >>>
+L00008185	### SMPFS-124 - P0-TERMINAL-PROTOCOL-MATRIX
+L00008186	
+L00008187	```yaml
+L00008188	plan_unit_id: SMPFS-124
+L00008189	unit_type: requirement
+L00008190	status: accepted
+L00008191	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00008192	canonical_text: >-
+L00008193	  P0-TERMINAL-PROTOCOL-MATRIX (P0) is compiled as canonical Puppet Master intent for Built-in GUI terminal protocol coverage: Add PlanUnits under Section15 or a new Built_In_Terminal_Runtime.md that enumerate VT/xterm/OSC protocol fixtures and acceptance tests. Treat protocols as data fixtures with replayable byte streams, not prose-only requirements. The preserved PM gap/delta is: No explicit terminal protocol test matrix for OSC 52, OSC 8, OSC 9;4, OSC 133, OSC 633, bracketed paste, focus events, SGR/UTF-8 mouse, DEC synchronized updates, pasteboard priority, or terminal-feature negotiation. The observed external-repo signal remains source-lineage evidence: Ghostty/tmux current issues and releases revolve around OSC 133 shell integration, pasteboard semantics, mouse/key handling, Unicode/ZWJ crashes, and platform-specific regressions; Warp changelog shows alt-screen CLI-agent contrast, dropped keystrokes, zero-width crash, WSL PWD restore, session reopening, MCP spawn cwd, and settings/autonomy
+L00008194	  fixes.
+L00008195	gui_related: true
+L00008196	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.

@@ -1,0 +1,400 @@
+<<< CONTEXT_BEFORE 2649-2660 >>>
+  - "Document Writer"
+  - "collaborator"
+  - "assistant"
+  - "general-purpose"
+  - "draft workflow outputs"
+negative_constraints:
+  - "Do not create or require a dedicated core Document Writer handoff."
+  - "Do not invent product facts when the supporting canon is incomplete."
+owner_hints:
+  - Plans/Personas.md
+```
+
+
+<<< AUTHORITATIVE_CORE 2661-3031 >>>
+### P-044 - Collaborator Core Persona
+
+```yaml
+plan_unit_id: P-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  collaborator is the user-facing planning, clarification, ideation, interview, scope-probe, specification-discovery, and co-shaping Persona for turning rough ideas into clear, complete, testable project intent before document generation, plan handoff, or build handoff.
+gui_related: false
+gui_classification_reason: This unit defines planning Persona behavior and workflow handoff policy rather than GUI presentation.
+split_recommended: false
+depends_on:
+  - P-031
+  - P-043
+unblocks: []
+acceptance_criteria:
+  - collaborator asks targeted questions in digestible batches and keeps asking follow-ups over the flow.
+  - collaborator challenges weak, risky, contradictory, or underspecified ideas directly but constructively.
+  - explicit user or workflow confirmation is required before document generation, plan handoff, or build handoff.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: collaborator_persona_scope_drift
+reasoning_tier: standard
+context_scope: personas_core_catalog
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0052
+preserved_exact_tokens:
+  - "collaborator"
+  - "Chain Wizard"
+  - "Requirements Doc Builder"
+  - "section/thread ledger"
+  - "document generation"
+negative_constraints:
+  - "Requirements drafting and section summaries are workflow outputs, not a handoff to a separate core Document Writer."
+stale_retired_dispositions:
+  - "Chain Wizard and Requirements Doc Builder are retained here only as legacy source tokens; current persona fit is PRD Builder and Planning Wizard topic/intake conversations."
+owner_hints:
+  - Plans/Personas.md
+```
+
+### P-045 - Specialty Persona Catalog Scope
+
+```yaml
+plan_unit_id: P-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  Specialty Personas are the configurable layer and may be first-party bundled Personas, project-local Personas, global user Personas, imported seed Personas, or future optional template/catalog entries, but they are not protected core built-ins unless listed in the Reserved Personas section.
+gui_related: false
+gui_classification_reason: This unit defines catalog layering and mutability scope rather than visual presentation.
+split_recommended: false
+depends_on:
+  - P-021
+  - P-031
+unblocks: []
+acceptance_criteria:
+  - The SPECIALTY-PERSONAS anchor remains preserved.
+  - Specialty Personas remain configurable rather than protected core built-ins by default.
+  - Protected core status is limited to entries listed in the Reserved Personas section.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: specialty_catalog_scope_drift
+reasoning_tier: standard
+context_scope: personas_specialty_catalog
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0053
+preserved_exact_tokens:
+  - "SPECIALTY-PERSONAS"
+  - "Specialty Personas"
+  - "first-party bundled Personas"
+  - "project-local Personas"
+  - "global user Personas"
+negative_constraints:
+  - "Specialty Personas are not protected core built-ins unless listed in section 6."
+owner_hints:
+  - Plans/Personas.md
+```
+
+### P-046 - Specialty Mutability And Provider-Native Source Rules
+
+```yaml
+plan_unit_id: P-046
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  First-party bundled specialty Personas may be modified, disabled, and restored to default; user-created and imported specialty Personas may be edited or deleted; provider-native files are seed/import material only, and provider-native tools lists, WebFetch, WebSearch, protocol JSON examples, context-manager steps, KPI/SLA guarantees, polished completion claims, and benchmark model recommendations are migration inputs rather than literal PM built-in guarantees.
+gui_related: false
+gui_classification_reason: This unit defines catalog mutability, import, provider-source, permissions, and model-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on:
+  - P-007
+  - P-045
+unblocks: []
+acceptance_criteria:
+  - Provider-native files under .claude/agents, .cursor/agents, .github, or other provider-native directories are seed/import material only.
+  - PM adaptation translates provider-native tools lists into PM permission/tool-preference metadata.
+  - Specialty model behavior defaults to Auto/inherit unless a PM-owned definition explicitly sets a provider/model preference.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: provider_native_specialty_source_drift
+reasoning_tier: standard
+context_scope: personas_specialty_catalog
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0054
+preserved_exact_tokens:
+  - ".claude/agents"
+  - ".cursor/agents"
+  - ".github"
+  - "WebFetch"
+  - "WebSearch"
+  - "context-manager"
+  - "Auto"
+negative_constraints:
+  - "Provider-native guarantees and external benchmark model recommendations are not literal PM built-in guarantees."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md"
+owner_hints:
+  - Plans/Personas.md
+```
+
+### P-047 - First-Party Specialty Browser Groups
+
+```yaml
+plan_unit_id: P-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  The first-party specialty browser groups Personas before individual stack/tool refinements, using Review/audit/verification, Design/research/documentation, Implementation generalists, Data/platform/operations/reliability, Language/framework specialists, and Prompt/LLM systems groups with the listed typical role IDs.
+gui_related: true
+gui_classification_reason: This unit defines the user-visible specialty browser grouping presentation.
+split_recommended: false
+depends_on:
+  - P-045
+unblocks: []
+acceptance_criteria:
+  - First-party specialty groups appear before individual stack/tool refinements.
+  - Typical role IDs remain associated with their groups.
+  - Prompt and LLM systems includes prompt-engineer.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: specialty_browser_grouping_drift
+reasoning_tier: standard
+context_scope: personas_specialty_catalog
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0055
+preserved_exact_tokens:
+  - "Review, audit, and verification"
+  - "Design, research, and documentation"
+  - "Implementation generalists"
+  - "Data, platform, operations, and reliability"
+  - "Language and framework specialists"
+  - "Prompt and LLM systems"
+  - "prompt-engineer"
+negative_constraints:
+  - "No additional negative constraints beyond the canonical text."
+owner_hints:
+  - Plans/Personas.md
+```
+
+### P-048 - Specialty Entry Exclusions And Document Writer Guard
+
+```yaml
+plan_unit_id: P-048
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  technical-writer is a specialty/template candidate only and must not recreate document-writer by another name, while project-manager, product-manager, and context-manager are not PM Persona catalog entries because delivery sequencing, product framing, and context/memory behavior belong to orchestration, interview, prompt pipeline, and memory systems.
+gui_related: false
+gui_classification_reason: This unit defines catalog exclusions and ownership boundaries rather than GUI presentation.
+split_recommended: false
+depends_on:
+  - P-043
+  - P-045
+  - P-047
+unblocks: []
+acceptance_criteria:
+  - technical-writer remains specialty/template candidate only.
+  - document-writer is not recreated by another name.
+  - project-manager, product-manager, and context-manager remain outside PM Persona catalog entries.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: specialty_exclusion_boundary_drift
+reasoning_tier: standard
+context_scope: personas_specialty_catalog
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0055
+preserved_exact_tokens:
+  - "technical-writer"
+  - "document-writer"
+  - "project-manager"
+  - "product-manager"
+  - "context-manager"
+negative_constraints:
+  - "technical-writer MUST NOT be used to recreate document-writer by another name."
+  - "project-manager, product-manager, and context-manager are not PM Persona catalog entries."
+owner_hints:
+  - Plans/Personas.md
+```
+
+### P-049 - First-Wave Specialty Additions And Future Candidates
+
+```yaml
+plan_unit_id: P-049
+unit_type: decision
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  docker-expert, github-actions-expert, graphql-expert, openapi-expert, and postgres-expert are approved first-wave additions to the first-party specialty catalog, while benchmark-derived candidates such as design-system-architect, observability-engineer, threat-modeling-expert, error-detective, incident-responder, dx-optimizer, api-documenter, monorepo-architect, playwright-expert, kubernetes-expert, terraform-expert, prisma-expert, oauth-oidc-expert, jwt-expert, and rest-expert remain future catalog/template candidates until promoted by owner-doc changes.
+gui_related: false
+gui_classification_reason: This unit records catalog curation decisions rather than GUI presentation.
+split_recommended: false
+depends_on:
+  - P-045
+unblocks: []
+acceptance_criteria:
+  - Approved first-wave additions remain listed exactly.
+  - Future candidates are not treated as approved first-party specialties until promoted by owner-doc changes.
+  - First-wave additions map to common IDE tasks and clear stack/tool seams.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: specialty_catalog_promotion_drift
+reasoning_tier: standard
+context_scope: personas_specialty_catalog
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: decision
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0056
+preserved_exact_tokens:
+  - "docker-expert"
+  - "github-actions-expert"
+  - "graphql-expert"
+  - "openapi-expert"
+  - "postgres-expert"
+  - "playwright-expert"
+  - "oauth-oidc-expert"
+negative_constraints:
+  - "Future catalog/template candidates are not approved first-wave additions until separately promoted by owner-doc changes."
+owner_hints:
+  - Plans/Personas.md
+```
+
+### P-050 - Specialty Prompt Shape Normalization
+
+```yaml
+plan_unit_id: P-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  PM-native bundled specialty prompts should be small and sharp, with most specialties around 250-500 words, complex cross-stack or strategy specialties around 450-700 words, internal/helper or narrow stack specialties around 180-350 words, and bodies focused on mission, when to use, when not to use, operating posture, response approach, useful heuristics, boundaries, and handoff expectations.
+gui_related: false
+gui_classification_reason: This unit defines prompt content shape and metadata boundaries rather than visual presentation.
+split_recommended: false
+depends_on:
+  - P-045
+  - P-046
+unblocks: []
+acceptance_criteria:
+  - Permission/tool posture belongs mostly in metadata.
+  - Hard numeric goals, fake benchmark claims, vendor/version encyclopedias, generic tool lists, and raw JSON communication examples are avoided unless the role truly requires them.
+  - Prompt bodies preserve mission, usage, posture, heuristics, boundaries, and handoff expectations.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: specialty_prompt_bloat_drift
+reasoning_tier: standard
+context_scope: personas_specialty_catalog
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0057
+preserved_exact_tokens:
+  - "250-500 words"
+  - "450-700 words"
+  - "180-350 words"
+  - "permission/tool posture"
+  - "raw JSON communication examples"
+negative_constraints:
+  - "Do not copy long provider-native source files as PM-native bundled specialty prompts."
+  - "Avoid fake benchmark claims and generic tool lists unless the role truly requires them."
+owner_hints:
+  - Plans/Personas.md
+```
+
+### P-051 - Specialty Auto-Resolution Collision Rules
+
+```yaml
+plan_unit_id: P-051
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  Specialty auto-resolution must be predictable: role/function axis outranks stack axis, operation type outranks repository language hints, review/audit roles outrank implementation roles for validation/governance/review tasks, implementation roles outrank review roles for build/change tasks, framework/tool specialists refine broader roles, fullstack-developer loses to narrower backend/frontend or stack-specific matches when justified, and governance/review/corroboration Personas do not collapse into implementation Personas because repository language hints are strong.
+gui_related: false
+gui_classification_reason: This unit defines resolver and collision logic rather than GUI presentation.
+split_recommended: false
+depends_on:
+  - P-030
+  - P-045
+unblocks: []
+acceptance_criteria:
+  - Role/function and operation axes outrank stack/language hints where specified.
+  - Review, audit, validation, governance, build, and change tasks route predictably.
+  - Framework/tool specialists refine broader roles and normally replace them only when explicitly requested or strongly matched.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: specialty_auto_resolution_collision_drift
+reasoning_tier: high
+context_scope: personas_specialty_resolution
+implementation_surfaces:
+  - Plans/Personas.md
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Personas-S0058
+preserved_exact_tokens:
+  - "role/function axis"
+  - "stack axis"
+  - "operation type"
+  - "fullstack-developer"
+  - "governance/review/corroboration Personas"
+negative_constraints:
+  - "Governance/review/corroboration Personas do not collapse into implementation Personas merely because repository language hints are strong."
+owner_hints:
+  - Plans/Personas.md
+```
+
+
+<<< CONTEXT_AFTER 3032-3043 >>>
+### P-052 - Specialty Browser Resolution Presentation
+
+```yaml
+plan_unit_id: P-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Personas.md
+canonical_text: >-
+  The specialty browser uses grouping and auto-resolution together: top-level group, specialty within group, optional stack/framework refinement, then project/global override.
+gui_related: true
+gui_classification_reason: This unit defines user-visible specialty browser ordering and presentation.
+split_recommended: false

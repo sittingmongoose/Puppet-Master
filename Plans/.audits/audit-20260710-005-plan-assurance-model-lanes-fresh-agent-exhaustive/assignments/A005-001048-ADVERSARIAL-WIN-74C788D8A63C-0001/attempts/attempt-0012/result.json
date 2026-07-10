@@ -1,0 +1,894 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001048-ADVERSARIAL-WIN-74C788D8A63C-0001",
+  "attempt_id": "attempt-0012",
+  "task_thread_id": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001048_attempt_0012",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Tools.md",
+    "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca",
+    "core_sha256": "be2bc7c1ce4e4bc8d43c9ab70162f122ddb396a793fa71b6e7f3390fa5d2acad",
+    "core_range": [
+      1,
+      397
+    ]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001048-GAP-001",
+      "item_type": "gap",
+      "title": "Approval persistence token is not canonicalized",
+      "statement": "The ask summary presents both `for session` and `for-session` as approval choices without saying whether they are aliases, distinct values, or which spelling is persisted. That ambiguity can split GUI, storage, migration, and test behavior at an authority boundary.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 55,
+          "line_end": 55,
+          "exact_quote": "- **ask** — User must approve (`deny` / `once` / `for session` / `for-session` / `always`). In headless runs, maps to `deny` unless HITL is enabled.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "wire_token_ambiguity",
+      "impact": "Equivalent user choices may serialize differently or receive different precedence, making approval persistence and migration non-deterministic.",
+      "builder_discretion": "Choose one canonical stored token and define any accepted input aliases plus normalization timing.",
+      "feature_keys": [
+        "tool-permissions",
+        "approval-flow"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-002",
+      "item_type": "gap",
+      "title": "Shell handles lack ownership and concurrency rules",
+      "statement": "The bash contract allows reuse of an existing `shellId`, but does not bind that handle to project, run, child run, actor, permission snapshot, or operational identity, and does not specify serialization for concurrent calls. A guessed, leaked, or concurrently reused handle could cross authority boundaries or interleave stateful commands and output.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 302,
+          "line_end": 302,
+          "exact_quote": "| `shellId` | string | no | Existing shell/session binding to reuse for stateful commands; omitted to create a new shell binding. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 71,
+          "line_end": 71,
+          "exact_quote": "Canonical child-run identity fields:",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "session_authority_and_race",
+      "impact": "Commands or output can execute in the wrong run context, and parallel invocations can corrupt shell state or attribution.",
+      "builder_discretion": "Define unforgeable handle scope, access checks on every reuse, stale-handle behavior, and a deterministic per-handle concurrency model.",
+      "feature_keys": [
+        "bash-tool",
+        "child-run-identity",
+        "terminal-binding"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-003",
+      "item_type": "failure_recovery",
+      "title": "Detached process lifecycle has no terminal owner",
+      "statement": "A detached process is defined to survive client shutdown, while the command ceiling is merely recommended. The core does not define who retains cancellation authority, whether the ceiling still applies after detachment, how completion is persisted, or how orphaned processes are discovered and reclaimed after restart.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 303,
+          "line_end": 303,
+          "exact_quote": "| `detach` | boolean | no | Async-only. When `true`, the process is fully detached and survives client shutdown; when `false`, it remains attached to the shell session. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 329,
+          "line_end": 329,
+          "exact_quote": "- Recommended hard execution ceiling: `30m` per shell command unless a stricter runner limit is configured.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "orphaned_side_effect_lifecycle",
+      "impact": "Detached commands can outlive the approving UI and continue consuming resources or performing side effects without an observable recovery or shutdown path.",
+      "builder_discretion": "Specify durable ownership, mandatory maximum lifetime, restart reconciliation, cancellation authorization, and terminal event persistence.",
+      "feature_keys": [
+        "bash-tool",
+        "process-lifecycle"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-004",
+      "item_type": "contract",
+      "title": "Three outcome vocabularies have no deterministic mapping",
+      "statement": "The core defines a normalized tool-result taxonomy, tool-specific status and error codes, and `ToolTurnSettlement.settlement_state`, but gives no total mapping or precedence across those layers. Cases such as output truncation followed by timeout, redacted runtime error, or retained partial output can therefore persist contradictory analytics and GUI truth.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 124,
+          "line_end": 124,
+          "exact_quote": "At minimum, the normalized tool-result taxonomy MUST distinguish:",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 291,
+          "line_end": 291,
+          "exact_quote": "`ToolTurnSettlement` uses the wire field `settlement_state`. Allowed values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. Precedence when multiple conditions apply is: `fatal` > `malformed` > `partial_truncated` > `redacted` > `nullable_content` > `partial` > `retryable` > `retained` > `success`. `success` is legal only when required result, error, truncation, retention, and redaction metadata have been normalized and persisted or intentionally omitted by the specific tool contract.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 322,
+          "line_end": 322,
+          "exact_quote": "| `output_limit_exceeded` | Output exceeded cap and was truncated or the command was aborted per runtime policy. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "outcome_normalization_mapping",
+      "impact": "Persistence, usage error rates, retries, and user-visible terminal states can disagree for the same attempt.",
+      "builder_discretion": "Provide a complete mapping table and multi-condition precedence from execution observation to normalized result and settlement state.",
+      "feature_keys": [
+        "tool-result-normalization",
+        "tool-settlement",
+        "usage-analytics"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-005",
+      "item_type": "authority",
+      "title": "Create and overwrite inherit edit authority without destructive-action policy",
+      "statement": "`write` can create or overwrite a file and shares the same permission as exact replacement. The core does not define whether project-level edit allowance is sufficient for destructive overwrite, whether existing-file replacement requires a separate approval, or how protected and newly created paths are surfaced before execution.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 185,
+          "line_end": 185,
+          "exact_quote": "| **write** | Create new files or overwrite existing ones | (same as `edit`) | Same permission as edit; overwrites if file exists. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 228,
+          "line_end": 228,
+          "exact_quote": "- **Edit group:** `edit`, `write`, `patch`, and `multiedit` share one **edit** permission so that \"allow file changes\" is a single knob ([OpenCode](https://opencode.ai/docs/tools/): \"The edit permission covers all file modifications (edit, write, patch, multiedit)\").",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "destructive_action_escalation",
+      "impact": "A broad edit grant can silently escalate from bounded replacement to full data destruction or new-file creation.",
+      "builder_discretion": "Keep the shared permission key if desired, but define invocation-level overwrite guards, preview requirements, protected-file handling, and audit detail.",
+      "feature_keys": [
+        "edit-group",
+        "write-tool",
+        "filesafe"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-006",
+      "item_type": "gap",
+      "title": "Atomic edit contract leaves path and content TOCTOU open",
+      "statement": "The edit contract recognizes a file-changing-during-validation conflict and promises atomic failure only for timeout, but does not specify the comparison primitive, path canonicalization moment, symlink policy, atomic replace mechanism, durability, or behavior when the target changes between authorization and commit.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 358,
+          "line_end": 358,
+          "exact_quote": "| `replace_conflict` | Multiple ambiguous matches or file changed during validation. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 365,
+          "line_end": 365,
+          "exact_quote": "- On timeout, the operation must fail atomically: no partial file rewrite, and the response is `{ status: \"timed_out\", path, error: { code: \"timeout\" } }`.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "filesystem_toctou",
+      "impact": "Concurrent writers or path swaps can redirect or overwrite content that was not the object validated and approved.",
+      "builder_discretion": "Define canonical-path and file-identity checks plus compare-and-swap or equivalent atomic commit behavior for every failure class.",
+      "feature_keys": [
+        "edit-tool",
+        "filesafe",
+        "atomic-write"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-007",
+      "item_type": "gap",
+      "title": "Read scale limits are named but not testable",
+      "statement": "The read contract permits an unbounded to-end range and returns `too_large` based on an unspecified cap. It also returns all directory entries without a pagination, truncation, ordering, or maximum-entry contract. This leaves memory, latency, and caller recovery behavior implementation-defined.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 376,
+          "line_end": 376,
+          "exact_quote": "| `view_range` | array `[start_line, end_line]` | no | Inclusive 1-based line range. `-1` as `end_line` means \"to end of file\". |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 381,
+          "line_end": 381,
+          "exact_quote": "- Directory read: `{ path, kind: \"directory\", entries: string[] }`",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 394,
+          "line_end": 394,
+          "exact_quote": "| `too_large` | File exceeds the read cap without an allowed ranged request. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "nondeterministic_scale_cap",
+      "impact": "Large repositories produce provider-dependent failures or oversized responses that callers cannot paginate deterministically.",
+      "builder_discretion": "Set mandatory byte, line, and entry limits and define continuation or truncation metadata.",
+      "feature_keys": [
+        "read-tool",
+        "scale-limits"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-008",
+      "item_type": "failure_recovery",
+      "title": "Network tools have no offline or partial-network state contract",
+      "statement": "The web tool inventory mentions timeouts, size bounds, and bounded fan-out but gives no normalized distinction for offline, DNS failure, TLS failure, authentication loss, rate limiting, partial crawl, or stale cached results. Retry authority and whether partial sources remain usable are also unspecified in the core.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 192,
+          "line_end": 192,
+          "exact_quote": "| **webfetch** | Fetch web content from a URL | `webfetch` | URL allowlist/denylist (FileSafe); timeout; size cap. Document which domains are contacted. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 196,
+          "line_end": 196,
+          "exact_quote": "| **webcrawl** | Crawl a site or section | `webcrawl` | Multi-page crawl; bounded by permission and fan-out limits. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "offline_and_partial_network_semantics",
+      "impact": "Callers cannot reliably decide whether to retry, retain partial provenance, prompt for auth, or present an offline state.",
+      "builder_discretion": "Define normalized network reason codes, retryability, partial-result settlement, cache trust, and recovery actions.",
+      "feature_keys": [
+        "web-tools",
+        "offline-recovery"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-009",
+      "item_type": "gap",
+      "title": "Retention and redaction states lack a data-lifecycle envelope",
+      "statement": "The settlement vocabulary names `redacted` and `retained`, but the core does not define the required metadata fields, retention class, expiry/deletion behavior, subject scope, original-versus-redacted storage authority, or which consumers may reveal retained tool content.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 291,
+          "line_end": 291,
+          "exact_quote": "`ToolTurnSettlement` uses the wire field `settlement_state`. Allowed values are `success`, `partial`, `partial_truncated`, `malformed`, `nullable_content`, `redacted`, `retained`, `retryable`, and `fatal`. Precedence when multiple conditions apply is: `fatal` > `malformed` > `partial_truncated` > `redacted` > `nullable_content` > `partial` > `retryable` > `retained` > `success`. `success` is legal only when required result, error, truncation, retention, and redaction metadata have been normalized and persisted or intentionally omitted by the specific tool contract.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "privacy_retention_contract",
+      "impact": "Sensitive stdout, file contents, web results, or MCP data may be retained indefinitely or re-exposed inconsistently despite a redacted settlement label.",
+      "builder_discretion": "Define a common privacy metadata envelope and enforce delete, expiry, reveal, export, and analytics rules by data class.",
+      "feature_keys": [
+        "tool-settlement",
+        "privacy-lifecycle"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-010",
+      "item_type": "gui_truth",
+      "title": "Permission dropdown can misrepresent effective execution authority",
+      "statement": "The Settings row is required to show a permission value bound to run config, but FileSafe can still block an allowed tool and the runtime can enter degraded or stale capability states. The core does not require the row to distinguish configured, requested, and effective permission, explain FileSafe supersession, or refresh when MCP availability and session identity change.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 37,
+          "line_end": 37,
+          "exact_quote": "- **Settings > Permissions** -- **Required:** Per-tool (and optional wildcard) allow/deny/ask; **presets are in scope for MVP** (Read-only, Plan mode, Full) per §10.4 -- user may choose not to apply a preset, but the preset feature must be implemented; list of built-in + MCP-discovered tools with permission dropdown per row. Bound to the same config that the run uses for the central tool registry. Spec: `Plans/Permissions_System.md` §10 and `Plans/FinalGUISpec.md` §7.4 Settings and inspectors.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 97,
+          "line_end": 97,
+          "exact_quote": "FileSafe runs **in addition to** tool permissions. A tool may be **allowed** by permission but still **blocked** by FileSafe. Tool permission = \"may the agent call this tool?\"; FileSafe = \"may this specific invocation proceed?\". See `Plans/FileSafe.md`. The policy engine applies both layers in order: permission first, then FileSafe. Full integration order: §10.6.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "configured_vs_effective_gui_truth",
+      "impact": "Users can read an `allow` row as proof that execution will succeed or is currently available when a later guard or stale binding will block it.",
+      "builder_discretion": "Expose configured and effective state separately with blocker reason, freshness, and the scope at which the decision applies.",
+      "feature_keys": [
+        "permissions-gui",
+        "filesafe",
+        "mcp-availability"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-011",
+      "item_type": "gap",
+      "title": "Interactive permission and question surfaces omit accessibility and localization requirements",
+      "statement": "The core mandates permission dropdowns and structured question flows, but contains no keyboard, focus, screen-reader, status-announcement, error-association, text expansion, locale, or canonical-code-versus-localized-label rules for these authority-bearing controls.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 37,
+          "line_end": 37,
+          "exact_quote": "- **Settings > Permissions** -- **Required:** Per-tool (and optional wildcard) allow/deny/ask; **presets are in scope for MVP** (Read-only, Plan mode, Full) per §10.4 -- user may choose not to apply a preset, but the preset feature must be implemented; list of built-in + MCP-discovered tools with permission dropdown per row. Bound to the same config that the run uses for the central tool registry. Spec: `Plans/Permissions_System.md` §10 and `Plans/FinalGUISpec.md` §7.4 Settings and inspectors.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 198,
+          "line_end": 198,
+          "exact_quote": "| **question** | Ask the user structured questions during execution | `question` | Supports both single-question and multi-question questionnaire flows. Only meaningful when HITL/UI can show prompts. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "accessible_localized_authority_ui",
+      "impact": "Users relying on assistive technology or translated UI may be unable to understand or safely operate approval and question flows.",
+      "builder_discretion": "Reference a mandatory accessible interaction contract and keep wire tokens stable while localizing visible labels and explanations.",
+      "feature_keys": [
+        "permissions-gui",
+        "question-tool",
+        "accessibility",
+        "localization"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-012",
+      "item_type": "acceptance_oracle",
+      "title": "Side-effect outputs omit attempt identity and idempotency",
+      "statement": "Successful bash and edit envelopes expose a shell or file result but no tool-attempt ID, idempotency key, parent identity, permission snapshot hash, or replay marker. After transport loss or uncertain persistence, a caller cannot prove whether retrying will duplicate a process or mutation, nor correlate one visible result to one authorized attempt.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 307,
+          "line_end": 307,
+          "exact_quote": "- Completed sync result: `{ shellId, status: \"completed\", stdout, stderr, exit_code }`",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 345,
+          "line_end": 345,
+          "exact_quote": "`{ status: \"success\", path, replacements: [{ start_line, end_line }], line_count_changed, bytes_changed }`",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "idempotency_and_correlation",
+      "impact": "Retries can duplicate destructive side effects, while audit, analytics, and reveal links can misattribute results under concurrency.",
+      "builder_discretion": "Add a canonical attempt identity and idempotency/replay contract to every side-effecting request and normalized result.",
+      "feature_keys": [
+        "tool-attempt-identity",
+        "idempotency",
+        "observability"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-013",
+      "item_type": "gap",
+      "title": "Registry admission does not close untrusted custom and MCP identity collisions",
+      "statement": "Custom and MCP tools are declared first-class central-registry entries using the same policy model, while provider mappings normalize names. In this core, no admission rule defines trusted provenance, reserved canonical names, collision precedence, schema complexity bounds, capability mutation after approval, or invalidation of cached permissions when a discovered tool changes identity.",
+      "severity": "critical",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 24,
+          "line_end": 24,
+          "exact_quote": "- **Custom tools** -- User- or project-defined tools (config-defined functions the LLM can call), including schema and how they plug into the registry.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 25,
+          "line_end": 25,
+          "exact_quote": "- **MCP** -- MCP tools are **in scope**: they are first-class tools in the central registry; same permission model (including wildcards); naming and precedence with built-in/custom. MCP server config and per-platform config paths are specified in **newtools.md**; live MCP naming, availability, credential, and invalidation vocabulary is specified in **MCP_Integration.md**; here we define how MCP-discovered tools integrate with the registry and policy.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 233,
+          "line_end": 233,
+          "exact_quote": "Providers map canonical tool names to platform-native equivalents (e.g. `edit` → Claude \"Edit\", Cursor edit tool, etc.). The registry and permission engine use **canonical names only**; platform_specs or runner code holds the mapping so that adding a new provider does not require changing permission config.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "untrusted_registry_admission",
+      "impact": "A malicious or changed adapter can shadow a trusted permission key, inherit prior approval, or exhaust registry and GUI consumers with hostile schemas.",
+      "builder_discretion": "Define immutable registry identity, provenance and version binding, reserved namespaces, collision rejection, schema limits, and permission-cache invalidation.",
+      "feature_keys": [
+        "tool-registry",
+        "custom-tools",
+        "mcp-tools",
+        "provider-mapping"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-014",
+      "item_type": "consumer",
+      "title": "Question tool has no non-interactive consumer outcome",
+      "statement": "The question tool is said to be meaningful only when a HITL UI can show prompts, but no headless, disconnected-UI, cancelled-run, timeout, or partially answered questionnaire outcome is defined. Callers therefore lack a deterministic transition or recovery action when the UI consumer disappears.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 198,
+          "line_end": 198,
+          "exact_quote": "| **question** | Ask the user structured questions during execution | `question` | Supports both single-question and multi-question questionnaire flows. Only meaningful when HITL/UI can show prompts. |",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "missing_consumer_failure_contract",
+      "impact": "Runs can hang or interpret absence of an answer inconsistently when no interactive consumer is available.",
+      "builder_discretion": "Define availability preflight, timeout/cancellation, partial-answer persistence, headless fallback, and normalized recovery actions.",
+      "feature_keys": [
+        "question-tool",
+        "hitl"
+      ]
+    },
+    {
+      "item_id": "A005-001048-GAP-015",
+      "item_type": "failure_recovery",
+      "title": "LSP rename is approval-gated but not transactionally specified",
+      "statement": "Rename is correctly classified as a write requiring approval, yet the core gives only input fields and four broad statuses. It does not define workspace-edit preview scope, per-file authorization, concurrent document version checks, partial multi-file failure, rollback, or normalized changed-file evidence.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 257,
+          "line_end": 257,
+          "exact_quote": "- LSP canon must preserve the exact MVP operation inventory, normalized parameter shapes, and result envelope. The packetization summary phrase `10 read-only + 1 write-gated (lsp_rename)` reconciles to the canonical Part M inventory: nine read-only operations plus one approval-gated `rename` operation. `workspaceSymbol` must carry `query`, position-based operations use `path` + `position`, and `rename` / `lsp_rename` requires `path` + `position` + `newName` with approval gating.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 280,
+          "line_end": 280,
+          "exact_quote": "- ok | partial | unavailable | error",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "gap_kind": "multi_file_write_transaction",
+      "impact": "A rename can leave a workspace partially changed while reporting only `partial` or `error`, with no safe retry or rollback oracle.",
+      "builder_discretion": "Define preview and approval scope, document-version preconditions, atomicity boundary, partial-change manifest, rollback behavior, and settlement mapping.",
+      "feature_keys": [
+        "lsp-rename",
+        "edit-group",
+        "rollback"
+      ]
+    },
+    {
+      "item_id": "A005-001048-NONGAP-001",
+      "item_type": "explicit_non_gap",
+      "title": "Central policy order explicitly composes permission and FileSafe",
+      "statement": "The core explicitly requires every agent-usable attempt to pass through one policy engine and orders permission, HITL, FileSafe, binding, execution, and normalization. This closes the basic hidden bypass and ordering gap, subject to the narrower identity and invocation issues reported separately.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 102,
+          "line_end": 102,
+          "exact_quote": "Every agent-usable tool attempt MUST pass through one canonical policy engine that resolves permission, approval/HITL, FileSafe, execution, terminal binding when relevant, and result normalization.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 105,
+          "line_end": 105,
+          "exact_quote": "Canonical order:",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "feature_keys": [
+        "central-policy-engine"
+      ]
+    },
+    {
+      "item_id": "A005-001048-NONGAP-002",
+      "item_type": "explicit_non_gap",
+      "title": "Edit timeout requires atomic failure",
+      "statement": "For the timeout case, the core provides an explicit no-partial-rewrite invariant and a concrete result shape. That is a falsifiable recovery guarantee even though other race and failure classes remain open.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 365,
+          "line_end": 365,
+          "exact_quote": "- On timeout, the operation must fail atomically: no partial file rewrite, and the response is `{ status: \"timed_out\", path, error: { code: \"timeout\" } }`.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "feature_keys": [
+        "edit-tool",
+        "timeout-recovery"
+      ]
+    },
+    {
+      "item_id": "A005-001048-NONGAP-003",
+      "item_type": "explicit_non_gap",
+      "title": "LSP compatibility aliases are normalized to one canonical operation",
+      "statement": "The core explicitly makes short lookup names and `lsp_rename` compatibility aliases rather than additional permission keys. This prevents duplicate operation identity during compatibility migration.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 249,
+          "line_end": 249,
+          "exact_quote": "Canonical operation inventory: the packetization summary phrase `10 read-only + 1 write-gated (lsp_rename)` reconciles to the live Part M operation set as nine read-only operations plus one approval-gated `rename` operation. `lsp_rename` is a legacy/source alias for canonical `rename` / `lsp.rename`, not a second tool key.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 251,
+          "line_end": 251,
+          "exact_quote": "Short LSP lookup names `definition`, `references`, and `implementation` are compatibility aliases for `goToDefinition`, `findReferences`, and `goToImplementation`; the canonical operation names remain the long-form LSP actions above.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "feature_keys": [
+        "lsp-tool",
+        "compatibility-aliases"
+      ]
+    },
+    {
+      "item_id": "A005-001048-NONGAP-004",
+      "item_type": "explicit_non_gap",
+      "title": "Stale debug runtime identity has an explicit transition",
+      "statement": "A recoverably stale linked runtime must enter `attention_required` with a stable reason code instead of silently resuming. This is an explicit invalid-state guard and GUI truth requirement.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 221,
+          "line_end": 221,
+          "exact_quote": "- when a debug-capable tool's linked runtime identity is stale but recoverable, tool execution must enter `attention_required` with `attention_required_reason_code = session_reconnect_required` instead of silently resuming against stale sessions",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "feature_keys": [
+        "debug-capable-tools",
+        "runtime-reconnect"
+      ]
+    },
+    {
+      "item_id": "A005-001048-NONGAP-005",
+      "item_type": "explicit_non_gap",
+      "title": "Blocked shell attempts do not create false live sessions",
+      "statement": "The shell-binding rules explicitly prevent denied or blocked calls from minting a fake live terminal session, closing a misleading terminal-state edge case.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 119,
+          "line_end": 119,
+          "exact_quote": "- denied or blocked shell calls do not mint fake live terminal sessions",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "feature_keys": [
+        "terminal-binding",
+        "gui-truth"
+      ]
+    },
+    {
+      "item_id": "A005-001048-NONGAP-006",
+      "item_type": "explicit_non_gap",
+      "title": "Child-run identity and default terminal lifecycle are explicit",
+      "statement": "The core names canonical parent/child and grouping identity fields and states that completion, cancellation, or failure normally ends a disposable child. That supplies a baseline caller and lifecycle boundary, while shell-handle scope remains a separate gap.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 71,
+          "line_end": 71,
+          "exact_quote": "Canonical child-run identity fields:",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        },
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 92,
+          "line_end": 92,
+          "exact_quote": "Subagents are disposable by default. Completion, cancellation, or failure normally ends that child. Follow-up work should usually spawn a new child rather than reopen an old one.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "feature_keys": [
+        "child-run-identity",
+        "subagent-lifecycle"
+      ]
+    },
+    {
+      "item_id": "A005-001048-NONGAP-007",
+      "item_type": "explicit_non_gap",
+      "title": "Multi-lane approval-scope mismatch is explicitly prohibited",
+      "statement": "The core explicitly recognizes that per-spawn sessions and parallel lanes can invalidate same-session approval assumptions. This closes the broad unknown-unknown at that seam, though it does not itself provide the binding algorithm.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Tools.md",
+          "line_start": 158,
+          "line_end": 158,
+          "exact_quote": "Tool-facing widgets and command routing do not hide scope or identity mismatches. Progress and widget consumers distinguish page-global, app-global, project-scoped, and `/run-centric` layout/state before treating a view as authoritative. Catalog normalization treats missing `IDs` as structural, not merely local; surfaces must normalize `cmd.*.open_*` variants through one shared target model, prefer deliberate `object_kind` extension over new top-level route fields, and preserve `Executor_Protocol` / `Executor_Protocol.md` `/attempt/blocked-sequence` identity. Approval scope in a multi-lane run must not silently remain same-session when sessions are per-agent-spawn and lanes are parallel.",
+          "source_sha256": "42e6d8dc2379c290d1f51752663e86572d52cc089cad51fe7d816658eb8a46ca"
+        }
+      ],
+      "feature_keys": [
+        "multi-lane-approval",
+        "scope-identity"
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Question lacks a deterministic non-interactive consumer path, and untrusted registry entrants lack defined admission consumers and invalidation behavior.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-013",
+        "A005-001048-GAP-014",
+        "A005-001048-NONGAP-006"
+      ]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Ambiguous approval tokens, shell-handle reuse, and partial LSP rename leave invalid transitions open; stale debug sessions and blocked shell UI state are explicitly handled.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-001",
+        "A005-001048-GAP-002",
+        "A005-001048-GAP-015",
+        "A005-001048-NONGAP-004",
+        "A005-001048-NONGAP-005"
+      ]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Concurrent shell-handle reuse and edit authorization-to-commit races lack deterministic serialization and file-identity checks.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-002",
+        "A005-001048-GAP-006",
+        "A005-001048-GAP-012"
+      ]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Detached processes, outcome normalization, uncertain retries, and multi-file rename have unresolved partial-failure semantics; edit timeout is explicitly atomic.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-003",
+        "A005-001048-GAP-004",
+        "A005-001048-GAP-012",
+        "A005-001048-GAP-015",
+        "A005-001048-NONGAP-002"
+      ]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "Detached execution and multi-file rename lack restart recovery or rollback, and edit atomicity is only explicit for timeout.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-003",
+        "A005-001048-GAP-006",
+        "A005-001048-GAP-015",
+        "A005-001048-NONGAP-002"
+      ]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "Shell reuse, destructive write grouping, and custom/MCP registry admission leave authority escalation paths despite an explicit central policy-engine order.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-002",
+        "A005-001048-GAP-005",
+        "A005-001048-GAP-013",
+        "A005-001048-NONGAP-001",
+        "A005-001048-NONGAP-007"
+      ]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Redacted and retained settlement labels are not backed by deletion, expiry, reveal, export, or original-data handling rules.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-009"
+      ]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Filesystem path races, unbounded reads, and untrusted registry names and schemas lack complete validation and admission constraints.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-006",
+        "A005-001048-GAP-007",
+        "A005-001048-GAP-013"
+      ]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Configured permission can be displayed as allowed despite later FileSafe, availability, or identity blockers; stale debug identity and blocked-shell fake-session behavior are explicitly guarded.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-001",
+        "A005-001048-GAP-010",
+        "A005-001048-NONGAP-004",
+        "A005-001048-NONGAP-005"
+      ]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "Web tools lack normalized offline, network-failure, partial-result, retry, and cache-trust contracts.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-008"
+      ]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Read limits are unspecified and detached process lifetime is only recommended, leaving repository and process scale behavior non-deterministic.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-003",
+        "A005-001048-GAP-007",
+        "A005-001048-GAP-013"
+      ]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "Authority-bearing permission and question controls have no explicit accessible interaction contract in the core.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-011"
+      ]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "Visible approval and question labels are not separated from canonical wire tokens, and localization behavior is undefined.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-001",
+        "A005-001048-GAP-011"
+      ]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Approval token normalization is ambiguous, while LSP compatibility aliases are explicitly reconciled to canonical operations.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-001",
+        "A005-001048-NONGAP-003"
+      ]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Outcome-layer mapping, retention metadata, and attempt correlation are incomplete despite an explicit normalization stage and usage metrics intent.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-004",
+        "A005-001048-GAP-009",
+        "A005-001048-GAP-012",
+        "A005-001048-NONGAP-001"
+      ]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "Overwrite, filesystem TOCTOU, retry duplication, and multi-file rename lack sufficient destructive-action escalation and rollback contracts.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-005",
+        "A005-001048-GAP-006",
+        "A005-001048-GAP-012",
+        "A005-001048-GAP-015",
+        "A005-001048-NONGAP-002"
+      ]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "The core delegates permission, FileSafe, MCP, and GUI ownership but does not close effective-state display or immutable registry-identity seams within this window.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-010",
+        "A005-001048-GAP-013",
+        "A005-001048-NONGAP-001"
+      ]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Unspecified caps, missing outcome mappings, and absent attempt identity prevent deterministic conformance tests; edit timeout supplies one concrete oracle.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-004",
+        "A005-001048-GAP-007",
+        "A005-001048-GAP-012",
+        "A005-001048-NONGAP-002"
+      ]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "gap_found",
+      "summary": "The highest negative-space risks are mutable registry identity, cross-run shell reuse, and detached side effects; multi-lane approval mismatch is at least explicitly recognized.",
+      "evidence_item_ids": [
+        "A005-001048-GAP-002",
+        "A005-001048-GAP-003",
+        "A005-001048-GAP-013",
+        "A005-001048-NONGAP-007"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

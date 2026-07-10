@@ -1,0 +1,393 @@
+<<< CONTEXT_BEFORE 3000-3011 >>>
+- "Do not revive the retired preview/browser trust-tier matrix."
+- "Browser implementation-readiness details stay with browser owner docs, not Permissions implementation ownership."
+preserved_contractrefs: []
+compatibility_only_notes:
+- "UI/source aliases always-allowed, session-granted, and explicit-confirmation are lineage labels only."
+stale_retired_dispositions:
+- "Retired preview/browser trust-tier matrix is not revived by browser-session permission tiers."
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 3012-3375 >>>
+### PS-033 - Special Guard Synthetic Key Family
+
+```yaml
+plan_unit_id: PS-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Special guards are synthetic permission keys tied to behavioral conditions rather than specific tools and are evaluated in addition to tool-specific permissions."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-019
+unblocks: []
+acceptance_criteria:
+- "PS-033 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: special_guard_family
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0029
+preserved_exact_tokens:
+- "Special guards"
+- "SPECIAL-GUARDS"
+- "synthetic permission keys"
+- "behavioral condition"
+negative_constraints: []
+preserved_contractrefs:
+- "ContractRef: PolicyRule:Decision_Policy.md§2"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+### PS-034 - Doom Loop Guard
+
+```yaml
+plan_unit_id: PS-034
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "doom_loop triggers when the same tool is called with identical input three consecutive times, defaults to ask, pauses or denies in headless mode, and allows configurable threshold and action."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-033
+unblocks: []
+acceptance_criteria:
+- "PS-034 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: doom_loop_guard
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0030
+preserved_exact_tokens:
+- "doom_loop"
+- "GUARD-DOOM-LOOP"
+- "identical input three consecutive times"
+- "3×"
+- "possible loop"
+- "once"
+- "for session"
+- "always"
+- "abort the run"
+- "threshold = 3"
+negative_constraints:
+- "Headless mode cannot wait for an unavailable approval and therefore denies when the guard requires ask."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+### PS-035 - External Directory Guard Evaluation
+
+```yaml
+plan_unit_id: PS-035
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "external_directory triggers when a tool references a path outside project working roots, checks the external directory allowlist first, and otherwise applies the configured allow, ask, or deny action."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-026
+- PS-033
+unblocks: []
+acceptance_criteria:
+- "PS-035 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: external_directory_guard_runtime
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0031
+preserved_exact_tokens:
+- "external_directory"
+- "GUARD-EXTERNAL-DIR"
+- "project working roots"
+- "Default action: ask"
+- "external directory allowlist"
+- "allow"
+- "ask"
+- "deny"
+- "allowlist"
+negative_constraints:
+- "Outside-root paths must not bypass the guard unless they match an allowlist entry."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+### PS-036 - External Publish Guard Coverage
+
+```yaml
+plan_unit_id: PS-036
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "external_publish_side_effect covers DockerHub repository creation, autonomous DockerHub image push, managed remote template repository creation, and managed Unraid template repository remote push as non-bypassable remote side-effect approvals."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, compatibility, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-009
+- PS-033
+unblocks: []
+acceptance_criteria:
+- "PS-036 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: external_publish_guard_non_bypassable
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0032
+preserved_exact_tokens:
+- "external_publish_side_effect"
+- "DockerHub repository creation"
+- "DockerHub image push"
+- "managed remote template repository"
+- "managed Unraid template repository"
+- "Default action: ask"
+- "non-bypassable"
+- "yolo"
+- "scope-bound approval reuse"
+- "generic prior allows"
+negative_constraints:
+- "yolo mode, scope-bound approval reuse, and generic prior allows must not suppress external_publish_side_effect."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Containers_Registry_and_Unraid.md"
+```
+
+### PS-037 - External Publish Approval And Failure Presentation
+
+```yaml
+plan_unit_id: PS-037
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "A direct user click approves only the exact remote side effect named by that control, chained remote side effects require separate approvals in execution order, and blocked or rejected runtime errors identify the blocked step, guard, and recovery actions inline and in chat/evidence output."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+split_recommended: false
+depends_on:
+- PS-036
+unblocks: []
+acceptance_criteria:
+- "PS-037 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: external_publish_failure_presentation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0032
+preserved_exact_tokens:
+- "direct user click"
+- "exact remote side effect"
+- "separate approval step"
+- "execution order"
+- "Failure presentation"
+- "blocked remote step"
+- "guard name"
+- "recovery actions"
+- "Docker Manager"
+- "orchestrator surfaces"
+- "chat/evidence output"
+negative_constraints:
+- "A direct click approval must not authorize a different remote side effect in the same chained flow."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Containers_Registry_and_Unraid.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-038 - Tool Permission Key Taxonomy
+
+```yaml
+plan_unit_id: PS-038
+unit_type: reference
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Tool permission key taxonomy and preset vocabulary remain owned by Permissions, while approval-card summaries and session-approval behavior are owned by Ask flow semantics and durable always reuse remains inspectable through permission/audit surfaces."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+split_recommended: false
+depends_on:
+- PS-019
+- PS-028
+unblocks: []
+acceptance_criteria:
+- "PS-038 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: tool_permission_key_taxonomy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0033
+preserved_exact_tokens:
+- "Tool permission keys"
+- "tool permission-key taxonomy"
+- "preset vocabulary"
+- "deny"
+- "once"
+- "for session"
+- "always"
+- "question default `allow` only when HITL is available"
+- "read_only"
+- "plan"
+- "websearch"
+- "webfetch"
+- "webextract"
+- "webresearch"
+- "webcrawl"
+- "webmap"
+- "blocked_reason_code"
+- "allowed_action_ids[]"
+- "status: \"unavailable\""
+negative_constraints: []
+preserved_contractrefs:
+- "ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+```
+
+### PS-039 - Ask Flow Web Summary Ownership
+
+```yaml
+plan_unit_id: PS-039
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Web tool permission keys, approval-card summary templates, session-approval semantics, and exact approval-card cross-reference targets remain canonical in Permissions and must not be reinvented from thin tool descriptions or stale Ask UI links."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+split_recommended: false
+depends_on:
+- PS-030
+- PS-031
+unblocks: []
+acceptance_criteria:
+- "PS-039 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_206
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: ask_flow_web_summary_owner_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0034
+preserved_exact_tokens:
+- "Ask flow semantics"
+- "Web tool permission keys"
+- "approval-card summary templates"
+- "session-approval semantics"
+- "stale Ask UI links"
+negative_constraints:
+- "Web tool permission keys, approval-card summary templates, and session-approval semantics must not be re-invented from thin tool descriptions or stale Ask UI links."
+preserved_contractrefs:
+- "ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+
+<<< CONTEXT_AFTER 3376-3387 >>>
+### PS-040 - Ask Flow Preset Carry Through
+
+```yaml
+plan_unit_id: PS-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Ask flow preset behavior carries TODO, plan-mode web, batch webfetch, four-tier approval ladder, web tool visibility, strict read_only/no-network options, blocked/unavailable payload fields, and skill/lsp/question/todo/web keys through permission presets."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, settings help, GUI references, or compact surface behavior."
+split_recommended: false
+depends_on:

@@ -1,0 +1,408 @@
+<<< CONTEXT_BEFORE canonical_document_lines=27133-27144 >>>
+L00027133	- The plan graph must not own max concurrent execution caps.
+L00027134	- Crew spawn must not exceed either the crew cap or the per-platform agent cap.
+L00027135	compatibility_only_notes: []
+L00027136	stale_retired_dispositions:
+L00027137	- The old `§Subagent Configuration executionLimits (this file)` pointer is retired when it resolves to the corrupted YAML block; the live same-file anchor is `Canonical crew-cap and availability rules`.
+L00027138	owner_boundary_notes:
+L00027139	- Crosswalk §3.7 and the same-file `Canonical crew-cap and availability rules` executionLimits anchor own concurrency cap values.
+L00027140	owner_hints:
+L00027141	- Plans/orchestrator-subagent-integration.md
+L00027142	preserved_contractrefs: []
+L00027143	```
+L00027144	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=27145-27523 >>>
+L00027145	### OSI-358 - Parallel Subagent Benefits Rationale
+L00027146	
+L00027147	```yaml
+L00027148	plan_unit_id: OSI-358
+L00027149	unit_type: requirement
+L00027150	status: accepted
+L00027151	owner_doc: Plans/orchestrator-subagent-integration.md
+L00027152	canonical_text: >-
+L00027153	  Preserve the rationale that parallel subagent execution can improve speed, specialization, resource efficiency, and
+L00027154	  scalability when bounded by the execution/coordination constraints.
+L00027155	gui_related: false
+L00027156	gui_classification_reason: This unit covers rationale for backend orchestration behavior, not GUI presentation.
+L00027157	split_recommended: false
+L00027158	depends_on:
+L00027159	- OSI-352
+L00027160	- OSI-357
+L00027161	unblocks: []
+L00027162	acceptance_criteria:
+L00027163	- Covered benefits list remains losslessly available for exact-text audit.
+L00027164	- Rationale does not override concurrency, coordination, or worktree constraints.
+L00027165	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00027166	validation_surfaces:
+L00027167	- >-
+L00027168	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00027169	- python3 scripts/pm-plan-index.py validate
+L00027170	reasoning_tier: standard
+L00027171	context_scope: orchestrator_subagent_standardization
+L00027172	implementation_surfaces:
+L00027173	- Plans/orchestrator-subagent-integration.md
+L00027174	risk_class: parallel_subagent_benefits_rationale
+L00027175	node_compile_hint:
+L00027176	  mode: parallel_subagent_benefits_rationale
+L00027177	  create_worknodes: false
+L00027178	source_lineage:
+L00027179	- >-
+L00027180	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0159
+L00027181	preserved_exact_tokens:
+L00027182	- Faster Execution
+L00027183	- Better Specialization
+L00027184	- Resource Efficiency
+L00027185	- Scalability
+L00027186	negative_constraints:
+L00027187	- Benefits rationale must not override execution limits or coordination constraints.
+L00027188	compatibility_only_notes: []
+L00027189	stale_retired_dispositions: []
+L00027190	owner_boundary_notes: []
+L00027191	owner_hints:
+L00027192	- Plans/orchestrator-subagent-integration.md
+L00027193	preserved_contractrefs: []
+L00027194	```
+L00027195	
+L00027196	### OSI-359 - Multi-Language Backend Parallelization Example
+L00027197	
+L00027198	```yaml
+L00027199	plan_unit_id: OSI-359
+L00027200	unit_type: requirement
+L00027201	status: accepted
+L00027202	owner_doc: Plans/orchestrator-subagent-integration.md
+L00027203	canonical_text: >-
+L00027204	  Preserve the multi-language backend example where Rust backend subtasks split database schema, API endpoints, and
+L00027205	  authentication work across appropriate specialist subagents with dependency ordering.
+L00027206	gui_related: false
+L00027207	gui_classification_reason: This unit covers backend example work, not GUI presentation.
+L00027208	split_recommended: false
+L00027209	depends_on:
+L00027210	- OSI-352
+L00027211	unblocks: []
+L00027212	acceptance_criteria:
+L00027213	- Covered backend example bullets remain losslessly available for exact-text audit.
+L00027214	- Example subtasks remain illustrative and do not create executable work queues.
+L00027215	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00027216	validation_surfaces:
+L00027217	- >-
+L00027218	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00027219	- python3 scripts/pm-plan-index.py validate
+L00027220	reasoning_tier: standard
+L00027221	context_scope: orchestrator_subagent_standardization
+L00027222	implementation_surfaces:
+L00027223	- Plans/orchestrator-subagent-integration.md
+L00027224	risk_class: multilanguage_backend_parallelization_example
+L00027225	node_compile_hint:
+L00027226	  mode: multilanguage_backend_parallelization_example
+L00027227	  create_worknodes: false
+L00027228	source_lineage:
+L00027229	- >-
+L00027230	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0160
+L00027231	preserved_exact_tokens:
+L00027232	- Rust backend
+L00027233	- Database schema
+L00027234	- API endpoints
+L00027235	- Authentication
+L00027236	- rust-engineer
+L00027237	- database-administrator
+L00027238	- api-designer
+L00027239	- security-engineer
+L00027240	negative_constraints:
+L00027241	- Example subtasks are not WorkNodes or executable queues.
+L00027242	compatibility_only_notes: []
+L00027243	stale_retired_dispositions: []
+L00027244	owner_boundary_notes:
+L00027245	- Backend owners adjudicate implementation task decomposition if promoted.
+L00027246	owner_hints:
+L00027247	- Plans/orchestrator-subagent-integration.md
+L00027248	preserved_contractrefs: []
+L00027249	```
+L00027250	
+L00027251	### OSI-360 - Frontend UI Parallelization Example
+L00027252	
+L00027253	```yaml
+L00027254	plan_unit_id: OSI-360
+L00027255	unit_type: requirement
+L00027256	status: accepted
+L00027257	owner_doc: Plans/orchestrator-subagent-integration.md
+L00027258	canonical_text: >-
+L00027259	  Preserve the frontend UI example where component library and API integration subtasks use react-specialist and
+L00027260	  frontend-developer subagents, with API integration depending on backend work.
+L00027261	gui_related: true
+L00027262	gui_classification_reason: This unit covers frontend UI example work and user-visible presentation surfaces.
+L00027263	split_recommended: false
+L00027264	depends_on:
+L00027265	- OSI-359
+L00027266	unblocks: []
+L00027267	acceptance_criteria:
+L00027268	- Covered frontend UI example bullets remain losslessly available for exact-text audit.
+L00027269	- Frontend example remains illustrative and does not create executable UI work.
+L00027270	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00027271	validation_surfaces:
+L00027272	- >-
+L00027273	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00027274	- python3 scripts/pm-plan-index.py validate
+L00027275	reasoning_tier: standard
+L00027276	context_scope: orchestrator_subagent_standardization
+L00027277	implementation_surfaces:
+L00027278	- Plans/orchestrator-subagent-integration.md
+L00027279	risk_class: frontend_ui_parallelization_example
+L00027280	node_compile_hint:
+L00027281	  mode: frontend_ui_parallelization_example
+L00027282	  create_worknodes: false
+L00027283	source_lineage:
+L00027284	- >-
+L00027285	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0160
+L00027286	preserved_exact_tokens:
+L00027287	- Frontend UI
+L00027288	- Component library
+L00027289	- API integration
+L00027290	- react-specialist
+L00027291	- frontend-developer
+L00027292	negative_constraints:
+L00027293	- Example subtasks are not WorkNodes, NodeSeeds, or executable UI tasks.
+L00027294	compatibility_only_notes: []
+L00027295	stale_retired_dispositions: []
+L00027296	owner_boundary_notes:
+L00027297	- GUI/frontend owner adjudicates any promoted UI implementation.
+L00027298	owner_hints:
+L00027299	- Plans/orchestrator-subagent-integration.md
+L00027300	preserved_contractrefs: []
+L00027301	```
+L00027302	
+L00027303	### OSI-361 - Dependency-Level Execution Flow Example
+L00027304	
+L00027305	```yaml
+L00027306	plan_unit_id: OSI-361
+L00027307	unit_type: requirement
+L00027308	status: accepted
+L00027309	owner_doc: Plans/orchestrator-subagent-integration.md
+L00027310	canonical_text: >-
+L00027311	  Preserve the Level 0, Level 1, and Level 2 execution-flow example showing parallel backend/frontend starts and inherited
+L00027312	  context across dependency levels.
+L00027313	gui_related: true
+L00027314	gui_classification_reason: This mixed example includes frontend UI execution flow and backend dependency sequencing.
+L00027315	split_recommended: true
+L00027316	depends_on:
+L00027317	- OSI-359
+L00027318	- OSI-360
+L00027319	unblocks: []
+L00027320	acceptance_criteria:
+L00027321	- Covered execution-flow fenced example remains losslessly available for exact-text audit.
+L00027322	- Mixed backend/frontend example remains source-lineage evidence unless owner docs promote it.
+L00027323	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00027324	validation_surfaces:
+L00027325	- >-
+L00027326	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00027327	- python3 scripts/pm-plan-index.py validate
+L00027328	reasoning_tier: standard
+L00027329	context_scope: orchestrator_subagent_standardization
+L00027330	implementation_surfaces:
+L00027331	- Plans/orchestrator-subagent-integration.md
+L00027332	risk_class: dependency_level_execution_flow_example
+L00027333	node_compile_hint:
+L00027334	  mode: dependency_level_execution_flow_example
+L00027335	  create_worknodes: false
+L00027336	source_lineage:
+L00027337	- >-
+L00027338	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0160
+L00027339	preserved_exact_tokens:
+L00027340	- Level 0 (Parallel)
+L00027341	- Level 1 (After Level 0)
+L00027342	- Level 2 (After Task 1)
+L00027343	- inherits context
+L00027344	- inherits API context from Task 1
+L00027345	negative_constraints:
+L00027346	- Example levels are not executable queues.
+L00027347	compatibility_only_notes:
+L00027348	- Mixed GUI/backend example is split_recommended for future owner refinement.
+L00027349	stale_retired_dispositions: []
+L00027350	owner_boundary_notes:
+L00027351	- Backend and frontend owners retain implementation decomposition authority.
+L00027352	owner_hints:
+L00027353	- Plans/orchestrator-subagent-integration.md
+L00027354	preserved_contractrefs: []
+L00027355	```
+L00027356	
+L00027357	### OSI-362 - Parallel Execution Implementation Considerations
+L00027358	
+L00027359	```yaml
+L00027360	plan_unit_id: OSI-362
+L00027361	unit_type: requirement
+L00027362	status: accepted
+L00027363	owner_doc: Plans/orchestrator-subagent-integration.md
+L00027364	canonical_text: >-
+L00027365	  Parallel execution implementation considerations preserve selection-before-grouping, context caching, worktree creation,
+L00027366	  result aggregation, and continue_on_failure error handling as source-lineage orchestration constraints.
+L00027367	gui_related: false
+L00027368	gui_classification_reason: This unit covers backend orchestration considerations, not GUI presentation.
+L00027369	split_recommended: false
+L00027370	depends_on:
+L00027371	- OSI-038
+L00027372	- OSI-096
+L00027373	- OSI-236
+L00027374	unblocks: []
+L00027375	acceptance_criteria:
+L00027376	- Covered implementation-considerations list remains losslessly available for exact-text audit.
+L00027377	- Checklist items are not executable tasks by themselves.
+L00027378	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00027379	validation_surfaces:
+L00027380	- >-
+L00027381	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00027382	- python3 scripts/pm-plan-index.py validate
+L00027383	reasoning_tier: standard
+L00027384	context_scope: orchestrator_subagent_standardization
+L00027385	implementation_surfaces:
+L00027386	- Plans/orchestrator-subagent-integration.md
+L00027387	risk_class: parallel_execution_implementation_considerations
+L00027388	node_compile_hint:
+L00027389	  mode: parallel_execution_implementation_considerations
+L00027390	  create_worknodes: false
+L00027391	source_lineage:
+L00027392	- >-
+L00027393	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0161
+L00027394	preserved_exact_tokens:
+L00027395	- Subagent Selection Timing
+L00027396	- Context Caching
+L00027397	- Worktree Management
+L00027398	- Result Aggregation
+L00027399	- Error Handling
+L00027400	- continue_on_failure
+L00027401	negative_constraints:
+L00027402	- Implementation considerations are not executable build tasks.
+L00027403	compatibility_only_notes: []
+L00027404	stale_retired_dispositions: []
+L00027405	owner_boundary_notes:
+L00027406	- Orchestrator policy and runtime owners adjudicate promoted behavior.
+L00027407	owner_hints:
+L00027408	- Plans/orchestrator-subagent-integration.md
+L00027409	preserved_contractrefs: []
+L00027410	```
+L00027411	
+L00027412	### OSI-363 - Updated Orchestrator Flow
+L00027413	
+L00027414	```yaml
+L00027415	plan_unit_id: OSI-363
+L00027416	unit_type: requirement
+L00027417	status: accepted
+L00027418	owner_doc: Plans/orchestrator-subagent-integration.md
+L00027419	canonical_text: >-
+L00027420	  Preserve the updated high-level orchestrator flow for cached context detection, dependency graph construction,
+L00027421	  parallelizable groups, subagent selection, worktree creation, parallel execution, merge, cleanup, and level advancement.
+L00027422	gui_related: false
+L00027423	gui_classification_reason: This unit covers backend orchestration flow, not GUI presentation.
+L00027424	split_recommended: false
+L00027425	depends_on:
+L00027426	- OSI-362
+L00027427	unblocks: []
+L00027428	acceptance_criteria:
+L00027429	- Covered orchestrator-flow fenced example remains losslessly available for exact-text audit.
+L00027430	- Flow example does not create executable queues or work manifests.
+L00027431	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00027432	validation_surfaces:
+L00027433	- >-
+L00027434	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00027435	- python3 scripts/pm-plan-index.py validate
+L00027436	reasoning_tier: standard
+L00027437	context_scope: orchestrator_subagent_standardization
+L00027438	implementation_surfaces:
+L00027439	- Plans/orchestrator-subagent-integration.md
+L00027440	risk_class: updated_orchestrator_flow
+L00027441	node_compile_hint:
+L00027442	  mode: updated_orchestrator_flow
+L00027443	  create_worknodes: false
+L00027444	source_lineage:
+L00027445	- >-
+L00027446	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0162
+L00027447	preserved_exact_tokens:
+L00027448	- Detect project context
+L00027449	- CACHED
+L00027450	- Build dependency graph
+L00027451	- Get parallelizable groups
+L00027452	- Select subagents for each subtask
+L00027453	- Create worktrees
+L00027454	- Execute subtasks in parallel
+L00027455	- Merge results
+L00027456	- Cleanup worktrees
+L00027457	- Advance to next dependency level
+L00027458	negative_constraints:
+L00027459	- Flow example is not an executable work manifest.
+L00027460	compatibility_only_notes: []
+L00027461	stale_retired_dispositions: []
+L00027462	owner_boundary_notes:
+L00027463	- Runtime/orchestrator owners adjudicate concrete dispatch flow.
+L00027464	owner_hints:
+L00027465	- Plans/orchestrator-subagent-integration.md
+L00027466	preserved_contractrefs: []
+L00027467	```
+L00027468	
+L00027469	### OSI-364 - Platform Capability Execution Classes
+L00027470	
+L00027471	```yaml
+L00027472	plan_unit_id: OSI-364
+L00027473	unit_type: requirement
+L00027474	status: accepted
+L00027475	owner_doc: Plans/orchestrator-subagent-integration.md
+L00027476	canonical_text: >-
+L00027477	  Platform capability handling is provider-first, limited to PM-supported runtime surfaces, and classified across direct,
+L00027478	  CLI-bridged, and server-bridged providers under the referenced provider/prompt contracts.
+L00027479	gui_related: false
+L00027480	gui_classification_reason: This unit covers provider/runtime capability classes, not GUI presentation.
+L00027481	split_recommended: false
+L00027482	depends_on:
+L00027483	- OSI-004
+L00027484	- OSI-091
+L00027485	unblocks: []
+L00027486	acceptance_criteria:
+L00027487	- Covered platform capability heading and overview remain losslessly available for exact-text audit.
+L00027488	- Capability handling must not introduce unsupported runtime surfaces.
+L00027489	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00027490	validation_surfaces:
+L00027491	- >-
+L00027492	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00027493	- python3 scripts/pm-plan-index.py validate
+L00027494	reasoning_tier: standard
+L00027495	context_scope: orchestrator_subagent_standardization
+L00027496	implementation_surfaces:
+L00027497	- Plans/orchestrator-subagent-integration.md
+L00027498	risk_class: platform_capability_execution_classes
+L00027499	node_compile_hint:
+L00027500	  mode: platform_capability_execution_classes
+L00027501	  create_worknodes: false
+L00027502	source_lineage:
+L00027503	- >-
+L00027504	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0163
+L00027505	- >-
+L00027506	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0164
+L00027507	preserved_exact_tokens:
+L00027508	- Platform-Specific Capabilities & Extensions
+L00027509	- direct providers
+L00027510	- CLI-bridged providers
+L00027511	- server-bridged providers
+L00027512	negative_constraints:
+L00027513	- Capability handling must not create unsupported runtime surfaces.
+L00027514	compatibility_only_notes: []
+L00027515	stale_retired_dispositions: []
+L00027516	owner_boundary_notes:
+L00027517	- Provider and prompt contracts retain provider capability ownership.
+L00027518	owner_hints:
+L00027519	- Plans/orchestrator-subagent-integration.md
+L00027520	preserved_contractrefs:
+L00027521	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Prompt_Pipeline.md'
+L00027522	```
+L00027523	
+
+<<< CONTEXT_AFTER canonical_document_lines=27524-27535 >>>
+L00027524	### OSI-365 - CLI-Bridged Capability Surfaces
+L00027525	
+L00027526	```yaml
+L00027527	plan_unit_id: OSI-365
+L00027528	unit_type: requirement
+L00027529	status: accepted
+L00027530	owner_doc: Plans/orchestrator-subagent-integration.md
+L00027531	canonical_text: >-
+L00027532	  CLI-bridged capability surfaces preserve Cursor CLI cursor-agent boundaries, PM-managed account roots and derived
+L00027533	  MCP/instruction projections, Claude Code setup families, and PM-native skill/MCP handling.
+L00027534	gui_related: false
+L00027535	gui_classification_reason: This unit covers provider/runtime capability boundaries, not GUI presentation.

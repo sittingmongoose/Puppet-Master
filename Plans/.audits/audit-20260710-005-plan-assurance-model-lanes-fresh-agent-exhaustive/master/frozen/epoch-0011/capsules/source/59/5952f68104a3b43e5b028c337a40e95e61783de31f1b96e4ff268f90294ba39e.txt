@@ -1,0 +1,369 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2099-2110 >>>
+L00002099	- PM must not silently cross to another auth surface, provider entry, or account family when hard no-fallback applies.
+L00002100	compatibility_only_notes: []
+L00002101	stale_retired_dispositions: []
+L00002102	owner_boundary_notes:
+L00002103	- Provider adapters expose facts; PM owns cross-provider switching policy and final selectable-unit resolution.
+L00002104	owner_hints:
+L00002105	- Plans/Multi-Account.md
+L00002106	preserved_contractrefs:
+L00002107	- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md'
+L00002108	split_recommendation_reason: Hard no-fallback is split from threshold and cooldown behavior.
+L00002109	```
+L00002110	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2111-2450 >>>
+L00002111	### MA-021 - Switch Eligibility Signal Weighting And Threshold Evidence
+L00002112	
+L00002113	```yaml
+L00002114	plan_unit_id: MA-021
+L00002115	unit_type: requirement
+L00002116	status: accepted
+L00002117	owner_doc: Plans/Multi-Account.md
+L00002118	canonical_text: Auto-switching is allowed only when policy permits and the account has hard exhaustion, projected quota below
+L00002119	  threshold, severe rate-limit pressure, or temporary unavailability/capacity constraints. PM orders evidence from hard
+L00002120	  runtime failure through weaker heuristics, uses authoritative counters for threshold and exhausted states, preserves
+L00002121	  provider windows, and does not promote weak one-off plan warnings into automatic switching.
+L00002122	gui_related: false
+L00002123	gui_classification_reason: The unit covers runtime evidence weighting and threshold semantics rather than visual presentation.
+L00002124	split_recommended: false
+L00002125	depends_on:
+L00002126	- MA-020
+L00002127	unblocks: []
+L00002128	acceptance_criteria:
+L00002129	- Covered source spans remain losslessly available for exact-text audit.
+L00002130	- Signal weighting order remains preserved.
+L00002131	- Authoritative remaining counters drive threshold_reached and exhausted transitions.
+L00002132	- Runtime token stats alone do not become hard blocks without authoritative evidence.
+L00002133	- One soft plan-warning does not trigger auto-switch by itself.
+L00002134	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002135	validation_surfaces:
+L00002136	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002137	- python3 scripts/pm-plan-index.py validate
+L00002138	risk_class: switch_signal_weighting
+L00002139	reasoning_tier: standard
+L00002140	context_scope: multi_account_standardization
+L00002141	implementation_surfaces:
+L00002142	- Plans/Multi-Account.md
+L00002143	node_compile_hint:
+L00002144	  mode: switch_signal_weighting
+L00002145	  create_worknodes: false
+L00002146	source_lineage:
+L00002147	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0019
+L00002148	preserved_exact_tokens:
+L00002149	- hard exhaustion
+L00002150	- projected remaining quota below threshold
+L00002151	- severe rate-limit pressure
+L00002152	- threshold_reached
+L00002153	- exhausted
+L00002154	- 20% remaining
+L00002155	- 10% remaining
+L00002156	- fiveHour
+L00002157	- weekly
+L00002158	- pattern_only_or_inferred
+L00002159	- plan-warning
+L00002160	- plan-pressure
+L00002161	- reset_at
+L00002162	negative_constraints:
+L00002163	- The scheduler must not leave threshold/exhausted transitions undefined when authoritative remaining quota is available.
+L00002164	- PM must not auto-switch purely on one soft plan-warning.
+L00002165	compatibility_only_notes:
+L00002166	- Authoritative threshold semantics are preserved from source for audit compatibility.
+L00002167	stale_retired_dispositions: []
+L00002168	owner_boundary_notes:
+L00002169	- Plans/usage-feature.md and provider adapters supply evidence; PM resolves switching policy.
+L00002170	owner_hints:
+L00002171	- Plans/Multi-Account.md
+L00002172	preserved_contractrefs:
+L00002173	- 'ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/storage-plan.md'
+L00002174	split_recommendation_reason: Threshold evidence is split from cooldown/no-switch and manual control requirements.
+L00002175	```
+L00002176	
+L00002177	### MA-022 - No-Switch Cooldown Retry Budget Manual Override And Exhausted Copy
+L00002178	
+L00002179	```yaml
+L00002180	plan_unit_id: MA-022
+L00002181	unit_type: requirement
+L00002182	status: accepted
+L00002183	owner_doc: Plans/Multi-Account.md
+L00002184	canonical_text: PM does not auto-switch when no eligible backup exists, policy forbids it, provider capability does not support
+L00002185	  switching, a hard requested constraint forbids fallback, or explicit recovery is required. Cooldown and retry budget are
+L00002186	  first-class account state, authoritative cooldown sets hard_block until revalidation, manual set-active remains an
+L00002187	  override/debug control, and exhausted account copy remains user-visible when fallback is available.
+L00002188	gui_related: true
+L00002189	gui_classification_reason: The unit preserves user-visible exhausted copy and manual account control behavior.
+L00002190	split_recommended: false
+L00002191	depends_on:
+L00002192	- MA-021
+L00002193	unblocks: []
+L00002194	acceptance_criteria:
+L00002195	- Covered source spans remain losslessly available for exact-text audit.
+L00002196	- No-switch conditions remain explicit.
+L00002197	- cooldown and retry_budget remain first-class account state.
+L00002198	- cooldown_until sets hard_block=true until revalidation after expiry.
+L00002199	- Manual set-active/preferred account controls remain override/debug controls.
+L00002200	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002201	validation_surfaces:
+L00002202	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002203	- python3 scripts/pm-plan-index.py validate
+L00002204	risk_class: cooldown_manual_control
+L00002205	reasoning_tier: standard
+L00002206	context_scope: multi_account_standardization
+L00002207	implementation_surfaces:
+L00002208	- Plans/Multi-Account.md
+L00002209	node_compile_hint:
+L00002210	  mode: cooldown_manual_control
+L00002211	  create_worknodes: false
+L00002212	source_lineage:
+L00002213	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0019
+L00002214	preserved_exact_tokens:
+L00002215	- cooldown_until
+L00002216	- hard_block=true
+L00002217	- cooldown
+L00002218	- retry budget
+L00002219	- manual set active
+L00002220	- preferred account
+L00002221	- Usage exhausted
+L00002222	- Puppet Master will use another eligible account until this one resets
+L00002223	negative_constraints:
+L00002224	- Manual control does not redefine the default operating model.
+L00002225	compatibility_only_notes: []
+L00002226	stale_retired_dispositions: []
+L00002227	owner_boundary_notes:
+L00002228	- Manual controls still record requested versus effective account identity and switch reason.
+L00002229	owner_hints:
+L00002230	- Plans/Multi-Account.md
+L00002231	preserved_contractrefs:
+L00002232	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/FinalGUISpec.md'
+L00002233	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, ContractName:Plans/Contracts_V0.md#42-authpolicy'
+L00002234	split_recommendation_reason: No-switch, cooldown, manual override, and exhausted copy close the S0019 split.
+L00002235	```
+L00002236	
+L00002237	### MA-023 - Provider Behavior Matrix
+L00002238	
+L00002239	```yaml
+L00002240	plan_unit_id: MA-023
+L00002241	unit_type: requirement
+L00002242	status: accepted
+L00002243	owner_doc: Plans/Multi-Account.md
+L00002244	canonical_text: >-
+L00002245	  Provider-specific behavior preserves the provider-entry matrix for Gemini Direct, Antigravity CLI public `agy` rows, separate Antigravity OAuth/internal generated-image route rows, retired Gemini CLI lineage, Cursor CLI, Claude Code CLI, Codex/OpenAI, GitHub Copilot, OpenCode, and accepted coding-plan rows, including identity shape, usage/health signals, recovery and switching notes, and the rule that Codex plan-backed and API-billed usage/cooldowns must not be merged.
+L00002246	gui_related: false
+L00002247	gui_classification_reason: The unit preserves provider behavior data and runtime identity, not direct GUI layout.
+L00002248	split_recommended: true
+L00002249	depends_on:
+L00002250	- MA-022
+L00002251	unblocks: []
+L00002252	acceptance_criteria:
+L00002253	- Covered source spans remain losslessly available for exact-text audit.
+L00002254	- All provider matrix rows remain traceable.
+L00002255	- Antigravity public `agy` and internal generated-image behavior rows remain separate when proof/auth/endpoint differs.
+L00002256	- Codex ChatGPT and API key account families remain separate.
+L00002257	- OpenCode managed and attached server profiles remain distinct.
+L00002258	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002259	validation_surfaces:
+L00002260	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002261	- python3 scripts/pm-plan-index.py validate
+L00002262	risk_class: provider_behavior_matrix
+L00002263	reasoning_tier: standard
+L00002264	context_scope: multi_account_standardization
+L00002265	implementation_surfaces:
+L00002266	- Plans/Multi-Account.md
+L00002267	node_compile_hint:
+L00002268	  mode: provider_behavior_matrix
+L00002269	  create_worknodes: false
+L00002270	source_lineage:
+L00002271	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0020
+L00002272	- pldg-20260624-001-provider-updates:atom-0142
+L00002273	- pldg-20260624-001-provider-updates:atom-0143
+L00002274	source_atom_ids: [atom-0142, atom-0143]
+L00002275	preserved_exact_tokens:
+L00002276	- Gemini Direct
+L00002277	- Antigravity CLI
+L00002278	- agy
+L00002279	- gemini-3.1-flash-image
+L00002280	- Gemini CLI
+L00002281	- Cursor CLI
+L00002282	- Claude Code CLI
+L00002283	- Codex
+L00002284	- GitHub Copilot
+L00002285	- OpenCode
+L00002286	- ChatGPT
+L00002287	- API key
+L00002288	- Managed Server
+L00002289	- Attach to Existing Server
+L00002290	negative_constraints:
+L00002291	- PM must not merge plan-backed and API-billed usage/cooldowns.
+L00002292	- PM must not merge public Antigravity `agy` CLI rows and Antigravity OAuth/internal generated-image route rows.
+L00002293	compatibility_only_notes: []
+L00002294	stale_retired_dispositions: []
+L00002295	owner_boundary_notes:
+L00002296	- Provider-specific rows route to their provider owners while Multi-Account owns account identity and switching semantics.
+L00002297	owner_hints:
+L00002298	- Plans/Multi-Account.md
+L00002299	preserved_contractrefs:
+L00002300	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md'
+L00002301	split_recommendation_reason: Multi-Account-S0020 is split by provider/root/auth/capability/sharing topics.
+L00002302	```
+L00002303	
+L00002304	### MA-024 - Claude Code Account Roots Login Import And Sharing Boundaries
+L00002305	
+L00002306	```yaml
+L00002307	plan_unit_id: MA-024
+L00002308	unit_type: requirement
+L00002309	status: accepted
+L00002310	owner_doc: Plans/Multi-Account.md
+L00002311	canonical_text: Claude Code account handling preserves native auth evidence, CLAUDE_CONFIG_DIR profile switching, isolated
+L00002312	  account auth state, selective sharing evidence, narrow auth-bearing import, native login variants, user-facing setup
+L00002313	  actions, and clean logged-out account evidence for isolated roots.
+L00002314	gui_related: true
+L00002315	gui_classification_reason: The unit includes user-facing Claude setup actions and login labels.
+L00002316	split_recommended: false
+L00002317	depends_on:
+L00002318	- MA-023
+L00002319	unblocks: []
+L00002320	acceptance_criteria:
+L00002321	- Covered source spans remain losslessly available for exact-text audit.
+L00002322	- Claude account status evidence is recorded rather than inferred blindly.
+L00002323	- CLAUDE_CONFIG_DIR remains the Claude Code profile switching mechanism.
+L00002324	- Import Existing Claude Auth copies only auth-bearing state.
+L00002325	- Login variants and user-facing setup actions remain distinct.
+L00002326	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002327	validation_surfaces:
+L00002328	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002329	- python3 scripts/pm-plan-index.py validate
+L00002330	risk_class: claude_code_account_boundary
+L00002331	reasoning_tier: standard
+L00002332	context_scope: multi_account_standardization
+L00002333	implementation_surfaces:
+L00002334	- Plans/Multi-Account.md
+L00002335	node_compile_hint:
+L00002336	  mode: claude_code_account_boundary
+L00002337	  create_worknodes: false
+L00002338	source_lineage:
+L00002339	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0020
+L00002340	preserved_exact_tokens:
+L00002341	- claude auth status
+L00002342	- 'loggedIn: true'
+L00002343	- 'authMethod: "claude.ai"'
+L00002344	- 'apiProvider: "firstParty"'
+L00002345	- 'subscriptionType: "pro"'
+L00002346	- CLAUDE_CONFIG_DIR
+L00002347	- .claude.json
+L00002348	- claude.json
+L00002349	- clausona
+L00002350	- symlink
+L00002351	- credentials.json
+L00002352	- .credentials.json
+L00002353	- Import Existing Claude Auth
+L00002354	- --email
+L00002355	- --sso
+L00002356	- --claudeai
+L00002357	- --console
+L00002358	- Sign In to Claude
+L00002359	- Sign In to Console/API
+L00002360	- Use SSO
+L00002361	negative_constraints:
+L00002362	- Claude Code config-dir-per-account must not be treated as sufficient for every provider.
+L00002363	compatibility_only_notes: []
+L00002364	stale_retired_dispositions:
+L00002365	- Earlier all-provider config-dir assumptions are incomplete for newer Gemini/Cursor direction.
+L00002366	owner_boundary_notes:
+L00002367	- Claude Code account-local files remain isolated unless a later owner contract promotes overlays.
+L00002368	owner_hints:
+L00002369	- Plans/Multi-Account.md
+L00002370	preserved_contractrefs:
+L00002371	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md'
+L00002372	split_recommendation_reason: Claude Code auth/root behavior is separable from Gemini/Cursor/Codex root behavior.
+L00002373	```
+L00002374	
+L00002375	### MA-025 - Provider Account Root Layout And Retired Gemini CLI Root Lineage
+L00002376	
+L00002377	```yaml
+L00002378	plan_unit_id: MA-025
+L00002379	unit_type: compatibility_disposition
+L00002380	status: accepted
+L00002381	owner_doc: Plans/Multi-Account.md
+L00002382	canonical_text: PM-owned provider account roots are keyed by provider_entry_id with explicit Linux, macOS, Windows, and
+L00002383	  portable path families. Selectable account-like units get stable child roots, and CLI account roots use a runnable root
+L00002384	  segment. The old Gemini CLI root-provisioning details are retained only as source-lineage; active CLI-runtime account
+L00002385	  roots for this lane belong to Antigravity CLI and must not reuse GEMINI_CLI_HOME.
+L00002386	gui_related: false
+L00002387	gui_classification_reason: The unit defines filesystem/root provisioning and provider-native state boundaries.
+L00002388	split_recommended: false
+L00002389	depends_on:
+L00002390	- MA-024
+L00002391	unblocks: []
+L00002392	acceptance_criteria:
+L00002393	- Covered source spans remain losslessly available for exact-text audit.
+L00002394	- Account-isolation path ownership remains concrete for Linux, macOS, and Windows.
+L00002395	- GEMINI_CLI_HOME remains traceable only as retired Gemini CLI source-lineage.
+L00002396	- Active implementation does not precreate or import Gemini CLI roots.
+L00002397	- Antigravity CLI root/probe behavior is owned by the active Antigravity setup contract.
+L00002398	- Provider-native history, credential, settings, and project-state bleed-through is avoided.
+L00002399	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002400	validation_surfaces:
+L00002401	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002402	- python3 scripts/pm-plan-index.py validate
+L00002403	risk_class: retired_gemini_cli_root_resurrection
+L00002404	reasoning_tier: standard
+L00002405	context_scope: multi_account_standardization
+L00002406	implementation_surfaces:
+L00002407	- Plans/Multi-Account.md
+L00002408	node_compile_hint:
+L00002409	  mode: provider_root_layout_retired_gemini_cli_lineage
+L00002410	  create_worknodes: false
+L00002411	source_lineage:
+L00002412	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0020
+L00002413	preserved_exact_tokens:
+L00002414	- '$XDG_DATA_HOME/puppet-master/providers/<provider_entry_id>/'
+L00002415	- '~/Library/Application Support/Puppet Master/providers/<provider_entry_id>/'
+L00002416	- '%APPDATA%\\Puppet Master\\providers\\<provider_entry_id>\\'
+L00002417	- /puppet-master/providers/
+L00002418	- /Puppet
+L00002419	- /providers/
+L00002420	- '.../accounts/<account_id>/'
+L00002421	- '.../accounts/<account_id>/root/'
+L00002422	- GEMINI_CLI_HOME
+L00002423	- fresh-home
+L00002424	- fresh-profile
+L00002425	- /.gemini/settings.json
+L00002426	- GEMINI_API_KEY
+L00002427	- GOOGLE_GENAI_USE_VERTEXAI
+L00002428	- GOOGLE_GENAI_USE_GCA
+L00002429	- oauth_creds.json
+L00002430	- state.json
+L00002431	- installation_id
+L00002432	- projects.json
+L00002433	negative_constraints:
+L00002434	- PM must not hand-wave filesystem ownership for CLI-backed providers.
+L00002435	- Do not create active Gemini CLI account roots.
+L00002436	- Do not import Gemini CLI auth as an active setup mode.
+L00002437	- Do not reuse GEMINI_CLI_HOME for Antigravity.
+L00002438	compatibility_only_notes:
+L00002439	- Gemini CLI root/provisioning tokens are preserved only for migration/currentness lineage.
+L00002440	stale_retired_dispositions:
+L00002441	- Gemini CLI managed-root provisioning is retired by CBP-019/MA-062.
+L00002442	owner_boundary_notes:
+L00002443	- Gemini state under GEMINI_CLI_HOME is retired source-lineage only; Antigravity CLI root ownership is separate.
+L00002444	owner_hints:
+L00002445	- Plans/Multi-Account.md
+L00002446	preserved_contractrefs:
+L00002447	- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md'
+L00002448	split_recommendation_reason: Provider root layout remains cohesive; Gemini CLI root provisioning is retained only as retired filesystem lineage.
+L00002449	```
+L00002450	
+
+<<< CONTEXT_AFTER canonical_document_lines=2451-2462 >>>
+L00002451	### MA-026 - Gemini Auth Project Context And Quota Plane Readiness
+L00002452	
+L00002453	```yaml
+L00002454	plan_unit_id: MA-026
+L00002455	unit_type: requirement
+L00002456	status: accepted
+L00002457	owner_doc: Plans/Multi-Account.md
+L00002458	canonical_text: Gemini auth states are richer than a binary logged-in flag. OAuth, API-key, and Vertex/Google credential
+L00002459	  families remain distinct auth, billing, quota, project-context, capability, and readiness planes, with requested/effective
+L00002460	  storage vocabulary preserving auth, capability, billing/quota plane, project context, and usage source.
+L00002461	gui_related: true
+L00002462	gui_classification_reason: The unit includes Gemini setup/readiness states and user-visible validation behavior.

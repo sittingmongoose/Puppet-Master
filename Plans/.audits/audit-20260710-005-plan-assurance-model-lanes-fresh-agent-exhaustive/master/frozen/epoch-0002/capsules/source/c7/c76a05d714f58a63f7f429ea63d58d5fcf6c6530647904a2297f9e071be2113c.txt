@@ -1,0 +1,361 @@
+<<< CONTEXT_BEFORE 13105-13116 >>>
+- "alternate memory behavior"
+- "canonical handoff reconstruction"
+negative_constraints:
+- "FileSafe does not define alternate child continuity or alternate memory behavior."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md"
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 13117-13448 >>>
+### F2-001 - FileSafe Retired Source-Preserving Bridge
+
+```yaml
+plan_unit_id: F2-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  F2-001 is retained only as migration-lineage compatibility disposition for the retired FileSafe
+  source-preserving bridge. Product coverage has been atomized into F2-002 through F2-187, and
+  F2-001 must not re-own FileSafe product spans or use source_preserving_planunit compile mode.
+gui_related: false
+gui_classification_reason: >-
+  This retired bridge records migration lineage only; the old bridge span mentions GUI tokens, but
+  product GUI coverage is owned by fine-grained FileSafe PlanUnits.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "F2-001 no longer uses source_preserving_planunit compile mode."
+- "FileSafe-S0001 through FileSafe-S0110 remain covered by F2-002 through F2-187 or structural dispositions in coverage_map."
+- "F2-001 maps only to retired bridge lineage FileSafe-S0113."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: migration_lineage
+reasoning_tier: standard
+context_scope: residual_plan_standardization
+implementation_surfaces:
+- "Plans/FileSafe.md"
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0113"
+preserved_exact_tokens:
+- "F2-001"
+- "source_preserving_planunit"
+- "source_preserving_bridge_retired"
+- "Owner / Consumer Map"
+- "PlanUnits"
+- "Migration Coverage"
+- "FileSafe-S0113"
+negative_constraints:
+- "F2-001 must not re-own FileSafe-S0001 through FileSafe-S0110 product coverage."
+- "F2-001 must not use node_compile_hint.mode=source_preserving_planunit."
+- "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this retired bridge."
+compatibility_only_notes:
+- "F2-001 remains only as a retired source-preserving bridge audit record for migration lineage."
+- "The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode."
+stale_retired_dispositions:
+- "The broad source-preserving bridge has been retired after Phase 2B batch 064."
+owner_boundary_notes:
+- "F2-002 through F2-187 own FileSafe product coverage for FileSafe-S0001 through FileSafe-S0110."
+- "FileSafe-S0111, FileSafe-S0112, and FileSafe-S0114 are structural/coverage dispositions, not product coverage owned by F2-001."
+owner_hints:
+- "Plans/FileSafe.md"
+```
+
+## Migration Coverage
+
+Original hash: `285a73955e3375657f111ef892fc805af9511994cf79f1ab9bd74ddc5697299d`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+Phase 2B batch 056 atomized or structurally dispositioned `FileSafe-S0001` through `FileSafe-S0014` into `F2-002` through `F2-026`. Phase 2B batch 057 atomized `FileSafe-S0015` through `FileSafe-S0016` into `F2-027` through `F2-034`. Phase 2B batch 058 atomized or structurally dispositioned `FileSafe-S0017` through `FileSafe-S0022` into `F2-035` through `F2-049`. Phase 2B batch 059 atomized or structurally dispositioned `FileSafe-S0023` through `FileSafe-S0040` into `F2-050` through `F2-070`. Phase 2B batch 060 atomized or structurally dispositioned `FileSafe-S0041` through `FileSafe-S0049` into `F2-071` through `F2-097`. Phase 2B batch 061 atomized or structurally dispositioned `FileSafe-S0050` through `FileSafe-S0064` into `F2-098` through `F2-120`. Phase 2B batch 062 atomized or structurally dispositioned `FileSafe-S0065` through `FileSafe-S0072` into `F2-121` through `F2-137`. Phase 2B batch 063 atomized or structurally dispositioned `FileSafe-S0073` through `FileSafe-S0102` into `F2-138` through `F2-177`. Phase 2B batch 064 atomized or structurally dispositioned `FileSafe-S0103` through `FileSafe-S0114` into `F2-178` through `F2-187` plus retired bridge lineage `F2-001`. `F2-001` no longer uses source-preserving compile mode, and `Plans/FileSafe.md` has no remaining source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+### F2-188 - Shared Mutation Session Guard Inputs
+
+```yaml
+plan_unit_id: F2-188
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe owns the guard inputs for shared mutation sessions spanning user edits, agent edits,
+  preview edits, and FileManager operations. A mutation session must carry mutation_id, session_id,
+  actor/runtime_identity, source_surface, project/package/seam/lane/worktree scope, file identity/path,
+  target refs, base version/digest, baseline hash or version, operation type, dirty-state snapshot,
+  watcher snapshot, trust/degraded state, preview/trust mode, preview trust state, LSP/index availability,
+  remote/offline/cache/LSP/watch state, permission result, conflict policy, resulting version/digest,
+  artifact/evidence refs, and rollback/recovery or safe-point refs before mutation actions proceed.
+gui_related: false
+gui_classification_reason: FileSafe mutation guard inputs are filesystem/runtime safety contracts, not visual presentation.
+depends_on: [CV-281]
+unblocks: []
+acceptance_criteria:
+  - User, agent, preview, and FileManager edits share one mutation-session guard model.
+  - Mutation sessions capture mutation_id, operation type, base and resulting version/digest, trust, degraded, offline/cache, watcher, LSP/index, permission, conflict, artifact/evidence, and rollback inputs.
+  - FileManager actions cannot bypass FileSafe guard inputs.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: mutation_safety_boundary_drift
+reasoning_tier: high
+context_scope: filesafe_shared_mutation_session
+implementation_surfaces: [Plans/FileSafe.md, Plans/FileManager.md, Plans/GitHub_Integration.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: filesafe_mutation_session_guard, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0082
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0083
+preserved_exact_tokens: ["FileSafe-adjacent mutation seams", "versioned mutation session contract", "user/agent/preview edits", "mutation_id", "actor/runtime_identity", "source_surface", "file identity/path", "base version/digest", "operation type", "preview/trust mode", "remote/offline/cache/LSP/watch state", "conflict policy", "resulting version/digest", "artifact/evidence refs", "rollback/recovery path", "remote cache/offline/LSP degraded states", "watcher behavior", "preview trust/fallback"]
+negative_constraints:
+  - Do not let FileManager mutation actions bypass FileSafe mutation-session guard inputs.
+  - Do not treat preview edits or agent edits as separate safety models.
+  - Do not omit artifact/evidence refs or resulting version/digest from mutation-session guard outcomes.
+owner_hints: [Plans/FileSafe.md, Plans/FileManager.md, Plans/FinalGUISpec.md, Plans/GitHub_Integration.md]
+```
+
+## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+
+### F2-189 - Safe Point And Rollback Policy For WorkNode Execution
+
+```yaml
+plan_unit_id: F2-189
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  Mutation-capable WorkNode attempts must create or verify a safe point before risky execution, support restore_safe_point_then_retry where required, and record rollback_available in source-control and execution receipts. FileSafe owns the file mutation, safe-point, restore, rollback, evidence, and dirty-state guard inputs consumed by Executor after WorkNode requests are accepted. PlanCompile may reference safe-point requirements in request metadata but does not create safe points or mutate source control.
+  Safe-point receipts preserve safe_point_id as the canonical safe-point identity for rollback and retry evidence.
+gui_related: false
+gui_classification_reason: Safe-point and rollback guard inputs are filesystem/runtime safety contracts.
+depends_on: [F2-188, W-072]
+unblocks: [EP-100, EP-103, POA-048]
+acceptance_criteria:
+  - Mutation-capable attempts create or verify a safe point before risky execution.
+  - restore_safe_point_then_retry is available where policy requires rollback before retry.
+  - Receipts record rollback availability and safe-point identity.
+  - PlanCompile does not create safe points or mutate source control.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future safe_point_receipt validation
+risk_class: unrecoverable_mutation
+reasoning_tier: high
+context_scope: worknode_safe_point_rollback
+implementation_surfaces: [Plans/FileSafe.md, Plans/Executor_Protocol.md, Plans/WorktreeGitImprovement.md, Plans/plans_to_code_handoff.schema.json]
+node_compile_hint: {mode: safe_point_rollback_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0035
+  - pldg-20260617-001-plans-to-code-handoff:atom-0037
+  - pldg-20260617-001-plans-to-code-handoff:dec-0015
+preserved_exact_tokens:
+  - "safe_point_id"
+  - "restore_safe_point_then_retry"
+  - "rollback_available"
+  - "source-control execution contract"
+  - "safe points"
+  - "rollback"
+negative_constraints:
+  - Do not let PlanCompile create source-control safe points.
+owner_hints:
+  - Plans/FileSafe.md
+  - Plans/Executor_Protocol.md
+  - Plans/WorktreeGitImprovement.md
+```
+
+ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### F2-190 - Planning Source-Control Safety, Non-Git Coverage, And Dirty-State Preservation
+
+```yaml
+plan_unit_id: F2-190
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: 'PRD Builder preserves original uploaded artifacts byte-for-byte with stable source IDs, hashes, MIME/type metadata, and extraction status before semantic processing. Project context supports greenfield, existing local project, existing Git repository, remote SSH project, and fork or external upstream contexts, with explicit repository and host facts. After the user selects or provides a project, Planning Wizard may automatically inspect local or remote paths, repository presence, current branch, remotes, status, file tree, package managers, frameworks, configuration, architecture signals, and test commands without mutation. Planning Wizard records repository context and may perform explicitly authorized project setup, but implementation worktree allocation, mutation preparation, and execution safe points belong to Executor provisioning after Plan Compile. A non-Git project may remain non-Git; FileSafe provides safe-point
+  and rollback coverage, while mutating work is serialized unless a future non-Git workspace-isolation adapter provides proven concurrent write isolation. Existing uncommitted user changes are preserved and inventoried; Puppet Master must not silently commit, stash, discard, reset, overwrite, or mingle with them and must create evidence-backed isolation or block unsafe mutation. For an SSH project, discovery, FileSafe, Git, worktrees, commands, testing, path authority, safe points, and execution occur on the remote host through the authorized adapter, with no silent local fallback. Plan Compile and Executor provisioning must compare live repository and environment state against the approved snapshot and route stale facts through bounded re-analysis or recompile rather than executing against invalid assumptions. Testing-tool installation and configuration writes use FileSafe/source-control safe points, bounded write surfaces, receipts, revalidation,
+  and rollback so discovery cannot damage the user''s project or environment.'
+gui_related: false
+gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: stale_or_forbidden_behavior
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/FileSafe.md
+- Plans/PRD_Builder.md
+- Plans/Project_Output_Artifacts.md
+- Plans/Planning_Wizard.md
+- Plans/GitHub_Integration.md
+- Plans/WorktreeGitImprovement.md
+- Plans/Executor_Protocol.md
+- Plans/Permissions_System.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0030
+- pldg-20260618-001-prd-planning-wizard:atom-0044
+- pldg-20260618-001-prd-planning-wizard:atom-0067
+- pldg-20260618-001-prd-planning-wizard:atom-0071
+- pldg-20260618-001-prd-planning-wizard:atom-0073
+- pldg-20260618-001-prd-planning-wizard:atom-0074
+- pldg-20260618-001-prd-planning-wizard:atom-0075
+- pldg-20260618-001-prd-planning-wizard:atom-0078
+- pldg-20260618-001-prd-planning-wizard:atom-0088
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/02-prd-builder.md#SRC-PRD
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md#SRC-PROJECT
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+source_atom_ids:
+- atom-0030
+- atom-0044
+- atom-0067
+- atom-0071
+- atom-0073
+- atom-0074
+- atom-0075
+- atom-0078
+- atom-0088
+decision_refs:
+- dec-0009
+- dec-0014
+- dec-0015
+- dec-0017
+correction_refs: []
+preserved_exact_tokens:
+- byte-for-byte
+- source IDs
+- hashes
+- greenfield
+- existing local project
+- existing Git repository
+- remote SSH
+- fork or external upstream
+- read-only project discovery
+- git status
+- current branch
+- Executor provisioning
+- implementation worktree
+- non-Git
+- FileSafe
+- serialized mutations
+- dirty repository
+- uncommitted user changes
+- remote host
+- no silent local fallback
+- revalidate
+- stale facts
+- safe point
+- rollback
+negative_constraints:
+- Do not create implementation worktrees or execution safe points as an implicit Planning Wizard side effect.
+- Do not force Git adoption merely to use Puppet Master.
+- Never silently commit, stash, discard, reset, or overwrite user changes.
+- Do not run against an unrelated local copy when remote context is active.
+owner_hints:
+- Plans/PRD_Builder.md
+- Plans/Project_Output_Artifacts.md
+- Plans/FileSafe.md
+- Plans/Planning_Wizard.md
+- Plans/GitHub_Integration.md
+- Plans/WorktreeGitImprovement.md
+- Plans/Executor_Protocol.md
+- Plans/Permissions_System.md
+- Plans/Plan_To_Node_Compilation.md
+- Plans/Automated_Testing_System.md
+```
+
+## Ledger Compile Addendum - pldg-20260622-001-fff
+
+### F2-191 - Discovery FileSafe No-Leak Indexing And Result Guards
+
+```yaml
+plan_unit_id: F2-191
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe rules apply before and during DiscoveryService indexing and querying. FileSafe, ignore rules, secret exclusions, symlink policy, root/home scan guardrails, project/worktree boundaries, and remote/SSH authorized-root boundaries filter candidates before scoring or produce an equivalent no-leak guarantee. Denied or hidden_by_policy candidates are not success-shaped ranked results and must not leak blocked filenames, blocked counts, rank gaps, matched ranges, display paths, fallback diagnostics, health messages, or rank explanations. candidate_count is visible post-policy only, and selected_result_ids are opaque/redaction-profiled identifiers rather than raw unauthorized paths.
+gui_related: false
+gui_classification_reason: This is FileSafe policy and no-leak filtering, not direct GUI presentation.
+depends_on: [F2-188, F2-190, SP-217]
+unblocks: [PS-118, ATS-011, RAP-031]
+acceptance_criteria:
+  - Policy-hidden paths cannot influence visible rank gaps, counts, summaries, or diagnostics.
+  - Root/home and symlink guardrails apply before discovery indexing and query ranking.
+  - Remote/SSH manifest entries are FileSafe-gated before dispatch and before local indexing.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py run-gates
+risk_class: filesafe_no_leak
+reasoning_tier: high
+context_scope: discovery_policy_filtering
+implementation_surfaces: [Plans/FileSafe.md, future DiscoveryService policy filter]
+node_compile_hint: {mode: filesafe_no_leak_guard, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260622-001-fff:atom-0039
+  - pldg-20260622-001-fff:atom-0057
+  - pldg-20260622-001-fff:atom-0069
+  - pldg-20260622-001-fff:atom-0082
+  - pldg-20260622-001-fff:atom-0083
+  - pldg-20260622-001-fff:atom-0090
+  - pldg-20260622-001-fff:atom-0091
+  - pldg-20260622-001-fff:state/precision_contract.json#visibility_and_redaction_policy
+source_atom_ids: [atom-0039, atom-0057, atom-0069, atom-0082, atom-0083, atom-0090, atom-0091]
+preserved_exact_tokens: ["filter before scoring", "candidate_count", "visible post-policy count only", "selected_result_ids", "opaque", "redaction_profile", "hidden_by_policy", "rank gaps", "matched_ranges", "display_path", "diagnostics"]
+negative_constraints:
+  - Do not leak blocked filenames through GUI rows, summaries, receipts, rank gaps, or diagnostics.
+  - Do not expose raw selected paths to unauthorized consumers through selected_result_ids.
+  - Do not run remote manifest discovery outside authorized remote project roots.
+owner_hints: [Plans/FileSafe.md, Plans/Permissions_System.md, Plans/Runtime_Artifacts_Panel.md, Plans/FinalGUISpec.md]
+```
+
+
+## Ledger Compile Addendum - pldg-20260626-001-feature-name
+
+This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+
+
+<<< CONTEXT_AFTER 13449-13460 >>>
+### F2-192 - Vision Bridge Image Source Safety
+
+```yaml
+plan_unit_id: F2-192
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: Vision bridge image source resolution may use chat/thread attachments, selected runtime artifacts/screenshots,
+  FileSafe-allowed project files, clipboard images, and recent OS screenshots. Clipboard and recent OS screenshot
+  support are MVP, not deferred, but PM must use explicit permissioned ingestion, visible source labeling, deterministic
+  source precedence, user choice for ambiguous recent screenshots, redaction/sensitivity policy, and no hidden Desktop/Downloads
+  scraping or FileSafe bypass.

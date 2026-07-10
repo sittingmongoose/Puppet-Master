@@ -1,0 +1,56 @@
+{
+  "assignment_id": "A005-000409-EXACT-WIN-30EBABB890C6-0011",
+  "attempt_id": "attempt-0002",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      3601,
+      3612
+    ],
+    [
+      3988,
+      3999
+    ]
+  ],
+  "core_range": [
+    3613,
+    3987
+  ],
+  "core_sha256": "67ca93d441590acb5889b7eac2a77ab3b41928826af8586e72ae98abb2a5ce01",
+  "document_path": "Plans/WorktreeGitImprovement.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/2e/2e275a25c79b92950fb586c2a0719e11f2abbe6713e803c1aa570b0a7c295624.txt",
+  "source_excerpt_sha256": "2e275a25c79b92950fb586c2a0719e11f2abbe6713e803c1aa570b0a7c295624",
+  "source_sha256": "28600deb3d08b7819b5a00c3a525fb5ff837eda1ef914ca98518d4687e039309",
+  "window_id": "WIN-30EBABB890C6-0011"
+}

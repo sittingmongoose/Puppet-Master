@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE 6604-6615 >>>
+preserved_exact_tokens:
+  - "chatsearch(query, filters={thread_id?, time_range?}, k)"
+  - "codesearch(query, path?, mode={text|symbol}, k)"
+  - "logsearch(query, filters={time_range?, run_id?, thread_id?, tool_name?, level?}, k)"
+  - "logread(ref)"
+  - "grep(pattern, path?, glob?)"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 6616-7014 >>>
+### ACD-068 - Search Freshness And Grep Fallback
+
+```yaml
+plan_unit_id: ACD-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Grep and search freshness disclosure distinguishes valid stale snapshots,
+  raw-ripgrep fallback, dirty-layer freshness protection, and sparse n-gram
+  acceleration without re-owning Tools implementation details.
+gui_related: false
+gui_classification_reason: Search freshness and fallback semantics are tool/runtime behavior, not GUI implementation.
+depends_on: [ACD-067]
+unblocks: []
+acceptance_criteria:
+  - Missing, disabled, corrupted, building, invalid, or query-skipped indices fall back to raw ripgrep.
+  - Stale-but-valid snapshots remain usable with disclosure.
+  - Chat summaries preserve same-freshness guarantees while Tools owns performance targets and implementation detail.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: freshness_disclosure
+reasoning_tier: standard
+context_scope: agent_search
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: search_freshness_grep_fallback
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0048
+preserved_exact_tokens:
+  - "raw-ripgrep"
+  - "search-tool"
+  - "stale-but-valid snapshots"
+  - "dirty-layer freshness"
+  - "sparse n-gram"
+negative_constraints:
+  - "raw-ripgrep fallback is active"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+### ACD-069 - GUI Log Search Surface
+
+```yaml
+plan_unit_id: ACD-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Dedicated GUI log surfaces expose logsearch and logread summary rows,
+  drill-down, export, and on-demand dereference without turning full payloads
+  into default chat transcript content.
+gui_related: true
+gui_classification_reason: Log summary rows, drill-down, export, and dereference controls are GUI surfaces.
+depends_on: [ACD-067]
+unblocks: []
+acceptance_criteria:
+  - GUI log surfaces provide summary rows and drill-down for logsearch/logread.
+  - Full log payloads are dereferenced on demand rather than placed in default chat transcript content.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: log_payload_exposure
+reasoning_tier: standard
+context_scope: agent_search
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: gui_log_search_surface
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0048
+preserved_exact_tokens:
+  - "logsearch"
+  - "logread"
+  - "summary rows"
+  - "drill-down"
+  - "export"
+  - "on-demand deref"
+negative_constraints:
+  - "without turning full payloads into default chat transcript content"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### ACD-070 - Per-Project Tantivy Indices
+
+```yaml
+plan_unit_id: ACD-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Chat, code, and log Tantivy indices are stored per project under
+  storage/tantivy/projects/{project_id}/chat, /code, and /logs for project-only
+  search, performance, retention, cleanup, and future cross-project top-K merge.
+gui_related: false
+gui_classification_reason: Per-project index storage and retention are storage architecture behavior.
+depends_on: [ACD-063, ACD-067]
+unblocks: []
+acceptance_criteria:
+  - Chat, code, and log indices are partitioned by project_id.
+  - Per-project storage supports cleanup and retention per project.
+  - The design does not block future cross-project top-K merge as an enhancement.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: project_scope_integrity
+reasoning_tier: standard
+context_scope: search_storage
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: per_project_tantivy_indices
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0049
+preserved_exact_tokens:
+  - "storage/tantivy/projects/{project_id}/chat"
+  - "storage/tantivy/projects/{project_id}/code"
+  - "storage/tantivy/projects/{project_id}/logs"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-071 - Threads And Chat Management Scope
+
+```yaml
+plan_unit_id: ACD-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Section 11 groups thread and chat management requirements for message taxonomy, lifecycle, identity, debug investigation state, shared navigation, branching, and session browser behavior.
+gui_related: false
+gui_classification_reason: This is a scope/anchor unit for thread-management semantics, not GUI implementation by itself.
+depends_on: []
+unblocks: [ACD-072, ACD-073, ACD-074, ACD-075, ACD-076, ACD-077, ACD-078, ACD-084, ACD-086, ACD-088]
+acceptance_criteria:
+  - Thread-management spans remain covered without turning the empty section heading into a separate behavior.
+  - Subsequent thread-management PlanUnits carry the concrete requirements.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: section_scope
+reasoning_tier: standard
+context_scope: threads
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: thread_management_scope
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0050
+preserved_exact_tokens:
+  - "Threads and chat management"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-072 - Message Type Taxonomy
+
+```yaml
+plan_unit_id: ACD-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Canonical chat records use the closed message_type taxonomy with required senders, properties, and rendering categories for user, assistant, system, tool_result, operation_card, blocked_notice, subagent_card, and error records.
+gui_related: false
+gui_classification_reason: Message record taxonomy and persisted properties are data-contract behavior, not visual implementation.
+depends_on: [ACD-071]
+unblocks: [ACD-073]
+acceptance_criteria:
+  - Persisted chat records use the canonical message_type values.
+  - Each taxonomy value retains the specified sender, properties, and rendering role.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: transcript_schema
+reasoning_tier: standard
+context_scope: messages
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: message_type_taxonomy
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0051
+preserved_exact_tokens:
+  - "message_type"
+  - "user"
+  - "assistant"
+  - "system"
+  - "tool_result"
+  - "operation_card"
+  - "blocked_notice"
+  - "subagent_card"
+  - "error"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-073 - Message Rendering Persistence Boundary
+
+```yaml
+plan_unit_id: ACD-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Visible message rendering vocabulary is closed to the taxonomy, independent
+  of thread lifecycle state and runtime posture, and persisted transcripts
+  retain canonical message_type so restore, export, and search do not infer type
+  from presentation alone.
+gui_related: true
+gui_classification_reason: Rendering vocabulary is visible UI, while persisted message_type protects restore/export/search behavior.
+depends_on: [ACD-072]
+unblocks: []
+acceptance_criteria:
+  - Rendering vocabulary is not extended outside the closed taxonomy without a later SSOT contract.
+  - Message taxonomy remains independent of lifecycle state and runtime posture.
+  - Restore, export, and search use persisted message_type rather than presentation inference.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: transcript_restore
+reasoning_tier: standard
+context_scope: messages
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: message_rendering_persistence_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0051
+preserved_exact_tokens:
+  - "visible rendering vocabulary"
+  - "canonical `message_type`"
+  - "restore, export, and search"
+negative_constraints:
+  - "persisted transcript records MUST retain their canonical `message_type` so restore, export, and search do not infer type from presentation alone"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-074 - Thread Lifecycle State Machine
+
+```yaml
+plan_unit_id: ACD-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Thread lifecycle state is separate from operational status markers and follows creating -> active -> suspended -> archived -> deleted with explicit, auditable transitions.
+gui_related: false
+gui_classification_reason: Thread lifecycle state and transitions are storage/runtime behavior, not GUI implementation.
+depends_on: [ACD-071]
+unblocks: [ACD-075]
+acceptance_criteria:
+  - Lifecycle state stays separate from attention_required, blocked, completed, or failed operational status markers.
+  - Lifecycle transitions follow the canonical path and allowed transitions.
+  - Lifecycle transitions are explicit and auditable.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: lifecycle_state
+reasoning_tier: standard
+context_scope: threads
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Decision_Policy.md
+node_compile_hint:
+  mode: thread_lifecycle_state_machine
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0052
+preserved_exact_tokens:
+  - "creating -> active -> suspended -> archived -> deleted"
+  - "attention_required"
+  - "blocked"
+  - "completed"
+  - "failed"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-075 - Thread Lifecycle Persistence
+
+```yaml
+plan_unit_id: ACD-075
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Thread lifecycle persistence keeps or prunes transcript, queue state,
+  metadata, restorable UI state, caches, and tombstones by lifecycle state while
+  preserving lineage and treating deletion as terminal for ordinary navigation.
+gui_related: false
+gui_classification_reason: Lifecycle persistence and retention behavior are storage/runtime requirements.
+depends_on: [ACD-074]
+unblocks: []
+acceptance_criteria:
+  - Active threads keep full transcript, queue state, metadata, runtime references, and restorable UI state.
+  - Suspended and archived states prune only the allowed transient state.
+  - Deletion removes the thread from normal user-visible chat surfaces while retaining only required integrity, sync, or compliance metadata.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: retention_integrity
+reasoning_tier: standard
+context_scope: threads
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: thread_lifecycle_persistence
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0052
+preserved_exact_tokens:
+  - "creating"
+  - "active"
+  - "suspended"
+  - "archived"
+  - "deleted"
+negative_constraints:
+  - "archiving does not rewrite message ids, thread lineage, or worktree lineage"
+  - "deletion is terminal for ordinary user navigation"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-076 - Thread Identity Fields
+
+```yaml
+plan_unit_id: ACD-076
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Thread identity is stable across reopen, restore, archive, and branch-aware history, minted on the first user message, and carries canonical thread, session lineage, persona, overlay, and title metadata.
+gui_related: false
+gui_classification_reason: Thread identity and metadata are storage/runtime schema behavior.
+depends_on: [ACD-071]
+unblocks: [ACD-077]
+acceptance_criteria:
+  - thread_id uses thr_{ulid} and is minted on the first user message.
+  - Empty unsent drafts do not receive durable thread_id values.
+  - persona_id remains registry/storage lineage only and not a thread runtime Persona identity field.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: thread_identity
+reasoning_tier: standard
+context_scope: threads
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: thread_identity_fields
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0053
+preserved_exact_tokens:
+  - "thr_{ulid}"
+  - "dev_session_id"
+  - "terminal_session_id"
+  - "mode_overlay"
+  - "persona_id"
+negative_constraints:
+  - "the system MUST NOT mint a durable `thread_id` for an unsent empty draft"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 7015-7026 >>>
+### ACD-077 - Terminal Thread Compatibility Boundary
+
+```yaml
+plan_unit_id: ACD-077
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Terminal-associated threads are ordinary chat threads with terminal lineage. terminal-thread is a compatibility/search label for terminal or non-writable boundaries, not a durable object type.
+gui_related: false
+gui_classification_reason: Terminal lineage and compatibility labels are identity/modeling behavior, not GUI implementation.
+depends_on: [ACD-076]
+unblocks: []

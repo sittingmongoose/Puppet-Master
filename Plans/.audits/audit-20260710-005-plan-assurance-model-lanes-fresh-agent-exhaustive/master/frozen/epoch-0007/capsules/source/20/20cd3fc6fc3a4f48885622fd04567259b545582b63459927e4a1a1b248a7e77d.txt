@@ -1,0 +1,313 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-298 >>>
+L00000001	# Runtime Artifacts Panel — SSOT
+L00000002	
+L00000003	
+L00000004	## Canonical owner-section requirements
+L00000005	
+L00000006	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000007	
+L00000008	### Export taxonomy and manifest contract
+L00000009	### Bridge-field precedence for attempt/provider/usage/receipt joins
+L00000010	### Artifacts index exact indexed fields
+L00000011	### Artifact envelope routing preference
+L00000012	
+L00000013	
+L00000014	> **Compliance:** This document follows Plans/DRY_Rules.md. Naming: "Puppet Master" only. No open questions; deterministic defaults per Plans/Decision_Policy.md.
+L00000015	
+L00000016	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Project_Output_Artifacts.md
+L00000017	
+L00000018	## 1. Purpose and scope
+L00000019	
+L00000020	The **Artifacts panel** is the single place to see everything agents produced during a run or thread: file changes (diffs), plans, verification evidence, screenshots, reasoning summaries, browser recordings, tool/LLM traces, cost_usage attribution, and other types below. It does not run agents; it lists, previews, and links. All artifact types listed are **required** for MVP; there are no optional types.
+L00000021	
+L00000022	| Family | Scope | SSOT | Persistence |
+L00000023	|--------|--------|------|-------------|
+L00000024	| **Project Plan Package** | User-project outputs | Plans/Project_Output_Artifacts.md | .puppet-master/project/** |
+L00000025	| **Runtime Artifacts** | Agent-run outputs in Artifacts panel | This document | seglog runtime_artifact.*, redb artifacts_index.v1:{project_id}:{artifact_id} |
+L00000026	
+L00000027	ContractRef: Plans/Project_Output_Artifacts.md#Runtime Artifacts (GUI panel) — distinct from this document, Plans/storage-plan.md#Required redb keys
+L00000028	
+L00000029	Required fields:
+L00000030	- artifact_id
+L00000031	- artifact_type
+L00000032	- run_id
+L00000033	- attempt_id
+L00000034	- projection_freshness
+L00000035	- projection_health
+L00000036	
+L00000037	Canonical terms and values:
+L00000038	- seglog `runtime_artifact.*`
+L00000039	- artifacts_index.v1:{project_id}:{artifact_id}
+L00000040	
+L00000041	Behavioral rules:
+L00000042	- Project Plan Package and Runtime Artifacts remain distinct families.
+L00000043	- Runtime artifact lookup/indexing remains a projection concern rather than canonical artifact truth.
+L00000044	## 3. Mechanism: one event type per artifact type
+L00000045	
+L00000046	
+L00000047	**Option 2 only:** One seglog event type per artifact type. No single generic `runtime_artifact` event with a subtype field. Each persisted event uses the canonical EventRecord envelope in `Plans/Contracts_V0.md#EventRecord`; this document owns the runtime-artifact event taxonomy and payload schema requirements, not the EventRecord field set. The persisted EventRecord `event_type` value is exactly one of the 19 event type names below.
+L00000048	
+L00000049	Legacy/source-lineage tuple notation such as `schema`, `ts`, `seq`, `type`, `run_id`, `thread_id`, and `payload` is compatibility shorthand for older notes only; it is not normative EventRecord field canon, and new persisted EventRecord values use `event_type`, not `type`.
+L00000050	
+L00000051	**Canonical 19 artifact types and event type names:**
+L00000052	- code_diff → `runtime_artifact.code_diff`
+L00000053	- implementation_plan → `runtime_artifact.implementation_plan`
+L00000054	- reasoning_summary → `runtime_artifact.reasoning_summary`
+L00000055	- validation_test → `runtime_artifact.validation_test`
+L00000056	- screenshot → `runtime_artifact.screenshot`
+L00000057	- evidence → `runtime_artifact.evidence`
+L00000058	- document → `runtime_artifact.document`
+L00000059	- restore_point → `runtime_artifact.restore_point`
+L00000060	- browser_recording → `runtime_artifact.browser_recording` (required; not optional)
+L00000061	- tool_llm_trace → `runtime_artifact.tool_llm_trace`
+L00000062	- context_snapshot → `runtime_artifact.context_snapshot`
+L00000063	- cost_usage → `runtime_artifact.cost_usage`
+L00000064	- hitl_approval → `runtime_artifact.hitl_approval`
+L00000065	- failed_attempts → `runtime_artifact.failed_attempts`
+L00000066	- subagent_lineage → `runtime_artifact.subagent_lineage`
+L00000067	- before_after_snapshot → `runtime_artifact.before_after_snapshot`
+L00000068	- suggested_next_steps → `runtime_artifact.suggested_next_steps`
+L00000069	- api_web_call → `runtime_artifact.api_web_call`
+L00000070	- artifact_version → `runtime_artifact.artifact_version`
+L00000071	
+L00000072	## 4. redb key and projector
+L00000073	
+L00000074	### 4A Artifacts index families and projector checkpoints
+L00000075	
+L00000076	
+L00000077	<a id="rap-4a-acceptance-carry-through"></a>
+L00000078	#### Acceptance carry-through
+L00000079	- Register artifacts_index, artifacts_project_state, and runtime_artifacts projector checkpoint families
+L00000080	- Make the artifact index rebuildable from canonical runtime evidence
+L00000081	- Index attempt_id and thread_id in artifact index families to preserve attempt-native artifact routing
+L00000082	
+L00000083	### 4B Runtime-artifact envelope and attribution packet
+L00000084	
+L00000085	<a id="rap-4b-acceptance-carry-through"></a>
+L00000086	#### Acceptance carry-through
+L00000087	- Share one attribution family across tool events, runtime artifacts, receipts, and usage records
+L00000088	- Carry run/attempt/thread/node/artifact/provider/usage anchors plus execution/runtime identity fields
+L00000089	- Make runtime artifacts attempt-native by default with artifact identity, routing refs, content refs, and provider/usage linkage
+L00000090	- Resolve artifact open flows by artifact_id and then by linked envelope refs
+L00000091	- Use attempt_id as local anchor, provider_attempt_ref as provider/runtime bridge, usage_event_ref as usage bridge, and receipt refs as external side-effect lineage bridge
+L00000092	- None of those bridge fields replace the primary local key
+L00000093	- Prefer usage_event_ref rather than timestamp heuristics when routing cost-bearing artifacts to Usage and Ledger
+L00000094	- Require runtime artifacts summarizing external operations to carry receipt linkage
+L00000095	
+L00000096	#### Route-state and shell-state boundary
+L00000097	
+L00000098	Runtime-artifact route-state answers "where should the user land," not "how should every panel be laid out when they get there." Artifact, receipt, usage, and export pivots resolve canonical IDs/refs and object identity first: `artifact_id`, `run_id`, `thread_id`, `node_id?`, `attempt_id`, `receipt_id?`, `provider_attempt_ref?`, and `usage_event_ref?`.
+L00000099	
+L00000100	workspace-tab selection, panel docking, and per-project layout restore are `shell-state` concerns layered underneath canonical routing. Shell-state may choose the destination tab, dock zone, or restored layout after route resolution, but it must not replace object identity or make the route model swallow the whole shell.
+L00000101	
+L00000102	Context-changing actions such as `Show in Usage`, `Open in Source Control`, `Resume Wizard`, and `View in Usage` from Orchestrator Ledger force a destination-context change. They normalize through route/open primitives first; historical/current `/current` usage navigation and `/open` actions use run/thread/attempt identity, `/node/attempt` identity, and `usage_event_ref` before any legacy `tier_id` view/filter compatibility. Superseded source labels such as `focus_thread_usage` remain lineage labels and must normalize to current route/open command IDs rather than remain live canonical IDs.
+L00000103	
+L00000104	Receipt-like exports and manifest-backed bundles preserve canonical run/thread/attempt linkage and must not mint shadow IDs. Usage-linked artifacts continue to route through canonical usage identity rather than artifact-local usage models.
+L00000105	
+L00000106	#### P5 runtime-artifact identity recovery requirements
+L00000107	
+L00000108	- Source Control artifact rows and tabs stay `information-dense` but selective: the panel MUST NOT assume package, `/lane/run/worktree`, receipt, and artifact metadata can all be shown at full fidelity at once; it shows canonical anchors, trust state, and drill targets first.
+L00000109	- Runtime artifact `/import` and `/evidence` export language MUST NOT be UI-`view-centric`; import/export records preserve artifact identity, evidence class, source refs, route refs, and owner lineage before describing the current view filter.
+L00000110	- `path-based` open remains for repo and `/workspace` files, while `identity-based` open is the canonical entrypoint for runtime artifacts, generated drafts, attempt `/evidence/safe-point/remediation` reports, and preview `/document` hybrids.
+L00000111	- User-facing `/export` behavior is `identity-preserving`: output format, `/date-range`, filter state, and download location are export parameters, not export identity, and they never replace canonical artifact/run/thread/attempt refs.
+L00000112	- Attempt `/safe-point/remediation` artifact opens remain stable across cleanup, `/archive/remove`, retention, and bundle moves; runtime artifacts must not be forced through fake repo paths to survive those flows.
+L00000113	- `non-trivial` bundle exports require manifests that preserve canonical `IDs` and `/refs`; manifests MUST NOT mint `export-local` surrogate identities that hide the source artifact, evidence, usage, run, attempt, or receipt identity.
+L00000114	- UI / projection / command contracts carried historical owner-gap evidence: earlier FinalGUISpec passes left `Tiers` as a standalone run-group view and lacked native concern-model, historical-run-mode, or Progress-only widget-boundary contracts. Current Orchestrator shell ownership lives in `Plans/Orchestrator_Page.md` and uses `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger`; `Tiers` remains stale-disposition evidence only. `FinalGUISpec.md` also sharpens the projection-state naming issue: generic “projection trust” language will collide with existing preview/browser `trust_tier`; the cleaner split remains `projection_freshness` vs `projection_health`. `Runtime_Artifacts_Panel.md` now looks more fragile than earlier passes suggested: `attempt_id` is still absent from the canonical artifact ID set, producer identity is anonymous at the envelope boundary, `subagent_lineage` still has no minimum payload semantics, `cost_usage` drill-through still rests on optional `usage_event_ref`, and `/stale`, cross-surface, `UI_Command_Catalog.md`, UI_Command_Catalog, `cmd.*`, rewrite-era command families such as `cmd.account`, `cmd.account.*`, `cmd.concern`, `cmd.concern.*`, `cmd.promotion`, `cmd.promotion.*`, and `approve_continue` remain part of the artifact-panel gap surface.
+L00000115	- exact_items: - `Plans/interview-subagent-integration.md` does contain `### Runtime identity visibility`, but its required fields still stop at `requested_account_binding` / `operational_identity` and do not carry `requested_account_policy` or `tool_use_id`. - `Plans/assistant-chat-design.md` already carries `tool_use_id`, so gap-001's consumer deficiency is sharper than a blanket "missing everywhere" claim. - `Plans/usage-feature.md` still does not contain an exact `artifact drill-through section` heading. - `Plans/Project_Output_Artifacts.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/interview-subagent-integration.md` still do not contain the exact `validation artifact lineage`, `bridge-field viewer`, or `validation/report section` headings.
+L00000116	- Cross-surface usage/deep-link identity is now clearly under-typed: - `storage-plan.md` promotes `usage_event_ref?` into receipt and cross-surface bridge records but still never defines its concrete format or stability semantics - `Runtime_Artifacts_Panel.md` requires `Show in Ledger` / `Show in Usage` for `cost_usage`, but the promised runtime-artifact schemas are not present and no concrete usage identity payload is pinned - `Orchestrator_Page.md` and `Run_Graph_View.md` still route `View in Usage` by `run_id` or `tier_id`, not by receipt/attempt/usage-event identity
+L00000117	- Add the missing canonical record/projection families to `storage-plan.md` for worktree lifecycle and artifact index state before downstream docs keep inventing them implicitly.
+L00000118	- The earlier missing-family note that named `artifacts_index:v1:{project_id}` is retained as stale source-lineage evidence only; RAP-026 and the storage owner now use `artifacts_index.v1:{project_id}:{artifact_id}` for row identity, with the projector rebuilt from `runtime_artifact.*` events and the envelope/per-type schema family remaining the payload requirement until schema files materialize.
+L00000119	- `Plans/Contracts_V0.md` + `Plans/storage-plan.md` - likely owners for canonical correlation blocks, switch/pressure episodes, and blocked/approval identity linkage
+L00000120	- `Plans/usage-feature.md` is still one of the main correlation drifts: - `usage.jsonl` and canonical usage discussion still center `tier_id` - canonical `UsageRecord` still requires `tier_id` - Run Graph and Orchestrator are still said to aggregate by `tier_id` and `attempt_id?` - later navigation wording is closer to the rewrite: - `usage_event_ref` - canonical Usage surfaces - run/thread-based opens for `Show in Ledger` and `Show in Usage`
+L00000121	- `Plans/usage-feature.md` - now clearly needs switch-event linkage or equivalent durable explanation path
+L00000122	- `Plans/Runtime_Artifacts_Panel.md` is already stronger than these docs on the usage side: - `cost_usage` routes by canonical usage identity - not by tier-local filters
+L00000123	- `Plans/Contracts_V0.md` - `Plans/storage-plan.md` - `Plans/usage-feature.md` - `Plans/Orchestrator_Page.md`
+L00000124	- `Plans/Multi-Account.md` - `Plans/storage-plan.md` - `Plans/usage-feature.md` - `Plans/Contracts_V0.md`
+L00000125	- `Plans/Multi-Account.md` - `Plans/storage-plan.md` - `Plans/Contracts_V0.md` - `Plans/usage-feature.md`
+L00000126	- `Plans/Runtime_Artifacts_Panel.md` - still lacks attempt-level identity, producer attribution, trustworthy `cost_usage` linkage, and degraded/stale projector behavior.
+L00000127	- Storage-plan is now clearly missing several record/projection families that downstream docs already treat as if they exist (`runtime_artifact` payload schemas, worktree records/projections, artifact index registration).
+L00000128	- `Plans/FileManager.md` - still cannot open runtime artifacts by identity or preserve attempt/worktree lineage coherently.
+L00000129	- `provider_attempt_ref` now looks like a key bridge field, not a niche detail. - If this packet is not normalized, each surface will keep rebuilding partial joins between tools, artifacts, receipts, and usage.
+L00000130	- Cross-owner docs implicated by this seam: - `Plans/storage-plan.md` - `Plans/FileManager.md` - `Plans/Runtime_Artifacts_Panel.md` - `Plans/Contracts_V0.md`
+L00000131	- If `route_target` simply absorbs every current surface-local field (`artifact_id`, `usage_event_ref`, `wizard_step`, `message_id`, `workflow_run_id`, etc.), it will recreate the same drift problem in a new place.
+L00000132	- `usage_event_ref` still reads like a direct route field in some docs rather than a normalized object identity.
+L00000133	- `Plans/usage-feature.md` duplicates the entire `Cost_usage runtime artifact and Show in Ledger / Show in Usage` section back-to-back.
+L00000134	- `Ledger` can inspect exact record structure consistently across families without inventing a custom viewer for every new object.
+L00000135	- Define `usage_event_ref` explicitly and make all `Show in Usage` / `Show in Ledger` pivots prefer receipt + attempt + usage-event identity over run-only or tier-only filters.
+L00000136	- The stale source-lineage claim that `Runtime_Artifacts_Panel.md` named `artifacts_index:v1:{project_id}` as canonical is resolved by the storage-owned `artifacts_index.v1:{project_id}:{artifact_id}` key family; this panel owns payload/open semantics and does not re-own storage key registration.
+L00000137	- cost-bearing receipt-like artifacts should always prefer `usage_event_ref` for Usage/Ledger routing, not timestamp heuristics
+L00000138	- `Runtime_Artifacts_Panel.md` currently treats the envelope mostly as an implementation hook: - one event type per artifact family - `EventRecord` wrapper - per-type schemas - artifact-local IDs
+L00000139	- `cost_usage` - must carry `usage_event_ref` whenever available - should also carry `attempt_id?` and `provider_attempt_ref?` when traceable
+L00000140	- `Plans/Runtime_Artifacts_Panel.md` - `Plans/storage-plan.md` - `Plans/FileManager.md`
+L00000141	- `Plans/FileManager.md` - `Plans/Runtime_Artifacts_Panel.md` - `Plans/storage-plan.md`
+L00000142	- `Plans/FileManager.md` - `Plans/storage-plan.md` - `Plans/Runtime_Artifacts_Panel.md`
+L00000143	- align `Show in Ledger`, `Show in Usage`, and artifact/report opens around the same target schema instead of per-feature payloads
+L00000144	- `Plans/storage-plan.md` - `Plans/FileManager.md` - `Plans/Runtime_Artifacts_Panel.md`
+L00000145	- `usage-feature.md` and `Runtime_Artifacts_Panel.md` both describe `Show in Ledger` / `Show in Usage` behavior using identifiers like: - `artifact_id` - `usage_event_ref?` - `run_id?` - `thread_id?` - time/filter context but they still frame those as view-specific navigation instructions, not as a canonical target model.
+L00000146	- `usage_event_ref` should normalize into a stable `usage_event` object identity rather than remain a top-level special-case field.
+L00000147	- `Plans/usage-feature.md` - `Plans/FileManager.md` - `Plans/Glossary.md` - `Plans/00-plans-index.md`
+L00000148	- `storage-plan.md` already hints at export for long-term ledger/history retention.
+L00000149	- Extend runtime-artifact envelopes and `cost_usage` linkage with canonical identity/trust/switch fields or refs.
+L00000150	- The old `artifacts_index:v1:{project_id}` shorthand is too underspecified to function as row identity; the live contract uses `artifacts_index.v1:{project_id}:{artifact_id}` with row identity and projector ownership, while the shorthand is source-lineage evidence only.
+L00000151	- `Plans/Project_Output_Artifacts.md` - `Plans/Glossary.md` - `Plans/FileManager.md`
+L00000152	- `Plans/Project_Output_Artifacts.md` - `Plans/Glossary.md` - `Plans/FileManager.md`
+L00000153	- `usage_event_ref` is the canonical bridge to cost/usage history for that attempt or artifact.
+L00000154	- `Runtime_Artifacts_Panel.md` insists receipt-like artifacts preserve canonical linkage, but it still does not spell out the precedence between `attempt_id`, `provider_attempt_ref`, and `usage_event_ref`.
+L00000155	- `usage_event_ref` should be the preferred route for cost-bearing pivots whenever present.
+L00000156	- `Plans/Runtime_Artifacts_Panel.md` - `Plans/FileManager.md` - `Plans/Project_Output_Artifacts.md`
+L00000157	- `Plans/FileManager.md` - `Plans/Runtime_Artifacts_Panel.md` - `Plans/usage-feature.md`
+L00000158	- `Plans/Project_Output_Artifacts.md` - `Plans/Glossary.md` - `Plans/FileManager.md`
+L00000159	- `Plans/Project_Output_Artifacts.md` - `Plans/Glossary.md` - `Plans/FileManager.md`
+L00000160	- `Plans/Project_Output_Artifacts.md` - `Plans/Glossary.md` - `Plans/FileManager.md`
+L00000161	- Thread/run/history exports risk flattening rich object identity unless they explicitly preserve canonical refs like `thread_id`, `run_id`, `artifact_id`, `usage_event_ref`, and route/open hints.
+L00000162	
+L00000163	
+L00000164	### 4C Runtime-artifact retention, stream-view, and audit boundaries
+L00000165	
+L00000166	Runtime artifacts that bridge receipts, Usage, Ledger, Debug, and exported evidence use the shared attribution packet from §4B plus the following artifact-panel rules. Owner docs keep their primary schema authority: `Plans/Contracts_V0.md` owns shared event names and temporal primitives; `Plans/storage-plan.md` owns persisted state mechanics, retention storage, and projector behavior; this document owns the runtime-artifact panel contract and artifact-family envelope.
+L00000167	
+L00000168	`usage_event_ref` is a locator-grade usage bridge on runtime artifacts. It is stable for the lifetime of the referenced Usage/Ledger record, scoped to the canonical project/run or account-backed usage record, and present whenever the artifact is cost-bearing or can pivot to Usage/Ledger history. Runtime artifacts MUST NOT use `usage_event_ref` as a replacement `artifact_id`, `attempt_id`, or route primary key.
+L00000169	
+L00000170	Receipt-like runtime artifacts preserve `requested_action`, `effective_action`, `effective_outcome`, requested/effective target fields, and any degradation-reason fields needed to explain partial, blocked, retried, or externally indeterminate outcomes. When an artifact summarizes a side effect, receipt linkage is required even if the artifact body is only a report or export projection.
+L00000171	
+L00000172	Runtime artifacts declare an explicit retention class:
+L00000173	- `durable` for canonical receipts, validation reports, exported bundles, and artifacts needed for History/Ledger replay.
+L00000174	- `session_bounded` for crash-recovery views, active stream snapshots, and diagnostic evidence that must survive a session boundary but can expire by policy.
+L00000175	- `ephemeral_view` for active UI frames, transient stream chunks, and non-canonical preview state that may be discarded after the owning view no longer needs it.
+L00000176	
+L00000177	Sensitive and operational metadata minimization applies before export defaults are chosen. Secret material is redacted by policy, and non-secret operational metadata is still masked or omitted when it can expose account, host, path, provider, or workspace context outside the selected export profile.
+L00000178	
+L00000179	Streaming and incremental runtime artifacts preserve `truncation_state`, flushed-sequence or equivalent committed-offset metadata, and explicit gap-rendering rules so viewers can distinguish complete evidence, intentionally omitted ranges, dropped stream chunks, and unknown continuity. Diff, review, and export artifacts MUST state the `raw-content-vs-metadata` boundary before storing or exporting changed-line bodies, comments, screenshots, traces, or logs.
+L00000180	
+L00000181	Cross-system runtime artifacts carry stitched receipt fields for `receipt_id`, correlation identity, `source_system`, optional `source_occurred_at`, `observed_at`, `recorded_at`, and any time-skew disclosure supplied by the owner event. Runtime artifact ordering follows canonical receipt/event sequence when remote clocks disagree.
+L00000182	
+L00000183	Persisted stream-view intent is explicit. Stream surfaces distinguish `follow`, `paused_snapshot`, and `historical_view`; after restart, `follow` may resume only after source revalidation, while `paused_snapshot` and `historical_view` reopen as bounded historical evidence with visible degradation when the live source cannot be recovered.
+L00000184	
+L00000185	The artifact panel exposes artifact audit visibility as a dedicated searchable log/audit surface distinct from inline chat cards. Audit rows index artifact identity, attempt/run lineage, receipt refs, export/import refs, retention class, redaction profile, omitted evidence counts, and integrity failures without flattening those rows into conversational summaries.
+L00000186	
+L00000187	Temporary instrumentation artifacts declare `instrumentation_id`, `collector_state` (`collector-state` in audit vocabulary), install/collect/remove lifecycle state, evidence sink, cleanup or rollback state, and owning Debug investigation refs. Debug instrumentation MUST NOT outlive its declared cleanup policy without an explicit failed-cleanup artifact or blocked recovery record.
+L00000188	
+L00000189	Runtime artifacts consume these cross-cutting owner contracts without re-owning them: large-dataset scaling contracts, cross-surface filter persistence, canonical time-source precedence, Debug evidence budgets and redaction defaults, debug adapter model, stale/live data signaling, chat/file-tree deep-link panel context, and receipt identity-extension fields after the storage/receipt owners land their fuller contract.
+L00000190	
+L00000191	## 5A. Debug investigation grouping, manifests, and exports
+L00000192	
+L00000193	
+L00000194	### Debug investigation bundle manifest contract
+L00000195	
+L00000196	Runtime artifacts may participate in a shared Debug investigation without changing artifact-family ownership.
+L00000197	
+L00000198	Required cross-artifact grouping fields are:
+L00000199	- `investigation_id?`
+L00000200	- `instrumentation_id?`
+L00000201	- `evidence_role?` (`baseline`, `repro`, `diagnosis`, `fix`, `verification`, `cleanup`)
+L00000202	- `verification_strength?` (`none`, `weak`, `strong`)
+L00000203	
+L00000204	Grouping rules:
+L00000205	- any runtime artifact may be grouped under an investigation when `investigation_id` is present
+L00000206	- investigation grouping does not invent a new artifact family; it is an index and navigation layer over the canonical artifact records
+L00000207	- `context_snapshot`, `tool_llm_trace`, `failed_attempts`, `restore_point`, `before_after_snapshot`, and `subagent_lineage` are required participants for Debug Mode when emitted
+L00000208	- Debug investigations reuse existing runtime-artifact families before inventing new debug-only silos: `runtime_artifact.evidence`, `context_snapshot`, `tool_llm_trace`, `browser_recording`, `failed_attempts`, `before_after_snapshot`, and `subagent_lineage` remain the SSOT artifact families, while `investigation_id` / bundle identity only groups them for diagnosis.
+L00000209	- Agent-session adapter investigations expose entry points for "why did the agent fail", "what did it do", and "troubleshoot this run"; they use `tool_llm_trace`, `context_snapshot`, `failed_attempts`, and `subagent_lineage` for bounded thread attach plus later export/import under the same investigation model.
+L00000210	- browser-backed investigations use `automation_session` for testing, verification, debugging, and other live automation as the `/session/evidence` collection surface and preserve `browser_session_id` plus `session_class`; when the runtime is healthy, readback evidence includes `navigate`, `snapshot`, `screenshot`, `console`, and network summaries, while `interaction` and `/trace/video` capture remain separately permissioned and stored as runtime artifacts; this browser/session/evidence contract grounds the web/app debug MVP.
+L00000211	- artifact open/focus actions must route to the owning target surface rather than to an artifact-local shell
+L00000212	- Debug evidence artifact open/focus routes resolve back to canonical browser/dev/debugger/session identities such as `browser_session_id`, `dev_session_id`, `terminal_session_id`, and DAP-style debug identity; the runtime-artifact record groups under `investigation_id` but does not replace those owner identities.
+L00000213	
+L00000214	Required bundle manifest fields are:
+L00000215	- `schema_id = pm.investigation_bundle.schema.v1`
+L00000216	- `bundle_id`
+L00000217	- `schema_version`
+L00000218	- `investigation_id`
+L00000219	- `final_state`
+L00000220	- `stop_reason_code`
+L00000221	- `target_summary`
+L00000222	- `phase_history`
+L00000223	- `context_items[]`
+L00000224	- `artifact_refs[]`
+L00000225	- `instrumentation_manifest[]`
+L00000226	- `verification_summary`
+L00000227	- `cleanup_state`
+L00000228	- `redaction_and_omission_summary`
+L00000229	- `fix_summary` with `status`, optional `diff_artifact_id`, `summary_text`, and optional `file_refs[]`
+L00000230	- `import_lineage` with optional `source_bundle_id`, optional `source_origin`, and optional `imported_at_utc`
+L00000231	- `omitted_items_summary` with `omitted_evidence_count`, `omitted_raw_payload_count`, and `omission_reason_codes[]`
+L00000232	
+L00000233	Export and import rules:
+L00000234	- raw screenshots, traces, logs, recordings, and diffs remain stored and opened through the shared runtime-artifact system; the bundle manifest references them instead of duplicating bytes inline
+L00000235	- exporting an investigation writes `runtime_artifact.document` or equivalent manifest-linked metadata plus `debug.investigation.exported`
+L00000236	- Investigation `/open/export` actions use the same artifact routing and manifest identity: open resolves artifact refs to their owning surfaces, and export writes a manifest-backed bundle instead of flattening evidence into an undifferentiated file dump.
+L00000237	- importing a bundle creates an `imported_bundle` debug target and preserves provenance about the external source rather than pretending the bundle is a live local runtime target
+L00000238	- redacted, revoked, blocked, expired, and omitted items remain visible in the manifest summary so users can tell what was or was not carried forward
+L00000239	
+L00000240	### 5B Export taxonomy and manifests
+L00000241	
+L00000242	<a id="rap-5b-export-acceptance-carry-through"></a>
+L00000243	#### Acceptance carry-through
+L00000244	- Define record export, bundle export, and view export as distinct export classes
+L00000245	- Require export manifests with export_id/export_kind/project scope/included ids/trust-state disclosure
+L00000246	
+L00000247	### 5C External provider-native artifacts
+L00000248	
+L00000249	User-created unmanaged GitHub Copilot instruction files are external/provider-native artifacts unless adopted into PM control: repository-wide `.github/copilot-instructions.md` / `/copilot-instructions.md` / `github/copilot-instructions.md`; path-scoped and path-specific provider instruction files such as `.github/instructions/*.instructions.md` / `github/instructions/*.instructions.md`; and broader `.github/instructions/*`, `/instructions/`, and `instructions.md` path forms.
+L00000250	
+L00000251	User-created unmanaged `.github/agents/*` files, including `.github/agents/*.md` and `.github/agents/*.agent.md`, are also shown as external/provider-native artifacts unless they are adopted into PM control.
+L00000252	
+L00000253	Rules:
+L00000254	- external/provider-native artifacts remain inspectable and linkable, but PM must not present them as PM-owned instruction projections or generated runtime artifacts
+L00000255	- GitHub custom agents are separate Markdown profiles in `.github/agents/*.agent.md` with YAML frontmatter, prompt body, optional tools, optional `mcp-server` configuration, and optional model selection; they remain provider-native until adopted into PM control
+L00000256	- adopting an unmanaged `.github/instructions/*`, `.github/agents/*`, or `.github/copilot-instructions.md` file into PM control changes its ownership state through the Agent-Config adoption flow
+L00000257	- leaving a file unmanaged preserves provider-native ownership and keeps drift/repair actions separate from PM-controlled projections
+L00000258	- implementation-ready parity for GitHub Copilot-native instruction targets treats `/copilot-instructions.md`, `github/copilot-instructions.md`, `github/instructions/*`, `github/instructions/*.instructions.md`, `github/agents/*`, `github/agents/*.md`, `/instructions/`, `instructions.md`, and `/agents/` path forms as provider-native artifacts until PM control is explicit
+L00000259	
+L00000260	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/assistant-chat-design.md
+L00000261	
+L00000262	## 6. reasoning_tokens and cost_usage
+L00000263	**reasoning_tokens:** Required in the usage/cost_usage schema as the JSON wire realization of the UF-085 `reasoning/thoughts` bucket (integer, minimum 0). It is a compatibility/wire alias for normalized reasoning usage, not an independent UsageEvent accounting field, source authority, or extra total. In the UI, display the reasoning/thoughts value only when value > 0 and the UsageRecord `counting_semantics` proves how it relates to `output_total`.
+L00000264	
+L00000265	**cost_usage artifact:** Attribution record only. It uses the same canonical usage identity and normalized fields as the app-wide Usage page, the thread-scoped Context Detail Pane, Ledger, Run Graph, and Orchestrator usage displays.
+L00000266	
+L00000267	The artifact view must preserve segregated LLM usage buckets for input, output, cache_read, cache_write, cache_write_1h/TTL where exposed, output_visible, and reasoning/thoughts (schema wire alias `reasoning_tokens`). The display LESSON is that background ops and subagent LLM calls remain visible through the same usage identity; the panel may show parent totals, but it must also preserve the child/subagent event links that explain how costs aggregate to the parent and must not add reasoning/thoughts back onto provider-inclusive output totals.
+L00000268	
+L00000269	Required actions for `cost_usage` items:
+L00000270	- **Show in Ledger** — navigate to the canonical Ledger surface with the matching usage identity in scope
+L00000271	- **Show in Usage** — navigate to either app-wide Usage or the canonical thread Context Detail Pane depending on artifact scope, using `route_target.object_kind = usage_event` when `usage_event_ref` is available and preserving run/thread as filters only
+L00000272	
+L00000273	ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+L00000274	
+L00000275	Rules:
+L00000276	- cost_usage artifacts do not create an artifact-local usage model
+L00000277	- thread-scoped cost_usage artifacts land on the same Context Detail Pane used by the chat context indicator `More Details` action
+L00000278	- app-wide cost_usage artifacts land on the canonical Usage page
+L00000279	- when cost is derived from normalized token buckets rather than authoritative provider pricing, user-facing thread surfaces label it as `Estimated Cost`
+L00000280	- `cost_usage` type_payload MUST carry normalized `provider`, `usage`, `cost`, `quota`, `authority`, `refs`, and `flags` objects so raw provider payload retention/redaction, source confidence, settlement status, token-bucket semantics, pricing snapshot, unknown cost/quota, BYOK, subscription-hidden cost display, and provider-attempt correlation are schema-visible.
+L00000281	- `cost_usage` artifacts MUST carry `usage_event_ref` whenever available (`usage_event_ref?` in older optional notation). When traceable, they also carry `attempt_id`, `node_id`, and `provider_attempt_ref` so Usage, Ledger, Run Graph, and the Artifacts panel can explain who produced the artifact and why it exists in the execution graph.
+L00000282	- `Show in Ledger` and `Show in Usage` prefer `usage_event_ref` plus receipt/attempt/node identity over timestamp heuristics, run-only filters, or tier-only filters. `tier_id` may remain derived display/grouping compatibility only; it is not the primary cross-surface key for usage correlation.
+L00000283	- `tool_llm_trace` type_payload MUST carry a stable `trace_ref`, trace lifecycle fields, provider_attempt_ref, usage_event_ref when available, stream start/partial/final/error/abort timestamps or refs, raw provider payload/redaction refs, settlement link, and retry/escalation relation. It cannot pass validation with an unrelated non-empty payload.
+L00000284	- `api_web_call` type_payload MUST carry redacted request/response refs plus web operation discriminators: `web_operation`, `tool_id`, canonical `operation_input`, invocation provenance, success/denial state, provider fallback state, adapter IDs, cache/read/citation refs, and browser/PageRepresentation refs when the operation used Site Reader. `web_input` and `blocked_reason_code` are compatibility aliases only and normalize before persistence.
+L00000285	- `browser_recording` type_payload MUST carry `browser_session_id`, session class, visible/collapsed/detached/background/runtime-unavailable state, PM-native browser runtime state, Open/Watch/fallback evidence, action results, artifact refs, and redaction profile. Browser screenshots, PDF captures, console logs, and network traces may be separate artifacts, but they must rejoin the owning browser session and page representation.
+L00000286	
+L00000287	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md
+L00000288	## 7. JSON schemas (all required)
+L00000289	
+L00000290	**Envelope:** Plans/runtime_artifact_envelope.schema.json (`$id`: pm.runtime_artifact.envelope.v1). Common payload fields for all runtime artifact events.
+L00000291	
+L00000292	**Per-type:** One file per artifact type, e.g. Plans/runtime_artifact_code_diff.schema.json through Plans/runtime_artifact_artifact_version.schema.json, with `$id`: pm.runtime_artifact.<type>.v1. Each payload is validated against the envelope plus the corresponding type schema. The cost_usage schema MUST include required `usage_event_ref`, normalized provider/usage/cost/quota/authority/refs/flags objects, and required `reasoning_tokens` (integer, minimum 0) as the schema wire alias for UF-085 `reasoning/thoughts`, backed by `counting_semantics` and no-double-count rules. The tool_llm_trace schema MUST include required `trace_ref`, trace lifecycle, provider-attempt, usage-settlement, retry/escalation, and raw-payload/redaction refs. The api_web_call and browser_recording schemas MUST reject arbitrary non-empty payloads and enforce their web operation / browser session discriminators. All 19 type schemas are required; no optional schema files.
+L00000293	
+L00000294	Implementation MUST validate every runtime_artifact.* event payload against the envelope and the matching type schema before appending to seglog and before writing to the artifacts index.
+L00000295	
+L00000296	Schema-file materialization note: `Plans/runtime_artifact_envelope.schema.json` and the 19 per-type `Plans/runtime_artifact_<type>.schema.json` files are current live doc targets now that they exist. This section remains normative for semantics, and the schema files must enforce the required per-type payload fields directly rather than allowing arbitrary non-empty `type_payload` objects. `Plans/storage-plan.md` owns the registered storage key families `artifacts_index.v1:{project_id}:{artifact_id}`, `artifacts_project_state.v1:{project_id}`, and `projector.checkpoint.runtime_artifacts:{project_id}`.
+L00000297	
+L00000298	### Runtime-artifact envelope ownership
+
+<<< CONTEXT_AFTER canonical_document_lines=299-310 >>>
+L00000299	
+L00000300	The runtime-artifact payload/schema-owner split resolves here: this document is the `/schema-owner` for the runtime-artifact payload envelope until `Plans/runtime_artifact_envelope.schema.json` and the 19 per-type `Plans/runtime_artifact_<type>.schema.json` files materialize. `Plans/Contracts_V0.md` owns the EventRecord wrapper and shared event vocabulary; `Plans/storage-plan.md` owns key registration and projector storage; neither owner may redefine runtime-artifact payload fields locally.
+L00000301	
+L00000302	The common envelope pins `artifact_id`, `artifact_type`, canonical IDs, `run_id`, `thread_id?`, `node_id?`, `attempt_id`, `provider_attempt_ref?`, `usage_event_ref?`, receipt refs, producer/actor refs, content refs, projection fields, and routing refs. Per-type schemas may add required fields for a specific `runtime_artifact.*` family, but they must not drift from or override those envelope fields.
+L00000303	
+L00000304	Spec-integrity rows that also name command `/catalog` ghost IDs, HITL executor canon, `/crosswalk/TOC` cleanup, glossary links, duplicated command families, or missing advertised sections stay with those owner docs. This panel owns only the runtime-artifact payload/schema-owner envelope and the artifact-panel routing contract.
+L00000305	
+L00000306	### Runtime-artifact identity, index, and preview rules
+L00000307	
+L00000308	Runtime artifact opens are identity-native. `OpenFile` remains a workspace-file source realization for concrete paths; generated artifacts, draft documents, checkpoints, search hits, runtime artifacts, and other object-backed subjects resolve through artifact/open identity first and then realize as `OpenSubject`, `OpenArtifact`, `generated://<artifact_id>`, or an owner-surface route as appropriate.
+L00000309	
+L00000310	Evidence and artifact lists use independent virtualization and `/paging`. Heavy artifacts remain `metadata-first` until opened, and artifact previews are demand-loaded rather than `pre-rendered` for long lists. This keeps Evidence exact without forcing every artifact body into memory or preview rows before the user asks for it.

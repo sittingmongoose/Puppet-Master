@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE 2468-2479 >>>
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0045
+preserved_exact_tokens:
+  - "DRY-RUN"
+  - "Preview"
+  - "permission-blocked placeholders"
+  - "read-only rendered Markdown view"
+negative_constraints: []
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+
+<<< AUTHORITATIVE_CORE 2480-2864 >>>
+### CS-035 - Dry-Run Preview Execution Safety
+
+```yaml
+plan_unit_id: CS-035
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Dry-run preview does not execute any run; shell injections in preview mode may
+  execute the shell command only under bash permission and must not submit the
+  result to any agent.
+gui_related: false
+gui_classification_reason: Preview execution safety is command execution policy, not visual presentation.
+split_recommended: true
+split_recommendation_reason: Source span S0045 mixes GUI rendering and backend execution-safety requirements.
+depends_on: [CS-017, CS-024, CS-034]
+unblocks: []
+acceptance_criteria:
+  - The preview does NOT execute any run.
+  - Shell injections in preview mode execute the shell command only subject to bash permission.
+  - Preview-mode shell results are not submitted to any agent.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: dry_run_preview_execution_drift
+reasoning_tier: high
+context_scope: commands_gui_preview
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: command_dry_run_preview_execution_safety
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0045
+preserved_exact_tokens:
+  - "does NOT execute any run"
+  - "bash"
+  - "do not submit the result to any agent"
+negative_constraints:
+  - "Dry-run preview must not submit the result to any agent."
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+### CS-036 - Shortcut Binding Section Anchor
+
+```yaml
+plan_unit_id: CS-036
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  The 6.3 Shortcut binding heading is preserved as source lineage only in this
+  window; it does not add behavior beyond invocation-surface shortcut rules
+  already covered by earlier PlanUnits and owner docs.
+gui_related: false
+gui_classification_reason: This is structural lineage for a heading-only span.
+split_recommended: false
+depends_on: [CS-011, CS-027]
+unblocks: []
+acceptance_criteria:
+  - The 6.3 Shortcut binding heading remains covered by migration artifacts.
+  - No new shortcut behavior is inferred from this heading-only span.
+  - Shortcut behavior continues to defer to invocation-surface and UI owner contracts.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: shortcut_heading_overinterpretation
+reasoning_tier: low
+context_scope: commands_gui_settings
+implementation_surfaces:
+  - Plans/Commands_System.md
+node_compile_hint:
+  mode: command_shortcut_binding_section_anchor
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0046
+preserved_exact_tokens:
+  - "6.3 Shortcut binding"
+negative_constraints:
+  - "Do not infer new shortcut behavior from the heading-only span."
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+### CS-037 - Reserved Slash-Command Set Lock
+
+```yaml
+plan_unit_id: CS-037
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Section 7 is the locked slash-command SSOT for reserved chat slash commands:
+  the canonical reserved set remains visible to consumers, /clear is removed,
+  /cancel is a deprecated alias to /stop, traceability includes obl-046 and
+  obl-047, and repairs replace the reserved section rather than appending
+  stale packet residue.
+gui_related: false
+gui_classification_reason: Reserved command set locking and stale-residue replacement are command registry governance.
+split_recommended: true
+split_recommendation_reason: Source span S0047 is dense and mixes reserved-set lock, /web parsing, aliases, override policy, and catalog presentation.
+depends_on: [CS-002, CS-013]
+unblocks: [CS-038, CS-039, CS-040, CS-041, CS-042, CS-045, CS-047]
+acceptance_criteria:
+  - Section 7 remains the slash-command SSOT for the single canonical set of reserved chat slash commands.
+  - Reserved commands include /new, /model, /effort, /mode, /export, /compact, /stop, /resume, /rewind, /revert, /share, /settings, /doctor, /help, /web, /skill, and /cancel.
+  - /clear is removed.
+  - /cancel remains a deprecated alias to /stop.
+  - Traceability for the reserved command family includes obl-046 and obl-047.
+  - Packet regeneration treats this owner as a replace_section unit.
+  - Repairs replace section 7 rather than appending stale-residue child/parent packet material after section 6.3.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: reserved_slash_set_drift
+reasoning_tier: high
+context_scope: reserved_slash_commands
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: reserved_slash_command_set_lock
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0047
+preserved_exact_tokens:
+  - "/new"
+  - "/model"
+  - "/effort"
+  - "/mode"
+  - "/export"
+  - "/compact"
+  - "/stop"
+  - "/resume"
+  - "/rewind"
+  - "/revert"
+  - "/share"
+  - "/settings"
+  - "/doctor"
+  - "/help"
+  - "/web"
+  - "/skill"
+  - "/cancel"
+  - "/clear"
+  - "obl-046"
+  - "obl-047"
+  - "replace_section"
+negative_constraints:
+  - "/clear stays removed."
+  - "Stale-residue child/parent packet material cannot survive beside the canonical /web, /skill, and /cancel rules."
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+### CS-038 - Web Slash Family Parsing and IDs
+
+```yaml
+plan_unit_id: CS-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  The /web family remains one reserved slash-command family with bare /web
+  opening help/autocomplete only, execution requiring explicit subcommands, and
+  stable cmd.chat.web.* IDs for search, fetch, extract, research, crawl, and map;
+  slash, palette, natural-language, autonomous agent, subagent, Goal, PRD, and
+  Planning Wizard web/browser intents enter the same WebOperation / BrowserAction
+  dispatcher with invocation_source, optional agent_reason, and URL reads
+  normalized to webfetch.
+gui_related: false
+gui_classification_reason: Web slash parsing and command IDs are dispatcher semantics.
+split_recommended: true
+split_recommendation_reason: Source span S0047 mixes web-family parsing with reserved aliases and visible catalog presentation.
+depends_on: [CS-013, CS-037]
+unblocks: [CS-039]
+acceptance_criteria:
+  - /web is one command family and is not flattened into separate top-level families.
+  - Bare /web shows help/autocomplete only.
+  - Execution requires /web search, /web fetch, /web extract, /web research, /web crawl, or /web map.
+  - The stale rule that bare /web with query routes to cmd.web.search by default is retired.
+  - cmd.web.search is not the implicit destination for bare /web.
+  - Stable command IDs include cmd.chat.web.search, cmd.chat.web.fetch, cmd.chat.web.extract, cmd.chat.web.research, cmd.chat.web.crawl, and cmd.chat.web.map.
+  - Slash, palette, natural-language, autonomous agent, subagent, Goal Runtime, PRD Builder, and Planning Wizard entrypoints converge on the same WebOperation / BrowserAction dispatcher.
+  - Dispatch records invocation_source, optional agent_reason, and source IDs before tool execution.
+  - URL reads normalize to cmd.chat.web.fetch / webfetch rather than websearch.
+  - URL normalization applies and parse failure shows usage.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: web_slash_family_drift
+reasoning_tier: high
+context_scope: reserved_slash_commands
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: web_family_subcommand_required_parsing
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0047
+preserved_exact_tokens:
+  - "/web search <query>"
+  - "/web fetch <url>"
+  - "/web extract <url>"
+  - "/web research <task>"
+  - "/web crawl <url>"
+  - "/web map <url>"
+  - "cmd.chat.web.search"
+  - "cmd.chat.web.fetch"
+  - "cmd.chat.web.extract"
+  - "cmd.chat.web.research"
+  - "cmd.chat.web.crawl"
+  - "cmd.chat.web.map"
+  - "WebOperation / BrowserAction dispatcher"
+  - "invocation_source"
+  - "agent_reason"
+  - "webfetch"
+  - "bare /web shows help/autocomplete only"
+negative_constraints:
+  - "Do not flatten /web into separate slash families."
+  - "cmd.web.search is not the implicit destination for bare /web."
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+### CS-039 - Reserved Dispatch Aliases and Override Policy
+
+```yaml
+plan_unit_id: CS-039
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  override_builtin is forbidden for every reserved built-in slash command, may
+  survive only for non-core command namespaces, and cannot override /web, /skill,
+  /cancel, /clear, /stop, or other canonical Assistant Chat built-ins; reserved
+  aliases keep /cancel mapped to stop, /rewind conversation-only, /revert file
+  restore, and /clear removed rather than thread-clear.
+gui_related: false
+gui_classification_reason: Override policy and dispatch alias mapping are dispatcher and registry constraints.
+split_recommended: true
+split_recommendation_reason: Source span S0047 mixes dispatch alias policy with web parsing and catalog presentation.
+depends_on: [CS-013, CS-037, CS-038]
+unblocks: [CS-040, CS-041, CS-047]
+acceptance_criteria:
+  - override_builtin is /forbid for every reserved built-in slash command.
+  - If override_builtin survives for extension design, it is narrowed to non-core command namespaces only.
+  - override_builtin cannot override /web, /skill, /cancel, /clear, /stop, or other canonical Assistant Chat built-ins.
+  - /cancel resolves internally to cmd.chat.stop.
+  - /rewind dispatches cmd.chat.rewind and remains conversation-only.
+  - /revert dispatches cmd.chat.revert and remains file-mutation restore, not conversation rewind.
+  - /share, /settings, /doctor, and /help route to their owning surfaces rather than user-defined commands.
+  - /clear stays removed and must not return as a thread-clear command.
+  - Source cleanup shorthand normalizes to reserved-command alias policy plus ask-gated web permission posture and does not create extra slash commands.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: reserved_alias_override_drift
+reasoning_tier: high
+context_scope: reserved_slash_commands
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: reserved_slash_dispatch_override_policy
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0047
+preserved_exact_tokens:
+  - "override_builtin"
+  - "/forbid"
+  - "cmd.chat.stop"
+  - "cmd.chat.rewind"
+  - "cmd.chat.revert"
+  - "thread-clear"
+  - "/de-duplication"
+  - "/research-focused"
+  - "/risky"
+negative_constraints:
+  - "/clear stays removed and must not return as a thread-clear command."
+  - "override_builtin cannot override canonical Assistant Chat built-ins."
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+### CS-040 - Reserved Command Catalog Presentation
+
+```yaml
+plan_unit_id: CS-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Reserved commands remain visible as non-editable catalog entries, /web remains
+  discoverable in catalog, and deprecated aliases are shown distinctly from
+  active commands.
+gui_related: true
+gui_classification_reason: Reserved command catalog presentation is visible catalog UI behavior.
+split_recommended: true
+split_recommendation_reason: Source span S0047 mixes visible catalog presentation with backend reserved-set and alias rules.
+depends_on: [CS-027, CS-037, CS-039]
+unblocks: []
+acceptance_criteria:
+  - /web remains discoverable in catalog.
+  - Deprecated aliases are shown distinctly from active commands.
+  - Reserved commands are shown as non-editable in catalog.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: reserved_command_catalog_drift
+reasoning_tier: standard
+context_scope: reserved_slash_commands
+implementation_surfaces:
+  - Plans/Commands_System.md
+node_compile_hint:
+  mode: reserved_command_catalog_presentation
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0047
+preserved_exact_tokens:
+  - "/web remains discoverable in catalog"
+  - "deprecated aliases shown distinctly from active commands"
+  - "reserved commands shown as non-editable in catalog"
+negative_constraints: []
+owner_hints:
+  - Plans/Commands_System.md
+```
+
+### CS-041 - User Command UICommand Dispatch Bridge
+
+```yaml
+plan_unit_id: CS-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  cmd.chat.run_user_command is the required UICommand dispatch bridge for User
+  Command execution from every invocation surface, with registration owned by
+  UI_Command_Catalog and event naming owned by the event owner rather than by
+  assertion in this document.
+gui_related: false
+gui_classification_reason: The dispatch bridge and event ownership are internal command wiring semantics.
+split_recommended: false
+depends_on: [CS-011, CS-020, CS-039]
+unblocks: [CS-042, CS-045, CS-049]
+acceptance_criteria:
+  - UICOMMAND-ENTRY remains the anchor for the User Command UICommand catalog entry.
+  - cmd.chat.run_user_command is the required dispatch bridge for User Command execution from any invocation surface.
+  - Args schema preserves command_name and optional arguments.
+  - Expected events are tool.invoked when subtask: true, otherwise the canonical chat message event registered by the event owner.
+  - chat.message.submitted is not expected unless that event is explicitly registered.
+  - This document does not make cmd.chat.run_user_command registered by assertion.
+  - Reserved slash-command UICommand IDs remain defined in UI_Command_Catalog section 2.7 and distinct from User Command execution.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: command_uicommand_bridge_drift
+reasoning_tier: high
+context_scope: command_dispatch_bridge
+implementation_surfaces:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: run_user_command_uicommand_bridge
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Commands_System-S0048
+preserved_exact_tokens:
+  - "UICOMMAND-ENTRY"
+  - "cmd.chat.run_user_command"
+  - "{ command_name, arguments? }"
+  - "tool.invoked"
+  - "subtask: true"
+  - "chat.message.submitted"
+  - "ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md#7-uicommand"
+negative_constraints:
+  - "This document does not make cmd.chat.run_user_command registered by assertion."
+owner_hints:
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+```
+
+
+<<< CONTEXT_AFTER 2865-2876 >>>
+### CS-042 - Debug Mode UICommand Family
+
+```yaml
+plan_unit_id: CS-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Commands_System.md
+canonical_text: >-
+  Debug Mode actions use a separate canonical cmd.debug.* UICommand family for
+  assistant-thread investigation control, allowing Assistant Chat, editor, and
+  debug-adjacent surfaces to invoke investigation lifecycle actions without
+  overloading the User Command namespace.

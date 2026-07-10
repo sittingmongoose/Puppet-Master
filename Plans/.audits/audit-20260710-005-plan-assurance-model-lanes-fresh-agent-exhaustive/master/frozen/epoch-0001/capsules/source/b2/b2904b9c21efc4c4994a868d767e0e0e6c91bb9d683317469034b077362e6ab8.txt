@@ -1,0 +1,410 @@
+<<< CONTEXT_BEFORE 2677-2688 >>>
+- panel_id
+negative_constraints:
+- Source-lineage packet names and process inventory files remain noncanonical.
+- Command-system backfill must not create a second command system.
+- cmd.panel.switch must not become a hidden object-targeting command when a stable route command exists.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+
+<<< AUTHORITATIVE_CORE 2689-3069 >>>
+### UCC-028 - Wiring Acceptance Hooks Contract
+
+```yaml
+plan_unit_id: UCC-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Every catalog command must be verifiable through the Wiring Matrix with handler registration, event-emission tests when events are declared, UI element binding, and testable acceptance_checks; commands with no persisted domain event remain subject to handler and UI binding checks.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-028 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: wiring_acceptance_hooks_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0016
+preserved_exact_tokens:
+- 2.0.1 Acceptance hooks contract (wiring verification)
+- Handler registration
+- Event emission verification
+- UI element binding
+- Acceptance checks
+- no persisted domain event
+- expected_event_types
+- acceptance_checks
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/UI_Wiring_Rules.md, SchemaID:Wiring_Matrix.schema.json, Gate:GATE-010, Invariant:INV-011, Invariant:INV-012'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-029 - Github Auth Command Family Anchor
+
+```yaml
+plan_unit_id: UCC-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: The GitHub auth command family is the GitHub HTTPS API-only catalog section for GitHub connection and disconnection command rows.
+gui_related: false
+gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-029 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: github_auth_command_family_anchor
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0017
+preserved_exact_tokens:
+- 2.1 GitHub auth (GitHub HTTPS API only)
+- GitHub HTTPS API only
+- cmd.github.connect
+- cmd.github.disconnect
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-030 - Github Connect Command Contract
+
+```yaml
+plan_unit_id: UCC-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: cmd.github.connect starts a fresh GitHub OAuth device-code flow with empty args locked by Spec Lock, emits device-code/polling/authenticated-or-failed events, affects GitHub/Auth setup surfaces, and uses recovery wrappers with keyed context for deferred reconnect.
+gui_related: false
+gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-030 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: github_connect_command_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0018
+preserved_exact_tokens:
+- cmd.github.connect
+- arg-less
+- device-code
+- project_id
+- auth_realm
+- effective-account snapshot/ref
+- source /ref
+- auth.github.device_code.issued
+- auth.github.token.polling
+- auth.github.authenticated
+- auth.github.failed
+negative_constraints:
+- Deferred reconnect and recovery wrappers must not stay arg-less, under-keyed, or split-brain.
+preserved_contractrefs:
+- 'ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, SchemaID:Spec_Lock.json#locked_decisions.auth_model'
+- 'ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+- 'ContractRef: UICommand:cmd.github.connect'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-031 - Github Disconnect Command Contract
+
+```yaml
+plan_unit_id: UCC-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: cmd.github.disconnect uses empty args, deletes the GitHub token from credential storage, emits auth.github.disconnected, and affects Settings > GitHub/Auth and Dashboard auth status.
+gui_related: false
+gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-031 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: github_disconnect_command_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0019
+preserved_exact_tokens:
+- cmd.github.disconnect
+- delete token
+- credential store
+- auth.github.disconnected
+- Settings > GitHub/Auth
+- Dashboard auth status
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Contracts_V0.md#AuthState'
+- 'ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+- 'ContractRef: UICommand:cmd.github.disconnect'
+- 'ContractRef: UICommand:cmd.github.connect, UICommand:cmd.github.disconnect'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-032 - Project Management Deferred Wizard Commands
+
+```yaml
+plan_unit_id: UCC-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Project management and deferred wizard command IDs cover adding/opening projects, creating local or GitHub-backed projects, and opening deferred chain wizard payloads with the required args, events, and affected surfaces.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-032 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: project_management_deferred_wizard_commands
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0020
+preserved_exact_tokens:
+- cmd.project.add_existing
+- cmd.project.new_local
+- cmd.project.new_github_repo
+- cmd.project.open
+- cmd.project.chain_wizard_open_deferred
+- project.added
+- project.created
+- git.clone.completed
+- wizard.opened
+- wizard.deferred_payload.loaded
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/GitHub_Integration.md#d-project-management-flows-no-chain-wizard-required, ContractName:Plans/chain-wizard-flexibility.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-033 - File Manager Command Rows And Target Enum
+
+```yaml
+plan_unit_id: UCC-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: File Manager command rows define stable file/folder operations, clipboard intent, paste/copy/move/export behavior, PM-native open_with targets, valid target scope, and exclude system_default from the MVP canonical target enum.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-033 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: file_manager_command_rows_target_enum
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0021
+preserved_exact_tokens:
+- cmd.file.new_file
+- cmd.file.new_folder
+- cmd.file.rename
+- cmd.file.delete
+- cmd.file.copy_path
+- cmd.file.copy_nodes
+- cmd.file.cut_nodes
+- cmd.file.paste_nodes
+- cmd.file.open_with
+- cmd.file.save_local_copy
+- source_editor
+- image_viewer
+- workspace_preview
+- detached_preview
+- diff_review
+- system_default
+negative_constraints:
+- system_default is not part of cmd.file.open_with canonical MVP target enum.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileManager.md#114-open-with-and-save-local-copy, ContractName:Plans/FinalGUISpec.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-034 - Lsp Common Args Events And Surfaces
+
+```yaml
+plan_unit_id: UCC-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: LSP minimum commands share path/position args where applicable, emit tool.invoked or tool.denied events, and affect File editor, Problems panel, and Chat when LSP-in-chat is enabled.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-034 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: lsp_common_args_events_surfaces
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0022
+preserved_exact_tokens:
+- 2.2 LSP (minimum required)
+- path
+- position
+- line
+- character
+- tool.invoked
+- tool.denied
+- File editor
+- Problems panel
+- Chat
+- LSP-in-chat
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md'
+- 'ContractRef: ContractName:Contracts_V0.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+
+<<< CONTEXT_AFTER 3070-3081 >>>
+### UCC-035 - Lsp Command Id List
+
+```yaml
+plan_unit_id: UCC-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: The minimum LSP command ID list includes goto definition, find references, rename symbol, format document/selection, code action, goto symbol, open problems, and restart server commands with their args.
+gui_related: false
+gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+split_recommended: false
+depends_on:

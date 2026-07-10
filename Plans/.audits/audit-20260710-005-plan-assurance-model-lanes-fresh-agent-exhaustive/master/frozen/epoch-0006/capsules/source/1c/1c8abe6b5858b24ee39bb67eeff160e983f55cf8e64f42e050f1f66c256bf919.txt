@@ -1,0 +1,373 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-358 >>>
+L00000001	# UI Wiring Rules (Canonical)
+L00000002	
+L00000003	
+L00000004	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000005	
+L00000006	
+L00000007	<!--
+L00000008	PUPPET MASTER -- UI WIRING RULES
+L00000009	
+L00000010	ABSOLUTE NAMING RULE:
+L00000011	- Platform name is "Puppet Master" only.
+L00000012	- If older naming exists, refer to it only as "legacy naming" (do not quote it).
+L00000013	-->
+L00000014	
+L00000015	<a id="section-0"></a>
+L00000016	## 0. Scope
+L00000017	This file is the canonical SSOT for UI wiring rules that guarantee the Puppet Master GUI is fully wired to backend behavior.
+L00000018	All rules in this document are autonomously verifiable without paid UI tooling; verification relies exclusively on schema validation, deterministic lints, and scriptable checks.
+L00000019	
+L00000020	ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand, Primitive:Gate
+L00000021	
+L00000022	### 0.1 GUI concept reconciliation input
+L00000023	
+L00000024	When a GUI concept artifact is included in a reconciliation packet, `Concepts/PuppetMasterDashComp.html` is the primary concept input for wiring review until superseded by a newer explicit concept artifact in the same packet. The path token `/PuppetMasterDashComp.html` is evidence lineage, not a live Plans owner path; UI wiring canon remains in this document, GUI product/layout canon remains in `Plans/FinalGUISpec.md`, and command canon remains in `Plans/UI_Command_Catalog.md`.
+L00000025	
+L00000026	`Concepts/PMConcept.html` is likewise a GUI concept-lineage input when cited by a transfer source; `/PMConcept.html` drives reconciliation targeting and wiring review but MUST NOT be copied verbatim into canon or treated as a live owner path.
+L00000027	
+L00000028	For the 2026-07-02 GUI/PMConcept readiness repair, `Plans/PMConcept_Control_Reconciliation.json` is the machine-readable concept reconciliation artifact and `Plans/Wiring_Matrix.production.json` is the schema-validated production wiring artifact. PMConcept controls without production command/state/handler/receipt/test coverage remain concept lineage only. PMConcept local/demo/mock data is `concept_fixture_only` unless a canonical owner doc replaces it with a real projected state contract.
+L00000029	
+L00000030	Production wiring evidence MUST include accessibility and interaction readiness: every retained actionable control has an accessible name, semantic role, keyboard activation contract, focus behavior, state attributes (`aria-selected`, `aria-expanded`, `aria-checked`, or equivalent native state where applicable), disabled reason projection, UICommand binding, handler target, receipt/event effect, and test evidence. Icon-only controls without names, custom clickable elements without keyboard parity, tab/menu/disclosure controls without state semantics, and disabled controls without user-visible reasons are GATE-010 failures.
+L00000031	
+L00000032	Annotation and targeted-revision work is a cross-surface GUI feature, not just a backend `note-schema` tweak. Wiring must cover the reusable GUI components in `Plans/FinalGUISpec.md` (`AnnotationActionMenu`, `AnnotationDrawer`, `ContextChipStrip`), their commands, projected state, status/live-region updates, and separate send-to-chat chip behavior across Assistant Deep Plan, Wizard/PRD review, Interview embedded document pane, and document viewer review surfaces.
+L00000033	
+L00000034	Cross-surface wiring reviews for Debug Mode and similar features must verify command IDs, overlays, attachments, and route/open wiring against non-derived owner-doc clusters, including `/runtime/permissions/storage/browser/artifacts/tools/UI`, `/prompt/command`, and `/index/terminology`, while keeping product semantics in the owner docs rather than in wiring rows.
+L00000035	
+L00000036	Route-aware wiring verification extends the simple `ui_element_id -> ui_command_id -> handler_location -> expected_event_types` proof with optional metadata fields: `command_arg_contract_ref?`, `route_target_kind?`, `subject_kind?`, `deprecated_alias_for?`, `preconditions?`, `arg_passthrough_requirements?`, `correlation_passthrough?`, and `route_contract?`. For Usage route/open rows, `route_contract` is a validation proof packet: it requires `route_target`, `OpenSubject`, `route_target.object_kind = usage_event` when `usage_event_ref` exists, and passthrough for UsageRecord/runtime/provider refs. These fields are verification hints only; `WiringEntry` consumes route/open semantics and cannot become the route owner.
+L00000037	
+L00000038	The wiring layer remains deliberately small: rows key off `ui_command_id`, handler location, expected events, and evidence, while gate logic understands command-normalization metadata and keeps `wiring-schema` expansion minimal instead of duplicating command-owner contracts.
+L00000039	
+L00000040	`GATE-010` route-aware verification includes schema validation, command coverage, handler resolution, `expected-event` emission, unknown-command rejection, architectural lints, wrapper normalization, argument passthrough, correlation passthrough, and route target kind checks.
+L00000041	
+L00000042	Runtime action wiring reconciles old `cmd.graph` / `cmd.graph.*` recovery actions to canonical `cmd.runtime` / `cmd.runtime.*` command contracts. Package, lane, and `/package/lane` promotion controls must dispatch through cataloged command IDs rather than ad hoc UI confirms or untyped wiring shortcuts.
+L00000043	
+L00000044	Reserved slash-command override policy must resolve into one command-catalog rule: real `cmd.chat`, `cmd.chat.*`, `cmd.orchestrator`, and `cmd.orchestrator.*` IDs must be cataloged before UI wiring lands, and referenced-but-uncataloged IDs such as `cmd.chat.run_user_command`, `cmd.orchestrator.switch_tab`, and `cmd.chat.branch_from_restore` remain gate failures until cataloged, aliased, or retired.
+L00000045	
+L00000046	Runtime-artifact wiring consumes `Plans/Runtime_Artifacts_Panel.md` and `/Runtime_Artifacts_Panel.md` for envelope ownership; per-family behavior and bridge-governance semantics are verified by owner references, not by copying runtime-artifact payload rules into wiring rows.
+L00000047	
+L00000048	Weak-integration verification tracks dead-end GUI and end-to-end workflow risks when backend `/runtime` or `/governance` behavior exists but is not exposed in the operator control surface. Category labels include `wiring`, `workflow`, `state_contract`, `gui_alignment`, `design_architecture`, `quality`, `evidence_gap`, `corroboration`, `recovery`, `account_usage_pressure`, and `projection_trust`.
+L00000049	
+L00000050	Element-centric and command-centric wiring remains the baseline proof: `ui_element_id -> ui_command_id -> handler_location -> expected_event_types` proves dispatch coverage, while route-aware gates add navigation, subject, and `/consumer/runtime-trace` checks without replacing the row shape. The machine-readable wiring schema remains a set of `interactive-element` dispatch rows; producer/consumer trace evidence is layered above that schema rather than used as a substitute for it.
+L00000051	
+L00000052	The UI command envelope evidence keeps `command_id`, `issued_at`, `origin`, `correlation_id`, and `args` visible and references `Contracts_V0.md`; wiring rows may verify envelope passthrough but do not redefine the command contract.
+L00000053	
+L00000054	A broad public `cmd.nav` / `cmd.nav.*` family is optional alias surface, not the mandatory answer for every route. Wrapper commands can normalize to shared route contracts, and any `cmd.nav` prototype must carry alias `/deprecation`, handler-registration, and gate-maintenance consequences through `GATE-010`.
+L00000055	
+L00000056	`GATE-010` must verify that wrapper command IDs normalize to shared route primitives instead of treating every public command ID as independent. Generalized route `/subject` navigation cannot be reduced to one-off handler/event coverage; the gate evidence must prove argument passthrough, subject kind, route target kind, and wrapper normalization.
+L00000057	
+L00000058	Stale `Tiers` vocabulary from `FinalGUISpec.md` is compatibility lineage only; wiring rules do not reintroduce `Tiers` as a live route, object, or navigation vocabulary.
+L00000059	
+L00000060	Wiring SSOT / SSOTs integrity includes stale or `/degraded` action preconditions, owner-doc `/runtime` gating, dispatcher/runtime gating, and command registration. These are owner-doc blocking issues when they affect action availability; they are not cosmetic drift in wiring prose.
+L00000061	
+L00000062	Adjacent `GUI` usage controls such as `auth-mode` and `/effective-account` filtering remain consumer requirements until usage/account owners guarantee them. UI wiring may expose the `/UI` control only when the command and effective-account contract exists.
+L00000063	
+L00000064	## Owner / Consumer Map
+L00000065	
+L00000066	This document owns UI wiring rules, dispatcher boundary requirements from the UI side, wiring matrix row expectations, and autonomous verification strategy for interactive GUI command coverage. It consumes command identifiers from `Plans/UI_Command_Catalog.md`, command and event envelope contracts from `Plans/Contracts_V0.md`, GUI placement and visible behavior from `Plans/FinalGUISpec.md`, and gate definitions from `Plans/Progression_Gates.md`.
+L00000067	
+L00000068	This document does not own product layout, command catalog membership, runtime event schemas, route semantics, storage projections, or evidence bundle schemas. Those remain with their owner docs and are referenced here for wiring verification.
+L00000069	
+L00000070	ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Progression_Gates.md
+L00000071	
+L00000072	## PlanUnits
+L00000073	
+L00000074	### UIW-001 - UI Wiring Scope And Authority
+L00000075	
+L00000076	```yaml
+L00000077	plan_unit_id: UIW-001
+L00000078	unit_type: requirement
+L00000079	status: accepted
+L00000080	owner_doc: Plans/UI_Wiring_Rules.md
+L00000081	canonical_text: Plans/UI_Wiring_Rules.md is the canonical SSOT for UI wiring rules that prove Puppet Master GUI interactions are wired to backend behavior through typed commands, deterministic lints, schema validation, and scriptable checks.
+L00000082	gui_related: true
+L00000083	gui_classification_reason: The unit governs GUI interaction wiring and user-visible control coverage.
+L00000084	depends_on: []
+L00000085	unblocks: [UIW-002, UIW-003, UIW-004, UIW-006, UIW-007]
+L00000086	acceptance_criteria:
+L00000087	  - UI wiring canon is maintained in this document rather than consumer docs.
+L00000088	  - Verification remains autonomous and does not require paid UI tooling.
+L00000089	  - Product layout, command catalog membership, runtime event schemas, storage projections, and evidence schemas remain with their owner docs.
+L00000090	validation_surfaces:
+L00000091	  - python3 scripts/pm-plans-verify.py lint-contractrefs
+L00000092	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-001-standardize-plans
+L00000093	risk_class: owner_drift
+L00000094	reasoning_tier: standard
+L00000095	context_scope: ui_wiring
+L00000096	implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.schema.json]
+L00000097	node_compile_hint: {mode: doc_standardized_planunit, create_worknodes: false}
+L00000098	source_lineage:
+L00000099	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0001
+L00000100	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0002
+L00000101	preserved_exact_tokens: ["Puppet Master", "UI wiring rules", "autonomously verifiable", "schema validation", "deterministic lints", "scriptable checks"]
+L00000102	negative_constraints:
+L00000103	  - Do not make UI wiring the owner for product layout, command catalog membership, runtime event schemas, route semantics, storage projections, or evidence bundle schemas.
+L00000104	owner_hints: [Plans/UI_Wiring_Rules.md]
+L00000105	consumer_docs: [Plans/FinalGUISpec.md, Plans/Wiring_Matrix.md, Plans/UI_Command_Catalog.md]
+L00000106	```
+L00000107	
+L00000108	### UIW-002 - Typed UICommand Dispatch Only
+L00000109	
+L00000110	```yaml
+L00000111	plan_unit_id: UIW-002
+L00000112	unit_type: constraint
+L00000113	status: accepted
+L00000114	owner_doc: Plans/UI_Wiring_Rules.md
+L00000115	canonical_text: The UI layer MUST dispatch only typed UICommand messages with stable command_id values from Plans/UI_Command_Catalog.md. The view layer is a pure function of projected state plus outbound UICommand emissions and MUST NOT call backend services, storage, domain logic, handlers, or services directly.
+L00000116	gui_related: true
+L00000117	gui_classification_reason: The unit constrains GUI/view-layer interaction behavior.
+L00000118	depends_on: [UIW-001]
+L00000119	unblocks: [UIW-004, UIW-007]
+L00000120	acceptance_criteria:
+L00000121	  - User-initiated UI interactions emit typed UICommand envelopes.
+L00000122	  - Backend mutations originate through the dispatcher boundary, not the view layer.
+L00000123	  - Direct UI references to backend services, storage, domain logic, handlers, or services are gate failures.
+L00000124	validation_surfaces:
+L00000125	  - GATE-010 wiring checks
+L00000126	  - UI purity lints
+L00000127	  - Dispatcher tests for unknown-command rejection
+L00000128	risk_class: ui_backend_bypass
+L00000129	reasoning_tier: high
+L00000130	context_scope: ui_dispatch
+L00000131	implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md]
+L00000132	node_compile_hint: {mode: command_dispatch_constraint, create_worknodes: false}
+L00000133	source_lineage:
+L00000134	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0004
+L00000135	preserved_exact_tokens: ["UICommand", "command_id", "UI Command Dispatcher", "MUST NOT call backend services", "pure function of projected state"]
+L00000136	negative_constraints:
+L00000137	  - The UI MUST NOT call backend services, storage, or domain logic directly.
+L00000138	  - No backend mutation may originate from the view layer.
+L00000139	owner_hints: [Plans/UI_Wiring_Rules.md]
+L00000140	consumer_docs: [Plans/FinalGUISpec.md]
+L00000141	```
+L00000142	
+L00000143	### UIW-003 - One Interactive Element Maps To One Command
+L00000144	
+L00000145	```yaml
+L00000146	plan_unit_id: UIW-003
+L00000147	unit_type: requirement
+L00000148	status: accepted
+L00000149	owner_doc: Plans/UI_Wiring_Rules.md
+L00000150	canonical_text: Every interactive UI element, including buttons, menu items, links, toggles, sliders, and form submits, MUST map to exactly one UICommandID recorded in the Wiring Matrix. Orphan elements and orphan commands are gate failures.
+L00000151	gui_related: true
+L00000152	gui_classification_reason: The unit governs interactive GUI elements and command coverage.
+L00000153	depends_on: [UIW-001]
+L00000154	unblocks: [UIW-006, UIW-007]
+L00000155	acceptance_criteria:
+L00000156	  - Every interactive element has exactly one Wiring Matrix entry.
+L00000157	  - Every UICommandID has a handler registration.
+L00000158	  - Orphan elements and orphan commands fail verification.
+L00000159	validation_surfaces:
+L00000160	  - Plans/Wiring_Matrix.schema.json
+L00000161	  - GATE-010 element-command coverage checks
+L00000162	risk_class: unwired_gui
+L00000163	reasoning_tier: standard
+L00000164	context_scope: ui_elements
+L00000165	implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.md, Plans/UI_Command_Catalog.md]
+L00000166	node_compile_hint: {mode: wiring_coverage_requirement, create_worknodes: false}
+L00000167	source_lineage:
+L00000168	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0005
+L00000169	preserved_exact_tokens: ["one element, one command", "UICommandID", "orphan elements", "orphan commands"]
+L00000170	negative_constraints:
+L00000171	  - No interactive element may exist without a corresponding wiring matrix entry.
+L00000172	  - No UICommandID in Plans/UI_Command_Catalog.md may lack a handler registration.
+L00000173	owner_hints: [Plans/UI_Wiring_Rules.md]
+L00000174	consumer_docs: [Plans/Wiring_Matrix.md, Plans/UI_Command_Catalog.md]
+L00000175	```
+L00000176	
+L00000177	### UIW-004 - UI Command Dispatcher Flow
+L00000178	
+L00000179	```yaml
+L00000180	plan_unit_id: UIW-004
+L00000181	unit_type: requirement
+L00000182	status: accepted
+L00000183	owner_doc: Plans/UI_Wiring_Rules.md
+L00000184	canonical_text: UI command dispatch flows from UI Element to UICommand envelope to Dispatcher to Handler to EventRecord to Projection to UI State. The dispatcher rejects unknown command_id values with structured errors, handlers remain UI-stateless, and UI/view code observes projected state rather than mutating domain state.
+L00000185	gui_related: true
+L00000186	gui_classification_reason: The flow begins and ends at GUI state and constrains user interaction dispatch; backend portions are inseparable from the GUI wiring contract.
+L00000187	split_recommended: false
+L00000188	depends_on: [UIW-002]
+L00000189	unblocks: [UIW-006, UIW-007]
+L00000190	acceptance_criteria:
+L00000191	  - UI command flow preserves command_id, args, and correlation_id through dispatch.
+L00000192	  - Unknown command_id values return structured errors and emit no domain events.
+L00000193	  - Handler modules do not import UI widget/view namespaces or keep UI object references.
+L00000194	validation_surfaces:
+L00000195	  - Dispatcher tests
+L00000196	  - Handler statelessness lint
+L00000197	  - UI purity check
+L00000198	risk_class: dispatcher_integrity
+L00000199	reasoning_tier: high
+L00000200	context_scope: ui_to_runtime_flow
+L00000201	implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Contracts_V0.md]
+L00000202	node_compile_hint: {mode: dispatcher_flow_requirement, create_worknodes: false}
+L00000203	source_lineage:
+L00000204	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0006
+L00000205	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0007
+L00000206	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0008
+L00000207	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0009
+L00000208	preserved_exact_tokens: ["UI Element", "UICommand envelope", "Dispatcher", "Handler", "EventRecord", "Projection", "UI State", "schema_mode", "strict", "/lenient"]
+L00000209	negative_constraints:
+L00000210	  - The UI MUST NOT hold a reference to any handler or service.
+L00000211	  - Browser scenario acceptance rows must not turn UI wiring into the browser product owner.
+L00000212	owner_hints: [Plans/UI_Wiring_Rules.md]
+L00000213	consumer_docs: [Plans/Contracts_V0.md, Plans/FinalGUISpec.md]
+L00000214	```
+L00000215	
+L00000216	### UIW-005 - Route-Aware And Cross-Surface Wiring Boundaries
+L00000217	
+L00000218	```yaml
+L00000219	plan_unit_id: UIW-005
+L00000220	unit_type: requirement
+L00000221	status: accepted
+L00000222	owner_doc: Plans/UI_Wiring_Rules.md
+L00000223	canonical_text: Route-aware and cross-surface wiring verification extends element-to-command proof with metadata such as command_arg_contract_ref, route_target_kind, subject_kind, deprecated_alias_for, preconditions, arg_passthrough_requirements, correlation_passthrough, and route_contract, while keeping route, runtime, product semantics, and GUI layout in their owner docs; Usage route/open rows use route_contract to prove route_target/OpenSubject and UsageRecord correlation passthrough.
+L00000224	gui_related: true
+L00000225	gui_classification_reason: The unit governs GUI wiring verification for routed controls, overlays, attachments, and cross-surface interactions.
+L00000226	split_recommended: false
+L00000227	depends_on: [UIW-001, UIW-002]
+L00000228	unblocks: [UIW-006, UIW-007]
+L00000229	acceptance_criteria:
+L00000230	  - Wiring rows may carry route-aware metadata without becoming route owners.
+L00000231	  - Usage route/open rows carry route_contract proof for route_target, OpenSubject, usage_event object identity, and UsageRecord correlation passthrough.
+L00000232	  - Concept artifacts are treated as evidence lineage, not live Plans owner paths.
+L00000233	  - Runtime action wiring normalizes stale graph recovery actions to canonical runtime command contracts.
+L00000234	validation_surfaces:
+L00000235	  - GATE-010 route-aware checks
+L00000236	  - ContractRef lint
+L00000237	  - Migration coverage map for retained anchors and aliases
+L00000238	risk_class: route_owner_drift
+L00000239	reasoning_tier: high
+L00000240	context_scope: cross_surface_gui_wiring
+L00000241	implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md, Plans/Contracts_V0.md]
+L00000242	node_compile_hint: {mode: route_aware_wiring_metadata, create_worknodes: false}
+L00000243	source_lineage:
+L00000244	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0003
+L00000245	preserved_exact_tokens: ["Concepts/PuppetMasterDashComp.html", "/PuppetMasterDashComp.html", "Concepts/PMConcept.html", "/PMConcept.html", "command_arg_contract_ref", "route_target_kind", "subject_kind", "deprecated_alias_for", "preconditions", "arg_passthrough_requirements", "correlation_passthrough", "route_contract", "GATE-010", "cmd.runtime"]
+L00000246	negative_constraints:
+L00000247	  - Concept artifacts MUST NOT be copied verbatim into canon or treated as live owner paths.
+L00000248	  - WiringEntry consumes route/open semantics and cannot become the route owner.
+L00000249	  - Stale Tiers vocabulary must not be reintroduced as live route, object, or navigation vocabulary.
+L00000250	owner_hints: [Plans/UI_Wiring_Rules.md]
+L00000251	consumer_docs: [Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md, Plans/Runtime_Artifacts_Panel.md]
+L00000252	```
+L00000253	
+L00000254	### UIW-006 - Wiring Matrix Artifact Contract
+L00000255	
+L00000256	```yaml
+L00000257	plan_unit_id: UIW-006
+L00000258	unit_type: requirement
+L00000259	status: accepted
+L00000260	owner_doc: Plans/UI_Wiring_Rules.md
+L00000261	canonical_text: The Wiring Matrix binds every interactive UI element to command handler and expected outcome evidence. Rows include ui_element_id, ui_location, ui_command_id, handler_location, expected_event_types, acceptance_checks, and evidence_required, with machine-readable entries keyed by ui_element_id.
+L00000262	gui_related: true
+L00000263	gui_classification_reason: The matrix proves interactive GUI element command coverage.
+L00000264	depends_on: [UIW-003, UIW-004, UIW-005]
+L00000265	unblocks: [UIW-007]
+L00000266	acceptance_criteria:
+L00000267	  - Wiring Matrix JSON stores rows under entries as a map keyed by ui_element_id.
+L00000268	  - Row schema preserves handler, expected event, acceptance, and evidence requirements.
+L00000269	  - Instant Grep and similar wiring addenda point back to owner docs for lifecycle, storage, and runtime canon.
+L00000270	validation_surfaces:
+L00000271	  - Plans/Wiring_Matrix.schema.json
+L00000272	  - GATE-010 schema validation
+L00000273	  - python3 scripts/pm-plans-verify.py lint-contractrefs
+L00000274	risk_class: matrix_schema_drift
+L00000275	reasoning_tier: standard
+L00000276	context_scope: wiring_matrix
+L00000277	implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Wiring_Matrix.md, Plans/Wiring_Matrix.schema.json]
+L00000278	node_compile_hint: {mode: wiring_matrix_artifact_contract, create_worknodes: false}
+L00000279	source_lineage:
+L00000280	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0010
+L00000281	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0011
+L00000282	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0012
+L00000283	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0013
+L00000284	preserved_exact_tokens: ["ui_element_id", "ui_location", "ui_command_id", "handler_location", "expected_event_types", "acceptance_checks", "evidence_required", "entries", "Instant Grep"]
+L00000285	negative_constraints:
+L00000286	  - Wiring rows and reconciliation checks must point back to owner docs for lifecycle, publish/storage, and runtime canon.
+L00000287	owner_hints: [Plans/UI_Wiring_Rules.md]
+L00000288	consumer_docs: [Plans/Wiring_Matrix.md, Plans/Tools.md, Plans/storage-plan.md]
+L00000289	```
+L00000290	
+L00000291	### UIW-007 - Autonomous Verification Strategy
+L00000292	
+L00000293	```yaml
+L00000294	plan_unit_id: UIW-007
+L00000295	unit_type: requirement
+L00000296	status: accepted
+L00000297	owner_doc: Plans/UI_Wiring_Rules.md
+L00000298	canonical_text: UI wiring verification is scriptable and includes schema validation, element uniqueness, command coverage, handler registration, event emission tests, unknown-command rejection tests, handler statelessness lint, UI purity checks, and dead command detection. GATE-010 failures block progression with no manual override.
+L00000299	gui_related: true
+L00000300	gui_classification_reason: The unit verifies GUI controls, command dispatch, and user-visible workflow wiring.
+L00000301	depends_on: [UIW-002, UIW-003, UIW-004, UIW-006]
+L00000302	unblocks: []
+L00000303	acceptance_criteria:
+L00000304	  - Verification runs without paid UI tooling or manual inspection.
+L00000305	  - GATE-010 failures block progression.
+L00000306	  - Evidence bundles produced by checks conform to Plans/evidence.schema.json.
+L00000307	validation_surfaces:
+L00000308	  - GATE-010
+L00000309	  - Plans/evidence.schema.json
+L00000310	  - Future UI wiring verifier scripts
+L00000311	risk_class: false_wiring_completion
+L00000312	reasoning_tier: high
+L00000313	context_scope: ui_wiring_validation
+L00000314	implementation_surfaces: [Plans/UI_Wiring_Rules.md, Plans/Progression_Gates.md, Plans/evidence.schema.json]
+L00000315	node_compile_hint: {mode: verification_strategy, create_worknodes: false}
+L00000316	source_lineage:
+L00000317	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0014
+L00000318	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0015
+L00000319	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0016
+L00000320	preserved_exact_tokens: ["schema validation", "Element uniqueness check", "Coverage check", "Handler registration check", "Event emission test", "Unknown-command rejection test", "Handler statelessness lint", "UI purity check", "Dead command detection", "GATE-010"]
+L00000321	negative_constraints:
+L00000322	  - No manual override is permitted for gate failure.
+L00000323	owner_hints: [Plans/UI_Wiring_Rules.md]
+L00000324	consumer_docs: [Plans/Progression_Gates.md]
+L00000325	```
+L00000326	
+L00000327	### UIW-008 - Reference Boundary Preservation
+L00000328	
+L00000329	```yaml
+L00000330	plan_unit_id: UIW-008
+L00000331	unit_type: requirement
+L00000332	status: accepted
+L00000333	owner_doc: Plans/UI_Wiring_Rules.md
+L00000334	canonical_text: UI wiring references Contracts_V0, UI_Command_Catalog, Architecture_Invariants, Progression_Gates, Wiring_Matrix, Wiring_Matrix.schema.json, evidence.schema.json, DRY_Rules, and Decision_Policy while preserving their owner boundaries.
+L00000335	gui_related: true
+L00000336	gui_classification_reason: The referenced boundaries exist to verify GUI wiring and interactive UI behavior.
+L00000337	depends_on: [UIW-001]
+L00000338	unblocks: []
+L00000339	acceptance_criteria:
+L00000340	  - Reference rows remain exact enough for ContractRef lint and migration coverage.
+L00000341	  - UI wiring does not restate owner-doc contracts beyond what is needed for wiring verification.
+L00000342	validation_surfaces:
+L00000343	  - python3 scripts/pm-plans-verify.py lint-contractrefs
+L00000344	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json
+L00000345	risk_class: reference_drift
+L00000346	reasoning_tier: standard
+L00000347	context_scope: ui_wiring_references
+L00000348	implementation_surfaces: [Plans/UI_Wiring_Rules.md]
+L00000349	node_compile_hint: {mode: reference_boundary, create_worknodes: false}
+L00000350	source_lineage:
+L00000351	  - Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl:UI_Wiring_Rules-S0017
+L00000352	preserved_exact_tokens: ["Plans/Contracts_V0.md", "Plans/UI_Command_Catalog.md", "Plans/Architecture_Invariants.md", "Plans/Progression_Gates.md", "Plans/Wiring_Matrix.md", "Plans/Wiring_Matrix.schema.json", "Plans/evidence.schema.json", "Plans/DRY_Rules.md", "Plans/Decision_Policy.md"]
+L00000353	negative_constraints:
+L00000354	  - Do not convert reference rows into competing owner prose.
+L00000355	owner_hints: [Plans/UI_Wiring_Rules.md]
+L00000356	consumer_docs: []
+L00000357	```
+L00000358	
+
+<<< CONTEXT_AFTER canonical_document_lines=359-370 >>>
+L00000359	### UIW-009 - Approve And Build Disabled Reason Projection
+L00000360	
+L00000361	```yaml
+L00000362	plan_unit_id: UIW-009
+L00000363	unit_type: requirement
+L00000364	status: accepted
+L00000365	owner_doc: Plans/UI_Wiring_Rules.md
+L00000366	canonical_text: >-
+L00000367	  The Planning Wizard final-review control for `cmd.planning_wizard.approve_and_build` must derive its enabled state
+L00000368	  from `Plans/.implementation_readiness/buildability_gate_report.json`. When `buildability_gate_passed=false`, the UI
+L00000369	  projection keeps the control disabled and fills `state.planning_wizard.final_review.approve_and_build.disabled_reason`
+L00000370	  from the report's currently open blocker families, blocker IDs, exact owner_docs, and hard disabled reasons that are

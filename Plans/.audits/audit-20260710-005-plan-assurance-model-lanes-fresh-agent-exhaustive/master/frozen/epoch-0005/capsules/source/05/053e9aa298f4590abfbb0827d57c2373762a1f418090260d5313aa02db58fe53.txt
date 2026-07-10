@@ -1,0 +1,393 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-378 >>>
+L00000001	# Wiring Matrix (Canonical)
+L00000002	
+L00000003	
+L00000004	## Canonical owner-section requirements
+L00000005	
+L00000006	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000007	
+L00000008	### Route/open compatibility-only fallback marking
+L00000009	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000010	
+L00000011	
+L00000012	<!--
+L00000013	PUPPET MASTER -- UI WIRING MATRIX SSOT
+L00000014	
+L00000015	ABSOLUTE NAMING RULE:
+L00000016	- Platform name is "Puppet Master" only.
+L00000017	- If older naming exists, refer to it only as "legacy naming" (do not quote it).
+L00000018	-->
+L00000019	
+L00000020	<a id="section-0"></a>
+L00000021	## 0. Scope
+L00000022	This file is the wiring matrix template and example entries.
+L00000023	Real project wiring matrices are generated/maintained as JSON validated against `Plans/Wiring_Matrix.schema.json`.
+L00000024	The current production GUI/PMConcept repair artifact is `Plans/Wiring_Matrix.production.json`; `Plans/Wiring_Matrix.production.exclusions.json` records generic, parser, glob, or compatibility-only command-family tokens that are not valid production wiring rows.
+L00000025	
+L00000026	ContractRef: SchemaID:Wiring_Matrix.schema.json, ContractName:Plans/UI_Wiring_Rules.md, Gate:GATE-010
+L00000027	
+L00000028	---
+L00000029	
+L00000030	<a id="section-1"></a>
+L00000031	## 1. Template
+L00000032	
+L00000033	Column definitions for wiring matrix entries:
+L00000034	
+L00000035	| Column | Description |
+L00000036	|---|---|
+L00000037	| `ui_element_id` | Stable DOM/widget ID of the triggering UI element (e.g., `btn.github.connect`). |
+L00000038	| `ui_location` | Human-readable surface path where the element appears (e.g., "Settings > GitHub/Auth"). |
+L00000039	| `ui_command_id` | The `cmd.*` ID from `UI_Command_Catalog.md` that this element dispatches. |
+L00000040	| `handler_location` | Canonical Rust module/function path (e.g., `handlers::github_auth::connect` or `crate::core::handlers::auth::connect`). |
+L00000041	| `expected_event_types` | Event types emitted on successful dispatch, or "(none — UI-only)" for view-state-only commands. |
+L00000042	| `acceptance_checks` | 2–3 checks that GATE-010 verification validates for this entry. |
+L00000043	| `evidence_required` | Evidence artifact or bundle required to satisfy the gate. |
+L00000044	
+L00000045	Machine-readable format note:
+L00000046	- `entries` in JSON is a map keyed by `ui_element_id` (not an array). This keying makes interactive-element IDs unique by construction.
+L00000047	
+L00000048	**Markdown table header:**
+L00000049	
+L00000050	| ui_element_id | ui_location | ui_command_id | handler_location | expected_event_types | acceptance_checks | evidence_required |
+L00000051	|---|---|---|---|---|---|---|
+L00000052	
+L00000053	ContractRef: Primitive:UICommand, ContractName:Plans/Contracts_V0.md#7-uicommand, Gate:GATE-010
+L00000054	
+L00000055	---
+L00000056	
+L00000057	<a id="section-2"></a>
+L00000058	## 2. Example Entries
+L00000059	
+L00000060	The following 10 rows are drawn from `Plans/UI_Command_Catalog.md`.
+L00000061	Each row is marked `(EXAMPLE)` — real entries live in JSON validated against `Plans/Wiring_Matrix.schema.json`.
+L00000062	
+L00000063	ContractRef: ContractName:Plans/UI_Command_Catalog.md, SchemaID:Wiring_Matrix.schema.json
+L00000064	
+L00000065	| ui_element_id | ui_location | ui_command_id | handler_location | expected_event_types | acceptance_checks | evidence_required |
+L00000066	|---|---|---|---|---|---|---|
+L00000067	| btn.github.connect | Settings > GitHub/Auth | cmd.github.connect | handlers::github_auth::connect | auth.github.device_code.issued, auth.github.token.polling, auth.github.authenticated, auth.github.failed | Handler registered in dispatcher; Dispatch emits expected events in order; UI element rendered in Settings > GitHub/Auth surface | (EXAMPLE) |
+L00000068	| btn.github.disconnect | Settings > GitHub/Auth | cmd.github.disconnect | handlers::github_auth::disconnect | auth.github.disconnected | Handler registered in dispatcher; Dispatch emits auth.github.disconnected; Token removed from credential store | (EXAMPLE) |
+L00000069	| menu.lsp.goto_def | File Editor context menu | cmd.lsp.goto_definition | handlers::lsp::goto_definition | tool.invoked | Handler registered in dispatcher; Dispatch emits tool.invoked with tool_name=lsp; Editor navigates to definition location | (EXAMPLE) |
+L00000070	| menu.lsp.find_refs | File Editor context menu | cmd.lsp.find_references | handlers::lsp::find_references | tool.invoked | Handler registered in dispatcher; Dispatch emits tool.invoked with tool_name=lsp; References panel populated | (EXAMPLE) |
+L00000071	| btn.widget.add | Dashboard widget picker | cmd.widget.add | handlers::widget_layout::add | (none — UI-only) | Handler registered in dispatcher; Widget instance added to layout state; Widget rendered in target page grid | (EXAMPLE) |
+L00000072	| btn.widget.remove | Dashboard widget header | cmd.widget.remove | handlers::widget_layout::remove | (none — UI-only) | Handler registered in dispatcher; Widget instance removed from layout state; Widget no longer rendered in grid | (EXAMPLE) |
+L00000073	| node.graph.select | Orchestrator > Node Graph Display | cmd.graph.select_node | handlers::run_graph::select_node | (none — UI-only) | Handler registered in dispatcher; Selection state updated to target node_id; Detail panel reflects selected node | (EXAMPLE) |
+L00000074	| btn.graph.retry | Orchestrator > Node Graph Display detail panel | cmd.graph.retry_node | handlers::run_graph::retry_node | tool.invoked, tool.denied | Handler registered in dispatcher; Dispatch emits tool.invoked or tool.denied; Node state transitions to retrying when invocation succeeds | (EXAMPLE) |
+L00000075	| tab.orchestrator.switch | Orchestrator page tab bar | cmd.orchestrator.switch_tab | handlers::orchestrator::switch_tab | (none — UI-only) | Handler registered in dispatcher; Active tab state updated to target tab_id; Tab content panel switches | (EXAMPLE) |
+L00000076	| btn.chat.new | Assistant chat input | cmd.chat.new | handlers::chat::new_thread | chat.thread.created | Handler registered in dispatcher; Dispatch emits chat.thread.created; New empty thread displayed in chat panel | (EXAMPLE) |
+L00000077	
+L00000078	ContractRef: UICommand:cmd.github.connect, UICommand:cmd.github.disconnect, UICommand:cmd.lsp.goto_definition, UICommand:cmd.lsp.find_references, UICommand:cmd.widget.add, UICommand:cmd.widget.remove, UICommand:cmd.graph.select_node, UICommand:cmd.graph.retry_node, UICommand:cmd.orchestrator.switch_tab, UICommand:cmd.chat.new
+L00000079	
+L00000080	---
+L00000081	
+L00000082	<a id="section-3"></a>
+L00000083	## 3. JSON Example
+L00000084	
+L00000085	A machine-readable wiring matrix conforms to `Plans/Wiring_Matrix.schema.json`.
+L00000086	Below are 3 representative entries illustrating the JSON format:
+L00000087	
+L00000088	```json
+L00000089	{
+L00000090	  "$schema": "https://json-schema.org/draft/2020-12/schema",
+L00000091	  "schema_id": "pm.wiring_matrix.v0",
+L00000092	  "generated_at": "2026-02-24T00:00:00Z",
+L00000093	  "entries": {
+L00000094	    "btn.github.connect": {
+L00000095	      "ui_element_id": "btn.github.connect",
+L00000096	      "ui_location": "Settings > GitHub/Auth",
+L00000097	      "ui_command_id": "cmd.github.connect",
+L00000098	      "handler_location": "handlers::github_auth::connect",
+L00000099	      "expected_event_types": [
+L00000100	        "auth.github.device_code.issued",
+L00000101	        "auth.github.token.polling",
+L00000102	        "auth.github.authenticated",
+L00000103	        "auth.github.failed"
+L00000104	      ],
+L00000105	      "acceptance_checks": [
+L00000106	        "Handler registered in dispatcher",
+L00000107	        "Dispatch emits expected events in order",
+L00000108	        "UI element rendered in Settings > GitHub/Auth surface"
+L00000109	      ],
+L00000110	      "evidence_required": "evidence/wiring/cmd.github.connect.json"
+L00000111	    },
+L00000112	    "menu.lsp.goto_def": {
+L00000113	      "ui_element_id": "menu.lsp.goto_def",
+L00000114	      "ui_location": "File Editor context menu",
+L00000115	      "ui_command_id": "cmd.lsp.goto_definition",
+L00000116	      "handler_location": "handlers::lsp::goto_definition",
+L00000117	      "expected_event_types": [
+L00000118	        "tool.invoked"
+L00000119	      ],
+L00000120	      "acceptance_checks": [
+L00000121	        "Handler registered in dispatcher",
+L00000122	        "Dispatch emits tool.invoked with tool_name=lsp",
+L00000123	        "Editor navigates to definition location"
+L00000124	      ],
+L00000125	      "evidence_required": "evidence/wiring/cmd.lsp.goto_definition.json"
+L00000126	    },
+L00000127	    "btn.widget.add": {
+L00000128	      "ui_element_id": "btn.widget.add",
+L00000129	      "ui_location": "Dashboard widget picker",
+L00000130	      "ui_command_id": "cmd.widget.add",
+L00000131	      "handler_location": "handlers::widget_layout::add",
+L00000132	      "expected_event_types": [],
+L00000133	      "acceptance_checks": [
+L00000134	        "Handler registered in dispatcher",
+L00000135	        "Widget instance added to layout state",
+L00000136	        "Widget rendered in target page grid"
+L00000137	      ],
+L00000138	      "evidence_required": "evidence/wiring/cmd.widget.add.json"
+L00000139	    }
+L00000140	  }
+L00000141	}
+L00000142	```
+L00000143	
+L00000144	## GUI / PMConcept production wiring repair addendum (2026-07-02)
+L00000145	
+L00000146	This addendum closes the GUI wiring defects from the PMConcept readiness report. It does not create WorkNodes, NodeSeeds, executable queues, implementation code, runtime dispatch, generated governance artifacts, or a governance seal.
+L00000147	
+L00000148	### Production JSON artifact
+L00000149	
+L00000150	`Plans/Wiring_Matrix.production.json` is the production wiring-matrix JSON artifact for the current GUI/PMConcept repair packet and validates against `Plans/Wiring_Matrix.schema.json`. It contains one map entry per schema-valid production command/control binding, keyed by `ui_element_id`, with `ui_command_id`, `handler_location`, expected event types, acceptance checks, required evidence, typed state selector, disabled-reason projection, effect contract, accessibility contract, and test evidence. `Plans/Wiring_Matrix.production.exclusions.json` records command-family roots, parser false positives, glob tokens, invalid historical aliases, and compatibility-only namespace roots that must not count as production coverage.
+L00000151	
+L00000152	The schema command pattern now allows underscores in every command segment so accepted namespaces such as `cmd.source_control.*`, `cmd.prd_builder.*`, `cmd.planning_wizard.*`, and `cmd.plan_compile.*` can be represented without inventing alternate command names.
+L00000153	
+L00000154	### PMConcept control reconciliation artifact
+L00000155	
+L00000156	`Plans/PMConcept_Control_Reconciliation.json` inventories PMConcept controls and dispositions. The current generated summary is:
+L00000157	
+L00000158	| Metric | Count |
+L00000159	|---|---:|
+L00000160	| Control-like nodes inventoried | 1284 |
+L00000161	| Inline-handler controls | 339 |
+L00000162	| Controls containing `cmd.*` tokens | 71 |
+L00000163	| Controls with accessibility gaps | 250 |
+L00000164	| Controls with local/demo markers | 13 |
+L00000165	| Concept fixture-only controls | 64 |
+L00000166	| Production wiring required | 44 |
+L00000167	| Production-intended controls missing a command | 0 |
+L00000168	| Concept-only controls already owner-adjudicated as source-lineage | 1175 |
+L00000169	| Concept-only controls pending owner adjudication before promotion | 0 |
+L00000170	| Production accessibility gaps | 0 |
+L00000171	| Production accessibility contracts added | 17 |
+L00000172	| Retired or re-scoped non-launch controls | 1 |
+L00000173	
+L00000174	Controls marked `concept_fixture_only` are source-lineage fixtures only and cannot satisfy acceptance evidence. Controls marked `concept_only_owner_adjudicated` are already adjudicated as concept/source-lineage only; they are not production evidence and are not promoted unless a canonical owner doc accepts the behavior and a production wiring row supplies command, state selector, disabled reason, handler, receipt/event effect, accessibility contract, and test evidence. `concept_only_pending_owner_adjudication` is currently 0. Controls marked `retired_or_rescoped_non_launch_authority` include stale `START`, `BUILD`, and `Approve & Continue` launch semantics.
+L00000175	
+L00000176	### Approve And Build wiring rule
+L00000177	
+L00000178	The production `Approve And Build` control maps to `cmd.planning_wizard.approve_and_build` and the high-risk row `planning.wizard.final_review.approve_and_build` in `Plans/Wiring_Matrix.production.json`. Acceptance evidence must prove:
+L00000179	
+L00000180	- final-review CAS fields match the displayed ApprovedPlanPack, PlanningRun revision, topic map version, project-context hash, PlanUnit index hash, acceptance-unit index hash, testing policy hash, and final audit/closure hash;
+L00000181	- stale CAS inputs fail closed with bounded revalidation or final-review refresh;
+L00000182	- success atomically writes `approval_cas_receipt`, `PlanApproved`, and `PlanCompileRun_created_or_bound`;
+L00000183	- duplicate idempotency key plus identical CAS inputs returns the same `PlanCompileRun`;
+L00000184	- Orchestrator Plan Compile opens as pending-launch or durable-run projection, not as a tab-switch-only success;
+L00000185	- no ordinary `START`, `BUILD`, or `Approve & Continue` control can create a second build launch from the same approval inputs.
+L00000186	
+L00000187	### Visible testing wiring rule
+L00000188	
+L00000189	The production matrix rows for `cmd.testing.capability_policy.set`, `cmd.testing.visibility_policy.set`, `cmd.testing.session.open`, `cmd.testing.session.watch`, `cmd.testing.session.background`, and `cmd.testing.session.redaction.inspect` are required for visible testing readiness. Evidence must cover global and per-project `Auto` / `On` / `Off`, inheritance/effective-policy projection, `show_when_possible`, `Open` / `Watch`, browser navigation/click/form/assertion/screenshot/console/network streams, native preview/simulator/emulator/device streams, redaction-before-display/persist, disabled reasons, and background continuation.
+L00000190	
+L00000191	### Accessibility evidence rule
+L00000192	
+L00000193	Every retained production control in PMConcept or Final GUI wiring evidence must prove:
+L00000194	
+L00000195	`ui_element_id -> accessible_name -> role -> keyboard_contract -> state_attributes -> disabled_reason_projection -> ui_command_id -> handler_location -> expected_event_types -> evidence_required`
+L00000196	
+L00000197	The acceptance bar is zero unnamed actionable controls, zero retained custom clickable elements without keyboard parity, correct tab/menu/disclosure state semantics, visible focus handling, and disabled reason projection for every disabled production action.
+L00000198	
+L00000199	ContractRef: SchemaID:Wiring_Matrix.schema.json, ContractName:Plans/Contracts_V0.md#EventRecord
+L00000200	
+L00000201	---
+L00000202	
+L00000203	<a id="section-4"></a>
+L00000204	## 4. Verification
+L00000205	
+L00000206	Wiring matrix entries are verified by **GATE-010** (see `Plans/Progression_Gates.md`) through `python3 scripts/pm-plans-verify.py validate-wiring-matrix`, `run-gates`, and `audit-governance`.
+L00000207	
+L00000208	### 4.1 Schema validation
+L00000209	All wiring matrix JSON artifacts MUST validate against `Plans/Wiring_Matrix.schema.json`.
+L00000210	GATE-010 runs JSON Schema validation as its first check and fails production rows that lack typed state selector, disabled-reason projection, effect contract, accessibility contract, test evidence, or event-test requirements.
+L00000211	
+L00000212	### 4.2 Coverage
+L00000213	Every `cmd.*` ID in `Plans/UI_Command_Catalog.md` MUST have at least one wiring matrix entry unless `Plans/Wiring_Matrix.production.exclusions.json` records the token as a parser false positive, glob token, invalid historical alias, generic family root, or compatibility-only namespace root.
+L00000214	GATE-010 extracts command IDs from the catalog, applies the exclusions, and verifies each remaining command has a corresponding production entry.
+L00000215	Research-session and web-tool wiring entries must use the canonical command identities from `Plans/UI_Command_Catalog.md` and tool payload owners from `Plans/Tools.md`; stale local command aliases for research-session, web-tool, or terminal command identity are verification failures, not compatibility shortcuts.
+L00000216	Terminal command-catalog coverage is not satisfied by `cmd.dev.start_session` and `cmd.dev.stop_session` alone; terminal action coverage includes reveal, show, rerun, split, close, clear, restart, terminate, kill, detach, reattach, and focus-session wiring rows with matching acceptance checks.
+L00000217	When route/subject-aware matrix cells are backfilled, the old work-item ledger `w-20260316-160450` lines 748-941 may be used only as source-lineage evidence for per-cell justification; it does not replace generated JSON entries, and each incorporated detail must land in explicit `ui_element_id`, `ui_command_id`, handler, event, acceptance-check, and evidence fields.
+L00000218	
+L00000219	### 4.2.1 One element, one command enforcement
+L00000220	Every `entries` key is a unique `ui_element_id`, so duplicates are invalid by structure.
+L00000221	GATE-010 also checks each row's `ui_element_id` value matches its key to prevent accidental drift.
+L00000222	
+L00000223	### 4.3 Handler resolution
+L00000224	Every `handler_location` in the wiring matrix MUST resolve to an existing module and function in the codebase.
+L00000225	GATE-010 parses module paths (e.g., `handlers::github_auth::connect`) and verifies the target exists in `puppet-master-rs/src/`.
+L00000226	The canonical format is `(crate::)?module(::submodule)+::function`, with the final segment naming the callable handler symbol. When resolution fails, GATE-010 evidence MUST record the owning `ui_element_id`, `ui_command_id`, unresolved `handler_location`, and the candidate files/modules inspected so the failure is actionable.
+L00000227	
+L00000228	### 4.4 Event tests
+L00000229	Every wiring matrix entry with non-empty `expected_event_types` MUST have a corresponding dispatch test that:
+L00000230	1. Invokes the command through the dispatcher.
+L00000231	2. Asserts that all declared event types are emitted in the expected order.
+L00000232	3. Asserts that no undeclared event types are emitted.
+L00000233	
+L00000234	GATE-010 checks that matching test functions exist and pass.
+L00000235	
+L00000236	ContractRef: Gate:GATE-010, Invariant:INV-011, Invariant:INV-012, SchemaID:Wiring_Matrix.schema.json
+L00000237	
+L00000238	### 4.5 Gate/schema limits and owner references
+L00000239	
+L00000240	Wiring_Matrix and UI_Wiring_Rules / `UI_Wiring_Rules.md` share the `/docs` and `/consumer` boundary for recovery wiring, but the matrix must still expose exact structural limits: `cmd.runtime` / `cmd.runtime.*` CTAs need dispatcher-level producer/consumer rows, stale-projection revalidation, `correlation_id` trace-through, `allowed_action_ids`, and `allowed_action_ids[]`. `Wiring_Matrix.schema.json`, `schema.json`, `/matrix/gate`, command-family coverage, and deprecated-vs-canonical command-family status are gate inputs until generated matrix rows can represent them directly.
+L00000241	
+L00000242	Extraction hazards are explicit gate failures, not real command IDs: regex-style scans must distinguish catalog IDs from filename-shaped `cmd.*.json`, generic `cmd.*` prose, command-family references, and `schema.json` evidence names. GUI side-panel targets such as Unraid and shell commands such as `cmd.panel.switch` require route/panel owner proof before `/evidence` can count them as wired.
+L00000243	
+L00000244	Route-aware gate evidence is shared with `Plans/Wiring_Matrix.md` / `/Wiring_Matrix.md`, `Plans/Progression_Gates.md` / `/Progression_Gates.md`, and `evidence.schema.json`; `/gate/evidence` records must show `GATE`, `GATE-010`, `/route`, route-aware checks, first-class `OpenSubject`, `cmd.nav` / `cmd.nav.*` alias handling, wrapper-to-canonical consistency, blocked-action admissibility, and projection-trust preconditions when those concepts are claimed.
+L00000245	
+L00000246	Runtime owner references remain split by contract: Contracts_V0 / `Contracts_V0.md` names `scheduler.pass`, `attempt.started`, `attempt.completed`, `node.blocked`, `safe_point`, and `safe_point.*`; Prompt_Pipeline / `Prompt_Pipeline.md` owns immutable attempt-start handoff context; storage-plan / `storage-plan.md` owns `attempt_record` and `blocked_projection`.
+L00000247	
+L00000248	Command/wiring ownership must keep `cmd.chat.run_user_command`, `/compact`, `/mode`, runtime-mode, slash-command, `IDs`, `GUI`, `{ mode }`, `/wiring`, command-owner, command-system, and reverse-coverage visible until the catalog, command-system, and matrix agree on canonical dispatch boundaries.
+L00000249	
+L00000250	`Wiring_Matrix` / `Wiring_Matrix.md` remains a wiring-row owner, not a general runtime schema: `/recovery` producer/consumer prose may require widened evidence, but `Wiring_Matrix.schema.json` and `schema.json` still validate matrix shape until a separate producer/consumer matrix is adopted.
+L00000251	
+L00000252	Route/open compatibility evidence references `Plans/Contracts_V0.md` / `/Contracts_V0.md` for `/open`, `tab_id`, `resume_url`, and `/prohibited` serialization classes. Runtime-artifact, chat, catalog, and file-open consumer references remain `Plans/Runtime_Artifacts_Panel.md` / `/Runtime_Artifacts_Panel.md`, `Plans/assistant-chat-design.md` / `/assistant-chat-design.md`, `Plans/UI_Command_Catalog.md` / `/UI_Command_Catalog.md`, and `Plans/FileManager.md` / `/FileManager.md`.
+L00000253	
+L00000254	---
+L00000255	
+L00000256	## References
+L00000257	- `Plans/UI_Wiring_Rules.md` — UI wiring rules and dispatcher boundary
+L00000258	- `Plans/Wiring_Matrix.schema.json` — JSON Schema for machine-readable wiring entries
+L00000259	- `Plans/UI_Command_Catalog.md` — Canonical command ID definitions
+L00000260	- `Plans/Contracts_V0.md` — Core contracts (UICommand, EventRecord)
+L00000261	- `Plans/Progression_Gates.md` — Gate definitions including GATE-010
+L00000262	
+L00000263	## Scheduler/Remediation/Event Wiring Addendum (2026-03-08)
+L00000264	
+L00000265	Compatibility/source-lineage disposition: this historical wiring addendum preserves exact producer, consumer, event, and projection tokens. It is a compatibility/source-lineage section; named wiring PlanUnits and Contracts_V0 event identities govern overlapping runtime wiring precedence.
+L00000266	
+L00000267	Add the following producer -> consumer paths to the wiring matrix.
+L00000268	
+L00000269	### 1. Scheduler analysis
+L00000270	
+L00000271	- canonical event: `scheduler.pass` (legacy alias: `run.scheduler_analysis`)
+L00000272	- producer: executor/orchestrator scheduler pass
+L00000273	- consumers: Run Graph View queue-analysis panel, storage `scheduler_pass_record` projection, usage/analytics dashboard
+L00000274	- storage projection: `scheduler_pass.{run_id}.{scheduler_pass_id}`
+L00000275	
+L00000276	### 2. Blocked/unblocked
+L00000277	
+L00000278	- canonical events: `node.blocked`, `node.unblocked`, `wizard.blocked`, `wizard.unblocked` (legacy aliases: `run.node_blocked`, `run.node_unblocked`)
+L00000279	- producer: executor/orchestrator blocked-state manager
+L00000280	- consumers: Run Graph View node badge/detail, assistant-chat blocked_notice, dashboard blocked-count badge, storage `blocked_projection`
+L00000281	- storage projection: `blocked_projection.{run_id}.{node_id}.{blocked_sequence}`
+L00000282	
+L00000283	### 3. Safe points
+L00000284	- producer: mutation-capable attempt dispatcher / retry controller
+L00000285	- canonical events: `safe_point.created`, `safe_point.restored`
+L00000286	- consumers: runtime recovery logic, Run Graph detail panel, audit/debug surfaces
+L00000287	
+L00000288	### 4. Remediation lineage
+L00000289	
+L00000290	- canonical events: `remediation.spawned`, `remediation.resolved` (legacy aliases: `run.remediation_started`, `run.remediation_completed`)
+L00000291	- producer: executor/orchestrator remediation manager
+L00000292	- consumers: Run Graph View remediation lineage tree, storage `remediation_lineage_record`, dashboard remediation badge
+L00000293	- storage projection: `remediation.{run_id}.{remediation_root_id}`
+L00000294	
+L00000295	### 5. Degradation evidence
+L00000296	- producer: draft decomposition/planning pipeline
+L00000297	- canonical event: `plan.decomposition_degraded`
+L00000298	- consumers: wizard/interview planning UI, storage projections, audit/debug surfaces
+L00000299	## Runtime recovery wiring requirements (2026-03-09)
+L00000300	
+L00000301	Compatibility/source-lineage disposition: this historical recovery-wiring section preserves minimum-row and UI-handler tokens. It remains source-lineage for WM-036 and must not be read as a separate peer wiring precedence layer.
+L00000302	
+L00000303	The wiring matrix MUST contain explicit producers, handlers, and projection consumers for the runtime packet.
+L00000304	
+L00000305	### Runtime recovery wiring minimum rows
+L00000306	- runtime event producers for `scheduler.pass`, `attempt.started`, `attempt.completed`, `node.blocked`, `safe_point.created`, `safe_point.restored`, `remediation.spawned`, and `remediation.resolved`
+L00000307	- projection consumers feeding run graph, orchestrator summaries, chat banners, and history/evidence tabs
+L00000308	- UI command handlers for queue-analysis open, attempt details open, blocked resume, retry, safe-point restore-and-retry, and remediation lineage open
+L00000309	
+L00000310	The matrix must make it possible to trace every new packet field from producer to UI consumer.
+L00000311	## Canonical Runtime Event Wiring Canonical Alignment (2026-03-09)
+L00000312	
+L00000313	Compatibility/source-lineage disposition: this historical event-wiring alignment preserves canonical event row tokens and handler-rule wording. Follow the named Wiring_Matrix PlanUnits and Contracts_V0 event identities rather than adjacent addendum order.
+L00000314	
+L00000315	The wiring matrix MUST use the canonical runtime names and identities from `Plans/Contracts_V0.md`.
+L00000316	
+L00000317	### Canonical runtime event minimum rows
+L00000318	- producer: scheduler/executor
+L00000319	  - canonical event: `scheduler.pass`
+L00000320	  - identity: `scheduler_pass_id`
+L00000321	  - consumers: storage pass projection, Run Graph, Orchestrator Page, analytics/debug surfaces
+L00000322	- producer: executor attempt dispatcher / retry controller
+L00000323	  - canonical events: `attempt.started`, `attempt.completed`
+L00000324	  - persisted record: `attempt_record`
+L00000325	  - consumers: storage attempt projection, Run Graph attempt detail, history/evidence tabs, scheduler retry logic, safe-point and remediation recovery flows
+L00000326	- producer: executor/orchestrator/auth/permissions/HITL/FileSafe/worktree/plugins
+L00000327	  - canonical events: `node.blocked`, `node.unblocked`, `node.prerequisite_resolved`
+L00000328	  - consumers: blocked projections, Run Graph, Orchestrator Page, assistant thread/banner surfaces
+L00000329	- producer: remediation controller
+L00000330	  - canonical events: `remediation.spawned`, `remediation.resolved`
+L00000331	  - consumers: remediation lineage storage, Run Graph, Orchestrator Page, artifacts/evidence views
+L00000332	- producer: graph builder / replan reconciler
+L00000333	  - canonical events: `run.graph_canonical_locked`, `run.graph_integrity_failed`
+L00000334	  - consumers: executor admission logic, progression gates, blocked/replan surfaces
+L00000335	
+L00000336	### UI command handler rule
+L00000337	Recovery UI handlers MUST be keyed by canonical `allowed_action_id` families and then bind any domain-specific command ids using the blocked payload metadata.
+L00000338	## Canonical Runtime Producer Consumer and Action Wiring Canonical Alignment (2026-03-09)
+L00000339	
+L00000340	Compatibility/source-lineage disposition: this historical producer/consumer/action section preserves command and action-binding tokens. It remains source-lineage for runtime wiring consolidation and does not create a new executable queue, WorkNode, or NodeSeed surface.
+L00000341	
+L00000342	### Context Lens minimum rows
+L00000343	
+L00000344	| Producer | Consumer | Payload / Contract | Notes |
+L00000345	| --- | --- | --- | --- |
+L00000346	| `cmd.chat.context_lens.toggle` | Assistant chat header controller | toggle request for the top-right Context Lens icon/dropdown | Opens or closes the Context Lens control to the right of the search bar. |
+L00000347	| `cmd.chat.context_lens.set_mode` | Assistant chat thread projection and selection overlay | mode = `mute` \| `focus` \| `subcompact` | Establishes one active Context Lens mode at a time. |
+L00000348	| `cmd.chat.context_lens.turn_off` | Assistant chat thread projection and selection overlay | clear active mode and clear transient selection state | Mirrors the `Turn Off` dropdown action in the PM concept. |
+L00000349	| `cmd.chat.context_lens.toggle_message_selection` | Thread-local context overlay store | message ids[] selection mutation under the current mode | Multi-select is supported in all Context Lens modes. |
+L00000350	| `cmd.chat.context_lens.clear_selection` | Thread-local context overlay store | clear current selection set for the current mode | Clears pending selection without changing persistent canonical history. |
+L00000351	| `cmd.chat.context_lens.apply_subcompact` | Subcompact summarizer and effective-context assembler | selected message ids[] -> local summary replacement in effective context | `Subcompact` is explicit-apply and remains distinct from automatic dynamic context shrinking. |
+L00000352	| `cmd.chat.context_lens.revert_subcompact` | Thread-local context overlay store and effective-context assembler | restore original selected message block into effective assembly | Rehydration uses canonical source messages rather than already-compressed derivatives. |
+L00000353	
+L00000354	ContractRef: Context Lens wiring MUST remain thread-local, must support multi-select in all modes, and must keep `Subcompact` as an explicit apply/revert path distinct from automatic dynamic context shrinking. [Source: assistant-chat-design.md#176-context-lens-mute--focus--subcompact; Prompt_Pipeline.md#dynamic-context-shrinking]
+L00000355	
+L00000356	The wiring above is part of the canonical chat control surface and must remain aligned with the command catalog, final GUI placement, and effective-context assembly rules.
+L00000357	ContractRef: Wiring rows for Context Lens MUST remain aligned with command IDs, chat placement, and overlay persistence semantics; a packet may not leave those elements split between unrelated addenda. [Source: UI_Command_Catalog.md#context-lens-command-set; FinalGUISpec.md#context-lens-placement-and-behavior]
+L00000358	
+L00000359	Add canonical rows for:
+L00000360	- `node.ready`
+L00000361	- `scheduler.pass`
+L00000362	- `node.blocked`
+L00000363	- `node.unblocked`
+L00000364	- `safe_point.created`
+L00000365	- `safe_point.restored`
+L00000366	- `remediation.spawned`
+L00000367	- `remediation.resolved`
+L00000368	
+L00000369	Each row MUST identify:
+L00000370	- producer
+L00000371	- persisted record
+L00000372	- UI consumers
+L00000373	- policy consumers
+L00000374	- replay/recovery expectations
+L00000375	- command surfaces that act on the resulting state
+L00000376	## Runtime Recovery Producer / Consumer Wiring
+L00000377	### Minimum required rows
+L00000378	The following rows are required for the promoted Section 15 feature set and the reconciled terminal/editor integration model.
+
+<<< CONTEXT_AFTER canonical_document_lines=379-390 >>>
+L00000379	
+L00000380	| UI element / surface | UICommand ID | Producer | Consumer / handler | Required effect |
+L00000381	|---|---|---|---|---|
+L00000382	| Project switcher result row | `cmd.project.switch_active_tab` | Projects view / command palette | shell state controller | Switch active workspace tab to target project and recalc effective state |
+L00000383	| Project switcher alternate action | `cmd.project.open_in_new_workspace_tab` | Projects view / command palette | shell state controller | Open target project in a new workspace tab |
+L00000384	| Thread context hover `More Details` | `cmd.chat.open_thread_context_details` | chat header hover module | chat layout / editor-tab controller | Open or focus the canonical thread Context Detail Pane |
+L00000385	| Thread context click `Compact Now` | `cmd.chat.compact_context` | chat header Compact Now action | chat runtime controller | Dispatch only after explicit user choice; emit started/completed/failed events and return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed status |
+L00000386	| Goal button/chip/icon or slash `/goal` | `cmd.chat.goal.start` | Assistant Chat composer / Goal chip / slash-command dispatcher | Goal Runtime controller | Start visible Goal Mode from the current thread using the Goal Runtime event envelope; concrete Goal event names and payload schemas remain owner-registered in Goal_Runtime_System, Contracts_V0, and storage-plan |
+L00000387	| Goal status update icon, `/goal again`, or natural-language update request | `cmd.chat.goal.update` | Assistant Chat status/menu / composer / slash-command dispatcher | Goal Runtime controller | Submit an active-goal update through the Goal Runtime event envelope without inventing concrete payload schemas in Wiring_Matrix |
+L00000388	| Restore-and-branch CTA | `cmd.chat.branch_from_restore` | History / restore UI | thread/session controller | Create new thread/session branch from restore point |
+L00000389	| Browser toolbar `Open in Browser` | `cmd.browser.open_workspace_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `workspace_preview` browser session |
+L00000390	| Browser toolbar `Open in Detached Browser` | `cmd.browser.open_detached_preview` | file preview / command palette / open action | browser-session controller | Create or focus the canonical `detached_preview` browser session |

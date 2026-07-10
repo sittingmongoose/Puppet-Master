@@ -1,0 +1,396 @@
+<<< CONTEXT_BEFORE 4082-4093 >>>
+- last_updated
+- structured validation
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:DRYRules, Gate:GATE-009, PolicyRule:Decision_Policy.md§2'
+```
+
+
+<<< AUTHORITATIVE_CORE 4094-4460 >>>
+### N2-062 - Catalog Module Ownership Boundary
+
+```yaml
+plan_unit_id: N2-062
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: The catalog must live in src/interview/gui_tool_catalog.rs; automation stays focused on running tests, and any later framework branching depends on interview or shared config rather than duplicating catalog data.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: catalog_module_ownership_boundary
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: catalog_module_ownership_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0040
+preserved_exact_tokens:
+- src/interview/gui_tool_catalog.rs
+- interview owns what tools to offer
+- automation runs tests
+negative_constraints:
+- Framework/tool catalog data must not be duplicated in automation.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Interview owns what tools to offer; automation remains focused on running tests.
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2'
+```
+
+### N2-063 - GUI Automation Evidence Path State Files
+
+```yaml
+plan_unit_id: N2-063
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: .puppet-master/evidence/gui-automation/ must be documented in STATE_FILES.md and added to the cleanup allowlist so generated evidence is never removed by prepare/cleanup.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: gui_automation_evidence_path_state_files
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: gui_automation_evidence_path_state_files
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0040
+preserved_exact_tokens:
+- .puppet-master/evidence/gui-automation/
+- STATE_FILES.md
+- cleanup allowlist
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:STATE_FILES.md, ContractName:Plans/MiscPlan.md#cleanup, SchemaID:evidence.schema.json'
+```
+
+### N2-064 - Conditional Custom Headless Doctor Check
+
+```yaml
+plan_unit_id: N2-064
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Doctor conditionally verifies that the custom headless tool exists and runs when plan_custom_headless_tool was true, using the Section 12.6 detection contract as input.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: conditional_custom_headless_doctor_check
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: conditional_custom_headless_doctor_check
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0040
+preserved_exact_tokens:
+- Doctor check
+- plan_custom_headless_tool
+- detection contract
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, SchemaID:evidence.schema.json, Gate:GATE-005'
+```
+
+### N2-065 - Consistent Interview Config Field Names
+
+```yaml
+plan_unit_id: N2-065
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: GUI config, YAML config, and InterviewOrchestratorConfig use the same field names detected_gui_frameworks, selected_framework_tools, and plan_custom_headless_tool, serialized through the Option B run-config shape.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: consistent_interview_config_field_names
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: consistent_interview_config_field_names
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0040
+preserved_exact_tokens:
+- detected_gui_frameworks
+- selected_framework_tools
+- plan_custom_headless_tool
+- Option B run-config
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#config-wiring, ContractName:Plans/WorktreeGitImprovement.md#option-b-run-config'
+```
+
+### N2-066 - Custom Headless Detection Contract
+
+```yaml
+plan_unit_id: N2-066
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Interview completion writes .puppet-master/config.json with tools.custom_headless only when plan_custom_headless_tool == true; Doctor reads that key, validates string/object shape and executable path, registers CustomHeadlessTool only when valid, warns and skips invalid values, skips cleanly when absent, and emits doctor.custom_headless.checked.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: custom_headless_detection_contract
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: custom_headless_detection_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0041
+preserved_exact_tokens:
+- tools.custom_headless
+- CustomHeadlessTool
+- tool.custom_headless.invalid
+- tool.custom_headless.skipped
+- doctor.custom_headless.checked
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, ContractName:STATE_FILES.md, SchemaID:evidence.schema.json, PolicyRule:Decision_Policy.md§2'
+```
+
+### N2-067 - Test Strategy Artifact Schema Ownership
+
+```yaml
+plan_unit_id: N2-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: .puppet-master/interview/test-strategy.json has top-level project, generatedAt, coverageLevel, and items[]; Plans/test_strategy.schema.json remains canonical schema pm.test_strategy.schema.v1; interview writes it, orchestrator reads it, and newtools extends it additively.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: test_strategy_artifact_schema_ownership
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: test_strategy_artifact_schema_ownership
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0041
+preserved_exact_tokens:
+- .puppet-master/interview/test-strategy.json
+- project
+- generatedAt
+- coverageLevel
+- items[]
+- pm.test_strategy.schema.v1
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: SchemaID:pm.test_strategy.schema.v1, Gate:GATE-001, PolicyRule:Decision_Policy.md§2'
+```
+
+### N2-068 - MCP Adapter Injection CWD Boundary
+
+```yaml
+plan_unit_id: N2-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: CliBridge provider MCP adapter config is derived from the central registry and generated before CLI start in the actual spawn cwd, preferably at spawn time so worktree runs see correct project-local files; DirectApi providers do not use provider-side MCP config files.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: mcp_adapter_injection_cwd_boundary
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: mcp_adapter_injection_cwd_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0041
+preserved_exact_tokens:
+- CliBridge
+- actual spawn cwd
+- worktree
+- DirectApi
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- The central MCP registry remains authoritative; provider-side files are derived adapters only.
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/WorktreeGitImprovement.md, PolicyRule:Decision_Policy.md§2, SchemaID:evidence.schema.json'
+```
+
+### N2-069 - Credential-Store-Only API Key Storage
+
+```yaml
+plan_unit_id: N2-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Secrets must not be written to seglog, redb, Tantivy, YAML config, .puppet-master/config.json, logs, evidence bundles, or state files. Allowed persistence is OS credential store only, with environment variables first and credential-store SecretId second, and UI shows only key stored/missing.
+gui_related: false
+gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: credential_store_only_api_key_storage
+reasoning_tier: standard
+context_scope: newtools_standardization
+implementation_surfaces:
+- Plans/newtools.md
+node_compile_hint:
+  mode: credential_store_only_api_key_storage
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0041
+preserved_exact_tokens:
+- seglog
+- redb
+- Tantivy
+- .puppet-master/config.json
+- OS credential store
+- SecretId
+- Key stored/missing
+negative_constraints:
+- Secrets must not be written to seglog, redb, Tantivy, YAML config, .puppet-master/config.json, logs, evidence bundles, or state files.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/newtools.md
+preserved_contractrefs:
+- 'ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002'
+```
+
+
+<<< CONTEXT_AFTER 4461-4472 >>>
+### N2-070 - Iced Catalog Detection Hints
+
+```yaml
+plan_unit_id: N2-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newtools.md
+canonical_text: Catalog detection rules must reliably set detected_gui_frameworks; for Iced, preferred detection checks Cargo.toml for iced or scans for src/automation/headless_runner or src/automation/action_catalog.rs, and must not miss Puppet Master automation pattern.
+gui_related: true
+gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or live visualization behavior.
+split_recommended: false
+depends_on: []

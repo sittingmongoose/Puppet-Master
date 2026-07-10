@@ -1,0 +1,390 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1169-1180 >>>
+L00001169	  }
+L00001170	}
+L00001171	```
+L00001172	
+L00001173	Rules:
+L00001174	- The canonical effective support state for a run is the intersection of transport support, model metadata, and variant/runtime-path constraints.
+L00001175	- Provider/model catalog snapshots carry `boot_refresh_enabled`, `model_catalog_status`, `last_model_refresh_at`, and `selectable_unit_ids[]` / `selectable_unit_ids` so boot-time refresh, stale catalog state, and the selectable units tied to a catalog entry remain inspectable.
+L00001176	- Capability resolution records may include `resolved_capability_deltas[]`, `pool_scope`, and `provider_entry`; `pool_scope` can be `provider_entry` when capability differences must be pinned to the concrete runtime surface rather than a provider family.
+L00001177	- Both the runtime filtering stage and the Persona editor MUST call the same resolver to obtain this snapshot.
+L00001178	- A cached copy MAY be persisted for performance, but the cache is derivative; the canonical source is the shared capability resolver plus its provider/model metadata inputs.
+L00001179	- Every control disclosure shown to the user MUST be derivable from this snapshot without ad hoc UI-only logic.
+L00001180	- `source` MUST be one of `documented`, `empirical`, or `inferred` so future verification work can distinguish hard facts from provisional assumptions.
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1181-1541 >>>
+L00001181	
+L00001182	Account-routing capability fields are part of the same canonical snapshot when a provider participates in multi-account-related selection, account switching, or pressure routing. Provider capability modeling for those paths is explicitly required and MUST expose:
+L00001183	- `supports_multi_account`
+L00001184	- `account_identity_kind`
+L00001185	- `quota_signal_sources[]`
+L00001186	- `quota_signal_confidence`
+L00001187	- `supports_threshold_switch`
+L00001188	- `supports_hard_exhaustion_detection`
+L00001189	- `supports_rate_limit_detection`
+L00001190	- `supports_reset_countdown`
+L00001191	- `supports_manual_set_active`
+L00001192	- `supports_cooldown`
+L00001193	- `supports_retry_budget`
+L00001194	- `supports_role_scoped_account_pools`
+L00001195	- `switch_boundary`
+L00001196	- `provider_limit_notes?`
+L00001197	
+L00001198	The generic signal axes remain `signal_source_kinds[]` and `signal_confidence` for signal sources/confidence. `quota_signal_sources[]` plus `quota_signal_confidence` are the quota/account-pressure specialization of those axes for account-pressure interpretation. The resolver treats these as provider capability metadata, not account state. `retry_budget?`, `cooldown_until?`, and `reset_at?` may appear on account-health records only when the capability snapshot says the provider path supports or can infer those facts. A provider path that lacks cooldown/retry-budget support or reset countdown support MUST disclose `unsupported`, `opaque`, `inferred`, or `stale` rather than pretending the provider account pool is safely switchable.
+L00001199	
+L00001200	Bridge note:
+L00001201	- `talkativeness` remains governed by the derived-control rule in §10.4.2 and therefore only appears in the snapshot when a concrete prompt-construction policy records the effective value for disclosure/debugging.
+L00001202	- its effective support is derived from `persona_prompt_body`.
+L00001203	- if a provider path can apply Persona prompt-body instructions, it can apply `talkativeness`.
+L00001204	- if Persona prompt-body injection is bypassed or unavailable, `talkativeness` MUST be recorded as skipped with the same provider/model disclosure rules as other Persona controls.
+L00001205	
+L00001206	GUI gating and runtime disclosure MUST use this derived rule rather than inventing a second inconsistent source.
+L00001207	
+L00001208	### 10.5 Unsupported control disclosure rules
+L00001209	
+L00001210	If a Persona requests a control the active provider cannot honor:
+L00001211	- do not silently ignore it,
+L00001212	- do not show it as applied,
+L00001213	- record it in `skipped_persona_controls[]`,
+L00001214	- record the reason and provider,
+L00001215	- and expose that status in UI.
+L00001216	
+L00001217	Example skipped control records:
+L00001218	- `temperature`: `unsupported by Claude Code transport`
+L00001219	- `top_p`: `unsupported by Cursor CLI transport`
+L00001220	- `reasoning_effort`: `provider does not expose effort knob`
+L00001221	
+L00001222	### 10.6 GUI disclosure requirements
+L00001223	
+L00001224	Persona-related model/runtime controls shown in GUI MUST reflect provider support state:
+L00001225	
+L00001226	- **supported:** editable normally
+L00001227	- **partially_supported:** editable with warning badge and explanatory tooltip
+L00001228	- **unsupported:** disabled with explanatory text
+L00001229	
+L00001230	Example UI copy patterns:
+L00001231	- `Reasoning effort` -> disabled on Cursor CLI with note `Cursor CLI does not expose a documented effort control.`
+L00001232	- `Temperature` -> disabled on Claude Code with note `Not exposed in official Claude Code CLI settings.`
+L00001233	
+L00001234	### 10.7 Runtime display requirements
+L00001235	
+L00001236	All run surfaces must display effective runtime choices, not only raw configured values.
+L00001237	
+L00001238	Minimum display requirements:
+L00001239	- Persona name
+L00001240	- selection reason
+L00001241	- effective platform
+L00001242	- effective model
+L00001243	- effective variant/effort when present
+L00001244	- indication of skipped controls when relevant
+L00001245	
+L00001246	Example display:
+L00001247	- `Persona: Rust Engineer (Auto: Rust repo + code task)`
+L00001248	- `Model: Codex GPT-5.3 (Persona preferred)`
+L00001249	- `Platform: Codex (Available)`
+L00001250	- `Skipped controls: temperature unsupported by provider`
+L00001251	
+L00001252	### 10.8 OpenCode baseline note
+L00001253	
+L00001254	OpenCode demonstrates the integrated runtime shape Puppet Master is adopting:
+L00001255	- role object carries prompt, model, variant, temperature, topP, permission, and options,
+L00001256	- selected role is resolved by name,
+L00001257	- role prompt is injected into system prompt assembly,
+L00001258	- role model and runtime options are applied before model call.
+L00001259	
+L00001260	Puppet Master follows that structure conceptually, but uses Persona as the canonical stored contract and adds provider capability disclosure instead of assuming all backends honor all knobs.
+L00001261	
+L00001262	### 10.9 Acceptance criteria addendum
+L00001263	
+L00001264	- Effective runtime state must distinguish requested vs effective vs skipped Persona controls.
+L00001265	- Runtime support outcomes must preserve the `requested_runtime` alongside whether the request was `substituted`, `clamped`, `blocked`, or `retried_on_fallback`.
+L00001266	- Unsupported controls must be visible in both editor UI and runtime UI.
+L00001267	- Provider capability matrix must be the shared source for editor gating and runtime disclosure.
+L00001268	- Chat/Interview/Builder/Orchestrator history/event views must show effective Persona/model/platform rather than only stored preferences.
+L00001269	
+L00001270	<a id="MODEL-RETRY-POLICY"></a>
+L00001271	<a id="RETRY-POLICY"></a>
+L00001272	
+L00001273	## Provider Failure-Class Alignment Addendum (2026-03-08)
+L00001274	
+L00001275	Model/provider selection fallback remains separate from runtime retry classification.
+L00001276	
+L00001277	Required clarifications:
+L00001278	- unavailable Persona-preferred models continue to fall through the normal selection chain and do not create a blocked state by themselves
+L00001279	- provider execution failures that occur after selection must map into the shared runtime taxonomy, most notably `provider_transient` or terminal provider failure classes
+L00001280	- provider-level retry defaults must not silently override the shared runtime retry/backoff matrix
+L00001281	## Runtime Retry / Fallback Ownership Addendum (2026-03-09)
+L00001282	
+L00001283	Model fallback and runtime retry are separate concerns.
+L00001284	
+L00001285	### Ownership split
+L00001286	- model selection decides requested/effective provider/model before execution begins
+L00001287	- runtime policy decides whether an attempt is retried, remediated, blocked, or escalated after a classified outcome
+L00001288	- providers and adapters may not invent model-local retry loops that bypass runtime policy
+L00001289	
+L00001290	### Required attempt snapshots
+L00001291	
+L00001292	
+L00001293	Each attempt MUST retain requested and effective model/provider identifiers so users can later explain why a blocked or failed attempt ran under a specific effective configuration.
+L00001294	
+L00001295	### Fallback rule
+L00001296	Model fallback may change the effective model only through the shared model-selection contract, never as an implicit side effect of provider transient handling inside an already-running attempt.
+L00001297	## Requested/Effective Model and Retry Ownership Canonical Alignment (2026-03-09)
+L00001298	
+L00001299	Requested/effective model resolution remains separate from runtime retry policy.
+L00001300	
+L00001301	Rules:
+L00001302	- model/provider fallback may change the effective model only through the shared selection contract before execution begins
+L00001303	- runtime retries, remediation, and prerequisite-resumed work always occur as new attempts with new attempt snapshots
+L00001304	- providers/adapters must not hide model-local retry loops inside an already-running attempt
+L00001305	## Model Selection Versus Runtime Retry Ownership Consolidation Addendum (2026-03-09)
+L00001306	
+L00001307	
+L00001308	Model selection and retry ownership remain separate concerns.
+L00001309	
+L00001310	Rules:
+L00001311	- attempt start persists stable requested/effective model snapshot identifiers
+L00001312	- retries and resumes do not silently change model identity unless the canonical runtime policy explicitly creates a new attempt with new snapshot IDs
+L00001313	- model fallback behavior MUST NOT rewrite blocked reason or retry classification semantics
+L00001314	- UI and artifact surfaces read model snapshot IDs from attempt records rather than inferring them from provider names alone
+L00001315	## Requested / Effective Model Snapshot Alignment
+L00001316	
+L00001317	
+L00001318	Requested and effective model/runtime fields must stay visible for child runs, crew members, and surfaced planning/runtime decisions.
+L00001319	
+L00001320	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md
+L00001321	
+L00001322	Child effort resolution order:
+L00001323	1. explicit child effort request
+L00001324	2. child Persona or task preference
+L00001325	3. weak parent hint
+L00001326	4. target-surface default
+L00001327	
+L00001328	Rules:
+L00001329	- PM resolves canonical effort intent first, then translates it per target surface.
+L00001330	- remapped effort values remain visible as requested versus effective.
+L00001331	- explicit runtime surface requests do not silently fallback.
+L00001332	- implicit orchestrator-selected runtime surfaces may fallback, but the fallback reason must be visible.
+L00001333	
+L00001334	Default Crew configuration belongs under the model/runtime settings surface.
+L00001335	
+L00001336	Minimum Default Crew settings model:
+L00001337	- enable or disable Default Crew
+L00001338	- ordered list of crew members
+L00001339	- per-member model selector
+L00001340	- per-member provider/runtime surface selector
+L00001341	- immediate normalization of the whole crew to `Copilot` when any member selects Copilot, because Copilot is a crew-level provider selection constraint and is not a per-member freely mixed provider in the default crew editor
+L00001342	
+L00001343	ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/CLI_Bridged_Providers.md
+L00001344	
+L00001345	## Provider/model selection policy and audit addendum
+L00001346	
+L00001347	This addendum elaborates how the canonical provider/model precedence owner section is surfaced through user-facing policy, capability gating, and audit trail details.
+L00001348	
+L00001349	### Persona, execution-unit, and scope policy inputs
+L00001350	
+L00001351	
+L00001352	1. **Persona axis**: Users select a Persona (e.g., "Code Analyzer", "Documentation Writer") which carries default preferences for model, provider, and mutation_policy.
+L00001353	2. **Execution Unit Type axis**: Different execution unit types (run, node, delegated_subagent) can have scoped policies (e.g., "use GPT-4 for run-level analysis, but Claude for node-level code generation").
+L00001354	3. **Scope axis**: Settings can be scoped to worktree, project, or global level; settings at a tighter scope override broader scopes.
+L00001355	
+L00001356	### Precedence chain for provider/model selection
+L00001357	
+L00001358	When a unit needs to select a provider and model, resolve in this order:
+L00001359	
+L00001360	1. **Explicit run-envelope override**: If the run was launched with `--provider=X --model=Y`, use those.
+L00001361	2. **Scoped owner policy**: If the active execution_unit_type has a policy (e.g., "node-type uses Copilot"), apply it.
+L00001362	3. **Persona preference**: Use the active Persona's default model and provider.
+L00001363	4. **Surface or stage default**: If the UI surface or execution stage has a default (e.g., "code review prefers GPT-4"), use it.
+L00001364	5. **Project or global config default**: Fallback to project-wide or global settings.
+L00001365	6. **Last-used state**: If permitted by settings, use the model/provider from the previous run of the same type.
+L00001366	7. **Provider default**: Use the provider's canonical default model.
+L00001367	
+L00001368	### Settings resolution and override semantics
+L00001369	
+L00001370	
+L00001371	- **Conservative policy**: Use only settings tier 1 (explicit override) or tier 3+ (canonical defaults); do not apply stage defaults or persona preferences.
+L00001372	- **Standard policy** (default): Use tiers 1-5 (explicit override through project defaults); respect all configuration.
+L00001373	- **Aggressive policy**: Use all tiers 1-7; auto-select the cheapest or fastest model if multiple are available and equally suitable.
+L00001374	
+L00001375	### Provider capability and cost gating
+L00001376	
+L00001377	- **Capability check**: Before selecting a provider, verify it supports the required model and inference parameters (context length, output length, reasoning mode, etc.).
+L00001378	- **Multi-account capability check**: Provider capability modeling MUST include multi-account-related behavior before any provider/account pool can be selected or switched. Required capability facts include `supports_multi_account`, signal sources/confidence, cooldown/retry-budget support, reset countdown support, and provider-specific limits that change account pressure interpretation or rotation safety.
+L00001379	- **Cost gating**: If a model exceeds the active Persona's cost budget, skip it and move to the next in the precedence chain.
+L00001380	- **Fallback**: If all preferred models exceed budget or are unavailable, emit a concern (not a silent failure) and suggest cheaper alternatives or escalation.
+L00001381	
+L00001382	Clamp/substitution decisions use the `clamp/substitution` reason-code family when the requested provider, model, effort, capability, instruction projection, or skill projection cannot be applied exactly.
+L00001383	
+L00001384	Required `clamp/substitution` reason codes:
+L00001385	- `model_unavailable`
+L00001386	- `model_routed_by_provider`
+L00001387	- `model_substituted`
+L00001388	- `effort_unsupported`
+L00001389	- `effort_clamped`
+L00001390	- `auth_family_capability_clamped`
+L00001391	- `capability_unknown`
+L00001392	- `instruction_projection_partial`
+L00001393	- `skill_projection_partial`
+L00001394	
+L00001395	Rules:
+L00001396	- `model_unavailable` and `model_routed_by_provider` distinguish PM inability to select a requested model from provider-side rerouting after PM dispatch.
+L00001397	- `model_substituted`, `effort_clamped`, and `auth_family_capability_clamped` are explicit `/substitution` evidence for requested/effective differences caused by model fallback, narrowed effort, or auth-family capability limits.
+L00001398	- `effort_unsupported` and `effort_clamped` distinguish unsupported effort controls from accepted-but-narrowed effort controls.
+L00001399	- `capability_unknown`, `instruction_projection_partial`, and `skill_projection_partial` remain inspectable so the UI does not present a fully honored model/capability/instruction state when PM only has partial or unknown evidence.
+L00001400	
+L00001401	ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md
+L00001402	
+L00001403	### Selection reason and audit trail
+L00001404	
+L00001405	
+L00001406	When a provider and model are selected, emit a `selection_reason` object:
+L00001407	```typescript
+L00001408	selection_reason {
+L00001409	  selected_provider: string,           // e.g., 'openai', 'anthropic', 'github'
+L00001410	  selected_model: string,              // e.g., 'gpt-4', 'claude-3-opus'
+L00001411	  precedence_tier: number,             // 1-7 indicating which tier was applied
+L00001412	  fallback_reason?: string,            // If a fallback was triggered (capability, cost, unavailability)
+L00001413	  alternatives: Array,                 // Other models that were considered and why they were skipped
+L00001414	  selection_time_utc: string,          // When the decision was made
+L00001415	  execution_unit_id: string,           // Tied to the unit making the selection
+L00001416	}
+L00001417	```
+L00001418	
+L00001419	This metadata is logged so inspectors and auditors can trace why a particular model was chosen and what constraints were active.
+L00001420	
+L00001421	ContractRef: Primitive:Persona, Primitive:ExecutionUnitContext, ContractName:Plans/Executor_Protocol.md
+L00001422	
+L00001423	## Owner / Consumer Map
+L00001424	
+L00001425	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Models_System.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00001426	
+L00001427	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00001428	
+L00001429	## PlanUnits
+L00001430	
+L00001431	### MS-002 - Models SSOT And DRY Compliance Boundary
+L00001432	
+L00001433	```yaml
+L00001434	plan_unit_id: MS-002
+L00001435	unit_type: requirement
+L00001436	status: accepted
+L00001437	owner_doc: Plans/Models_System.md
+L00001438	canonical_text: Models_System.md is the SSOT for model selection, configuration, and variants. Consumers reference anchors
+L00001439	  such as Plans/Models_System.md#MODEL-ID instead of restating model selection rules or variant definitions.
+L00001440	gui_related: false
+L00001441	gui_classification_reason: The unit covers SSOT scope and governance references rather than direct GUI presentation.
+L00001442	split_recommended: false
+L00001443	depends_on: []
+L00001444	unblocks: []
+L00001445	acceptance_criteria:
+L00001446	- Covered source spans remain losslessly available for exact-text audit.
+L00001447	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001448	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001449	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001450	validation_surfaces:
+L00001451	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001452	- python3 scripts/pm-plan-index.py validate
+L00001453	risk_class: models_ssot_dry_boundary
+L00001454	reasoning_tier: standard
+L00001455	context_scope: models_system_standardization
+L00001456	implementation_surfaces:
+L00001457	- Plans/Models_System.md
+L00001458	node_compile_hint:
+L00001459	  mode: models_ssot_dry_boundary
+L00001460	  create_worknodes: false
+L00001461	source_lineage:
+L00001462	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0001
+L00001463	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0003
+L00001464	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0004
+L00001465	preserved_exact_tokens:
+L00001466	- Models System (Canonical SSOT)
+L00001467	- Puppet Master
+L00001468	- Plans/Models_System.md#MODEL-ID
+L00001469	- single canonical source of truth
+L00001470	negative_constraints:
+L00001471	- Default aliases must not be treated as provider availability proof.
+L00001472	- Antigravity `--model` prompt success with an unlisted alias must not mark that alias green because the CLI can fall back to a default model.
+L00001473	compatibility_only_notes:
+L00001474	- Nano Banana aliases remain valid media lookup aliases, but current Antigravity CLI verification does not prove Antigravity media-generation support for them.
+L00001475	stale_retired_dispositions: []
+L00001476	owner_boundary_notes:
+L00001477	- Plans/Models_System.md is the single canonical source for model selection, configuration, and variant rules.
+L00001478	owner_hints:
+L00001479	- Plans/Models_System.md
+L00001480	preserved_contractrefs:
+L00001481	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+L00001482	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001483	  where safe.
+L00001484	```
+L00001485	
+L00001486	### MS-003 - Owner Section Requirements And Reference Inventory
+L00001487	
+L00001488	```yaml
+L00001489	plan_unit_id: MS-003
+L00001490	unit_type: requirement
+L00001491	status: accepted
+L00001492	owner_doc: Plans/Models_System.md
+L00001493	canonical_text: Canonical owner-section requirements preserve product, runtime, storage, UI, and governance details, while
+L00001494	  SSOT references remain exact inventory pointers and do not replace their owner docs.
+L00001495	gui_related: true
+L00001496	gui_classification_reason: The unit preserves UI/governance reference posture and references Plans/FinalGUISpec.md.
+L00001497	split_recommended: false
+L00001498	depends_on:
+L00001499	- MS-002
+L00001500	unblocks: []
+L00001501	acceptance_criteria:
+L00001502	- Covered source spans remain losslessly available for exact-text audit.
+L00001503	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001504	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001505	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001506	validation_surfaces:
+L00001507	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001508	- python3 scripts/pm-plan-index.py validate
+L00001509	risk_class: owner_section_reference_inventory
+L00001510	reasoning_tier: standard
+L00001511	context_scope: models_system_standardization
+L00001512	implementation_surfaces:
+L00001513	- Plans/Models_System.md
+L00001514	node_compile_hint:
+L00001515	  mode: owner_section_reference_inventory
+L00001516	  create_worknodes: false
+L00001517	source_lineage:
+L00001518	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0002
+L00001519	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0005
+L00001520	preserved_exact_tokens:
+L00001521	- Canonical owner-section requirements
+L00001522	- SSOT references (DRY)
+L00001523	- Plans/Spec_Lock.json
+L00001524	- Plans/auto_decisions.jsonl
+L00001525	- Plans/FinalGUISpec.md
+L00001526	negative_constraints:
+L00001527	- Default media aliases are lookup aliases, not provider availability proof.
+L00001528	- Do not mark Nano Banana, Nanobanana, Imagen, Veo, TTS, or other generated-media aliases green through Antigravity unless the selected provider catalog lists the media model and an E2E generated artifact proof succeeds.
+L00001529	compatibility_only_notes:
+L00001530	- Nano Banana aliases remain valid lookup aliases, but current Antigravity CLI proof does not verify Antigravity generated-media support for them.
+L00001531	stale_retired_dispositions:
+L00001532	- Arbitrary successful `agy --model "Nano Banana"` prompt output is not support evidence because the current Antigravity CLI logs the model as unrecognized and falls back.
+L00001533	owner_boundary_notes:
+L00001534	- This unit preserves reference inventory only; referenced owner docs keep their own contracts.
+L00001535	owner_hints:
+L00001536	- Plans/Models_System.md
+L00001537	preserved_contractrefs: []
+L00001538	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001539	  where safe.
+L00001540	```
+L00001541	
+
+<<< CONTEXT_AFTER canonical_document_lines=1542-1553 >>>
+L00001542	### MS-004 - Provider Model Precedence Owner Boundary
+L00001543	
+L00001544	```yaml
+L00001545	plan_unit_id: MS-004
+L00001546	unit_type: requirement
+L00001547	status: accepted
+L00001548	owner_doc: Plans/Models_System.md
+L00001549	canonical_text: Models_System.md owns provider/model precedence across run, seam, package, node, overseer, delegated-subagent,
+L00001550	  and worktree-narrowed surfaces without replacing requested/effective resolver records.
+L00001551	gui_related: false
+L00001552	gui_classification_reason: The unit covers backend/runtime owner boundaries rather than GUI presentation.
+L00001553	split_recommended: false

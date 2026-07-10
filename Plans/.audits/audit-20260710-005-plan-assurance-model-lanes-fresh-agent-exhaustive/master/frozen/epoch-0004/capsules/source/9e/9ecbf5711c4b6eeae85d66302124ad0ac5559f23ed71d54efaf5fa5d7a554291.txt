@@ -1,0 +1,406 @@
+<<< CONTEXT_BEFORE 8508-8519 >>>
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0063
+preserved_exact_tokens:
+  - "stdin/TTY"
+  - "watch/server"
+  - "Open in Terminal"
+  - "preview+audit"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+
+<<< AUTHORITATIVE_CORE 8520-8896 >>>
+### ACD-109 - Web Activity Owner Contract Bridge
+
+```yaml
+plan_unit_id: ACD-109
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Web/provider activity consumes storage, contracts, browser, and permissions
+  payload contracts through the `/tool/storage/runtime` bridge; owner contracts
+  define payload shape while Assistant Chat owns visible provenance, setup
+  guidance, runtime disclosure, and exact ContractRef alignment.
+gui_related: true
+gui_classification_reason: Web provenance, setup guidance, and runtime disclosure are visible Assistant Chat surfaces.
+depends_on: [ACD-101, ACD-103]
+unblocks: [ACD-110, ACD-111, ACD-112, ACD-113, ACD-114, ACD-115, ACD-116, ACD-117, ACD-118, ACD-119, ACD-120, ACD-121, ACD-122, ACD-123, ACD-124, ACD-125]
+acceptance_criteria:
+  - Web/provider activity consumes owner payload contracts rather than redefining them.
+  - Assistant Chat owns visible web provenance and runtime disclosure.
+  - ContractRef alignment remains exact.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: owner_contract_bridge
+reasoning_tier: high
+context_scope: web_activity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: web_activity_owner_contract_bridge
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0064
+preserved_exact_tokens:
+  - "/tool/storage/runtime"
+  - "ContractRef"
+  - "Plans/storage-plan.md#4.4 Activity transparency payloads"
+  - "Plans/Contracts_V0.md#3.4 Tool-specific payload extensions"
+  - "Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+```
+
+### ACD-110 - Web Provider Capability Matrix
+
+```yaml
+plan_unit_id: ACD-110
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The provider capability matrix keeps capability tier separate from routing
+  posture: Firecrawl, Tavily, and Exa retain real `webfetch` capability and
+  are not flattened to `fallback-only`; Anthropic/OpenAI `websearch` remains
+  `native (model)` / model-native, not `pm-composed`.
+gui_related: false
+gui_classification_reason: Provider capability classification is a routing and contract boundary.
+depends_on: [ACD-109]
+unblocks: [ACD-111, ACD-112]
+acceptance_criteria:
+  - Capability tier remains separate from routing posture.
+  - Firecrawl, Tavily, and Exa retain real webfetch capability.
+  - Anthropic/OpenAI websearch remains model-native.
+  - Provider capability is not flattened to fallback-only or pm-composed when canon says otherwise.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: provider_capability_drift
+reasoning_tier: high
+context_scope: web_activity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+node_compile_hint:
+  mode: web_provider_capability_matrix
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0064
+preserved_exact_tokens:
+  - "Firecrawl"
+  - "Tavily"
+  - "Exa"
+  - "webfetch"
+  - "fallback-only"
+  - "native (model)"
+  - "pm-composed"
+negative_constraints:
+  - "Anthropic/OpenAI websearch remains model-native, not pm-composed."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+### ACD-111 - Web Routing Setup And Priority Disclosure
+
+```yaml
+plan_unit_id: ACD-111
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Web routing includes a `capability-unavailable terminal branch` with clear
+  setup guidance; the global provider stack is user-changeable in Settings,
+  per-operation priority reordering is NOT MVP, and consumers show effective
+  provider order and capability results.
+gui_related: true
+gui_classification_reason: Setup guidance, Settings provider order, and capability results are visible user-facing behavior.
+depends_on: [ACD-110]
+unblocks: []
+acceptance_criteria:
+  - Capability-unavailable terminal branches provide setup guidance.
+  - Global provider stack is user-changeable in Settings.
+  - Per-operation priority reordering remains outside MVP.
+  - Consumers show effective provider order and capability results.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: routing_disclosure
+reasoning_tier: standard
+context_scope: web_activity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: web_routing_setup_priority_disclosure
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0064
+preserved_exact_tokens:
+  - "capability-unavailable terminal branch"
+  - "Settings"
+  - "per-operation priority reordering is NOT MVP"
+negative_constraints:
+  - "Per-operation priority reordering is NOT MVP."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+### ACD-112 - Site Reader Native Identity Boundary
+
+```yaml
+plan_unit_id: ACD-112
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  `webfetch = native Site Reader path by DEFAULT`; Site Reader is PM-native and
+  reserves `Reading Site: <url>`, while provider-routed fetch uses `Fetching
+  Site: <url> (via <provider>)`; `Extracting Site` is a separate evidence path,
+  and Site Reader v1 requires real browser-interaction capability.
+gui_related: true
+gui_classification_reason: Site Reader identity and activity labels are visible web activity behavior.
+depends_on: [ACD-110]
+unblocks: [ACD-113, ACD-120]
+acceptance_criteria:
+  - webfetch defaults to the native Site Reader path.
+  - Reading Site is reserved for PM-native Site Reader.
+  - Provider-routed fetch uses Fetching Site with provider disclosure.
+  - Extracting Site remains a separate evidence path.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: native_identity_drift
+reasoning_tier: high
+context_scope: web_activity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/Section15_MVP_Promoted_Features_Spec.md
+node_compile_hint:
+  mode: site_reader_native_identity_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0064
+preserved_exact_tokens:
+  - "webfetch = native Site Reader path by DEFAULT"
+  - "Reading Site: <url>"
+  - "Fetching Site: <url> (via <provider>)"
+  - "Extracting Site"
+  - "Site Reader v1"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+### ACD-113 - Search-Then-Read Answer Provenance
+
+```yaml
+plan_unit_id: ACD-113
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Web answer construction preserves search-then-read behavior: chat may
+  shortlist with search, but final citations must come from the actual read
+  path, and raw search snippets alone are not enough final evidence.
+gui_related: false
+gui_classification_reason: Citation source validity is answer/provenance behavior rather than GUI implementation.
+depends_on: [ACD-112]
+unblocks: []
+acceptance_criteria:
+  - Search may shortlist sources.
+  - Final citations come from the actual read path.
+  - Raw search snippets alone are not treated as final evidence.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: citation_provenance
+reasoning_tier: high
+context_scope: web_activity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+node_compile_hint:
+  mode: search_then_read_answer_provenance
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0064
+preserved_exact_tokens:
+  - "search-then-read"
+  - "final citations"
+  - "actual read path"
+  - "raw search snippets alone are not enough final evidence"
+negative_constraints:
+  - "Raw search snippets alone are not enough final evidence."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+### ACD-114 - Firecrawl Transport Route Disclosure
+
+```yaml
+plan_unit_id: ACD-114
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  PM must not silently switch between self-hosted Firecrawl and hosted/cloud
+  Firecrawl; when Firecrawl transport changes, the activity card and audit
+  payload disclose requested and effective Firecrawl route.
+gui_related: true
+gui_classification_reason: Firecrawl route disclosure appears in activity cards and audit-visible payloads.
+depends_on: [ACD-109, ACD-110]
+unblocks: []
+acceptance_criteria:
+  - Self-hosted and hosted/cloud Firecrawl routes are distinguishable.
+  - Activity cards disclose requested and effective Firecrawl route when route changes.
+  - Audit payloads preserve requested and effective route details.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: transport_disclosure
+reasoning_tier: high
+context_scope: web_activity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: firecrawl_transport_route_disclosure
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0064
+preserved_exact_tokens:
+  - "self-hosted Firecrawl"
+  - "hosted/cloud Firecrawl"
+  - "requested and effective Firecrawl route"
+negative_constraints:
+  - "PM must not silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+### ACD-115 - Provider Fallback And Cost-Aware Routing
+
+```yaml
+plan_unit_id: ACD-115
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Web routing remains cost-aware when multiple providers offer similar
+  capability, preserves the `>100 credits` warning and `500 credits` cap, and
+  falls back on rate-limit/outage to the next eligible provider supporting the
+  same operation with `provider_fallback_summary` audit linkage.
+gui_related: false
+gui_classification_reason: Provider fallback and cost caps are routing/runtime behavior.
+depends_on: [ACD-110, ACD-111]
+unblocks: [ACD-120]
+acceptance_criteria:
+  - Similar web capabilities route with cost awareness.
+  - Firecrawl credit warning and cap are preserved.
+  - Rate-limit and outage fallback use the next eligible provider for the same operation.
+  - provider_fallback_summary links fallback behavior to audit records.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: fallback_cost_routing
+reasoning_tier: high
+context_scope: web_activity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: provider_fallback_cost_aware_routing
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0064
+preserved_exact_tokens:
+  - ">100 credits"
+  - "500 credits"
+  - "provider_fallback_summary"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+### ACD-116 - Firecrawl Research And Search Capability Mapping
+
+```yaml
+plan_unit_id: ACD-116
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Firecrawl `webresearch` preserves provider-native no-URL natural-language
+  research, navigation/forms/pagination capability, and structured extraction;
+  Firecrawl `websearch` preserves provider-specific search behavior,
+  Serper-backed Google-result behavior, categories, sources, and optional
+  result scraping.
+gui_related: false
+gui_classification_reason: Firecrawl capability mapping is provider/tool behavior.
+depends_on: [ACD-110]
+unblocks: [ACD-117]
+acceptance_criteria:
+  - Firecrawl webresearch keeps no-URL natural-language research semantics.
+  - Navigation, forms, pagination, and structured extraction capability are preserved.
+  - Firecrawl websearch keeps provider-specific search, categories, sources, and optional scraping behavior.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: firecrawl_capability_mapping
+reasoning_tier: standard
+context_scope: web_activity
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+node_compile_hint:
+  mode: firecrawl_research_search_mapping
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0064
+preserved_exact_tokens:
+  - "webresearch"
+  - "websearch"
+  - "no-URL natural-language research"
+  - "Serper-backed Google-result behavior"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 8897-8908 >>>
+### ACD-117 - Firecrawl Change Tracking Contract
+
+```yaml
+plan_unit_id: ACD-117
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The Firecrawl owner section must preserve `changeTracking` structured output
+  or explicitly retire it; same-URL change tracking requires previous
+  fetch/cache state and emits `change_status: "new" | "same" | "changed" |
+  "removed"`, `pages[].change_status`, and `change_summary` rather than

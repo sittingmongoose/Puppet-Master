@@ -1,0 +1,417 @@
+<<< CONTEXT_BEFORE 7369-7380 >>>
+preserved_exact_tokens:
+  - "route_target"
+  - "OpenSubject"
+  - "OpenFile"
+  - "resume_url"
+negative_constraints:
+  - "resume_url is serialized transport only and must not outgrow the canonical route contract"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+```
+
+
+<<< AUTHORITATIVE_CORE 7381-7768 >>>
+### ACD-085 - Runtime Identity Display Snapshot
+
+```yaml
+plan_unit_id: ACD-085
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Chat may display requested/effective runtime identity and projection state, but it must not define assistant-local replacements for owner-doc fields; historical views use frozen requested/effective runtime snapshots captured for execution.
+gui_related: true
+gui_classification_reason: Runtime identity and projection-state display are user-visible chat UI behavior.
+depends_on: [ACD-084]
+unblocks: []
+acceptance_criteria:
+  - Chat displays requested/effective runtime identity only as a consumer of owner-doc fields.
+  - Historical views use frozen requested/effective runtime snapshots from execution.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: runtime_identity_drift
+reasoning_tier: standard
+context_scope: navigation
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/Multi-Account.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: runtime_identity_display_snapshot
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0055
+preserved_exact_tokens:
+  - "requested/effective runtime identity"
+  - "frozen requested/effective runtime snapshots"
+negative_constraints:
+  - "chat must not define assistant-local replacements for the owner-doc field set"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+```
+
+### ACD-086 - Branch Conversation Lineage
+
+```yaml
+plan_unit_id: ACD-086
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Restore-and-branch creates a new thread_id and branch_id linked to the source restore point and source thread, and branch lineage remains queryable for restore, history, and usage attribution.
+gui_related: false
+gui_classification_reason: Branch identity and lineage are storage/history behavior, not GUI implementation.
+depends_on: [ACD-071]
+unblocks: [ACD-087]
+acceptance_criteria:
+  - Restore-and-branch creates new thread and branch identities.
+  - Branch lineage is linked to the source restore point and source thread.
+  - Branch lineage remains queryable for restore/history and usage attribution.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: branch_lineage
+reasoning_tier: standard
+context_scope: branching
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: branch_conversation_lineage
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056
+preserved_exact_tokens:
+  - "restore-and-branch"
+  - "thread_id"
+  - "branch_id"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-087 - Branch Conversation UI Confirmation
+
+```yaml
+plan_unit_id: ACD-087
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Branch labels are visible in history and thread navigation, and branching from a running or dirty thread requires confirmation that names the preserved source state and new branch target.
+gui_related: true
+gui_classification_reason: Branch labels and confirmation prompts are user-visible UI behavior.
+depends_on: [ACD-086]
+unblocks: []
+acceptance_criteria:
+  - Branch labels appear in history and thread navigation.
+  - Branching from running or dirty threads requires explicit confirmation naming source state and branch target.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: branch_user_confirmation
+reasoning_tier: standard
+context_scope: branching
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: branch_conversation_ui_confirmation
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0056
+preserved_exact_tokens:
+  - "branch labels"
+  - "running or dirty thread"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-088 - Session Browser Thread Focus
+
+```yaml
+plan_unit_id: ACD-088
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Project or session browsing may open or focus a thread, but active-thread navigation remains local to the chat shell, and blocked, queued, and background states remain visible through badges and attention surfaces when the thread is inactive.
+gui_related: true
+gui_classification_reason: Thread focus, badges, and attention surfaces are visible UI behavior.
+depends_on: [ACD-071]
+unblocks: []
+acceptance_criteria:
+  - Project/session browsing can open or focus a thread.
+  - Active-thread navigation remains local to the chat shell.
+  - Blocked, queued, and background states remain visible when the thread is not active.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: attention_visibility
+reasoning_tier: standard
+context_scope: session_browser
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: session_browser_thread_focus
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0057
+preserved_exact_tokens:
+  - "project/session browsing"
+  - "blocked, queued, and background states"
+  - "badges and attention surfaces"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-089 - Context Usage Display Ownership
+
+```yaml
+plan_unit_id: ACD-089
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Normal thread context-usage behavior is owned by Assistant Chat plus usage-feature, and Assistant, Interview, BrainStorm, and Crew views route cross-doc open/focus actions to the canonical thread usage surface.
+gui_related: true
+gui_classification_reason: Context usage display and open/focus routing are user-visible UI behavior.
+depends_on: [ACD-071]
+unblocks: [ACD-090]
+acceptance_criteria:
+  - Assistant Chat and usage-feature remain the primary feature owners for context/usage display.
+  - Assistant, Interview, BrainStorm, and Crew views route context/usage open/focus actions to the canonical thread usage surface.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_owner_boundary
+reasoning_tier: standard
+context_scope: context_usage
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: context_usage_display_ownership
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0058
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0059
+preserved_exact_tokens:
+  - "context-usage"
+  - "Assistant, Interview, BrainStorm, and Crew"
+  - "canonical thread usage surface"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/usage-feature.md
+```
+
+### ACD-090 - Context Usage Route Stale Disposition
+
+```yaml
+plan_unit_id: ACD-090
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Context and usage open behavior resolves through canonical route/open to the editor-tab Context Detail Pane; side-panel, artifact-local, or chat-local usage route wording is stale and non-buildable until reconciled against Assistant Chat and usage-feature owners.
+gui_related: true
+gui_classification_reason: Context Detail Pane routing and stale route cleanup affect user-visible navigation.
+depends_on: [ACD-084, ACD-089]
+unblocks: []
+acceptance_criteria:
+  - Context/usage open behavior resolves through canonical route/open to the editor-tab Context Detail Pane.
+  - Side-panel, artifact-local, and chat-local usage route wording remains stale/non-buildable until reconciled.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: stale_usage_route
+reasoning_tier: standard
+context_scope: context_usage
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/usage-feature.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: context_usage_route_stale_disposition
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0059
+preserved_exact_tokens:
+  - "/open"
+  - "editor-tab Context Detail Pane"
+  - "side-panel"
+  - "artifact-local"
+  - "chat-local"
+  - "non-buildable"
+negative_constraints:
+  - "Stale wording that sends this seam to a side-panel, artifact-local, or chat-local usage route is non-buildable until reconciled against those owners."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/usage-feature.md
+```
+
+### ACD-091 - Context Usage Thread Signals
+
+```yaml
+plan_unit_id: ACD-091
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant and Interview threads expose a visible context-usage summary for
+  the context actually consumed, including current usage versus the effective
+  model window, last compaction/truncation reason, provider-authoritative
+  versus estimated token/cost status, and whether hidden/background usage
+  contributed.
+gui_related: true
+gui_classification_reason: Context usage signals are visible in thread UI.
+depends_on: [ACD-089, ACD-090]
+unblocks: [ACD-092, ACD-093, ACD-094]
+acceptance_criteria:
+  - Thread context usage is computed against the effective model window.
+  - Compaction and truncation reasons are visible when present.
+  - Provider-authoritative and estimated token/cost status remain distinguishable.
+  - Hidden/background usage contribution remains visible.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: usage_disclosure
+reasoning_tier: standard
+context_scope: context_usage
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/usage-feature.md
+node_compile_hint:
+  mode: context_usage_thread_signals
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+preserved_exact_tokens:
+  - "effective model window"
+  - "provider-authoritative"
+  - "estimated"
+  - "hidden/background usage"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/usage-feature.md
+```
+
+### ACD-092 - Context Detail Pane Information Architecture
+
+```yaml
+plan_unit_id: ACD-092
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The Context Detail Pane is an editor-tab pane with top-level `Curated` and
+  `Raw` views; `Curated` contains `Overview`, `Breakdown`, and `Messages`, and
+  `Raw` exposes message payloads, related `tool-part` payloads, provider
+  metadata blobs, and path/runtime debug data through an accordion.
+gui_related: true
+gui_classification_reason: Context Detail Pane tabs and accordions are visible editor-pane UI.
+depends_on: [ACD-091]
+unblocks: [ACD-093, ACD-100]
+acceptance_criteria:
+  - Context Detail Pane opens as an editor-tab pane.
+  - Top-level Curated and Raw views are available.
+  - Curated includes Overview, Breakdown, and Messages.
+  - Raw exposes payloads, tool-part data, provider metadata, and runtime/path debug data.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: pane_ia
+reasoning_tier: standard
+context_scope: context_usage
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: context_detail_pane_ia
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+preserved_exact_tokens:
+  - "Curated"
+  - "Raw"
+  - "Overview"
+  - "Breakdown"
+  - "Messages"
+  - "/model/mode/persona"
+  - "/context/cost"
+  - "tool-part"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-093 - Context Breakdown Source Taxonomy
+
+```yaml
+plan_unit_id: ACD-093
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Context Detail Pane breakdowns include system/instruction blocks,
+  user/assistant messages, compiled attachments and forwarded document
+  selections, tool/activity-derived context, canonical `usage.event` and
+  `run.completed.usage` snapshots, and debug-only Investigation Context items
+  for active debug threads.
+gui_related: true
+gui_classification_reason: Breakdown rows and source groups are visible in the Context Detail Pane.
+depends_on: [ACD-092]
+unblocks: [ACD-094, ACD-095]
+acceptance_criteria:
+  - Context breakdowns include all canonical user, assistant, system, attachment, tool, usage, and debug source families.
+  - Investigation Context items appear only for active debug threads.
+  - Canonical usage snapshots remain separate from ordinary chat-local message estimates.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: breakdown_source_taxonomy
+reasoning_tier: standard
+context_scope: context_usage
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/usage-feature.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: context_breakdown_source_taxonomy
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0060
+preserved_exact_tokens:
+  - "usage.event"
+  - "run.completed.usage"
+  - "Investigation Context"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+```
+
+
+<<< CONTEXT_AFTER 7769-7780 >>>
+### ACD-094 - Context Usage Runtime Source Boundary
+
+```yaml
+plan_unit_id: ACD-094
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The thread surface derives usage from canonical runtime records and must not
+  invent a second chat-local cost model; hidden/background helper usage remains
+  source-class inspectable, and truncation, redaction, and
+  context-serialization state remain visible so omitted context is never

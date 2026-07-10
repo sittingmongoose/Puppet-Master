@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE 24386-24397 >>>
+          "requirement": "cmd.source_control.review.swap records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_review_swap.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.source_control.review.swap records dispatch receipt cmd.source_control.review.swap.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 24398-24782 >>>
+    "catalog.source_control_select_tab": {
+      "ui_element_id": "catalog.source_control_select_tab",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.source_control.select_tab",
+      "handler_location": "handlers::source_control::select_tab",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.source_control.select_tab must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.source_control.select_tab must expose projected state selector and disabled reason before dispatch",
+        "cmd.source_control.select_tab dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.source_control.select_tab must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.source_control.select_tab must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.source_control.select_tab; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.source_control_select_tab.availability",
+      "disabled_reason_projection": "state.commands.source_control_select_tab.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.source_control.select_tab records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.source_control.select_tab.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.source_control_select_tab exposes a stable role/name/description matching cmd.source_control.select_tab.",
+        "keyboard_access": "catalog.source_control_select_tab is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.source_control_select_tab preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.source_control_select_tab surfaces state.commands.source_control_select_tab.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.source_control_select_tab.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.source_control.select_tab reaches handlers::source_control::select_tab with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_select_tab.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.source_control_select_tab.availability and disabled copy reads state.commands.source_control_select_tab.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_select_tab.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.source_control.select_tab records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_select_tab.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.source_control.select_tab records dispatch receipt cmd.source_control.select_tab.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.source_control_select_worktree": {
+      "ui_element_id": "catalog.source_control_select_worktree",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.source_control.select_worktree",
+      "handler_location": "handlers::source_control::select_worktree",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.source_control.select_worktree must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.source_control.select_worktree must expose projected state selector and disabled reason before dispatch",
+        "cmd.source_control.select_worktree dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.source_control.select_worktree must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.source_control.select_worktree must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.source_control.select_worktree; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.source_control_select_worktree.availability",
+      "disabled_reason_projection": "state.commands.source_control_select_worktree.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.source_control.select_worktree records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.source_control.select_worktree.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.source_control_select_worktree exposes a stable role/name/description matching cmd.source_control.select_worktree.",
+        "keyboard_access": "catalog.source_control_select_worktree is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.source_control_select_worktree preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.source_control_select_worktree surfaces state.commands.source_control_select_worktree.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.source_control_select_worktree.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.source_control.select_worktree reaches handlers::source_control::select_worktree with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_select_worktree.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.source_control_select_worktree.availability and disabled copy reads state.commands.source_control_select_worktree.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_select_worktree.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.source_control.select_worktree records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_select_worktree.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.source_control.select_worktree records dispatch receipt cmd.source_control.select_worktree.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.source_control_set_compare_target": {
+      "ui_element_id": "catalog.source_control_set_compare_target",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.source_control.set_compare_target",
+      "handler_location": "handlers::source_control::set_compare_target",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.source_control.set_compare_target must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.source_control.set_compare_target must expose projected state selector and disabled reason before dispatch",
+        "cmd.source_control.set_compare_target dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.source_control.set_compare_target must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.source_control.set_compare_target must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.source_control.set_compare_target; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.source_control_set_compare_target.availability",
+      "disabled_reason_projection": "state.commands.source_control_set_compare_target.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.source_control.set_compare_target records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.source_control.set_compare_target.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.source_control_set_compare_target exposes a stable role/name/description matching cmd.source_control.set_compare_target.",
+        "keyboard_access": "catalog.source_control_set_compare_target is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.source_control_set_compare_target preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.source_control_set_compare_target surfaces state.commands.source_control_set_compare_target.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.source_control_set_compare_target.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.source_control.set_compare_target reaches handlers::source_control::set_compare_target with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_set_compare_target.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.source_control_set_compare_target.availability and disabled copy reads state.commands.source_control_set_compare_target.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_set_compare_target.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.source_control.set_compare_target records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_set_compare_target.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.source_control.set_compare_target records dispatch receipt cmd.source_control.set_compare_target.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.source_control_stash": {
+      "ui_element_id": "catalog.source_control_stash",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.source_control.stash",
+      "handler_location": "handlers::source_control::stash",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.source_control.stash must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.source_control.stash must expose projected state selector and disabled reason before dispatch",
+        "cmd.source_control.stash dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.source_control.stash must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.source_control.stash must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.source_control.stash; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.source_control_stash.availability",
+      "disabled_reason_projection": "state.commands.source_control_stash.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.source_control.stash records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.source_control.stash.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.source_control_stash exposes a stable role/name/description matching cmd.source_control.stash.",
+        "keyboard_access": "catalog.source_control_stash is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.source_control_stash preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.source_control_stash surfaces state.commands.source_control_stash.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.source_control_stash.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.source_control.stash reaches handlers::source_control::stash with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_stash.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.source_control_stash.availability and disabled copy reads state.commands.source_control_stash.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_stash.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.source_control.stash records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_stash.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.source_control.stash records dispatch receipt cmd.source_control.stash.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.source_control_suggest_commit_batches": {
+      "ui_element_id": "catalog.source_control_suggest_commit_batches",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.source_control.suggest_commit_batches",
+      "handler_location": "handlers::source_control::suggest_commit_batches",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.source_control.suggest_commit_batches must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.source_control.suggest_commit_batches must expose projected state selector and disabled reason before dispatch",
+        "cmd.source_control.suggest_commit_batches dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.source_control.suggest_commit_batches must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.source_control.suggest_commit_batches must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.source_control.suggest_commit_batches; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.source_control_suggest_commit_batches.availability",
+      "disabled_reason_projection": "state.commands.source_control_suggest_commit_batches.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.source_control.suggest_commit_batches records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.source_control.suggest_commit_batches.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.source_control_suggest_commit_batches exposes a stable role/name/description matching cmd.source_control.suggest_commit_batches.",
+        "keyboard_access": "catalog.source_control_suggest_commit_batches is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.source_control_suggest_commit_batches preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.source_control_suggest_commit_batches surfaces state.commands.source_control_suggest_commit_batches.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.source_control_suggest_commit_batches.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.source_control.suggest_commit_batches reaches handlers::source_control::suggest_commit_batches with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_suggest_commit_batches.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.source_control_suggest_commit_batches.availability and disabled copy reads state.commands.source_control_suggest_commit_batches.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_suggest_commit_batches.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.source_control.suggest_commit_batches records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_suggest_commit_batches.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.source_control.suggest_commit_batches records dispatch receipt cmd.source_control.suggest_commit_batches.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.source_control_suggest_commit_groups": {
+      "ui_element_id": "catalog.source_control_suggest_commit_groups",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.source_control.suggest_commit_groups",
+      "handler_location": "handlers::source_control::suggest_commit_groups",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.source_control.suggest_commit_groups must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.source_control.suggest_commit_groups must expose projected state selector and disabled reason before dispatch",
+        "cmd.source_control.suggest_commit_groups dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.source_control.suggest_commit_groups must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.source_control.suggest_commit_groups must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.source_control.suggest_commit_groups; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.source_control_suggest_commit_groups.availability",
+      "disabled_reason_projection": "state.commands.source_control_suggest_commit_groups.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.source_control.suggest_commit_groups records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.source_control.suggest_commit_groups.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.source_control_suggest_commit_groups exposes a stable role/name/description matching cmd.source_control.suggest_commit_groups.",
+        "keyboard_access": "catalog.source_control_suggest_commit_groups is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.source_control_suggest_commit_groups preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.source_control_suggest_commit_groups surfaces state.commands.source_control_suggest_commit_groups.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.source_control_suggest_commit_groups.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.source_control.suggest_commit_groups reaches handlers::source_control::suggest_commit_groups with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_suggest_commit_groups.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.source_control_suggest_commit_groups.availability and disabled copy reads state.commands.source_control_suggest_commit_groups.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_suggest_commit_groups.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.source_control.suggest_commit_groups records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_suggest_commit_groups.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.source_control.suggest_commit_groups records dispatch receipt cmd.source_control.suggest_commit_groups.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.source_control_toggle_generated_filter": {
+      "ui_element_id": "catalog.source_control_toggle_generated_filter",
+      "ui_location": "Source Control surface",
+      "ui_command_id": "cmd.source_control.toggle_generated_filter",
+      "handler_location": "handlers::source_control::toggle_generated_filter",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.source_control.toggle_generated_filter must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.source_control.toggle_generated_filter must expose projected state selector and disabled reason before dispatch",
+        "cmd.source_control.toggle_generated_filter dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.source_control.toggle_generated_filter must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.source_control.toggle_generated_filter must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.source_control.toggle_generated_filter; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.source_control_toggle_generated_filter.availability",
+      "disabled_reason_projection": "state.commands.source_control_toggle_generated_filter.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.source_control.toggle_generated_filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+        "receipt_or_event_refs": [
+          "cmd.source_control.toggle_generated_filter.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.source_control_toggle_generated_filter exposes a stable role/name/description matching cmd.source_control.toggle_generated_filter.",
+        "keyboard_access": "catalog.source_control_toggle_generated_filter is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.source_control_toggle_generated_filter preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.source_control_toggle_generated_filter surfaces state.commands.source_control_toggle_generated_filter.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.source_control_toggle_generated_filter.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.source_control.toggle_generated_filter reaches handlers::source_control::toggle_generated_filter with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_toggle_generated_filter.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.source_control_toggle_generated_filter.availability and disabled copy reads state.commands.source_control_toggle_generated_filter.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_toggle_generated_filter.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.source_control.toggle_generated_filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+        },
+        {
+          "test_id": "wiring.catalog.source_control_toggle_generated_filter.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.source_control.toggle_generated_filter records dispatch receipt cmd.source_control.toggle_generated_filter.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< CONTEXT_AFTER 24783-24794 >>>
+    "catalog.terminal_clear_scrollback": {
+      "ui_element_id": "catalog.terminal_clear_scrollback",
+      "ui_location": "Terminal and bottom runtime panels",
+      "ui_command_id": "cmd.terminal.clear_scrollback",
+      "handler_location": "handlers::terminal::clear_scrollback",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.terminal.clear_scrollback must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.terminal.clear_scrollback must expose projected state selector and disabled reason before dispatch",
+        "cmd.terminal.clear_scrollback dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.terminal.clear_scrollback must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.terminal.clear_scrollback must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

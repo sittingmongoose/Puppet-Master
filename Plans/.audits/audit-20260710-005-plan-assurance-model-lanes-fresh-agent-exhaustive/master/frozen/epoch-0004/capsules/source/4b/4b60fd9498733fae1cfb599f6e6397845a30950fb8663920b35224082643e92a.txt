@@ -1,0 +1,393 @@
+<<< CONTEXT_BEFORE 7021-7032 >>>
+- canonical `Plans/Permissions_System.md` precedence
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/MCP_Integration.md'
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Slash variants and mixed `_` / `/` examples are retired.
+- Older `project > global > org > default` wording is non-canonical historical wording.
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 7033-7396 >>>
+### T-088 - MCP Unavailable Runtime Contract
+
+```yaml
+plan_unit_id: T-088
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Unavailable MCP servers mark their tools unavailable, fail calls immediately with structured errors, use independent
+  per-tool timeout, emit diagnostics, preserve safe stale identity, and retry once after cooldown.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- A transient `listTools()` failure does not permanently delete the MCP client or singleton state.
+- Calls to unavailable tools fail immediately with structured errors.
+- Reconnect behavior is bounded to one automatic attempt after cooldown.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: mcp_unavailable_runtime_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0060
+preserved_exact_tokens:
+- unavailable
+- failure_class=provider_transient
+- Per-tool MCP invocation timeout
+- 30 seconds
+- server_id
+- reason
+- last_healthy_at
+- stale list
+- listTools()
+- one automatic reconnect attempt
+- 60 seconds
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-089 - MCP Degraded User Surface
+
+```yaml
+plan_unit_id: T-089
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: User surfaces show MCP servers as `degraded` or `unavailable` and never silently hide a server after a single
+  transient failure.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.
+split_recommended: false
+depends_on:
+- T-088
+unblocks: []
+acceptance_criteria:
+- Visible degraded/unavailable state is emitted from runtime diagnostic evidence.
+- A single transient failure does not remove the server from user surfaces.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: mcp_degraded_user_surface
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0060
+preserved_exact_tokens:
+- degraded
+- unavailable
+- MUST NOT silently hide
+- startup timeout
+- transport failure
+- auth loss
+- schema mismatch
+- repeated health-check failure
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-090 - Tool Gap Risk Register
+
+```yaml
+plan_unit_id: T-090
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: The gaps table is preserved as risk/readiness metadata for platform semantics, MCP instability, defaults,
+  sandboxing, HITL, FileSafe, retention, subagent overrides, LSP, web abuse, config, snapshots, MCP down, empty Usage, provider
+  coverage, policy enforcement, and LSP crashes.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Rows remain risk/readiness mitigations, not WorkNodes or executable tasks.
+- Mitigation labels are preserved for future implementation planning.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_gap_risk_register
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0061
+preserved_exact_tokens:
+- Platform tool semantics differ
+- MCP tool names unstable
+- Permission default ambiguity
+- Custom tool sandboxing
+- Ask vs HITL in orchestrator
+- Edit permission vs write scope
+- Tool latency in seglog
+- Subagent tool defaults
+- LSP tool when no server
+- webfetch / websearch abuse
+- Config key for tool permissions
+- Permission change mid-run
+- MCP server down
+- Tool usage widget empty
+- All providers in MCP GUI
+- Policy application point
+- LSP server crash mid-call
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-091 - Optional Tool Enhancement Backlog
+
+```yaml
+plan_unit_id: T-091
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Optional tool enhancements remain non-MVP backlog items covering rate limits, dashboard, presets, templates,
+  allowlists, denied/ask audit, UI descriptions, and bash allowlists.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Optional enhancements do not redefine MVP scope.
+- MVP remains defined by §3 built-in tools, §10 permission model, §8 events/rollups, and GUI Tool permissions.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: optional_tool_enhancement_backlog
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0062
+preserved_exact_tokens:
+- optional
+- not MVP
+- Per-tool rate limits
+- Tool usage dashboard
+- Permission presets
+- Custom tool templates
+- MCP tool allowlist
+- Audit log for denied/ask
+- Tool description in UI
+- Bash command allowlist
+- Read-only
+- Plan mode
+- Full
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-092 - Permissions Implementation SSOT Boundary
+
+```yaml
+plan_unit_id: T-092
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tools consumes `Plans/Permissions_System.md` as the permission SSOT while adding registry-specific FileSafe
+  integration, CLI derivation, and preset implementation guidance.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Tools does not restate conflicting permission owner definitions.
+- Mode override text does not imply blanket denial of help-family tools when the effective preset allows them.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: permissions_implementation_ssot_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0063
+preserved_exact_tokens:
+- SSOT
+- Plans/Permissions_System.md
+- FileSafe integration
+- CLI derivation
+- presets
+- /question/skill/LSP/todo/subagent
+- /search/skill/lsp/question/todo
+- help-family tools
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Permissions_System.md, Primitive:DRYRules'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-093 - Permission Config Schema Projection
+
+```yaml
+plan_unit_id: T-093
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Durable permission config uses global and project TOML files and projects the merged set to redb `tool_permissions`
+  in `config:v1` for backward compatibility.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Global and project TOML locations are preserved.
+- Merged permission projection to redb remains backward-compatible.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: permission_config_schema_projection
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0064
+preserved_exact_tokens:
+- ~/.config/puppet-master/permissions.toml
+- <project_root>/.puppet-master/permissions.toml
+- tool_permissions
+- config:v1
+- backward compatibility
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-094 - Default Policy Table Consumer Summary
+
+```yaml
+plan_unit_id: T-094
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tools mirrors the canonical default policy table for skill, question, web, batch web, todo, and child-agent
+  question tool families while keeping defaults owned by Permissions_System §7.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Default table remains a consumer summary of Permissions_System §7.
+- Child-agent `question` remains denied by default.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: default_policy_table_consumer_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0065
+preserved_exact_tokens:
+- skill
+- question
+- HITL
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+- batch_webfetch
+- batch_webextract
+- todoread
+- todowrite
+- child-agent `question`
+- allow
+- ask
+- deny
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Permissions_System.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 7397-7408 >>>
+### T-095 - Permission Resolution Algorithm Summary
+
+```yaml
+plan_unit_id: T-095
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Permission resolution order is summarized as Mode override, Session cache, Persona, Project, Global, Defaults,
+  Special guards, then FileSafe post-resolution application.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false

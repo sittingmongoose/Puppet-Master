@@ -1,0 +1,376 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-361 >>>
+L00000001	# GUI Testing Tools & Framework Options -- Implementation Plan
+L00000002	
+L00000003	
+L00000004	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000005	
+L00000006	## Plan Document Status
+L00000007	
+L00000008	**This is a PLAN DOCUMENT ONLY** -- No code changes have been made. This document describes:
+L00000009	
+L00000010	- Extending the interviewer flow to discover and offer GUI/testing tools (existing and custom)
+L00000011	- Supporting headless GUI testing and full debug logs for non-web projects
+L00000012	- Integrating chosen tools into test strategy and execution plans so agents perform deeper, framework-appropriate testing
+L00000013	
+L00000014	Implementation must follow the **DRY Method** (AGENTS.md): reuse-first, single source of truth for tool/framework data, tagging of reusable items. **Rollout:** All items in this plan (including Doctor platform versions, MCP Doctor check, and catalog version) are in scope for a single implementation; no phased rollout.
+L00000015	
+L00000016	## Rewrite alignment (2026-02-21)
+L00000017	This plan remains authoritative for *what* tool discovery/testing support must exist, but implementation should align with `Plans/rewrite-tie-in-memo.md`:
+L00000018	
+L00000019	- tool discovery, permissions, and validation live in the **central tool registry + policy engine** (not per-provider special cases)
+L00000020	- tool execution results normalize into the **unified event model** and store through seglog -> projections (redb/Tantivy)
+L00000021	- tool latency and errors from the unified event model feed analytics scan jobs and dashboard rollups
+L00000022	- UI wiring details should be re-expressed in Slint (not Iced) without changing feature semantics
+L00000023	- auth policy remains subscription-first, with Gemini API key as the explicit `key-exception` where the selected provider entry supports it; stale-canon one-provider `mixed-account` Gemini wording and Gemini CLI (`gemini_cli`) active-provider wording are retired in favor of Gemini Direct (`gemini`, key-only/API-key-backed) plus Antigravity CLI as the active Google-owned CLI-runtime route, with requested/effective auth/account identity kept consistent with the shared provider runtime
+L00000024	- for this task, deliverables remain **Plans-folder documentation updates for the Slint rebuild**; no legacy Iced runtime wiring is required
+L00000025	
+L00000026	ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+L00000027	
+L00000028	### Route, view-state, and automation-default alignment
+L00000029	Tooling summaries must not let shell view commands become target identity owners. `cmd.source_control.switch_subview` is a `/view-state` command for Source Control subview selection; repo, worktree, and `/worktree/compare` target identity stays in the route/open contract and its runtime object envelope. Stored `resume_url` fields in storage-plan and storage-plan.md remain valid resumability hints, but last-opened-view convenience state inside `project_state:v1:{project_id}`, project_state, and project_id must not become operational truth.
+L00000030	
+L00000031	Open-resolution and route focus are GUI consumer behavior. `Project_Output_Artifacts`, `Project_Output_Artifacts.md`, Plans/Section15_MVP_Promoted_Features_Spec.md, /Section15_MVP_Promoted_Features_Spec.md, Plans/Tools.md, /Tools.md, Plans/newtools.md, /newtools.md, Plans/Orchestrator_Page.md, /Orchestrator_Page.md, and `/action` references remain adjacent owner or consumer docs; newtools summarizes only that concern-specific records, GUI open affordances, and `/open-resolution` focus must resolve through the shared object/surface route rather than through local tool prose.
+L00000032	
+L00000033	Automation defaults are automation-first. `regular`, `visual_mode`, `visual_mode = auto`, Run_Modes, Run_Modes.md, optional HITL, and manual confirmations must map into one coherent mode policy where local visual runs are allowed but do not defeat the automation-first posture or `/HTE-by-default` migration rule. Surface rows should prefer one strong primary line, compact status chips, `/icons`, expandable `/detail`, deep-link pivots, canonical `/surface` target identity, and secondary `/sub-selection` focus rather than overloading the primary command.
+L00000034	## DRY Method Compliance
+L00000035	
+L00000036	**CRITICAL:** All code in this plan MUST follow DRY principles.
+L00000037	ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+L00000038	
+L00000039	### DRY Requirements
+L00000040	
+L00000041	1. **Platform Data -- ALWAYS use platform_specs:**
+L00000042	   - ❌ **NEVER** hardcode platform CLI commands, binary names, models, auth, or capabilities
+L00000043	   - ✅ **ALWAYS** use `platform_specs::` functions (e.g., `platform_specs::cli_binary_names()`, `platform_specs::supports_effort()`)
+L00000044	   ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+L00000045	
+L00000046	2. **Subagent Names -- ALWAYS use subagent_registry:**
+L00000047	   - ❌ **NEVER** hardcode subagent names in match statements or mappings
+L00000048	   - ✅ **ALWAYS** use `subagent_registry::` functions (e.g., `subagent_registry::is_valid_subagent_name()`)
+L00000049	   - ✅ **ALWAYS** reference `DRY:DATA:subagent_registry` from orchestrator plan as the single source of truth
+L00000050	   ContractRef: Primitive:DRYRules, ContractName:Plans/orchestrator-subagent-integration.md
+L00000051	
+L00000052	3. **Tool/Framework Data -- Single Source of Truth:**
+L00000053	   - ✅ **ALWAYS** use `DRY:DATA:gui_tool_catalog` as the single source of truth for tool/framework data
+L00000054	   - ❌ **NEVER** hardcode tool names, installation paths, or framework-specific behavior
+L00000055	   ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+L00000056	
+L00000057	4. **Tag All Reusable Items:**
+L00000058	   - ✅ Tag reusable functions: `// DRY:FN:<name> -- Description`
+L00000059	   - ✅ Tag reusable data structures: `// DRY:DATA:<name> -- Description`
+L00000060	   - ✅ Tag reusable widgets: `// DRY:WIDGET:<name> -- Description`
+L00000061	   - ✅ Tag reusable helpers: `// DRY:HELPER:<name> -- Description`
+L00000062	
+L00000063	5. **Widget Reuse:**
+L00000064	   - ✅ **ALWAYS** check `docs/gui-widget-catalog.md` before creating new UI
+L00000065	   - ✅ **ALWAYS** use existing widgets from `src/widgets/`
+L00000066	   - ✅ If bespoke UI is required, add `// UI-DRY-EXCEPTION: <reason>`
+L00000067	
+L00000068	---
+L00000069	
+L00000070	## Table of Contents
+L00000071	
+L00000072	1. [Executive Summary](#1-executive-summary)
+L00000073	2. [Relationship to Other Plans](#2-relationship-to-other-plans)
+L00000074	3. [Problem Statement](#3-problem-statement)
+L00000075	4. [Goals](#4-goals)
+L00000076	5. [Design Overview](#5-design-overview)
+L00000077	6. [Framework & Tool Discovery (DRY)](#6-framework--tool-discovery-dry)
+L00000078	7. [Interviewer Flow Changes](#7-interviewer-flow-changes)
+L00000079	8. [MCP Support and GUI Settings](#8-mcp-support-and-gui-settings) (8.1 GUI, 8.2 per-platform + discovery table, 8.3 provider transport/auth taxonomy)
+L00000080	9. [Custom Headless GUI Tool](#9-custom-headless-gui-tool)
+L00000081	10. [Integration with Test Strategy & Plans](#10-integration-with-test-strategy--plans)
+L00000082	11. [Implementation Checklist](#11-implementation-checklist)
+L00000083	12. [Gaps, Risks, and DRY Notes](#12-gaps-risks-and-dry-notes)
+L00000084	13. [Evidence-in-Chat Contract and Flow](#13-evidence-in-chat-contract-and-flow-research-evidence-media-chat)
+L00000085	14. [Live Visualization Execution Architecture](#14-live-visualization-execution-architecture-research-live-visualization)
+L00000086	    - [14.5 Mobile Testing Stacks](#145-mobile-testing-stacks-research-mobile-testing-stacks)
+L00000087	    - [14.6 Preview, Build, Docker, and Actions Contracts](#146-preview-build-docker-and-actions-contracts)
+L00000088	    - [14.7 Docker runtime + DockerHub contract](#147-docker-runtime--dockerhub-contract)
+L00000089	    - [14.8 GitHub Actions settings + generation contract](#148-github-actions-settings--generation-contract)
+L00000090	    - [14.9 Automation migration contract](#149-automation-migration-contract-iced-era-tool-to-slint-era-tooling)
+L00000091	    - [14.10 Doctor and preflight matrix](#1410-doctor-and-preflight-matrix)
+L00000092	15. [References](#15-references)
+L00000093	
+L00000094	---
+L00000095	
+L00000096	## 1. Executive Summary
+L00000097	
+L00000098	Today, the interviewer can generate **Playwright** requirements (an optional/fallback/project-native web test path) and wire them into the test strategy so agents run E2E tests. For **web-based GUIs**, the PM built-in browser automation is the primary native web test path; Playwright is optional, fallback, or project-native, not the native default. Many projects use native or framework-specific GUIs (e.g. Iced, Dioxus, Qt, Electron, Tauri). For those:
+L00000099	
+L00000100	- There may be **existing tools** (e.g. Dioxus hot reload + web preview, Iced headless runner, framework-specific test utilities) that the interviewer should **discover and offer**.
+L00000101	- When no suitable tool exists, the interviewer should offer to **plan or build a custom headless GUI tool** that allows headless navigation and produces a **full debug log** after tests, so agents can run smoke tests and interpret results.
+L00000102	
+L00000103	This plan adds:
+L00000104	
+L00000105	1. **Discovery:** During the interview (especially Architecture and Testing phases), detect GUI stack and search a **single source of truth** for framework-specific tools (existing tools, docs, hot reload, headless options).
+L00000106	2. **User choice:** Present options to the user (use existing tools, plan to build custom tool, or both).
+L00000107	3. **Plan and test strategy:** Write into the generated plans/PRD and test strategy: get existing tools (if chosen), and/or plan to build the custom tool; then integrate tool usage into testing instructions so agents use them during execution.
+L00000108	
+L00000109	Result: **More thorough and deeper testing** across web and non-web projects, with agents using the right tools per framework and a consistent path for custom headless + debug logging when needed.
+L00000110	
+L00000111	**Success criteria (how we know the plan succeeded):** (1) When a non-web GUI framework is detected, the interview offers framework tools and the custom headless option from the catalog. (2) User choices are persisted and drive test strategy and PRD/plan content (tasks + instructions). (3) Agents receive test strategy that includes framework tools and/or custom headless instructions and evidence paths. (4) When the user chose custom headless, a Doctor check can verify the tool exists and runs (conditional on that choice). (5) MCP (e.g. Context7) is configurable for all supported providers via GUI and applied at run time. (6) Existing Playwright flow (optional/fallback/project-native web test path) and existing test strategy behavior remain unchanged when no new options are selected (no regression); PM built-in browser automation remains the primary native web test path.
+L00000112	
+L00000113	---
+L00000114	
+L00000115	## 2. Relationship to Other Plans
+L00000116	
+L00000117	This plan extends the **interview** and **test strategy**; it does not replace them. New options (framework tools, custom headless) are **interview config** that must be wired like existing options and must align with orchestrator, Worktree, and cleanup behavior.
+L00000118	
+L00000119	| Plan | How newtools fits |
+L00000120	|------|-------------------|
+L00000121	| **Plans/interview-subagent-integration.md** | **Phase 8 (Testing & Verification)** already uses qa-expert and test-automator. newtools adds **tool discovery and selection** inside that phase (GUI stack detection, catalog lookup, user options). New fields (`selected_framework_tools`, `plan_custom_headless_tool`, etc.) are **interview config** and must be wired into `InterviewOrchestratorConfig`, set from `gui_config.interview` in `app.rs`, and used at completion when generating test strategy and PRD -- same pattern as `generate_playwright_requirements`. Phase 5 document generation is extended so test strategy and plans include framework tools and custom headless instructions. |
+L00000122	| **Plans/orchestrator-subagent-integration.md** | **Interview config wiring:** Any new interview setting follows the same three-step checklist as in "Interviewer Enhancements and Config Wiring" and "Avoiding Built but Not Wired": add to execution config type, set at construction from `gui_config.interview`, use in interview runtime. **Test strategy** is already loaded and merged into node criteria by the orchestrator; newtools ensures the **new** tool instructions and debug-log paths are part of that merged context so agents see them. Evidence paths (e.g. `.puppet-master/evidence/`) stay as-is; custom headless tool writes evidence in the same style. |
+L00000123	| **Plans/WorktreeGitImprovement.md** | **Config:** New interview toggles live in the Interview tab and `gui_config.interview`; they are persisted and included in the **same Option B run-config build** as other GUI settings (no separate config file). **Worktrees:** When agents run in a worktree, the custom headless tool's evidence path follows the same policy (e.g. `.puppet-master/evidence/` under the workspace used for the run); no change to worktree creation/merge/cleanup. |
+L00000124	| **Plans/MiscPlan.md** | **Cleanup:** `.puppet-master/evidence/` is allowlisted; headless tool evidence is never removed by prepare/cleanup. **Interview output:** Test strategy and interview outputs stay under `.puppet-master/interview/`; newtools only extends **content** (framework tools, custom headless). **run_with_cleanup:** Interview and start_chain continue to use `run_with_cleanup`; newtools does not add new call sites. |
+L00000125	
+L00000126	---
+L00000127	
+L00000128	## 3. Problem Statement
+L00000129	
+L00000130	- **Playwright** (optional/fallback/project-native for web) is the only GUI testing path currently surfaced in the interviewer flow, even though the PM built-in browser automation is the primary native web test path. The interview does not yet discover framework-specific tools for native GUIs.
+L00000131	- **Native/framework GUIs** (Rust/Iced, Dioxus, Qt, Flutter, etc.) have no standardized path in the interview: no discovery of framework-specific tools (e.g. Dioxus devtools, Iced headless runner), and no option to plan or build a project-specific headless tool with full debug output.
+L00000132	- Without a chosen tool or plan, agents cannot reliably run **smoke tests** or **GUI-level verification** on non-web projects, and testing remains shallow.
+L00000133	
+L00000134	---
+L00000135	
+L00000136	## 4. Goals
+L00000137	
+L00000138	- **Discover existing tools:** Interviewer consults a single source of truth (e.g. a catalog or module) mapping GUI frameworks to existing tools (official or community: hot reload, web preview, headless runners, test harnesses).
+L00000139	  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+L00000140	- **Offer options to the user:** Present: use existing tools only, plan/build custom headless tool only, or both. User choice is stored and drives what gets written into execution plans and test strategy.
+L00000141	  ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation
+L00000142	- **Custom headless tool option:** When chosen, execution plans MUST include: build (or adopt) a project-specific tool that supports headless GUI navigation and emits a **full debug log** after runs so agents can verify behavior and debug failures.
+L00000143	  ContractRef: SchemaID:evidence.schema.json, ContractName:AGENTS.md
+L00000144	- **Integrate into testing:** Selected tools (existing and/or custom) MUST be reflected in test strategy (e.g. test-strategy.md, test-strategy.json) and in PRD/execution plan language so **agents use the tools** during iterations for smoke and deeper GUI tests.
+L00000145	  ContractRef: ContractName:Plans/interview-subagent-integration.md#phase-5-document-generation, ContractName:Plans/orchestrator-subagent-integration.md#test-strategy-loading
+L00000146	- **DRY:** One place for framework→tool data; reuse existing interview phase flow, test strategy generator, and prompt/context loading.
+L00000147	  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/interview-subagent-integration.md#dry-compliance
+L00000148	
+L00000149	---
+L00000150	
+L00000151	## 5. Design Overview
+L00000152	
+L00000153	- **Where it happens:** Interview flow, primarily **Architecture & Technology** (to detect GUI stack) and **Testing & Verification** (to choose tools and coverage). Optionally use **Product/UX** phase for GUI type (web vs native).
+L00000154	- **Data flow:**
+L00000155	  1. During or after Architecture (and optionally UX), derive **GUI type** and **framework** (e.g. web, Iced, Dioxus, Qt, Flutter, Tauri, Electron).
+L00000156	  2. **Lookup** framework in a **single source of truth** (see §6) to get: existing tools (with names, install/setup, capabilities), and whether a custom headless tool is typically needed.
+L00000157	  3. In Testing phase (or a dedicated "GUI testing tools" step), **present options** to the user: existing tools, custom headless tool plan, or both.
+L00000158	  4. **Persist** user choices in interview state and config (e.g. "use_playwright", "use_framework_tools", "plan_custom_headless_tool", "selected_framework_tools").
+L00000159	     ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#config-wiring
+L00000160	  5. On interview completion, **write into plans/PRD and test strategy:**
+L00000161	     - Tasks to **obtain/set up** existing tools when selected.
+L00000162	     - Tasks to **plan or build** the custom headless tool when selected (with requirement: headless navigation + full debug log after test runs).
+L00000163	     - **Testing instructions** that tell agents to use the PM built-in browser (primary web path) or Playwright (optional/fallback/project-native for web), selected framework tools, and/or the custom tool for smoke and GUI tests; reference debug log location and format where applicable.
+L00000164	
+L00000165	---
+L00000166	
+L00000167	## 6. Framework & Tool Discovery (DRY)
+L00000168	
+L00000169	### 6.1 Single source of truth
+L00000170	
+L00000171	Introduce a **single source of truth** for "GUI framework → available tools" so the interviewer (and any future automation) does not hardcode or duplicate this data.
+L00000172	
+L00000173	- **Location (required):** `puppet-master-rs/src/interview/gui_tool_catalog.rs` per §12.5 "Catalog location". Tag as `// DRY:DATA:GuiToolCatalog`.
+L00000174	  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
+L00000175	- **Runtime‑mutable `GuiToolCatalog` (Resolved):**
+L00000176	  - `GuiToolCatalog` is composed of:
+L00000177	    1. **Base catalog** shipped with Puppet Master (curated defaults; DRY:DATA in code).
+L00000178	    2. **User overlay catalog** persisted in app settings (**non‑secret**; redb settings store) and editable via UI; export/import as JSON.
+L00000179	  - Merge precedence: **overlay wins** by stable IDs (`framework_id`, `tool_id`).
+L00000180	  - Research-populated entries are written to the **overlay** (never to the base catalog).
+L00000181	  ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§2, PolicyRule:no_secrets_in_storage
+L00000182	- **Content:** A catalog (e.g. struct + const data or table) that for each supported framework (or "web" for the PM built-in browser as the primary web test path, with Playwright optional/fallback/project-native) provides:
+L00000183	  - **Framework ID** (e.g. `web`, `iced`, `dioxus`, `qt`, `flutter`, `tauri`, `electron`).
+L00000184	  - **Display name** and optional **detection hints** (e.g. Cargo.toml crate name, package.json deps).
+L00000185	  - **Existing tools:** list of entries, each with: name, description, install/setup summary, capabilities (e.g. "hot reload", "web preview", "headless test", "real-time dev UI"), and optional doc URL.
+L00000186	  - **Custom headless default:** whether to suggest "plan/build custom headless tool" by default for this framework (e.g. true for Iced when no headless runner in project; false for "web" because the PM built-in browser is the primary web test path and Playwright is optional/fallback/project-native).
+L00000187	
+L00000188	**Examples to seed the catalog:**
+L00000189	
+L00000190	| Framework | Existing tools (examples) | Custom headless suggestion |
+L00000191	|-----------|---------------------------|----------------------------|
+L00000192	| web       | PM built-in browser (primary), Playwright (optional/fallback/project-native) | No (PM built-in browser is the primary web test path) |
+L00000193	| dioxus    | Dioxus devtools (web preview, hot reload, hot patching) | Optional (if more than preview needed) |
+L00000194	| iced      | In-repo headless_runner (tiny-skia), GUI automation action catalog | Yes, if not already in project |
+L00000195	| qt        | Qt Test, Squish, etc. (research and list) | Often |
+L00000196	| flutter   | Flutter driver, integration_test | Optional |
+L00000197	| tauri     | WebDriver + front-end; Tauri test utils | Optional |
+L00000198	| electron  | Playwright (Electron support, optional/fallback/project-native), Spectron legacy | No (Playwright optional/fallback/project-native) |
+L00000199	
+L00000200	Catalog MUST be **extensible** (add new frameworks/tools without changing interviewer flow logic). Implementation MUST provide **DRY:FN** helpers for "lookup by framework", "list tools for framework", "should suggest custom headless for framework".
+L00000201	ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2
+L00000202	
+L00000203	### 6.2 Research as input only (no research-only outcome)
+L00000204	
+L00000205	Research (Context7 MCP, web search) may be used to **inform** the catalog or the build plan, but MUST NOT be presented as a standalone research-only outcome. Options:
+L00000206	ContractRef: PolicyRule:Decision_Policy.md§4, Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7
+L00000207	
+L00000208	- **Catalog population:** When the base+overlay `GuiToolCatalog` has no or sparse data for a framework, research can **add or extend overlay entries** (validated) so the catalog remains the single source of truth and future runs see the data. The user is shown **catalog-backed options** (including newly added entries), not a separate research-only result.
+L00000209	- **Build plan input:** When the user chooses plan/build custom headless GUI tool for an unknown or sparse-catalog framework, research can **inform the design** of that tool. The deliverable is always the **plan to build the full-featured tool** (see §9); research only feeds that plan.
+L00000210	
+L00000211	Implementation MUST NOT offer a research-only mode where the interview concludes with only researched links and no concrete tool choice or build plan. For unknown frameworks, the user still gets: catalog options (if research populated the catalog) and/or the option to plan/build the full-featured custom headless tool, with research used only to improve that plan.
+L00000212	ContractRef: PolicyRule:Decision_Policy.md§4
+L00000213	
+L00000214	### 6.3 MCP and tool invocation
+L00000215	
+L00000216	Some **existing tools** in the catalog (or used during research) rely on **MCP** (Model Context Protocol), e.g. Context7 for documentation lookup, Browser MCP for web testing. For selected tools to be callable when agents run:
+L00000217	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#platform-capability-manager
+L00000218	
+L00000219	- **All platforms:** MCP-backed tools MUST be supported and configurable for **all supported providers** (Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, Gemini). Canonical MCP configuration lives in Puppet Master; per-platform files are **derived adapters only** where a platform requires them (see §8.2). Implementation MUST ensure that when the user selects a catalog tool that uses MCP, Puppet Master can **set up and verify** that the tool is available and callable for the node's platform.
+L00000220	  ContractRef: ContractName:Plans/orchestrator-subagent-integration.md#platform-capability-manager, Gate:GATE-005
+L00000221	- **Setup and verification:** Implementation MUST provide a way to configure MCP servers (including API keys where required) and to verify that tools are callable (e.g. Doctor check or pre-run check per §11 checklist item **Doctor (MCP)**). Implementation MUST document or implement how MCP config (including Context7 API key and enable/disable state) is passed into the runner or agent environment so that platform CLIs see the correct MCP servers when executing.
+L00000222	  ContractRef: ContractName:Plans/MiscPlan.md#72-manual-prune-clean-workspace-action, SchemaID:evidence.schema.json, Gate:GATE-005
+L00000223	- **Catalog metadata:** In the GUI tool catalog (§6.1), implementation MUST tag tools that require MCP (via `requires_mcp: bool` and `mcp_servers: Vec<String>` fields per §12.6.2 structured handoff) so the UI can show requirements (e.g. "Requires Context7 MCP" or "Requires Browser MCP"). When such a tool is selected, the run config or prompt builder MUST ensure the corresponding MCP settings are enabled and configured.
+L00000224	  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/orchestrator-subagent-integration.md#platform-capability-manager
+L00000225	
+L00000226	---
+L00000227	
+L00000228	## 7. Interviewer Flow Changes
+L00000229	
+L00000230	### 7.1 GUI stack detection
+L00000231	
+L00000232	- **Inputs:** Architecture phase output (tech stack, dependencies), optionally UX phase (web vs native vs both). Use existing feature_detector / technology_matrix if available.
+L00000233	- **Output:** One or more **GUI framework IDs** (e.g. `["web"]`, `["iced"]`, `["dioxus","web"]` for Dioxus+web).
+L00000234	- **Storage:** Add to interview state (e.g. `detected_gui_frameworks: Vec<String>`). Use this for the rest of the flow.
+L00000235	
+L00000236	### 7.2 Testing phase: tool discovery and user options
+L00000237	
+L00000238	- After (or as part of) the **Testing & Verification** phase:
+L00000239	  1. **Lookup** detected GUI frameworks in the **GuiToolCatalog** (§6). If catalog is sparse for a framework, research may run to **populate or extend the catalog** (§6.2); the user is never shown a research-only result.
+L00000240	  2. **Build options:**
+L00000241	     - **PM built-in browser** (when "web" is in detected frameworks): primary native web test path. **Playwright** is offered as an optional/fallback/project-native web test path: keep current "Generate Playwright requirements" behavior; present as one option.
+L00000242	     - **Framework tools:** For each detected non-web framework, list existing tools from the catalog; allow user to select which to use (e.g. "Dioxus devtools", "Iced headless runner if present").
+L00000243	     - **Custom headless tool:** Checkbox or option: "plan/build a custom headless GUI tool for the target project (headless navigation + full debug log for agent smoke tests)". Default can come from catalog ("custom headless default" per framework).
+L00000244	  3. **Persist** choices in interview config/state (e.g. `generate_playwright_requirements`, `selected_framework_tools: Vec<FrameworkToolChoice>`, `plan_custom_headless_tool: bool`). Ensure these are wired into `InterviewOrchestratorConfig` and used at completion when generating test strategy and plans (§10). At interview completion, write the Doctor-readable projection into project config: `tools.custom_headless` is written when `plan_custom_headless_tool == true` and removed when `plan_custom_headless_tool == false`.
+L00000245	
+L00000246	### 7.3 UI for tool selection
+L00000247	
+L00000248	- Reuse existing widgets per **DRY** (`docs/gui-widget-catalog.md`, `src/widgets/`). Use toggles, checkboxes, or multi-select for:
+L00000249	  - Playwright (existing, optional/fallback/project-native web test path); PM built-in browser is the primary web path.
+L00000250	  - Per-framework list of existing tools (select one or more).
+L00000251	  - "plan/build custom headless GUI tool" toggle.
+L00000252	- Tooltips or short help: explain that existing tools come from the catalog; custom tool is full-featured (headless runner, action catalog, full evidence) like Puppet Master's automation. No new one-off UI patterns; tag new reusable widgets with `// DRY:WIDGET:...`. Follow existing accessibility and widget patterns (selectable labels, keyboard navigation, screen reader considerations per `docs/gui-widget-catalog.md`).
+L00000253	  ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, ContractName:docs/gui-widget-catalog.md
+L00000254	
+L00000255	---
+L00000256	
+L00000257	## 8. MCP Support and GUI Settings
+L00000258	
+L00000259	This section is a consumer guide only. `Plans/MCP_Integration.md` is the current MCP SSOT.
+L00000260	
+L00000261	ContractRef: ContractName:Plans/MCP_Integration.md, ContractName:Plans/FinalGUISpec.md
+L00000262	
+L00000263	### 8.1 Owner document
+L00000264	
+L00000265	- `Plans/MCP_Integration.md` is live canon now; it is not future-tense planned work
+L00000266	- naming, availability, credential binding, config schema, and supported flows defer to that owner
+L00000267	
+L00000268	### 8.2 GUI/settings alignment
+L00000269	
+L00000270	This GUI/settings alignment section mirrors the linked owner contract and stays aligned with it.
+L00000271	
+L00000272	ContractRef: Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure, Plans/Tools.md#12. Web tool routing algorithm, Plans/MCP_Integration.md#2. Requested versus effective availability, Plans/MCP_Integration.md#7. Effective tool availability and GUI surfacing
+L00000273	
+L00000274	Core rules:
+L00000275	- Legacy `#8.2 GUI/settings alignment` references normalize to this section, with owner-routing back to `Plans/Tools.md` for provider stack, Firecrawl, and web-routing canon.
+L00000276	- This section is the consumer-only GUI/settings alignment landing for `Plans/newtools.md` §8; provider-capability canon lives in Plans/Tools.md sections 11 and 12, while MCP canon lives in `Plans/MCP_Integration.md`.
+L00000277	- global provider stack is user-changeable in Settings.
+L00000278	- per-operation priority reordering is NOT MVP.
+L00000279	- global MVP provider priority is not immutable product policy.
+L00000280	- row-level health/error disclosure and last-failure messaging remain visible in Settings.
+L00000281	- availability plus support-tier visibility in Settings and availability plus support-tier visibility in `/web help/autocomplete` remain mirrored here.
+L00000282	- MCP availability vocabulary points back to `Plans/MCP_Integration.md`.
+L00000283	- `/retire` for this consumer section means stale PM/OpenCode terminology residue is rewritten into PM-native web tool / MCP framing, with repaired owner references to `Plans/Tools.md` and `Plans/MCP_Integration.md`; OpenCode remains reference/provenance only.
+L00000284	
+L00000285	Fields:
+L00000286	- authenticated | expired | not_authenticated
+L00000287	- connected | disabled | needs_auth | needs_client_registration | failed
+L00000288	- LoggedIn | LoggedOut | AuthExpired | AuthFailed
+L00000289	- {server_slug}_{tool_name}
+L00000290	
+L00000291	Labels and values:
+L00000292	- GUI/settings alignment
+L00000293	- requested availability
+L00000294	- effective availability
+L00000295	- credential binding
+L00000296	
+L00000297	Rules:
+L00000298	- Provider ID
+L00000299	- `firecrawl`
+L00000300	- Display name
+L00000301	- `Firecrawl`
+L00000302	- Default priority
+L00000303	- below Exa, Tavily; above DDG (user-adjustable)
+L00000304	- Default state
+L00000305	- disabled (requires API key or self-hosted URL)
+L00000306	### 8.2.1 Cited-search landing
+L00000307	
+L00000308	This cited-search and search-provider note is non-normative consumer guidance.
+L00000309	
+L00000310	ContractRef: Plans/Tools.md#11.1 Provider classes, defaults, and fallback disclosure, Plans/Tools.md#12. Web tool routing algorithm, Plans/MCP_Integration.md#2. Requested versus effective availability, Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
+L00000311	
+L00000312	Required note:
+L00000313	- cited-search wording does not replace provider capability, routing, provenance, or billing canon owned elsewhere.
+L00000314	- Legacy cited-search references, including the heading alias `### 8.2.1 Cited-search and search-provider note`, the `§8.2.1 cited web search` shorthand, and the `cited web search contract`, resolve to this now-written Cited-search landing; these aliases are cross-reference compatibility only, not active search-provider canon.
+L00000315	- The MCP SSOT cross-reference and research session variant cross-reference remain consumer pointers to their owners, not local `newtools.md` canon.
+L00000316	- MCP/web-tooling (`/web-tooling`) guidance in this section is consumer alignment only; owner canon remains `Plans/Tools.md` and `Plans/MCP_Integration.md`.
+L00000317	- See Plans/newtools.md §8 for full list.
+L00000318	- Plans/MCP_Integration.md is live canon now; it is not future-tense planned work.
+L00000319	- Legacy TOC and ENTIRELY MISSING audit wording resolves to this now-written landing; keep that phrase as retired gap history, not active product canon.
+L00000320	- this section is non-normative consumer guidance, not the owner landing for search-provider canon.
+L00000321	- GUI/settings guidance for web-tool providers uses PM product language first: user-facing activity stays `Searching Web`, `Reading Site`, and `Site Reader`, while backend/provider names stay in support, routing, and recovery details.
+L00000322	- Exa-style search may expose a hosted/free-tier path that does not require an API key by default; an optional user API key belongs in global user settings, and rate-limit/fails or 429 states should show user-facing recovery guidance and fallback to another enabled provider before stopping.
+L00000323	- Agent web-search expectations are search, then read top results before answering; PM must not degrade LLM/web-research flows into search-only or instant-answer behavior by default.
+L00000324	- DuckDuckGo/DDG is not treated as a first-party-style full web-search provider unless an official/public full-search API is available; practical DDG wrappers or scraping-based adapters are fallback/compatibility options, not the primary provider contract.
+L00000325	- Site Reader v1 includes full browser interaction capability, not just passive structured reading.
+L00000326	### 8.3 Research session variant reference
+L00000327	
+L00000328	Research-session behavior references the shared `research_session` contract in `Plans/Section15_MVP_Promoted_Features_Spec.md`; MCP settings do not redefine it.
+L00000329	## 9. Custom Headless GUI Tool
+L00000330	
+L00000331	When the user chooses **"plan/build custom headless GUI tool"**:
+L00000332	
+L00000333	### 9.1 Requirement: full-featured (like Puppet Master's automation)
+L00000334	
+L00000335	
+L00000336	The custom headless GUI tool must be **fully featured**, not minimal. Use **Puppet Master's** automation as the reference (`src/automation/`: headless runner, action catalog, evidence layout). The tool must provide:
+L00000337	
+L00000338	- **Headless execution:** Runs without display (CI-friendly); uses software rendering or framework-specific headless mode (e.g. Iced tiny-skia, or framework's own headless API).
+L00000339	- **Action catalog:** A defined set of actions or scenarios so that smoke and regression flows can be scripted and repeated. Not a one-off script -- a reusable catalog the agent can extend and run.
+L00000340	  ContractRef: ContractName:AGENTS.md-action-catalog
+L00000341	  - **Full evidence output:** After each run, the tool MUST produce the **same depth of debug information** as Puppet Master's GUI automation: **Timeline** (e.g. `timeline.jsonl`), **Summary** (e.g. `summary.md`), **Artifacts** (screenshots or state dumps per step), and the canonical manifest described in **§13**. **Consistent paths:** Evidence under `.puppet-master/evidence/gui-automation/<run_id>/`. Optional: **ephemeral workspace clone** as in Puppet Master's headless runner.
+L00000342	  ContractRef: SchemaID:evidence.schema.json, Gate:GATE-005, ContractName:AGENTS.md-evidence
+L00000343	
+L00000344	### 9.2 What gets written into plans
+L00000345	
+L00000346	
+L00000347	- **If get existing tool** (e.g. Iced headless runner already in repo that meets §9.1): Plan steps to **ensure the tool is available** (install/setup), document how to run it and where evidence is written, and reference it in test strategy.
+L00000348	- **If build custom:** Plan steps to **design and implement** a **full-featured** project-specific automation that meets §9.1 (headless runner, action catalog, full evidence: timeline, summary, artifacts). Prefer adopting or wrapping an existing runner (e.g. Iced headless_runner) when the project uses that stack. No minimal smoke harness -- the deliverable is a tool that matches the capability and evidence depth of Puppet Master's automation.
+L00000349	  ContractRef: SchemaID:evidence.schema.json, ContractName:AGENTS.md
+L00000350	- **If both:** Plan to use existing tools where they fit, and add or extend the custom tool for full coverage and evidence.
+L00000351	
+L00000352	### 9.3 Reuse of existing automation (Puppet Master reference implementation)
+L00000353	
+L00000354	Puppet Master's **headless runner** and **action catalog** in `src/automation/` (AGENTS.md) are the **reference implementation**. For **Iced projects**, the plan should reference reusing or porting that pattern. For other frameworks, the plan describes building or adopting a system that meets the **same contract**: action catalog, timeline + summary + artifacts, standard evidence paths.
+L00000355	ContractRef: ContractName:AGENTS.md, SchemaID:evidence.schema.json
+L00000356	
+L00000357	---
+L00000358	
+L00000359	## 10. Integration with Test Strategy & Plans
+L00000360	
+L00000361	### 10.1 Test strategy (test-strategy.md, test-strategy.json)
+
+<<< CONTEXT_AFTER canonical_document_lines=362-373 >>>
+L00000362	
+L00000363	- **Extend** test strategy outputs (`test-strategy.md` + `.puppet-master/interview/test-strategy.json`, schema `Plans/test_strategy.schema.json`) to include:
+L00000364	  - **Framework tools:** List of selected framework tool IDs and how they are used (e.g. "Run Dioxus devtools for live preview; use for manual smoke checks" or "Run Iced headless runner with action set X").
+L00000365	  - **Custom headless tool:** When selected, a dedicated section or items that state: "Use the project's headless GUI tool for smoke tests; read evidence at `.puppet-master/evidence/gui-automation/<run_id>/` (timeline, summary, manifest, artifacts) after each run."
+L00000366	  ContractRef: SchemaID:pm.test_strategy.schema.v1, PolicyRule:Decision_Policy.md§2
+L00000367	- **Test types:** Add or reuse test types (e.g. `headless_gui`, `framework_tool`) in addition to `playwright`, so that verification commands and criteria can reference "run headless tool" or "run framework tool X".
+L00000368	- **DRY:** Extend `test_strategy_generator` and `TestItem` (or equivalent) so that new options are generated from the **same** interview state (selected_framework_tools, plan_custom_headless_tool); no duplicate logic in views vs generator.
+L00000369	
+L00000370	### 10.2 PRD / execution plans
+L00000371	
+L00000372	- **Tasks in the PRD (or execution plan):**
+L00000373	  - "Obtain/set up &lt;existing tool&gt;" when the user selected that tool.

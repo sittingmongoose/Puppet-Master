@@ -1,0 +1,54 @@
+{
+  "assignment_id": "A005-000654-ADVERSARIAL-WIN-4D165ACE14E8-0002",
+  "attempt_id": "attempt-0009",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      332,
+      343
+    ]
+  ],
+  "core_range": [
+    344,
+    669
+  ],
+  "core_sha256": "4477afe2ae1e98ab3e2c1864042994af3c7d8f5cfc14294a06a8cf63560dcc02",
+  "document_path": "Plans/Release_Supply_Chain.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/88/88cbd6ce17ec8489fa1a23fe3f86e2357989337bcdd2aa2ea1d4c0ad4c35249d.txt",
+  "source_excerpt_sha256": "88cbd6ce17ec8489fa1a23fe3f86e2357989337bcdd2aa2ea1d4c0ad4c35249d",
+  "source_sha256": "d4387d59a9c25be43d49f17370e4d8e639314635cda08dca193bc8ca21f2facf",
+  "window_id": "WIN-4D165ACE14E8-0002"
+}

@@ -1,0 +1,380 @@
+<<< CONTEXT_BEFORE canonical_document_lines=753-764 >>>
+L00000753	  - "`github://owner/repo/path`"
+L00000754	  - "`workspace://project/concern`"
+L00000755	  - "`share://sharepoint-url`"
+L00000756	  - "`notion://...`"
+L00000757	negative_constraints:
+L00000758	  - "Route-target decisions must not become Crosswalk-owned implementation behavior."
+L00000759	owner_hints:
+L00000760	  - Plans/Crosswalk.md
+L00000761	  - Plans/Contracts_V0.md
+L00000762	  - Plans/Models_System.md
+L00000763	```
+L00000764	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=765-1115 >>>
+L00000765	### C-008 - OpenSubject Navigation Normalization
+L00000766	
+L00000767	```yaml
+L00000768	plan_unit_id: C-008
+L00000769	unit_type: requirement
+L00000770	status: accepted
+L00000771	owner_doc: Plans/Crosswalk.md
+L00000772	canonical_text: >-
+L00000773	  GUI Open and Inspect buttons normalize open requests to OpenSubject and route
+L00000774	  through orchestrator concern/help/artifact resolution; Crosswalk describes
+L00000775	  openable subject types while Contracts_V0 owns canonical OpenSubject rules.
+L00000776	gui_related: true
+L00000777	gui_classification_reason: This unit governs GUI Open and Inspect button normalization.
+L00000778	split_recommended: false
+L00000779	depends_on: [C-006, C-007]
+L00000780	unblocks: [C-009, C-024]
+L00000781	acceptance_criteria:
+L00000782	  - "GUI Open and Inspect actions normalize requests to OpenSubject."
+L00000783	  - "Subject types include file, concern, help_entry, project_state, run, and artifact_storage."
+L00000784	  - "Contracts_V0 owns canonical OpenSubject rules."
+L00000785	validation_surfaces:
+L00000786	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000787	  - python3 scripts/pm-plan-index.py validate
+L00000788	risk_class: open_subject_normalization_drift
+L00000789	reasoning_tier: high
+L00000790	context_scope: opensubject_navigation_normalization
+L00000791	implementation_surfaces:
+L00000792	  - Plans/Crosswalk.md
+L00000793	  - Plans/Contracts_V0.md
+L00000794	node_compile_hint:
+L00000795	  mode: opensubject_navigation_normalization
+L00000796	  create_worknodes: false
+L00000797	source_lineage:
+L00000798	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0010
+L00000799	preserved_exact_tokens:
+L00000800	  - "`OpenSubject`"
+L00000801	  - "`file`"
+L00000802	  - "`concern`"
+L00000803	  - "`help_entry`"
+L00000804	  - "`project_state`"
+L00000805	  - "`run`"
+L00000806	  - "`artifact_storage`"
+L00000807	negative_constraints:
+L00000808	  - "Crosswalk must not replace Contracts_V0 as the canonical OpenSubject owner."
+L00000809	owner_hints:
+L00000810	  - Plans/Crosswalk.md
+L00000811	  - Plans/Contracts_V0.md
+L00000812	```
+L00000813	
+L00000814	### C-009 - FileManager Path Realization Boundary
+L00000815	
+L00000816	```yaml
+L00000817	plan_unit_id: C-009
+L00000818	unit_type: requirement
+L00000819	status: accepted
+L00000820	owner_doc: Plans/Crosswalk.md
+L00000821	canonical_text: >-
+L00000822	  FileManager owns path-based OpenFile realization only after a canonical path is
+L00000823	  known; cross-surface route-target/OpenSubject navigation, open-by-identity,
+L00000824	  and identity-native document, artifact, runtime, and governance opens route
+L00000825	  through the canonical route/open boundary before OpenFile realization.
+L00000826	gui_related: false
+L00000827	gui_classification_reason: This unit defines owner routing and path-realization boundaries; UI consumption is indirect.
+L00000828	split_recommended: false
+L00000829	depends_on: [C-006, C-008]
+L00000830	unblocks: [C-024, C-030]
+L00000831	acceptance_criteria:
+L00000832	  - "FileManager owns path-based editor realization only."
+L00000833	  - "Identity-native opens normalize through route/open boundaries before OpenFile realization."
+L00000834	validation_surfaces:
+L00000835	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000836	  - python3 scripts/pm-plan-index.py validate
+L00000837	risk_class: filemanager_navigation_overclaim
+L00000838	reasoning_tier: high
+L00000839	context_scope: filemanager_path_realization_boundary
+L00000840	implementation_surfaces:
+L00000841	  - Plans/Crosswalk.md
+L00000842	  - Plans/FileManager.md
+L00000843	  - Plans/Contracts_V0.md
+L00000844	node_compile_hint:
+L00000845	  mode: filemanager_path_realization_boundary
+L00000846	  create_worknodes: false
+L00000847	source_lineage:
+L00000848	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0011
+L00000849	preserved_exact_tokens:
+L00000850	  - "`OpenFile`"
+L00000851	  - "`route-target`"
+L00000852	  - "`OpenSubject`"
+L00000853	  - "`/open-by-identity`"
+L00000854	negative_constraints:
+L00000855	  - "FileManager must not become the universal navigation owner."
+L00000856	owner_hints:
+L00000857	  - Plans/Crosswalk.md
+L00000858	  - Plans/FileManager.md
+L00000859	  - Plans/Contracts_V0.md
+L00000860	```
+L00000861	
+L00000862	### C-010 - Source Control Lane Worktree Ownership
+L00000863	
+L00000864	```yaml
+L00000865	plan_unit_id: C-010
+L00000866	unit_type: requirement
+L00000867	status: accepted
+L00000868	owner_doc: Plans/Crosswalk.md
+L00000869	canonical_text: >-
+L00000870	  Source Control and WorktreeGitImprovement own Git/worktree object navigation
+L00000871	  and worktree lifecycle, while FileManager only preserves path/root context;
+L00000872	  routes carry package, worktree, repo, worktree, node attempt, lane, package,
+L00000873	  seam, lifecycle, and historical lineage rather than becoming panel-only state.
+L00000874	gui_related: true
+L00000875	gui_classification_reason: This unit governs Source Control pivots, Orchestrator tab copy, blocked/recovery actions, and other user-visible route labels.
+L00000876	split_recommended: false
+L00000877	depends_on: [C-009]
+L00000878	unblocks: [C-025, C-033]
+L00000879	acceptance_criteria:
+L00000880	  - "Source Control and WorktreeGitImprovement own Git/worktree object navigation and lifecycle."
+L00000881	  - "SCM lineage preserves package, worktree, repo_id, worktree_id, node/attempt, rollback/retry context, and cross-surface navigation."
+L00000882	  - "acknowledged remains escalation/noise control and ownership visibility, not semantic closure."
+L00000883	validation_surfaces:
+L00000884	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000885	  - python3 scripts/pm-plan-index.py validate
+L00000886	risk_class: source_control_lane_worktree_boundary_drift
+L00000887	reasoning_tier: high
+L00000888	context_scope: source_control_lane_worktree_ownership
+L00000889	implementation_surfaces:
+L00000890	  - Plans/Crosswalk.md
+L00000891	  - Plans/WorktreeGitImprovement.md
+L00000892	  - Plans/FileManager.md
+L00000893	node_compile_hint:
+L00000894	  mode: source_control_lane_worktree_ownership
+L00000895	  create_worknodes: false
+L00000896	source_lineage:
+L00000897	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0012
+L00000898	preserved_exact_tokens:
+L00000899	  - "`open-in-SCM`"
+L00000900	  - "`/package`"
+L00000901	  - "`/worktree`"
+L00000902	  - "`repo_id`"
+L00000903	  - "`worktree_id`"
+L00000904	  - "`/node/attempt`"
+L00000905	  - "`acknowledged`"
+L00000906	negative_constraints:
+L00000907	  - "Worktree selection, open-in-SCM, and Source Control pivots are object navigation, not pure layout state."
+L00000908	owner_hints:
+L00000909	  - Plans/Crosswalk.md
+L00000910	  - Plans/WorktreeGitImprovement.md
+L00000911	  - Plans/FileManager.md
+L00000912	```
+L00000913	
+L00000914	### C-011 - Assistant Thread Worktree Binding Ownership
+L00000915	
+L00000916	```yaml
+L00000917	plan_unit_id: C-011
+L00000918	unit_type: requirement
+L00000919	status: accepted
+L00000920	owner_doc: Plans/Crosswalk.md
+L00000921	canonical_text: >-
+L00000922	  Assistant thread worktree binding is owned by assistant-chat-design, with the
+L00000923	  owner table preserving binding data model, seglog events, commands, settings,
+L00000924	  merge-back, pre-merge test gate, Source Control accordion/filter, worktree
+L00000925	  record extension, FileManager toggle, and LSP root identity consumers.
+L00000926	gui_related: true
+L00000927	gui_classification_reason: The owner table includes settings, Source Control accordion/filter, FileManager toggle, and other user-visible controls.
+L00000928	split_recommended: false
+L00000929	depends_on: [C-010]
+L00000930	unblocks: [C-032]
+L00000931	acceptance_criteria:
+L00000932	  - "Thread-to-worktree binding is owned by assistant-chat-design.md."
+L00000933	  - "The binding owner table remains the routing source for consumers."
+L00000934	  - "Freshness/health projection follows storage-plan projection state."
+L00000935	validation_surfaces:
+L00000936	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000937	  - python3 scripts/pm-plan-index.py validate
+L00000938	risk_class: thread_worktree_binding_owner_drift
+L00000939	reasoning_tier: high
+L00000940	context_scope: assistant_thread_worktree_binding_ownership
+L00000941	implementation_surfaces:
+L00000942	  - Plans/Crosswalk.md
+L00000943	  - Plans/assistant-chat-design.md
+L00000944	  - Plans/storage-plan.md
+L00000945	node_compile_hint:
+L00000946	  mode: assistant_thread_worktree_binding_ownership
+L00000947	  create_worknodes: false
+L00000948	source_lineage:
+L00000949	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0013
+L00000950	preserved_exact_tokens:
+L00000951	  - "`chat.thread_worktree_*`"
+L00000952	  - "`cmd.chat.worktree.*`"
+L00000953	  - "`owner_thread_id`"
+L00000954	  - "`root_identity`"
+L00000955	  - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md"
+L00000956	negative_constraints:
+L00000957	  - "Consumer docs must not reassign thread-to-worktree binding ownership away from assistant-chat-design.md."
+L00000958	owner_hints:
+L00000959	  - Plans/Crosswalk.md
+L00000960	  - Plans/assistant-chat-design.md
+L00000961	  - Plans/storage-plan.md
+L00000962	```
+L00000963	
+L00000964	### C-012 - Projection Freshness Health Ownership
+L00000965	
+L00000966	```yaml
+L00000967	plan_unit_id: C-012
+L00000968	unit_type: requirement
+L00000969	status: accepted
+L00000970	owner_doc: Plans/Crosswalk.md
+L00000971	canonical_text: >-
+L00000972	  Projection freshness and health vocabulary is centrally owned: storage-plan
+L00000973	  owns axes and persisted semantics, Decision_Policy owns stale/degraded/
+L00000974	  unavailable gating behavior, FinalGUISpec owns UI disclosure, and consumers
+L00000975	  may consume but must not redefine or collapse the axes.
+L00000976	gui_related: true
+L00000977	gui_classification_reason: FinalGUISpec owns UI disclosure for freshness and health state.
+L00000978	split_recommended: false
+L00000979	depends_on: [C-011]
+L00000980	unblocks: [C-022, C-026]
+L00000981	acceptance_criteria:
+L00000982	  - "Projection freshness/health axes and persisted semantics are owned by storage-plan."
+L00000983	  - "Decision_Policy owns behavior when projection state affects execution or mutation gating."
+L00000984	  - "FinalGUISpec owns UI disclosure of freshness/health."
+L00000985	  - "Feature and surface docs do not redefine or collapse the axes."
+L00000986	validation_surfaces:
+L00000987	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000988	  - python3 scripts/pm-plan-index.py validate
+L00000989	risk_class: projection_state_axis_drift
+L00000990	reasoning_tier: high
+L00000991	context_scope: projection_freshness_health_ownership
+L00000992	implementation_surfaces:
+L00000993	  - Plans/Crosswalk.md
+L00000994	  - Plans/storage-plan.md
+L00000995	  - Plans/Decision_Policy.md
+L00000996	  - Plans/FinalGUISpec.md
+L00000997	node_compile_hint:
+L00000998	  mode: projection_freshness_health_ownership
+L00000999	  create_worknodes: false
+L00001000	source_lineage:
+L00001001	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0014
+L00001002	preserved_exact_tokens:
+L00001003	  - "`freshness=current|refreshing|stale`"
+L00001004	  - "`health=healthy|degraded|unavailable`"
+L00001005	  - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md"
+L00001006	negative_constraints:
+L00001007	  - "Feature/surface docs may consume these states but MUST NOT redefine the axes or collapse them into one field."
+L00001008	owner_hints:
+L00001009	  - Plans/Crosswalk.md
+L00001010	  - Plans/storage-plan.md
+L00001011	  - Plans/Decision_Policy.md
+L00001012	  - Plans/FinalGUISpec.md
+L00001013	```
+L00001014	
+L00001015	### C-013 - Subagent Crew Context Shaping Ownership
+L00001016	
+L00001017	```yaml
+L00001018	plan_unit_id: C-013
+L00001019	unit_type: requirement
+L00001020	status: accepted
+L00001021	owner_doc: Plans/Crosswalk.md
+L00001022	canonical_text: >-
+L00001023	  Subagent, crew, shell isolation, context-shaping transitions, crew lifecycle,
+L00001024	  and requested/effective child-run runtime surfaces are split across their SSOT
+L00001025	  owner docs; per-surface docs may narrow these behaviors but must not redefine
+L00001026	  the owners.
+L00001027	gui_related: false
+L00001028	gui_classification_reason: This unit defines runtime ownership routing rather than UI presentation.
+L00001029	split_recommended: false
+L00001030	depends_on: [C-012]
+L00001031	unblocks: [C-032]
+L00001032	acceptance_criteria:
+L00001033	  - "Each subagent, crew, shell-isolation, context-shaping, and child-runtime concern has one authoritative owner."
+L00001034	  - "Per-surface docs may narrow behaviors but must not redefine the owners."
+L00001035	validation_surfaces:
+L00001036	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001037	  - python3 scripts/pm-plan-index.py validate
+L00001038	risk_class: subagent_crew_owner_redefinition
+L00001039	reasoning_tier: high
+L00001040	context_scope: subagent_crew_context_shaping_ownership
+L00001041	implementation_surfaces:
+L00001042	  - Plans/Crosswalk.md
+L00001043	  - Plans/orchestrator-subagent-integration.md
+L00001044	  - Plans/interview-subagent-integration.md
+L00001045	  - Plans/Tools.md
+L00001046	  - Plans/storage-plan.md
+L00001047	node_compile_hint:
+L00001048	  mode: subagent_crew_context_shaping_ownership
+L00001049	  create_worknodes: false
+L00001050	source_lineage:
+L00001051	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0015
+L00001052	preserved_exact_tokens:
+L00001053	  - "`maxNestingDepth`"
+L00001054	  - "`maxTotalSpawnedAgents`"
+L00001055	  - "`maxToolRoundsPerAgent`"
+L00001056	  - "`shell-isolation`"
+L00001057	  - "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md"
+L00001058	negative_constraints:
+L00001059	  - "Per-surface docs may narrow these behaviors, but MUST NOT redefine the owners above."
+L00001060	owner_hints:
+L00001061	  - Plans/Crosswalk.md
+L00001062	  - Plans/orchestrator-subagent-integration.md
+L00001063	  - Plans/interview-subagent-integration.md
+L00001064	  - Plans/Tools.md
+L00001065	```
+L00001066	
+L00001067	### C-014 - Human In The Loop Ownership Split
+L00001068	
+L00001069	```yaml
+L00001070	plan_unit_id: C-014
+L00001071	unit_type: requirement
+L00001072	status: accepted
+L00001073	owner_doc: Plans/Crosswalk.md
+L00001074	canonical_text: >-
+L00001075	  Human-in-the-loop ownership is split so human-in-the-loop owns approval and
+L00001076	  decline semantics plus blocked-episode overlay, Contracts_V0 owns canonical
+L00001077	  blocked fields/action ids/persisted payloads, UI_Command_Catalog owns command
+L00001078	  ids, and FinalGUISpec plus assistant-chat-design own presentation only.
+L00001079	gui_related: false
+L00001080	gui_classification_reason: This unit routes HITL ownership; presentation ownership is named but not defined here.
+L00001081	split_recommended: false
+L00001082	depends_on: [C-013]
+L00001083	unblocks: [C-016, C-028]
+L00001084	acceptance_criteria:
+L00001085	  - "human-in-the-loop.md owns approval/decline semantics and blocked-episode overlay contract."
+L00001086	  - "Contracts_V0 owns canonical blocked-episode fields, action ids, and persisted payload shapes."
+L00001087	  - "FinalGUISpec and assistant-chat-design own presentation only."
+L00001088	validation_surfaces:
+L00001089	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001090	  - python3 scripts/pm-plan-index.py validate
+L00001091	risk_class: hitl_ownership_drift
+L00001092	reasoning_tier: high
+L00001093	context_scope: hitl_ownership_split
+L00001094	implementation_surfaces:
+L00001095	  - Plans/Crosswalk.md
+L00001096	  - Plans/human-in-the-loop.md
+L00001097	  - Plans/Contracts_V0.md
+L00001098	  - Plans/UI_Command_Catalog.md
+L00001099	node_compile_hint:
+L00001100	  mode: hitl_ownership_split
+L00001101	  create_worknodes: false
+L00001102	source_lineage:
+L00001103	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0016
+L00001104	preserved_exact_tokens:
+L00001105	  - "`Contracts_V0.md` owns the canonical blocked-episode fields, action ids, and persisted payload shapes"
+L00001106	  - "ContractRef: ContractName:Plans/human-in-the-loop.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md"
+L00001107	negative_constraints:
+L00001108	  - "HITL presentation docs must not become owners of blocked payload shapes."
+L00001109	owner_hints:
+L00001110	  - Plans/Crosswalk.md
+L00001111	  - Plans/human-in-the-loop.md
+L00001112	  - Plans/Contracts_V0.md
+L00001113	  - Plans/UI_Command_Catalog.md
+L00001114	```
+L00001115	
+
+<<< CONTEXT_AFTER canonical_document_lines=1116-1127 >>>
+L00001116	### C-015 - Debug Investigation Ownership Split
+L00001117	
+L00001118	```yaml
+L00001119	plan_unit_id: C-015
+L00001120	unit_type: requirement
+L00001121	status: accepted
+L00001122	owner_doc: Plans/Crosswalk.md
+L00001123	canonical_text: >-
+L00001124	  Debug and investigation ownership is split across assistant-chat-design for
+L00001125	  Assistant Debug Mode and investigation-thread behavior,
+L00001126	  orchestrator-subagent-integration for delegated-worker use,
+L00001127	  Executor_Protocol for execution-time propagation, storage-plan for persisted

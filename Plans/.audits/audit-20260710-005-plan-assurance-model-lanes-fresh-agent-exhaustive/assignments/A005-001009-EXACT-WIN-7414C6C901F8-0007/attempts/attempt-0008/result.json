@@ -1,0 +1,763 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001009-EXACT-WIN-7414C6C901F8-0007",
+  "attempt_id": "attempt-0008",
+  "task_thread_id": "/root/a005_001009_exact_win_0007_attempt_0008_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "b3556b39de2a06d26c4ccbfa755a1d0b8973443f9b6893bdff394ebdf45dd537",
+    "core_range": [2087, 2485]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001009-0007-I001",
+      "item_type": "behavior",
+      "title": "Authoritative editor document and mutation boundary",
+      "statement": "LSPS-020 requires a shared authoritative document store, sync barriers, document-scoped request gating, and FileSafe-backed workspace-edit paths for rename, format, and code actions.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-020"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2094,
+          "line_end": 2094,
+          "exact_quote": "canonical_text: The editor integrates LSP through a shared authoritative document store, sync barriers, document-scoped request gating, and FileSafe-backed workspace edit paths for rename, format, and code actions while preserving Search, diff/review, and chat restore ownership outside LSP.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I002",
+      "item_type": "explicit_non_gap",
+      "title": "LSP does not own adjacent product semantics",
+      "statement": "The source explicitly keeps Search, diff/review, and chat restore semantics outside LSP ownership.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-020"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2127,
+          "line_end": 2127,
+          "exact_quote": "- LSP never becomes the owner of Search, diff/review, or chat restore semantics.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I003",
+      "item_type": "gap",
+      "title": "DocumentStore synchronization protocol is under-specified",
+      "statement": "The required components are named, but the core does not define barrier completion, stale-version comparison, request cancellation, concurrent-edit ordering, or FileSafe failure/rollback semantics.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-020"],
+      "gap_kind": "contract_and_state_transition_under_specification",
+      "impact": "Independent builders can implement incompatible stale-request and workspace-edit behavior, risking edits against the wrong document version or inconsistent recovery.",
+      "builder_discretion": "Builders must invent synchronization states, version gates, cancellation points, concurrency ordering, and mutation rollback behavior.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2094,
+          "line_end": 2094,
+          "exact_quote": "canonical_text: The editor integrates LSP through a shared authoritative document store, sync barriers, document-scoped request gating, and FileSafe-backed workspace edit paths for rename, format, and code actions while preserving Search, diff/review, and chat restore ownership outside LSP.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I004",
+      "item_type": "capability",
+      "title": "Editor intelligence surfaces use distinct routing",
+      "statement": "LSPS-021 covers breadcrumbs, outline, symbols, hover, references, code actions, diagnostics, Problems, status copy, fallback navigation, code index, Search, and grep, and requires routing through distinct owners.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-021"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2146,
+          "line_end": 2146,
+          "exact_quote": "canonical_text: Editor UI integration routes breadcrumbs, outline, symbols, hover, references, code actions, diagnostics, Problems, status copy, fallback navigation, code index, Search, and grep terminology through distinct owners so degraded LSP never masquerades as healthy semantic intelligence.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I005",
+      "item_type": "explicit_non_gap",
+      "title": "Fallback and text search may not impersonate LSP health",
+      "statement": "The core explicitly prevents fallback navigation, text-first Search, grep, and regex acceleration from being presented as healthy semantic LSP state.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-021"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2184,
+          "line_end": 2184,
+          "exact_quote": "- Fallback navigation/index behavior must not masquerade as healthy LSP state.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2185,
+          "line_end": 2185,
+          "exact_quote": "- Search remains text-first and must not become a second default symbol browser.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2186,
+          "line_end": 2186,
+          "exact_quote": "- grep and Search regex acceleration must not be labeled as LSP symbol health.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I006",
+      "item_type": "gap",
+      "title": "Per-surface owner and fallback routing map is absent",
+      "statement": "The core requires distinct owners and names three referenced documents, but it does not map each listed surface, state source, fallback decision, or status-copy producer to one authoritative owner.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-021"],
+      "gap_kind": "authority_and_ownership_mapping",
+      "impact": "Problems, status, navigation, index, and Search integrations can duplicate authority or disagree about which state is user-visible.",
+      "builder_discretion": "Builders must allocate the listed surfaces among the referenced owner documents and define the boundary APIs themselves.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2146,
+          "line_end": 2146,
+          "exact_quote": "canonical_text: Editor UI integration routes breadcrumbs, outline, symbols, hover, references, code actions, diagnostics, Problems, status copy, fallback navigation, code index, Search, and grep terminology through distinct owners so degraded LSP never masquerades as healthy semantic intelligence.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2194,
+          "line_end": 2194,
+          "exact_quote": "- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md'",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I007",
+      "item_type": "contract",
+      "title": "Rewrite-era consumers route to current owners",
+      "statement": "LSPS-022 routes stale FileManager references, Orchestrator/Tiers wording, runtime identity, widget compatibility, event supersession, runtime artifacts, traceability, and project labels through current owner documents.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-022"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2205,
+          "line_end": 2205,
+          "exact_quote": "canonical_text: Rewrite-era LSP consumers route stale FileManager references, Orchestrator/Tiers compatibility wording, storage/runtime identity, widget layout compatibility, event/addendum supersession, runtime artifacts, Crosswalk/Decision_Log traceability, and project status labels through current owner docs rather than preserving stale ownership.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2245,
+          "line_end": 2245,
+          "exact_quote": "- Legacy FileManager section references and Tiers/task/subtask vocabulary are compatibility inputs only.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I008",
+      "item_type": "explicit_non_gap",
+      "title": "Independent health-state domains remain separate",
+      "statement": "The core explicitly separates project health/status, code-index state, LSP attach state, and runtime capability state.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-022"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2243,
+          "line_end": 2243,
+          "exact_quote": "- Project health/status, code-index state, LSP attach state, and runtime capability state remain separate.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I009",
+      "item_type": "capability",
+      "title": "Chat consumes read-only LSP intelligence",
+      "statement": "LSPS-023 permits chat and assistant context to consume read-only LSP intelligence when the thread has an associated project with running LSP servers, using editor instances and real or virtual documents with degraded-state disclosure.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-023"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2263,
+          "line_end": 2263,
+          "exact_quote": "canonical_text: Chat LSP provides read-only language-intelligence features in chat and assistant context when a thread has an associated project with running LSP servers, using editor server instances, real file URIs or virtual documents, degraded-state disclosure, Problems placement, status-bar health, and chat as a context/navigation consumer.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I010",
+      "item_type": "explicit_non_gap",
+      "title": "Chat has no separate server pool or diagnostics authority",
+      "statement": "The MVP boundary is explicitly read-only, reuses the editor server pool, and prevents chat from becoming another diagnostics owner.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-023"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2300,
+          "line_end": 2300,
+          "exact_quote": "- Chat LSP is read-only for MVP and does not spawn a separate chat-only server pool.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2301,
+          "line_end": 2301,
+          "exact_quote": "- Chat is not another diagnostics owner.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I011",
+      "item_type": "gap",
+      "title": "Chat virtual-document and eligibility contract is incomplete",
+      "statement": "The core names project association, running-server eligibility, real file URIs, and virtual documents, but does not define association resolution, virtual URI identity, content/version lifetime, server-language selection, cancellation, or behavior when eligibility changes mid-request.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-023"],
+      "gap_kind": "input_lifecycle_and_state_contract",
+      "impact": "Chat intelligence can target stale content, the wrong server, or a document identity that cannot be correlated with diagnostics and navigation.",
+      "builder_discretion": "Builders must define virtual-document identity and lifecycle, project/server selection, and state-change behavior.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2263,
+          "line_end": 2263,
+          "exact_quote": "canonical_text: Chat LSP provides read-only language-intelligence features in chat and assistant context when a thread has an associated project with running LSP servers, using editor server instances, real file URIs or virtual documents, degraded-state disclosure, Problems placement, status-bar health, and chat as a context/navigation consumer.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I012",
+      "item_type": "behavior",
+      "title": "Diagnostic-to-chat mutation is previewed and FileSafe-backed",
+      "statement": "LSPS-024 packages diagnostic context with session and URI references, while later quick-fix, code-action, rename, or workspace-edit mutations from chat require preview/confirmation and FileSafe-backed workspace/applyEdit.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-024"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2320,
+          "line_end": 2320,
+          "exact_quote": "canonical_text: Diagnostic-to-chat packaging uses the same diagnostic entry shape as the LSP evidence schema with session and URI refs; any later quick fix, code action, rename, or workspace edit from chat must open preview/confirmation and apply only through FileSafe-backed workspace/applyEdit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2362,
+          "line_end": 2362,
+          "exact_quote": "- Chat diagnostic context must not mutate directly from the message; later mutation workflows require explicit preview/confirmation and FileSafe-backed workspace/applyEdit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I013",
+      "item_type": "contract",
+      "title": "Diagnostic payload vocabulary is preserved",
+      "statement": "The source preserves diagnostic path, position, severity, message, source, code, and severity-label tokens for the diagnostic-to-chat pipeline.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-024"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2345,
+          "line_end": 2345,
+          "exact_quote": "- Diagnostic-to-chat pipeline behavior",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2347,
+          "line_end": 2347,
+          "exact_quote": "- path",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2350,
+          "line_end": 2350,
+          "exact_quote": "- severity",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2351,
+          "line_end": 2351,
+          "exact_quote": "- message",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2353,
+          "line_end": 2353,
+          "exact_quote": "- code",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I014",
+      "item_type": "gap",
+      "title": "Diagnostic payload schema and invalidation behavior are unspecified",
+      "statement": "The core references an LSP evidence schema and session/URI references but does not give a ContractRef to that schema here, define field types/nullability/ranges, or specify stale-session, stale-URI, malformed-payload, or partial-data handling.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-024"],
+      "gap_kind": "input_output_schema_and_failure_contract",
+      "impact": "Chat, Problems, evidence, and mutation preview consumers may serialize or reject the same diagnostic differently and can act on stale references.",
+      "builder_discretion": "Builders must locate or invent the diagnostic schema binding and define validation, invalidation, and error outcomes.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2320,
+          "line_end": 2320,
+          "exact_quote": "canonical_text: Diagnostic-to-chat packaging uses the same diagnostic entry shape as the LSP evidence schema with session and URI refs; any later quick fix, code action, rename, or workspace edit from chat must open preview/confirmation and apply only through FileSafe-backed workspace/applyEdit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I015",
+      "item_type": "state_transition",
+      "title": "Registration precedes process spawn",
+      "statement": "LSPS-025 requires session-map registration and a cancellable lifecycle tracker before subprocess creation or watcher launch, with spawn or handshake failure reflected in session handling.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-025"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2381,
+          "line_end": 2381,
+          "exact_quote": "canonical_text: An LSP server is registered in the session map before its process is spawned; asynchronous startup registers a cancellable lifecycle-tracker before subprocess creation or watcher launch, and spawn or handshake failure marks or cleans up the session record.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I016",
+      "item_type": "explicit_non_gap",
+      "title": "Untracked process window is forbidden",
+      "statement": "The registration order is an explicit invariant: spawning before registration is forbidden because it would create an untracked process window.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-025"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2416,
+          "line_end": 2416,
+          "exact_quote": "- Spawning before registration is forbidden because it creates an untracked process window.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I017",
+      "item_type": "gap",
+      "title": "Failed startup has an unresolved mark-or-cleanup branch",
+      "statement": "The failure transition permits either marking or cleaning up the session record without defining which failure takes which branch, the resulting terminal state, process/watcher cleanup ordering, or cancellation race behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-025"],
+      "gap_kind": "ambiguous_failure_state_transition",
+      "impact": "Failure handling can leak processes/watchers, erase useful failure state, or expose inconsistent session-map state to consumers.",
+      "builder_discretion": "Builders decide when to retain versus remove a failed record and how to sequence cancellation and resource cleanup.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2381,
+          "line_end": 2381,
+          "exact_quote": "canonical_text: An LSP server is registered in the session map before its process is spawned; asynchronous startup registers a cancellable lifecycle-tracker before subprocess creation or watcher launch, and spawn or handshake failure marks or cleans up the session record.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I018",
+      "item_type": "failure_recovery",
+      "title": "Crash and timeout recovery reaches diagnostics and UI surfaces",
+      "statement": "LSPS-026 marks failed or timed-out server state, clears owned diagnostics, refreshes Problems and gutter, exposes Error or Waiting status, offers restart with bounded backoff, logs stderr details, and avoids blocking the UI thread.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-026"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2436,
+          "line_end": 2436,
+          "exact_quote": "canonical_text: LSP failure and timeout handling marks server state, clears diagnostics for owned documents, refreshes Problems and gutter, shows Error or Waiting states in status surfaces, offers restart behavior with bounded backoff, logs stderr details, and never blocks the UI thread.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I019",
+      "item_type": "behavior",
+      "title": "Recovery copy, action, and backoff constants are preserved",
+      "statement": "The source preserves the restart action, exponential backoff sequence and cap, timeout copy, waiting copy, and stderr-tail behavior.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-026"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2466,
+          "line_end": 2466,
+          "exact_quote": "- Restart language server",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2467,
+          "line_end": 2467,
+          "exact_quote": "- 1s, 2s, 4s, cap 30s",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2469,
+          "line_end": 2469,
+          "exact_quote": "- Timed out",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2470,
+          "line_end": 2470,
+          "exact_quote": "- Waiting for language server...",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2472,
+          "line_end": 2472,
+          "exact_quote": "- stderr tail",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I020",
+      "item_type": "explicit_non_gap",
+      "title": "LSP requests cannot block UI execution",
+      "statement": "The core has an explicit UI-thread non-blocking constraint for LSP requests.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-026"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2474,
+          "line_end": 2474,
+          "exact_quote": "- LSP requests must never block the UI thread.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I021",
+      "item_type": "gap",
+      "title": "Timeout and restart policy lacks termination and reset rules",
+      "statement": "Although a backoff sequence and cap are preserved, the core does not define request/handshake timeout thresholds, retry limit, jitter, automatic-versus-manual restart policy, success reset point, crash-loop terminal state, or user cancellation behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-026"],
+      "gap_kind": "operational_recovery_policy",
+      "impact": "Servers may restart indefinitely, synchronize retry storms, or expose inconsistent Waiting/Error states across implementations.",
+      "builder_discretion": "Builders must choose timeout values and complete the restart state machine around the named backoff constants.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2436,
+          "line_end": 2436,
+          "exact_quote": "canonical_text: LSP failure and timeout handling marks server state, clears diagnostics for owned documents, refreshes Problems and gutter, shows Error or Waiting states in status surfaces, offers restart behavior with bounded backoff, logs stderr details, and never blocks the UI thread.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2467,
+          "line_end": 2467,
+          "exact_quote": "- 1s, 2s, 4s, cap 30s",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I022",
+      "item_type": "gap",
+      "title": "Acceptance oracles cover plan preservation, not runtime behavior",
+      "statement": "The unit acceptance criteria and validation surfaces establish exact-text traceability and plan-index/migration validation, but no executable oracle in this core verifies document synchronization, routing, chat packaging, registration ordering, recovery, or UI non-blocking behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-020", "LSPS-021", "LSPS-022", "LSPS-023", "LSPS-024", "LSPS-025", "LSPS-026"],
+      "gap_kind": "runtime_acceptance_oracle_absent",
+      "impact": "Governance validation can pass while incompatible or incorrect runtime behavior remains untested.",
+      "builder_discretion": "Builders must define behavioral tests, failure injection, GUI assertions, and pass/fail thresholds.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2443,
+          "line_end": 2443,
+          "exact_quote": "- The covered source span remains losslessly available for exact-text audit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2448,
+          "line_end": 2448,
+          "exact_quote": "- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2449,
+          "line_end": 2449,
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I023",
+      "item_type": "explicit_non_gap",
+      "title": "PlanUnit phase excludes executable task generation",
+      "statement": "The core explicitly prohibits WorkNodes, NodeSeeds, executable queues, final node manifests, and production build tasks in this phase.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-020", "LSPS-021", "LSPS-022", "LSPS-023", "LSPS-024", "LSPS-025", "LSPS-026"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2446,
+          "line_end": 2446,
+          "exact_quote": "- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I024",
+      "item_type": "unknown",
+      "title": "Chat LSP privacy and authorization rules are unknown",
+      "statement": "This core allows real file URIs, virtual documents, diagnostics, and session/URI references to enter chat context but does not state authorization checks, workspace-boundary enforcement, redaction, retention, logging sensitivity, or remote-chat disclosure rules.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-023", "LSPS-024"],
+      "gap_kind": "security_privacy_unknown",
+      "impact": "File paths, code context, and diagnostics could cross unintended project, user, persistence, or remote-service boundaries.",
+      "builder_discretion": "Builders must determine access control and privacy handling for chat-bound LSP data.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2263,
+          "line_end": 2263,
+          "exact_quote": "canonical_text: Chat LSP provides read-only language-intelligence features in chat and assistant context when a thread has an associated project with running LSP servers, using editor server instances, real file URIs or virtual documents, degraded-state disclosure, Problems placement, status-bar health, and chat as a context/navigation consumer.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2320,
+          "line_end": 2320,
+          "exact_quote": "canonical_text: Diagnostic-to-chat packaging uses the same diagnostic entry shape as the LSP evidence schema with session and URI refs; any later quick fix, code action, rename, or workspace edit from chat must open preview/confirmation and apply only through FileSafe-backed workspace/applyEdit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001009-0007-I025",
+      "item_type": "gap",
+      "title": "Failure propagation ordering and consistency are unspecified",
+      "statement": "The core names server-state marking, diagnostic clearing, Problems/gutter refresh, status copy, and stderr logging but does not define the event contract, ordering, atomic snapshot, document ownership lookup, or handling when one downstream refresh fails.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["LSPS-026"],
+      "gap_kind": "propagation_contract_under_specification",
+      "impact": "Consumers can briefly or permanently disagree about server health and retain stale diagnostics after failure.",
+      "builder_discretion": "Builders must choose propagation events, order, consistency guarantees, and partial-failure recovery.",
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 2436,
+          "line_end": 2436,
+          "exact_quote": "canonical_text: LSP failure and timeout handling marks server state, clears diagnostics for owned documents, refreshes Problems and gutter, shows Error or Waiting states in status surfaces, offers restart behavior with bounded backoff, logs stderr details, and never blocks the UI thread.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "addressed",
+      "summary": "The core states the principal behaviors for document synchronization boundaries, UI routing, compatibility routing, chat intelligence, diagnostic packaging, startup ordering, and failure recovery.",
+      "evidence_item_ids": ["A005-001009-0007-I001", "A005-001009-0007-I004", "A005-001009-0007-I007", "A005-001009-0007-I009", "A005-001009-0007-I012", "A005-001009-0007-I015", "A005-001009-0007-I018"]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "addressed",
+      "summary": "Editor intelligence surfaces, read-only Chat LSP, diagnostic-to-chat packaging, workspace-edit preview, and restart/status capabilities are explicitly named.",
+      "evidence_item_ids": ["A005-001009-0007-I004", "A005-001009-0007-I009", "A005-001009-0007-I012", "A005-001009-0007-I018", "A005-001009-0007-I019"]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "gap_found",
+      "summary": "Real/virtual document inputs and diagnostic/session/URI payloads are named, but concrete schemas, identity, lifecycle, validation, and invalidation outputs are incomplete.",
+      "evidence_item_ids": ["A005-001009-0007-I011", "A005-001009-0007-I013", "A005-001009-0007-I014"]
+    },
+    {
+      "dimension": "contracts",
+      "status": "gap_found",
+      "summary": "Strong negative boundaries exist, but synchronization, per-surface routing, payload schema, and startup-failure contracts still leave consequential branches unspecified.",
+      "evidence_item_ids": ["A005-001009-0007-I002", "A005-001009-0007-I003", "A005-001009-0007-I005", "A005-001009-0007-I006", "A005-001009-0007-I014", "A005-001009-0007-I016", "A005-001009-0007-I017"]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "gap_found",
+      "summary": "Registration-before-spawn and failure/status concepts are explicit, but document synchronization, startup failure, cancellation, retry, and recovery transitions are not fully deterministic.",
+      "evidence_item_ids": ["A005-001009-0007-I003", "A005-001009-0007-I015", "A005-001009-0007-I017", "A005-001009-0007-I021"]
+    },
+    {
+      "dimension": "authority",
+      "status": "gap_found",
+      "summary": "The core excludes several false authorities and separates health domains, but does not assign every listed UI/routing surface to a precise authoritative producer.",
+      "evidence_item_ids": ["A005-001009-0007-I002", "A005-001009-0007-I005", "A005-001009-0007-I006", "A005-001009-0007-I008", "A005-001009-0007-I010"]
+    },
+    {
+      "dimension": "ownership",
+      "status": "gap_found",
+      "summary": "LSP-specific versus adjacent owner boundaries and chat non-ownership are explicit, but the distinct-owner requirement lacks a per-surface ownership map.",
+      "evidence_item_ids": ["A005-001009-0007-I002", "A005-001009-0007-I006", "A005-001009-0007-I007", "A005-001009-0007-I010"]
+    },
+    {
+      "dimension": "consumers",
+      "status": "addressed",
+      "summary": "Editor UI surfaces, Search/index/fallback systems, current owner documents, chat/assistant context, Problems, gutter, and status surfaces are identified as consumers or adjacent systems.",
+      "evidence_item_ids": ["A005-001009-0007-I004", "A005-001009-0007-I007", "A005-001009-0007-I009", "A005-001009-0007-I010", "A005-001009-0007-I018"]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "addressed",
+      "summary": "The core distinguishes healthy LSP from fallback/search state, defines degraded disclosure and Problems/status placement, preserves Error/Waiting/restart copy, and forbids UI-thread blocking.",
+      "evidence_item_ids": ["A005-001009-0007-I005", "A005-001009-0007-I009", "A005-001009-0007-I018", "A005-001009-0007-I019", "A005-001009-0007-I020"]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "Crash, timeout, diagnostic clearing, restart, backoff, logging, and UI states are covered, but startup cleanup and retry termination/reset semantics remain ambiguous.",
+      "evidence_item_ids": ["A005-001009-0007-I017", "A005-001009-0007-I018", "A005-001009-0007-I019", "A005-001009-0007-I021", "A005-001009-0007-I025"]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "unknown",
+      "summary": "No authorization, workspace-boundary, redaction, retention, or remote disclosure rules are stated for file URIs, virtual content, diagnostics, and session references entering chat.",
+      "evidence_item_ids": ["A005-001009-0007-I024"]
+    },
+    {
+      "dimension": "propagation",
+      "status": "gap_found",
+      "summary": "Failure effects are required to reach diagnostics, Problems, gutter, status, and logs, but the event, ordering, consistency, and partial-failure contract is absent.",
+      "evidence_item_ids": ["A005-001009-0007-I018", "A005-001009-0007-I025"]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Restart action, backoff constants, status copy, and stderr tail are operationally useful, but timeout thresholds, retry limits, crash-loop policy, reset, and cancellation are unspecified.",
+      "evidence_item_ids": ["A005-001009-0007-I019", "A005-001009-0007-I021"]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "gap_found",
+      "summary": "UI-thread non-blocking and bounded backoff are explicit, but this core provides no latency budgets, queue/backpressure limits, diagnostic-volume behavior, or quantitative timeout thresholds.",
+      "evidence_item_ids": ["A005-001009-0007-I020", "A005-001009-0007-I021"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "addressed",
+      "summary": "Stale FileManager and Tiers vocabulary are explicitly compatibility-only, current owner routing is required, and independent health domains remain separate.",
+      "evidence_item_ids": ["A005-001009-0007-I007", "A005-001009-0007-I008"]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "The specified validators prove plan preservation/indexing, while runtime behavior and failure/UI outcomes lack executable acceptance oracles in this core.",
+      "evidence_item_ids": ["A005-001009-0007-I022", "A005-001009-0007-I023"]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Builders retain consequential discretion over synchronization, routing ownership, virtual documents, payload validation, failed-startup cleanup, retry policy, privacy controls, and propagation consistency.",
+      "evidence_item_ids": ["A005-001009-0007-I003", "A005-001009-0007-I006", "A005-001009-0007-I011", "A005-001009-0007-I014", "A005-001009-0007-I017", "A005-001009-0007-I021", "A005-001009-0007-I024", "A005-001009-0007-I025"]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "The principal unknowns are the exact synchronization state machine, owner routing map, virtual-document lifecycle, diagnostic schema binding, mark-versus-cleanup branch, restart termination, privacy boundary, and propagation ordering.",
+      "evidence_item_ids": ["A005-001009-0007-I003", "A005-001009-0007-I006", "A005-001009-0007-I011", "A005-001009-0007-I014", "A005-001009-0007-I017", "A005-001009-0007-I021", "A005-001009-0007-I024", "A005-001009-0007-I025"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

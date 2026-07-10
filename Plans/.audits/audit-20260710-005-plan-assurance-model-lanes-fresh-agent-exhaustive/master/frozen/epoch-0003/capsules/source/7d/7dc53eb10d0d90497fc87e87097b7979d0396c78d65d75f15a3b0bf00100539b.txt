@@ -1,0 +1,390 @@
+<<< CONTEXT_BEFORE 5295-5306 >>>
+- The app must not crash when shortcuts config is corrupted or invalid.
+- The UI must never show blank or (undefined) shortcut labels.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Core shortcut registry behavior remains covered by M-026 and M-047.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: Gap guards are a coherent shortcut safety cluster.
+```
+
+
+<<< AUTHORITATIVE_CORE 5307-5667 >>>
+### M-067 - Skills Runtime Compatibility Boundary
+
+```yaml
+plan_unit_id: M-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Skills runtime behavior is PM-native registry discovery, permission filtering, readiness validation, context bundling, and on-demand skill tool access; CLI/provider-native projections are compatibility-only.
+gui_related: false
+gui_classification_reason: The unit covers runtime skill delivery and provider compatibility boundaries.
+split_recommended: true
+depends_on:
+- M-033
+- M-035
+- M-048
+unblocks: []
+acceptance_criteria:
+- Direct providers consume PM-native skill bundling and PM tool availability.
+- CLI-bridged providers may receive compatibility projections only when explicitly enabled.
+- Runtime correctness still depends on PM-native bundling plus the PM skill tool.
+- OpenCode server-bridged providers remain subject to the same PM-native skill canon.
+- Skills_System, FileSafe, Tools, Prompt_Pipeline, CLI_Bridged_Providers, Provider_OpenCode, and Multi-Account ContractRefs remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_runtime_compatibility_boundary_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: skills_runtime_compatibility_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0083
+preserved_exact_tokens:
+- registry discovery
+- permission filtering
+- readiness validation
+- context bundling
+- on-demand `skill` tool access
+- provider-native skill runtime-delivery matrix
+- CLI-bridged providers
+- PM-native bundling plus the PM `skill` tool
+- OpenCode
+negative_constraints:
+- Do not invent a separate provider-native skill runtime-delivery matrix for MVP.
+compatibility_only_notes:
+- CLI-bridged provider projections are compatibility-only and optional.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Skills_System.md, Prompt_Pipeline.md, Tools.md, FileSafe.md, CLI_Bridged_Providers.md, Provider_OpenCode.md, and Multi-Account.md retain authority.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md'
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Multi-Account.md'
+split_recommendation_reason: Runtime compatibility spans multiple provider owner docs.
+```
+
+### M-068 - Shortcuts Skills Implementation Risks
+
+```yaml
+plan_unit_id: M-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Shortcuts and Skills implementation planning must explicitly confirm Slint 1.17.1 or current-stable key-event integration, Windows path-case behavior for skill discovery, and platform_specs skill injection per provider.
+gui_related: true
+gui_classification_reason: The unit affects GUI key handling, Skills list behavior, and provider-visible skill integration.
+split_recommended: true
+depends_on:
+- M-047
+- M-048
+unblocks: []
+acceptance_criteria:
+- Slint key-event capture location and KeyMap application are confirmed against Slint 1.17.1 or current stable docs before implementation.
+- Skill discovery handles Windows path case and separators as needed.
+- platform_specs or equivalent documents how each provider receives skill list, paths, content, environment, prompt injection, or tools.
+- list_skills_for_agent remains stubbed until platform-specific delivery is defined.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: shortcuts_skills_implementation_risk_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: shortcuts_skills_implementation_risks
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0084
+preserved_exact_tokens:
+- Slint 1.17.1
+- FocusScope
+- KeyEvent
+- Windows path case
+- platform_specs skill injection
+- Cursor
+- Claude Code
+- OpenCode
+- Codex
+- GitHub Copilot
+- Gemini
+negative_constraints: []
+compatibility_only_notes:
+- Provider skill injection remains stubbed until platform_specs or equivalent defines delivery.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Provider docs and platform_specs own provider-specific delivery details.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: Risks span GUI framework, OS filesystem behavior, and provider integration.
+```
+
+### M-069 - Cross-Plan Cleanup Owner Boundaries
+
+```yaml
+plan_unit_id: M-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Cross-plan cleanup reconciliation must preserve owner boundaries for FileSafe, Worktree, newtools, Contracts, Crosswalk, Executor, Orchestrator, command aliases, package lanes, safe-points, historical lineage, and stale tier-era terminology.
+gui_related: true
+gui_classification_reason: The unit includes user-visible route/open cleanup, Source Control, help/search surfaces, and orchestrator tab/page retargeting.
+split_recommended: true
+depends_on:
+- M-006
+- M-008
+- M-011
+- M-022
+- M-061
+unblocks: []
+acceptance_criteria:
+- Cleanup scope remains package/lane/worktree aware and cannot erase another package's live artifacts.
+- FileSafe write-scope rules remain package-scoped.
+- Export/archive status alone does not authorize deletion of canonical historical record or worktree lineage.
+- Route/open cleanup respects Contracts_V0, Crosswalk, FileManager, and command-catalog ownership.
+- Tier language remains legacy decomposition/help compatibility terminology.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: cross_plan_cleanup_owner_boundary_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: cross_plan_cleanup_owner_boundaries
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0085
+preserved_exact_tokens:
+- /FileSafe.md
+- /WorktreeGitImprovement.md
+- /newtools.md
+- /Contracts_V0.md
+- /Crosswalk.md
+- /packages/graph
+- /alias
+- /worktree
+- /historical
+- /block/runtime-lineage
+- /effective/runtime
+- Tier language is legacy decomposition/help terminology.
+negative_constraints:
+- Per-subtask /worktree cleanup must not conflict with package-based lane pools.
+- Export or archival status alone must not authorize deletion of canonical /historical record model or /worktree lineage.
+compatibility_only_notes:
+- Tier IDs and /request-era or tier-era state file names remain compatibility inputs only.
+stale_retired_dispositions:
+- Alias, deprecated command, and cleanup-command drift notes are retained as source-lineage reconciliation warnings.
+owner_boundary_notes:
+- Referenced owner docs retain their contract authority; MiscPlan records cleanup reconciliation constraints.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: The source span maps many owner boundaries and stale terminology constraints.
+```
+
+### M-070 - Worktree Cleanup Dependency Distinction
+
+```yaml
+plan_unit_id: M-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: MiscPlan cleanup must distinguish inside-workspace git clean from Worktree plan directory removal, while sharing run-config wiring, git binary resolution, worktree lists, and STATE_FILES updates.
+gui_related: true
+gui_classification_reason: The unit covers user-visible worktree cleanup controls and Doctor/Config interactions.
+split_recommended: true
+depends_on:
+- M-012
+- M-019
+- M-021
+- M-069
+unblocks: []
+acceptance_criteria:
+- Cleanup config uses the same Option B config shape that the Worktree plan uses.
+- run_git_clean_with_excludes uses path_utils::resolve_git_executable or the shared git binary resolver once available.
+- Clean all worktrees uses reliable worktree list state after or with Worktree Phase 2.
+- Worktree remove_worktree and cleanup_subtask_worktree remove directories, while MiscPlan cleanup removes untracked/ignored files inside the selected workspace or worktree.
+- STATE_FILES updates stay in their own subsections.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_cleanup_dependency_distinction_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: worktree_cleanup_dependency_distinction
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0086
+preserved_exact_tokens:
+- WorktreeGitImprovement.md
+- Option B
+- path_utils::resolve_git_executable()
+- run_git_clean_with_excludes
+- worktree_manager.list_worktrees()
+- active_worktrees
+- cleanup_subtask_worktree
+- remove_worktree
+- STATE_FILES.md
+negative_constraints:
+- Do not use Command::new("git") alone when shared git resolution is available.
+- Do not confuse removing a worktree directory with cleaning untracked files inside a worktree.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- WorktreeGitImprovement.md owns worktree directory lifecycle and active worktree state.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: This unit crosses config, git resolution, worktree lists, and cleanup semantics.
+```
+
+### M-071 - Orchestrator Cleanup Wrapper Boundary
+
+```yaml
+plan_unit_id: M-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Orchestrator agent runs, including future subagent execution paths, must use the shared prepare-execute-cleanup wrapper while preserving start/end verification ordering, parallel worktree isolation, and commit-order safety.
+gui_related: false
+gui_classification_reason: The unit covers backend orchestrator execution ordering and runner invocation.
+split_recommended: true
+depends_on:
+- M-015
+- M-044
+- M-061
+- M-070
+unblocks: []
+acceptance_criteria:
+- New orchestrator or subagent execution paths do not call runner.execute directly without prepare/cleanup wrapping.
+- verify_tier_start and verify_tier_end compatibility ordering remains outside iteration-level prepare/cleanup.
+- Parallel subtasks run cleanup only in their own work_dir.
+- cleanup_after_execution remains temp/build-artifact-only because commit_tier_progress happens later.
+- Orchestrator plan remains a consumer and not a competing execution owner for cleanup semantics.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: orchestrator_cleanup_wrapper_boundary_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: orchestrator_cleanup_wrapper_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0087
+preserved_exact_tokens:
+- execute_tier_with_subagents
+- run_with_cleanup
+- runner.execute()
+- verify_tier_start
+- verify_tier_end
+- prepare_working_directory
+- cleanup_after_execution
+- commit_tier_progress
+negative_constraints:
+- Do not call runner.execute directly from new orchestrator/subagent code without the cleanup wrapper.
+- cleanup_after_execution must not remove untracked files before commit_tier_progress.
+compatibility_only_notes:
+- verify_tier_start, verify_tier_end, and commit_tier_progress are legacy-named compatibility lineage.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- orchestrator-subagent-integration.md consumes cleanup wrapper semantics and owns orchestrator-specific invocation.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: Orchestrator cleanup boundary spans verification, parallel execution, and commit ordering.
+```
+
+### M-072 - Interview Cleanup Wrapper Boundary
+
+```yaml
+plan_unit_id: M-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Interview runner and subagent invocation paths must use run_with_cleanup when they execute in a project workspace, and their generated output paths must remain under .puppet-master or allowlisted.
+gui_related: false
+gui_classification_reason: The unit covers backend interview execution and output path safety rather than direct GUI presentation.
+split_recommended: true
+depends_on:
+- M-015
+- M-044
+- M-062
+unblocks: []
+acceptance_criteria:
+- research_pre_question_with_subagent and similar interview runner calls use run_with_cleanup.
+- SubagentInvoker or equivalent platform invocation helpers centralize on the same wrapper.
+- Interview, research, start-chain, wizard, and orchestrator outputs stay under .puppet-master or are explicitly allowlisted.
+- Interview and orchestrator plan output paths remain safe from cleanup removal.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: interview_cleanup_wrapper_boundary_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: interview_cleanup_wrapper_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0088
+preserved_exact_tokens:
+- research_pre_question_with_subagent
+- runner.execute(&request)
+- run_with_cleanup
+- SubagentInvoker
+- .puppet-master/interview/
+- .puppet-master/research/
+- .puppet-master/start-chain/
+- .puppet-master/plans/
+negative_constraints:
+- Interview and subagent platform runs must not bypass cleanup wrapping when a project working directory is known.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- interview-subagent-integration.md owns interview-specific subagent invocation.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: Interview wrapper behavior spans runner calls, subagent invocation, and output allowlist boundaries.
+```
+
+
+<<< CONTEXT_AFTER 5668-5679 >>>
+### M-073 - Runner Output Process Isolation And Agent Output Policy
+
+```yaml
+plan_unit_id: M-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Runner and cleanup paths must honor Plans/newfeatures.md §13 bounded subprocess output buffers, separate CLI process execution, and .puppet-master/agent-output/{run-id}/ preservation or clearing only by cleanup policy.
+gui_related: false
+gui_classification_reason: The unit covers backend runner process isolation, subprocess output buffering, and agent-output cleanup policy rather than direct GUI presentation.
+split_recommended: false
+depends_on:

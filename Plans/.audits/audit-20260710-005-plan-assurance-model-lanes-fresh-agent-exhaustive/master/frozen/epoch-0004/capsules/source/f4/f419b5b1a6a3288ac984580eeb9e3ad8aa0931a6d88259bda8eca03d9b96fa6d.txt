@@ -1,0 +1,266 @@
+<<< AUTHORITATIVE_CORE 1-265 >>>
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pm.project-plan-node.v1",
+  "title": "Puppet Master Project Plan Node (Shard)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "node_id",
+    "objective",
+    "contract_refs",
+    "acceptance",
+    "evidence_required",
+    "allowed_tools",
+    "tool_policy_mode",
+    "policy_mode",
+    "change_budget",
+    "blockers",
+    "unblocks",
+    "status",
+    "evidence_pointer",
+    "verifier_result",
+    "decision_refs",
+    "spec_lock_requirements"
+  ],
+  "properties": {
+    "$schema": {"type": "string"},
+    "node_id": {"type": "string", "minLength": 1},
+    "objective": {"type": "string", "minLength": 1},
+    "contract_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "contains": {"type": "string", "pattern": "^ProjectContract:"}
+    },
+    "acceptance": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/acceptance_check"}
+    },
+    "evidence_required": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_id", "path"],
+      "properties": {
+        "schema_id": {"type": "string", "const": "pm.evidence.schema.v1"},
+        "path": {"type": "string", "minLength": 1}
+      }
+    },
+    "allowed_tools": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "tool_policy_mode": {
+      "type": "string",
+      "enum": ["auto", "ask", "deny"]
+    },
+    "policy_mode": {
+      "type": "string",
+      "enum": ["read-only", "workspace-write", "danger-full-access"]
+    },
+    "change_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "allowed_paths",
+        "forbidden_paths",
+        "forbidden_files",
+        "max_files_changed",
+        "max_lines_added",
+        "max_lines_deleted"
+      ],
+      "properties": {
+        "schema_id": {"type": "string", "const": "pm.change_budget.schema.v1"},
+        "allowed_paths": {"type": "array", "items": {"type": "string"}},
+        "forbidden_paths": {"type": "array", "items": {"type": "string"}},
+        "forbidden_files": {"type": "array", "items": {"type": "string"}},
+        "max_files_changed": {"type": "integer", "minimum": 0},
+        "max_lines_added": {"type": "integer", "minimum": 0},
+        "max_lines_deleted": {"type": "integer", "minimum": 0},
+        "max_total_loc_delta": {"type": "integer", "minimum": 0},
+        "notes": {"type": "string"}
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "unblocks": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "status": {
+      "type": "string",
+      "enum": ["queued", "in_progress", "verify_pending", "verified", "done", "failed"]
+    },
+    "evidence_pointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "ref"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["filesystem_path", "seglog_ref"]
+        },
+        "ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "verifier_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome"],
+      "properties": {
+        "outcome": {
+          "type": "string",
+          "enum": ["pending", "pass", "fail"]
+        },
+        "timestamp_utc": {"type": "string", "format": "date-time"},
+        "message": {"type": "string"}
+      }
+    },
+    "decision_refs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1},
+      "minItems": 0
+    },
+    "spec_lock_requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_versions"],
+      "properties": {
+        "schema_versions": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "depends_on": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "parallel_group": {"type": "string"},
+    "requirement_refs": {
+      "type": "array",
+      "description": "Authoritative list of requirement IDs (from REQUIREMENTS.md) that this plan node implements. Each entry must be a valid FR-###, NFR-###, or REQ-### identifier.",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "anyOf": [
+          {"pattern": "^FR-[0-9]{3,}$"},
+          {"pattern": "^NFR-[0-9]{3,}$"},
+          {"pattern": "^REQ-[0-9]{3,}$"}
+        ]
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {"enum": ["verified", "done"]}
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "verifier_result": {
+            "allOf": [
+              {
+                "required": ["outcome", "timestamp_utc"]
+              },
+              {
+                "properties": {
+                  "outcome": {"const": "pass"}
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"const": "failed"}
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "verifier_result": {
+            "allOf": [
+              {
+                "required": ["outcome", "timestamp_utc"]
+              },
+              {
+                "properties": {
+                  "outcome": {"const": "fail"}
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {"enum": ["queued", "in_progress", "verify_pending"]}
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": {
+          "verifier_result": {
+            "properties": {
+              "outcome": {"const": "pending"}
+            },
+            "required": ["outcome"]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "command_spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cmd", "expect_exit_code"],
+      "properties": {
+        "cmd": {"type": "string", "minLength": 1},
+        "cwd": {"type": "string"},
+        "expect_exit_code": {"type": "integer"},
+        "timeout_ms": {"type": "integer", "minimum": 0},
+        "expect_stdout_contains": {"type": "array", "items": {"type": "string"}},
+        "expect_stderr_contains": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "acceptance_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["check_id", "commands"],
+      "properties": {
+        "check_id": {"type": "string", "minLength": 1},
+        "description": {"type": "string"},
+        "commands": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/command_spec"}
+        },
+        "expected_events": {"type": "array", "items": {"type": "string"}},
+        "contract_refs": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    }
+  }
+}

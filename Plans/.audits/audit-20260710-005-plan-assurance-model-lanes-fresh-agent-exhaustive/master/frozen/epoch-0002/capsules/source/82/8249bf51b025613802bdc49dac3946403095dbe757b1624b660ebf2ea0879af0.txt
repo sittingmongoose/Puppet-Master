@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE 7003-7014 >>>
+  - "thr_{ulid}"
+  - "dev_session_id"
+  - "terminal_session_id"
+  - "mode_overlay"
+  - "persona_id"
+negative_constraints:
+  - "the system MUST NOT mint a durable `thread_id` for an unsent empty draft"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 7015-7380 >>>
+### ACD-077 - Terminal Thread Compatibility Boundary
+
+```yaml
+plan_unit_id: ACD-077
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Terminal-associated threads are ordinary chat threads with terminal lineage. terminal-thread is a compatibility/search label for terminal or non-writable boundaries, not a durable object type.
+gui_related: false
+gui_classification_reason: Terminal lineage and compatibility labels are identity/modeling behavior, not GUI implementation.
+depends_on: [ACD-076]
+unblocks: []
+acceptance_criteria:
+  - Terminal lineage remains attached for audit after terminal exit.
+  - Live terminal/output/ports surfaces remain owned by terminal or dev-session identity.
+  - terminal-thread does not become a separate durable object type.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: identity_model_drift
+reasoning_tier: standard
+context_scope: threads
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: terminal_thread_compatibility_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0053
+preserved_exact_tokens:
+  - "terminal or non-writable"
+  - "terminal-thread"
+  - "/surfaces"
+negative_constraints:
+  - "Terminal-associated threads are ordinary chat threads with terminal lineage, not a second terminal-thread identity model."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-078 - Debug Investigation Lifecycle
+
+```yaml
+plan_unit_id: ACD-078
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Threads may contain multiple historical investigations, but only one non-terminal investigation may be active for prompt injection and mutation-capable automation at a time.
+gui_related: false
+gui_classification_reason: Investigation lifecycle and prompt/mutation eligibility are workflow/runtime behavior.
+depends_on: [ACD-071]
+unblocks: [ACD-079, ACD-080, ACD-081, ACD-082, ACD-083]
+acceptance_criteria:
+  - A thread can retain multiple historical investigations.
+  - Only one active, blocked, attention_required, verifying, or failed_cleanup investigation is eligible for prompt injection and mutation-capable automation at a time.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: debug_lifecycle
+reasoning_tier: high
+context_scope: debug_investigation
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: debug_investigation_lifecycle
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
+preserved_exact_tokens:
+  - "active"
+  - "blocked"
+  - "attention_required"
+  - "verifying"
+  - "failed_cleanup"
+  - "resolved"
+  - "cancelled"
+  - "superseded"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### ACD-079 - Debug Reopen And Supersede
+
+```yaml
+plan_unit_id: ACD-079
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Switching debug targets in a thread with a non-terminal investigation defaults to continuing the current investigation; materially different targets require explicit supersede, and terminal investigations reopen as historical views unless new lineage is created.
+gui_related: false
+gui_classification_reason: Investigation supersession and reopen lineage are workflow/runtime behavior.
+depends_on: [ACD-078]
+unblocks: [ACD-080, ACD-081]
+acceptance_criteria:
+  - A materially different debug target requires an explicit supersede action.
+  - resolved, cancelled, and superseded investigations reopen as historical views by default.
+  - New live work from a terminal investigation creates a new investigation lineage linked by supersedes_investigation_id.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: debug_reopen
+reasoning_tier: high
+context_scope: debug_investigation
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: debug_reopen_supersede
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
+preserved_exact_tokens:
+  - "supersedes_investigation_id"
+negative_constraints:
+  - "resolved, cancelled, and superseded investigations reopen as historical views by default; they do not silently restart automation, instrumentation, or browser/dev sessions."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-080 - Debug Restore Context Surface
+
+```yaml
+plan_unit_id: ACD-080
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Thread restore rehydrates the visible Investigation Context header, linked artifacts, requested and effective debug posture, revalidation reason, frozen target bindings, and allowed recovery actions without silent target rebinding.
+gui_related: true
+gui_classification_reason: The Investigation Context header and allowed recovery actions are visible debug UI behavior.
+depends_on: [ACD-078, ACD-079]
+unblocks: [ACD-081]
+acceptance_criteria:
+  - Restore rehydrates the Investigation Context header and linked artifacts.
+  - Attention-required investigations restore with attention_required_reason_code and allowed recovery actions.
+  - Resume-time restore does not silently rebind to a different target.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: debug_restore
+reasoning_tier: high
+context_scope: debug_investigation
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+  - Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: debug_restore_context_surface
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
+preserved_exact_tokens:
+  - "Investigation Context"
+  - "attention_required_reason_code"
+  - "no-silent-rebind"
+negative_constraints:
+  - "attention_required investigations do not auto-resume execution"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### ACD-081 - Debug Revalidation Cleanup Boundary
+
+```yaml
+plan_unit_id: ACD-081
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Revalidation and cleanup safety prevent silent resume or rebinding, and failed_cleanup investigations block a new mutation-capable debug loop against the same target until residue is resolved, rolled back, or explicitly promoted.
+gui_related: false
+gui_classification_reason: Revalidation, cleanup, and mutation eligibility are runtime safety behavior.
+depends_on: [ACD-078, ACD-080]
+unblocks: []
+acceptance_criteria:
+  - Revalidation prevents silent resume after target, auth, worktree, HEAD, instrumentation, safe-point, or remediation-lineage drift.
+  - failed_cleanup reopens directly into cleanup-recovery state.
+  - New mutation-capable debugging against the same target waits until residue is handled.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: debug_safety
+reasoning_tier: high
+context_scope: debug_investigation
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: debug_revalidation_cleanup_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
+preserved_exact_tokens:
+  - "target replacement"
+  - "auth/account switch"
+  - "worktree or branch drift"
+  - "HEAD drift"
+  - "expired instrumentation"
+  - "stale safe-point"
+  - "failed_cleanup"
+negative_constraints:
+  - "PM must not start a new mutation-capable debug loop against the same target until residue is resolved, rolled back, or explicitly promoted into the durable fix lane."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### ACD-082 - Debug Stop Reason Mapping
+
+```yaml
+plan_unit_id: ACD-082
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Debug investigation terminal and non-terminal states map deterministically to stop_reason_code, attention_required_reason_code, and blocked_reason_code values.
+gui_related: false
+gui_classification_reason: Stop reason codes and deterministic state mapping are runtime/event semantics, not GUI implementation.
+depends_on: [ACD-078]
+unblocks: []
+acceptance_criteria:
+  - resolved, attention_required, blocked, failed, failed_cleanup, cancelled, and superseded states map to the specified stop reason families.
+  - attention_required and blocked carry the related reason-code fields.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: debug_status_mapping
+reasoning_tier: standard
+context_scope: debug_investigation
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: debug_stop_reason_mapping
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
+preserved_exact_tokens:
+  - "stop_reason_code"
+  - "attention_required_reason_code"
+  - "blocked_reason_code"
+  - "investigation.resolved_verified"
+  - "investigation.analysis_only_completed"
+  - "investigation.verification_failed"
+  - "investigation.no_repro_observed"
+  - "investigation.budget_exhausted"
+  - "investigation.runtime_unavailable"
+  - "investigation.target_unreachable"
+  - "investigation.adapter_unavailable"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-083 - Debug Budget And Attention Taxonomy
+
+```yaml
+plan_unit_id: ACD-083
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Debug automation budgets and attention defaults are fixed initial ceilings with a machine-readable Debug-specific attention taxonomy for auth, manual repro, manual verification, app start, reconnect, credentials, degraded evidence, sensitive capture, adapter, target, workspace, and bundle import cases.
+gui_related: false
+gui_classification_reason: Debug budgets and attention taxonomies are runtime/policy behavior.
+depends_on: [ACD-078]
+unblocks: []
+acceptance_criteria:
+  - Initial browser/evidence and cleanup/resume ceilings are enforced as machine-readable values.
+  - Debug attention taxonomy reason codes remain machine-readable.
+  - Budget, blocked, and attention stops continue to use stop_reason_code values.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: debug_budget
+reasoning_tier: standard
+context_scope: debug_investigation
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Permissions_System.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: debug_budget_attention_taxonomy
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0054
+preserved_exact_tokens:
+  - "max_browser_scenario_branches = 3"
+  - "max_consecutive_no_new_evidence_loops = 2"
+  - "max_active_temporary_instrumentation_lanes = 1"
+  - "max_cleanup_retries = 2"
+  - "max_attention_required_resume_cycles = 3"
+  - "auth_handoff_required"
+  - "manual_repro_required"
+  - "manual_verification_required"
+  - "external_app_start_required"
+  - "session_reconnect_required"
+  - "missing_credentials_or_secret"
+  - "degraded_evidence_review_required"
+  - "sensitive_capture_review_required"
+  - "adapter_switch_recommended"
+  - "target_selection_required"
+  - "workspace_binding_required"
+  - "import_bundle_required"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Runtime_Artifacts_Panel.md
+```
+
+### ACD-084 - Shared Navigation Contract
+
+```yaml
+plan_unit_id: ACD-084
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat consumes shared navigation and runtime identity contracts
+  through route_target, OpenSubject, and OpenFile. resume_url is serialized
+  transport only and must not outgrow the canonical route contract.
+gui_related: false
+gui_classification_reason: Navigation contract consumption and serialized transport boundaries are routing behavior, not GUI implementation.
+depends_on: [ACD-071]
+unblocks: [ACD-085, ACD-090]
+acceptance_criteria:
+  - Routed opens resolve through route_target.
+  - Source opens resolve through OpenSubject or OpenFile.
+  - Assistant Chat does not define chat-local replacements for shared navigation contracts.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: route_contract_drift
+reasoning_tier: standard
+context_scope: navigation
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+  - Plans/FileManager.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: shared_navigation_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0055
+preserved_exact_tokens:
+  - "route_target"
+  - "OpenSubject"
+  - "OpenFile"
+  - "resume_url"
+negative_constraints:
+  - "resume_url is serialized transport only and must not outgrow the canonical route contract"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+```
+
+
+<<< CONTEXT_AFTER 7381-7392 >>>
+### ACD-085 - Runtime Identity Display Snapshot
+
+```yaml
+plan_unit_id: ACD-085
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Chat may display requested/effective runtime identity and projection state, but it must not define assistant-local replacements for owner-doc fields; historical views use frozen requested/effective runtime snapshots captured for execution.
+gui_related: true
+gui_classification_reason: Runtime identity and projection-state display are user-visible chat UI behavior.
+depends_on: [ACD-084]
+unblocks: []

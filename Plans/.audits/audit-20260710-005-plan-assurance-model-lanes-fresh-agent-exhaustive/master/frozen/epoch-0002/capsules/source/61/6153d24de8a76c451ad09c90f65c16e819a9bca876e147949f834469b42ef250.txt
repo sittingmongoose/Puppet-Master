@@ -1,0 +1,296 @@
+<<< AUTHORITATIVE_CORE 1-281 >>>
+# Puppet Master GUI Specification -- Slint Rewrite
+
+
+## Canonical owner-section requirements
+
+
+These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+
+### Concern record family definition
+
+
+### Concern routing and object-first search behavior
+
+Global search labels distinguish `Search in this tab` from `Search Orchestrator`: the former is local tab filtering, while the latter is object-first, cross-tab, and route-aware so concern, evidence, history, ledger, and graph results land on the canonical object route rather than a page-local text match.
+
+The active split names `Orchestrator search` as object-first, run-aware, cross-tab routing and `tab-local search` as local `/filtering` within the active tab or `/view`.
+
+
+### Concern action policy and authority model
+- Concern surfaces map `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` views onto concern-linked `/evidence`, `/package` rollups, exact source references, `/split/supersession`, and acknowledgment `/dismissal` rationale instead of flattening concern history into one summary row.
+- Concern record surfaces expose a canonical record schema with `/routing`, `/blocked/remediation`, `/corroboration/graph`, `/recovery`, and relationship links to reviews and graph patches; structural actions use `/split/supersession` instead of local free-text history.
+- Concern lineage transitions use `merge`, `split`, and `superseded`; when one concern is reframed into several precise concerns, the original resolves with `resolution_kind = split` and retained lineage refs rather than being overwritten.
+- Concern updates append new `/evidence` and can raise `/attention`; two duplicate concerns merge into one retained id and `/redirect` the `merged-away` ids, while an older framing replaced by a `/newer` concern is `resolved` with `resolution_kind = superseded`.
+- Object-specific context menus show only operational actions valid for the current object state and use canonical labels from runtime semantics; mutation actions never appear because a generic shell menu has a matching verb.
+- Structural concern actions such as `merge`, `split`, and `supersede` use guided flows instead of one-click menus because they change `/history/ledger` interpretation and lineage, not only presentation state.
+### Projection trust and action gating
+
+Projection-backed surfaces display `projection_freshness` and `projection_health` as the runtime trust grammar. Preview/browser `/UI` keeps `trust_tier` under `/browser`; runtime `/degraded` copy never reuses `trust_tier` as degraded trust. Artifact provenance `/trust` disclosure derives from persisted receipts and canonical refs, so reports remain inspectable after the live worktree or provider session is gone. `projection-backed` panels expose `trust state` and `last updated` as first-class UI fields.
+
+Shared attention labels include `Waiting on user approval`, `Seam integration blocked`, `Graph patch required`, `Recovery in progress`, `Provider/account pressure`, and `Projection trust degraded`; each label carries owner route, projection state, and `/account` or provider context when relevant instead of acting as free-text status.
+
+Projection-backed surfaces use `freshness_state` values `current`, `refreshing`, `stale`, `degraded`, and `unavailable`; `/current` projections may allow normal read/write interaction, while `stale` or `/degraded` surfaces narrow mutation-bearing actions, disable them, or require direct canonical/current revalidation before execution.
+
+Visible projection trust grammar includes `last_updated_at`, `data_source_kind`, `degraded_reason`, and `action_gate_reason` so operators can see whether a blocked or disabled action comes from freshness, source quality, or an authoritative runtime gate.
+
+
+### Progress-only widget hostability
+- `Plans/Orchestrator_Page.md` (`/Orchestrator_Page.md`) six-tab `Tiers` carry-through is stale and predates the canonical Plan Compile tab: widget-based tabs `1, 2, 4, 5, 6`, `widget.tier_tree`, `widget.current_task`, `widget.progress_bars`, `tier_id`, `request_id`, `requested_persona_id`, `effective_persona_id`, `provider`, `model`, and `PuppetMasterEvent` / `PuppetMasterEvent::TierChanged` / `PuppetMasterEvent::UserInteractionRequired` / `TierChanged` / `UserInteractionRequired` inputs are compatibility signals, while new live-state UI uses native Orchestrator surfaces, the seven-tab shell, and explicit `HITL` runtime objects.
+- `Plans/Widget_System.md` (`/Widget_System.md`) tier-centric `Orch/Tiers` and `/Tiers` entries, `widget.agent_terminal`, `widget.completed_prose`, `widget.tier_tree`, older `TierChanged` / `IterationStart` pushes, and `/task/subtask`-oriented `widget.current_task` remain compatibility vocabulary; only `Progress` is widget-hosted in the current Orchestrator model.
+- Legacy `GUI` inventory entries such as `/current-task`, `7.7 Tiers`, tier-oriented Settings, `Orchestrator tabs`, `wizard_attention_required`, `resume_url`, and phase-task-subtask progress bars stay searchable compatibility copy, but primary navigation moves to native graph/package/lane/seam surfaces rather than treating `Tiers` as canonical.
+- Legacy Progress widget catalog fields such as `widget.current_task`, `widget.progress_bars`, `widget.cta_stack`, `widget.agent_terminal`, and `widget.completed_prose` plus `PuppetMasterEvent`, `PuppetMasterEvent::UserInteractionRequired`, `UserInteractionRequired`, `tier_id`, `/tasks`, `/task/subtask`, and `/objective/elapsed` are compatibility inputs only; native Orchestrator views own live progress display.
+- `Plans/Widget_System.md` / `/Widget_System.md` migrates `dashboard_layout:v1` to `widget_layout:v1:dashboard`; `widget_layout` is the active layout family while `dashboard_layout` and `dashboard_layout:v1` remain backup/migration names.
+- `Widget_System` / `Widget_System.md` keeps `/Tiers`, `Orch/Tiers`, `Orch/Evidence`, `Orch/History`, `Orch/Ledger`, `/Evidence`, `/History`, and `/Ledger` as legacy widget-composed catalog aliases only; only `Progress` remains widget-composed in native Orchestrator.
+- Widget persistence scope is explicit: `dashboard` layout may stay app-global, `orchestrator:progress` is project-scoped or app-default plus project override, and `usage` declares app-wide versus project-scoped mode rather than silently reusing one layout.
+- `Orchestrator_Page` / `Orchestrator_Page.md` Progress widgets that still center active-tier or tier-targeted terminal semantics are legacy inputs; `widget.agent_terminal`, `widget.completed_prose`, `widget.current_task`, `widget.progress_bars`, `/task/subtask`, and `/objective/platform/model` resolve through native Progress and runtime views.
+- The widget layout migration has one explicit persistence-rule: active layout state writes through `widget_layout`, while retired layout keys are read-only migration backups.
+- FinalGUISpec must not let stale Orchestrator ontology re-amplifies drift into widgets, settings, dashboard copy, or route handling.
+### Shared escalation ladder
+
+Blocked-notice consumers keep `## Unified Thread Blocked-State Lifecycle`, `### Multi-episode display`, and `### 7.3 Shared route and open behavior` as owner-anchor / owner-heading carry-through, but `gap-002`, `exact_items`, `stale-survivor`, and `GUI` cleanup must expose `blocked_sequence`, `approval_scope_key`, `report_ref`, `startup_recovered`, `action_available`, and `escalation_level` instead of leaving those fields in a skeletal blocked-notice flow.
+
+`Plans/Run_Graph_View.md` (`/Run_Graph_View.md`) `cmd.graph.approve_hitl` / `cmd.graph.deny_hitl` actions use `blocked_sequence` and ordered `allowed_action_ids[]`; legacy `hitl_request_id` is compatibility display metadata, not a second `HITL` approval identity.
+
+`Plans/UI_Command_Catalog.md` (`/UI_Command_Catalog.md`) graph HITL command examples with `{ request_id, node_id, rationale }` and `{ request_id, node_id, rationale, resolution? }` map to the same runtime approval identity; `request_id` and `node_id` are routing/lineage args, not a replacement for `blocked_sequence`.
+
+
+### Action-surface policy
+- Bulk live actions such as `/remove`, `/recovery`, archive/prune, or worktree cleanup choose `light`, `strong`, or `hard_gate` confirmation based on blocked/recovery lineage and target preview; destructive `remove` defaults to `strong`, and blocked-lineage recovery can escalate to `hard_gate`.
+- A `hard_gate` confirmation must show runtime-defined allowed actions, why the gate exists, the exact consequence of each allowed action, and no hidden alternative path.
+- Runtime mutation and `/recovery` surfaces require `/schema/gate` preconditions for `allowed_action_ids`, `allowed_action_ids[]`, freshness `/trust`, account capability, and `/runtime` capability before the GUI exposes mutation controls.
+- Bulk actions default to navigation, triage, and low-risk state updates; live execution mutations stay narrow unless the runtime exposes an explicit safe batch semantic for that exact action.
+- Stale visibility is not action authority: when projection trust drops, `/recovery` controls and `allowed_action_ids[]` may become invalid, and destructive or topology-changing actions require stronger gating rather than ordinary undo.
+- `Plans/Tools.md` (`/Tools.md`) DAE tool-event reconstruction requires richer event payloads and reconciled outcome taxonomy before GUI surfaces can replay DAE tool-event history as authoritative runtime state.
+### Glossary and help governance
+- The canonical term system owns stable object `/state/action` names from docs and `/runtime/contracts`; the help entry system owns explainer pages or `/cards`; the contextual help system owns inline tooltips, badges, hover copy, and small "what is this?" affordances.
+### Notification routing policy
+
+Notification and attention copy use the shared state/action label set: `alert-level`, `event-family`, backbone event, `/action`, and condition-aging taxonomy terms are routed through `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md` (`/Orchestrator_Page.md`), and `Plans/Glossary.md` (`/Glossary.md`) rather than ad hoc local labels.
+
+Alert-state semantics remain explicit across Dashboard and attention-surface copy for `attention_required` and `blocked` states: `resolved` means the underlying condition changed; `dismissed` or `/acknowledged` only hides or confirms presentation while the condition may still exist, and active blockers must never appear unblocked through dismissal alone.
+
+Local attention surfaces normalize through the shared notification model: Dashboard `Action Required`, thread badges, run-graph `/node` badges, warnings `/toasts/banners`, tray `/system` notifications, rate-limit banners, and blocked versus attention-required copy all preserve severity, source, and owner route instead of inventing local alert state.
+
+Tab badges stay sparse and purposeful: the `Progress` badge represents meaningful `/action-required` count, while other tabs prefer targeted counts or simple dot-badges rather than noisy unread-like counters.
+
+
+### Canonical route payload
+
+Route payloads may target `source_control`, `github_actions`, `docker_manager`, or `document_pane`; panel-local subviews and `/selectors` refine the landing inside that destination, and remembered state supplies defaults only when the route does not override them.
+
+Object-first deep-link recipes normalize `/message`, scheduler `/blocking/safe-point/remediation/attempt`, and `/package/lane/worktree/concern/promotion/graph` lineage through one route shape; `Plans/assistant-chat-design.md`, `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, and `Plans/WorktreeGitImprovement.md` consume the same object-first routing instead of inventing an SCM-local navigation identity.
+
+`Contracts_V0` / `Contracts_V0.md` owns the canonical route payload and target model, including the `object_kind` enum; `Glossary.md` carries the user-facing `object_kind` vocabulary so help and downstream copy do not drift.
+
+
+### Project summary projection
+
+
+### Project attention projection
+
+`project_summary` is a current-state projection overwritten by projector updates, while `project_attention_item` rows keep active versus resolved `/dismissed/quieted` semantics; when a source record owns durable history, the attention row may remain projection-level but preserves a stable `source_object_ref`.
+
+`Contracts_V0` / `Contracts_V0.md` and `storage-plan` / `storage-plan.md` contradictions are resolved by shared families for `remediation.resolved`, concrete-account display, `/actor` dimensions in effective `/runtime` records, route-payload schema, and project-summary / project-attention projections rather than GUI-local inventions.
+
+
+### Requested concrete-account fields
+
+Provider dispatch surfaces show a concrete-account request separately from policy: `Prompt_Pipeline.md`, `CLI_Bridged_Providers.md`, `Models_System.md`, and `Prompt_Pipeline`/`Models_System` references must surface `ProviderRequestEnvelope`, `account_switch_reason`, `/account`, `execution-role`, `/model/variant`, role-scoped pool selection, and requested concrete-account intent.
+
+`Plans/Multi-Account.md` / `/Multi-Account.md` binds operational identity and role-scoped pools into the shared runtime grammar, while `Plans/assistant-chat-design.md` / `/assistant-chat-design.md` surfaces thread-level `/account/role` switching and `/trust` disclosure without minting chat-local account truth.
+
+Operational identities may display provider/account identity and `/account` source metadata, but the GUI must not imply shared token ownership across accounts, providers, or execution roles.
+
+Requested-account event-schema precision is a visible GUI contract: identity projections expose account fields, requested concrete-account truth, role `/actor` identity, operational identity, switch-history, and trust-state anywhere a user-facing GUI surface claims to show runtime truth.
+
+`Plans/Prompt_Pipeline.md` / `/Prompt_Pipeline.md` locks requested `/effective` identity semantics, including concrete-account intent, while tier-era override ownership is compatibility vocabulary only.
+
+
+### Execution role and operational identity
+
+Operational identity is distinct from provider-account identity: `Multi-Account.md`, `/registry/Kubernetes`, `/runtime/storage`, and side-effect surfaces expose operational-identity blocks beside provider-account displays rather than collapsing GitHub, registry, or Kubernetes actors into one provider credential.
+
+Orchestrator worker identity rows from `Orchestrator_Page` / `Orchestrator_Page.md` that list `requested_persona_id`, `effective_persona_id`, provider, model, `attempt_id`, or `session_id` must also expose `execution_role` and operational target context before the GUI treats them as complete runtime identity.
+
+`Plans/GitHub_Integration.md` (`/GitHub_Integration.md`) `Worktrees` copy must present lane-backed operational identity instead of centering raw worktree rows when the Source Control surface is showing branch, lane, package, or worktree state.
+
+
+### Projection freshness vs projection health
+
+
+- Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
+### Dismissed vs resolved rationale enforcement
+### Blocked-owner eight-kind taxonomy and escalation ladder surfaces
+
+
+### Recommended minimum concern record shape
+
+
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+
+**Date:** 2026-02-22
+**Status:** Authoritative specification for AI agent implementation
+**Tech Stack:** Rust stable 1.96.1 + Slint 1.17.1 (.slint markup compiled via slint_build)
+**Renderer:** Native desktop uses Slint Winit with Skia compiled in and selected by default; fallback is Winit + FemtoVG-wgpu, then Winit software renderer only as an emergency path.
+
+---
+
+## Table of Contents
+
+1. [Executive Summary](#1-executive-summary)
+2. [Tech Stack and Renderer](#2-tech-stack-and-renderer)
+3. [Master Layout](#3-master-layout)
+4. [Navigation Architecture](#4-navigation-architecture)
+5. [Panel System](#5-panel-system)
+6. [Theme System](#6-theme-system)
+7. [Views Specification](#7-views-specification)
+8. [Widget Catalog](#8-widget-catalog)
+9. [State Management](#9-state-management)
+10. [UX Patterns](#10-ux-patterns)
+11. [Anti-Flickering and Scroll Preservation](#11-anti-flickering-and-scroll-preservation)
+12. [Responsive Design](#12-responsive-design)
+13. [Accessibility](#13-accessibility)
+14. [Slint File Organization](#14-slint-file-organization)
+15. [Persistence](#15-persistence)
+16. [Migration Mapping](#16-migration-mapping)
+17. [Risks and Mitigations](#17-risks-and-mitigations)
+18. [Promoted Features](#18-promoted-features-formerly-future-considerations)
+19. [Persona Editor, Compatibility Disclosure, and Surface-Level Persona Controls](#19-persona-editor-compatibility-disclosure-and-surface-level-persona-controls-2026-03-06)
+20. [Appendix A: Cross-References](#appendix-a-cross-references)
+21. [Appendix B: Locked Decisions Summary](#appendix-b-locked-decisions-summary)
+
+---
+
+## 1. Executive Summary
+
+This document is the authoritative GUI specification for the Puppet Master desktop application, replacing the retired Rust/Iced-lineage GUI with a Slint 1.17.1 implementation on Rust stable 1.96.1. The design follows an IDE-shell layout (Activity Bar + Primary Content + Side Panel + Bottom Panel) with three user-facing theme families (Retro Dark, Retro Light, Basic Modern) backed by deterministic built-in palette variants plus user-created custom themes, detachable panels, and a rearrangeable dashboard.
+
+The current GUI uses a two-row header with 16 flat navigation buttons above a single full-width content area. This wastes screen real estate and forces constant page-switching. The new layout follows a three-column IDE shell inspired by VS Code / JetBrains, dressed in the existing retro-futuristic aesthetic.
+
+Key changes from the retired Rust/Iced-lineage GUI:
+- **Layout:** Single-page-at-a-time replaced with persistent IDE shell (Activity Bar, Primary Content, Side Panel, Bottom Panel)
+- **Navigation:** 16 flat buttons replaced with 5-group Activity Bar + Command Palette
+- **Settings restructure:** Old `Settings` becomes `App Settings`; old `Config` becomes `Settings`; Login and Doctor merge into unified Settings
+- **New views:** Usage page, File Manager panel, editor surface, Chat panel, Agent Activity pane, Artifacts, Source Control, GitHub Actions, Docker Manager, and Run & Debug side-panel surfaces
+- **Bottom runtime zone:** Terminal, Problems, Output, Ports, and the classical **Debugger** / **DAP Debugger** live here; normal browsing and HTML preview remain editor-tab or detached-window browser surfaces rather than bottom-panel tabs
+- Coarse surface vocabulary treats primary-content pages `/views`, side-panel destinations, bottom-panel surfaces, and Orchestrator tabs as shell categories, not interchangeable route identities.
+- **Themes:** Three theme families with full extensibility and deterministic built-in variants
+- **Real-time:** Event-driven updates via Rust channels and `invoke_from_event_loop`, not polling
+- **Panels:** Chat and File Manager are detachable; shell state remains identity-safe when re-docked
+- **Project bar:** Instant project switching from title bar with full state preservation and reload
+- **Language detection:** Auto-detect project languages, display badges, and suggest LSP/tool presets
+- **Sound effects:** Optional audio feedback for key events via `rodio`
+- **Catalog and sync:** Community content catalog with install/update/remove flows and config export/import bundles
+- **SSH remote editing:** Edit files on remote hosts via SSH/SFTP with connection management and offline resilience
+- **Debug workflows:** Assistant Debug Mode is a first-class chat workflow overlay; the classical DAP surface remains a separate debugger surface
+- **Product name:** `Puppet Master`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/GitHub_Integration.md
+
+## 2. Tech Stack and Renderer
+
+
+### 2.1 Core Stack
+
+| Component | Technology | Notes |
+|-----------|-----------|-------|
+| Language | Rust stable 1.96.1 | All logic, state management, and Slint bridge code; verified current stable on 2026-07-02 |
+| UI Framework | Slint 1.17.1 | `.slint` markup files compiled via `slint_build` in `build.rs`; selected by owner decision on 2026-07-07 |
+| Default Renderer | Winit + Skia | Skia is compiled in for Windows, Linux, and macOS native desktop builds and is the default renderer |
+| Fallback Renderer | Winit + FemtoVG-wgpu | Used when Skia is unavailable after explicit override and persisted-preference resolution |
+| Emergency Renderer | Winit software renderer | Last resort for headless, CI, unsupported GPU, or emergency recovery environments |
+| Persistence (layout) | redb | Durable KV store for layout state, preferences, editor state |
+| Persistence (events) | seglog | Canonical event ledger for usage, chat, orchestrator events |
+| Search | Tantivy | Full-text search index over seglog projections |
+
+Toolchain currentness is a certification input, not PMConcept evidence. Runtime implementation or production build packets must re-check the official Rust stable channel and Slint current stable release before code work starts; stale PMConcept terminal transcripts, demo version strings, and old audit references are concept/source-lineage fixtures only.
+
+### 2.2 Native Desktop Renderer Contract
+
+Native desktop targets Windows, Linux, and macOS through the Slint Winit backend. The compiled renderer availability order is Winit + Skia, Winit + FemtoVG-wgpu, then Winit software renderer. Runtime selection resolves in this order: `SLINT_BACKEND` explicit override, persisted renderer preference, compiled Skia default, FemtoVG-wgpu fallback, and software emergency fallback. `SLINT_BACKEND` remains valid for debugging, CI, and operator override, but persisted preferences must not silently override an explicit environment override. Startup diagnostics record the requested backend, effective backend, fallback reason, platform, GPU/driver summary when available, and whether the fallback was operator-selected or automatic.
+
+### 2.3 Web/WASM GUI Contract
+
+The first GUI implementation includes both the native desktop target and a Slint Rust WASM web GUI. The web GUI is a Slint/WASM canvas client compiled as a Rust `cdylib` with `wasm-bindgen`, `wasm-pack`, or an approved equivalent toolchain and loaded by a minimal HTML/canvas bootstrap. The web target does not use React, Tauri, or DOM-rendered product UI. Browser JavaScript is limited to generated or minimal bootstrap glue needed to load the WASM canvas client, route static assets, attach the canvas, and connect to approved local services.
+
+Browser-only WASM is not allowed to pretend it owns OS capabilities. It must not claim direct ownership of PTY, project filesystem mutation or watching, process/container execution, CEF-class browser embedding, system tray, native windows, native child windows, or raw native OS drag/drop. When a capability is unavailable in the browser sandbox, the UI shows the capability state, degraded reason, and the approved native or daemon-mediated route.
+
+### 2.4 Trusted Local Daemon Contract
+
+The web GUI may use OS-owned capabilities only through a trusted local Puppet Master daemon. The daemon boundary requires authenticated local origin or pairing, origin and CSRF protection, capability probing before feature enablement, explicit permission requests for sensitive operations, receipt/audit events for granted or denied actions, redaction before display or persistence, degraded reasons when the daemon is absent or narrowed, and deterministic agent-test hooks for fixture mode and browser automation. The web GUI consumes daemon capability receipts; it does not infer authority from localhost reachability alone.
+
+### 2.5 Web Capability Matrix
+
+Web capability state values are exactly `native_full`, `web_supported_direct`, `web_supported_via_trusted_local_daemon`, `web_simulated_or_degraded`, and `web_disabled`.
+
+| Capability family | Native desktop state | Web state | Required web alternative |
+|-------------------|----------------------|-----------|--------------------------|
+| Terminal/PTY | `native_full` | `web_supported_via_trusted_local_daemon` | Daemon-owned PTY session stream, permission receipt, redacted transcript/evidence |
+| Git, process, and container operations | `native_full` | `web_supported_via_trusted_local_daemon` | Daemon-owned command execution, capability probe, audit receipt, disabled/degraded reason |
+| Project filesystem watching and mutation | `native_full` | `web_supported_via_trusted_local_daemon` | Project-root grant, watch proxy, FileSafe/permission receipt, redacted path display |
+| Browser automation | `native_full` | `web_supported_via_trusted_local_daemon` | Daemon-owned automation session with screenshots, state capture, console/network receipt |
+| CEF embedding / native child browser host | `native_full` | `web_disabled` | Evidence stream, in-canvas browser status panels, or browser popup clients when permitted |
+| System tray and OS notifications/tray menu | `native_full` | `web_disabled` | Status page, in-canvas notification center, browser notification permission where supported |
+| Native detached Slint windows and redock | `native_full` | `web_simulated_or_degraded` | In-canvas panels, browser popup clients, persisted layout state without OS window authority |
+| Raw native OS drag/drop paths | `native_full` | `web_supported_via_trusted_local_daemon` | File drops, project-root grants, browser File API metadata, daemon-mediated path binding |
+
+### 2.6 SVG Icon And No-Emoji UI Contract
+
+Production GUI surfaces use bundled local SVG assets referenced by stable `icon_id`. The production UI must not use emoji, emoji-like pictographs, Dingbat-style pseudo-icons, or Unicode pictographs as controls, badges, status indicators, or decorative substitutes for icons. Concept glyphs from PMConcept or other source-lineage artifacts map only to approved `icon_id` entries before promotion.
+
+The local SVG manifest includes `icon_id`, file path, semantic label, theme behavior, size slots, accessible label, fallback text, and any state-variant mapping. Icons are never the sole carrier of state: every icon-only control has an accessible label, tooltip or equivalent label projection, keyboard/focus behavior, and nearby or programmatic state text. Network/CDN icon fonts or remote SVG/icon imports are forbidden for production GUI source.
+
+### 2.7 GUI Web Dev/Test Workflow
+
+The web GUI development workflow uses a local trusted daemon plus a static web route, fixture mode, browser automation smoke tests, screenshots/state capture, deterministic state hooks, and fast rebuild/reload loops. Development preview controls may expose reload, fixture-mode selection, screenshot/state capture, and daemon capability inspection only in configured development or automated-test builds. Production builds must not enable dev/test, MCP, live-preview, fixture, or browser automation controls unless an explicit production configuration authorizes that capability and records the permission/audit surface.
+
+### 2.8 What Is NOT Used
+
+Native product UI does not use React, JavaScript, TypeScript, HTML, CSS, Tauri, or DOM-rendered controls. The native desktop GUI is Rust + Slint `.slint` markup. The web GUI uses Rust Slint compiled to WASM canvas plus minimal bootstrap glue only; it is not a React/Tauri/web-DOM product UI.
+
+### 2.9 Build Integration
+
+```rust
+// build.rs
+fn main() {
+    let config = slint_build::CompilerConfiguration::new()
+        .with_style("cosmic".into());
+    slint_build::compile_with_config("ui/app.slint", config).unwrap();
+}
+```
+
+## GUI / PMConcept implementation-readiness repair addendum (2026-07-02)
+
+This addendum reconciles PMConcept with the final GUI implementation-readiness contract. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+
+PMConcept remains concept/source-lineage input only. `Plans/PMConcept_Control_Reconciliation.json` inventories PMConcept controls and marks each control as production-wiring-required, concept-only pending owner adjudication before promotion, concept fixture only, retired/re-scoped, or parser false positive. Production GUI implementation uses `Plans/Wiring_Matrix.production.json`, `Plans/UI_Command_Catalog.md`, and owner docs rather than PMConcept inline handlers, local state, colors, CSS classes, demo data, or fixed mock content.
+
+The old fixed Project Setup through Plan Compile Configuration rail is not the Planning Wizard data model. Production Planning Wizard shows dynamic PlanningRun topic maps, impacted/stale/repair/final-review states, source and annotation projections, audit/repair activity, and final Approve And Build. Fixed phase labels may be used only as high-level progress grouping, not as a hardcoded workflow.
+
+Approve And Build is the only ordinary final planning approval-to-PlanCompileRun launch authority. It dispatches `cmd.planning_wizard.approve_and_build`, carries the displayed final-review CAS/currentness inputs, writes `approval_cas_receipt`, publishes `PlanApproved`, creates or binds exactly one `PlanCompileRun` synchronously, and opens Orchestrator Plan Compile in pending-launch or durable-run state. No `START`, `BUILD`, or `Approve & Continue` control may create a second ordinary launch from the same approval inputs. Post-approval controls use scoped labels such as `Open Plan Compile`, `Open Build`, `Pause`, `Resume`, `Retry`, or `Approve Step` only when their command, disabled reason, receipt effect, and stale-projection behavior are defined.
+
+Visible testing UI is required wherever testing policy or evidence is user-visible. Settings expose global and per-project testing capability rows with inherited/effective state and `Auto` / `On` / `Off`; visibility policy exposes `show_when_possible`; active sessions expose `Open`, `Watch`, collapse/detach/background, evidence inspection, and redaction inspection. Browser testing projections show navigation, clicks, form input, assertions, screenshots, console, network, and pass/fail progression. Native testing projections show live preview, hot reload, simulator, emulator, device stream, app window, interaction trace, screenshots, and logs when available and permitted.
+
+Accessibility is part of implementation readiness. Production controls must have accessible names, semantic roles or native elements, keyboard parity, focus-visible behavior, tab/menu/disclosure state semantics, disabled reason text, and `aria-describedby` or equivalent reason association for disabled actions. PMConcept icon-only buttons, custom clickable `div`/`span` elements, and tab/menu patterns are visual lineage until these requirements are satisfied in wiring evidence.
+
+Production fixtures and examples must not expose local machine paths, localhost URLs, demo database strings, sample secrets, raw account details, or misleading terminal/browser evidence as acceptance proof. Such PMConcept values are `concept_fixture_only`; production UI consumes project-scoped projected state, redacted display values, credential-store summaries, and evidence refs with redaction manifests.
+
+## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+
+This addendum compiles native Docker/Hosts GUI obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
+
+
+<<< CONTEXT_AFTER 282-293 >>>
+### F3-410 - Docker/Hosts Native Page And Host Lab IA
+
+```yaml
+plan_unit_id: F3-410
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Puppet Master exposes containerized hosts through a native Rust + Slint Docker/Hosts routed primary-content page/lab for
+  expanded Docker and Host Lab details, reached from Docker Manager, command palette routes, Assistant Chat, Orchestrator,
+  Run Graph, Automated Testing, and Runtime Artifacts links. Docker Manager remains the canonical operational owner,
+  side-panel command namespace, and Activity Bar side-panel owner through docker_manager; Docker/Hosts is not a separate

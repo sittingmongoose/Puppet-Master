@@ -1,0 +1,56 @@
+{
+  "assignment_id": "A005-001273-EXACT-WIN-8C88D9F4CA2B-0045",
+  "attempt_id": "attempt-0002",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      16744,
+      16755
+    ],
+    [
+      17155,
+      17166
+    ]
+  ],
+  "core_range": [
+    16756,
+    17154
+  ],
+  "core_sha256": "f2f3893de7e5e8adb3e756d8157c5051cc42705a647e587e383f82e32f69db93",
+  "document_path": "Plans/Wiring_Matrix.production.json",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/9d/9da65e165aa5bc130fb4079e6d3e24fff4c618effaf00e80c2d0f09fcdae1da8.txt",
+  "source_excerpt_sha256": "9da65e165aa5bc130fb4079e6d3e24fff4c618effaf00e80c2d0f09fcdae1da8",
+  "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d",
+  "window_id": "WIN-8C88D9F4CA2B-0045"
+}

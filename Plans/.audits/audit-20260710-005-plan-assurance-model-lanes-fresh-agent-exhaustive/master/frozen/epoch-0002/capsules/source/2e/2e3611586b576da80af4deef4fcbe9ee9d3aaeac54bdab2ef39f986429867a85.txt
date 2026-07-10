@@ -1,0 +1,293 @@
+<<< CONTEXT_BEFORE 789-800 >>>
+            },
+            "contract_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+
+<<< AUTHORITATIVE_CORE 801-1064 >>>
+  "$defs": {
+    "InvocationProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "invocation_source": {
+                "enum": [
+                  "agent_initiated",
+                  "goal",
+                  "prd",
+                  "planning_wizard",
+                  "subagent"
+                ]
+              }
+            },
+            "required": [
+              "invocation_source"
+            ]
+          },
+          "then": {
+            "required": [
+              "agent_reason"
+            ]
+          }
+        }
+      ],
+      "required": [
+        "invocation_source"
+      ],
+      "properties": {
+        "invocation_source": {
+          "type": "string",
+          "enum": [
+            "slash",
+            "palette",
+            "nl_user",
+            "agent_initiated",
+            "goal",
+            "prd",
+            "planning_wizard",
+            "subagent"
+          ]
+        },
+        "agent_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_user_message_id": {
+          "type": "string"
+        },
+        "source_goal_id": {
+          "type": "string"
+        },
+        "source_subagent_id": {
+          "type": "string"
+        },
+        "source_prd_id": {
+          "type": "string"
+        },
+        "source_planning_run_id": {
+          "type": "string"
+        }
+      }
+    },
+    "CacheRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "cache_state": {
+                "const": "stored"
+              }
+            },
+            "required": [
+              "cache_state"
+            ]
+          },
+          "then": {
+            "required": [
+              "ttl_seconds",
+              "no_secret_verified",
+              "redaction_profile_id"
+            ],
+            "properties": {
+              "no_secret_verified": {
+                "const": true
+              }
+            }
+          }
+        }
+      ],
+      "required": [
+        "cache_state"
+      ],
+      "properties": {
+        "cache_state": {
+          "type": "string",
+          "enum": [
+            "hit",
+            "miss",
+            "bypassed",
+            "stored",
+            "not_stored"
+          ]
+        },
+        "cache_ref": {
+          "type": "string"
+        },
+        "content_hash": {
+          "type": "string"
+        },
+        "ttl_seconds": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "no_secret_verified": {
+          "type": "boolean"
+        },
+        "redaction_profile_id": {
+          "type": "string"
+        }
+      }
+    },
+    "ReadReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receipt_id",
+        "url",
+        "web_operation",
+        "tool_id",
+        "content_ref",
+        "read_at_utc"
+      ],
+      "properties": {
+        "receipt_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "web_operation": {
+          "type": "string",
+          "const": "read"
+        },
+        "tool_id": {
+          "type": "string",
+          "const": "webfetch"
+        },
+        "content_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "page_representation_ref": {
+          "type": "string"
+        },
+        "browser_session_id": {
+          "type": "string"
+        },
+        "read_at_utc": {
+          "type": "string",
+          "minLength": 1
+        },
+        "redaction_profile_id": {
+          "type": "string"
+        },
+        "content_hash": {
+          "type": "string"
+        }
+      }
+    },
+    "CitationRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "evidence_kind": {
+                "const": "extract"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "extract_receipt_ref"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "evidence_kind": {
+                "enum": [
+                  "read",
+                  "browser_snapshot",
+                  "browser_screenshot",
+                  "provider_native_read"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "read_receipt_ref"
+            ]
+          }
+        }
+      ],
+      "required": [
+        "citation_id",
+        "url",
+        "source_ref",
+        "evidence_kind",
+        "snippet_only"
+      ],
+      "properties": {
+        "citation_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string"
+        },
+        "source_ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "read_receipt_ref": {
+          "type": "string"
+        },
+        "extract_receipt_ref": {
+          "type": "string"
+        },
+        "evidence_kind": {
+          "type": "string",
+          "enum": [
+            "read",
+            "extract",
+            "browser_snapshot",
+            "browser_screenshot",
+            "provider_native_read"
+          ]
+        },
+        "quoted_span_ref": {
+          "type": "string"
+        },
+        "snippet_only": {
+          "type": "boolean",
+          "const": false
+        }
+      }
+    },
+
+<<< CONTEXT_AFTER 1065-1076 >>>
+    "WebOperationJob": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "completed",
+                  "failed",
+                  "cancelled",

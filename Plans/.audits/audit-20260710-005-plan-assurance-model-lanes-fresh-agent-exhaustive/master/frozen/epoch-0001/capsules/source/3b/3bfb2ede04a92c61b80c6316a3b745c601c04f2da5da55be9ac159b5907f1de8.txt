@@ -1,0 +1,231 @@
+<<< AUTHORITATIVE_CORE 1-230 >>>
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://puppetmaster.local/schemas/storage_value_registry.schema.json",
+  "title": "Puppet Master Storage Value Registry",
+  "description": "Registry of seglog/redb storage value families, key shapes, value schemas, replay, migration, retention, and redaction contracts. The registry is a Tier 0 storage contract only; it does not declare Puppet Master implementation-buildable.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema_id",
+    "schema_version",
+    "generated_at_utc",
+    "owner_doc",
+    "buildability_gate_policy",
+    "critical_family_ids",
+    "families"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://puppetmaster.local/schemas/storage_value_registry.schema.json"
+    },
+    "schema_id": {
+      "type": "string",
+      "const": "pm.storage_value_registry.v1"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0.0"
+    },
+    "generated_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "owner_doc": {
+      "type": "string",
+      "const": "Plans/storage-plan.md"
+    },
+    "buildability_gate_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "buildability_gate_passed_must_remain_false",
+        "ordinary_product_worknodes_allowed",
+        "ordinary_product_nodeseeds_allowed",
+        "scope"
+      ],
+      "properties": {
+        "buildability_gate_passed_must_remain_false": {
+          "type": "boolean",
+          "const": true
+        },
+        "ordinary_product_worknodes_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "ordinary_product_nodeseeds_allowed": {
+          "type": "boolean",
+          "const": false
+        },
+        "scope": {
+          "type": "string",
+          "const": "tier_0c_2_storage_value_contracts_only"
+        }
+      }
+    },
+    "critical_family_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/family_id"
+      }
+    },
+    "families": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/family"
+      }
+    }
+  },
+  "$defs": {
+    "family_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "non_empty_string": {
+      "type": "string",
+      "minLength": 1
+    },
+    "string_list": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/non_empty_string"
+      }
+    },
+    "family": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "family_id",
+        "storage_kind",
+        "status",
+        "tier",
+        "key_shape",
+        "value_schema_id",
+        "value_schema_ref",
+        "owner_doc",
+        "producer",
+        "consumers",
+        "schema_version",
+        "encoding",
+        "required_fields",
+        "optional_fields",
+        "nullable_fields",
+        "replay_behavior",
+        "migration",
+        "retention_compaction",
+        "redaction_no_secret_rule",
+        "legacy_canonical_crosswalk_status"
+      ],
+      "properties": {
+        "family_id": {
+          "$ref": "#/$defs/family_id"
+        },
+        "storage_kind": {
+          "type": "string",
+          "enum": [
+            "seglog",
+            "redb",
+            "redb_projection",
+            "redb_index",
+            "redb_checkpoint",
+            "redb_and_seglog"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "materialized",
+            "deferred_not_build_blocking",
+            "compatibility_alias"
+          ]
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "tier_0_launch_critical",
+            "later_gui_or_feature_projection",
+            "migration_only"
+          ]
+        },
+        "key_shape": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "value_schema_id": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "value_schema_ref": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "owner_doc": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "producer": {
+          "$ref": "#/$defs/string_list"
+        },
+        "consumers": {
+          "$ref": "#/$defs/string_list"
+        },
+        "schema_version": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "encoding": {
+          "type": "string",
+          "enum": [
+            "messagepack_canonical",
+            "json_canonical",
+            "seglog_messagepack",
+            "projection_checkpoint"
+          ]
+        },
+        "required_fields": {
+          "$ref": "#/$defs/string_list"
+        },
+        "optional_fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        "nullable_fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/non_empty_string"
+          }
+        },
+        "replay_behavior": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "migration": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "retention_compaction": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "redaction_no_secret_rule": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "legacy_canonical_crosswalk_status": {
+          "$ref": "#/$defs/non_empty_string"
+        },
+        "value_schema": {
+          "type": "object"
+        },
+        "deferred_owner": {
+          "type": "string"
+        },
+        "deferred_reason": {
+          "type": "string"
+        },
+        "reopen_condition": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

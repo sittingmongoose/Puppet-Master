@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE canonical_document_lines=28299-28310 >>>
+L00028299	negative_constraints:
+L00028300	- Next steps are not executable queues or production build tasks.
+L00028301	compatibility_only_notes:
+L00028302	- Checklist remains source-lineage planning evidence only.
+L00028303	stale_retired_dispositions: []
+L00028304	owner_boundary_notes:
+L00028305	- Provider/platform owners decide whether checklist evidence becomes owner-doc canon.
+L00028306	owner_hints:
+L00028307	- Plans/orchestrator-subagent-integration.md
+L00028308	preserved_contractrefs: []
+L00028309	```
+L00028310	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=28311-28705 >>>
+L00028311	### OSI-379 - Autonomous QA Reference Adoption Boundary
+L00028312	
+L00028313	```yaml
+L00028314	plan_unit_id: OSI-379
+L00028315	unit_type: requirement
+L00028316	status: accepted
+L00028317	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028318	canonical_text: >-
+L00028319	  The autonomous QA loop pattern is an external reference input for quality-gate ideas and must not override PM-native
+L00028320	  orchestrator, subagent, and verification contracts.
+L00028321	gui_related: false
+L00028322	gui_classification_reason: This unit covers external reference/adoption boundary, not GUI presentation.
+L00028323	split_recommended: false
+L00028324	depends_on:
+L00028325	- OSI-098
+L00028326	- OSI-107
+L00028327	- OSI-116
+L00028328	unblocks: []
+L00028329	acceptance_criteria:
+L00028330	- Covered Autonomous QA Loop Pattern Integration and Overview text remains losslessly available for exact-text audit.
+L00028331	- External VS Code Copilot pattern material remains reference input only.
+L00028332	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028333	validation_surfaces:
+L00028334	- >-
+L00028335	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028336	- python3 scripts/pm-plan-index.py validate
+L00028337	reasoning_tier: standard
+L00028338	context_scope: orchestrator_subagent_standardization
+L00028339	implementation_surfaces:
+L00028340	- Plans/orchestrator-subagent-integration.md
+L00028341	risk_class: autonomous_qa_reference_adoption_boundary
+L00028342	node_compile_hint:
+L00028343	  mode: autonomous_qa_reference_adoption_boundary
+L00028344	  create_worknodes: false
+L00028345	source_lineage:
+L00028346	- >-
+L00028347	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0177
+L00028348	- >-
+L00028349	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0178
+L00028350	preserved_exact_tokens:
+L00028351	- 'https://gist.github.com/gsemet/1ef024fc426cfc75f946302033a69812'
+L00028352	- autonomous QA loop pattern
+L00028353	- VS Code Copilot
+L00028354	- quality gates
+L00028355	negative_constraints:
+L00028356	- External pattern material must not override PM-native orchestration contracts.
+L00028357	compatibility_only_notes:
+L00028358	- External pattern is reference input only.
+L00028359	stale_retired_dispositions: []
+L00028360	owner_boundary_notes:
+L00028361	- PM-native orchestrator and verification contracts retain authority.
+L00028362	owner_hints:
+L00028363	- Plans/orchestrator-subagent-integration.md
+L00028364	preserved_contractrefs: []
+L00028365	```
+L00028366	
+L00028367	### OSI-380 - Autonomous QA Backend Concept Catalog
+L00028368	
+L00028369	```yaml
+L00028370	plan_unit_id: OSI-380
+L00028371	unit_type: requirement
+L00028372	status: accepted
+L00028373	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028374	canonical_text: >-
+L00028375	  Backend autonomous QA concepts preserve orchestrator/subagent separation, three-tier QA naming, phase-aware execution,
+L00028376	  PAUSE.md halting, and rework commit strategy as source-lineage concepts.
+L00028377	gui_related: false
+L00028378	gui_classification_reason: This unit covers backend orchestration concepts, not visual presentation.
+L00028379	split_recommended: false
+L00028380	depends_on:
+L00028381	- OSI-098
+L00028382	- OSI-107
+L00028383	- OSI-137
+L00028384	unblocks: []
+L00028385	acceptance_criteria:
+L00028386	- Covered backend concept bullets remain losslessly available for exact-text audit.
+L00028387	- Concept bullets remain plan evidence and do not create executable queues.
+L00028388	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028389	validation_surfaces:
+L00028390	- >-
+L00028391	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028392	- python3 scripts/pm-plan-index.py validate
+L00028393	reasoning_tier: standard
+L00028394	context_scope: orchestrator_subagent_standardization
+L00028395	implementation_surfaces:
+L00028396	- Plans/orchestrator-subagent-integration.md
+L00028397	risk_class: autonomous_qa_backend_concept_catalog
+L00028398	node_compile_hint:
+L00028399	  mode: autonomous_qa_backend_concept_catalog
+L00028400	  create_worknodes: false
+L00028401	source_lineage:
+L00028402	- >-
+L00028403	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0179
+L00028404	preserved_exact_tokens:
+L00028405	- Orchestrator/Subagent Separation
+L00028406	- Three-Tier QA System
+L00028407	- Phase-Aware Execution
+L00028408	- PAUSE.md
+L00028409	- Commit Strategy
+L00028410	negative_constraints:
+L00028411	- Backend concept bullets are not executable work queues.
+L00028412	compatibility_only_notes: []
+L00028413	stale_retired_dispositions: []
+L00028414	owner_boundary_notes:
+L00028415	- Orchestrator and verification owners decide whether concepts become canonical behavior.
+L00028416	owner_hints:
+L00028417	- Plans/orchestrator-subagent-integration.md
+L00028418	preserved_contractrefs: []
+L00028419	```
+L00028420	
+L00028421	### OSI-381 - Autonomous QA Visual Status Symbols
+L00028422	
+L00028423	```yaml
+L00028424	plan_unit_id: OSI-381
+L00028425	unit_type: requirement
+L00028426	status: accepted
+L00028427	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028428	canonical_text: >-
+L00028429	  Autonomous QA visual status concepts preserve the exact visual symbols for progress and incomplete-task prioritization
+L00028430	  as GUI-consumer evidence separate from backend orchestration semantics.
+L00028431	gui_related: true
+L00028432	gui_classification_reason: This unit preserves user-visible status symbols and incomplete-task visual markers.
+L00028433	split_recommended: false
+L00028434	depends_on:
+L00028435	- OSI-380
+L00028436	unblocks: []
+L00028437	acceptance_criteria:
+L00028438	- Covered visual status symbol bullets remain losslessly available for exact-text audit.
+L00028439	- GUI status presentation remains a consumer projection and does not own backend orchestration semantics.
+L00028440	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028441	validation_surfaces:
+L00028442	- >-
+L00028443	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028444	- python3 scripts/pm-plan-index.py validate
+L00028445	reasoning_tier: standard
+L00028446	context_scope: orchestrator_subagent_standardization
+L00028447	implementation_surfaces:
+L00028448	- Plans/orchestrator-subagent-integration.md
+L00028449	risk_class: autonomous_qa_visual_status_symbols
+L00028450	node_compile_hint:
+L00028451	  mode: autonomous_qa_visual_status_symbols
+L00028452	  create_worknodes: false
+L00028453	source_lineage:
+L00028454	- >-
+L00028455	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0179
+L00028456	preserved_exact_tokens:
+L00028457	- Visual status symbols
+L00028458	- '⬜ 🔄 ✅ 🔴'
+L00028459	- 'Incomplete tasks (🔴)'
+L00028460	negative_constraints:
+L00028461	- Visual symbols do not own backend orchestration state.
+L00028462	compatibility_only_notes:
+L00028463	- Symbols are GUI-consumer evidence until presentation owners accept them.
+L00028464	stale_retired_dispositions: []
+L00028465	owner_boundary_notes:
+L00028466	- Final GUI owns user-visible presentation; orchestrator owns status semantics.
+L00028467	owner_hints:
+L00028468	- Plans/orchestrator-subagent-integration.md
+L00028469	preserved_contractrefs: []
+L00028470	```
+L00028471	
+L00028472	### OSI-382 - Progress Tracking Visual Status Model
+L00028473	
+L00028474	```yaml
+L00028475	plan_unit_id: OSI-382
+L00028476	unit_type: requirement
+L00028477	status: accepted
+L00028478	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028479	canonical_text: >-
+L00028480	  Progress tracking visual status model evidence preserves TaskStatus values and exact status symbols for user-visible
+L00028481	  progress presentation while keeping presentation separate from runtime state authority.
+L00028482	gui_related: true
+L00028483	gui_classification_reason: This unit preserves visible progress status symbols and labels.
+L00028484	split_recommended: false
+L00028485	depends_on:
+L00028486	- OSI-381
+L00028487	unblocks: []
+L00028488	acceptance_criteria:
+L00028489	- Covered progress tracking visual status lines remain losslessly available for exact-text audit.
+L00028490	- Visual TaskStatus examples do not redefine canonical runtime status enums.
+L00028491	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028492	validation_surfaces:
+L00028493	- >-
+L00028494	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028495	- python3 scripts/pm-plan-index.py validate
+L00028496	reasoning_tier: standard
+L00028497	context_scope: orchestrator_subagent_standardization
+L00028498	implementation_surfaces:
+L00028499	- Plans/orchestrator-subagent-integration.md
+L00028500	risk_class: progress_tracking_visual_status_model
+L00028501	node_compile_hint:
+L00028502	  mode: progress_tracking_visual_status_model
+L00028503	  create_worknodes: false
+L00028504	source_lineage:
+L00028505	- >-
+L00028506	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0180
+L00028507	- >-
+L00028508	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0181
+L00028509	preserved_exact_tokens:
+L00028510	- Enhanced Progress Tracking
+L00028511	- TaskStatus
+L00028512	- NotStarted
+L00028513	- InProgress
+L00028514	- Completed
+L00028515	- Incomplete
+L00028516	- Skipped
+L00028517	- '⬜'
+L00028518	- '🔄'
+L00028519	- '✅'
+L00028520	- '🔴'
+L00028521	- '⏸️'
+L00028522	negative_constraints:
+L00028523	- Visual TaskStatus examples do not redefine canonical runtime status enums.
+L00028524	compatibility_only_notes:
+L00028525	- Integration Opportunities heading is attached coverage for S0181-S0187 units.
+L00028526	stale_retired_dispositions: []
+L00028527	owner_boundary_notes:
+L00028528	- Runtime contracts own canonical status enums; GUI consumes display projection.
+L00028529	owner_hints:
+L00028530	- Plans/orchestrator-subagent-integration.md
+L00028531	preserved_contractrefs: []
+L00028532	```
+L00028533	
+L00028534	### OSI-383 - ProgressTracker State And Next-Task Selection
+L00028535	
+L00028536	```yaml
+L00028537	plan_unit_id: OSI-383
+L00028538	unit_type: requirement
+L00028539	status: accepted
+L00028540	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028541	canonical_text: >-
+L00028542	  ProgressTracker source evidence preserves task progress fields, current-phase tracking, and next-task selection that
+L00028543	  prioritizes incomplete current-phase tasks before not-started current-phase tasks.
+L00028544	gui_related: false
+L00028545	gui_classification_reason: This unit covers backend progress tracking and selection behavior, not GUI presentation.
+L00028546	split_recommended: false
+L00028547	depends_on:
+L00028548	- OSI-380
+L00028549	- OSI-382
+L00028550	unblocks: []
+L00028551	acceptance_criteria:
+L00028552	- Covered ProgressTracker Rust snippet remains losslessly available for exact-text audit.
+L00028553	- Snippet remains plan evidence and does not create executable scheduling work.
+L00028554	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028555	validation_surfaces:
+L00028556	- >-
+L00028557	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028558	- python3 scripts/pm-plan-index.py validate
+L00028559	reasoning_tier: standard
+L00028560	context_scope: orchestrator_subagent_standardization
+L00028561	implementation_surfaces:
+L00028562	- Plans/orchestrator-subagent-integration.md
+L00028563	risk_class: progress_tracker_state_next_task_selection
+L00028564	node_compile_hint:
+L00028565	  mode: progress_tracker_state_next_task_selection
+L00028566	  create_worknodes: false
+L00028567	source_lineage:
+L00028568	- >-
+L00028569	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0181
+L00028570	preserved_exact_tokens:
+L00028571	- TaskProgress
+L00028572	- ProgressTracker
+L00028573	- current_phase
+L00028574	- get_next_task
+L00028575	- incomplete tasks in current phase
+L00028576	- not started tasks in current phase
+L00028577	negative_constraints:
+L00028578	- ProgressTracker snippet is not an executable scheduler manifest.
+L00028579	compatibility_only_notes:
+L00028580	- Rust snippet is source-lineage evidence only.
+L00028581	stale_retired_dispositions: []
+L00028582	owner_boundary_notes:
+L00028583	- Orchestrator scheduling owners adjudicate concrete next-task policy.
+L00028584	owner_hints:
+L00028585	- Plans/orchestrator-subagent-integration.md
+L00028586	preserved_contractrefs: []
+L00028587	```
+L00028588	
+L00028589	### OSI-384 - Three-Tier QA System Interfaces
+L00028590	
+L00028591	```yaml
+L00028592	plan_unit_id: OSI-384
+L00028593	unit_type: requirement
+L00028594	status: accepted
+L00028595	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028596	canonical_text: >-
+L00028597	  Three-tier QA system evidence preserves preflight, task-inspector, and phase-inspector interfaces plus complete/incomplete
+L00028598	  feedback classification as source-lineage quality-gate concepts.
+L00028599	gui_related: false
+L00028600	gui_classification_reason: This unit covers backend QA interfaces, not GUI presentation.
+L00028601	split_recommended: false
+L00028602	depends_on:
+L00028603	- OSI-098
+L00028604	- OSI-116
+L00028605	- OSI-124
+L00028606	- OSI-221
+L00028607	unblocks: []
+L00028608	acceptance_criteria:
+L00028609	- Covered QASystem Rust snippet remains losslessly available for exact-text audit.
+L00028610	- QA interface example does not create executable inspector work.
+L00028611	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028612	validation_surfaces:
+L00028613	- >-
+L00028614	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028615	- python3 scripts/pm-plan-index.py validate
+L00028616	reasoning_tier: standard
+L00028617	context_scope: orchestrator_subagent_standardization
+L00028618	implementation_surfaces:
+L00028619	- Plans/orchestrator-subagent-integration.md
+L00028620	risk_class: three_tier_qa_system_interfaces
+L00028621	node_compile_hint:
+L00028622	  mode: three_tier_qa_system_interfaces
+L00028623	  create_worknodes: false
+L00028624	source_lineage:
+L00028625	- >-
+L00028626	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0182
+L00028627	preserved_exact_tokens:
+L00028628	- QASystem
+L00028629	- PreflightRunner
+L00028630	- TaskInspector
+L00028631	- PhaseInspector
+L00028632	- run_preflight
+L00028633	- inspect_task
+L00028634	- inspect_phase
+L00028635	- Complete or Incomplete with feedback
+L00028636	negative_constraints:
+L00028637	- QA interface example does not create executable inspector work.
+L00028638	compatibility_only_notes:
+L00028639	- Rust snippet is source-lineage evidence only.
+L00028640	stale_retired_dispositions: []
+L00028641	owner_boundary_notes:
+L00028642	- Verification/quality-gate owners adjudicate promoted inspector interfaces.
+L00028643	owner_hints:
+L00028644	- Plans/orchestrator-subagent-integration.md
+L00028645	preserved_contractrefs: []
+L00028646	```
+L00028647	
+L00028648	### OSI-385 - Task Inspector Subtask Feedback Integration
+L00028649	
+L00028650	```yaml
+L00028651	plan_unit_id: OSI-385
+L00028652	unit_type: requirement
+L00028653	status: accepted
+L00028654	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028655	canonical_text: >-
+L00028656	  Task inspector integration evidence preserves post-subagent inspection for subtasks, completed/incomplete marking, and
+L00028657	  feedback prepending for the next iteration.
+L00028658	gui_related: false
+L00028659	gui_classification_reason: This unit covers backend task inspection flow, not GUI presentation.
+L00028660	split_recommended: false
+L00028661	depends_on:
+L00028662	- OSI-120
+L00028663	- OSI-121
+L00028664	- OSI-137
+L00028665	- OSI-384
+L00028666	unblocks: []
+L00028667	acceptance_criteria:
+L00028668	- Covered task inspector integration snippet remains losslessly available for exact-text audit.
+L00028669	- Feedback integration remains source evidence and does not create executable remediation work.
+L00028670	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028671	validation_surfaces:
+L00028672	- >-
+L00028673	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028674	- python3 scripts/pm-plan-index.py validate
+L00028675	reasoning_tier: standard
+L00028676	context_scope: orchestrator_subagent_standardization
+L00028677	implementation_surfaces:
+L00028678	- Plans/orchestrator-subagent-integration.md
+L00028679	risk_class: task_inspector_subtask_feedback_integration
+L00028680	node_compile_hint:
+L00028681	  mode: task_inspector_subtask_feedback_integration
+L00028682	  create_worknodes: false
+L00028683	source_lineage:
+L00028684	- >-
+L00028685	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0183
+L00028686	preserved_exact_tokens:
+L00028687	- execute_tier_with_subagents
+L00028688	- 'TierType::Subtask'
+L00028689	- 'InspectionStatus::Complete'
+L00028690	- mark_completed
+L00028691	- 'InspectionStatus::Incomplete'
+L00028692	- mark_incomplete
+L00028693	- prepend_task_feedback
+L00028694	negative_constraints:
+L00028695	- Task inspector feedback snippet is not executable remediation work.
+L00028696	compatibility_only_notes:
+L00028697	- Rust snippet is source-lineage evidence only.
+L00028698	stale_retired_dispositions: []
+L00028699	owner_boundary_notes:
+L00028700	- Orchestrator remediation/inspection owners adjudicate concrete feedback routing.
+L00028701	owner_hints:
+L00028702	- Plans/orchestrator-subagent-integration.md
+L00028703	preserved_contractrefs: []
+L00028704	```
+L00028705	
+
+<<< CONTEXT_AFTER canonical_document_lines=28706-28717 >>>
+L00028706	### OSI-386 - Phase Inspector Completion Gate
+L00028707	
+L00028708	```yaml
+L00028709	plan_unit_id: OSI-386
+L00028710	unit_type: requirement
+L00028711	status: accepted
+L00028712	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028713	canonical_text: >-
+L00028714	  Phase inspector evidence preserves phase completion checking, phase-level inspection, phase task lookup, and phase
+L00028715	  advancement after all tasks complete.
+L00028716	gui_related: false
+L00028717	gui_classification_reason: This unit covers backend phase inspection flow, not GUI presentation.

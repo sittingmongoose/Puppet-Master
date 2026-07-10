@@ -1,0 +1,401 @@
+<<< CONTEXT_BEFORE 1484-1495 >>>
+- Duplicating provider CLI details
+- Provider SSOT
+- 'ContractRef: PolicyRule:Decision_Policy.md§2'
+negative_constraints:
+- Vague requirements without measurable behavior are forbidden.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1496-1867 >>>
+### DR-027 - ContractRef Required Keywords
+
+```yaml
+plan_unit_id: DR-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: Any statement using MUST, SHALL, REQUIRED, or NEVER must include at least one ContractRef line.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: dry_rule_drift
+reasoning_tier: standard
+context_scope: dry_rules_standardization
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: contractref_required_keywords
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0011
+preserved_exact_tokens:
+- MUST / SHALL / REQUIRED / NEVER
+- ContractRef:` line.
+- 'ContractRef: Primitive:DRYRules, PolicyRule:Decision_Policy.md§2'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+### DR-028 - ContractRef Taxonomy
+
+```yaml
+plan_unit_id: DR-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: Allowed ContractRef categories are SchemaID, ContractName, Primitive, ToolID, EventType, ConfigKey, PolicyRule, UICommand, Invariant, and Gate.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: dry_rule_drift
+reasoning_tier: standard
+context_scope: dry_rules_standardization
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: contractref_taxonomy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0012
+preserved_exact_tokens:
+- SchemaID:<id>
+- ContractName:<path>#<anchor>
+- Primitive:<name>
+- ToolID:<id>
+- EventType:<type>
+- ConfigKey:<key>
+- PolicyRule:<id>
+- UICommand:<id>
+- Invariant:<id>
+- Gate:<id>
+- 'ContractRef: Primitive:DRYRules'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+### DR-029 - Operational Requirement Annotation Rule
+
+```yaml
+plan_unit_id: DR-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: Every operational requirement must have at least one ContractRef, detected deterministically by MUST, MUST NOT, SHALL, REQUIRED, or NEVER, while preserving the path-plus-anchor example format.
+gui_related: true
+gui_classification_reason: This unit governs user-visible routing, display, command, or UI documentation boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: dry_rule_drift
+reasoning_tier: standard
+context_scope: dry_rules_standardization
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: operational_requirement_annotation_rule
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0013
+preserved_exact_tokens:
+- <a id="7"></a>
+- Every operational requirement MUST have at least one `ContractRef:`
+- MUST
+- MUST NOT
+- SHALL
+- REQUIRED
+- NEVER
+- ContractName:<path>#<anchor>
+- 'ContractRef: ContractName:Plans/Progression_Gates.md#GATE-009'
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/Contracts_V0.md#AuthState'
+- 'ContractRef: Gate:GATE-009, ContractName:Plans/Progression_Gates.md#GATE-009'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+### DR-030 - Packet-Fidelity Semantic Matching
+
+```yaml
+plan_unit_id: DR-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: VERIFIER packet preflight and SCRIBE self-check strip standalone ContractRef lines, normalize CRLF/LF, whitespace, and blank lines, and must not weaken ContractRef enforcement in run-gates or other plan-quality gates.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: dry_rule_drift
+reasoning_tier: standard
+context_scope: dry_rules_standardization
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: packet_fidelity_semantic_matching
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0014
+preserved_exact_tokens:
+- VERIFIER packet preflight
+- SCRIBE self-check
+- ContractRef:` on both the packet-text side and the file-text side
+- CRLF to LF
+- Collapse 3+ blank lines to 2 blank lines
+- MUST NOT weaken ContractRef enforcement
+- 'ContractRef: Primitive:DRYRules, Gate:GATE-009, PolicyRule:Decision_Policy.md§2'
+negative_constraints:
+- Packet-fidelity matching must not weaken ContractRef enforcement in run-gates or any other plan-quality gate.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+### DR-031 - Reference Style
+
+```yaml
+plan_unit_id: DR-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: References should prefer canonical files/anchors and stable anchors over inline duplication or unstable heading slug references.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: dry_rule_drift
+reasoning_tier: standard
+context_scope: dry_rules_standardization
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: reference_style
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0015
+preserved_exact_tokens:
+- Prefer referencing canonical files/anchors
+- Prefer stable anchors
+- <a id="..."></a>
+- 'ContractRef: Primitive:DRYRules'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+### DR-032 - No Unreferenced Operational Text
+
+```yaml
+plan_unit_id: DR-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: Operational requirements without ContractRef are non-canonical and must fail the plan-quality gate.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: dry_rule_drift
+reasoning_tier: standard
+context_scope: dry_rules_standardization
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: no_unreferenced_operational_text
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0016
+preserved_exact_tokens:
+- Operational requirements without `ContractRef:`
+- non-canonical
+- MUST fail the plan-quality gate
+- 'ContractRef: Gate:GATE-009'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+### DR-033 - Inline Requirement Tags Are Non-Authoritative
+
+```yaml
+plan_unit_id: DR-033
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: Inline requirement tags such as Req:FR-001, Req:NFR-001, and Req:REQ-001 are readability-only and do not constitute traceability evidence.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: dry_rule_drift
+reasoning_tier: standard
+context_scope: dry_rules_standardization
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: inline_requirement_tags_are_non_authoritative
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0017
+preserved_exact_tokens:
+- readability-only and non-authoritative
+- Req:FR-001
+- Req:NFR-001
+- Req:REQ-001
+- does NOT constitute traceability evidence
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+### DR-034 - Authoritative Requirement Coverage
+
+```yaml
+plan_unit_id: DR-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: Authoritative requirement coverage lives only in node shard requirement_refs fields and derived .puppet-master/project/traceability/requirements_coverage.json.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DR-001.
+- ContractRefs, anchors, examples, negative constraints, compatibility notes, stale/retired dispositions, and owner boundaries from the source span remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: dry_rule_drift
+reasoning_tier: standard
+context_scope: dry_rules_standardization
+implementation_surfaces:
+- Plans/DRY_Rules.md
+node_compile_hint:
+  mode: authoritative_requirement_coverage
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:DRY_Rules-S0017
+preserved_exact_tokens:
+- Node shard `requirement_refs` fields
+- 'schema: `pm.project-plan-node.v1`'
+- .puppet-master/project/traceability/requirements_coverage.json
+- SchemaID:pm.requirements_coverage.schema.v1
+- Gate:GATE-011
+- ContractName:Plans/DRY_Rules.md#10
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/DRY_Rules.md
+```
+
+
+<<< CONTEXT_AFTER 1868-1879 >>>
+### DR-035 - Inline Tag Conflict Rule
+
+```yaml
+plan_unit_id: DR-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/DRY_Rules.md
+canonical_text: Inline tags must not be the sole traceability mechanism, and when an inline tag conflicts with a node requirement_refs value, requirement_refs is authoritative.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance DRY behavior, not GUI presentation.
+split_recommended: false
+depends_on: []

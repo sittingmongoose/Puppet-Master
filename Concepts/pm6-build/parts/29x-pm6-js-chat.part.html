@@ -677,7 +677,6 @@
     var panel = document.getElementById('chatPanel');
     var resizer = document.getElementById('chatResizer');
     var icon = document.querySelector('.activity-bar .icon[title="Chat"]');
-    $all('.pm6-chat-layout-state').forEach(function (el) { el.textContent = mode; });
     if (!float0) return;
     /* one shared surface per mode: docked = the #chatPanel aside (legacy
        .hidden contract), overlay/detached = the floating chat. Keeping the
@@ -707,6 +706,15 @@
       var d = demo();
       if (d && d.emit) { try { d.emit('chat.layout', { mode: next, source: 'chat' }); } catch (err) {} }
     });
+    /* docked pop-out enters the same cycle at overlay */
+    document.addEventListener('click', function (e) {
+      var pop = e.target && e.target.closest ? e.target.closest('.popOutBtn') : null;
+      if (!pop) return;
+      applyLayout('overlay');
+      say('Chat layout: overlay — cycle from the floating header: overlay / detached / docked.');
+      var d = demo();
+      if (d && d.emit) { try { d.emit('chat.layout', { mode: 'overlay', source: 'chat' }); } catch (err) {} }
+    });
     /* Esc closes the chat overlay (keyboard parity with the layout cycle) */
     document.addEventListener('keydown', function (e) {
       if (e.key !== 'Escape') return;
@@ -715,6 +723,47 @@
         f.style.display = 'none';
         say('Chat overlay closed — reopen it from the layout control or Settings > Appearance > Chat Layout.');
       }
+    });
+  }
+
+  /* ---------- floating chat drag (header row 1 is the handle; detached mode only) ---------- */
+  function wireFloatDrag() {
+    var IGNORE = 'button, a, input, select, textarea, [contenteditable], .wt-bind-wrap, .context-usage, .context-lens-wrap';
+    document.addEventListener('mousedown', function (e) {
+      var float0 = document.getElementById('floatingChat');
+      if (!float0 || float0.style.display === 'none') return;
+      if (float0.classList.contains('pm6-chat-overlay')) return;
+      var header = $('.chat-panel-header', float0);
+      if (!header || !header.firstElementChild) return;
+      var row = header.firstElementChild;
+      if (!e.target || !e.target.closest || !row.contains(e.target)) return;
+      if (e.target.closest(IGNORE)) return;
+      e.preventDefault();
+      var startX = e.clientX, startY = e.clientY;
+      var rect = float0.getBoundingClientRect();
+      var moved = false;
+      function onMove(ev) {
+        if (!moved) {
+          moved = true;
+          /* convert from right-anchored to left/top positioning once */
+          float0.style.left = rect.left + 'px';
+          float0.style.top = rect.top + 'px';
+          float0.style.right = 'auto';
+          float0.style.bottom = 'auto';
+        }
+        var nx = rect.left + (ev.clientX - startX);
+        var ny = rect.top + (ev.clientY - startY);
+        nx = Math.max(0, Math.min(nx, window.innerWidth - rect.width));
+        ny = Math.max(0, Math.min(ny, window.innerHeight - rect.height));
+        float0.style.left = nx + 'px';
+        float0.style.top = ny + 'px';
+      }
+      function onUp() {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
     });
   }
 
@@ -855,6 +904,7 @@
     wireThreads();
     wireCardControls();
     wireLayoutCycle();
+    wireFloatDrag();
     subscribe();
     var d = demo();
     if (d && d.state && d.state.chat) setContext(d.state.chat.context);

@@ -1,0 +1,278 @@
+<<< CONTEXT_BEFORE 1476-1487 >>>
+- NN-*.md
+- NN-*.txt
+- evidence/
+- 'ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1488-1750 >>>
+### DPP-026 - Pointer Stub Presence and Fixed Format
+
+```yaml
+plan_unit_id: DPP-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: When packaging produces a .docset/ directory, the original file path remains as a deterministic pointer stub with canonical-content statement, entrypoint <filename>.docset/00-index.md, source_sha256, and puppet-master docset verify <docset_path> command.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance packaging behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DPP-001.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: document_packaging_policy_drift
+reasoning_tier: standard
+context_scope: document_packaging_policy_standardization
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: pointer_stub_presence_and_fixed_format
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0020
+preserved_exact_tokens:
+- original file path MUST remain present
+- <filename>.docset/00-index.md
+- source_sha256
+- puppet-master docset verify <docset_path>
+- <!-- Puppet Master Document Set pointer stub — do not edit -->
+- 'ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014, Gate:GATE-002'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+### DPP-027 - Canonical Truth Rules for Docset vs Source File
+
+```yaml
+plan_unit_id: DPP-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: When a .docset/ directory exists for an artifact, that directory is canonical and the pointer stub file is derived; without a .docset/ directory, the logical .md or .txt file is canonical.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance packaging behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DPP-001.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: document_packaging_policy_drift
+reasoning_tier: standard
+context_scope: document_packaging_policy_standardization
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: canonical_truth_rules_for_docset_vs_source_file
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0021
+preserved_exact_tokens:
+- .docset/
+- pointer stub file is derived
+- .md
+- .txt
+- 'ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+### DPP-028 - Pointer Stub Verification Discovery and Failure Rules
+
+```yaml
+plan_unit_id: DPP-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: Pointer-stub verification requires the .docset/ directory, .docset/manifest.json, and all reconstruction sha256, line coverage, index/manifest, idempotency, and clean-room checks; verification fails for missing docset, failed checks, or over-budget source without docset.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance packaging behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DPP-001.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: document_packaging_policy_drift
+reasoning_tier: standard
+context_scope: document_packaging_policy_standardization
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: pointer_stub_verification_discovery_and_failure_rules
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0022
+preserved_exact_tokens:
+- .docset/manifest.json
+- reconstruction sha256
+- line coverage
+- index/manifest match
+- idempotency
+- clean-room determinism
+- pointer stub exists but the .docset/ directory is missing
+- the .md file exceeds budget thresholds (§3) and no .docset/ directory exists
+negative_constraints:
+- Do not treat a pointer stub as compliant unless all listed verification checks pass.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+### DPP-029 - Requirements Docset Example and Pointer Stub Example
+
+```yaml
+plan_unit_id: DPP-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: The requirements.md example preserves the canonical pointer-stub and requirements.md.docset/ directory shape, ordered shard examples, audit filenames, example source hash, and deterministic verify command.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance packaging behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DPP-001.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: document_packaging_policy_drift
+reasoning_tier: standard
+context_scope: document_packaging_policy_standardization
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: requirements_docset_example_and_pointer_stub_example
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0023
+preserved_exact_tokens:
+- .puppet-master/project/requirements.md
+- requirements.md.docset/
+- 01-introduction.md
+- 02-functional-requirements.md
+- audit_a_verification.json
+- audit_b_index_manifest.json
+- audit_c_clean_room.json
+- a1b2c3d4e5f6...
+- puppet-master docset verify requirements.md.docset/
+- 'ContractRef: ContractName:Plans/Document_Packaging_Policy.md#7, Gate:GATE-014'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+### DPP-001 - Document Packaging Policy Source-Preserving Bridge Retired
+
+```yaml
+plan_unit_id: DPP-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: The former Document Packaging Policy source-preserving bridge is retired in place after Phase 2B atomized or structurally dispositioned Document_Packaging_Policy-S0001 through Document_Packaging_Policy-S0028 into DPP-002 through DPP-029, explicit structural coverage, and retired bridge lineage. DPP-001 remains only as migration lineage for the retired bridge span and must not re-own atomized source coverage.
+gui_related: false
+gui_classification_reason: The retired bridge is migration lineage and no longer owns GUI or product behavior; coverage_map still preserves S0027 gui_related_inferred=true.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- DPP-001 no longer uses the source-preserving PlanUnit compile hint.
+- DPP-002 through DPP-029 own product coverage for Document_Packaging_Policy-S0001 through Document_Packaging_Policy-S0023.
+- Document_Packaging_Policy-S0024, S0025, S0026, and S0028 are structural/reference/migration scaffolding dispositions.
+- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: migration_lineage
+reasoning_tier: standard
+context_scope: plan_standardization
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0027
+preserved_exact_tokens:
+- DPP-001
+- source_preserving_planunit
+- source_preserving_bridge_retired
+- DPP-002
+- DPP-029
+- Document_Packaging_Policy-S0001
+- Document_Packaging_Policy-S0028
+- References
+- Owner / Consumer Map
+- PlanUnits
+- Migration Coverage
+negative_constraints:
+- Do not remap atomized Document_Packaging_Policy spans back to DPP-001.
+- Do not treat the retired bridge as implementation-ready product coverage.
+- Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this migration-lineage unit.
+compatibility_only_notes:
+- The old source-preserving bridge is retained only so migration lineage and historical references to DPP-001 remain auditable.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- DPP-002 through DPP-029 own product coverage for S0001-S0023.
+- S0024, S0025, S0026, and S0028 are structural/reference/migration scaffolding dispositions.
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+## Migration Coverage
+
+Original hash: `e58d5d9b410738b9d8435da00ca9a2bf8e51d0d365aad9079afa7aeec0e10ce3`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+
+Phase 2B batch 047 atomized `Document_Packaging_Policy-S0001` through `Document_Packaging_Policy-S0023` into `DPP-002` through `DPP-029`, with structural parent spans `Document_Packaging_Policy-S0007` and `Document_Packaging_Policy-S0017` mapped to their child units while preserving anchor alias `7`. Phase 2B batch 048 structurally dispositioned `Document_Packaging_Policy-S0024`, `S0025`, `S0026`, and `S0028`, and retired `DPP-001` as migration-lineage compatibility coverage for `Document_Packaging_Policy-S0027`. `Plans/Document_Packaging_Policy.md` now has no residual source-preserving product coverage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime packaging-policy rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-803c53af977a001393cd07fc`: SSOT naming contradictions are not permanent policy. Each contradiction row must name `resolution_owner_doc`, `resolution_due_phase`, and `current_status`. Until resolved, consumers must use owner-doc names from `Plans/00-plans-index.md` over examples in packaging prose.
+- Repairs `sfk-2ebbc3349354d2a57460398b`: packaging validation failure uses exit code `42`, error shape `{error_code, message, failed_rule_id, document_path, partial_outputs[]}`, and rollback rule "delete temp outputs; never overwrite previous packaged output until all checks pass."

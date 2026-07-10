@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=22447-22458 >>>
+L00022447	          "requirement": "cmd.search.evict_remote_cache has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00022448	        },
+L00022449	        {
+L00022450	          "test_id": "wiring.catalog.search_evict_remote_cache.accessibility",
+L00022451	          "evidence_kind": "accessibility_regression",
+L00022452	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022453	        }
+L00022454	      ],
+L00022455	      "event_test_requirements": [
+L00022456	        "Assert cmd.search.evict_remote_cache records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00022457	      ]
+L00022458	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=22459-22843 >>>
+L00022459	    "catalog.search_find_in_files": {
+L00022460	      "ui_element_id": "catalog.search_find_in_files",
+L00022461	      "ui_location": "Search surface",
+L00022462	      "ui_command_id": "cmd.search.find_in_files",
+L00022463	      "handler_location": "handlers::search::find_in_files",
+L00022464	      "expected_event_types": [],
+L00022465	      "acceptance_checks": [
+L00022466	        "cmd.search.find_in_files must be registered in the UICommand dispatcher with typed args and result contract",
+L00022467	        "cmd.search.find_in_files must expose projected state selector and disabled reason before dispatch",
+L00022468	        "cmd.search.find_in_files dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022469	        "cmd.search.find_in_files must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022470	        "cmd.search.find_in_files must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00022471	      ],
+L00022472	      "evidence_required": "Production wiring contract for cmd.search.find_in_files; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00022473	      "state_selector": "state.commands.search_find_in_files.availability",
+L00022474	      "disabled_reason_projection": "state.commands.search_find_in_files.disabled_reason",
+L00022475	      "effect_contract": {
+L00022476	        "effect_kind": "receipt",
+L00022477	        "description": "cmd.search.find_in_files has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00022478	        "receipt_or_event_refs": [
+L00022479	          "cmd.search.find_in_files.dispatch_receipt"
+L00022480	        ]
+L00022481	      },
+L00022482	      "accessibility_contract": {
+L00022483	        "role_or_semantics": "catalog.search_find_in_files exposes a stable role/name/description matching cmd.search.find_in_files.",
+L00022484	        "keyboard_access": "catalog.search_find_in_files is reachable and activatable by keyboard where the control is visible.",
+L00022485	        "focus_management": "catalog.search_find_in_files preserves visible focus and returns focus deterministically after dispatch or error.",
+L00022486	        "disabled_announcement": "catalog.search_find_in_files surfaces state.commands.search_find_in_files.disabled_reason to assistive technology when unavailable."
+L00022487	      },
+L00022488	      "test_evidence": [
+L00022489	        {
+L00022490	          "test_id": "wiring.catalog.search_find_in_files.dispatcher",
+L00022491	          "evidence_kind": "dispatcher_fixture",
+L00022492	          "requirement": "Dispatching cmd.search.find_in_files reaches handlers::search::find_in_files with typed args/result contract."
+L00022493	        },
+L00022494	        {
+L00022495	          "test_id": "wiring.catalog.search_find_in_files.state_projection",
+L00022496	          "evidence_kind": "state_projection",
+L00022497	          "requirement": "Availability reads state.commands.search_find_in_files.availability and disabled copy reads state.commands.search_find_in_files.disabled_reason."
+L00022498	        },
+L00022499	        {
+L00022500	          "test_id": "wiring.catalog.search_find_in_files.effect",
+L00022501	          "evidence_kind": "receipt_or_event_assertion",
+L00022502	          "requirement": "cmd.search.find_in_files has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00022503	        },
+L00022504	        {
+L00022505	          "test_id": "wiring.catalog.search_find_in_files.accessibility",
+L00022506	          "evidence_kind": "accessibility_regression",
+L00022507	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022508	        }
+L00022509	      ],
+L00022510	      "event_test_requirements": [
+L00022511	        "Assert cmd.search.find_in_files records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00022512	      ]
+L00022513	    },
+L00022514	    "catalog.search_next_result": {
+L00022515	      "ui_element_id": "catalog.search_next_result",
+L00022516	      "ui_location": "Search surface",
+L00022517	      "ui_command_id": "cmd.search.next_result",
+L00022518	      "handler_location": "handlers::search::next_result",
+L00022519	      "expected_event_types": [],
+L00022520	      "acceptance_checks": [
+L00022521	        "cmd.search.next_result must be registered in the UICommand dispatcher with typed args and result contract",
+L00022522	        "cmd.search.next_result must expose projected state selector and disabled reason before dispatch",
+L00022523	        "cmd.search.next_result dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022524	        "cmd.search.next_result must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022525	        "cmd.search.next_result must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00022526	      ],
+L00022527	      "evidence_required": "Production wiring contract for cmd.search.next_result; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00022528	      "state_selector": "state.commands.search_next_result.availability",
+L00022529	      "disabled_reason_projection": "state.commands.search_next_result.disabled_reason",
+L00022530	      "effect_contract": {
+L00022531	        "effect_kind": "receipt",
+L00022532	        "description": "cmd.search.next_result has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00022533	        "receipt_or_event_refs": [
+L00022534	          "cmd.search.next_result.dispatch_receipt"
+L00022535	        ]
+L00022536	      },
+L00022537	      "accessibility_contract": {
+L00022538	        "role_or_semantics": "catalog.search_next_result exposes a stable role/name/description matching cmd.search.next_result.",
+L00022539	        "keyboard_access": "catalog.search_next_result is reachable and activatable by keyboard where the control is visible.",
+L00022540	        "focus_management": "catalog.search_next_result preserves visible focus and returns focus deterministically after dispatch or error.",
+L00022541	        "disabled_announcement": "catalog.search_next_result surfaces state.commands.search_next_result.disabled_reason to assistive technology when unavailable."
+L00022542	      },
+L00022543	      "test_evidence": [
+L00022544	        {
+L00022545	          "test_id": "wiring.catalog.search_next_result.dispatcher",
+L00022546	          "evidence_kind": "dispatcher_fixture",
+L00022547	          "requirement": "Dispatching cmd.search.next_result reaches handlers::search::next_result with typed args/result contract."
+L00022548	        },
+L00022549	        {
+L00022550	          "test_id": "wiring.catalog.search_next_result.state_projection",
+L00022551	          "evidence_kind": "state_projection",
+L00022552	          "requirement": "Availability reads state.commands.search_next_result.availability and disabled copy reads state.commands.search_next_result.disabled_reason."
+L00022553	        },
+L00022554	        {
+L00022555	          "test_id": "wiring.catalog.search_next_result.effect",
+L00022556	          "evidence_kind": "receipt_or_event_assertion",
+L00022557	          "requirement": "cmd.search.next_result has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00022558	        },
+L00022559	        {
+L00022560	          "test_id": "wiring.catalog.search_next_result.accessibility",
+L00022561	          "evidence_kind": "accessibility_regression",
+L00022562	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022563	        }
+L00022564	      ],
+L00022565	      "event_test_requirements": [
+L00022566	        "Assert cmd.search.next_result records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00022567	      ]
+L00022568	    },
+L00022569	    "catalog.search_open_result": {
+L00022570	      "ui_element_id": "catalog.search_open_result",
+L00022571	      "ui_location": "Search surface",
+L00022572	      "ui_command_id": "cmd.search.open_result",
+L00022573	      "handler_location": "handlers::search::open_result",
+L00022574	      "expected_event_types": [],
+L00022575	      "acceptance_checks": [
+L00022576	        "cmd.search.open_result must be registered in the UICommand dispatcher with typed args and result contract",
+L00022577	        "cmd.search.open_result must expose projected state selector and disabled reason before dispatch",
+L00022578	        "cmd.search.open_result dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022579	        "cmd.search.open_result must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022580	        "cmd.search.open_result must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00022581	      ],
+L00022582	      "evidence_required": "Production wiring contract for cmd.search.open_result; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00022583	      "state_selector": "state.commands.search_open_result.availability",
+L00022584	      "disabled_reason_projection": "state.commands.search_open_result.disabled_reason",
+L00022585	      "effect_contract": {
+L00022586	        "effect_kind": "receipt",
+L00022587	        "description": "cmd.search.open_result has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00022588	        "receipt_or_event_refs": [
+L00022589	          "cmd.search.open_result.dispatch_receipt"
+L00022590	        ]
+L00022591	      },
+L00022592	      "accessibility_contract": {
+L00022593	        "role_or_semantics": "catalog.search_open_result exposes a stable role/name/description matching cmd.search.open_result.",
+L00022594	        "keyboard_access": "catalog.search_open_result is reachable and activatable by keyboard where the control is visible.",
+L00022595	        "focus_management": "catalog.search_open_result preserves visible focus and returns focus deterministically after dispatch or error.",
+L00022596	        "disabled_announcement": "catalog.search_open_result surfaces state.commands.search_open_result.disabled_reason to assistive technology when unavailable."
+L00022597	      },
+L00022598	      "test_evidence": [
+L00022599	        {
+L00022600	          "test_id": "wiring.catalog.search_open_result.dispatcher",
+L00022601	          "evidence_kind": "dispatcher_fixture",
+L00022602	          "requirement": "Dispatching cmd.search.open_result reaches handlers::search::open_result with typed args/result contract."
+L00022603	        },
+L00022604	        {
+L00022605	          "test_id": "wiring.catalog.search_open_result.state_projection",
+L00022606	          "evidence_kind": "state_projection",
+L00022607	          "requirement": "Availability reads state.commands.search_open_result.availability and disabled copy reads state.commands.search_open_result.disabled_reason."
+L00022608	        },
+L00022609	        {
+L00022610	          "test_id": "wiring.catalog.search_open_result.effect",
+L00022611	          "evidence_kind": "receipt_or_event_assertion",
+L00022612	          "requirement": "cmd.search.open_result has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00022613	        },
+L00022614	        {
+L00022615	          "test_id": "wiring.catalog.search_open_result.accessibility",
+L00022616	          "evidence_kind": "accessibility_regression",
+L00022617	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022618	        }
+L00022619	      ],
+L00022620	      "event_test_requirements": [
+L00022621	        "Assert cmd.search.open_result records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00022622	      ]
+L00022623	    },
+L00022624	    "catalog.search_previous_result": {
+L00022625	      "ui_element_id": "catalog.search_previous_result",
+L00022626	      "ui_location": "Search surface",
+L00022627	      "ui_command_id": "cmd.search.previous_result",
+L00022628	      "handler_location": "handlers::search::previous_result",
+L00022629	      "expected_event_types": [],
+L00022630	      "acceptance_checks": [
+L00022631	        "cmd.search.previous_result must be registered in the UICommand dispatcher with typed args and result contract",
+L00022632	        "cmd.search.previous_result must expose projected state selector and disabled reason before dispatch",
+L00022633	        "cmd.search.previous_result dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022634	        "cmd.search.previous_result must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022635	        "cmd.search.previous_result must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00022636	      ],
+L00022637	      "evidence_required": "Production wiring contract for cmd.search.previous_result; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00022638	      "state_selector": "state.commands.search_previous_result.availability",
+L00022639	      "disabled_reason_projection": "state.commands.search_previous_result.disabled_reason",
+L00022640	      "effect_contract": {
+L00022641	        "effect_kind": "receipt",
+L00022642	        "description": "cmd.search.previous_result has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00022643	        "receipt_or_event_refs": [
+L00022644	          "cmd.search.previous_result.dispatch_receipt"
+L00022645	        ]
+L00022646	      },
+L00022647	      "accessibility_contract": {
+L00022648	        "role_or_semantics": "catalog.search_previous_result exposes a stable role/name/description matching cmd.search.previous_result.",
+L00022649	        "keyboard_access": "catalog.search_previous_result is reachable and activatable by keyboard where the control is visible.",
+L00022650	        "focus_management": "catalog.search_previous_result preserves visible focus and returns focus deterministically after dispatch or error.",
+L00022651	        "disabled_announcement": "catalog.search_previous_result surfaces state.commands.search_previous_result.disabled_reason to assistive technology when unavailable."
+L00022652	      },
+L00022653	      "test_evidence": [
+L00022654	        {
+L00022655	          "test_id": "wiring.catalog.search_previous_result.dispatcher",
+L00022656	          "evidence_kind": "dispatcher_fixture",
+L00022657	          "requirement": "Dispatching cmd.search.previous_result reaches handlers::search::previous_result with typed args/result contract."
+L00022658	        },
+L00022659	        {
+L00022660	          "test_id": "wiring.catalog.search_previous_result.state_projection",
+L00022661	          "evidence_kind": "state_projection",
+L00022662	          "requirement": "Availability reads state.commands.search_previous_result.availability and disabled copy reads state.commands.search_previous_result.disabled_reason."
+L00022663	        },
+L00022664	        {
+L00022665	          "test_id": "wiring.catalog.search_previous_result.effect",
+L00022666	          "evidence_kind": "receipt_or_event_assertion",
+L00022667	          "requirement": "cmd.search.previous_result has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00022668	        },
+L00022669	        {
+L00022670	          "test_id": "wiring.catalog.search_previous_result.accessibility",
+L00022671	          "evidence_kind": "accessibility_regression",
+L00022672	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022673	        }
+L00022674	      ],
+L00022675	      "event_test_requirements": [
+L00022676	        "Assert cmd.search.previous_result records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00022677	      ]
+L00022678	    },
+L00022679	    "catalog.search_rebuild_index": {
+L00022680	      "ui_element_id": "catalog.search_rebuild_index",
+L00022681	      "ui_location": "Search surface",
+L00022682	      "ui_command_id": "cmd.search.rebuild_index",
+L00022683	      "handler_location": "handlers::search::rebuild_index",
+L00022684	      "expected_event_types": [],
+L00022685	      "acceptance_checks": [
+L00022686	        "cmd.search.rebuild_index must be registered in the UICommand dispatcher with typed args and result contract",
+L00022687	        "cmd.search.rebuild_index must expose projected state selector and disabled reason before dispatch",
+L00022688	        "cmd.search.rebuild_index dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022689	        "cmd.search.rebuild_index must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022690	        "cmd.search.rebuild_index must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00022691	      ],
+L00022692	      "evidence_required": "Production wiring contract for cmd.search.rebuild_index; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00022693	      "state_selector": "state.commands.search_rebuild_index.availability",
+L00022694	      "disabled_reason_projection": "state.commands.search_rebuild_index.disabled_reason",
+L00022695	      "effect_contract": {
+L00022696	        "effect_kind": "receipt",
+L00022697	        "description": "cmd.search.rebuild_index has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00022698	        "receipt_or_event_refs": [
+L00022699	          "cmd.search.rebuild_index.dispatch_receipt"
+L00022700	        ]
+L00022701	      },
+L00022702	      "accessibility_contract": {
+L00022703	        "role_or_semantics": "catalog.search_rebuild_index exposes a stable role/name/description matching cmd.search.rebuild_index.",
+L00022704	        "keyboard_access": "catalog.search_rebuild_index is reachable and activatable by keyboard where the control is visible.",
+L00022705	        "focus_management": "catalog.search_rebuild_index preserves visible focus and returns focus deterministically after dispatch or error.",
+L00022706	        "disabled_announcement": "catalog.search_rebuild_index surfaces state.commands.search_rebuild_index.disabled_reason to assistive technology when unavailable."
+L00022707	      },
+L00022708	      "test_evidence": [
+L00022709	        {
+L00022710	          "test_id": "wiring.catalog.search_rebuild_index.dispatcher",
+L00022711	          "evidence_kind": "dispatcher_fixture",
+L00022712	          "requirement": "Dispatching cmd.search.rebuild_index reaches handlers::search::rebuild_index with typed args/result contract."
+L00022713	        },
+L00022714	        {
+L00022715	          "test_id": "wiring.catalog.search_rebuild_index.state_projection",
+L00022716	          "evidence_kind": "state_projection",
+L00022717	          "requirement": "Availability reads state.commands.search_rebuild_index.availability and disabled copy reads state.commands.search_rebuild_index.disabled_reason."
+L00022718	        },
+L00022719	        {
+L00022720	          "test_id": "wiring.catalog.search_rebuild_index.effect",
+L00022721	          "evidence_kind": "receipt_or_event_assertion",
+L00022722	          "requirement": "cmd.search.rebuild_index has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00022723	        },
+L00022724	        {
+L00022725	          "test_id": "wiring.catalog.search_rebuild_index.accessibility",
+L00022726	          "evidence_kind": "accessibility_regression",
+L00022727	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022728	        }
+L00022729	      ],
+L00022730	      "event_test_requirements": [
+L00022731	        "Assert cmd.search.rebuild_index records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00022732	      ]
+L00022733	    },
+L00022734	    "catalog.search_replace_all": {
+L00022735	      "ui_element_id": "catalog.search_replace_all",
+L00022736	      "ui_location": "Search surface",
+L00022737	      "ui_command_id": "cmd.search.replace_all",
+L00022738	      "handler_location": "handlers::search::replace_all",
+L00022739	      "expected_event_types": [],
+L00022740	      "acceptance_checks": [
+L00022741	        "cmd.search.replace_all must be registered in the UICommand dispatcher with typed args and result contract",
+L00022742	        "cmd.search.replace_all must expose projected state selector and disabled reason before dispatch",
+L00022743	        "cmd.search.replace_all dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022744	        "cmd.search.replace_all must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022745	        "cmd.search.replace_all must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00022746	      ],
+L00022747	      "evidence_required": "Production wiring contract for cmd.search.replace_all; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00022748	      "state_selector": "state.commands.search_replace_all.availability",
+L00022749	      "disabled_reason_projection": "state.commands.search_replace_all.disabled_reason",
+L00022750	      "effect_contract": {
+L00022751	        "effect_kind": "receipt",
+L00022752	        "description": "cmd.search.replace_all has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00022753	        "receipt_or_event_refs": [
+L00022754	          "cmd.search.replace_all.dispatch_receipt"
+L00022755	        ]
+L00022756	      },
+L00022757	      "accessibility_contract": {
+L00022758	        "role_or_semantics": "catalog.search_replace_all exposes a stable role/name/description matching cmd.search.replace_all.",
+L00022759	        "keyboard_access": "catalog.search_replace_all is reachable and activatable by keyboard where the control is visible.",
+L00022760	        "focus_management": "catalog.search_replace_all preserves visible focus and returns focus deterministically after dispatch or error.",
+L00022761	        "disabled_announcement": "catalog.search_replace_all surfaces state.commands.search_replace_all.disabled_reason to assistive technology when unavailable."
+L00022762	      },
+L00022763	      "test_evidence": [
+L00022764	        {
+L00022765	          "test_id": "wiring.catalog.search_replace_all.dispatcher",
+L00022766	          "evidence_kind": "dispatcher_fixture",
+L00022767	          "requirement": "Dispatching cmd.search.replace_all reaches handlers::search::replace_all with typed args/result contract."
+L00022768	        },
+L00022769	        {
+L00022770	          "test_id": "wiring.catalog.search_replace_all.state_projection",
+L00022771	          "evidence_kind": "state_projection",
+L00022772	          "requirement": "Availability reads state.commands.search_replace_all.availability and disabled copy reads state.commands.search_replace_all.disabled_reason."
+L00022773	        },
+L00022774	        {
+L00022775	          "test_id": "wiring.catalog.search_replace_all.effect",
+L00022776	          "evidence_kind": "receipt_or_event_assertion",
+L00022777	          "requirement": "cmd.search.replace_all has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00022778	        },
+L00022779	        {
+L00022780	          "test_id": "wiring.catalog.search_replace_all.accessibility",
+L00022781	          "evidence_kind": "accessibility_regression",
+L00022782	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022783	        }
+L00022784	      ],
+L00022785	      "event_test_requirements": [
+L00022786	        "Assert cmd.search.replace_all records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00022787	      ]
+L00022788	    },
+L00022789	    "catalog.search_replace_in_files": {
+L00022790	      "ui_element_id": "catalog.search_replace_in_files",
+L00022791	      "ui_location": "Search surface",
+L00022792	      "ui_command_id": "cmd.search.replace_in_files",
+L00022793	      "handler_location": "handlers::search::replace_in_files",
+L00022794	      "expected_event_types": [],
+L00022795	      "acceptance_checks": [
+L00022796	        "cmd.search.replace_in_files must be registered in the UICommand dispatcher with typed args and result contract",
+L00022797	        "cmd.search.replace_in_files must expose projected state selector and disabled reason before dispatch",
+L00022798	        "cmd.search.replace_in_files dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022799	        "cmd.search.replace_in_files must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022800	        "cmd.search.replace_in_files must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00022801	      ],
+L00022802	      "evidence_required": "Production wiring contract for cmd.search.replace_in_files; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00022803	      "state_selector": "state.commands.search_replace_in_files.availability",
+L00022804	      "disabled_reason_projection": "state.commands.search_replace_in_files.disabled_reason",
+L00022805	      "effect_contract": {
+L00022806	        "effect_kind": "receipt",
+L00022807	        "description": "cmd.search.replace_in_files has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00022808	        "receipt_or_event_refs": [
+L00022809	          "cmd.search.replace_in_files.dispatch_receipt"
+L00022810	        ]
+L00022811	      },
+L00022812	      "accessibility_contract": {
+L00022813	        "role_or_semantics": "catalog.search_replace_in_files exposes a stable role/name/description matching cmd.search.replace_in_files.",
+L00022814	        "keyboard_access": "catalog.search_replace_in_files is reachable and activatable by keyboard where the control is visible.",
+L00022815	        "focus_management": "catalog.search_replace_in_files preserves visible focus and returns focus deterministically after dispatch or error.",
+L00022816	        "disabled_announcement": "catalog.search_replace_in_files surfaces state.commands.search_replace_in_files.disabled_reason to assistive technology when unavailable."
+L00022817	      },
+L00022818	      "test_evidence": [
+L00022819	        {
+L00022820	          "test_id": "wiring.catalog.search_replace_in_files.dispatcher",
+L00022821	          "evidence_kind": "dispatcher_fixture",
+L00022822	          "requirement": "Dispatching cmd.search.replace_in_files reaches handlers::search::replace_in_files with typed args/result contract."
+L00022823	        },
+L00022824	        {
+L00022825	          "test_id": "wiring.catalog.search_replace_in_files.state_projection",
+L00022826	          "evidence_kind": "state_projection",
+L00022827	          "requirement": "Availability reads state.commands.search_replace_in_files.availability and disabled copy reads state.commands.search_replace_in_files.disabled_reason."
+L00022828	        },
+L00022829	        {
+L00022830	          "test_id": "wiring.catalog.search_replace_in_files.effect",
+L00022831	          "evidence_kind": "receipt_or_event_assertion",
+L00022832	          "requirement": "cmd.search.replace_in_files has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00022833	        },
+L00022834	        {
+L00022835	          "test_id": "wiring.catalog.search_replace_in_files.accessibility",
+L00022836	          "evidence_kind": "accessibility_regression",
+L00022837	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022838	        }
+L00022839	      ],
+L00022840	      "event_test_requirements": [
+L00022841	        "Assert cmd.search.replace_in_files records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00022842	      ]
+L00022843	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=22844-22855 >>>
+L00022844	    "catalog.search_replace_selected": {
+L00022845	      "ui_element_id": "catalog.search_replace_selected",
+L00022846	      "ui_location": "Search surface",
+L00022847	      "ui_command_id": "cmd.search.replace_selected",
+L00022848	      "handler_location": "handlers::search::replace_selected",
+L00022849	      "expected_event_types": [],
+L00022850	      "acceptance_checks": [
+L00022851	        "cmd.search.replace_selected must be registered in the UICommand dispatcher with typed args and result contract",
+L00022852	        "cmd.search.replace_selected must expose projected state selector and disabled reason before dispatch",
+L00022853	        "cmd.search.replace_selected dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022854	        "cmd.search.replace_selected must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022855	        "cmd.search.replace_selected must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

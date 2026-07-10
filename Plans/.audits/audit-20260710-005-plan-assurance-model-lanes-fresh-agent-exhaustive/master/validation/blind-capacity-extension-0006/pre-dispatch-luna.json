@@ -1,0 +1,22 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "luna-independent-capacity-gate-v1",
+  "capacity_extension_id": "blind-capacity-extension-0006",
+  "epoch_id": "epoch-0013",
+  "status": "pass",
+  "controller_lane_thread_id": "019f4d26-0582-7f71-8aa9-57bcfc354488",
+  "controller_lane_turn_id": "019f4e27-4f9b-7c50-9108-c7b59b621f11",
+  "fresh_child_thread_id": "019f4e27-8bec-7891-9b70-529d907242ad",
+  "fresh_child_required": true,
+  "read_only": true,
+  "global_semantic_concurrency_max": 48,
+  "maximum_concurrent_cohort_count": 6,
+  "active_assignment_receipt_count": 24,
+  "extension_assignment_count": 24,
+  "combined_assignment_count": 48,
+  "extension_receipt_count_at_gate": 0,
+  "extension_result_count_at_gate": 0,
+  "repo_root_dispatch_file_count": 0,
+  "error_count": 0,
+  "errors": []
+}

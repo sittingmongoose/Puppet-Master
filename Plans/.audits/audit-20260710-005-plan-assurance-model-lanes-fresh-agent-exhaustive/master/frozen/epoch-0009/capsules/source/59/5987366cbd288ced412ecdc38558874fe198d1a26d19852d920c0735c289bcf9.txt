@@ -1,0 +1,400 @@
+<<< CONTEXT_BEFORE canonical_document_lines=5042-5053 >>>
+L00005042	  - "`effective`"
+L00005043	  - "`selection_reason`"
+L00005044	  - "`/clamped`"
+L00005045	  - "`/switch`"
+L00005046	  - "`requested_account_policy`"
+L00005047	  - "`requested_account_id`"
+L00005048	negative_constraints:
+L00005049	  - "`requested_account_policy` is not a substitute for a user-selected `requested_account_id`."
+L00005050	owner_hints:
+L00005051	  - Plans/Containers_Registry_and_Unraid.md
+L00005052	```
+L00005053	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=5054-5424 >>>
+L00005054	### CRAU-078 - Runtime Projection Scope And Stale Key Disposition
+L00005055	
+L00005056	```yaml
+L00005057	plan_unit_id: CRAU-078
+L00005058	unit_type: compatibility_disposition
+L00005059	status: accepted
+L00005060	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00005061	canonical_text: >-
+L00005062	  Runtime/projection events classify as runtime-internal, operator-visible, or
+L00005063	  chat-thread resolution events; multi-project, multi-account, and multi-worktree
+L00005064	  orchestration scopes identity and references by project, package, seam, node,
+L00005065	  account, and worktree, while stale tier_id usage is migration-only
+L00005066	  compatibility state and not a Docker Manager coordination key.
+L00005067	gui_related: true
+L00005068	gui_classification_reason: Projection scopes and stale-key disclosures affect visible navigation and audit joins.
+L00005069	split_recommended: true
+L00005070	split_recommendation_reason: Source span S0078 mixes projection scope with approval, identity, route, and help semantics.
+L00005071	depends_on: [CRAU-019, CRAU-020, CRAU-075]
+L00005072	unblocks: [CRAU-079]
+L00005073	acceptance_criteria:
+L00005074	  - Runtime/projection events keep runtime-internal, operator-visible, and chat-thread resolution classifications.
+L00005075	  - Identity/projection/storage references are scoped by project, package, seam, node, account, and worktree.
+L00005076	  - tier_id remains migration-only compatibility state and not a new navigation or audit join key.
+L00005077	validation_surfaces:
+L00005078	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005079	  - python3 scripts/pm-plan-index.py validate
+L00005080	risk_class: projection_scope_or_stale_key_revival
+L00005081	reasoning_tier: high
+L00005082	context_scope: runtime_projection_scope_stale_key_disposition
+L00005083	implementation_surfaces:
+L00005084	  - Plans/Containers_Registry_and_Unraid.md
+L00005085	node_compile_hint:
+L00005086	  mode: runtime_projection_scope
+L00005087	  create_worknodes: false
+L00005088	source_lineage:
+L00005089	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0078
+L00005090	preserved_exact_tokens:
+L00005091	  - "`tier_id`"
+L00005092	  - "package"
+L00005093	  - "seam"
+L00005094	  - "lane"
+L00005095	  - "node"
+L00005096	  - "attempt"
+L00005097	  - "receipt"
+L00005098	  - "worktree"
+L00005099	  - "runtime asset"
+L00005100	compatibility_only_notes:
+L00005101	  - "Stale tier_id usage is migration-only compatibility state, not a Docker Manager coordination-state key."
+L00005102	negative_constraints:
+L00005103	  - "New navigation and audit joins must not use tier_id."
+L00005104	owner_hints:
+L00005105	  - Plans/Containers_Registry_and_Unraid.md
+L00005106	```
+L00005107	
+L00005108	### CRAU-079 - Route Activation Cross-Surface SCM And Display Labels
+L00005109	
+L00005110	```yaml
+L00005111	plan_unit_id: CRAU-079
+L00005112	unit_type: constraint
+L00005113	status: accepted
+L00005114	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00005115	canonical_text: >-
+L00005116	  cmd.panel.switch is shell-state only; object-bearing Docker Manager targeting
+L00005117	  routes through shared route/open target contracts, PM-owned SCM state registers
+L00005118	  with Orchestrator, Source Control, /Source, and Docker Manager, recovery
+L00005119	  consumers see allowed_action_ids and allowed_action_ids[], and requested/effective
+L00005120	  display groups use exact labels Requested, Effective, Reason, Support,
+L00005121	  Inherited from, and Overridden by.
+L00005122	gui_related: true
+L00005123	gui_classification_reason: Routing, destination panels, recovery state, and display labels are user-visible UI behavior.
+L00005124	split_recommended: true
+L00005125	split_recommendation_reason: Source span S0078 mixes route activation with SCM state and label grammar.
+L00005126	depends_on: [CRAU-015, CRAU-024, CRAU-063, CRAU-075, CRAU-077, CRAU-078]
+L00005127	unblocks: [CRAU-080]
+L00005128	acceptance_criteria:
+L00005129	  - cmd.panel.switch remains shell-state only.
+L00005130	  - Object-bearing targeting routes through shared route/open target contracts.
+L00005131	  - Route activation does not reuse destination-local state when doing so would obscure requested target in /GUI.
+L00005132	  - PM-owned SCM state registers with all named owner/consumer surfaces.
+L00005133	  - Requested/effective display groups preserve exact labels.
+L00005134	validation_surfaces:
+L00005135	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005136	  - python3 scripts/pm-plan-index.py validate
+L00005137	risk_class: route_target_or_cross_surface_state_drift
+L00005138	reasoning_tier: high
+L00005139	context_scope: route_activation_cross_surface_scm_display_labels
+L00005140	implementation_surfaces:
+L00005141	  - Plans/Containers_Registry_and_Unraid.md
+L00005142	  - Plans/Orchestrator_Page.md
+L00005143	node_compile_hint:
+L00005144	  mode: route_and_cross_surface_scm_state
+L00005145	  create_worknodes: false
+L00005146	source_lineage:
+L00005147	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0078
+L00005148	preserved_exact_tokens:
+L00005149	  - "`cmd.panel.switch`"
+L00005150	  - "`route-activation`"
+L00005151	  - "`/GUI`"
+L00005152	  - "`allowed_action_ids`"
+L00005153	  - "`allowed_action_ids[]`"
+L00005154	  - "`Requested`"
+L00005155	  - "`Effective`"
+L00005156	  - "`Reason`"
+L00005157	  - "`Support`"
+L00005158	  - "`Inherited from`"
+L00005159	  - "`Overridden by`"
+L00005160	negative_constraints:
+L00005161	  - "Object-bearing targeting must not be smuggled through panel-switch shell state."
+L00005162	owner_hints:
+L00005163	  - Plans/Containers_Registry_and_Unraid.md
+L00005164	```
+L00005165	
+L00005166	### CRAU-080 - Canonical Help Semantics And Runtime Recovery Vocabulary
+L00005167	
+L00005168	```yaml
+L00005169	plan_unit_id: CRAU-080
+L00005170	unit_type: constraint
+L00005171	status: accepted
+L00005172	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00005173	canonical_text: >-
+L00005174	  Docker Manager help must not flatten canonical terms into one-line tooltips;
+L00005175	  Simple, Expert, ELI5, Expert/ELI5, and tooltip variants keep stable
+L00005176	  terminology, object/state/action distinctions, canonical reason codes and
+L00005177	  evidence, dedicated help entries, and separate safe-point, restore-point,
+L00005178	  rollback, and contamination recovery vocabulary.
+L00005179	gui_related: true
+L00005180	gui_classification_reason: Help text, tooltips, ELI5/Expert variants, and runtime recovery copy are visible user-facing copy.
+L00005181	split_recommended: true
+L00005182	split_recommendation_reason: Source span S0078 mixes help semantics with approval, identity, and routing contracts.
+L00005183	depends_on: [CRAU-023, CRAU-075, CRAU-079]
+L00005184	unblocks: []
+L00005185	acceptance_criteria:
+L00005186	  - Help text does not flatten canonical terms into one-line substitutions.
+L00005187	  - Simple/Expert/ELI5 and tooltip variants distinguish object, state, action, reason code, and evidence.
+L00005188	  - Dedicated help-entry candidates remain preserved.
+L00005189	  - safe-point, restore-point, rollback, and contamination remain distinct across storage/UI.
+L00005190	  - Contextual help stays limited to local affordances, counts, badges, one-surface controls, and provider caveats.
+L00005191	validation_surfaces:
+L00005192	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005193	  - python3 scripts/pm-plan-index.py validate
+L00005194	risk_class: terminology_flattening
+L00005195	reasoning_tier: high
+L00005196	context_scope: canonical_help_runtime_recovery_vocabulary
+L00005197	implementation_surfaces:
+L00005198	  - Plans/Containers_Registry_and_Unraid.md
+L00005199	  - Plans/Glossary.md
+L00005200	node_compile_hint:
+L00005201	  mode: canonical_help_recovery_vocabulary
+L00005202	  create_worknodes: false
+L00005203	source_lineage:
+L00005204	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0078
+L00005205	preserved_exact_tokens:
+L00005206	  - "`/Expert/ELI5`"
+L00005207	  - "`/tooltip`"
+L00005208	  - "`safe-point`"
+L00005209	  - "`restore-point`"
+L00005210	  - "History vs Ledger"
+L00005211	  - "historical vs superseded vs revoked vs reopened"
+L00005212	negative_constraints:
+L00005213	  - "Help text must not flatten canonical state vocabulary into one-line tooltips."
+L00005214	owner_hints:
+L00005215	  - Plans/Containers_Registry_and_Unraid.md
+L00005216	  - Plans/Glossary.md
+L00005217	```
+L00005218	
+L00005219	### CRAU-081 - Docker Unraid Safety Constraints
+L00005220	
+L00005221	```yaml
+L00005222	plan_unit_id: CRAU-081
+L00005223	unit_type: constraint
+L00005224	status: accepted
+L00005225	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00005226	canonical_text: >-
+L00005227	  Docker/Unraid safety constraints keep repository creation confirmation
+L00005228	  mandatory and non-bypassable, keep secrets out of redb, project files, YAML,
+L00005229	  and evidence, redact secrets in publish/template-repo logs and evidence,
+L00005230	  distinguish DockerHub image distribution from Unraid template distribution,
+L00005231	  preserve browser login and PAT as different inputs that may yield different
+L00005232	  effective capability, and prevent UI overclaim when validation shows partial
+L00005233	  repository-management capability.
+L00005234	gui_related: true
+L00005235	gui_classification_reason: Confirmation, capability display, redaction, and distribution distinction are user-visible safety behavior.
+L00005236	split_recommended: false
+L00005237	depends_on: [CRAU-026, CRAU-028, CRAU-031, CRAU-045, CRAU-076]
+L00005238	unblocks: [CRAU-082, CRAU-083]
+L00005239	acceptance_criteria:
+L00005240	  - Repository creation confirmation is mandatory and non-bypassable.
+L00005241	  - Secrets are not written to redb, project files, YAML, or evidence.
+L00005242	  - Publish/template-repo logs and evidence redact secrets.
+L00005243	  - Docs distinguish DockerHub image distribution from Unraid template distribution.
+L00005244	  - Browser login and PAT remain distinct inputs that may produce different effective capability.
+L00005245	  - UI does not claim full repository-management support when validation shows partial capability.
+L00005246	validation_surfaces:
+L00005247	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005248	  - python3 scripts/pm-plan-index.py validate
+L00005249	risk_class: secret_or_capability_overclaim
+L00005250	reasoning_tier: high
+L00005251	context_scope: docker_unraid_safety_constraints
+L00005252	implementation_surfaces:
+L00005253	  - Plans/Containers_Registry_and_Unraid.md
+L00005254	node_compile_hint:
+L00005255	  mode: docker_unraid_safety_constraints
+L00005256	  create_worknodes: false
+L00005257	source_lineage:
+L00005258	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0079
+L00005259	preserved_exact_tokens:
+L00005260	  - "redb"
+L00005261	  - "YAML"
+L00005262	  - "DockerHub image distribution"
+L00005263	  - "Unraid template distribution"
+L00005264	  - "browser login"
+L00005265	  - "PAT"
+L00005266	negative_constraints:
+L00005267	  - "Secrets must not be written to redb, project files, YAML, or evidence."
+L00005268	  - "The UI must not claim full repository-management support when validation shows only partial capability."
+L00005269	owner_hints:
+L00005270	  - Plans/Containers_Registry_and_Unraid.md
+L00005271	```
+L00005272	
+L00005273	### CRAU-082 - Initial Non Goals And Review Bounds
+L00005274	
+L00005275	```yaml
+L00005276	plan_unit_id: CRAU-082
+L00005277	unit_type: constraint
+L00005278	status: accepted
+L00005279	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00005280	canonical_text: >-
+L00005281	  Initial first-class Docker/Unraid scope does not require Community Applications
+L00005282	  submission-form submission, forum support-thread creation, fully automatic
+L00005283	  remote template-repo push by default, or bypassing manual review for public
+L00005284	  maintainer metadata correctness.
+L00005285	gui_related: true
+L00005286	gui_classification_reason: Initial non-goals bound visible automation and review expectations.
+L00005287	split_recommended: false
+L00005288	depends_on: [CRAU-048, CRAU-053, CRAU-060, CRAU-081]
+L00005289	unblocks: [CRAU-083]
+L00005290	acceptance_criteria:
+L00005291	  - Community Applications submission-form submission remains out of initial scope.
+L00005292	  - Forum support-thread creation remains out of initial scope.
+L00005293	  - Fully automatic remote template-repo push by default remains out of initial scope.
+L00005294	  - Manual review for public maintainer metadata correctness is not bypassed.
+L00005295	validation_surfaces:
+L00005296	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005297	  - python3 scripts/pm-plan-index.py validate
+L00005298	risk_class: scope_creep
+L00005299	reasoning_tier: standard
+L00005300	context_scope: initial_non_goals_review_bounds
+L00005301	implementation_surfaces:
+L00005302	  - Plans/Containers_Registry_and_Unraid.md
+L00005303	node_compile_hint:
+L00005304	  mode: non_goal_scope_boundary
+L00005305	  create_worknodes: false
+L00005306	source_lineage:
+L00005307	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0080
+L00005308	preserved_exact_tokens:
+L00005309	  - "Community Applications"
+L00005310	  - "forum support-thread"
+L00005311	  - "fully automatic remote template-repo push by default"
+L00005312	negative_constraints:
+L00005313	  - "Initial scope must not bypass manual review for public maintainer metadata correctness."
+L00005314	owner_hints:
+L00005315	  - Plans/Containers_Registry_and_Unraid.md
+L00005316	```
+L00005317	
+L00005318	### CRAU-083 - End To End Acceptance Criteria Overlay
+L00005319	
+L00005320	```yaml
+L00005321	plan_unit_id: CRAU-083
+L00005322	unit_type: acceptance_overlay
+L00005323	status: accepted
+L00005324	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00005325	canonical_text: >-
+L00005326	  The end-to-end acceptance overlay preserves checklist assertions for DockerHub
+L00005327	  auth, requested/effective capability display, namespace/repository discovery,
+L00005328	  non-bypassable missing-repo creation, private default, build/run access,
+L00005329	  publish result digest/tag/registry info, Unraid generation defaults, managed
+L00005330	  template-repo defaults, ca_profile.xml generation/editability/scope, profile
+L00005331	  image modes, and template-repo commit/push UX without creating separate
+L00005332	  implementation scope.
+L00005333	gui_related: true
+L00005334	gui_classification_reason: Acceptance criteria cover visible GUI auth, repository, Docker Manager, Unraid, and template-repo workflows.
+L00005335	split_recommended: false
+L00005336	depends_on: [CRAU-026, CRAU-029, CRAU-031, CRAU-035, CRAU-048, CRAU-070, CRAU-071, CRAU-072, CRAU-081, CRAU-082]
+L00005337	unblocks: []
+L00005338	acceptance_criteria:
+L00005339	  - The S0081 acceptance checklist remains preserved as validation overlay.
+L00005340	  - Acceptance bullets map to owner units rather than creating duplicate WorkNode or implementation scope.
+L00005341	validation_surfaces:
+L00005342	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005343	  - python3 scripts/pm-plan-index.py validate
+L00005344	risk_class: acceptance_coverage_drift
+L00005345	reasoning_tier: standard
+L00005346	context_scope: containers_registry_unraid_acceptance_overlay
+L00005347	implementation_surfaces:
+L00005348	  - Plans/Containers_Registry_and_Unraid.md
+L00005349	node_compile_hint:
+L00005350	  mode: acceptance_overlay
+L00005351	  create_worknodes: false
+L00005352	source_lineage:
+L00005353	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0081
+L00005354	preserved_exact_tokens:
+L00005355	  - "PAT-recommended helper text"
+L00005356	  - "New repository creation defaults to private"
+L00005357	  - "digest/tag/registry info"
+L00005358	  - "root `ca_profile.xml` plus maintainer folder plus `project-name.xml`"
+L00005359	negative_constraints:
+L00005360	  - "Acceptance overlay must not become a standalone WorkNode seed."
+L00005361	owner_hints:
+L00005362	  - Plans/Containers_Registry_and_Unraid.md
+L00005363	```
+L00005364	
+L00005365	### CRAU-084 - Remote Side Effect Blocked Payload Normalization
+L00005366	
+L00005367	```yaml
+L00005368	plan_unit_id: CRAU-084
+L00005369	unit_type: constraint
+L00005370	status: accepted
+L00005371	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00005372	canonical_text: >-
+L00005373	  Docker/Unraid remote-side-effect contracts are the reference pattern for
+L00005374	  blocked remote mutation: remote side effects blocked by confirmation or policy
+L00005375	  remain blocked rather than failed, completed local work is preserved, auth
+L00005376	  recovery does not auto-resubmit or auto-publish, UI explains when local
+L00005377	  artifacts exist but remote publish remains blocked, runtime-facing blocked
+L00005378	  payloads use blocked_reason_code plus ordered allowed_action_ids[],
+L00005379	  preserved_local_work, and optional detail_ref, and legacy reason_code and
+L00005380	  recovery_options[] are compatibility inputs only.
+L00005381	gui_related: true
+L00005382	gui_classification_reason: Blocked remote mutation, recovery CTAs, and user explanations are visible runtime/publish behavior.
+L00005383	split_recommended: true
+L00005384	split_recommendation_reason: This unit carries S0082 and the blocked-payload compatibility sentence from S0078.
+L00005385	depends_on: [CRAU-015, CRAU-043, CRAU-044, CRAU-045, CRAU-074, CRAU-076]
+L00005386	unblocks: []
+L00005387	acceptance_criteria:
+L00005388	  - Blocked remote side effects remain blocked, not failed.
+L00005389	  - Completed local work is preserved when remote publish or creation is blocked.
+L00005390	  - Auth recovery alone does not auto-resubmit or auto-publish blocked remote side effects.
+L00005391	  - UI explains when a local artifact exists but remote publish remains blocked.
+L00005392	  - Runtime-facing payload shape includes blocked_reason_code, ordered allowed_action_ids[], preserved_local_work, and optional detail_ref.
+L00005393	  - Legacy reason_code and recovery_options[] are non-canonical compatibility inputs and are not copied into new shared runtime contracts.
+L00005394	validation_surfaces:
+L00005395	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005396	  - python3 scripts/pm-plan-index.py validate
+L00005397	risk_class: blocked_payload_contract_drift
+L00005398	reasoning_tier: high
+L00005399	context_scope: remote_side_effect_blocked_payload_normalization
+L00005400	implementation_surfaces:
+L00005401	  - Plans/Containers_Registry_and_Unraid.md
+L00005402	  - Plans/Contracts_V0.md
+L00005403	node_compile_hint:
+L00005404	  mode: blocked_payload_normalization
+L00005405	  create_worknodes: false
+L00005406	source_lineage:
+L00005407	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0078
+L00005408	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0082
+L00005409	preserved_exact_tokens:
+L00005410	  - "`blocked_reason_code`"
+L00005411	  - "`allowed_action_ids[]`"
+L00005412	  - "`preserved_local_work`"
+L00005413	  - "`detail_ref?`"
+L00005414	  - "`reason_code`"
+L00005415	  - "`recovery_options[]`"
+L00005416	compatibility_only_notes:
+L00005417	  - "Legacy reason_code and recovery_options[] are compatibility inputs only."
+L00005418	negative_constraints:
+L00005419	  - "Legacy fields such as `reason_code` and `recovery_options[]` are non-canonical and MUST NOT be copied into new shared runtime contracts."
+L00005420	owner_hints:
+L00005421	  - Plans/Containers_Registry_and_Unraid.md
+L00005422	  - Plans/Contracts_V0.md
+L00005423	```
+L00005424	
+
+<<< CONTEXT_AFTER canonical_document_lines=5425-5436 >>>
+L00005425	### CRAU-085 - Docker Operation Result Envelope And Status Lifecycle
+L00005426	
+L00005427	```yaml
+L00005428	plan_unit_id: CRAU-085
+L00005429	unit_type: requirement
+L00005430	status: accepted
+L00005431	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00005432	canonical_text: >-
+L00005433	  Docker Manager operations use a shared operation result envelope with operation_id, operation_kind,
+L00005434	  target identity, actor/runtime_identity, project/package/seam/lane/worktree/account scope, preflight
+L00005435	  snapshot, approval_scope_key, status, started/updated/completed timestamps, review_payload,
+L00005436	  failure_payload, allowed_action_ids, evidence refs, and emitted receipt refs. `review_payload` carries

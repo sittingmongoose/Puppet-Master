@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "accepted_assignments": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "audit_id": {
+      "const": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive"
+    },
+    "blocked_assignments": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "complete": {
+      "type": "boolean"
+    },
+    "current_phase": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "pending_assignments": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "schema_version": {
+      "const": "coverage-state-v1"
+    },
+    "substantive_coverage_credit": {
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "audit_id",
+    "schema_version",
+    "complete",
+    "substantive_coverage_credit",
+    "accepted_assignments",
+    "pending_assignments",
+    "blocked_assignments",
+    "current_phase"
+  ],
+  "type": "object"
+}

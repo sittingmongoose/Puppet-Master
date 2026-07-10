@@ -1,0 +1,889 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001046-ADVERSARIAL-WIN-749F06E4B796-0006",
+  "attempt_id": "attempt-0012",
+  "task_thread_id": "/root/a005_blind_wave_0005_c_dispatcher_epoch_0012/leaf_a005_001046_attempt_0012",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Automated_Testing_System.md",
+    "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
+    "core_sha256": "d66fe137218256b0da16a3ce734ec5ef1ec32a8e6d2ab766cff205f08ba17ba0",
+    "core_range": [
+      1723,
+      1890
+    ]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001046-I001",
+      "item_type": "explicit_non_gap",
+      "title": "Transport soak scenarios are enumerated",
+      "statement": "The plan explicitly names sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback as required soak coverage.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1739,
+          "line_end": 1739,
+          "exact_quote": "- Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I002",
+      "item_type": "gap",
+      "title": "Transport coverage is not bound to a test matrix or consumers",
+      "statement": "The finding family names WS, SSE, terminal, browser, and device transports, but the acceptance sentence neither maps each transport to each scenario nor names the runtime callers and result consumers. SSE and device behavior can therefore disappear while the repeated generic sentence still appears satisfied.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_callers_consumers",
+      "impact": "A partial implementation can claim coverage without exercising all named transport families or delivering results to their consumers.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1767,
+          "line_end": 1767,
+          "exact_quote": "finding_family: Add WS/SSE/terminal/browser/device transport soak tests",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1739,
+          "line_end": 1739,
+          "exact_quote": "- Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I003",
+      "item_type": "gap",
+      "title": "Soak workload and pass thresholds are unbounded",
+      "statement": "The soak requirement provides no duration, reconnect count, first-event deadline, terminal-output size, snapshot rate, concurrency, resource budget, or permitted loss/error threshold.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "scale_limits",
+      "impact": "Implementations can select trivial loads and incompatible pass criteria, making the requirement non-falsifiable at production scale.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1739,
+          "line_end": 1739,
+          "exact_quote": "- Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I004",
+      "item_type": "gap",
+      "title": "Offline and network-loss fault model is incomplete",
+      "statement": "Reconnect and fallback are named, but the core does not define offline startup, partition duration, half-open sockets, frame loss or duplication, proxy failure, backpressure, DNS/TLS failure, session expiry, or expected recovery state.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "offline_network_loss",
+      "impact": "Network-failure behavior and recovery correctness remain implementation-discretionary.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1731,
+          "line_end": 1731,
+          "exact_quote": "  P2-TRANSPORT-SOAK-TESTS (P2) is compiled as canonical Puppet Master intent for Add WS/SSE/terminal/browser/device transport soak tests: Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I005",
+      "item_type": "gap",
+      "title": "Validation surfaces do not provide an executable soak oracle",
+      "statement": "Two listed validations check plan or ledger structure, while the third only repeats the acceptance sentence. No test command, receipt schema, artifact path, or measurable pass oracle is bound to ATS-021.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "Governance validation can pass without executing or evidencing transport soak behavior.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1742,
+          "line_end": 1742,
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1744,
+          "line_end": 1744,
+          "exact_quote": "- Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I006",
+      "item_type": "explicit_non_gap",
+      "title": "Terminal replay scope and multi-projection comparisons are concrete",
+      "statement": "ATS-022 explicitly requires minimized fixtures across major terminal cases and replay comparisons across parse tree, accessible mirror, scrollback, and painted viewport.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1798,
+          "line_end": 1798,
+          "exact_quote": "- PM stores minimized terminal replay fixtures for parser bugs, shell markers, giant outputs, unicode/graphemes, bracketed paste, OSC, tmux/zellij/ssh panes, and CLI agents.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1799,
+          "line_end": 1799,
+          "exact_quote": "- Terminal parser has fuzz tests, chunk-splitting tests, and replay snapshots that compare parse tree, accessible mirror, scrollback, and painted viewport.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I007",
+      "item_type": "gap",
+      "title": "Replay-corpus privacy and lifecycle rules are absent",
+      "statement": "The requirement says PM stores fixtures derived from shell, SSH, pane, CLI-agent, and giant-output behavior, but specifies no provenance, consent, secret redaction, retention, deletion, access control, or safe sharing/export rules.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Permanent replay corpora can retain credentials, command history, user content, hostnames, or agent data without a governed lifecycle.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1798,
+          "line_end": 1798,
+          "exact_quote": "- PM stores minimized terminal replay fixtures for parser bugs, shell markers, giant outputs, unicode/graphemes, bracketed paste, OSC, tmux/zellij/ssh panes, and CLI agents.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I008",
+      "item_type": "gap",
+      "title": "Fuzz and replay reproducibility is unspecified",
+      "statement": "The core does not require seed capture, minimizer identity, fixture versioning, expected-output versioning, deterministic replay metadata, corpus migration, deduplication, or compatibility across parser and renderer versions.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "compatibility_migration",
+      "impact": "Failures may not reproduce after toolchain or schema changes, and old corpora can silently become unusable or semantically stale.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1799,
+          "line_end": 1799,
+          "exact_quote": "- Terminal parser has fuzz tests, chunk-splitting tests, and replay snapshots that compare parse tree, accessible mirror, scrollback, and painted viewport.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I009",
+      "item_type": "gap",
+      "title": "Renderer budget and degradation receipt are undefined",
+      "statement": "The plan requires locks to be budgeted and oversized recordings to degrade with receipts, but gives no numeric budgets, measured resource dimensions, degradation levels, preserved guarantees, or receipt fields and consumers.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "scale_limits",
+      "impact": "A freeze or data-losing degradation can be labeled budget-compliant without a falsifiable threshold or auditable receipt.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1800,
+          "line_end": 1800,
+          "exact_quote": "- Renderer/scrollback locks are budgeted; oversized recordings degrade with receipts instead of freezing UI.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I010",
+      "item_type": "gap",
+      "title": "Adapter invocation authority and trust boundary are not defined",
+      "statement": "TestAdapterInvocation accepts adapter, target, optional command, input artifacts, timeout, and an optional permission snapshot, but supplies no initiating actor, project/workspace authority, allowlist or validation contract, capability binding, or rule requiring a permission snapshot for privileged invocations.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "authority_boundaries",
+      "impact": "An untrusted command, target, or artifact reference can cross adapter authority boundaries or execute under stale/absent permissions.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1861,
+          "line_end": 1861,
+          "exact_quote": "`TestAdapterInvocation` fields are `invocation_id`, `adapter_id`, `test_kind`, `target_ref`, `command_ref?`, `input_artifact_refs[]`, `timeout_ms`, `permission_snapshot_id?`, and `created_at_utc`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I011",
+      "item_type": "gap",
+      "title": "Invocation lifecycle identity is incomplete",
+      "statement": "The invocation has no schema version, correlation or causation ID, idempotency key, retry attempt, cancellation token, queue priority, environment snapshot, or requested output/redaction policy.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "contract",
+      "impact": "Retries, cancellation, migrations, duplicate suppression, and cross-service tracing cannot be implemented consistently.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1861,
+          "line_end": 1861,
+          "exact_quote": "`TestAdapterInvocation` fields are `invocation_id`, `adapter_id`, `test_kind`, `target_ref`, `command_ref?`, `input_artifact_refs[]`, `timeout_ms`, `permission_snapshot_id?`, and `created_at_utc`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I012",
+      "item_type": "gap",
+      "title": "TestRunReceipt states lack transition and invariant rules",
+      "statement": "The seven statuses are enumerated without allowed transitions, terminal-state classification, timestamp requirements by state, count invariants, or rules relating failed/error counts and failure_refs to passed, failed, blocked, or inconclusive outcomes.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "Contradictory receipts such as running with ended_at_utc or passed with failures can be accepted and drive misleading GUI actions.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1863,
+          "line_end": 1863,
+          "exact_quote": "`TestRunReceipt` fields are `test_run_id`, `adapter_id`, `test_kind`, `target_ref`, `started_at_utc`, `ended_at_utc`, `status`, `passed_count`, `failed_count`, `skipped_count`, `error_count`, `log_artifact_refs[]`, `visual_artifact_refs[]`, `coverage_ref?`, `failure_refs[]`, and `schema_version`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1865,
+          "line_end": 1865,
+          "exact_quote": "`status` values are `queued`, `running`, `passed`, `failed`, `cancelled`, `blocked`, and `inconclusive`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I013",
+      "item_type": "explicit_non_gap",
+      "title": "Testing GUI commands, regions, and basic button derivation are explicit",
+      "statement": "The GUI surface names its commands, five panel regions, and status/artifact-derived enablement for watch, cancel, open-receipt, and export actions.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1871,
+          "line_end": 1871,
+          "exact_quote": "Testing GUI commands are `cmd.testing.open_panel`, `cmd.testing.watch_run`, `cmd.testing.cancel_run`, `cmd.testing.open_receipt`, `cmd.testing.open_failure`, and `cmd.testing.export_bundle`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1873,
+          "line_end": 1873,
+          "exact_quote": "Panel layout contains `run_list`, `active_run_detail`, `failure_list`, `artifact_preview`, and `redaction_notice`. Button states derive from `TestRunReceipt.status`: watch enabled for `queued|running`; cancel enabled for `queued|running`; open receipt enabled for any terminal state; export bundle enabled when `log_artifact_refs[]` or `visual_artifact_refs[]` is non-empty.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I014",
+      "item_type": "gap",
+      "title": "GUI action states race with run completion",
+      "statement": "Watch and cancel are enabled from a locally observed queued or running status, but no revision, freshness, optimistic-transition, acknowledgement, idempotency, rejection, or completion-race behavior is defined. The phrase any terminal state is also not normatively mapped to the status enum.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_races",
+      "impact": "A user can issue cancel after completion or see stale controls without an authoritative resolution state.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1873,
+          "line_end": 1873,
+          "exact_quote": "Panel layout contains `run_list`, `active_run_detail`, `failure_list`, `artifact_preview`, and `redaction_notice`. Button states derive from `TestRunReceipt.status`: watch enabled for `queued|running`; cancel enabled for `queued|running`; open receipt enabled for any terminal state; export bundle enabled when `log_artifact_refs[]` or `visual_artifact_refs[]` is non-empty.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I015",
+      "item_type": "gap",
+      "title": "Export enablement bypasses redaction and authorization truth",
+      "statement": "Export is enabled solely by non-empty log or visual artifact arrays. The presence of a redaction_notice region is not connected to a completed redaction state, export authorization, artifact classification, or failed-redaction state.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Sensitive terminal logs or screenshots can appear exportable before redaction and authorization are satisfied.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1873,
+          "line_end": 1873,
+          "exact_quote": "Panel layout contains `run_list`, `active_run_detail`, `failure_list`, `artifact_preview`, and `redaction_notice`. Button states derive from `TestRunReceipt.status`: watch enabled for `queued|running`; cancel enabled for `queued|running`; open receipt enabled for any terminal state; export bundle enabled when `log_artifact_refs[]` or `visual_artifact_refs[]` is non-empty.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I016",
+      "item_type": "gap",
+      "title": "Testing GUI lacks accessibility and localization contracts",
+      "statement": "The GUI layout and controls have no accessible names, focus order, keyboard commands, live-region behavior for run updates, non-color status semantics, screen-reader treatment for artifact previews, locale keys, pluralization, timestamp/number formatting, or overflow rules.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "accessibility_localization",
+      "impact": "Core test monitoring and cancellation can be unusable or misleading for assistive-technology users and non-default locales.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1873,
+          "line_end": 1873,
+          "exact_quote": "Panel layout contains `run_list`, `active_run_detail`, `failure_list`, `artifact_preview`, and `redaction_notice`. Button states derive from `TestRunReceipt.status`: watch enabled for `queued|running`; cancel enabled for `queued|running`; open receipt enabled for any terminal state; export bundle enabled when `log_artifact_refs[]` or `visual_artifact_refs[]` is non-empty.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I017",
+      "item_type": "explicit_non_gap",
+      "title": "Runtime enablement has explicit positive prerequisites",
+      "statement": "The core requires configured adapter, available capability probe, current permissions, fixtures, and receipt production without claiming PNC-019 certification, and names a transition event with core identifiers.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1879,
+          "line_end": 1879,
+          "exact_quote": "Testing remains runtime-disabled until all of the following are true: a target adapter is configured, the target capability probe returns `available`, permission snapshot is current, required fixtures exist, and the test invocation can produce a `TestRunReceipt` without claiming PNC-019 lifecycle certification. The transition event is `testing.runtime_enabled_for_adapter` with fields `adapter_id`, `project_id`, `capability_probe_ref`, `permission_snapshot_id`, `enabled_at_utc`, and `reason_code`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I018",
+      "item_type": "gap",
+      "title": "Runtime enablement has no revocation or recovery transition",
+      "statement": "Only the disabled-to-enabled event is defined. The core omits behavior when the capability probe becomes unavailable or stale, permissions are revoked, fixtures disappear, the network is lost, or receipt production later fails; there is no disable, suspend, re-probe, rollback, or in-flight-run policy.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "recovery_rollback",
+      "impact": "An adapter can remain presented as enabled after its safety prerequisites cease to hold.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1879,
+          "line_end": 1879,
+          "exact_quote": "Testing remains runtime-disabled until all of the following are true: a target adapter is configured, the target capability probe returns `available`, permission snapshot is current, required fixtures exist, and the test invocation can produce a `TestRunReceipt` without claiming PNC-019 lifecycle certification. The transition event is `testing.runtime_enabled_for_adapter` with fields `adapter_id`, `project_id`, `capability_probe_ref`, `permission_snapshot_id`, `enabled_at_utc`, and `reason_code`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I019",
+      "item_type": "gap",
+      "title": "Enablement event omits authority and operational correlation",
+      "statement": "The event identifies adapter, project, probe, permission snapshot, time, and reason, but not actor or authority decision, previous state, state revision, correlation or causation ID, schema version, expiry, or consumer acknowledgement.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "observability_support",
+      "impact": "Support tooling cannot reliably attribute, order, migrate, revoke, or trace enablement decisions.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1879,
+          "line_end": 1879,
+          "exact_quote": "Testing remains runtime-disabled until all of the following are true: a target adapter is configured, the target capability probe returns `available`, permission snapshot is current, required fixtures exist, and the test invocation can produce a `TestRunReceipt` without claiming PNC-019 lifecycle certification. The transition event is `testing.runtime_enabled_for_adapter` with fields `adapter_id`, `project_id`, `capability_probe_ref`, `permission_snapshot_id`, `enabled_at_utc`, and `reason_code`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I020",
+      "item_type": "gap",
+      "title": "Adapter-interface row is simultaneously repaired and deferred",
+      "statement": "The addendum declares the Test Adapter Interface row repaired, while the later canonical note still dispositions the same row as explicitly deferred and says closing it requires a dedicated lane. No supersession or precedence rule resolves the contradiction.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "cross_document_seams",
+      "impact": "Readers, indexes, and repair tooling can disagree on whether the critical adapter-contract gap is open or closed.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1859,
+          "line_end": 1859,
+          "exact_quote": "Repairs row `sfk-fa0b68afddc10ec875a0b183`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1886,
+          "line_end": 1886,
+          "exact_quote": "- `registry_line 331` (explicitly_deferred; source line 1126; `sfk-fa0b68afddc10ec875a0b183`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: every ATS PlanUnit is prose pointing at generic validators no concrete IPC schema, adapter interface, or `TestRunReceipt` file format anywhere.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I021",
+      "item_type": "gap",
+      "title": "GUI-result row is simultaneously repaired and deferred",
+      "statement": "The GUI Result Surfacing section declares the row repaired, while the later note retains the identical row as explicitly deferred and describes zero GUI wiring. The canonical core supplies no ordering or resolved-status marker.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "gui_misleading_states",
+      "impact": "The product and governance surfaces can show incompatible closure truth for the same critical GUI obligation.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1869,
+          "line_end": 1869,
+          "exact_quote": "Repairs row `sfk-bd4e3c4facbc54e0a68a60c8`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1887,
+          "line_end": 1887,
+          "exact_quote": "- `registry_line 332` (explicitly_deferred; source line 1127; `sfk-bd4e3c4facbc54e0a68a60c8`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: zero GUI wiring despite steer explicitly asking for GUI result surfacing no command IDs, panel layout, or button states for watching/viewing test results.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I022",
+      "item_type": "gap",
+      "title": "Runtime-trigger row is simultaneously repaired and deferred",
+      "statement": "The Runtime Disabled To Enabled Trigger section declares the row repaired, while the later note preserves the same row as explicitly deferred and says the trigger criteria are undefined. No canonical disposition states whether the new trigger supersedes the deferred finding.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "Runtime readiness and closure evaluation can diverge on whether the enablement transition contract exists.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1877,
+          "line_end": 1877,
+          "exact_quote": "Repairs row `sfk-a86063e06fec52acf396acb6`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1888,
+          "line_end": 1888,
+          "exact_quote": "- `registry_line 333` (explicitly_deferred; source line 1128; `sfk-a86063e06fec52acf396acb6`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] 6 (L279-281): entire document is gated behind an undefined future \"runtime_disabled enabled\" event with no trigger criteria.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I023",
+      "item_type": "gap",
+      "title": "Cross-document owners are listed without contract bindings",
+      "statement": "ATS-022 targets four documents, while its implementation_surfaces list contains only the current owner doc. The core does not identify which contract, GUI, runtime-artifact, or promoted-feature sections consume each fixture, receipt, or state, nor how cross-document compatibility is validated.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "cross_document_seams",
+      "impact": "Required consumers can remain unmodified while ATS-022 is treated as accepted and locally complete.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1811,
+          "line_end": 1811,
+          "exact_quote": "implementation_surfaces:",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1831,
+          "line_end": 1831,
+          "exact_quote": "target_docs:",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1835,
+          "line_end": 1835,
+          "exact_quote": "- Contracts_V0.md",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I024",
+      "item_type": "gap",
+      "title": "Cancellation is a destructive action without semantics",
+      "statement": "A cancel command and enabled states are defined, but not who may cancel, confirmation policy, cancellation boundary, child-process cleanup, partial artifact retention, rollback, receipt outcome, repeated-cancel behavior, or consequences for shared runs.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "destructive_actions",
+      "impact": "Cancellation can leak processes, destroy evidence, affect other users, or yield contradictory receipts.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1871,
+          "line_end": 1871,
+          "exact_quote": "Testing GUI commands are `cmd.testing.open_panel`, `cmd.testing.watch_run`, `cmd.testing.cancel_run`, `cmd.testing.open_receipt`, `cmd.testing.open_failure`, and `cmd.testing.export_bundle`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I025",
+      "item_type": "unknown",
+      "title": "Coverage completeness cannot be demonstrated from the specified oracles",
+      "statement": "The bounded core has scenario lists and individual comparison surfaces but no enumerated coverage manifest joining transports, failure modes, fixture classes, receipt states, GUI states, adapters, and compatibility versions. It is therefore unknown whether unmentioned interactions are deliberately excluded or accidentally untested.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "unknown_unknowns",
+      "impact": "The plan cannot distinguish complete negative-space coverage from a green subset selected by implementers.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1739,
+          "line_end": 1739,
+          "exact_quote": "- Sleep/wake, reconnect, first-event timeout, large terminal output, high-frequency browser snapshots, and WebSocket fallback are covered.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1799,
+          "line_end": 1799,
+          "exact_quote": "- Terminal parser has fuzz tests, chunk-splitting tests, and replay snapshots that compare parse tree, accessible mirror, scrollback, and painted viewport.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I026",
+      "item_type": "gap",
+      "title": "Partial-failure receipt coherence is unspecified",
+      "statement": "The receipt can carry passed, failed, skipped, and error counts plus multiple artifact and failure arrays, but no atomicity or completeness marker says whether a crashed adapter produced a final, partial, corrupt, or still-uploading bundle.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "partial_failure",
+      "impact": "Consumers may treat incomplete evidence as a complete terminal receipt or discard useful partial evidence inconsistently.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1863,
+          "line_end": 1863,
+          "exact_quote": "`TestRunReceipt` fields are `test_run_id`, `adapter_id`, `test_kind`, `target_ref`, `started_at_utc`, `ended_at_utc`, `status`, `passed_count`, `failed_count`, `skipped_count`, `error_count`, `log_artifact_refs[]`, `visual_artifact_refs[]`, `coverage_ref?`, `failure_refs[]`, and `schema_version`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I027",
+      "item_type": "gap",
+      "title": "Invocation and receipt compatibility policy is missing",
+      "statement": "TestRunReceipt includes schema_version but TestAdapterInvocation does not, and the core defines no version negotiation, unknown-field behavior, upgrade/downgrade rule, migration of stored receipts, or adapter compatibility declaration.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "compatibility_migration",
+      "impact": "Mixed-version adapters and clients can interpret invocations or historical evidence differently without a detectable contract failure.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1861,
+          "line_end": 1861,
+          "exact_quote": "`TestAdapterInvocation` fields are `invocation_id`, `adapter_id`, `test_kind`, `target_ref`, `command_ref?`, `input_artifact_refs[]`, `timeout_ms`, `permission_snapshot_id?`, and `created_at_utc`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1863,
+          "line_end": 1863,
+          "exact_quote": "`TestRunReceipt` fields are `test_run_id`, `adapter_id`, `test_kind`, `target_ref`, `started_at_utc`, `ended_at_utc`, `status`, `passed_count`, `failed_count`, `skipped_count`, `error_count`, `log_artifact_refs[]`, `visual_artifact_refs[]`, `coverage_ref?`, `failure_refs[]`, and `schema_version`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I028",
+      "item_type": "explicit_non_gap",
+      "title": "Receipt exposes useful support evidence references",
+      "statement": "TestRunReceipt explicitly includes log, visual, coverage, and failure references alongside counts and timestamps, providing a concrete base for operational diagnosis.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1863,
+          "line_end": 1863,
+          "exact_quote": "`TestRunReceipt` fields are `test_run_id`, `adapter_id`, `test_kind`, `target_ref`, `started_at_utc`, `ended_at_utc`, `status`, `passed_count`, `failed_count`, `skipped_count`, `error_count`, `log_artifact_refs[]`, `visual_artifact_refs[]`, `coverage_ref?`, `failure_refs[]`, and `schema_version`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I029",
+      "item_type": "gap",
+      "title": "Untrusted terminal and adapter inputs lack containment rules",
+      "statement": "The core intentionally processes terminal escape streams, bracketed paste, OSC, pane recordings, command references, targets, and input artifacts, but defines no size/depth limits, path or URI validation, archive-bomb handling, escape sanitization, parser sandbox, command allowlist, or artifact integrity binding.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "untrusted_inputs",
+      "impact": "Malicious fixtures or invocation references can cause code execution, resource exhaustion, path traversal, data exfiltration, or unsafe rendering.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1798,
+          "line_end": 1798,
+          "exact_quote": "- PM stores minimized terminal replay fixtures for parser bugs, shell markers, giant outputs, unicode/graphemes, bracketed paste, OSC, tmux/zellij/ssh panes, and CLI agents.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1861,
+          "line_end": 1861,
+          "exact_quote": "`TestAdapterInvocation` fields are `invocation_id`, `adapter_id`, `test_kind`, `target_ref`, `command_ref?`, `input_artifact_refs[]`, `timeout_ms`, `permission_snapshot_id?`, and `created_at_utc`.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001046-I030",
+      "item_type": "explicit_non_gap",
+      "title": "Renderer lock and freeze risk is acknowledged",
+      "statement": "ATS-022 explicitly recognizes renderer and scrollback locking, oversized recordings, degradation, receipts, and the requirement not to freeze the UI.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1800,
+          "line_end": 1800,
+          "exact_quote": "- Renderer/scrollback locks are budgeted; oversized recordings degrade with receipts instead of freezing UI.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Transport and cross-document consumers are named only as families or target docs, without per-scenario or per-contract bindings.",
+      "evidence_item_ids": [
+        "A005-001046-I002",
+        "A005-001046-I023"
+      ]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Receipt transitions and terminal-state invariants are absent, and enablement is contradicted by an unresolved deferred disposition.",
+      "evidence_item_ids": [
+        "A005-001046-I012",
+        "A005-001046-I014",
+        "A005-001046-I018",
+        "A005-001046-I022"
+      ]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Renderer lock risk is acknowledged, but stale GUI status and completion-versus-cancel races have no authoritative resolution protocol.",
+      "evidence_item_ids": [
+        "A005-001046-I014",
+        "A005-001046-I030"
+      ]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Receipts contain rich counters and artifacts but lack completeness, atomicity, and crashed-adapter partial-output semantics.",
+      "evidence_item_ids": [
+        "A005-001046-I026",
+        "A005-001046-I028"
+      ]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "No disable, rollback, re-probe, or in-flight recovery transition follows loss of enablement prerequisites; cancellation cleanup is also unspecified.",
+      "evidence_item_ids": [
+        "A005-001046-I018",
+        "A005-001046-I024"
+      ]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "Invocation, cancellation, export, and enablement omit actor authority and enforceable permission/authorization bindings.",
+      "evidence_item_ids": [
+        "A005-001046-I010",
+        "A005-001046-I015",
+        "A005-001046-I019",
+        "A005-001046-I024"
+      ]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Replay corpora and exported logs or screenshots have no governed provenance, redaction, retention, deletion, or authorization lifecycle.",
+      "evidence_item_ids": [
+        "A005-001046-I007",
+        "A005-001046-I015"
+      ]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Terminal streams, commands, targets, and artifacts lack validation, sandboxing, containment, and integrity limits.",
+      "evidence_item_ids": [
+        "A005-001046-I010",
+        "A005-001046-I029"
+      ]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Basic button derivation is explicit, but stale state, undefined terminality, unsafe export enablement, and contradictory repair status can mislead users.",
+      "evidence_item_ids": [
+        "A005-001046-I013",
+        "A005-001046-I014",
+        "A005-001046-I015",
+        "A005-001046-I021",
+        "A005-001046-I022"
+      ]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "Reconnect and fallback are named, but offline and partition fault models plus post-enable network-loss behavior are not specified.",
+      "evidence_item_ids": [
+        "A005-001046-I004",
+        "A005-001046-I018"
+      ]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Soak workloads, renderer budgets, degradation thresholds, and receipt expectations lack measurable limits.",
+      "evidence_item_ids": [
+        "A005-001046-I003",
+        "A005-001046-I009",
+        "A005-001046-I030"
+      ]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "Terminal replay compares an accessible mirror, but the test-results GUI itself lacks keyboard, focus, announcement, naming, and preview-accessibility contracts.",
+      "evidence_item_ids": [
+        "A005-001046-I006",
+        "A005-001046-I016"
+      ]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "No locale, pluralization, formatting, translation-key, or text-overflow behavior is specified for testing results and statuses.",
+      "evidence_item_ids": [
+        "A005-001046-I016"
+      ]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Fuzz corpora, invocations, receipts, adapters, and stored evidence lack a version negotiation and migration contract.",
+      "evidence_item_ids": [
+        "A005-001046-I008",
+        "A005-001046-I027"
+      ]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Receipt evidence references are a concrete strength, but soak execution, degradation receipts, event attribution, correlation, and consumer acknowledgement remain undefined.",
+      "evidence_item_ids": [
+        "A005-001046-I005",
+        "A005-001046-I009",
+        "A005-001046-I019",
+        "A005-001046-I028"
+      ]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "Cancellation is exposed without authority, confirmation, cleanup, shared-run, repeated-action, or evidence-retention semantics.",
+      "evidence_item_ids": [
+        "A005-001046-I024"
+      ]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "Target documents lack explicit consumer contracts, and three repaired rows remain simultaneously marked explicitly deferred in the same core.",
+      "evidence_item_ids": [
+        "A005-001046-I020",
+        "A005-001046-I021",
+        "A005-001046-I022",
+        "A005-001046-I023"
+      ]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Concrete scenario lists exist, but soak and budget thresholds, executable commands, receipt oracles, and a coverage matrix are missing.",
+      "evidence_item_ids": [
+        "A005-001046-I001",
+        "A005-001046-I003",
+        "A005-001046-I005",
+        "A005-001046-I006",
+        "A005-001046-I009",
+        "A005-001046-I025"
+      ]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "unknown",
+      "summary": "Without an enumerated interaction coverage manifest, it is unknown which negative-space combinations are intentional exclusions versus unseen omissions.",
+      "evidence_item_ids": [
+        "A005-001046-I025"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

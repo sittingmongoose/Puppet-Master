@@ -1,0 +1,271 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2127-2138 >>>
+L00002127	- Plans/FinalGUISpec.md
+L00002128	- Plans/UI_Command_Catalog.md
+L00002129	- Plans/Runtime_Artifacts_Panel.md
+L00002130	- Plans/PRD_Builder.md
+L00002131	- Plans/Planning_Wizard.md
+L00002132	- Plans/Project_Output_Artifacts.md
+L00002133	- Plans/storage-plan.md
+L00002134	- Plans/Contracts_V0.md
+L00002135	- Plans/Permissions_System.md
+L00002136	- Plans/assistant-chat-design.md
+L00002137	```
+L00002138	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2139-2394 >>>
+L00002139	### OP-027 - History Actions Deep Compare Export Rebuild
+L00002140	
+L00002141	```yaml
+L00002142	plan_unit_id: OP-027
+L00002143	unit_type: requirement
+L00002144	status: accepted
+L00002145	owner_doc: Plans/Orchestrator_Page.md
+L00002146	canonical_text: History rows expose authority-gated actions without mutating immutable history in place. Document
+L00002147	  rows support Open, Compare versions, Duplicate as draft, Reopen in Wizard, Export, and Send forward when currentness
+L00002148	  allows; run rows support viewing, filtering, artifact/evidence opening, resume/retry where valid, clone-as-new-run,
+L00002149	  export, and raw/ledger inspection. Compare versions is deep in MVP with rendered output, package/source-lineage
+L00002150	  metadata, source ledger atom lineage where applicable, and manifest identity. Export actions support selected
+L00002151	  rows, multi-select bundles, filtered views, zip/archive, JSON, rendered Markdown, rendered HTML, rendered PDF,
+L00002152	  and explicit evidence/redaction profiles. When projection state is stale, compare/export/reopen/send-forward remain
+L00002153	  blocked until Rebuild succeeds.
+L00002154	gui_related: true
+L00002155	gui_classification_reason: Defines user-visible row actions, compare/export controls, rebuild affordance, and blocked
+L00002156	  states.
+L00002157	depends_on:
+L00002158	- OP-026
+L00002159	- SP-219
+L00002160	- CV-295
+L00002161	unblocks:
+L00002162	- UCC-100
+L00002163	- POA-051
+L00002164	- ATS-012
+L00002165	acceptance_criteria:
+L00002166	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00002167	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00002168	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00002169	  are created by this compile.
+L00002170	validation_surfaces:
+L00002171	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00002172	- python3 scripts/pm-plan-index.py validate
+L00002173	- git diff --check
+L00002174	risk_class: history_action_authority_drift
+L00002175	reasoning_tier: high
+L00002176	context_scope: orchestrator_history_actions
+L00002177	implementation_surfaces:
+L00002178	- Plans/Orchestrator_Page.md
+L00002179	- future History row action menus
+L00002180	node_compile_hint:
+L00002181	  mode: history_action_surface
+L00002182	  create_worknodes: false
+L00002183	  create_nodeseeds: false
+L00002184	source_lineage:
+L00002185	- pldg-20260626-001-feature-name:atom-0017
+L00002186	- pldg-20260626-001-feature-name:atom-0018
+L00002187	- pldg-20260626-001-feature-name:atom-0026
+L00002188	- pldg-20260626-001-feature-name:atom-0027
+L00002189	- pldg-20260626-001-feature-name:atom-0034
+L00002190	- pldg-20260626-001-feature-name:atom-0035
+L00002191	- pldg-20260626-001-feature-name:atom-0038
+L00002192	- pldg-20260626-001-feature-name:atom-0041
+L00002193	- pldg-20260626-001-feature-name:atom-0043
+L00002194	- pldg-20260626-001-feature-name:atom-0057
+L00002195	- pldg-20260626-001-feature-name:atom-0058
+L00002196	- pldg-20260626-001-feature-name:atom-0059
+L00002197	- pldg-20260626-001-feature-name:atom-0062
+L00002198	- chat:history-defaults-answers
+L00002199	- chat:history-scope-retention-actions-answers
+L00002200	- chat:history-columns-toggle-deep-compare-answers
+L00002201	- chat:history-export-granularity-answer
+L00002202	- chat:history-export-compare-archive-answers
+L00002203	- chat:history-degraded-mode-answer
+L00002204	- chat:history-pressure-test-request
+L00002205	- chat:history-pressure-test-defaults-answer
+L00002206	source_atom_ids:
+L00002207	- atom-0017
+L00002208	- atom-0018
+L00002209	- atom-0026
+L00002210	- atom-0027
+L00002211	- atom-0034
+L00002212	- atom-0035
+L00002213	- atom-0038
+L00002214	- atom-0041
+L00002215	- atom-0043
+L00002216	- atom-0057
+L00002217	- atom-0058
+L00002218	- atom-0059
+L00002219	- atom-0062
+L00002220	decision_refs:
+L00002221	- dec-0003
+L00002222	- dec-0004
+L00002223	- dec-0005
+L00002224	- dec-0006
+L00002225	- dec-0007
+L00002226	- dec-0010
+L00002227	- dec-0011
+L00002228	- dec-0012
+L00002229	preserved_exact_tokens:
+L00002230	- All of that.
+L00002231	- status/date/project search
+L00002232	- opening artifacts/evidence
+L00002233	- resuming/retrying
+L00002234	- cloning as a new run
+L00002235	- exporting
+L00002236	- viewing what happened
+L00002237	- historical orchestrator runs
+L00002238	- document-specific actions
+L00002239	- Duplicate as draft
+L00002240	- Reopen in Wizard
+L00002241	- Compare versions
+L00002242	- Export
+L00002243	- Send forward when currentness allows
+L00002244	- 'Yes'
+L00002245	- currentness allows
+L00002246	- deeper is mvp
+L00002247	- rendered document diff
+L00002248	- package/source-lineage metadata
+L00002249	- ledger-atom diff
+L00002250	- immutable historical records
+L00002251	- all of thodse
+L00002252	- selected-row export
+L00002253	- multi-select bundle export
+L00002254	- whole filtered-view export
+L00002255	- manifest
+L00002256	- yes, and yes.
+L00002257	- zip+manifest
+L00002258	- JSON
+L00002259	- rendered Markdown/HTML/PDF
+L00002260	- 'yes'
+L00002261	- side-by-side rendered diff
+L00002262	- metadata/source-lineage pane
+L00002263	- atom/manifest change table
+L00002264	- sounds good
+L00002265	- Rebuild
+L00002266	- immutable source records
+L00002267	- block compare/export/reopen/send-forward until rebuild succeeds
+L00002268	- until rebuild succeeds
+L00002269	- currentness
+L00002270	- authority
+L00002271	- permissions/redaction profile details
+L00002272	- raw records/evidence
+L00002273	- explicit evidence/redaction profile
+L00002274	negative_constraints:
+L00002275	- Do not reduce historical runs to read-only summaries when the user needs action routes.
+L00002276	- Do not omit evidence/artifact/Ledger pivots from historical run rows.
+L00002277	- Do not mutate immutable historical run/document identity in place.
+L00002278	- Do not resume or retry a stale historical run without currentness and authority checks.
+L00002279	- Do not treat clone-as-new-run as the same identity as the original historical run.
+L00002280	- Do not expose run-only actions such as retry or clone-as-new-run directly on document rows unless they route through
+L00002281	  a document-appropriate currentness/authority action.
+L00002282	- Do not send a historical document forward without currentness checks.
+L00002283	- Do not launch Plan Compile, Orchestrator execution, or mutable wizard state directly from stale historical documents
+L00002284	  without currentness checks.
+L00002285	- Do not mutate immutable approved packs or historical document records in place.
+L00002286	- Do not ship compare versions as rendered-text-only in MVP.
+L00002287	- Do not hide source-lineage or package identity changes when comparing historical wizard documents.
+L00002288	- Do not compare by path or title alone when canonical document/package IDs exist.
+L00002289	- Do not let comparison mutate or merge historical records.
+L00002290	- Do not limit MVP export to selected-row-only.
+L00002291	- Do not make whole filtered-view export omit the active filter context.
+L00002292	- Do not collapse export into only one opaque archive format.
+L00002293	- Do not omit the manifest from archive/zip exports.
+L00002294	- Do not make deep comparison a single raw JSON or text-only diff.
+L00002295	- Do not hide metadata/source-lineage or atom/manifest changes behind unrelated developer-only tooling.
+L00002296	- Do not make rebuild available only as hidden developer tooling.
+L00002297	- Do not rebuild by mutating immutable source records.
+L00002298	- Do not allow compare/export/reopen/send-forward from stale projection state.
+L00002299	- Do not bypass currentness/authority checks just because rebuild is requested.
+L00002300	- Do not treat successful rebuild as automatic permission to bypass currentness or authority checks.
+L00002301	- Do not mutate immutable historical records after rebuild.
+L00002302	- Do not silently include raw records or evidence in ordinary exports.
+L00002303	- Do not export secrets, unauthorized provider/account details, or evidence outside the user's permissions.
+L00002304	- Do not omit a manifest of redactions/omissions when evidence export is requested.
+L00002305	owner_hints:
+L00002306	- Plans/Orchestrator_Page.md
+L00002307	- Plans/Runtime_Artifacts_Panel.md
+L00002308	- Plans/UI_Command_Catalog.md
+L00002309	- Plans/storage-plan.md
+L00002310	- Plans/Contracts_V0.md
+L00002311	- Plans/Permissions_System.md
+L00002312	- Plans/Planning_Wizard.md
+L00002313	- Plans/PRD_Builder.md
+L00002314	- Plans/FinalGUISpec.md
+L00002315	- Plans/Project_Output_Artifacts.md
+L00002316	```
+L00002317	
+L00002318	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00002319	
+L00002320	This addendum repairs non-runtime Orchestrator page rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+L00002321	
+L00002322	- Repairs `sfk-4ac2b9911ffce6c6ae062b08`: safe-point retry UI shows action `cmd.orchestrator.safe_point_retry` with fields `run_id`, `safe_point_id`, `retry_scope`, and `permission_snapshot_id?`. Confirmation copy must name the safe point and affected node/run. Disabled reasons are `safe_point_missing`, `state_changed`, `permission_denied`, and `operation_in_progress`.
+L00002323	- Repairs `sfk-20d70c6eed1de1a86055e838`: Plan Compile launch waits for `PlanApproved` publication for `60000` ms by default. On expiry it enters `plan_compile_launch_expired` with actions `retry_wait`, `open_plan_approval`, and `cancel_launch`.
+L00002324	- Repairs `sfk-e9a741e787bc73207fc9b89a`: core DAG GUI commands are `cmd.run_graph.pan`, `cmd.run_graph.zoom`, `cmd.run_graph.drag_node`, `cmd.run_graph.open_minimap_target`, `cmd.run_graph.open_context_menu`, `cmd.run_graph.keyboard_navigate`, and `cmd.run_graph.set_selection`. Enabled state requires graph data loaded and no modal capture; drag additionally requires editable layout mode.
+L00002325	
+L00002326	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+L00002327	## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+L00002328	
+L00002329	These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00002330	
+L00002331	- `registry_line 365` (explicitly_deferred; source line 1227; `sfk-e9a741e787bc73207fc9b89a`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: core DAG interactions (pan, zoom, drag, minimap click, right-click, keyboard nav, multi-select) are narrative "should" statements only zero command IDs or enabled/disabled logic anywhere; confirms Orchestrator_Page.md does not close this gap either (chec
+L00002332	
+L00002333	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->
+L00002334	
+L00002335	## Usage GUI Propagation Addendum - 2026-07-09
+L00002336	
+L00002337	This addendum binds Orchestrator usage/cost rows and actions to UsageRecord identity. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+L00002338	
+L00002339	### OP-029 - Orchestrator Usage Drill-Through Contract
+L00002340	
+L00002341	```yaml
+L00002342	plan_unit_id: OP-029
+L00002343	unit_type: requirement
+L00002344	status: accepted
+L00002345	owner_doc: Plans/Orchestrator_Page.md
+L00002346	canonical_text: >-
+L00002347	  Orchestrator usage, cost, ledger, evidence, history, and receipt rows are consumers of UsageRecord projection packets. They display source_class, source_confidence, source_authority, settlement_status, cost_status, quota_state, projection_freshness, projection_health, hidden/background contribution, and dedupe/parent-child refs when usage appears in a row or detail panel. `View in Usage`, `Show in Usage`, and `Show in Ledger` actions route through object_kind = usage_event and object_id from usage_event_ref whenever present, preserving usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, and thread_id as correlation/context fields.
+L00002348	gui_related: true
+L00002349	gui_classification_reason: Orchestrator usage rows and drill-through actions are user-visible GUI.
+L00002350	depends_on: [OP-026, OP-027, UF-087, UF-088, CV-316, RAP-044, RGV-016]
+L00002351	unblocks: []
+L00002352	acceptance_criteria:
+L00002353	  - Orchestrator usage/cost rows render unknown, estimated, disabled, not_exposed, hidden_byok, hidden_subscription, streaming_partial, adjusted, failed, stale, and provider-reported zero as distinct states.
+L00002354	  - Drill-through actions preserve UsageRecord refs and normalize to object_kind = usage_event when usage_event_ref is present.
+L00002355	  - Hidden/background usage contribution is attributed through parent_usage_record_id or child usage refs rather than silently folded into parent-only totals.
+L00002356	  - Orchestrator fixtures fail if Ledger/Usage pivots use timestamp/run/thread/tier as the primary key when usage_event_ref is available.
+L00002357	validation_surfaces:
+L00002358	  - python3 scripts/pm-plan-index.py validate
+L00002359	  - python3 scripts/pm-plans-verify.py run-gates
+L00002360	  - future Orchestrator Usage drill-through fixture suite
+L00002361	risk_class: orchestrator_usage_drillthrough_identity_drift
+L00002362	reasoning_tier: high
+L00002363	context_scope: orchestrator_usage_projection
+L00002364	implementation_surfaces:
+L00002365	  - Plans/Orchestrator_Page.md
+L00002366	  - Plans/usage-feature.md
+L00002367	  - Plans/Runtime_Artifacts_Panel.md
+L00002368	  - Plans/UI_Command_Catalog.md
+L00002369	node_compile_hint:
+L00002370	  mode: orchestrator_usage_drillthrough_contract
+L00002371	  create_worknodes: false
+L00002372	  create_nodeseeds: false
+L00002373	source_lineage:
+L00002374	  - "Plans/Orchestrator_Page.md:231-247"
+L00002375	  - "Plans/Run_Graph_View.md:491-535"
+L00002376	  - "Plans/usage-feature.md:5412-5605"
+L00002377	  - "Plans/Runtime_Artifacts_Panel.md:281-316"
+L00002378	preserved_exact_tokens:
+L00002379	  - View in Usage
+L00002380	  - Show in Usage
+L00002381	  - Show in Ledger
+L00002382	  - usage_event_ref
+L00002383	  - provider_attempt_ref
+L00002384	  - hidden/background
+L00002385	  - parent_usage_record_id
+L00002386	negative_constraints:
+L00002387	  - Do not let Orchestrator mint usage, billing, quota, or pricing authority.
+L00002388	  - Do not route usage/cost actions by timestamp, run-only, thread-only, or tier-only keys when usage_event_ref exists.
+L00002389	  - Do not hide background or subagent usage contribution behind a parent total without drill-through refs.
+L00002390	owner_hints:
+L00002391	  - Plans/Orchestrator_Page.md
+L00002392	  - Plans/usage-feature.md
+L00002393	  - Plans/Runtime_Artifacts_Panel.md
+L00002394	```

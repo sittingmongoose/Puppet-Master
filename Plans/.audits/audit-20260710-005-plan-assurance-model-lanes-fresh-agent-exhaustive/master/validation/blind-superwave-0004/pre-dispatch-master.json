@@ -1,0 +1,29 @@
+{
+  "aggregate_assignment_count": 24,
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "checker": "concurrent_superwave_pre_dispatch_v1",
+  "cohort_count": 3,
+  "cohort_reports": [
+    {
+      "errors": [],
+      "status": "pass",
+      "wave_id": "blind-wave-0004-a"
+    },
+    {
+      "errors": [],
+      "status": "pass",
+      "wave_id": "blind-wave-0004-b"
+    },
+    {
+      "errors": [],
+      "status": "pass",
+      "wave_id": "blind-wave-0004-c"
+    }
+  ],
+  "epoch_id": "epoch-0011",
+  "error_count": 0,
+  "errors": [],
+  "global_semantic_concurrency_max": 24,
+  "status": "pass",
+  "superwave_id": "blind-superwave-0004"
+}

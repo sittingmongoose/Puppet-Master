@@ -1,0 +1,380 @@
+<<< CONTEXT_BEFORE 15249-15260 >>>
+- "projects:v1"
+- "ContractName:Plans/assistant-chat-design.md"
+- "ContractName:Plans/Prompt_Pipeline.md"
+negative_constraints:
+- "`config:v1` is subordinate to `settings:v1`, not a competing global config key."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 15261-15611 >>>
+### F3-219 - Preview Browser LSP Account Remote Keys
+
+```yaml
+plan_unit_id: F3-219
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Preview, browser, LSP, account, MCP, skill, web operation, terminal, and remote GUI
+  persistence keys include preview state/source artifact, browser session/profile state,
+  unsaved buffer, search query, LSP session/diagnostics, provider account/server profile,
+  pressure/switch records, MCP/skill records, `web_operation_payload`, terminal layout/session
+  summaries, and `ssh_remotes/{id}`.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines GUI preview, browser, recovery, LSP, account, MCP, skill, web-operation,
+  terminal, and remote persistence keys.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: preview_browser_lsp_account_remote_keys
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145"
+preserved_exact_tokens:
+- "preview_state.v1:{project_id}:{preview_subject_id}"
+- "preview_source_artifact.v1:{project_id}:{artifact_id}"
+- "browser_session_state.v1:{project_id}:{browser_session_id}"
+- "browser_profile_state.v1:{project_id}:{profile_scope}"
+- "editor_unsaved_buffer.v1:{project_id}:{document_id}"
+- "search_query_state.v1:{project_id}:{query_session_id}"
+- "lsp_session_state.v1:{project_id}:{host_id}:{server_id}:{root_identity}"
+- "lsp_diagnostics_snapshot.v1:{project_id}:{host_id}:{server_id}:{root_identity}"
+- "provider_account_record.v1:{provider_id}:{account_id}"
+- "mcp_server_record.v1:{mcp_server_id}"
+- "skill_record.v1:{skill_id}"
+- "web_operation_payload"
+- "terminal_layout.v1:{project_id}"
+- "terminal_session.v1:{terminal_session_id}"
+- "ssh_remotes/{id}"
+- "ContractName:Plans/GitHub_Integration.md"
+- "ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md"
+negative_constraints:
+- "`editor_unsaved_buffer.v1:*` stores local unsaved buffer state only and MUST NOT imply that a remote write succeeded."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-220 - GUI Persistence Alias And Owner Routing Notes
+
+```yaml
+plan_unit_id: F3-220
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  GUI persistence summaries replace stale `ssh_connections:v1`, stale `browser_state.v1` /
+  `browser_state:v1`, and deprecated `dashboard_layout:v1` with canonical key families;
+  Search/LSP rows resolve back to storage, FileManager, and LSP owner contracts; viewer-mode
+  and MCP readiness copy mirror owner-doc precision and do not create local MCP, account, or
+  cost buckets.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves stale/deprecated alias rules and owner-routing constraints for GUI
+  persistence.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: gui_persistence_alias_and_owner_routing_notes
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145"
+preserved_exact_tokens:
+- "ssh_connections:v1"
+- "preview_state.v1:*"
+- "preview_source_artifact.v1:*"
+- "browser_session_state.v1:*"
+- "browser_profile_state.v1:*"
+- "browser_state.v1"
+- "browser_state:v1"
+- "dashboard_layout:v1"
+- "widget_layout:v1:dashboard"
+- "/viewer-mode"
+- "pm.lock"
+- "mcp_server_record"
+- "mcp_runtime_availability"
+- "/account/readiness"
+negative_constraints:
+- "GUI persistence must not imply ordinary edit capability when durable storage is locked or `pm.lock` cannot be acquired."
+- "Cost-display and `/account/readiness` copy must not create local MCP, account, or cost buckets."
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "`ssh_connections:v1`, single-blob browser state keys, and `dashboard_layout:v1` are stale/deprecated aliases only."
+owner_boundary_notes:
+- "Search, LSP, MCP readiness, usage/cost, and account/readiness copy route through their owner docs."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-221 - Terminal Persistence Compatibility Boundary
+
+```yaml
+plan_unit_id: F3-221
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Terminal GUI persistence imports the full storage-owned terminal key catalog, resolves
+  wildcard audit shorthands to concrete key families, and treats GUI-facing
+  `terminal_layout.v1` / `terminal_session.v1` rows as projection and compatibility summaries
+  only before claiming restore liveness.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves terminal GUI persistence compatibility and storage-owner boundaries.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: terminal_persistence_compatibility_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0145"
+preserved_exact_tokens:
+- "terminal_workspace_state.v1:{project_id}:{workspace_tab_id}"
+- "terminal_section_record.v1:{project_id}:{terminal_section_id}"
+- "terminal_tab_record.v1:{project_id}:{terminal_tab_id}"
+- "terminal_pane_record.v1:{project_id}:{terminal_pane_id}"
+- "terminal_leaf_pane_record.v1:{project_id}:{terminal_leaf_pane_id}"
+- "terminal_workgroup_record.v1:{project_id}:{terminal_workgroup_id}"
+- "editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}"
+- "terminal_session_record.v1:{project_id}:{terminal_session_id}"
+- "terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}"
+- "terminal_workspace_state.v1:*"
+- "terminal_command_block.v1:*"
+- "terminal_layout.v1"
+- "terminal_session.v1"
+negative_constraints:
+- "Terminal GUI persistence must not fork a local subset of the storage-owned terminal key catalog."
+- "Restore and open/focus flows must resolve through the storage key catalog before claiming liveness."
+compatibility_only_notes:
+- "GUI-facing `terminal_layout.v1` / `terminal_session.v1` rows are projection and compatibility summaries only."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Plans/storage-plan.md owns the complete terminal key catalog."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-222 - Usage Seglog And Rollup Production
+
+```yaml
+plan_unit_id: F3-222
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Usage events for tokens, cost, platform, provider/pricing tier, session, and thread_id
+  append to seglog, while analytics scan jobs produce redb rollups for 5h/7d counters, tool
+  latency, and error rates.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines persistence and analytics production rather than a visual surface.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: usage_seglog_and_rollup_production
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0146"
+preserved_exact_tokens:
+- "Usage events"
+- "tokens"
+- "cost"
+- "platform"
+- "provider/pricing tier"
+- "session"
+- "thread_id"
+- "seglog"
+- "tier"
+- "entitlement or pricing metadata"
+- "not decomposition-tier identity"
+- "Analytics scan jobs"
+- "redb"
+- "5h/7d counters"
+- "tool latency"
+- "error rates"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-223 - Usage Dashboard Rollup Consumption
+
+```yaml
+plan_unit_id: F3-223
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Usage view and Dashboard read redb rollups rather than raw seglog, and per-thread usage
+  derives from seglog events filtered by `thread_id`.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines Usage view and Dashboard consumption of persisted rollups.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: usage_dashboard_rollup_consumption
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0146"
+preserved_exact_tokens:
+- "Usage view"
+- "dashboard"
+- "redb rollups"
+- "not raw seglog"
+- "Per-thread usage"
+- "thread_id"
+negative_constraints:
+- "Usage view and dashboard must not read raw seglog directly."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-224 - Tantivy GUI Search Indices
+
+```yaml
+plan_unit_id: F3-224
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Tantivy indices support Chat panel search for human and agent messages, Evidence search, and
+  Ledger search.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines GUI-searchable Tantivy indices.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: tantivy_gui_search_indices
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0147"
+preserved_exact_tokens:
+- "Tantivy"
+- "Chat history search"
+- "human and agent messages"
+- "Chat panel search"
+- "Evidence search"
+- "Ledger search"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 15612-15623 >>>
+### F3-225 - Startup Shell State Restore
+
+```yaml
+plan_unit_id: F3-225
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  On startup, the GUI restores layout, theme, dashboard widget layout, activity bar order,
+  editor tabs, active project-facing shell state, hot-reload state, onboarding/tour state, and
+  safe detached-window coordinates from canonical persistence keys.
+gui_related: true

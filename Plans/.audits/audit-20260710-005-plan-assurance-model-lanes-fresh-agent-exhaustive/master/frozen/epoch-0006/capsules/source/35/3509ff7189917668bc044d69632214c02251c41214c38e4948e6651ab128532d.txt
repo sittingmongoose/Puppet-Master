@@ -1,0 +1,217 @@
+<<< CONTEXT_BEFORE canonical_document_lines=739-750 >>>
+L00000739	- isolated automation session
+L00000740	- /device/login
+L00000741	- auth_session
+L00000742	negative_constraints:
+L00000743	- Browser session-shaping actions remain explicit_confirmation operations when they mutate cookies, storage, export/import state, mock routing, or promotion into normal browsing.
+L00000744	compatibility_only_notes: []
+L00000745	stale_retired_dispositions: []
+L00000746	owner_boundary_notes: []
+L00000747	owner_hints:
+L00000748	- Plans/GitHub_API_Auth_and_Flows.md
+L00000749	```
+L00000750	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=751-952 >>>
+L00000751	### GAAAF-001 - GitHub API Auth Source-Preserving Bridge Retired
+L00000752	
+L00000753	```yaml
+L00000754	plan_unit_id: GAAAF-001
+L00000755	unit_type: compatibility_disposition
+L00000756	status: accepted
+L00000757	owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+L00000758	canonical_text: The former GitHub_API_Auth_and_Flows doc-level source-preserving bridge is retired after Phase 2B atomized GitHub_API_Auth_and_Flows-S0001 and S0003 through S0011 into GAAAF-002 through GAAAF-012 and structurally dispositioned S0002, S0006, S0007, S0012, S0013, and S0015. GAAAF-001 remains only as migration lineage for GitHub_API_Auth_and_Flows-S0014 and must not re-own atomized source coverage or use source_preserving_planunit compile mode.
+L00000759	gui_related: false
+L00000760	gui_classification_reason: This retired bridge records migration lineage only; product GUI coverage is owned by fine-grained GAAAF-003, GAAAF-005, GAAAF-007, and GAAAF-008.
+L00000761	split_recommended: false
+L00000762	depends_on: []
+L00000763	unblocks: []
+L00000764	acceptance_criteria:
+L00000765	- GAAAF-001 no longer uses source_preserving_planunit compile mode.
+L00000766	- GAAAF-002 through GAAAF-012 own product coverage for GitHub_API_Auth_and_Flows-S0001 and S0003 through S0011.
+L00000767	- GitHub_API_Auth_and_Flows-S0002, S0006, S0007, S0012, S0013, and S0015 are structural or migration-history dispositions.
+L00000768	- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00000769	validation_surfaces:
+L00000770	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000771	- python3 scripts/pm-plan-index.py validate
+L00000772	risk_class: migration_lineage
+L00000773	reasoning_tier: standard
+L00000774	context_scope: residual_plan_standardization
+L00000775	implementation_surfaces:
+L00000776	- Plans/GitHub_API_Auth_and_Flows.md
+L00000777	node_compile_hint:
+L00000778	  mode: source_preserving_bridge_retired
+L00000779	  create_worknodes: false
+L00000780	source_lineage:
+L00000781	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:GitHub_API_Auth_and_Flows-S0014
+L00000782	preserved_exact_tokens:
+L00000783	- GAAAF-001
+L00000784	- source_preserving_planunit
+L00000785	- source_preserving_bridge_retired
+L00000786	- GitHub_API_Auth_and_Flows-S0001
+L00000787	- GitHub_API_Auth_and_Flows-S0015
+L00000788	- Owner / Consumer Map
+L00000789	- PlanUnits
+L00000790	- Migration Coverage
+L00000791	negative_constraints:
+L00000792	- GAAAF-001 must not re-own GitHub_API_Auth_and_Flows-S0001 or S0003 through S0011 product coverage.
+L00000793	- GAAAF-001 must not use node_compile_hint.mode=source_preserving_planunit.
+L00000794	- Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this retired bridge.
+L00000795	compatibility_only_notes:
+L00000796	- GAAAF-001 remains only as a retired source-preserving bridge audit record for migration lineage.
+L00000797	- The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode.
+L00000798	stale_retired_dispositions:
+L00000799	- The broad GitHub API auth source-preserving bridge was retired in Phase 2B batch 076.
+L00000800	owner_boundary_notes:
+L00000801	- GAAAF-002 through GAAAF-012 own GitHub_API_Auth_and_Flows product coverage for S0001 and S0003 through S0011.
+L00000802	- S0002, S0006, S0007, S0012, S0013, and S0015 are structural or migration-history dispositions, not product coverage owned by GAAAF-001.
+L00000803	owner_hints:
+L00000804	- Plans/GitHub_API_Auth_and_Flows.md
+L00000805	```
+L00000806	
+L00000807	## Migration Coverage
+L00000808	
+L00000809	Original hash: `ae9a04b542086ed39c8b78e71f708c91a73242ebf4bfe39fd4680336c75f870d`.
+L00000810	
+L00000811	Run-scoped proof artifacts:
+L00000812	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00000813	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00000814	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00000815	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00000816	
+L00000817	Phase 2B batch 076 atomized `GitHub_API_Auth_and_Flows-S0001` and `GitHub_API_Auth_and_Flows-S0003` through `GitHub_API_Auth_and_Flows-S0011` into `GAAAF-002` through `GAAAF-012`, with mixed GUI/runtime/identity/recovery spans split where safe. `GitHub_API_Auth_and_Flows-S0002`, `GitHub_API_Auth_and_Flows-S0006`, `GitHub_API_Auth_and_Flows-S0007`, `GitHub_API_Auth_and_Flows-S0012`, `GitHub_API_Auth_and_Flows-S0013`, and `GitHub_API_Auth_and_Flows-S0015` are structural or migration-history dispositions. `GitHub_API_Auth_and_Flows-S0014` maps to retired bridge lineage `GAAAF-001`; `GAAAF-001` no longer uses source-preserving compile mode, and `Plans/GitHub_API_Auth_and_Flows.md` has no remaining source-preserving product coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00000818	
+L00000819	
+L00000820	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00000821	
+L00000822	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00000823	
+L00000824	### GAAAF-013 - GitHub Auth Consumers For Optional Planning Context
+L00000825	
+L00000826	```yaml
+L00000827	plan_unit_id: GAAAF-013
+L00000828	unit_type: requirement
+L00000829	status: accepted
+L00000830	owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+L00000831	canonical_text: 'GitHub is optional for repository creation, fork, push, and PR workflows; local or remote Git and FileSafe remain valid without GitHub credentials, and repository/worktree state is execution truth. For an SSH project, discovery, FileSafe, Git, worktrees, commands, testing, path authority, safe points, and execution occur on the remote host through the authorized adapter, with no silent local fallback.'
+L00000832	gui_related: false
+L00000833	gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+L00000834	depends_on: []
+L00000835	unblocks: []
+L00000836	acceptance_criteria:
+L00000837	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00000838	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00000839	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00000840	validation_surfaces:
+L00000841	- python3 scripts/pm-plan-index.py validate
+L00000842	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00000843	risk_class: owner_drift
+L00000844	reasoning_tier: standard
+L00000845	context_scope: ledger_to_plans_compile
+L00000846	implementation_surfaces:
+L00000847	- Plans/GitHub_API_Auth_and_Flows.md
+L00000848	- Plans/GitHub_Integration.md
+L00000849	- Plans/Planning_Wizard.md
+L00000850	- Plans/FileSafe.md
+L00000851	- Plans/Executor_Protocol.md
+L00000852	- Plans/Permissions_System.md
+L00000853	node_compile_hint:
+L00000854	  mode: canonical_planunit_from_bootstrap_ledger
+L00000855	  create_worknodes: false
+L00000856	  create_nodeseeds: false
+L00000857	source_lineage:
+L00000858	- pldg-20260618-001-prd-planning-wizard:atom-0069
+L00000859	- pldg-20260618-001-prd-planning-wizard:atom-0075
+L00000860	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md#SRC-PROJECT
+L00000861	source_atom_ids:
+L00000862	- atom-0069
+L00000863	- atom-0075
+L00000864	decision_refs:
+L00000865	- dec-0015
+L00000866	correction_refs: []
+L00000867	preserved_exact_tokens:
+L00000868	- GitHub optional
+L00000869	- execution truth
+L00000870	- remote host
+L00000871	- no silent local fallback
+L00000872	negative_constraints:
+L00000873	- Do not block local-only planning or build completion solely because GitHub is unavailable.
+L00000874	- Do not run against an unrelated local copy when remote context is active.
+L00000875	owner_hints:
+L00000876	- Plans/GitHub_Integration.md
+L00000877	- Plans/GitHub_API_Auth_and_Flows.md
+L00000878	- Plans/Planning_Wizard.md
+L00000879	- Plans/FileSafe.md
+L00000880	- Plans/Executor_Protocol.md
+L00000881	- Plans/Permissions_System.md
+L00000882	```
+L00000883	
+L00000884	## FABLE Residual GitHub Auth Cleanup Addendum - 2026-07-07
+L00000885	
+L00000886	This addendum closes the residual FABLE GitHub API auth rows for OAuth device-code mechanics, scope enumeration, and credential-store key naming. Values were checked against official GitHub OAuth documentation during the repair pass.
+L00000887	
+L00000888	### GAAAF-014 - OAuth Device Flow, Scope Matrix, And Credential Keys
+L00000889	
+L00000890	```yaml
+L00000891	plan_unit_id: GAAAF-014
+L00000892	unit_type: requirement
+L00000893	status: accepted
+L00000894	owner_doc: Plans/GitHub_API_Auth_and_Flows.md
+L00000895	canonical_text: >-
+L00000896	  GitHub API auth uses the OAuth device-code flow with explicit device-code request, user-code display,
+L00000897	  interval-governed polling, closed polling errors, operation-specific scope requests, MissingScopes blocked
+L00000898	  behavior, and OS credential-store key naming. Raw tokens and device-code secrets never enter PM storage,
+L00000899	  logs, prompts, exports, or runtime artifacts.
+L00000900	gui_related: true
+L00000901	gui_classification_reason: Device login, missing-scope recovery, and credential health are user-visible auth/setup behavior.
+L00000902	depends_on: [GAAAF-002, GAAAF-006, UCC-030, PS-131]
+L00000903	unblocks: []
+L00000904	acceptance_criteria:
+L00000905	  - Device auth requests and polling use GitHub's documented device-code endpoints and respect returned poll interval.
+L00000906	  - Polling handles authorization_pending, slow_down, expired_token, unsupported_grant_type, incorrect_client_credentials, incorrect_device_code, access_denied, and network_or_rate_limited.
+L00000907	  - Operation scope requests are explicit for repo, workflow, read:org, user:email, and admin:repo_hook.
+L00000908	  - Missing scopes produce blocked_reason_code = missing_scopes with missing_scopes[], credential_ref, account_id, operation_ref, and allowed_action_ids[].
+L00000909	  - Credential storage uses OS credential-store APIs through keyring, service name puppet-master.github_api, and keys github_api/{host}/{account_id}/{credential_ref}.
+L00000910	  - Stored PM records contain credential_ref and metadata only, never raw tokens or device_code secrets.
+L00000911	validation_surfaces:
+L00000912	  - python3 scripts/pm-plan-index.py validate
+L00000913	  - python3 scripts/pm-plans-verify.py lint-contractrefs
+L00000914	  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status
+L00000915	risk_class: fable_residual_github_auth_drift
+L00000916	reasoning_tier: high
+L00000917	context_scope: residual_feature_contract_cleanup
+L00000918	implementation_surfaces:
+L00000919	  - Plans/GitHub_API_Auth_and_Flows.md
+L00000920	  - Plans/Multi-Account.md
+L00000921	  - Plans/Permissions_System.md
+L00000922	node_compile_hint:
+L00000923	  mode: residual_github_oauth_device_flow_contract
+L00000924	  create_worknodes: false
+L00000925	  create_nodeseeds: false
+L00000926	source_lineage:
+L00000927	  - fablereport.md:1251
+L00000928	  - fablereport.md:1252
+L00000929	  - fablereport.md:1253
+L00000930	  - https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps
+L00000931	  - https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/scopes-for-oauth-apps
+L00000932	  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+L00000933	source_atom_ids: []
+L00000934	preserved_exact_tokens:
+L00000935	  - "OAuth device-code"
+L00000936	  - "authorization_pending"
+L00000937	  - "slow_down"
+L00000938	  - "expired_token"
+L00000939	  - "repo"
+L00000940	  - "workflow"
+L00000941	  - "read:org"
+L00000942	  - "OS credential store"
+L00000943	  - "credential_ref"
+L00000944	negative_constraints:
+L00000945	  - Do not store raw OAuth tokens, raw device codes, or client secrets in seglog, redb, Tantivy, logs, prompts, exports, runtime artifacts, or closure evidence.
+L00000946	  - Do not treat GitHub Copilot auth or local Git credential helpers as authorization for GitHub API platform mutations.
+L00000947	  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, runtime certification evidence, production build tasks, generated governance artifacts, or governance seal outputs.
+L00000948	owner_hints:
+L00000949	  - Plans/GitHub_API_Auth_and_Flows.md
+L00000950	  - Plans/Multi-Account.md
+L00000951	  - Plans/Permissions_System.md
+L00000952	```

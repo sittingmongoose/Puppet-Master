@@ -1,0 +1,405 @@
+<<< CONTEXT_BEFORE canonical_document_lines=686-697 >>>
+L00000686	  - "open history"
+L00000687	  - "open ledger"
+L00000688	  - "open resolution thread"
+L00000689	  - "approve/reject"
+L00000690	  - "true `/HITL` boundaries"
+L00000691	negative_constraints:
+L00000692	  - "Inspectors must not expand giant inline full records inside compact UI."
+L00000693	  - "Runtime `/overseer` actions must not become generic user-facing actions."
+L00000694	owner_hints:
+L00000695	  - Plans/Orchestrator_Page.md
+L00000696	```
+L00000697	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=698-1073 >>>
+L00000698	### OP-006 - Projection Trust Freshness And Wait Semantics
+L00000699	
+L00000700	```yaml
+L00000701	plan_unit_id: OP-006
+L00000702	unit_type: constraint
+L00000703	status: accepted
+L00000704	owner_doc: Plans/Orchestrator_Page.md
+L00000705	canonical_text: >-
+L00000706	  Projection state, freshness, direct revalidation, degraded fallback, stale-observation waits, and timeout display are governed by canonical runtime and storage projections rather than elapsed-time guesses.
+L00000707	gui_related: false
+L00000708	gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.
+L00000709	split_recommended: true
+L00000710	split_recommendation_reason: >-
+L00000711	  S0032 contains trust/fallback rules mixed with page and concern material.
+L00000712	depends_on: []
+L00000713	unblocks: []
+L00000714	acceptance_criteria:
+L00000715	  - Mutation-capable projections carry projection_state, last_observed_at, source_event_ref, and revalidation_route.
+L00000716	  - Stale, degraded, and unavailable projections disable mutation unless the owner surface performs direct revalidation.
+L00000717	  - Wait and timeout cards show canonical retained timeout_class and route recovery through stored blocked episodes or receipts.
+L00000718	validation_surfaces:
+L00000719	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000720	  - python3 scripts/pm-plan-index.py validate
+L00000721	risk_class: projection_trust_staleness_drift
+L00000722	reasoning_tier: standard
+L00000723	context_scope: orchestrator_page
+L00000724	implementation_surfaces:
+L00000725	  - Plans/Orchestrator_Page.md
+L00000726	node_compile_hint:
+L00000727	  mode: constraint
+L00000728	  create_worknodes: false
+L00000729	source_lineage:
+L00000730	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0013
+L00000731	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0036
+L00000732	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0037
+L00000733	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+L00000734	preserved_exact_tokens:
+L00000735	  - "current"
+L00000736	  - "refreshing"
+L00000737	  - "stale"
+L00000738	  - "degraded"
+L00000739	  - "unavailable"
+L00000740	  - "/weak-integration/freshness"
+L00000741	  - "projection_state"
+L00000742	  - "timeout_class"
+L00000743	  - "hard execution timeout"
+L00000744	  - "stale-observation"
+L00000745	negative_constraints:
+L00000746	  - "Do not infer skipped/failed from stale observation alone."
+L00000747	  - "Do not create new blocked reason, failure class, or receipt identity from wait-copy presentation."
+L00000748	owner_hints:
+L00000749	  - Plans/Orchestrator_Page.md
+L00000750	```
+L00000751	
+L00000752	### OP-007 - Object First Routing And Focused Run Context
+L00000753	
+L00000754	```yaml
+L00000755	plan_unit_id: OP-007
+L00000756	unit_type: constraint
+L00000757	status: accepted
+L00000758	owner_doc: Plans/Orchestrator_Page.md
+L00000759	canonical_text: >-
+L00000760	  Search, command-palette, drill-down, and cross-tab deep links route by stable object identity, focused run context, destination tab, selected object id, optional filters, and inspector detail targets.
+L00000761	gui_related: true
+L00000762	gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
+L00000763	split_recommended: true
+L00000764	split_recommendation_reason: >-
+L00000765	  S0032 includes route identity examples alongside broader scope prose.
+L00000766	depends_on: []
+L00000767	unblocks: []
+L00000768	acceptance_criteria:
+L00000769	  - Concern search results are run-aware and object-first.
+L00000770	  - Deep links stay coherent on focused_run_id and focus_mode rather than jumping to active_run_id implicitly.
+L00000771	  - Search results preserve route targets rather than highlight-only matches.
+L00000772	validation_surfaces:
+L00000773	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000774	  - python3 scripts/pm-plan-index.py validate
+L00000775	risk_class: route_identity_loss
+L00000776	reasoning_tier: standard
+L00000777	context_scope: orchestrator_page
+L00000778	implementation_surfaces:
+L00000779	  - Plans/Orchestrator_Page.md
+L00000780	node_compile_hint:
+L00000781	  mode: constraint
+L00000782	  create_worknodes: false
+L00000783	source_lineage:
+L00000784	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0007
+L00000785	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0011
+L00000786	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0034
+L00000787	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0044
+L00000788	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0045
+L00000789	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+L00000790	preserved_exact_tokens:
+L00000791	  - "active_run_id"
+L00000792	  - "focused_run_id"
+L00000793	  - "focus_mode = live | historical"
+L00000794	  - "/object-first"
+L00000795	  - "destination tab"
+L00000796	  - "selected object id"
+L00000797	  - "concern_id"
+L00000798	negative_constraints:
+L00000799	  - "Do not collapse similarly named seams, packages, nodes, or work packages across unrelated runs."
+L00000800	  - "Do not route with highlight-only matches."
+L00000801	owner_hints:
+L00000802	  - Plans/Orchestrator_Page.md
+L00000803	```
+L00000804	
+L00000805	### OP-008 - Notification Escalation And Blocked Owner Routing
+L00000806	
+L00000807	```yaml
+L00000808	plan_unit_id: OP-008
+L00000809	unit_type: requirement
+L00000810	status: accepted
+L00000811	owner_doc: Plans/Orchestrator_Page.md
+L00000812	canonical_text: >-
+L00000813	  Notifications, attention rows, blocked-owner summaries, escalation levels, quieting behavior, and surface routing are determined by severity, execution impact, blocked owner, persistence, and projection trust.
+L00000814	gui_related: true
+L00000815	gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
+L00000816	split_recommended: true
+L00000817	split_recommendation_reason: >-
+L00000818	  S0032 and S0058 combine escalation, help, and project taxonomy material.
+L00000819	depends_on: []
+L00000820	unblocks: []
+L00000821	acceptance_criteria:
+L00000822	  - History receives chronological notifications while Progress and Dashboard show active warnings, attention, blocked states, severity markers, and badges.
+L00000823	  - Thread, chat, or input surfaces are reserved for user decisions.
+L00000824	  - Blocked-owner summaries identify a primary blocked owner or attention owner.
+L00000825	validation_surfaces:
+L00000826	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000827	  - python3 scripts/pm-plan-index.py validate
+L00000828	risk_class: notification_escalation_drift
+L00000829	reasoning_tier: standard
+L00000830	context_scope: orchestrator_page
+L00000831	implementation_surfaces:
+L00000832	  - Plans/Orchestrator_Page.md
+L00000833	node_compile_hint:
+L00000834	  mode: requirement
+L00000835	  create_worknodes: false
+L00000836	source_lineage:
+L00000837	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0015
+L00000838	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0018
+L00000839	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0020
+L00000840	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0028
+L00000841	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0050
+L00000842	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0054
+L00000843	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0057
+L00000844	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0058
+L00000845	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0059
+L00000846	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+L00000847	preserved_exact_tokens:
+L00000848	  - "Info"
+L00000849	  - "Warning"
+L00000850	  - "Attention"
+L00000851	  - "Action Required"
+L00000852	  - "Runtime"
+L00000853	  - "Package Overseer"
+L00000854	  - "Seam Overseer"
+L00000855	  - "External Resource"
+L00000856	  - "info"
+L00000857	  - "watch"
+L00000858	  - "attention_required"
+L00000859	  - "blocked"
+L00000860	  - "escalated"
+L00000861	negative_constraints:
+L00000862	  - "Quiet windows must never suppress canonical blocked episodes."
+L00000863	  - "Dismissed presentation must not clear canonical blocked episodes that remain active."
+L00000864	owner_hints:
+L00000865	  - Plans/Orchestrator_Page.md
+L00000866	```
+L00000867	
+L00000868	### OP-009 - Project Summary Attention Account Pressure And Switch History
+L00000869	
+L00000870	```yaml
+L00000871	plan_unit_id: OP-009
+L00000872	unit_type: requirement
+L00000873	status: accepted
+L00000874	owner_doc: Plans/Orchestrator_Page.md
+L00000875	canonical_text: >-
+L00000876	  Project summary, project attention item, account pressure episode, and account switch event records remain durable, project-scoped, and split between current-state and historical-state facts.
+L00000877	gui_related: false
+L00000878	gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.
+L00000879	split_recommended: true
+L00000880	split_recommendation_reason: >-
+L00000881	  S0032 includes project, attention, and account examples mixed with broader scope material.
+L00000882	depends_on: []
+L00000883	unblocks: []
+L00000884	acceptance_criteria:
+L00000885	  - project_summary carries activity_state, attention_state, health_state, owner, and projection-trust disclosure.
+L00000886	  - project_attention_item carries a primary route payload and projection-trust disclosure consumable across surfaces.
+L00000887	  - account_switch_reason is split into pressure cause, switch outcome, and historical lineage.
+L00000888	validation_surfaces:
+L00000889	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000890	  - python3 scripts/pm-plan-index.py validate
+L00000891	risk_class: project_projection_account_drift
+L00000892	reasoning_tier: standard
+L00000893	context_scope: orchestrator_page
+L00000894	implementation_surfaces:
+L00000895	  - Plans/Orchestrator_Page.md
+L00000896	node_compile_hint:
+L00000897	  mode: requirement
+L00000898	  create_worknodes: false
+L00000899	source_lineage:
+L00000900	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0019
+L00000901	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0020
+L00000902	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0021
+L00000903	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0047
+L00000904	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0056
+L00000905	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0057
+L00000906	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+L00000907	preserved_exact_tokens:
+L00000908	  - "project_state:v1:{project_id}"
+L00000909	  - "project_summary"
+L00000910	  - "project_attention_item"
+L00000911	  - "account_pressure_episode"
+L00000912	  - "account_switch_event"
+L00000913	  - "account_switch_reason"
+L00000914	  - "projection_trust_state"
+L00000915	negative_constraints:
+L00000916	  - "Do not overload account_switch_reason with current and historical facts in one field."
+L00000917	owner_hints:
+L00000918	  - Plans/Orchestrator_Page.md
+L00000919	```
+L00000920	
+L00000921	### OP-010 - Promotion Review And Gate Evidence
+L00000922	
+L00000923	```yaml
+L00000924	plan_unit_id: OP-010
+L00000925	unit_type: requirement
+L00000926	status: accepted
+L00000927	owner_doc: Plans/Orchestrator_Page.md
+L00000928	canonical_text: >-
+L00000929	  Promotion classes, review records, gate facts, evidence expectations, decision outcomes, and revocation or reopen lineage remain explicit package, seam, lane, and governance data.
+L00000930	gui_related: false
+L00000931	gui_classification_reason: This unit defines runtime, governance, or ownership contract behavior rather than visual presentation.
+L00000932	split_recommended: true
+L00000933	split_recommendation_reason: >-
+L00000934	  S0032 contains promotion gate and review references inside broad scope prose.
+L00000935	depends_on: []
+L00000936	unblocks: []
+L00000937	acceptance_criteria:
+L00000938	  - Promotion classes are lane_to_package, package_to_seam_available, and seam_complete.
+L00000939	  - Promotion gate facts remain separate from generic promotion state.
+L00000940	  - Review records preserve scope refs, effective reviewer identity, findings, verdict, decision, evidence links, and timestamps.
+L00000941	validation_surfaces:
+L00000942	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000943	  - python3 scripts/pm-plan-index.py validate
+L00000944	risk_class: promotion_gate_evidence_loss
+L00000945	reasoning_tier: standard
+L00000946	context_scope: orchestrator_page
+L00000947	implementation_surfaces:
+L00000948	  - Plans/Orchestrator_Page.md
+L00000949	node_compile_hint:
+L00000950	  mode: requirement
+L00000951	  create_worknodes: false
+L00000952	source_lineage:
+L00000953	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0010
+L00000954	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0061
+L00000955	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+L00000956	preserved_exact_tokens:
+L00000957	  - "lane_to_package"
+L00000958	  - "package_to_seam_available"
+L00000959	  - "seam_complete"
+L00000960	  - "GUI readiness"
+L00000961	  - "accepted_risk"
+L00000962	  - "superseded"
+L00000963	  - "review_id"
+L00000964	  - "verdict"
+L00000965	  - "decision"
+L00000966	negative_constraints:
+L00000967	  - "Do not collapse gate facts into a generic promotion state."
+L00000968	owner_hints:
+L00000969	  - Plans/Orchestrator_Page.md
+L00000970	```
+L00000971	
+L00000972	### OP-011 - Progress Widget Hostability And Catalog
+L00000973	
+L00000974	```yaml
+L00000975	plan_unit_id: OP-011
+L00000976	unit_type: requirement
+L00000977	status: accepted
+L00000978	owner_doc: Plans/Orchestrator_Page.md
+L00000979	canonical_text: >-
+L00000980	  Widget-composed Orchestrator content is restricted to Progress, and the 13-widget Progress catalog, drill mappings, labels, action labels, alert taxonomy, event taxonomy, and condition-aging behavior are preserved.
+L00000981	gui_related: true
+L00000982	gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
+L00000983	split_recommended: true
+L00000984	split_recommendation_reason: >-
+L00000985	  S0032 includes stale widget compatibility while S0040 carries the catalog.
+L00000986	depends_on: []
+L00000987	unblocks: []
+L00000988	acceptance_criteria:
+L00000989	  - Only Progress remains widget-composed inside Orchestrator.
+L00000990	  - The progress catalog preserves all 13 widget IDs and drill destinations.
+L00000991	  - Progress state/action/alert/event taxonomies transfer with the catalog.
+L00000992	validation_surfaces:
+L00000993	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000994	  - python3 scripts/pm-plan-index.py validate
+L00000995	risk_class: progress_widget_catalog_drift
+L00000996	reasoning_tier: standard
+L00000997	context_scope: orchestrator_page
+L00000998	implementation_surfaces:
+L00000999	  - Plans/Orchestrator_Page.md
+L00001000	node_compile_hint:
+L00001001	  mode: requirement
+L00001002	  create_worknodes: false
+L00001003	source_lineage:
+L00001004	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0014
+L00001005	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0038
+L00001006	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0040
+L00001007	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+L00001008	preserved_exact_tokens:
+L00001009	  - "orchestrator:progress"
+L00001010	  - "progress.run-overview"
+L00001011	  - "progress.current-task"
+L00001012	  - "progress.blocked-concerns"
+L00001013	  - "progress.account-switches"
+L00001014	  - "queued|running|attention_required|blocked|recovering|degraded|complete"
+L00001015	  - "FinalGUISpec Appendix C"
+L00001016	negative_constraints:
+L00001017	  - "Tiers-first compatibility must not govern Progress widgets."
+L00001018	owner_hints:
+L00001019	  - Plans/Orchestrator_Page.md
+L00001020	```
+L00001021	
+L00001022	### OP-012 - Artifact Receipts And External Blocked State Pivots
+L00001023	
+L00001024	```yaml
+L00001025	plan_unit_id: OP-012
+L00001026	unit_type: constraint
+L00001027	status: accepted
+L00001028	owner_doc: Plans/Orchestrator_Page.md
+L00001029	canonical_text: >-
+L00001030	  Artifact routing, external receipts, blocked cards, mutable target ownership, terminal-state precedence, and domain blocked payloads route to owner surfaces with retained lineage and explicit missing-link states.
+L00001031	gui_related: true
+L00001032	gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
+L00001033	split_recommended: true
+L00001034	split_recommendation_reason: >-
+L00001035	  S0032 has artifact and authority fragments while S0041-S0042 carry detailed receipt rules.
+L00001036	depends_on: []
+L00001037	unblocks: []
+L00001038	acceptance_criteria:
+L00001039	  - Cost-bearing artifact routing uses usage_event_ref rather than timestamp heuristics.
+L00001040	  - Blocked cards expose publish-capable chains, missing-link explanations, and owner-surface pivots.
+L00001041	  - SCM, Actions, Docker, and Kubernetes blocked payloads carry domain-specific blocker fields.
+L00001042	validation_surfaces:
+L00001043	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001044	  - python3 scripts/pm-plan-index.py validate
+L00001045	risk_class: artifact_receipt_lineage_loss
+L00001046	reasoning_tier: standard
+L00001047	context_scope: orchestrator_page
+L00001048	implementation_surfaces:
+L00001049	  - Plans/Orchestrator_Page.md
+L00001050	node_compile_hint:
+L00001051	  mode: constraint
+L00001052	  create_worknodes: false
+L00001053	source_lineage:
+L00001054	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0029
+L00001055	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0041
+L00001056	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0042
+L00001057	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Orchestrator_Page-S0032
+L00001058	preserved_exact_tokens:
+L00001059	  - "usage_event_ref"
+L00001060	  - "publish_result_id"
+L00001061	  - "missing-link"
+L00001062	  - "indeterminate_remote_outcome"
+L00001063	  - "owned_by_run"
+L00001064	  - "dirty_worktree"
+L00001065	  - "worktree_conflict"
+L00001066	  - "Replay from last known good"
+L00001067	negative_constraints:
+L00001068	  - "Do not omit missing downstream links or invent lineage."
+L00001069	  - "Do not dispatch Actions-dependent steps from stale readiness snapshots."
+L00001070	owner_hints:
+L00001071	  - Plans/Orchestrator_Page.md
+L00001072	```
+L00001073	
+
+<<< CONTEXT_AFTER canonical_document_lines=1074-1085 >>>
+L00001074	### OP-013 - Owner Surface Command Routing
+L00001075	
+L00001076	```yaml
+L00001077	plan_unit_id: OP-013
+L00001078	unit_type: constraint
+L00001079	status: accepted
+L00001080	owner_doc: Plans/Orchestrator_Page.md
+L00001081	canonical_text: >-
+L00001082	  Orchestrator command exposure for recovery and navigation is route-open only into owner surfaces, while runtime mutation recovery maps through ordered allowed_action_ids to cmd.runtime commands.
+L00001083	gui_related: true
+L00001084	gui_classification_reason: This unit defines user-visible Orchestrator page behavior or controls.
+L00001085	split_recommended: false

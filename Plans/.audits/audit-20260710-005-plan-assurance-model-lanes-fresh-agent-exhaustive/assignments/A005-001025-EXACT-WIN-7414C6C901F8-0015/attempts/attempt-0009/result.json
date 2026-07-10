@@ -1,0 +1,453 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001025-EXACT-WIN-7414C6C901F8-0015",
+  "attempt_id": "attempt-0009",
+  "task_thread_id": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001025_exact_0015_attempt_0009_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "2817d929df8986217f0b01593a33c5f5ba96baaccdfc95ca1a88efc1e0d474fb",
+    "core_range": [5197, 5569]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001025-001",
+      "item_type": "behavior",
+      "title": "Phase 1 registry and document-sync checklist",
+      "statement": "LSPS-076 requires registry loading, built-in servers plus slint-lsp, ESLint and Slint root discovery, document synchronization, and document-version tracking.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-076"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5203, "line_end": 5203, "exact_quote": "canonical_text: Phase 1 checklist implementation includes server registry loading, all built-in servers plus slint-lsp, ESLint and Slint root discovery, document sync, and version tracking.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5236, "line_end": 5236, "exact_quote": "- didOpen", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5237, "line_end": 5237, "exact_quote": "- didChange", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5239, "line_end": 5239, "exact_quote": "- didClose", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5240, "line_end": 5240, "exact_quote": "- didSave", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-002",
+      "item_type": "gui_truth",
+      "title": "Phase 1 diagnostics, hover, completion, and status UI",
+      "statement": "LSPS-077 maps diagnostics into editor underlines, gutter markers, and Problems, and requires hover, completion, and status-bar examples as user-visible GUI behavior.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-077"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5259, "line_end": 5259, "exact_quote": "canonical_text: Phase 1 user-visible checklist implementation maps diagnostics to underlines, gutter markers, and Problems, implements hover, completion, and LSP status examples in the status bar.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5260, "line_end": 5260, "exact_quote": "gui_related: true", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-003",
+      "item_type": "capability",
+      "title": "Phase 2 navigation and symbol capability",
+      "statement": "LSPS-078 requires definition, references, breadcrumbs, document symbols, and workspace symbols, with keyboard and click affordances and a FileManager fallback.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-078"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5315, "line_end": 5315, "exact_quote": "canonical_text: Phase 2 editor navigation implements definition, references, breadcrumbs, documentSymbol, and workspace/symbol with documented keyboard and click affordances plus FileManager fallback.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5343, "line_end": 5343, "exact_quote": "- F12", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5344, "line_end": 5344, "exact_quote": "- Ctrl+Click", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5351, "line_end": 5351, "exact_quote": "- Shift+F12", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-004",
+      "item_type": "capability",
+      "title": "Phase 2 semantic editor actions",
+      "statement": "LSPS-079 requires code actions, code lens, signature help, inlay hints, and semantic tokens, with user-facing affordances and syntax-only fallback where applicable.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-079"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5373, "line_end": 5373, "exact_quote": "canonical_text: Phase 2 editor semantics implement code actions, code lens, signature help, inlay hints, and semantic tokens with editor affordances and syntax-only fallback where applicable.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5399, "line_end": 5399, "exact_quote": "- context menu", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5400, "line_end": 5400, "exact_quote": "- lightbulb", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5402, "line_end": 5402, "exact_quote": "- actionable links", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-005",
+      "item_type": "contract",
+      "title": "Rename and format edits cross the FileSafe boundary",
+      "statement": "LSPS-080 requires prepareRename, rename, formatting, and range formatting, with preview where needed; rename and format edits must be applied through FileSafe-backed workspace/applyEdit.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-080"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5427, "line_end": 5427, "exact_quote": "canonical_text: Phase 2 rename and format implement prepareRename, rename, formatting, and rangeFormatting, show preview where needed, and apply changes through FileSafe-backed workspace/applyEdit.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5463, "line_end": 5463, "exact_quote": "- Rename and format edits must apply through FileSafe-backed workspace/applyEdit.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-006",
+      "item_type": "state_transition",
+      "title": "Request timeout, cancellation, staleness, and disable states",
+      "statement": "LSPS-081 requires request timeout and cancellation handling, stale-version discard or re-request, per-server enablement, lsp.<id>.disabled, and lsp:false; disabled state must stop LSP for that language.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-081"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5480, "line_end": 5480, "exact_quote": "canonical_text: Phase 2 request control honors timeout, cancellation, stale document discard or re-request behavior, per-server enable/disable, lsp.<id>.disabled, and lsp:false.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5512, "line_end": 5512, "exact_quote": "- Per-server disabled state must stop LSP for that language.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-007",
+      "item_type": "gui_truth",
+      "title": "Settings LSP surface",
+      "statement": "LSPS-082 requires Settings > LSP to expose per-server enablement and custom entries under the referenced FinalGUISpec contract.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-082"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5529, "line_end": 5529, "exact_quote": "canonical_text: Phase 2 Settings > LSP exposes per-server enablement and custom entries according to the FinalGUISpec Settings contract.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5530, "line_end": 5530, "exact_quote": "gui_related: true", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-008",
+      "item_type": "authority",
+      "title": "LSP ownership boundary is explicit",
+      "statement": "Plans/LSPSupport.md owns LSP-specific protocol and client constraints, while referenced owner documents retain their own SSOT boundaries.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-076", "LSPS-077", "LSPS-078", "LSPS-079", "LSPS-080", "LSPS-081", "LSPS-082"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5202, "line_end": 5202, "exact_quote": "owner_doc: Plans/LSPSupport.md", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5246, "line_end": 5246, "exact_quote": "- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-009",
+      "item_type": "explicit_non_gap",
+      "title": "Checklist units do not create executable build nodes",
+      "statement": "The acceptance contract explicitly prohibits these PlanUnits from creating WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-076", "LSPS-077", "LSPS-078", "LSPS-079", "LSPS-080", "LSPS-081", "LSPS-082"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5213, "line_end": 5213, "exact_quote": "- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5224, "line_end": 5224, "exact_quote": "  create_worknodes: false", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-010",
+      "item_type": "gap",
+      "title": "Cross-unit dependency and propagation graph is absent",
+      "statement": "The reviewed Phase 1 and Phase 2 units declare neither prerequisites nor unblock relationships, so the source does not establish required ordering or propagation among registry/sync, UI features, navigation, semantic actions, FileSafe edits, request control, and Settings.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-076", "LSPS-077", "LSPS-078", "LSPS-079", "LSPS-080", "LSPS-081", "LSPS-082"],
+      "gap_kind": "missing_dependency_contract",
+      "impact": "A builder can schedule dependent capabilities independently and produce UI or edit paths before the runtime behaviors they require exist.",
+      "builder_discretion": "Infer all inter-unit prerequisites, sequencing, and readiness propagation.",
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5207, "line_end": 5207, "exact_quote": "depends_on: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5208, "line_end": 5208, "exact_quote": "unblocks: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5263, "line_end": 5263, "exact_quote": "depends_on: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5319, "line_end": 5319, "exact_quote": "depends_on: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5484, "line_end": 5484, "exact_quote": "depends_on: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5534, "line_end": 5534, "exact_quote": "unblocks: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-011",
+      "item_type": "gap",
+      "title": "Registry and document-sync protocol semantics are under-specified",
+      "statement": "LSPS-076 lists registry fields, config loading, LSP notifications, a default 100 ms token, and version tracking but does not define registry precedence, configuration shape, root-choice arbitration, synchronization kind or payload, what the 100 ms controls, or version-mismatch behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-076"],
+      "gap_kind": "underspecified_runtime_contract",
+      "impact": "Different implementations can emit incompatible document events, select different roots or servers, and interpret timing/version rules differently.",
+      "builder_discretion": "Choose registry/config precedence, root arbitration, sync payload and timing semantics, and mismatch handling.",
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5203, "line_end": 5203, "exact_quote": "canonical_text: Phase 1 checklist implementation includes server registry loading, all built-in servers plus slint-lsp, ESLint and Slint root discovery, document sync, and version tracking.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5230, "line_end": 5230, "exact_quote": "- id, extensions, root finder, spawn", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5231, "line_end": 5231, "exact_quote": "- load config", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5238, "line_end": 5238, "exact_quote": "- default 100 ms", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5241, "line_end": 5241, "exact_quote": "- track document version", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-012",
+      "item_type": "gap",
+      "title": "Diagnostics, hover, completion, and status interaction rules are incomplete",
+      "statement": "LSPS-077 names its visible destinations and display fields but does not determine diagnostics replacement/clearing and ordering, cursor/hover timing, completion selection and commit behavior, or how status transitions are triggered.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["LSPS-077"],
+      "gap_kind": "underspecified_gui_behavior",
+      "impact": "The same server messages can yield different Problems, editor, completion, hover, and status-bar behavior.",
+      "builder_discretion": "Define lifecycle, ordering, interaction, and transition behavior for each named surface.",
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5259, "line_end": 5259, "exact_quote": "canonical_text: Phase 1 user-visible checklist implementation maps diagnostics to underlines, gutter markers, and Problems, implements hover, completion, and LSP status examples in the status bar.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5289, "line_end": 5289, "exact_quote": "- file, line, message, severity, source", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5290, "line_end": 5290, "exact_quote": "- tooltip at cursor", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5291, "line_end": 5291, "exact_quote": "- inline list", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5294, "line_end": 5294, "exact_quote": "- 'rust-analyzer: Ready'", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5295, "line_end": 5295, "exact_quote": "- Initializing...", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5296, "line_end": 5296, "exact_quote": "- 'Error: ...'", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-013",
+      "item_type": "gap",
+      "title": "Navigation fallback selection is undefined",
+      "statement": "LSPS-078 requires a FileManager fallback and preserves a heuristic/index fallback token, but it does not define when fallback is entered, which index is authoritative, or how ambiguous and multi-location results are resolved.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["LSPS-078"],
+      "gap_kind": "missing_fallback_contract",
+      "impact": "Go-to-definition and reference navigation can diverge when the server is absent, incomplete, or returns multiple locations.",
+      "builder_discretion": "Choose fallback triggers, precedence, result selection, and ambiguity presentation.",
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5315, "line_end": 5315, "exact_quote": "canonical_text: Phase 2 editor navigation implements definition, references, breadcrumbs, documentSymbol, and workspace/symbol with documented keyboard and click affordances plus FileManager fallback.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5346, "line_end": 5346, "exact_quote": "- 'Fallback: heuristic/index'", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5350, "line_end": 5350, "exact_quote": "- References panel", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-014",
+      "item_type": "gap",
+      "title": "Semantic capability and fallback negotiation is unspecified",
+      "statement": "LSPS-079 says syntax-only fallback applies where applicable, but it does not identify which missing, failed, stale, or partial capabilities trigger fallback or how code actions, lenses, signature help, hints, and semantic tokens coexist with baseline editor output.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["LSPS-079"],
+      "gap_kind": "ambiguous_capability_fallback",
+      "impact": "Servers with partial or changing capability support can produce inconsistent editor behavior.",
+      "builder_discretion": "Define capability negotiation, fallback triggers, merging, invalidation, and user-visible degraded behavior.",
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5373, "line_end": 5373, "exact_quote": "canonical_text: Phase 2 editor semantics implement code actions, code lens, signature help, inlay hints, and semantic tokens with editor affordances and syntax-only fallback where applicable.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5409, "line_end": 5409, "exact_quote": "- fall back to syntax-only", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-015",
+      "item_type": "gap",
+      "title": "FileSafe edit transaction and preview policy are unresolved",
+      "statement": "LSPS-080 fixes the authority path through FileSafe but leaves 'where needed' preview criteria, multi-file transaction atomicity, conflicts, rejection, partial failure, undo, and post-apply document-version reconciliation unspecified.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-080"],
+      "gap_kind": "missing_edit_transaction_contract",
+      "impact": "Rename and format may modify files inconsistently or expose different safety and recovery behavior.",
+      "builder_discretion": "Define preview triggers and FileSafe transaction, conflict, failure, rollback, undo, and resynchronization semantics.",
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5427, "line_end": 5427, "exact_quote": "canonical_text: Phase 2 rename and format implement prepareRename, rename, formatting, and rangeFormatting, show preview where needed, and apply changes through FileSafe-backed workspace/applyEdit.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5456, "line_end": 5456, "exact_quote": "- show preview", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5457, "line_end": 5457, "exact_quote": "- workspace/applyEdit (FileSafe)", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5463, "line_end": 5463, "exact_quote": "- Rename and format edits must apply through FileSafe-backed workspace/applyEdit.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-016",
+      "item_type": "gap",
+      "title": "Request-control transitions and disable precedence are ambiguous",
+      "statement": "LSPS-081 does not choose between discard and re-request for stale results, define cancellation acknowledgement or late-response handling, bind timeout values to request classes, or define precedence and scope between per-server disable, lsp.<id>.disabled, and lsp:false.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-081"],
+      "gap_kind": "ambiguous_request_state_machine",
+      "impact": "Stale or late responses and layered disable settings can yield nondeterministic state and language service availability.",
+      "builder_discretion": "Choose timeout binding, cancel/late-response transitions, stale recovery decision rules, and disable precedence/scope.",
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5480, "line_end": 5480, "exact_quote": "canonical_text: Phase 2 request control honors timeout, cancellation, stale document discard or re-request behavior, per-server enable/disable, lsp.<id>.disabled, and lsp:false.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5505, "line_end": 5505, "exact_quote": "- Request timeout and cancellation", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5506, "line_end": 5506, "exact_quote": "- discard or re-request on stale document version", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5508, "line_end": 5508, "exact_quote": "- lsp.<id>.disabled", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5509, "line_end": 5509, "exact_quote": "- 'lsp: false'", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5512, "line_end": 5512, "exact_quote": "- Per-server disabled state must stop LSP for that language.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-017",
+      "item_type": "gap",
+      "title": "Custom server entry and Settings validation contract is incomplete",
+      "statement": "LSPS-082 requires all servers, custom entries, and validation in Settings > LSP but does not define custom-entry fields, required and optional values, uniqueness or precedence, validation timing and error messages, persistence, or whether edits take effect immediately.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["LSPS-082"],
+      "gap_kind": "missing_settings_data_contract",
+      "impact": "Custom server configuration can be stored, validated, and activated differently across implementations.",
+      "builder_discretion": "Define the entry schema, validation and errors, persistence, precedence, and activation lifecycle.",
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5529, "line_end": 5529, "exact_quote": "canonical_text: Phase 2 Settings > LSP exposes per-server enablement and custom entries according to the FinalGUISpec Settings contract.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5556, "line_end": 5556, "exact_quote": "- per-server enable/disable", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5557, "line_end": 5557, "exact_quote": "- all servers and custom entries", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5558, "line_end": 5558, "exact_quote": "- validation", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-018",
+      "item_type": "gap",
+      "title": "Acceptance oracles verify plan migration, not product behavior",
+      "statement": "The repeated acceptance criteria establish source preservation, addressability, lineage traceability, and the absence of executable build nodes; the listed validation surfaces validate plan migration and indexing rather than the LSP runtime and GUI behavior required by the canonical text.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-076", "LSPS-077", "LSPS-078", "LSPS-079", "LSPS-080", "LSPS-081", "LSPS-082"],
+      "gap_kind": "missing_product_acceptance_oracles",
+      "impact": "The PlanUnits can pass their stated validators without demonstrating registry, protocol, editor, FileSafe, request-control, or Settings behavior.",
+      "builder_discretion": "Invent product-level tests, fixtures, failure cases, expected outputs, and pass/fail criteria.",
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5210, "line_end": 5210, "exact_quote": "- The covered source span remains losslessly available for exact-text audit.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5211, "line_end": 5211, "exact_quote": "- This behavior is addressable through LSPS-076 instead of broad L-001 source-preserving coverage.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5212, "line_end": 5212, "exact_quote": "- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5215, "line_end": 5215, "exact_quote": "- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5216, "line_end": 5216, "exact_quote": "- python3 scripts/pm-plan-index.py validate", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-019",
+      "item_type": "unknown",
+      "title": "Security and privacy posture cannot be determined from this window",
+      "statement": "The reviewed units require registry loading, process spawning metadata, document synchronization, server-provided edits, and custom server entries, but preserve no local ContractRefs and state no trust, permission, disclosure, redaction, transport, or workspace-boundary rules; the governing security/privacy behavior is therefore unknown in this source window.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["LSPS-076", "LSPS-080", "LSPS-082"],
+      "gap_kind": "security_privacy_unknown",
+      "impact": "The reviewed text cannot establish what code or workspace data servers may receive, which servers may execute, or how server-proposed edits are authorized beyond the FileSafe path.",
+      "builder_discretion": "Do not infer a security policy from this window; obtain the controlling contract before implementation.",
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5203, "line_end": 5203, "exact_quote": "canonical_text: Phase 1 checklist implementation includes server registry loading, all built-in servers plus slint-lsp, ESLint and Slint root discovery, document sync, and version tracking.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5230, "line_end": 5230, "exact_quote": "- id, extensions, root finder, spawn", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5249, "line_end": 5249, "exact_quote": "preserved_contractrefs: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5457, "line_end": 5457, "exact_quote": "- workspace/applyEdit (FileSafe)", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5557, "line_end": 5557, "exact_quote": "- all servers and custom entries", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-020",
+      "item_type": "unknown",
+      "title": "Operational observability and recovery ownership are unknown",
+      "statement": "The window requires timeout, cancellation, stale handling, and disabled states but provides no operational state exposure, logging, metrics, alerting, retry budget, escalation, or recovery ownership; those operational behaviors cannot be determined here.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["LSPS-081"],
+      "gap_kind": "operations_unknown",
+      "impact": "Failures may be handled internally without a consistent way to diagnose, measure, or recover them.",
+      "builder_discretion": "Do not infer operational policy; obtain or define the controlling observability and recovery contract.",
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5480, "line_end": 5480, "exact_quote": "canonical_text: Phase 2 request control honors timeout, cancellation, stale document discard or re-request behavior, per-server enable/disable, lsp.<id>.disabled, and lsp:false.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5497, "line_end": 5497, "exact_quote": "implementation_surfaces:", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5498, "line_end": 5498, "exact_quote": "- Plans/LSPSupport.md", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-021",
+      "item_type": "unknown",
+      "title": "Scale and performance envelope is unknown",
+      "statement": "The window preserves a default 100 ms token and requires request timeout behavior, but it does not bind the 100 ms value to a named operation or define concurrency, queueing, cancellation latency, workspace size, document size, server count, or responsiveness thresholds.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["LSPS-076", "LSPS-081"],
+      "gap_kind": "performance_envelope_unknown",
+      "impact": "There is no supportable pass/fail performance target for large workspaces, many servers, or concurrent requests.",
+      "builder_discretion": "Do not infer the performance envelope or the meaning of the 100 ms token from this window.",
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5238, "line_end": 5238, "exact_quote": "- default 100 ms", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5480, "line_end": 5480, "exact_quote": "canonical_text: Phase 2 request control honors timeout, cancellation, stale document discard or re-request behavior, per-server enable/disable, lsp.<id>.disabled, and lsp:false.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5505, "line_end": 5505, "exact_quote": "- Request timeout and cancellation", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-022",
+      "item_type": "explicit_non_gap",
+      "title": "No compatibility-only or stale-retired behavior is claimed",
+      "statement": "All seven reviewed PlanUnits explicitly declare empty compatibility-only notes and empty stale/retired dispositions; this window therefore does not claim migration or legacy-compatibility behavior.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-076", "LSPS-077", "LSPS-078", "LSPS-079", "LSPS-080", "LSPS-081", "LSPS-082"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5243, "line_end": 5243, "exact_quote": "compatibility_only_notes: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5244, "line_end": 5244, "exact_quote": "stale_retired_dispositions: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5299, "line_end": 5299, "exact_quote": "compatibility_only_notes: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5357, "line_end": 5357, "exact_quote": "compatibility_only_notes: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5411, "line_end": 5411, "exact_quote": "compatibility_only_notes: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5464, "line_end": 5464, "exact_quote": "compatibility_only_notes: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5513, "line_end": 5513, "exact_quote": "compatibility_only_notes: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5560, "line_end": 5560, "exact_quote": "compatibility_only_notes: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5561, "line_end": 5561, "exact_quote": "stale_retired_dispositions: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001025-023",
+      "item_type": "explicit_non_gap",
+      "title": "GUI classification is explicit for every reviewed unit",
+      "statement": "The source explicitly classifies LSPS-076 and LSPS-081 as non-GUI runtime/protocol work and LSPS-077, LSPS-078, LSPS-079, LSPS-080, and LSPS-082 as GUI-related user-visible behavior.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-076", "LSPS-077", "LSPS-078", "LSPS-079", "LSPS-080", "LSPS-081", "LSPS-082"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 5204, "line_end": 5204, "exact_quote": "gui_related: false", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5260, "line_end": 5260, "exact_quote": "gui_related: true", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5316, "line_end": 5316, "exact_quote": "gui_related: true", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5374, "line_end": 5374, "exact_quote": "gui_related: true", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5428, "line_end": 5428, "exact_quote": "gui_related: true", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5481, "line_end": 5481, "exact_quote": "gui_related: false", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 5530, "line_end": 5530, "exact_quote": "gui_related: true", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension": "behavior", "status": "addressed", "summary": "The canonical text states the intended Phase 1 and Phase 2 checklist behaviors for all seven units.", "evidence_item_ids": ["A005-001025-001", "A005-001025-002", "A005-001025-003", "A005-001025-004", "A005-001025-005", "A005-001025-006", "A005-001025-007"]},
+    {"dimension": "capabilities", "status": "addressed", "summary": "Registry/sync, diagnostics, hover, completion, navigation, symbols, semantic features, rename/format, request control, and Settings capabilities are named.", "evidence_item_ids": ["A005-001025-001", "A005-001025-002", "A005-001025-003", "A005-001025-004", "A005-001025-005", "A005-001025-006", "A005-001025-007"]},
+    {"dimension": "inputs_outputs", "status": "gap_found", "summary": "Protocol method names and UI destinations are present, but payload, merge, ordering, validation, and edit-result contracts are incomplete.", "evidence_item_ids": ["A005-001025-011", "A005-001025-012", "A005-001025-014", "A005-001025-015", "A005-001025-016", "A005-001025-017"]},
+    {"dimension": "contracts", "status": "gap_found", "summary": "The FileSafe authority constraint is explicit, while registry, fallback, capability, request-control, and Settings contracts retain consequential discretion.", "evidence_item_ids": ["A005-001025-005", "A005-001025-011", "A005-001025-013", "A005-001025-014", "A005-001025-015", "A005-001025-016", "A005-001025-017"]},
+    {"dimension": "states_transitions", "status": "gap_found", "summary": "Timeout, cancellation, staleness, and disable states are named without a deterministic state machine or precedence rules.", "evidence_item_ids": ["A005-001025-006", "A005-001025-016"]},
+    {"dimension": "authority", "status": "addressed", "summary": "LSPSupport owns LSP-specific constraints, referenced owner docs retain SSOT, and FileSafe is the required edit authority path.", "evidence_item_ids": ["A005-001025-005", "A005-001025-008"]},
+    {"dimension": "ownership", "status": "addressed", "summary": "Every unit names Plans/LSPSupport.md as owner and repeats the owner boundary.", "evidence_item_ids": ["A005-001025-008"]},
+    {"dimension": "consumers", "status": "addressed", "summary": "The editor, Problems panel, status bar, References panel, FileManager fallback, and Settings surface are identifiable consumers or presentation destinations.", "evidence_item_ids": ["A005-001025-002", "A005-001025-003", "A005-001025-004", "A005-001025-005", "A005-001025-007"]},
+    {"dimension": "gui_truth", "status": "addressed", "summary": "GUI classification is explicit for every unit and user-visible surfaces are named for the five GUI-related units.", "evidence_item_ids": ["A005-001025-002", "A005-001025-007", "A005-001025-023"]},
+    {"dimension": "failures_recovery", "status": "gap_found", "summary": "Stale, timeout, cancel, fallback, and safe-edit concepts exist, but recovery decisions, late responses, conflicts, partial failure, and rollback are not resolved.", "evidence_item_ids": ["A005-001025-013", "A005-001025-015", "A005-001025-016"]},
+    {"dimension": "security_privacy", "status": "unknown", "summary": "The window does not establish trust, permission, disclosure, redaction, transport, execution, or workspace-boundary policy for servers and document data.", "evidence_item_ids": ["A005-001025-019"]},
+    {"dimension": "propagation", "status": "gap_found", "summary": "FileSafe propagation is named, but inter-unit dependencies and downstream readiness/activation effects are not declared.", "evidence_item_ids": ["A005-001025-010", "A005-001025-015", "A005-001025-017"]},
+    {"dimension": "operations", "status": "unknown", "summary": "No operational observability, recovery ownership, retry budget, escalation, or diagnostic contract can be established from the core.", "evidence_item_ids": ["A005-001025-020"]},
+    {"dimension": "scale_performance", "status": "unknown", "summary": "A default 100 ms token and timeout concept appear without a bound operation or measurable scale/performance envelope.", "evidence_item_ids": ["A005-001025-021"]},
+    {"dimension": "compatibility_migration", "status": "addressed", "summary": "Each unit explicitly declares empty compatibility-only notes and stale/retired dispositions, so this window claims no migration behavior.", "evidence_item_ids": ["A005-001025-022"]},
+    {"dimension": "acceptance_oracles", "status": "gap_found", "summary": "The listed validators demonstrate plan migration/index integrity rather than the stated LSP runtime and GUI outcomes.", "evidence_item_ids": ["A005-001025-018"]},
+    {"dimension": "builder_discretion", "status": "gap_found", "summary": "Builders must choose dependency ordering, sync semantics, GUI interaction rules, fallback negotiation, edit transactions, request state transitions, Settings schema, operations, security, and performance behavior.", "evidence_item_ids": ["A005-001025-010", "A005-001025-011", "A005-001025-012", "A005-001025-013", "A005-001025-014", "A005-001025-015", "A005-001025-016", "A005-001025-017", "A005-001025-018", "A005-001025-019", "A005-001025-020", "A005-001025-021"]},
+    {"dimension": "ambiguity_unknowns", "status": "gap_found", "summary": "Ambiguities include 'where applicable', 'where needed', discard-or-re-request, fallback precedence, disable precedence, custom-entry validation, and three unknown governing areas.", "evidence_item_ids": ["A005-001025-013", "A005-001025-014", "A005-001025-015", "A005-001025-016", "A005-001025-017", "A005-001025-019", "A005-001025-020", "A005-001025-021"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

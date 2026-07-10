@@ -1,0 +1,417 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3196-3207 >>>
+L00003196	negative_constraints: []
+L00003197	compatibility_only_notes: []
+L00003198	stale_retired_dispositions: []
+L00003199	owner_boundary_notes:
+L00003200	- Agent-Config owns the provider/account management surface while runtime records own actual requested/effective execution.
+L00003201	owner_hints:
+L00003202	- Plans/Multi-Account.md
+L00003203	preserved_contractrefs:
+L00003204	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md'
+L00003205	split_recommendation_reason: GUI structure is split from family pooling guardrails.
+L00003206	```
+L00003207	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3208-3595 >>>
+L00003208	### MA-038 - Provider Pooling Family Guardrails And No Pseudo-Providers
+L00003209	
+L00003210	```yaml
+L00003211	plan_unit_id: MA-038
+L00003212	unit_type: requirement
+L00003213	status: accepted
+L00003214	owner_doc: Plans/Multi-Account.md
+L00003215	canonical_text: >-
+L00003216	  Agent-Config surfaces provider/family pooling where a provider entry participates in family-level pooling, preserves active Gemini Direct, Antigravity CLI public `agy` rows, and the separate Antigravity OAuth/internal `gemini-3.1-flash-image` generated-image route as real provider-entry/account rows where configured, treats Gemini CLI as retired source-lineage only, requires requested/effective disclosure when family pooling selects a different backend, capability-checks media/effort/tooling needs, and forbids fake OAuth/API-key pseudo-providers.
+L00003217	gui_related: true
+L00003218	gui_classification_reason: The unit defines GUI pooling controls, account row badges, and requested/effective disclosure.
+L00003219	split_recommended: true
+L00003220	depends_on:
+L00003221	- MA-037
+L00003222	unblocks: []
+L00003223	acceptance_criteria:
+L00003224	- Covered source spans remain losslessly available for exact-text audit.
+L00003225	- Provider Pooling and Family Pooling sections remain visible where applicable.
+L00003226	- Gemini Direct and Antigravity CLI remain real active provider entries; Gemini CLI is retired/source-lineage only.
+L00003227	- Antigravity internal generated-image route rows remain separate from public `agy` CLI rows in pooling, badges, and requested/effective disclosure.
+L00003228	- Family pooling preserves requested and effective provider entries in run records.
+L00003229	- GUI grouping does not mint fake pseudo-providers.
+L00003230	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003231	validation_surfaces:
+L00003232	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003233	- python3 scripts/pm-plan-index.py validate
+L00003234	risk_class: family_pooling_guardrails
+L00003235	reasoning_tier: standard
+L00003236	context_scope: multi_account_standardization
+L00003237	implementation_surfaces:
+L00003238	- Plans/Multi-Account.md
+L00003239	node_compile_hint:
+L00003240	  mode: family_pooling_guardrails
+L00003241	  create_worknodes: false
+L00003242	source_lineage:
+L00003243	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0025
+L00003244	source_atom_ids: [atom-0142, atom-0143, atom-0144]
+L00003245	preserved_exact_tokens:
+L00003246	- Provider Pooling
+L00003247	- Family Pooling
+L00003248	- Gemini Direct
+L00003249	- Antigravity CLI
+L00003250	- agy
+L00003251	- gemini-3.1-flash-image
+L00003252	- Gemini CLI
+L00003253	- /media/effort/tooling
+L00003254	- requested provider entry
+L00003255	- effective provider entry
+L00003256	- pseudo-providers
+L00003257	- gemini
+L00003258	- gemini_cli
+L00003259	- auth-surface badges
+L00003260	- /configuration/availability
+L00003261	negative_constraints:
+L00003262	- The GUI must not mint fake OAuth/API-key pseudo-providers that compete with real active provider entries such as gemini and antigravity_cli.
+L00003263	- PM must never silently route into retired Gemini CLI-only capability boundaries.
+L00003264	- PM must not silently pool or fallback between public `agy`, Antigravity OAuth/internal image generation, Gemini Direct, or retired Gemini CLI lineage.
+L00003265	compatibility_only_notes:
+L00003266	- gemini_cli and Gemini CLI are preserved tokens only; they are not active setup/provider rows.
+L00003267	stale_retired_dispositions:
+L00003268	- The older one-card mixed OAuth/API grouping is preserved only as a retired direction.
+L00003269	- Active Gemini CLI provider grouping is retired.
+L00003270	owner_boundary_notes:
+L00003271	- Provider family grouping is a GUI/runtime policy surface, not a replacement for concrete provider entries.
+L00003272	owner_hints:
+L00003273	- Plans/Multi-Account.md
+L00003274	preserved_contractrefs:
+L00003275	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md'
+L00003276	split_recommendation_reason: Family pooling is split from the Agent-Config section-order unit.
+L00003277	```
+L00003278	
+L00003279	### MA-039 - Account Profile Row Content Actions And Inspector Boundaries
+L00003280	
+L00003281	```yaml
+L00003282	plan_unit_id: MA-039
+L00003283	unit_type: requirement
+L00003284	status: accepted
+L00003285	owner_doc: Plans/Multi-Account.md
+L00003286	canonical_text: Account/profile rows display dense scan-friendly identity, auth, configuration, availability, pressure,
+L00003287	  cooldown, entitlement, billing, health, and action state. Detailed usage/cooldown and requested/effective explanation
+L00003288	  belongs in the inspector, Codex and Copilot rows preserve their real account/entity shape, OpenCode server profiles
+L00003289	  expose connection readiness, and provider-level enable/disable changes future eligibility without destroying rows/defaults.
+L00003290	gui_related: true
+L00003291	gui_classification_reason: The unit defines GUI account/profile row content, actions, and inspector boundaries.
+L00003292	split_recommended: false
+L00003293	depends_on:
+L00003294	- MA-038
+L00003295	unblocks: []
+L00003296	acceptance_criteria:
+L00003297	- Covered source spans remain losslessly available for exact-text audit.
+L00003298	- Account/profile rows stay dense and scan-friendly.
+L00003299	- Codex ChatGPT and API key rows remain separate top-level rows.
+L00003300	- GitHub Copilot billing entities stay in the inspector rather than fake top-level accounts.
+L00003301	- Provider Enable/Disable does not destroy account/profile rows or saved defaults.
+L00003302	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003303	validation_surfaces:
+L00003304	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003305	- python3 scripts/pm-plan-index.py validate
+L00003306	risk_class: account_row_inspector_boundary
+L00003307	reasoning_tier: standard
+L00003308	context_scope: multi_account_standardization
+L00003309	implementation_surfaces:
+L00003310	- Plans/Multi-Account.md
+L00003311	node_compile_hint:
+L00003312	  mode: account_row_inspector_boundary
+L00003313	  create_worknodes: false
+L00003314	source_lineage:
+L00003315	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0026
+L00003316	preserved_exact_tokens:
+L00003317	- label
+L00003318	- auth family or profile mode
+L00003319	- current state
+L00003320	- derived auth/configuration/availability state
+L00003321	- pressure/cooldown summary
+L00003322	- entitlement/billing secondary line
+L00003323	- Add Account
+L00003324	- Add Profile
+L00003325	- Set Preferred
+L00003326	- Refresh Usage
+L00003327	- Revalidate
+L00003328	- Edit Threshold
+L00003329	- Open Provider Settings
+L00003330	- Enable/Disable Provider
+L00003331	negative_constraints:
+L00003332	- Provider-level Enable/Disable Provider changes future eligibility only and must not destroy account/profile rows or saved defaults.
+L00003333	compatibility_only_notes: []
+L00003334	stale_retired_dispositions: []
+L00003335	owner_boundary_notes:
+L00003336	- The expanded inspector owns billing-entity selection, premium-request state, and fallback-to-included-model disclosure.
+L00003337	owner_hints:
+L00003338	- Plans/Multi-Account.md
+L00003339	preserved_contractrefs:
+L00003340	- 'ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
+L00003341	split_recommendation_reason: Account/profile row requirements are narrow enough for one PlanUnit.
+L00003342	```
+L00003343	
+L00003344	### MA-040 - Setup Readiness State Machine And Labels
+L00003345	
+L00003346	```yaml
+L00003347	plan_unit_id: MA-040
+L00003348	unit_type: requirement
+L00003349	status: accepted
+L00003350	owner_doc: Plans/Multi-Account.md
+L00003351	canonical_text: Provider/account setup flows distinguish authentication from readiness. Account/profile GUI state machines
+L00003352	  retain provider-specific state for logged-out, logging-in, logged-in, needs-setup, validating, ready, expired, failed,
+L00003353	  logging-out, and disabled labels, and PM does not collapse logged-in, entitlement, billing, or partial setup states into Ready.
+L00003354	gui_related: true
+L00003355	gui_classification_reason: The unit defines user-visible setup/readiness states and GUI state machine labels.
+L00003356	split_recommended: true
+L00003357	depends_on:
+L00003358	- MA-039
+L00003359	unblocks: []
+L00003360	acceptance_criteria:
+L00003361	- Covered source spans remain losslessly available for exact-text audit.
+L00003362	- Authentication and readiness remain distinct.
+L00003363	- Logged in is not treated as Ready.
+L00003364	- Provider-specific entitlement/billing can keep an account in Needs setup after auth succeeds.
+L00003365	- The GUI state machine preserves provider-specific degraded states.
+L00003366	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003367	validation_surfaces:
+L00003368	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003369	- python3 scripts/pm-plan-index.py validate
+L00003370	risk_class: setup_readiness_state_machine
+L00003371	reasoning_tier: standard
+L00003372	context_scope: multi_account_standardization
+L00003373	implementation_surfaces:
+L00003374	- Plans/Multi-Account.md
+L00003375	node_compile_hint:
+L00003376	  mode: setup_readiness_state_machine
+L00003377	  create_worknodes: false
+L00003378	source_lineage:
+L00003379	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0027
+L00003380	preserved_exact_tokens:
+L00003381	- Logged out
+L00003382	- Logged Out
+L00003383	- Logging in
+L00003384	- Logging In
+L00003385	- Logged in
+L00003386	- Needs setup
+L00003387	- Validating
+L00003388	- Ready
+L00003389	- Auth expired
+L00003390	- Validation failed
+L00003391	- Logging out
+L00003392	- Disabled
+L00003393	- partial-setup
+L00003394	negative_constraints:
+L00003395	- Logged in is not the same as Ready.
+L00003396	- PM must not collapse provider-specific entitlement or billing setup into Ready, partial-setup, or Logging Out.
+L00003397	compatibility_only_notes: []
+L00003398	stale_retired_dispositions: []
+L00003399	owner_boundary_notes:
+L00003400	- Setup readiness labels consume setup/health lifecycle contracts but Multi-Account owns account-specific readiness semantics.
+L00003401	owner_hints:
+L00003402	- Plans/Multi-Account.md
+L00003403	preserved_contractrefs:
+L00003404	- 'ContractRef: ContractName:Plans/Contracts_V0.md#Setup/Health-lifecycle-contracts, ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md'
+L00003405	split_recommendation_reason: Setup state labels are split from provider-specific readiness branches.
+L00003406	```
+L00003407	
+L00003408	### MA-041 - Provider-Specific Readiness Branches And Cursor Rules Projection
+L00003409	
+L00003410	```yaml
+L00003411	plan_unit_id: MA-041
+L00003412	unit_type: requirement
+L00003413	status: accepted
+L00003414	owner_doc: Plans/Multi-Account.md
+L00003415	canonical_text: Provider-specific readiness branches preserve Copilot billing entity selection, Gemini Vertex/Google Cloud
+L00003416	  credential, project, location, trust, MCP, and account-auth choices, Cursor browser login and API-key availability, Cursor
+L00003417	  Rules projection to .cursor/rules/*.mdc as primary/native rules, and provider-reported cooldowns as read-only facts
+L00003418	  with source confidence.
+L00003419	gui_related: true
+L00003420	gui_classification_reason: The unit covers provider-specific setup GUI paths, helper text, and visible readiness labels.
+L00003421	split_recommended: true
+L00003422	depends_on:
+L00003423	- MA-040
+L00003424	unblocks: []
+L00003425	acceptance_criteria:
+L00003426	- Covered source spans remain losslessly available for exact-text audit.
+L00003427	- Copilot may require Choose Billing Entity before Ready.
+L00003428	- Gemini Vertex setup exposes ADC, service account JSON, and Google Cloud API key paths.
+L00003429	- Cursor CLI browser login is default and API key remains advanced optional.
+L00003430	- Cursor Rules labels and .cursorrules compatibility remain preserved.
+L00003431	- Provider-reported cooldowns remain read-only facts with source confidence.
+L00003432	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003433	validation_surfaces:
+L00003434	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003435	- python3 scripts/pm-plan-index.py validate
+L00003436	risk_class: provider_readiness_branches
+L00003437	reasoning_tier: standard
+L00003438	context_scope: multi_account_standardization
+L00003439	implementation_surfaces:
+L00003440	- Plans/Multi-Account.md
+L00003441	node_compile_hint:
+L00003442	  mode: provider_readiness_branches
+L00003443	  create_worknodes: false
+L00003444	source_lineage:
+L00003445	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0027
+L00003446	preserved_exact_tokens:
+L00003447	- Choose Billing Entity
+L00003448	- Use Vertex AI
+L00003449	- Application Default Credentials (ADC)
+L00003450	- Service Account JSON
+L00003451	- Sign In with Google
+L00003452	- Use Gemini API Key
+L00003453	- /trust/MCP
+L00003454	- .cursor/rules/*.mdc
+L00003455	- Cursor Rules
+L00003456	- .cursorrules
+L00003457	- /confidence
+L00003458	negative_constraints:
+L00003459	- Project Rules are primary/native for Cursor docs/rules projection; .cursorrules remains legacy/deprecated compatibility.
+L00003460	compatibility_only_notes:
+L00003461	- .cursorrules and root compatibility files remain compatibility targets, not the primary managed artifact.
+L00003462	stale_retired_dispositions:
+L00003463	- .cursorrules is legacy/deprecated relative to .cursor/rules/*.mdc.
+L00003464	owner_boundary_notes:
+L00003465	- Provider-specific setup surfaces expose only readiness branches valid for the selected provider entry/account state.
+L00003466	owner_hints:
+L00003467	- Plans/Multi-Account.md
+L00003468	preserved_contractrefs:
+L00003469	- 'ContractRef: ContractName:Plans/Contracts_V0.md#Setup/Health-lifecycle-contracts, ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md'
+L00003470	split_recommendation_reason: Provider-specific readiness branches close the S0027 split.
+L00003471	```
+L00003472	
+L00003473	### MA-042 - Account Lifecycle Flows Registration Schema And Defaults
+L00003474	
+L00003475	```yaml
+L00003476	plan_unit_id: MA-042
+L00003477	unit_type: requirement
+L00003478	status: accepted
+L00003479	owner_doc: Plans/Multi-Account.md
+L00003480	canonical_text: Provider settings expose account lifecycle controls in a consistent location while honoring provider-specific
+L00003481	  auth. Add, edit, remove/archive, and default account flows preserve credential revalidation, stable ULID account_id,
+L00003482	  canonical registration schema, closed status values, and exactly one default account or explicit no-default handling.
+L00003483	gui_related: true
+L00003484	gui_classification_reason: The unit defines settings GUI account lifecycle flows and confirmation dialogs.
+L00003485	split_recommended: true
+L00003486	depends_on:
+L00003487	- MA-041
+L00003488	unblocks: []
+L00003489	acceptance_criteria:
+L00003490	- Covered source spans remain losslessly available for exact-text audit.
+L00003491	- Add account, edit account, remove account/profile, and default account flows remain present.
+L00003492	- Credential rotation triggers re-auth or revalidation before returning to Ready.
+L00003493	- account_id remains a ULID.
+L00003494	- Canonical registration schema and status enum remain preserved.
+L00003495	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003496	validation_surfaces:
+L00003497	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003498	- python3 scripts/pm-plan-index.py validate
+L00003499	risk_class: account_lifecycle_flow
+L00003500	reasoning_tier: standard
+L00003501	context_scope: multi_account_standardization
+L00003502	implementation_surfaces:
+L00003503	- Plans/Multi-Account.md
+L00003504	node_compile_hint:
+L00003505	  mode: account_lifecycle_flow
+L00003506	  create_worknodes: false
+L00003507	source_lineage:
+L00003508	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0028
+L00003509	preserved_exact_tokens:
+L00003510	- Settings -> Providers -> [Provider] -> Add Account
+L00003511	- display_name
+L00003512	- Remove from PM only
+L00003513	- Remove and archive PM-managed data
+L00003514	- account_id
+L00003515	- ULID
+L00003516	- '{ account_id: ulid, provider_id, display_name, auth_method, credential_ref, created_at, last_used_at, status }'
+L00003517	- active | expired | revoked | error
+L00003518	negative_constraints: []
+L00003519	compatibility_only_notes: []
+L00003520	stale_retired_dispositions: []
+L00003521	owner_boundary_notes:
+L00003522	- Lifecycle controls are consistent but remain provider-specific where auth requirements differ.
+L00003523	owner_hints:
+L00003524	- Plans/Multi-Account.md
+L00003525	preserved_contractrefs:
+L00003526	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+L00003527	split_recommendation_reason: Account registration is split from provider-specific setup choices and button/removal safety.
+L00003528	```
+L00003529	
+L00003530	### MA-043 - Provider-Specific Setup Choices And Remediation Actions
+L00003531	
+L00003532	```yaml
+L00003533	plan_unit_id: MA-043
+L00003534	unit_type: requirement
+L00003535	status: accepted
+L00003536	owner_doc: Plans/Multi-Account.md
+L00003537	canonical_text: Provider-specific setup choices preserve Codex ChatGPT/API-key account entry labels and helper text, root-backed
+L00003538	  Fresh Login and Import Existing Auth modes, direct coding-plan provider API-key setup rows, remediation actions valid
+L00003539	  for the selected provider entry/account state, and explicit billing-entity refresh cadence.
+L00003540	gui_related: true
+L00003541	gui_classification_reason: The unit defines user-visible provider setup choices, helper text, and remediation actions.
+L00003542	split_recommended: true
+L00003543	depends_on:
+L00003544	- MA-042
+L00003545	unblocks: []
+L00003546	acceptance_criteria:
+L00003547	- Covered source spans remain losslessly available for exact-text audit.
+L00003548	- Codex add-account choices remain Sign in with ChatGPT and Use API Key.
+L00003549	- Generic stale browser/device-code/API-key matrix is not revived for Codex.
+L00003550	- Fresh Login, Import Existing Auth, and Environment/API-Key Setup remain provider-specific.
+L00003551	- Invalid remediation actions are hidden rather than generalized.
+L00003552	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003553	validation_surfaces:
+L00003554	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003555	- python3 scripts/pm-plan-index.py validate
+L00003556	risk_class: provider_setup_remediation
+L00003557	reasoning_tier: standard
+L00003558	context_scope: multi_account_standardization
+L00003559	implementation_surfaces:
+L00003560	- Plans/Multi-Account.md
+L00003561	node_compile_hint:
+L00003562	  mode: provider_setup_remediation
+L00003563	  create_worknodes: false
+L00003564	source_lineage:
+L00003565	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0028
+L00003566	preserved_exact_tokens:
+L00003567	- Sign in with ChatGPT
+L00003568	- Use API Key
+L00003569	- Uses Codex through your ChatGPT plan limits
+L00003570	- Switching to ChatGPT-backed access may require signing out first
+L00003571	- Fresh Login
+L00003572	- Import Existing Auth
+L00003573	- Environment/API-Key Setup
+L00003574	- Alibaba Coding Plan
+L00003575	- MiniMax Coding Plan
+L00003576	- Z.AI Coding Plan
+L00003577	- Retry Sign-In
+L00003578	- Edit Auth Settings
+L00003579	- Repair Home
+L00003580	- Revalidate
+L00003581	- Refresh Entitlements
+L00003582	negative_constraints:
+L00003583	- Codex setup copy must not revive the stale browser/device-code/API-key matrix as the primary Codex account model.
+L00003584	compatibility_only_notes: []
+L00003585	stale_retired_dispositions:
+L00003586	- Stale Codex browser/device-code/API-key matrix is retired as the primary Codex setup model.
+L00003587	owner_boundary_notes:
+L00003588	- Provider setup surfaces expose only actions valid for the selected provider entry and account state.
+L00003589	owner_hints:
+L00003590	- Plans/Multi-Account.md
+L00003591	preserved_contractrefs:
+L00003592	- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+L00003593	split_recommendation_reason: Provider-specific setup is split from registration schema and removal safety.
+L00003594	```
+L00003595	
+
+<<< CONTEXT_AFTER canonical_document_lines=3596-3607 >>>
+L00003596	### MA-044 - Button State Contract And Removal Safety Rules
+L00003597	
+L00003598	```yaml
+L00003599	plan_unit_id: MA-044
+L00003600	unit_type: requirement
+L00003601	status: accepted
+L00003602	owner_doc: Plans/Multi-Account.md
+L00003603	canonical_text: Row-level setup actions use explicit in-progress and terminal label transitions. Account/profile removal preserves
+L00003604	  requested/effective history, default-account removal atomically promotes an eligible account or leaves explicit no-default
+L00003605	  state, disabling does not delete roots, and removal avoids deleting non-PM-managed provider data outside the owned root.
+L00003606	gui_related: true
+L00003607	gui_classification_reason: The unit defines user-visible button states, terminal labels, and removal confirmations.

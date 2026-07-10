@@ -1,0 +1,387 @@
+<<< CONTEXT_BEFORE 23403-23414 >>>
+- "restoring"
+- "terminated"
+- "attention_required"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "assistant-chat-design.md owns terminal command-card state mappings; FinalGUISpec owns visible card-state presentation."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 23415-23772 >>>
+### F3-368 - Message Controls Queue And Scroll Behavior
+
+```yaml
+plan_unit_id: F3-368
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Message controls attach Stop, Edit, and Resend only to the most recent user-sent message,
+  use FIFO queued-message semantics with max two queued messages, discard later history or
+  work for rewind/resend/edit behavior, keep queue state transient across reload/restart, keep
+  Stop from clearing the queue, keep code-block copy always visible, disclose subagents, and
+  expose jump-to-latest or jump-to-bottom with unseen-count and auto-follow resume only when
+  the user returns to the bottom.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible FinalGUISpec widget or card behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: message_controls_queue_and_scroll_behavior
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0232"
+preserved_exact_tokens:
+- "Stop/Edit/Resend"
+- "most recent user-sent message"
+- "FIFO, max 2 queued messages"
+- "queue is transient and not restart-persisted"
+- "Stop does NOT clear the queue"
+- "always-visible copy affordance"
+- "mandatory subagent disclosure"
+- "jump-to-latest"
+- "jump-to-bottom"
+- "unseen-count"
+- "/auto-follow"
+negative_constraints:
+- "Queue state is transient and is not restored across reload or restart."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns visible card/widget behavior; owner docs retain runtime, tool, permission, schema, and storage authority."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-369 - Web Activity Payload Display Schema
+
+```yaml
+plan_unit_id: F3-369
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Web activity details display provider identity, routing reason, timing, cache status,
+  adapter-selection, projection, audit disclosure, and warning/error fields using the visible
+  schema: tool_use_id, adapter_id, adapter_selection_reason, timestamp, error_code,
+  error_message, provenance_badge, execution_path, duration_ms, cached, warnings,
+  requested_adapter_id, effective_adapter_id, provider_fallback_summary, warnings_count,
+  projection_freshness, and projection_health.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible FinalGUISpec widget or card behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: web_activity_payload_display_schema
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0232"
+preserved_exact_tokens:
+- "tool_use_id"
+- "adapter_id"
+- "adapter_selection_reason"
+- "timestamp"
+- "error_code"
+- "error_message"
+- "provenance_badge"
+- "execution_path"
+- "duration_ms"
+- "cached"
+- "warnings"
+- "requested_adapter_id"
+- "effective_adapter_id"
+- "provider_fallback_summary"
+- "projection_freshness"
+- "projection_health"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Contracts_V0.md and storage-plan.md own payload schemas; FinalGUISpec owns displayed field presentation."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-370 - Web Labels Narrative Order And Completion Rendering
+
+```yaml
+plan_unit_id: F3-370
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Web/search/diff cards preserve distinct card anatomy, narrative order, completed-content
+  rendering only on completion, streamed running labels, and concrete collapsed labels such as
+  Searching Web: <query>, Fetching Site: <url> (via <provider>), Reading Site: <url>,
+  Extracting Site: <url>, Researching Web: <task>, Crawling Site: <url>, and Mapping Site:
+  <url>.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible FinalGUISpec widget or card behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: web_labels_narrative_order_and_completion_rendering
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0232"
+preserved_exact_tokens:
+- "Searching Web: <query>"
+- "Fetching Site: <url> (via <provider>)"
+- "Reading Site: <url>"
+- "Extracting Site: <url>"
+- "Researching Web: <task>"
+- "Crawling Site: <url>"
+- "Mapping Site: <url>"
+- "/completion"
+- "Narrative order"
+negative_constraints:
+- "Cards do not float out of narrative position."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns visible card/widget behavior; owner docs retain runtime, tool, permission, schema, and storage authority."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-371 - Provider Runtime Identity Disclosure Widgets
+
+```yaml
+plan_unit_id: F3-371
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Web/provider GUI cards expose structured operation_input as canonical operation input while
+  normalizing legacy web_input before rendering, TODO progress statuses,
+  requested/effective runtime identity fields, exact provider class split
+  account-backed|API-backed|no-key, QuestionItem-aligned question widgets, support tier,
+  fallback disclosure, source count or scope summary, and warning or error text.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible FinalGUISpec widget or card behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: provider_runtime_identity_disclosure_widgets
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0232"
+preserved_exact_tokens:
+- "operation_input"
+- "legacy web_input"
+- "pending | in_progress | completed | blocked | skipped"
+- "requested_account_binding"
+- "operational_identity"
+- "effective_account_label"
+- "effective_provider_identity"
+- "effective_project_id"
+- "account-backed|API-backed|no-key"
+- "QuestionItem"
+- "support tier"
+- "fallback disclosure"
+negative_constraints: []
+compatibility_only_notes:
+- "Legacy web_input normalizes to operation_input before GUI web cards render."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns visible card/widget behavior; owner docs retain runtime, tool, permission, schema, and storage authority."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-372 - Operation Card Compatibility And Terminal Action Exclusion
+
+```yaml
+plan_unit_id: F3-372
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Legacy /operation-card references normalize to the operation-card widget family while
+  individual web, terminal, search, and diff card types keep owner-specific payload contracts;
+  search and diff/web cards do not expose terminal Show Terminal or Detach/Pop-Out
+  affordances, and only terminal cards expose those terminal actions while long-running web
+  operations may use background state.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible FinalGUISpec widget or card behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: operation_card_compatibility_and_terminal_action_exclusion
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0232"
+preserved_exact_tokens:
+- "Legacy `/operation-card`"
+- "operation-card widget family"
+- "owner-specific payload contracts"
+- "Show Terminal"
+- "Detach/Pop-Out"
+- "only terminal cards expose those actions"
+- "background state"
+negative_constraints:
+- "Search and diff/web cards must not expose terminal Show Terminal or Detach/Pop-Out affordances."
+compatibility_only_notes:
+- "Legacy /operation-card references normalize to the operation-card widget family."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns visible card/widget behavior; owner docs retain runtime, tool, permission, schema, and storage authority."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-373 - Blocked Unavailable And Fallback Recovery Cards
+
+```yaml
+plan_unit_id: F3-373
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Blocked or unavailable web/provider cards surface machine-actionable blocked responses
+  through allowed_action_ids[], show exact reason labels such as permission_denied,
+  network_error, provider_unavailable, headless_unavailable, and timeout, carry status:
+  unavailable, blocked_reason_code, denial and recovery fields, and show failed and next
+  same-operation providers in visible fallback activity labels while audit logs record
+  provider_fallback_summary.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible FinalGUISpec widget or card behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: blocked_unavailable_and_fallback_recovery_cards
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0232"
+preserved_exact_tokens:
+- "blocked_reason_code"
+- "allowed_action_ids[]"
+- "denial_reason_code"
+- "denial_source"
+- "suggested_recovery_action"
+- "permission_denied"
+- "network_error"
+- "provider_unavailable"
+- "headless_unavailable"
+- "timeout"
+- "status: \"unavailable\""
+- "provider_fallback_summary"
+negative_constraints:
+- "Blocked or unavailable card responses must remain machine-actionable through allowed_action_ids[]."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns visible card/widget behavior; owner docs retain runtime, tool, permission, schema, and storage authority."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 23773-23784 >>>
+### F3-374 - Sticky Plan Panel TODO Tracker
+
+```yaml
+plan_unit_id: F3-374
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Plan and Deep Plan both project to a normalized TODO list; the sticky Plan panel is per
+  thread and authoritative, showing plan title or summary, TODOs in canonical order, status
+  badge per TODO, dependency hints, owner or delegated-executor badge, verification hint, and
+  the locked status set pending, in_progress, completed, blocked, and skipped.

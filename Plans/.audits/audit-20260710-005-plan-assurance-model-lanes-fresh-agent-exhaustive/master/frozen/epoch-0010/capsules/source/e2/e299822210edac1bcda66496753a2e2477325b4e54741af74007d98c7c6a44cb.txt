@@ -1,0 +1,417 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1530-1541 >>>
+L00001530	- Nano Banana aliases remain valid lookup aliases, but current Antigravity CLI proof does not verify Antigravity generated-media support for them.
+L00001531	stale_retired_dispositions:
+L00001532	- Arbitrary successful `agy --model "Nano Banana"` prompt output is not support evidence because the current Antigravity CLI logs the model as unrecognized and falls back.
+L00001533	owner_boundary_notes:
+L00001534	- This unit preserves reference inventory only; referenced owner docs keep their own contracts.
+L00001535	owner_hints:
+L00001536	- Plans/Models_System.md
+L00001537	preserved_contractrefs: []
+L00001538	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001539	  where safe.
+L00001540	```
+L00001541	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1542-1929 >>>
+L00001542	### MS-004 - Provider Model Precedence Owner Boundary
+L00001543	
+L00001544	```yaml
+L00001545	plan_unit_id: MS-004
+L00001546	unit_type: requirement
+L00001547	status: accepted
+L00001548	owner_doc: Plans/Models_System.md
+L00001549	canonical_text: Models_System.md owns provider/model precedence across run, seam, package, node, overseer, delegated-subagent,
+L00001550	  and worktree-narrowed surfaces without replacing requested/effective resolver records.
+L00001551	gui_related: false
+L00001552	gui_classification_reason: The unit covers backend/runtime owner boundaries rather than GUI presentation.
+L00001553	split_recommended: false
+L00001554	depends_on:
+L00001555	- MS-002
+L00001556	unblocks: []
+L00001557	acceptance_criteria:
+L00001558	- Covered source spans remain losslessly available for exact-text audit.
+L00001559	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001560	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001561	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001562	validation_surfaces:
+L00001563	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001564	- python3 scripts/pm-plan-index.py validate
+L00001565	risk_class: provider_model_precedence_owner_boundary
+L00001566	reasoning_tier: standard
+L00001567	context_scope: models_system_standardization
+L00001568	implementation_surfaces:
+L00001569	- Plans/Models_System.md
+L00001570	node_compile_hint:
+L00001571	  mode: provider_model_precedence_owner_boundary
+L00001572	  create_worknodes: false
+L00001573	source_lineage:
+L00001574	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0006
+L00001575	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0007
+L00001576	preserved_exact_tokens:
+L00001577	- Provider/model precedence and settings resolution
+L00001578	- Scope and owner boundaries
+L00001579	- run
+L00001580	- seam
+L00001581	- package
+L00001582	- node
+L00001583	- overseer
+L00001584	- delegated-subagent
+L00001585	negative_constraints: []
+L00001586	compatibility_only_notes: []
+L00001587	stale_retired_dispositions: []
+L00001588	owner_boundary_notes:
+L00001589	- Adjacent docs consume this owner section and must not replace its provider/model precedence policy.
+L00001590	owner_hints:
+L00001591	- Plans/Models_System.md
+L00001592	preserved_contractrefs: []
+L00001593	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001594	  where safe.
+L00001595	```
+L00001596	
+L00001597	### MS-005 - Three Axis Settings And Deterministic Precedence
+L00001598	
+L00001599	```yaml
+L00001600	plan_unit_id: MS-005
+L00001601	unit_type: requirement
+L00001602	status: accepted
+L00001603	owner_doc: Plans/Models_System.md
+L00001604	canonical_text: Settings resolve on source, request, and execution axes. Deterministic precedence is explicit override, scoped
+L00001605	  policy, Persona preference, surface or stage default, project or global default, last-used when permitted, and provider
+L00001606	  default.
+L00001607	gui_related: false
+L00001608	gui_classification_reason: The unit covers resolver policy and precedence rather than direct GUI presentation.
+L00001609	split_recommended: false
+L00001610	depends_on:
+L00001611	- MS-004
+L00001612	unblocks: []
+L00001613	acceptance_criteria:
+L00001614	- Covered source spans remain losslessly available for exact-text audit.
+L00001615	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001616	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001617	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001618	validation_surfaces:
+L00001619	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001620	- python3 scripts/pm-plan-index.py validate
+L00001621	risk_class: three_axis_settings_precedence
+L00001622	reasoning_tier: standard
+L00001623	context_scope: models_system_standardization
+L00001624	implementation_surfaces:
+L00001625	- Plans/Models_System.md
+L00001626	node_compile_hint:
+L00001627	  mode: three_axis_settings_precedence
+L00001628	  create_worknodes: false
+L00001629	source_lineage:
+L00001630	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0008
+L00001631	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0009
+L00001632	preserved_exact_tokens:
+L00001633	- manual_override
+L00001634	- persona_preference
+L00001635	- scope_policy
+L00001636	- provider_default
+L00001637	- last-used
+L00001638	- requested/effective
+L00001639	negative_constraints: []
+L00001640	compatibility_only_notes: []
+L00001641	stale_retired_dispositions:
+L00001642	- Ownership transitions between overseer and delegated-subagent levels MUST emit a fresh resolver record instead of silently
+L00001643	  inheriting stale effective state.
+L00001644	owner_boundary_notes:
+L00001645	- Policy remains in the Models owner section and produces requested/effective resolver state.
+L00001646	owner_hints:
+L00001647	- Plans/Models_System.md
+L00001648	preserved_contractrefs: []
+L00001649	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001650	  where safe.
+L00001651	```
+L00001652	
+L00001653	### MS-006 - Resolver Input And Emit Shape
+L00001654	
+L00001655	```yaml
+L00001656	plan_unit_id: MS-006
+L00001657	unit_type: requirement
+L00001658	status: accepted
+L00001659	owner_doc: Plans/Models_System.md
+L00001660	canonical_text: The resolver accepts overrides, defaults, policy, capability, account, worktree, and permission context, then
+L00001661	  emits requested and effective platform, model, variant, auth, account, execution_role, selection_reason, resolver_matrix_entry,
+L00001662	  worker_policy_display, and skipped_persona_controls.
+L00001663	gui_related: false
+L00001664	gui_classification_reason: The unit covers backend resolver input and output shape rather than direct GUI presentation.
+L00001665	split_recommended: false
+L00001666	depends_on:
+L00001667	- MS-005
+L00001668	unblocks: []
+L00001669	acceptance_criteria:
+L00001670	- Covered source spans remain losslessly available for exact-text audit.
+L00001671	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001672	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001673	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001674	validation_surfaces:
+L00001675	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001676	- python3 scripts/pm-plan-index.py validate
+L00001677	risk_class: resolver_input_emit_shape
+L00001678	reasoning_tier: standard
+L00001679	context_scope: models_system_standardization
+L00001680	implementation_surfaces:
+L00001681	- Plans/Models_System.md
+L00001682	node_compile_hint:
+L00001683	  mode: resolver_input_emit_shape
+L00001684	  create_worknodes: false
+L00001685	source_lineage:
+L00001686	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0010
+L00001687	preserved_exact_tokens:
+L00001688	- requested_platform
+L00001689	- effective_model
+L00001690	- skipped_persona_controls[]
+L00001691	- selection_reason
+L00001692	- resolver_matrix_entry
+L00001693	- worker_policy_display
+L00001694	negative_constraints: []
+L00001695	compatibility_only_notes: []
+L00001696	stale_retired_dispositions: []
+L00001697	owner_boundary_notes:
+L00001698	- Runtime snapshots, inspectors, and owner transitions consume the emit shape; later sections elaborate but do not replace
+L00001699	  it.
+L00001700	owner_hints:
+L00001701	- Plans/Models_System.md
+L00001702	preserved_contractrefs: []
+L00001703	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001704	  where safe.
+L00001705	```
+L00001706	
+L00001707	### MS-007 - Concern Lifecycle And Consumer Boundaries
+L00001708	
+L00001709	```yaml
+L00001710	plan_unit_id: MS-007
+L00001711	unit_type: requirement
+L00001712	status: accepted
+L00001713	owner_doc: Plans/Models_System.md
+L00001714	canonical_text: Provider/model concerns use active, acknowledged, resolved, dismissed, resolution_kind, and accepted_risk.
+L00001715	  Consumers may disclose proceed, block, retry, and confirmation semantics but do not own selection policy.
+L00001716	gui_related: true
+L00001717	gui_classification_reason: The unit includes user confirmation and concern disclosure behavior that can surface in GUI flows.
+L00001718	split_recommended: false
+L00001719	depends_on:
+L00001720	- MS-006
+L00001721	unblocks: []
+L00001722	acceptance_criteria:
+L00001723	- Covered source spans remain losslessly available for exact-text audit.
+L00001724	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001725	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001726	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001727	validation_surfaces:
+L00001728	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001729	- python3 scripts/pm-plan-index.py validate
+L00001730	risk_class: concern_lifecycle_consumer_boundaries
+L00001731	reasoning_tier: standard
+L00001732	context_scope: models_system_standardization
+L00001733	implementation_surfaces:
+L00001734	- Plans/Models_System.md
+L00001735	node_compile_hint:
+L00001736	  mode: concern_lifecycle_consumer_boundaries
+L00001737	  create_worknodes: false
+L00001738	source_lineage:
+L00001739	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0010
+L00001740	preserved_exact_tokens:
+L00001741	- active
+L00001742	- acknowledged
+L00001743	- resolved
+L00001744	- dismissed
+L00001745	- accepted_risk
+L00001746	- DispatchContext.provider_id
+L00001747	- Provider / Model
+L00001748	- worker_provider
+L00001749	negative_constraints:
+L00001750	- Consumers may disclose concern state but must not replace Models_System.md as provider/model selection owner.
+L00001751	compatibility_only_notes:
+L00001752	- DispatchContext and Run Graph provider/model labels are compatibility labels over the canonical requested/effective snapshot.
+L00001753	stale_retired_dispositions: []
+L00001754	owner_boundary_notes:
+L00001755	- Plans/GUI_Rebuild_Requirements_Checklist.md, Executor, Worktree, Run Graph, and Crosswalk consume this policy.
+L00001756	owner_hints:
+L00001757	- Plans/Models_System.md
+L00001758	preserved_contractrefs: []
+L00001759	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001760	  where safe.
+L00001761	```
+L00001762	
+L00001763	### MS-008 - Requested Effective Identity And Storage Account Continuity
+L00001764	
+L00001765	```yaml
+L00001766	plan_unit_id: MS-008
+L00001767	unit_type: requirement
+L00001768	status: accepted
+L00001769	owner_doc: Plans/Models_System.md
+L00001770	canonical_text: Requested/effective persona, provider, model, account, runtime, execution-role, and operational identities
+L00001771	  remain distinct, durable, and explicit across storage, contracts, project account context, and provider snapshots.
+L00001772	gui_related: false
+L00001773	gui_classification_reason: The unit covers storage/account/runtime identity fields rather than direct GUI presentation.
+L00001774	split_recommended: false
+L00001775	depends_on:
+L00001776	- MS-006
+L00001777	unblocks: []
+L00001778	acceptance_criteria:
+L00001779	- Covered source spans remain losslessly available for exact-text audit.
+L00001780	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001781	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001782	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001783	validation_surfaces:
+L00001784	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001785	- python3 scripts/pm-plan-index.py validate
+L00001786	risk_class: requested_effective_identity_account_continuity
+L00001787	reasoning_tier: standard
+L00001788	context_scope: models_system_standardization
+L00001789	implementation_surfaces:
+L00001790	- Plans/Models_System.md
+L00001791	node_compile_hint:
+L00001792	  mode: requested_effective_identity_account_continuity
+L00001793	  create_worknodes: false
+L00001794	source_lineage:
+L00001795	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0010
+L00001796	preserved_exact_tokens:
+L00001797	- requested_persona
+L00001798	- effective_persona
+L00001799	- _id
+L00001800	- 'provider_id: cursor'
+L00001801	- selected_repo_id
+L00001802	- requested_*
+L00001803	- effective_*
+L00001804	negative_constraints:
+L00001805	- Compatibility _id fields must not collapse requested, effective, account, provider, model, execution role, or operational
+L00001806	  identity into one value.
+L00001807	- Runtime/storage account fallback fields must not disappear from requested/effective disclosure.
+L00001808	compatibility_only_notes:
+L00001809	- _id variants and legacy path references are compatibility labels, not replacement canonical IDs.
+L00001810	stale_retired_dispositions: []
+L00001811	owner_boundary_notes:
+L00001812	- Contracts, storage, GitHub, project-account, and orchestrator docs consume this identity model without re-owning it.
+L00001813	owner_hints:
+L00001814	- Plans/Models_System.md
+L00001815	preserved_contractrefs: []
+L00001816	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001817	  where safe.
+L00001818	```
+L00001819	
+L00001820	### MS-009 - Execution Unit Defaults Worker Policy And Delegation
+L00001821	
+L00001822	```yaml
+L00001823	plan_unit_id: MS-009
+L00001824	unit_type: requirement
+L00001825	status: accepted
+L00001826	owner_doc: Plans/Models_System.md
+L00001827	canonical_text: Run, seam, package, node, overseer, and delegated-subagent settings resolve through requested/effective snapshots.
+L00001828	  Easiest, lane-aware, worktree, node-worker, and delegation policies are explicit resolver inputs.
+L00001829	gui_related: false
+L00001830	gui_classification_reason: The unit covers execution-unit settings and delegation policy rather than direct GUI presentation.
+L00001831	split_recommended: false
+L00001832	depends_on:
+L00001833	- MS-006
+L00001834	unblocks: []
+L00001835	acceptance_criteria:
+L00001836	- Covered source spans remain losslessly available for exact-text audit.
+L00001837	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001838	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001839	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001840	validation_surfaces:
+L00001841	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001842	- python3 scripts/pm-plan-index.py validate
+L00001843	risk_class: execution_unit_defaults_worker_delegation
+L00001844	reasoning_tier: standard
+L00001845	context_scope: models_system_standardization
+L00001846	implementation_surfaces:
+L00001847	- Plans/Models_System.md
+L00001848	node_compile_hint:
+L00001849	  mode: execution_unit_defaults_worker_delegation
+L00001850	  create_worknodes: false
+L00001851	source_lineage:
+L00001852	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0010
+L00001853	preserved_exact_tokens:
+L00001854	- /model/effort/persona
+L00001855	- /package/node
+L00001856	- /easiest
+L00001857	- node-effective
+L00001858	- overseer-effective
+L00001859	- lane-aware
+L00001860	negative_constraints:
+L00001861	- Provider/model defaults must not become ad hoc per-node manual model names outside the resolver record.
+L00001862	compatibility_only_notes:
+L00001863	- Lifecycle events carry the execution-unit provider/model snapshot that made each transition valid.
+L00001864	stale_retired_dispositions: []
+L00001865	owner_boundary_notes:
+L00001866	- Execution settings remain model-owner inputs while package, lane, and worktree docs consume the resolved snapshot.
+L00001867	owner_hints:
+L00001868	- Plans/Models_System.md
+L00001869	preserved_contractrefs: []
+L00001870	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001871	  where safe.
+L00001872	```
+L00001873	
+L00001874	### MS-010 - Compatibility Cleanup And Stale Tier Routing
+L00001875	
+L00001876	```yaml
+L00001877	plan_unit_id: MS-010
+L00001878	unit_type: constraint
+L00001879	status: accepted
+L00001880	owner_doc: Plans/Models_System.md
+L00001881	canonical_text: Legacy tier, event, four-tier, TierContext, tier-native, and active-agent vocabulary maps to current execution-unit,
+L00001882	  package/lane, and requested/effective resolver semantics.
+L00001883	gui_related: false
+L00001884	gui_classification_reason: The unit covers compatibility vocabulary and cleanup constraints rather than direct GUI presentation.
+L00001885	split_recommended: false
+L00001886	depends_on:
+L00001887	- MS-006
+L00001888	unblocks: []
+L00001889	acceptance_criteria:
+L00001890	- Covered source spans remain losslessly available for exact-text audit.
+L00001891	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00001892	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00001893	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001894	validation_surfaces:
+L00001895	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001896	- python3 scripts/pm-plan-index.py validate
+L00001897	risk_class: compatibility_cleanup_stale_tier_routing
+L00001898	reasoning_tier: standard
+L00001899	context_scope: models_system_standardization
+L00001900	implementation_surfaces:
+L00001901	- Plans/Models_System.md
+L00001902	node_compile_hint:
+L00001903	  mode: compatibility_cleanup_stale_tier_routing
+L00001904	  create_worknodes: false
+L00001905	source_lineage:
+L00001906	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0010
+L00001907	preserved_exact_tokens:
+L00001908	- TierChanged
+L00001909	- GateStart
+L00001910	- four-tier
+L00001911	- node-graph
+L00001912	- TierContext
+L00001913	- tier-native
+L00001914	negative_constraints:
+L00001915	- Old and new provider/model models cannot remain peer canon in the same surface.
+L00001916	- Owner-of-owners cleanup must not amplify provider/model drift.
+L00001917	compatibility_only_notes:
+L00001918	- Legacy tier, executor, and active-agent terms are compatibility inputs only.
+L00001919	stale_retired_dispositions:
+L00001920	- Legacy tier semantics remain compatibility-only and do not revive tier-native execution semantics.
+L00001921	owner_boundary_notes:
+L00001922	- Models_System.md resolves provider/model wording contradictions into one requested/effective resolver statement.
+L00001923	owner_hints:
+L00001924	- Plans/Models_System.md
+L00001925	preserved_contractrefs: []
+L00001926	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00001927	  where safe.
+L00001928	```
+L00001929	
+
+<<< CONTEXT_AFTER canonical_document_lines=1930-1941 >>>
+L00001930	### MS-011 - GUI Help Labels Receipts And Subject Open Presentation
+L00001931	
+L00001932	```yaml
+L00001933	plan_unit_id: MS-011
+L00001934	unit_type: requirement
+L00001935	status: accepted
+L00001936	owner_doc: Plans/Models_System.md
+L00001937	canonical_text: Visible labels, help text, receipts, and subject-open presentation may simplify display but remain views over
+L00001938	  canonical requested/effective model state and shared cost, ledger, and artifact-opening identity.
+L00001939	gui_related: true
+L00001940	gui_classification_reason: The unit covers GUI labels, help copy, receipts, tabs, and user-visible subject-open behavior.
+L00001941	split_recommended: false

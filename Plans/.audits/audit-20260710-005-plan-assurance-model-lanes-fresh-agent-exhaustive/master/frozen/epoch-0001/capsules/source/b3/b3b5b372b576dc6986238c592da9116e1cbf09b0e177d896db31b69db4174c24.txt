@@ -1,0 +1,425 @@
+<<< CONTEXT_BEFORE 1502-1513 >>>
+- warnings_count
+- error_code
+- projection_freshness
+- projection_health
+- tool.denied.payload.meta
+- web_operation
+- operation_input
+- operation_input_preview
+
+Permission rules:
+- single confirmation prompt showing all unique domains in the batch
+- For Session grants all listed domains for that session
+
+<<< AUTHORITATIVE_CORE 1514-1909 >>>
+
+Rules:
+- Firecrawl `webfetch` capability is not erased by Site Reader primacy
+- Tavily `webfetch` capability is not erased by Site Reader primacy
+- Exa `webfetch` capability is not erased by Site Reader primacy
+- fallback-only
+- webfetch
+- Anthropic/OpenAI `websearch` support is `native (model)` / model-native, not `pm-composed`
+- native (model)
+- pm-composed
+- capability-unavailable terminal branch
+- clear setup guidance when no provider supports the requested operation
+- Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only
+- Reading Site
+- provider-routed fetch must not reuse the reserved native Site Reader identity
+- search-then-read behavior
+- final citations come from the actual read path
+- raw search snippets alone are not enough provenance for the final answer
+- changeTracking { status: changed | unchanged | no_previous_version, previous_content_ref?, diff_summary_ref?, checked_at_utc }
+- change_status: "new" | "same" | "changed" | "removed"
+- pages[].change_status
+- change_summary
+- explicit out-of-scope retirement if `changeTracking` is not MVP
+- no silent disappearance of the capability
+- cost-aware selection when providers offer similar capability
+- >100 credits
+- 500 credits
+- cost-aware selection
+- static priority alone is insufficient
+- global provider stack is user-changeable in Settings
+- per-operation priority reordering is NOT MVP
+- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl
+- enableWebSearch
+- Fire Engine
+- 5 MB default
+- /tool/storage/runtime
+- tool.denied
+- tool.invoked
+- adapter_unavailable
+- unsupported_operation
+- content_blocked
+- content_not_found
+- unsupported_source
+- extraction_schema_mismatch
+- autonomous_budget_exceeded
+- no_previous_version
+- `urls: string[]` (required; min 1, max 50)
+- `concurrency?: number` (default 3; max 10
+- `continue_on_error?: boolean` (default true
+- "For Session" grants all listed domains for that session
+- Batch-level timeout is LOCKED as `individual_timeout × min(url_count, 5)`, cap 600s (10 min)
+- chat may shortlist with search but must read chosen pages before citing them as final evidence
+
+Compatibility/source-lineage disposition: this extract preserves web/provider payload keys, display labels, permission fragments, and routing rules in source order. Treat each token by typed role through Core rules, ContractRefs, and owner docs; do not read the `Fields:` list as a standalone chat-owned schema.
+### 13.3 Bash and terminal ownership
+
+This section defines the canonical contract for this surface.
+
+Core rules:
+- Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy.
+- Terminal promotion and handoff are locked so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.
+- Terminal action canon must preserve the distinct terminal actions and give Rerun in Terminal owned command-table treatment rather than collapsing actions into one normalized target.
+
+Fields:
+- terminal_session_id
+- Open in Terminal
+- Show Terminal
+- Rerun in Terminal
+- Detach/Pop-Out
+
+Rules:
+- Collapsed preview: 5 lines
+- Expanded preview: 15 lines
+- Persists after completion
+- status, cwd, command summary, elapsed time, exit code / truncation indicator, and exit `/truncation-style` details
+- READ-ONLY and non-interactive
+- One card per command `/instance`
+- Retries create a new terminal and therefore a new mini terminal card
+- Shell owns interactive state; chat owns preview+audit
+- Commands requiring stdin/TTY start Terminal immediately
+- Background/watch/server actions create terminal-owned session
+- One-shot commands remain chat-inline by default
+- Every promoted command card binds to stable terminal session identity
+- Large payloads store full data behind refs/blobs
+- non-interactive work may promote if it becomes long-running
+- attach failure recovery differs for live process, ended process, and inline-only completed command
+- `Open in Terminal` and `Show Terminal` must focus the same live session
+- after promotion, chat stops owning the full transcript
+- inline cards persist across thread reload and re-render from persisted metadata
+- search and diff do not stream progressively
+- `/collapsible` result behavior is shared across command, search, and diff activity cards: collapsed cards retain material status, subject summary, failure line when present, and the primary reveal action; expansion exposes only bounded preview/detail, with full payloads kept behind refs/blobs or the owning surface.
+- `pop-out-to-terminal` behavior normalizes to terminal-owned reveal/detach actions over the existing `terminal_session_id`: `Open in Terminal` and `Show Terminal` focus the live session, while `Detach/Pop-Out` changes terminal surface placement without creating a chat-owned terminal transcript.
+- Command-card `/edit/manage` menus expose terminal-focus, `View output`, `View output log`, `Retry attach`, and `Stop process` only when the referenced terminal/session state supports them. The legacy `Pop Out Terminal` label is a deprecated alias for `Detach/Pop-Out`.
+- Completed inline commands without a real `terminal_session_id` expose `View output` and `Rerun in Terminal` follow-up actions, but must not fabricate `Open in Terminal`.
+
+### Terminal consumer carry-through
+
+Chat consumes the terminal model without becoming the terminal owner. The terminal engine/emulator, PTY/process host, and UI shell/chrome remain separate concerns; chat cards expose bounded preview, audit, and reveal controls only. Product-critical terminal fidelity includes GPU fallback with context-loss disclosure, IME correctness, /accessibility/Unicode-width handling, /log/CI-safe and machine-readable output modes, diff-based redraw, /command/exit markers, recent-command navigation, /detach/revive/reconnect flows, and narrow /extensibility APIs rather than broad plugin surfaces.
+
+Shell-first command continuity is /PTY-backed and preserves /env/session, working-directory, and terminal-session state. Chat is not a pseudo-terminal or earlier-thread transcript owner; it shows per-step /changes and /summaries plus explicit Open in Terminal / `/show` Terminal focus actions, and /transparency plus /logging/subagents plus terminal-session continuity stay visible in audit rather than hidden in a chat-only reconstruction.
+
+Shell-first routing is /reaffirmed. Route shell-like or shell-native /CLI-native work to Terminal when it needs stdin, PTY, /TUI or TTY interaction, session continuity, visible /control, or may evolve into interactive behavior. Route non-interactive, short-lived, summary-oriented /build/test or structured /build/runtime-output and /results output to Output. Route diagnostics to Problems only when /line/code/location semantics exist, and route discovered endpoints to Ports. Inline previews, command cards, and chat summaries are audit/preview surfaces, never the canonical execution-surface for shell work; hiding infrastructure-like work is allowed only when terminal semantics are not needed.
+Assistant routing must distinguish terminal-oriented PTY work from `/non-PTY` output routing: Terminal is required for shell-native `/steps`, TTY, stdin, alternate-screen, shell editing, prompts, multi-command continuity, and `/profile/cwd/env` fidelity, while Output is appropriate only for non-interactive work with bounded `/progress/result` or `/results/structured` payloads and no expected live takeover.
+
+Terminal workspace behavior is now-explicit and /clarifying rather than a replacement of older shell-first assumptions. The model covers /tabs/panes, /focus/send-input/interrupt/resize/state APIs, /status/search/selection state, /overlay state, /persistence/diagnostics/labeling/docking settings, /cwd/shell disclosure, /Problems/Ports linked surfaces, tab-scoped overrides, /reuse/binding, and session-reveal semantics for Open in Terminal. The `/controller` split stays visible: Terminal owns live PTY lifecycle, Output owns derived structured process views, Problems owns diagnostics, Ports owns endpoint state, and chat owns only preview/reveal cards. Non-guarantees are explicit: chat does not guarantee full terminal transcript ownership after promotion, future-transport surfaces are sibling transports into the same terminal model, and MVP extensibility stays typed and automation-oriented for PM-owned /workflows.
+Terminal search is a first-class review tool in chat-consuming surfaces: search can target whole-transcript history within the current `/pane` and `/session`, show result count plus current-hit position, navigate next and `/previous`, keep stable highlights while output streams, jump between `/matching` command blocks when metadata exists, and restore prior live/review state predictably when search exits.
+
+Command-block confidence rules:
+- rich or basic shell integration may show authoritative command blocks with start/end markers, cwd, exit metadata, sticky headers, failed-command navigation, /confidence metadata, and safe rerun.
+- weak grouping must look approximate; PM must not show fake exact command blocks, exact command-text, /copy-command, or rerun controls unless command-text capture is authoritative or sufficiently trustworthy.
+- running output extends the active block without re-keying the block identity; completed blocks keep stable /end, /output, cwd, duration, exit status, and confidence metadata.
+
+Terminal empty, restore, and review states:
+- no-structure-yet uses new-user empty copy and offers create default terminal plus settings when relevant.
+- hidden-structure is not empty; Show Terminal reveals the existing structure.
+- review-only, `/review-only`, and history-only workspaces emphasize /reviews and /rerun/reopen/clear/close rather than onboarding copy.
+- pane-without-live-runtime shows an honest pane-local status with restart, rerun, replace, and close actions.
+- restored-without-history says that no retained transcript/history exists; it is not first-run empty.
+- /disconnected panes remain reviewable when history exists.
+- /tab/pane/session structure restore is separate from live runtime restore.
+
+Pane status, badges, and notifications:
+- terminal_session state includes creating, attaching, ready, running, interrupting, terminating, killing, exited, failed, and restoring; restore ends as ready, /exited/disconnected-equivalent, /restoring/disconnected/exited, or another honest outcome.
+- aggregate precedence for tabs and /sections is failed_to_start or /disconnect/failed-start, disconnected, restore_action_needed, exited_error, failed_command_since_focus, running, unseen_completion, unseen_output, context_changed, ready, then exited_clean.
+- visual-surface placement keeps exact runtime-state in pane headers, compact /badges with quiet /count semantics on tabs, summary attention on /dock entries, and high-priority /chrome attention on detached windows.
+- focused-pane events prefer inline-status and badges over intrusive notifications; /inactive/detached failures may notify.
+- focusing a pane clears unseen_output and unseen_completion; failed_command_since_focus clears only after the failed pane is focused/reviewed, and restore_action_needed clears only after the restore issue is fixed or the pane is intentionally /replaced.
+- TUI mouse-capture guidance is contextual, not a permanent warning banner.
+
+Transcript, alternate-screen, and reset semantics:
+- persisted transcript is review continuity, not emulator-state resurrection.
+- /TUI and alternate-screen entering or /exiting are represented as events or /markers; normal-screen transcript continues after TUI exit.
+- clear scrollback starts a new visible transcript segment; /reset or /reinitialize does not delete history unless paired with clear.
+- Clear, reset, replace, and close remain separate card actions: clear affects reviewable and `/reviewable` history visibility, reset reinitializes display `/parser` state when supported, interrupt requests stop of the foreground command, terminate ends the session/process, kill force-stops where policy allows, replace starts a new runtime in the slot, and close is a workspace-structure action unless an explicit runtime termination policy is chosen.
+- block-level copy/export indicates partial backing history when only pruned transcript remains.
+- metadata-only command blocks may expose command metadata, duration, cwd, and exit status without fabricating output text.
+- per-project Terminal settings distinguish live scrollback depth, persisted transcript retention, clear-on-close, and preserve-on-close behavior.
+
+Terminal labels and accessibility:
+- pane headers carry the primary label, runtime status chip, and lightweight context badges such as cwd/shell/remote/profile.
+- /shell/remote/profile and /shell/profile/remote/container context should prefer badges, subtitles, /tooltips, or details rather than noisy /tab/window titles.
+- labels are stable identity, badges are compact context or attention, subtitles and tooltips hold richer detail, and /sticky headers hold command-local review detail.
+- The display label for a Terminal tab or `/pane` is separate from derived suggestions and `/metadata`: user labels always win, derived context may update badges, and default labels such as Terminal or Terminal 2 come from stable workspace-oriented runtime context rather than volatile every-command changes. Suggested label sources include project/folder, `/cwd/context`, long-running task, `/profile/role`, and `/shell/remote/task` context, but they must not overwrite a user-facing label after rename.
+- accessibility-name identifies the same stable object as the visible primary label; descriptions may add current status/context.
+- user-rename freezes only the primary label; runtime-state, context badges, and subtitles keep updating, and reset-to-auto restores derived labels.
+
+Terminal diagnostics:
+- diagnostics use structured events and typed failure reasons instead of only freeform logs.
+- user-facing pane UI avoids /noisy internals and offers retry, restart pane, rerun command, reveal logs, or switch renderer mode when applicable.
+- minimum failure taxonomy includes failed_to_start_session, attach_failed, reconnect_failed, shell_integration_unavailable, shell_integration_degraded, transcript_persist_failed, transcript_unavailable, renderer_fallback_activated, renderer_error, clipboard_integration_failed, IME /input_pipeline_error, and unsupported_platform_capability.
+- pane-level diagnostics prefer inline banners/cards, status chips/badges, and drill-down /details; support exports and diagnostics surfaces share the same structured /source state.
+
+### Command-card model
+Command cards are transcript-adjacent summaries rather than a second shell implementation.
+
+Rules:
+- cards surface summary, status, and a primary reveal action without pretending to own the full shell lifecycle
+- when shell integration is `rich` or `basic`, command cards may expose cwd, duration, exit code, and command labels according to confidence tier
+- when shell integration is `opaque`, the card MUST degrade to lower-confidence activity disclosure and MUST NOT fabricate exact command text or exact command boundaries
+- transcript continuity remains canonical even when command-card metadata is degraded
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md
+
+### Reveal and focus behavior
+- if the referenced terminal session is already visible, `Open in Terminal` and `Show Terminal` simply focus it
+- if the session is hidden inside another pane, tab, or section, the shell reveals the existing pane or tab before creating anything new
+- if only historical state remains, the card opens that historical shell receipt and presents explicit recovery actions instead of silently creating a replacement session
+- reveal-origin may land on an `/exited` or `/review-only` pane when that pane is the true origin; it must not silently replace that origin with a fresh shell unless the user chooses restart, `/rerun/new`, or explicit New Terminal.
+- explicit `New Terminal` and explicit restart remain separate user-visible actions
+
+ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md
+
+### Status, degradation, and linked-surface behavior
+Command-card status badges may reflect `starting`, `running`, `exited`, `failed`, `terminated`, `disconnected`, `restoring`, and `attention_required`.
+
+Rules:
+- chat preview stays compact even when the terminal transcript is large
+- Output, Problems, Debug Console, and Ports continue to route through the owning terminal or dev-session identity rather than through chat-local state
+- command cards may link to Output, Problems, or Ports when the command or dev session produced those linked surfaces
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FileManager.md
+### 13.4 Shared runtime identity display
+Assistant Chat may display requested/effective runtime identity, but it must consume the owner-doc shared runtime model rather than invent assistant-local fields.
+
+Rules:
+- compact chat surfaces may show only the material display summary needed for that moment
+- the message-under-row summary uses the resolved user-facing mode label, model, and time or duration
+- the mode display label is derived from canonical shared fields rather than from assistant-local string assembly
+- compact chat surfaces do not show version and do not show `current` or `frozen` wording
+- historical thread/activity views show frozen requested/effective runtime state captured for that execution
+- assistant/chat MUST NOT introduce local replacement fields such as `active_model`, `actual_model`, or `assistant_runtime_state`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md
+
+Message runtime popover fields are closed to:
+- `Mode`
+- `Provider`
+- `Model`
+- `Effort`
+- `Persona`
+- `Worker`
+- `Tokens`
+- `Context`
+
+The message-level `info-popover` consumes this closed field list; it is not a second schema and must stay aligned with the context-detail `Messages` row expansion and the shared Contracts field labels.
+
+Label rules:
+- `Mode` uses the normalized user-facing labels `Ask`, `Agent`, `Plan`, and `Deep Plan`
+- `Worker` is `Agent` or `Subagent`
+- `Tokens` shows compact total and may disclose breakdown on expansion or in the detailed pane
+- `Context` shows used, limit, and percentage when known
+- assistant rows show thinking time or duration; user rows show timestamp
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/usage-feature.md
+
+Display mapping rules:
+- `Deep Plan` is shown when the effective overlay is `deep_plan`
+- `Plan` is shown when the effective overlay is `plan` and the runtime posture is planning
+- `Ask` is shown when the effective runtime posture is `ask` and no higher planning overlay is active
+- `Agent` is shown for normal execution posture when no higher planning overlay is active
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md
+## 14. Subagents & Crew
+
+Subagents and crews use the PM child-run model. A subagent is a child run with its own identity, lifecycle, requested/effective runtime state, and inspectable history. Subagents are disposable by default: spawn, run, complete/cancel/fail, then remain in history instead of being treated as reusable long-lived actors.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### 14.1 Subagent visibility in thread -- implementation detail
+
+Subagent work remains visible in the parent thread while preserving transcript compactness.
+
+Required thread-surface behavior:
+- each active subagent shows a real-time status chip with the subagent name, current status (`running`, `waiting`, `done`, or `failed`), and elapsed time
+- the thread header shows an active subagent count badge
+- subagent output streams inline into the thread as collapsible cards
+- users may collapse any subagent output card to a one-line summary and later expand it without losing streamed history
+- when a subagent fails, the failure card names the failing subagent, what it was doing, and the error/failure summary
+
+Interaction rules:
+- collapse/expand state is thread-local and persists while the thread remains open in the current session
+- collapsed summaries preserve the latest status and headline result so the transcript remains scannable
+- inline cards and header badges project canonical child-run state; chat MUST NOT invent a divergent subagent-only lifecycle model
+- Provider-specific parent TUI affordances such as OpenCode `view subagents` are reference examples only; PM projects equivalent session-centric child visibility through inline cards, header badges, and direct child history navigation rather than treating a provider-native TUI tree as canonical chat state.
+- OpenCode runtime-shape references in this chat-display section are provenance-anchored to upstream commit `9a006d87004835d1867207def09c9aa4cf7394db`; that commit is comparative evidence only and does not override PM-owned child-run display contracts.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
+
+### Inline subagent cards
+
+Every child run MUST appear inline in the parent thread as a visually distinct subagent card.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Collapsed card content:
+
+| Field | Requirement |
+|---|---|
+| Persona | Show the effective child Persona label. |
+| Task | Show the child task label in plain language. |
+| Status | Show the current status badge. |
+| Provider/model | Shown on hover, matching the hover metadata pattern used by other chat bubbles. |
+
+Expanded panel content:
+
+| Region | Requirement |
+|---|---|
+| Work stream | Live progress and work activity visible while the child is running. |
+| Thought stream | Visible and visually distinct from the work stream. |
+| State block | Shows blocked, awaiting-parent, failure, or cancellation reason when relevant. |
+| Context state | Shows relevant context-shaping disclosures, including context-expansion/rehydration requests and whether dynamic context shrinking affected the child. The expanded child-panel context-state disclosure and hover metadata are MVP, and subagent-expanded panels must show enough context-shaping state for the user to understand what the child received. |
+| Result block | Shows a concise final outcome summary once the child completes. |
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### Child status taxonomy
+
+The chat thread and child-run runtime MUST use the same visible status vocabulary.
+ContractRef: ContractName: child_status_projection. Child status projection into chat MUST remain a direct projection of canonical child lifecycle state and MUST NOT create a separate chat-only status enum. [Source: Tools.md#event-model; Contracts_V0.md#canonical-runtime-event-outcome-and-action-contract-reconciliation-addendum-2026-03-09]
+
+| Status | Meaning |
+|---|---|
+| `queued` | Child exists but has not started active execution yet. |
+| `running` | Child is actively executing or streaming work. |
+| `awaiting_parent` | Child is paused pending parent action, clarification, or more context. |
+| `blocked` | Child cannot proceed because of a tool/policy/provider/runtime restriction, including permission-policy denial. |
+| `complete` | Child finished successfully. |
+| `failed` | Child attempted execution and ended unsuccessfully. |
+| `cancelled` | Child was intentionally stopped before completion. |
+
+Signal mapping rules:
+- `clarification_needed`, `user_input_requested`, and `context_expansion_requested` render as `awaiting_parent`.
+- policy/tool/provider/runtime denials render as `blocked`.
+- replacement/supersession is preserved as terminal reason metadata even when the visible terminal status is `cancelled`.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md
+
+### Parallel fan-out, batch cards, and subgroup inspection
+
+Parallel child spawning and grouping/aggregation are first-class behavior. The thread must not assume only one or two children exist.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md
+
+Rules:
+- small fan-out may render as separate child cards
+- large fan-out renders as one top-level batch card
+- expanding a large batch card opens intermediate subgroups of 10 children each
+- expanding a subgroup opens the 10 inline child cards for that subgroup
+- only one subgroup is expanded by default unless the user explicitly opens more
+- canonical child order remains launch order; status changes do not reorder the child list
+- subgroup and batch summaries surface blocked, awaiting-parent, and failed counts so the user knows where attention is needed
+- when `continue_on_error` is `false`, the first failure closes the batch, preserves already completed child results, and marks later unstarted children as not run rather than successful
+- batch cards link the failing subgroup and failing child instead of flattening strict-stop runs into one generic failure summary
+- parent and child audit identity remain inspectable from the batch card rather than being hidden in a storage-only projection
+### Parent-mediated clarification and escalation
+
+Children do not question the user directly by default. A child escalates to the parent; the parent decides whether to answer from existing context, send more context, ask the user, reroute, or cancel the child.
+For missing-capability signals, including `/runtime/tool` gaps, the parent chooses `/reframing`, reroute, replacement, context expansion, user question, or cancellation; the visible status is `awaiting_parent` when parent action can continue the child and `blocked` when policy, runtime, or tool restrictions make progress impossible.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+
+If user input is required:
+- the child card shows `awaiting_parent` with the reason.
+- the parent emits the actual user-facing question in the main thread.
+- the user answers the parent thread, not a hidden child channel.
+
+### Crew mode
+
+Crew mode is a multi-model coordination overlay over the child-run system. It does not replace child cards, child history, or parent-owned synthesis.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+Default crew behavior:
+- same task framing across members.
+- often the same Persona across members.
+- diversity comes primarily from model/provider choice.
+- crew members coordinate through an explicit attributable crew board.
+- the parent owns final synthesis, user-facing summarization, and user escalation.
+
+Crew boards are inspectable on demand. They are not hidden memory and do not grant capabilities.
+## 15. Plan Mode + Crew Mode
+
+Plan-mode and crew-mode rules must align with the PM child-run contract.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md
+
+### Plan-mode delegated work
+
+`ask` and `plan` may launch delegated child runs only for read-only research or analysis.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md
+
+Rules:
+- no code-writing, file mutation, or execution child may be launched from `ask` or `plan`.
+- required planning dependencies may still be child runs as long as they remain read-only.
+- parent mode is a hard ceiling; a child may narrow but must not widen parent authority.
+- unresolved required planning children keep the plan provisional rather than falsely complete.
+
+### Crew-mode planning interaction
+
+Crew is an overlay, not a new runtime-mode enum. A crew launched from `plan` remains read-only; a crew launched from `regular` or `yolo` inherits those parent ceilings and guardrails.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Models_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+
+### Crew selection flow
+
+
+When crew mode is first invoked for a relevant scope:
+- if a valid default crew exists, ask whether to use the default crew.
+- otherwise ask which models to use.
+- after model selection, resolve and confirm provider/runtime mapping where ambiguity or restriction-sensitive mapping exists.
+- if any crew member is configured to use Copilot, the entire crew normalizes to Copilot as a crew-level provider constraint.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
+## 16. Interview Phase UX (Chat Surface)
+
+When the chat is in **Interview** mode, it uses the same shared question system that powers assistant clarification flows and builder clarification flows.
+
+### Shared question system baseline
+Each question flow shows:
+- question text
+- suggested options as buttons/chips when provided
+- a mandatory `Something else` / freeform path when freeform is allowed
+- current draft answer state
+
+Rules:
+- the Interview question UI is the baseline visual pattern for reusable question cards across Assistant, Interviewer, and requirements/document-builder flows
+- questions are required by default unless explicitly marked optional
+- a question flow may contain multiple questions in one questionnaire
+- users may answer in any order and revise answers before final submission
+- dismissing a questionnaire pauses that conversational branch and returns an explicit dismissed state; it does not fabricate a submitted answer set
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/chain-wizard-flexibility.md
+
+### Clarification and resume behavior
+Structured clarification flows MUST preserve question identity and resume deterministically.
+
+<<< CONTEXT_AFTER 1910-1921 >>>
+
+Rules:
+- `clarification_request` and related wizard/thread surfaces may point at a multi-question questionnaire, not only one prompt at a time
+- `question_ids[]` remain the canonical cross-surface identifiers for clarification work
+- thread resume and wizard resume must restore the same outstanding questionnaire state or its resolved outcome
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/chain-wizard-flexibility.md, ContractName:Plans/storage-plan.md
+
+### Runtime visibility
+Active Interview work blocks must show the effective runtime state required by the shared runtime owner docs.
+
+Assistant-invoked `/dev` and live command work uses shell-owned terminal/output/ports and `/output/ports` surfaces; chat must not invent a parallel dev-output model.

@@ -1,0 +1,415 @@
+<<< CONTEXT_BEFORE canonical_document_lines=14259-14270 >>>
+L00014259	  - "`parent_failure_class`"
+L00014260	  - "ContractRef: EventType:remediation.spawned, ContractName:Plans/Executor_Protocol.md"
+L00014261	  - "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md"
+L00014262	compatibility_only_notes:
+L00014263	  - "`run.remediation_started` is a deprecated legacy alias for remediation.spawned."
+L00014264	negative_constraints:
+L00014265	  - "New producers MUST emit remediation.spawned instead of run.remediation_started."
+L00014266	owner_hints:
+L00014267	  - Plans/Contracts_V0.md
+L00014268	  - Plans/Executor_Protocol.md
+L00014269	```
+L00014270	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=14271-14656 >>>
+L00014271	### CV-230 - Remediation Resolved Alias And Payload
+L00014272	
+L00014273	```yaml
+L00014274	plan_unit_id: CV-230
+L00014275	unit_type: compatibility_disposition
+L00014276	status: accepted
+L00014277	owner_doc: Plans/Contracts_V0.md
+L00014278	canonical_text: >-
+L00014279	  remediation.resolved replaces deprecated run.remediation_completed and
+L00014280	  preserves remediation resolution payload fields; the resolution enum is fixed,
+L00014281	  superseded, abandoned, or replan_required; legacy success|failed|ceiling_exceeded maps through
+L00014282	  explicit compatibility rules and remediation_ceiling_exceeded remains a blocked_reason_code.
+L00014283	gui_related: false
+L00014284	gui_classification_reason: This unit defines remediation event compatibility and payload fields.
+L00014285	split_recommended: false
+L00014286	depends_on: [CV-229]
+L00014287	unblocks: [CV-243, CV-246]
+L00014288	acceptance_criteria:
+L00014289	  - "New producers emit remediation.resolved instead of run.remediation_completed."
+L00014290	  - "Payload preserves run_id, node_id, remediation_root_id, child_attempt_id, resolution, and ts."
+L00014291	  - "resolution accepts fixed, superseded, abandoned, and replan_required only."
+L00014292	  - "Compatibility imports map success -> fixed, ceiling_exceeded -> replan_required, and failed -> abandoned only for terminal legacy failures."
+L00014293	  - "remediation_ceiling_exceeded remains a blocked_reason_code."
+L00014294	validation_surfaces:
+L00014295	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014296	  - python3 scripts/pm-plan-index.py validate
+L00014297	risk_class: remediation_resolved_alias_payload_drift
+L00014298	reasoning_tier: high
+L00014299	context_scope: remediation_resolved_payload_compatibility
+L00014300	implementation_surfaces:
+L00014301	  - Plans/Contracts_V0.md
+L00014302	  - Plans/Executor_Protocol.md
+L00014303	  - Plans/storage-plan.md
+L00014304	node_compile_hint:
+L00014305	  mode: remediation_resolved_payload_compatibility
+L00014306	  create_worknodes: false
+L00014307	source_lineage:
+L00014308	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0091
+L00014309	  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/design_atoms.jsonl:13
+L00014310	  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/records/decisions.jsonl:10
+L00014311	  - Plans/ledgers/v2/pldg-20260613-001-cleanup-fable-audit/source_shards/section-a-conflicting-canon.md:20
+L00014312	preserved_exact_tokens:
+L00014313	  - "`remediation.resolved`"
+L00014314	  - "`run.remediation_completed`"
+L00014315	  - "`remediation_root_id`"
+L00014316	  - "`child_attempt_id`"
+L00014317	  - "`resolution`"
+L00014318	  - "`fixed`"
+L00014319	  - "`superseded`"
+L00014320	  - "`abandoned`"
+L00014321	  - "`replan_required`"
+L00014322	  - "`remediation_ceiling_exceeded`"
+L00014323	  - "`blocked_reason_code`"
+L00014324	  - "`success|failed|ceiling_exceeded`"
+L00014325	  - "success -> fixed"
+L00014326	  - "ceiling_exceeded -> replan_required"
+L00014327	  - "failed -> abandoned"
+L00014328	  - "ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md"
+L00014329	compatibility_only_notes:
+L00014330	  - "`run.remediation_completed` is a deprecated legacy alias for remediation.resolved."
+L00014331	  - "The legacy remediation completion enum success|failed|ceiling_exceeded is source-lineage only."
+L00014332	  - "failed maps to abandoned only when the legacy producer reported terminal failure; otherwise a current value must be explicit."
+L00014333	negative_constraints:
+L00014334	  - "remediation_ceiling_exceeded must not become a remediation.resolved resolution value."
+L00014335	  - "Legacy failed must not be guessed into abandoned for non-terminal failures."
+L00014336	owner_hints:
+L00014337	  - Plans/Contracts_V0.md
+L00014338	  - Plans/Executor_Protocol.md
+L00014339	```
+L00014340	
+L00014341	### CV-231 - Plan Decomposition Degraded Payload
+L00014342	
+L00014343	```yaml
+L00014344	plan_unit_id: CV-231
+L00014345	unit_type: requirement
+L00014346	status: accepted
+L00014347	owner_doc: Plans/Contracts_V0.md
+L00014348	canonical_text: >-
+L00014349	  plan.decomposition_degraded minimum payload preserves project_id,
+L00014350	  source_stage, reason_code, original_shape, degraded_shape, evidence_ref, and
+L00014351	  timestamp.
+L00014352	gui_related: false
+L00014353	gui_classification_reason: This unit defines degradation event payload fields.
+L00014354	split_recommended: false
+L00014355	depends_on: []
+L00014356	unblocks: [CV-235, CV-236]
+L00014357	acceptance_criteria:
+L00014358	  - "plan.decomposition_degraded payload includes project_id, source_stage, reason_code, original_shape, degraded_shape, evidence_ref, and ts."
+L00014359	validation_surfaces:
+L00014360	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014361	  - python3 scripts/pm-plan-index.py validate
+L00014362	risk_class: decomposition_degraded_payload_loss
+L00014363	reasoning_tier: standard
+L00014364	context_scope: plan_decomposition_degraded_payload
+L00014365	implementation_surfaces:
+L00014366	  - Plans/Contracts_V0.md
+L00014367	node_compile_hint:
+L00014368	  mode: plan_decomposition_degraded_payload_contract
+L00014369	  create_worknodes: false
+L00014370	source_lineage:
+L00014371	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0093
+L00014372	preserved_exact_tokens:
+L00014373	  - "`plan.decomposition_degraded`"
+L00014374	  - "`project_id`"
+L00014375	  - "`source_stage`"
+L00014376	  - "`reason_code`"
+L00014377	  - "`original_shape`"
+L00014378	  - "`degraded_shape`"
+L00014379	  - "`evidence_ref`"
+L00014380	negative_constraints: []
+L00014381	owner_hints:
+L00014382	  - Plans/Contracts_V0.md
+L00014383	```
+L00014384	
+L00014385	### CV-232 - Graph Integrity Failed Payload
+L00014386	
+L00014387	```yaml
+L00014388	plan_unit_id: CV-232
+L00014389	unit_type: requirement
+L00014390	status: accepted
+L00014391	owner_doc: Plans/Contracts_V0.md
+L00014392	canonical_text: >-
+L00014393	  run.graph_integrity_failed minimum payload preserves run_id, reason_code,
+L00014394	  detail_ref, replan_generation, and timestamp.
+L00014395	gui_related: false
+L00014396	gui_classification_reason: This unit defines graph integrity event payload fields.
+L00014397	split_recommended: false
+L00014398	depends_on: []
+L00014399	unblocks: [CV-235]
+L00014400	acceptance_criteria:
+L00014401	  - "run.graph_integrity_failed payload includes run_id, reason_code, detail_ref, replan_generation, and ts."
+L00014402	validation_surfaces:
+L00014403	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014404	  - python3 scripts/pm-plan-index.py validate
+L00014405	risk_class: graph_integrity_failed_payload_loss
+L00014406	reasoning_tier: standard
+L00014407	context_scope: graph_integrity_failed_payload
+L00014408	implementation_surfaces:
+L00014409	  - Plans/Contracts_V0.md
+L00014410	node_compile_hint:
+L00014411	  mode: graph_integrity_failed_payload_contract
+L00014412	  create_worknodes: false
+L00014413	source_lineage:
+L00014414	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0094
+L00014415	preserved_exact_tokens:
+L00014416	  - "`run.graph_integrity_failed`"
+L00014417	  - "`run_id`"
+L00014418	  - "`reason_code`"
+L00014419	  - "`detail_ref`"
+L00014420	  - "`replan_generation`"
+L00014421	negative_constraints: []
+L00014422	owner_hints:
+L00014423	  - Plans/Contracts_V0.md
+L00014424	```
+L00014425	
+L00014426	### CV-233 - Wizard Blocked Routing Payload
+L00014427	
+L00014428	```yaml
+L00014429	plan_unit_id: CV-233
+L00014430	unit_type: constraint
+L00014431	status: accepted
+L00014432	owner_doc: Plans/Contracts_V0.md
+L00014433	canonical_text: >-
+L00014434	  wizard.blocked is not standalone navigation or blocked-state ownership; it
+L00014435	  decodes through route_target plus blocked/remediation identity, with resume_url
+L00014436	  as serialized transport and report_ref/detail_ref as inspection references.
+L00014437	gui_related: false
+L00014438	gui_classification_reason: This unit defines wizard blocked runtime routing and payload semantics.
+L00014439	split_recommended: false
+L00014440	depends_on: []
+L00014441	unblocks: [CV-234, CV-235]
+L00014442	acceptance_criteria:
+L00014443	  - "wizard.blocked decodes through route_target plus blocked/remediation identity."
+L00014444	  - "resume_url remains serialized transport only."
+L00014445	  - "Payload preserves wizard_id, thread_id, round_count, report_ref, resume_url, and ts."
+L00014446	validation_surfaces:
+L00014447	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014448	  - python3 scripts/pm-plan-index.py validate
+L00014449	risk_class: wizard_blocked_route_ownership_drift
+L00014450	reasoning_tier: high
+L00014451	context_scope: wizard_blocked_routing_payload
+L00014452	implementation_surfaces:
+L00014453	  - Plans/Contracts_V0.md
+L00014454	node_compile_hint:
+L00014455	  mode: wizard_blocked_route_payload_contract
+L00014456	  create_worknodes: false
+L00014457	source_lineage:
+L00014458	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0096
+L00014459	preserved_exact_tokens:
+L00014460	  - "`wizard.blocked`"
+L00014461	  - "`route_target`"
+L00014462	  - "`resume_url`"
+L00014463	  - "`report_ref`"
+L00014464	  - "`detail_ref`"
+L00014465	  - "`wizard_id`"
+L00014466	  - "`thread_id?`"
+L00014467	  - "`round_count`"
+L00014468	negative_constraints:
+L00014469	  - "wizard.blocked must not become standalone navigation or blocked-state ownership."
+L00014470	owner_hints:
+L00014471	  - Plans/Contracts_V0.md
+L00014472	```
+L00014473	
+L00014474	### CV-234 - Wizard Unblocked Payload
+L00014475	
+L00014476	```yaml
+L00014477	plan_unit_id: CV-234
+L00014478	unit_type: requirement
+L00014479	status: accepted
+L00014480	owner_doc: Plans/Contracts_V0.md
+L00014481	canonical_text: >-
+L00014482	  wizard.unblocked minimum payload preserves wizard_id, optional thread_id,
+L00014483	  resolution_source, and timestamp.
+L00014484	gui_related: false
+L00014485	gui_classification_reason: This unit defines wizard unblocked event payload fields.
+L00014486	split_recommended: false
+L00014487	depends_on: [CV-233]
+L00014488	unblocks: []
+L00014489	acceptance_criteria:
+L00014490	  - "wizard.unblocked payload includes wizard_id, thread_id, resolution_source, and ts."
+L00014491	validation_surfaces:
+L00014492	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014493	  - python3 scripts/pm-plan-index.py validate
+L00014494	risk_class: wizard_unblocked_payload_loss
+L00014495	reasoning_tier: standard
+L00014496	context_scope: wizard_unblocked_payload
+L00014497	implementation_surfaces:
+L00014498	  - Plans/Contracts_V0.md
+L00014499	node_compile_hint:
+L00014500	  mode: wizard_unblocked_payload_contract
+L00014501	  create_worknodes: false
+L00014502	source_lineage:
+L00014503	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0097
+L00014504	preserved_exact_tokens:
+L00014505	  - "`wizard.unblocked`"
+L00014506	  - "`wizard_id`"
+L00014507	  - "`thread_id?`"
+L00014508	  - "`resolution_source`"
+L00014509	negative_constraints: []
+L00014510	owner_hints:
+L00014511	  - Plans/Contracts_V0.md
+L00014512	```
+L00014513	
+L00014514	### CV-235 - Canonical Event Projection Derivation
+L00014515	
+L00014516	```yaml
+L00014517	plan_unit_id: CV-235
+L00014518	unit_type: constraint
+L00014519	status: accepted
+L00014520	owner_doc: Plans/Contracts_V0.md
+L00014521	canonical_text: >-
+L00014522	  The scheduler, degradation, wizard, and recovery events in this packet are
+L00014523	  canonical ledger events, not debug-only instrumentation; all UI and storage
+L00014524	  projections derive from these events or fields normatively referenced by
+L00014525	  them.
+L00014526	gui_related: true
+L00014527	gui_classification_reason: This unit constrains UI and storage projections over canonical events.
+L00014528	split_recommended: false
+L00014529	depends_on: [CV-231, CV-232, CV-233]
+L00014530	unblocks: []
+L00014531	acceptance_criteria:
+L00014532	  - "Events above remain canonical ledger events."
+L00014533	  - "UI and storage projections derive from these events or normatively referenced fields."
+L00014534	  - "Debug-only instrumentation does not replace canonical event identity."
+L00014535	validation_surfaces:
+L00014536	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014537	  - python3 scripts/pm-plan-index.py validate
+L00014538	risk_class: projection_derivation_drift
+L00014539	reasoning_tier: high
+L00014540	context_scope: canonical_event_projection_derivation
+L00014541	implementation_surfaces:
+L00014542	  - Plans/Contracts_V0.md
+L00014543	  - Plans/storage-plan.md
+L00014544	node_compile_hint:
+L00014545	  mode: canonical_event_projection_derivation
+L00014546	  create_worknodes: false
+L00014547	source_lineage:
+L00014548	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0098
+L00014549	preserved_exact_tokens:
+L00014550	  - "debug-only instrumentation"
+L00014551	  - "UI"
+L00014552	  - "storage projections"
+L00014553	negative_constraints:
+L00014554	  - "Canonical ledger events must not be reduced to debug-only instrumentation."
+L00014555	owner_hints:
+L00014556	  - Plans/Contracts_V0.md
+L00014557	  - Plans/storage-plan.md
+L00014558	```
+L00014559	
+L00014560	### CV-236 - Safe-Point Recovery Boundary And Graph Lock
+L00014561	
+L00014562	```yaml
+L00014563	plan_unit_id: CV-236
+L00014564	unit_type: constraint
+L00014565	status: accepted
+L00014566	owner_doc: Plans/Contracts_V0.md
+L00014567	canonical_text: >-
+L00014568	  safe_point.* events are runtime-internal recovery records distinct from
+L00014569	  user-facing restore_point.* and rollback.* contracts, and
+L00014570	  plan.decomposition_degraded is allowed only before canonical graph lock.
+L00014571	gui_related: true
+L00014572	gui_classification_reason: This unit distinguishes internal recovery records from user-facing recovery contracts.
+L00014573	split_recommended: false
+L00014574	depends_on: [CV-224, CV-231]
+L00014575	unblocks: []
+L00014576	acceptance_criteria:
+L00014577	  - "safe_point.* remains runtime-internal recovery record vocabulary."
+L00014578	  - "restore_point.* and rollback.* remain distinct user-facing contracts."
+L00014579	  - "plan.decomposition_degraded is allowed only before canonical graph lock."
+L00014580	validation_surfaces:
+L00014581	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014582	  - python3 scripts/pm-plan-index.py validate
+L00014583	risk_class: recovery_boundary_graph_lock_drift
+L00014584	reasoning_tier: high
+L00014585	context_scope: safe_point_recovery_graph_lock_boundary
+L00014586	implementation_surfaces:
+L00014587	  - Plans/Contracts_V0.md
+L00014588	node_compile_hint:
+L00014589	  mode: safe_point_recovery_graph_lock_boundary
+L00014590	  create_worknodes: false
+L00014591	source_lineage:
+L00014592	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0098
+L00014593	preserved_exact_tokens:
+L00014594	  - "`safe_point.*`"
+L00014595	  - "`restore_point.*`"
+L00014596	  - "`rollback.*`"
+L00014597	  - "`plan.decomposition_degraded`"
+L00014598	  - "canonical graph lock"
+L00014599	negative_constraints:
+L00014600	  - "safe_point.* runtime-internal recovery records must not be collapsed into user-facing restore_point.* or rollback.* contracts."
+L00014601	owner_hints:
+L00014602	  - Plans/Contracts_V0.md
+L00014603	```
+L00014604	
+L00014605	### CV-237 - Scheduler Addendum Required Fields
+L00014606	
+L00014607	```yaml
+L00014608	plan_unit_id: CV-237
+L00014609	unit_type: requirement
+L00014610	status: accepted
+L00014611	owner_doc: Plans/Contracts_V0.md
+L00014612	canonical_text: >-
+L00014613	  Runtime scheduler addendum fields preserve run_id, thread_id,
+L00014614	  replan_generation, wake_reason, available_slots, ready_nodes with score
+L00014615	  breakdown terms, selected_nodes, non_selected with non_selected_reason, and
+L00014616	  capacity summary.
+L00014617	gui_related: false
+L00014618	gui_classification_reason: This unit defines scheduler event payload fields.
+L00014619	split_recommended: false
+L00014620	depends_on: [CV-215, CV-216]
+L00014621	unblocks: [CV-238, CV-239]
+L00014622	acceptance_criteria:
+L00014623	  - "Scheduler pass fields preserve run_id, thread_id, replan_generation, wake_reason, available_slots, ready_nodes, selected_nodes, non_selected, non_selected_reason, and capacity summary."
+L00014624	  - "Wake reason semantics remain aligned with Executor Protocol."
+L00014625	validation_surfaces:
+L00014626	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014627	  - python3 scripts/pm-plan-index.py validate
+L00014628	risk_class: scheduler_addendum_field_loss
+L00014629	reasoning_tier: high
+L00014630	context_scope: runtime_scheduler_addendum_fields
+L00014631	implementation_surfaces:
+L00014632	  - Plans/Contracts_V0.md
+L00014633	  - Plans/Executor_Protocol.md
+L00014634	node_compile_hint:
+L00014635	  mode: scheduler_addendum_required_fields
+L00014636	  create_worknodes: false
+L00014637	source_lineage:
+L00014638	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0099
+L00014639	preserved_exact_tokens:
+L00014640	  - "`run_id`"
+L00014641	  - "`thread_id`"
+L00014642	  - "`replan_generation`"
+L00014643	  - "`wake_reason`"
+L00014644	  - "`available_slots`"
+L00014645	  - "`ready_nodes[]`"
+L00014646	  - "`selected_nodes[]`"
+L00014647	  - "`non_selected[]`"
+L00014648	  - "`non_selected_reason`"
+L00014649	  - "capacity summary"
+L00014650	  - "ContractRef: Plans/Executor_Protocol.md#Wake reasons and coalescing"
+L00014651	negative_constraints: []
+L00014652	owner_hints:
+L00014653	  - Plans/Contracts_V0.md
+L00014654	  - Plans/Executor_Protocol.md
+L00014655	```
+L00014656	
+
+<<< CONTEXT_AFTER canonical_document_lines=14657-14668 >>>
+L00014657	### CV-238 - Startup-Recovered Scheduler Pass
+L00014658	
+L00014659	```yaml
+L00014660	plan_unit_id: CV-238
+L00014661	unit_type: requirement
+L00014662	status: accepted
+L00014663	owner_doc: Plans/Contracts_V0.md
+L00014664	canonical_text: >-
+L00014665	  The first scheduler pass after startup recovery persists wake_reason as
+L00014666	  startup_recovered, and blocked/recovery wake ownership is carried by
+L00014667	  scheduler.pass rather than inferred from prompt text.
+L00014668	gui_related: false

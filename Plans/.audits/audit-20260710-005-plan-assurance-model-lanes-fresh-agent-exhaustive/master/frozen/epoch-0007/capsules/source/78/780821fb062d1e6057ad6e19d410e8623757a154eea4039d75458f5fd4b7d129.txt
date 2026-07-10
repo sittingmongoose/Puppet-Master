@@ -1,0 +1,384 @@
+<<< CONTEXT_BEFORE canonical_document_lines=12750-12761 >>>
+L00012750	- "require safe-point restore before retry"
+L00012751	- "workspace must be rolled back to a known baseline"
+L00012752	- "retryable transient error"
+L00012753	negative_constraints:
+L00012754	- "FileSafe must not silently convert a denial into a retryable transient error."
+L00012755	compatibility_only_notes: []
+L00012756	stale_retired_dispositions: []
+L00012757	owner_boundary_notes: []
+L00012758	owner_hints:
+L00012759	- "Plans/FileSafe.md"
+L00012760	```
+L00012761	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=12762-13116 >>>
+L00012762	### F2-181 - Runtime Blocked Restore Override Mapping Scope
+L00012763	
+L00012764	```yaml
+L00012765	plan_unit_id: F2-181
+L00012766	unit_type: requirement
+L00012767	status: accepted
+L00012768	owner_doc: Plans/FileSafe.md
+L00012769	canonical_text: >-
+L00012770	  The FileSafe runtime blocked and restore override consolidation addendum defines FileSafe action
+L00012771	  mapping and persistence for blocked runtime episodes.
+L00012772	gui_related: false
+L00012773	gui_classification_reason: >-
+L00012774	  This unit defines runtime blocked-state, recovery, persistence, or migration behavior rather
+L00012775	  than visual presentation.
+L00012776	split_recommended: false
+L00012777	depends_on: []
+L00012778	unblocks: []
+L00012779	acceptance_criteria:
+L00012780	- "The covered source span remains losslessly available for exact-text audit."
+L00012781	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00012782	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00012783	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00012784	validation_surfaces:
+L00012785	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00012786	- "python3 scripts/pm-plan-index.py validate"
+L00012787	risk_class: filesafe_drift
+L00012788	reasoning_tier: standard
+L00012789	context_scope: filesafe_standardization
+L00012790	implementation_surfaces:
+L00012791	- "Plans/FileSafe.md"
+L00012792	node_compile_hint:
+L00012793	  mode: runtime_blocked_restore_override_mapping_scope
+L00012794	  create_worknodes: false
+L00012795	source_lineage:
+L00012796	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0106"
+L00012797	preserved_exact_tokens:
+L00012798	- "FileSafe Runtime Blocked and Restore Override Consolidation Addendum (2026-03-09)"
+L00012799	- "fileSafe Action Mapping and Persistence"
+L00012800	negative_constraints: []
+L00012801	compatibility_only_notes: []
+L00012802	stale_retired_dispositions: []
+L00012803	owner_boundary_notes: []
+L00012804	owner_hints:
+L00012805	- "Plans/FileSafe.md"
+L00012806	```
+L00012807	
+L00012808	### F2-182 - Canonical FileSafe Blocked Payload Fields
+L00012809	
+L00012810	```yaml
+L00012811	plan_unit_id: F2-182
+L00012812	unit_type: requirement
+L00012813	status: accepted
+L00012814	owner_doc: Plans/FileSafe.md
+L00012815	canonical_text: >-
+L00012816	  FileSafe blocked payloads must use the canonical blocked payload fields blocked_reason_code =
+L00012817	  filesafe_blocked, allowed_action_ids, preserved_local_work, requires_safe_point_restore, and
+L00012818	  detail_ref.
+L00012819	gui_related: false
+L00012820	gui_classification_reason: >-
+L00012821	  This unit defines runtime blocked-state, recovery, persistence, or migration behavior rather
+L00012822	  than visual presentation.
+L00012823	split_recommended: false
+L00012824	depends_on: []
+L00012825	unblocks: []
+L00012826	acceptance_criteria:
+L00012827	- "The covered source span remains losslessly available for exact-text audit."
+L00012828	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00012829	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00012830	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00012831	validation_surfaces:
+L00012832	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00012833	- "python3 scripts/pm-plan-index.py validate"
+L00012834	risk_class: filesafe_drift
+L00012835	reasoning_tier: standard
+L00012836	context_scope: filesafe_standardization
+L00012837	implementation_surfaces:
+L00012838	- "Plans/FileSafe.md"
+L00012839	node_compile_hint:
+L00012840	  mode: canonical_filesafe_blocked_payload_fields
+L00012841	  create_worknodes: false
+L00012842	source_lineage:
+L00012843	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0107"
+L00012844	preserved_exact_tokens:
+L00012845	- "blocked_reason_code = filesafe_blocked"
+L00012846	- "allowed_action_ids[]"
+L00012847	- "preserved_local_work"
+L00012848	- "requires_safe_point_restore?"
+L00012849	- "detail_ref?"
+L00012850	- "canonical blocked payload"
+L00012851	negative_constraints: []
+L00012852	compatibility_only_notes: []
+L00012853	stale_retired_dispositions: []
+L00012854	owner_boundary_notes:
+L00012855	- "ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md"
+L00012856	owner_hints:
+L00012857	- "Plans/FileSafe.md"
+L00012858	```
+L00012859	
+L00012860	### F2-183 - Shared Action IDs And Local Affordance Labels
+L00012861	
+L00012862	```yaml
+L00012863	plan_unit_id: F2-183
+L00012864	unit_type: requirement
+L00012865	status: accepted
+L00012866	owner_doc: Plans/FileSafe.md
+L00012867	canonical_text: >-
+L00012868	  Shared runtime action IDs remain the canonical recovery families, while labels such as Approve
+L00012869	  and add to allowlist and Edit and retry are FileSafe-local affordances unless the global action
+L00012870	  enum adopts them.
+L00012871	gui_related: false
+L00012872	gui_classification_reason: >-
+L00012873	  This unit defines runtime blocked-state, recovery, persistence, or migration behavior rather
+L00012874	  than visual presentation.
+L00012875	split_recommended: true
+L00012876	depends_on: []
+L00012877	unblocks: []
+L00012878	acceptance_criteria:
+L00012879	- "The covered source span remains losslessly available for exact-text audit."
+L00012880	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00012881	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00012882	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00012883	validation_surfaces:
+L00012884	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00012885	- "python3 scripts/pm-plan-index.py validate"
+L00012886	risk_class: filesafe_drift
+L00012887	reasoning_tier: standard
+L00012888	context_scope: filesafe_standardization
+L00012889	implementation_surfaces:
+L00012890	- "Plans/FileSafe.md"
+L00012891	node_compile_hint:
+L00012892	  mode: shared_action_ids_and_local_affordance_labels
+L00012893	  create_worknodes: false
+L00012894	source_lineage:
+L00012895	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0108"
+L00012896	preserved_exact_tokens:
+L00012897	- "Shared runtime action IDs"
+L00012898	- "canonical recovery families"
+L00012899	- "Approve and add to allowlist"
+L00012900	- "Edit and retry"
+L00012901	- "FileSafe-local affordances"
+L00012902	- "global action enum"
+L00012903	negative_constraints:
+L00012904	- "FileSafe-local affordance labels are not new shared runtime action IDs unless the global action enum explicitly adopts them."
+L00012905	compatibility_only_notes: []
+L00012906	stale_retired_dispositions: []
+L00012907	owner_boundary_notes: []
+L00012908	owner_hints:
+L00012909	- "Plans/FileSafe.md"
+L00012910	```
+L00012911	
+L00012912	### F2-184 - FileSafe Blocked Action Mapping And Retired Field Names
+L00012913	
+L00012914	```yaml
+L00012915	plan_unit_id: F2-184
+L00012916	unit_type: requirement
+L00012917	status: accepted
+L00012918	owner_doc: Plans/FileSafe.md
+L00012919	canonical_text: >-
+L00012920	  Runtime-facing FileSafe blocks use canonical blocked_reason_code plus ordered allowed_action_ids
+L00012921	  and may map safely offered local recovery to approve_once, filesafe_add_rule, and
+L00012922	  open_filesafe_settings while retiring recovery_options and allowed_actions as shared fields.
+L00012923	gui_related: false
+L00012924	gui_classification_reason: >-
+L00012925	  This unit defines runtime blocked-state, recovery, persistence, or migration behavior rather
+L00012926	  than visual presentation.
+L00012927	split_recommended: true
+L00012928	depends_on: []
+L00012929	unblocks: []
+L00012930	acceptance_criteria:
+L00012931	- "The covered source span remains losslessly available for exact-text audit."
+L00012932	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00012933	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00012934	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00012935	validation_surfaces:
+L00012936	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00012937	- "python3 scripts/pm-plan-index.py validate"
+L00012938	risk_class: filesafe_drift
+L00012939	reasoning_tier: standard
+L00012940	context_scope: filesafe_standardization
+L00012941	implementation_surfaces:
+L00012942	- "Plans/FileSafe.md"
+L00012943	node_compile_hint:
+L00012944	  mode: filesafe_blocked_action_mapping_and_retired_field_names
+L00012945	  create_worknodes: false
+L00012946	source_lineage:
+L00012947	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0108"
+L00012948	preserved_exact_tokens:
+L00012949	- "runtime-facing FileSafe blocks"
+L00012950	- "ordered `allowed_action_ids[]`"
+L00012951	- "approve_once"
+L00012952	- "filesafe_add_rule"
+L00012953	- "open_filesafe_settings"
+L00012954	- "recovery_options[]"
+L00012955	- "allowed_actions[]"
+L00012956	negative_constraints:
+L00012957	- "recovery_options[] and allowed_actions[] are not canonical shared runtime fields."
+L00012958	compatibility_only_notes: []
+L00012959	stale_retired_dispositions:
+L00012960	- "recovery_options[] and allowed_actions[] are retired/noncanonical for shared runtime payloads."
+L00012961	owner_boundary_notes: []
+L00012962	owner_hints:
+L00012963	- "Plans/FileSafe.md"
+L00012964	```
+L00012965	
+L00012966	### F2-185 - Child Run And Rerun Identity Preservation
+L00012967	
+L00012968	```yaml
+L00012969	plan_unit_id: F2-185
+L00012970	unit_type: requirement
+L00012971	status: accepted
+L00012972	owner_doc: Plans/FileSafe.md
+L00012973	canonical_text: >-
+L00012974	  Child runs blocked by FileSafe remain child runs with canonical lineage and status history, and
+L00012975	  rerun or restore behavior preserves canonical child, run, and worktree identities.
+L00012976	gui_related: false
+L00012977	gui_classification_reason: >-
+L00012978	  This unit defines runtime blocked-state, recovery, persistence, or migration behavior rather
+L00012979	  than visual presentation.
+L00012980	split_recommended: true
+L00012981	depends_on: []
+L00012982	unblocks: []
+L00012983	acceptance_criteria:
+L00012984	- "The covered source span remains losslessly available for exact-text audit."
+L00012985	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00012986	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00012987	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00012988	validation_surfaces:
+L00012989	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00012990	- "python3 scripts/pm-plan-index.py validate"
+L00012991	risk_class: filesafe_drift
+L00012992	reasoning_tier: standard
+L00012993	context_scope: filesafe_standardization
+L00012994	implementation_surfaces:
+L00012995	- "Plans/FileSafe.md"
+L00012996	node_compile_hint:
+L00012997	  mode: child_run_and_rerun_identity_preservation
+L00012998	  create_worknodes: false
+L00012999	source_lineage:
+L00013000	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0108"
+L00013001	preserved_exact_tokens:
+L00013002	- "child runs blocked by FileSafe"
+L00013003	- "canonical lineage"
+L00013004	- "status history"
+L00013005	- "canonical child/run/worktree identities"
+L00013006	negative_constraints: []
+L00013007	compatibility_only_notes: []
+L00013008	stale_retired_dispositions: []
+L00013009	owner_boundary_notes: []
+L00013010	owner_hints:
+L00013011	- "Plans/FileSafe.md"
+L00013012	```
+L00013013	
+L00013014	### F2-186 - Restore Override Rerun Path
+L00013015	
+L00013016	```yaml
+L00013017	plan_unit_id: F2-186
+L00013018	unit_type: requirement
+L00013019	status: accepted
+L00013020	owner_doc: Plans/FileSafe.md
+L00013021	canonical_text: >-
+L00013022	  filesafe_blocked is not retryable by default; if local changes happened before the block
+L00013023	  finalized, the projection exposes preserved_local_work and requires_safe_point_restore, and the
+L00013024	  only legal rerun path is restore_safe_point_then_retry.
+L00013025	gui_related: false
+L00013026	gui_classification_reason: >-
+L00013027	  This unit defines runtime blocked-state, recovery, persistence, or migration behavior rather
+L00013028	  than visual presentation.
+L00013029	split_recommended: false
+L00013030	depends_on: []
+L00013031	unblocks: []
+L00013032	acceptance_criteria:
+L00013033	- "The covered source span remains losslessly available for exact-text audit."
+L00013034	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00013035	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00013036	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00013037	validation_surfaces:
+L00013038	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00013039	- "python3 scripts/pm-plan-index.py validate"
+L00013040	risk_class: filesafe_drift
+L00013041	reasoning_tier: standard
+L00013042	context_scope: filesafe_standardization
+L00013043	implementation_surfaces:
+L00013044	- "Plans/FileSafe.md"
+L00013045	node_compile_hint:
+L00013046	  mode: restore_override_rerun_path
+L00013047	  create_worknodes: false
+L00013048	source_lineage:
+L00013049	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0109"
+L00013050	preserved_exact_tokens:
+L00013051	- "filesafe_blocked"
+L00013052	- "not retryable by default"
+L00013053	- "preserved_local_work = true"
+L00013054	- "requires_safe_point_restore = true"
+L00013055	- "restore_safe_point_then_retry"
+L00013056	negative_constraints:
+L00013057	- "When requires_safe_point_restore is true, restore_safe_point_then_retry is the only legal rerun path."
+L00013058	compatibility_only_notes: []
+L00013059	stale_retired_dispositions: []
+L00013060	owner_boundary_notes: []
+L00013061	owner_hints:
+L00013062	- "Plans/FileSafe.md"
+L00013063	```
+L00013064	
+L00013065	### F2-187 - Persistent Runtime Episode And Handoff Reconstruction
+L00013066	
+L00013067	```yaml
+L00013068	plan_unit_id: F2-187
+L00013069	unit_type: requirement
+L00013070	status: accepted
+L00013071	owner_doc: Plans/FileSafe.md
+L00013072	canonical_text: >-
+L00013073	  A FileSafe block remains a persistent blocked runtime episode until resolved or superseded, does
+L00013074	  not define alternate child continuity or memory behavior, and uses canonical handoff
+L00013075	  reconstruction for rerun or restore after denial.
+L00013076	gui_related: false
+L00013077	gui_classification_reason: >-
+L00013078	  This unit defines runtime blocked-state, recovery, persistence, or migration behavior rather
+L00013079	  than visual presentation.
+L00013080	split_recommended: false
+L00013081	depends_on: []
+L00013082	unblocks: []
+L00013083	acceptance_criteria:
+L00013084	- "The covered source span remains losslessly available for exact-text audit."
+L00013085	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F2-001 coverage."
+L00013086	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00013087	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00013088	validation_surfaces:
+L00013089	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00013090	- "python3 scripts/pm-plan-index.py validate"
+L00013091	risk_class: filesafe_drift
+L00013092	reasoning_tier: standard
+L00013093	context_scope: filesafe_standardization
+L00013094	implementation_surfaces:
+L00013095	- "Plans/FileSafe.md"
+L00013096	node_compile_hint:
+L00013097	  mode: persistent_runtime_episode_and_handoff_reconstruction
+L00013098	  create_worknodes: false
+L00013099	source_lineage:
+L00013100	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileSafe-S0110"
+L00013101	preserved_exact_tokens:
+L00013102	- "persistent blocked runtime episode"
+L00013103	- "resolved or superseded"
+L00013104	- "alternate child continuity"
+L00013105	- "alternate memory behavior"
+L00013106	- "canonical handoff reconstruction"
+L00013107	negative_constraints:
+L00013108	- "FileSafe does not define alternate child continuity or alternate memory behavior."
+L00013109	compatibility_only_notes: []
+L00013110	stale_retired_dispositions: []
+L00013111	owner_boundary_notes:
+L00013112	- "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md"
+L00013113	owner_hints:
+L00013114	- "Plans/FileSafe.md"
+L00013115	```
+L00013116	
+
+<<< CONTEXT_AFTER canonical_document_lines=13117-13128 >>>
+L00013117	### F2-001 - FileSafe Retired Source-Preserving Bridge
+L00013118	
+L00013119	```yaml
+L00013120	plan_unit_id: F2-001
+L00013121	unit_type: compatibility_disposition
+L00013122	status: accepted
+L00013123	owner_doc: Plans/FileSafe.md
+L00013124	canonical_text: >-
+L00013125	  F2-001 is retained only as migration-lineage compatibility disposition for the retired FileSafe
+L00013126	  source-preserving bridge. Product coverage has been atomized into F2-002 through F2-187, and
+L00013127	  F2-001 must not re-own FileSafe product spans or use source_preserving_planunit compile mode.
+L00013128	gui_related: false

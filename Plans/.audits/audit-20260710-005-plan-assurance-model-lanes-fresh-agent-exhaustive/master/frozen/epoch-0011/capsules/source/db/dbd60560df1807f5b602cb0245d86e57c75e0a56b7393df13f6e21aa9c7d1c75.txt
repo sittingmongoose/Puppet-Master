@@ -1,0 +1,394 @@
+<<< CONTEXT_BEFORE canonical_document_lines=734-745 >>>
+L00000734	- graph generations
+L00000735	- historical lineage
+L00000736	- Plans/Executor_Protocol.md
+L00000737	negative_constraints: []
+L00000738	compatibility_only_notes: []
+L00000739	stale_retired_dispositions: []
+L00000740	owner_boundary_notes:
+L00000741	- Orchestrator_Page, Run_Graph_View, and Executor_Protocol own detailed orchestration behavior.
+L00000742	owner_hints:
+L00000743	- Plans/feature-list.md
+L00000744	```
+L00000745	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=746-1110 >>>
+L00000746	### FL-012 - Usage Recovery Runtime Records Summary
+L00000747	
+L00000748	```yaml
+L00000749	plan_unit_id: FL-012
+L00000750	unit_type: requirement
+L00000751	status: accepted
+L00000752	owner_doc: Plans/feature-list.md
+L00000753	canonical_text: >-
+L00000754	  Usage, recovery, and analytics are runtime-native records using shared runtime identity, blocked-episode lineage, account pressure, and account-switch history so usage and recovery flows can reconstruct what happened through first-class runtime records.
+L00000755	gui_related: false
+L00000756	gui_classification_reason: This unit summarizes runtime identity and records, not GUI presentation.
+L00000757	split_recommended: true
+L00000758	depends_on: []
+L00000759	unblocks: []
+L00000760	acceptance_criteria:
+L00000761	- The covered source span remains losslessly available for exact-text audit.
+L00000762	- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+L00000763	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000764	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000765	validation_surfaces:
+L00000766	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000767	- python3 scripts/pm-plan-index.py validate
+L00000768	risk_class: feature_summary_drift
+L00000769	reasoning_tier: standard
+L00000770	context_scope: feature_list_standardization
+L00000771	implementation_surfaces:
+L00000772	- Plans/feature-list.md
+L00000773	node_compile_hint:
+L00000774	  mode: usage_recovery_runtime_records_summary
+L00000775	  create_worknodes: false
+L00000776	source_lineage:
+L00000777	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0009
+L00000778	preserved_exact_tokens:
+L00000779	- runtime-native records
+L00000780	- runtime-first
+L00000781	- not `tier_id`-first
+L00000782	- blocked-episode identity
+L00000783	- account pressure
+L00000784	- account-switch history
+L00000785	- shared runtime identity
+L00000786	negative_constraints: []
+L00000787	compatibility_only_notes:
+L00000788	- tier_id-first usage correlation is historical compatibility vocabulary, not live behavior.
+L00000789	stale_retired_dispositions: []
+L00000790	owner_boundary_notes:
+L00000791	- usage-feature, storage-plan, and Contracts_V0 own detailed usage and recovery contracts.
+L00000792	owner_hints:
+L00000793	- Plans/feature-list.md
+L00000794	split_recommendation_reason: Source span also describes explanatory user-facing surfaces, split into FL-013.
+L00000795	```
+L00000796	
+L00000797	### FL-013 - Usage Recovery Explanation Surface Summary
+L00000798	
+L00000799	```yaml
+L00000800	plan_unit_id: FL-013
+L00000801	unit_type: requirement
+L00000802	status: accepted
+L00000803	owner_doc: Plans/feature-list.md
+L00000804	canonical_text: >-
+L00000805	  Usage analysis and recovery flows explain what happened, who acted, and why the system transitioned between states.
+L00000806	gui_related: true
+L00000807	gui_classification_reason: This unit captures user-visible explanatory usage/recovery views.
+L00000808	split_recommended: true
+L00000809	depends_on: []
+L00000810	unblocks: []
+L00000811	acceptance_criteria:
+L00000812	- The covered source span remains losslessly available for exact-text audit.
+L00000813	- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+L00000814	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000815	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000816	validation_surfaces:
+L00000817	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000818	- python3 scripts/pm-plan-index.py validate
+L00000819	risk_class: feature_summary_drift
+L00000820	reasoning_tier: standard
+L00000821	context_scope: feature_list_standardization
+L00000822	implementation_surfaces:
+L00000823	- Plans/feature-list.md
+L00000824	node_compile_hint:
+L00000825	  mode: usage_recovery_explanation_surface_summary
+L00000826	  create_worknodes: false
+L00000827	source_lineage:
+L00000828	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0009
+L00000829	preserved_exact_tokens:
+L00000830	- explain what happened
+L00000831	- who acted
+L00000832	- why the system transitioned between states
+L00000833	- usage views
+L00000834	negative_constraints: []
+L00000835	compatibility_only_notes: []
+L00000836	stale_retired_dispositions: []
+L00000837	owner_boundary_notes:
+L00000838	- This unit isolates user-visible explanation consequences from runtime records.
+L00000839	owner_hints:
+L00000840	- Plans/feature-list.md
+L00000841	split_recommendation_reason: Split from FL-012 so GUI/user-visible explanation surfaces do not mix with backend runtime record ownership.
+L00000842	```
+L00000843	
+L00000844	### FL-014 - Runtime Storage Scheduler And Account Switch Alignment Summary
+L00000845	
+L00000846	```yaml
+L00000847	plan_unit_id: FL-014
+L00000848	unit_type: requirement
+L00000849	status: accepted
+L00000850	owner_doc: Plans/feature-list.md
+L00000851	canonical_text: >-
+L00000852	  Feature summaries describe the runtime/storage/schema backbone as attempt-scoped execution state with attempt_id, scheduler_lane, safe-point recovery, blocked lineage, package/seam/lane promotion, /storage/schema separation, deterministic scored ready-set scheduling, and append-only account-switch events.
+L00000853	gui_related: false
+L00000854	gui_classification_reason: This unit summarizes runtime/storage/schema and scheduler/account identity behavior, not GUI presentation.
+L00000855	split_recommended: false
+L00000856	depends_on: []
+L00000857	unblocks: []
+L00000858	acceptance_criteria:
+L00000859	- The covered source span remains losslessly available for exact-text audit.
+L00000860	- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+L00000861	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000862	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000863	validation_surfaces:
+L00000864	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000865	- python3 scripts/pm-plan-index.py validate
+L00000866	risk_class: feature_summary_drift
+L00000867	reasoning_tier: standard
+L00000868	context_scope: feature_list_standardization
+L00000869	implementation_surfaces:
+L00000870	- Plans/feature-list.md
+L00000871	node_compile_hint:
+L00000872	  mode: runtime_storage_scheduler_and_account_switch_alignment_summary
+L00000873	  create_worknodes: false
+L00000874	source_lineage:
+L00000875	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0010
+L00000876	preserved_exact_tokens:
+L00000877	- attempt_id
+L00000878	- scheduler_lane
+L00000879	- /storage/schema
+L00000880	- /phase/iteration
+L00000881	- tier_runtime_record
+L00000882	- tier_id
+L00000883	- scored ready-set
+L00000884	- node_id
+L00000885	- account.switched
+L00000886	- recent_switch_reason
+L00000887	- account_switch_reason
+L00000888	- requested account
+L00000889	- effective account
+L00000890	- ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Executor_Protocol.md
+L00000891	negative_constraints:
+L00000892	- Scheduler and recovery summaries must preserve deterministic scored ready-set behavior rather than drifting back to lexicographic `node_id` dispatch.
+L00000893	compatibility_only_notes:
+L00000894	- /phase/iteration, tier_runtime_record, and tier_id vocabulary is compatibility history.
+L00000895	stale_retired_dispositions: []
+L00000896	owner_boundary_notes:
+L00000897	- storage-plan, usage-feature, and Executor_Protocol own detailed runtime storage and scheduler behavior.
+L00000898	owner_hints:
+L00000899	- Plans/feature-list.md
+L00000900	```
+L00000901	
+L00000902	### FL-015 - Git Worktree Lineage Summary
+L00000903	
+L00000904	```yaml
+L00000905	plan_unit_id: FL-015
+L00000906	unit_type: requirement
+L00000907	status: accepted
+L00000908	owner_doc: Plans/feature-list.md
+L00000909	canonical_text: >-
+L00000910	  The Git/worktree feature family separates orchestration truth from concrete repository operations so historical execution lineage survives live worktree cleanup or rebinding, with lane/worktree lifecycle split between Orchestrator operational truth and Source Control Git actions.
+L00000911	gui_related: false
+L00000912	gui_classification_reason: This unit summarizes repository lineage and worktree ownership behavior, not GUI presentation.
+L00000913	split_recommended: false
+L00000914	depends_on: []
+L00000915	unblocks: []
+L00000916	acceptance_criteria:
+L00000917	- The covered source span remains losslessly available for exact-text audit.
+L00000918	- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+L00000919	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000920	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000921	validation_surfaces:
+L00000922	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000923	- python3 scripts/pm-plan-index.py validate
+L00000924	risk_class: feature_summary_drift
+L00000925	reasoning_tier: standard
+L00000926	context_scope: feature_list_standardization
+L00000927	implementation_surfaces:
+L00000928	- Plans/feature-list.md
+L00000929	node_compile_hint:
+L00000930	  mode: git_worktree_lineage_summary
+L00000931	  create_worknodes: false
+L00000932	source_lineage:
+L00000933	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0011
+L00000934	preserved_exact_tokens:
+L00000935	- lane/worktree lifecycle
+L00000936	- Orchestrator operational truth
+L00000937	- Source Control concrete Git actions
+L00000938	- historical lane identity
+L00000939	- live worktree cleanup
+L00000940	- ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/usage-feature.md
+L00000941	negative_constraints: []
+L00000942	compatibility_only_notes: []
+L00000943	stale_retired_dispositions: []
+L00000944	owner_boundary_notes:
+L00000945	- GitHub_Integration, WorktreeGitImprovement, storage-plan, Orchestrator_Page, Run_Graph_View, and usage-feature own detailed Git/worktree behavior.
+L00000946	owner_hints:
+L00000947	- Plans/feature-list.md
+L00000948	```
+L00000949	
+L00000950	### FL-016 - Markdown Mermaid Browser Preview Surface Summary
+L00000951	
+L00000952	```yaml
+L00000953	plan_unit_id: FL-016
+L00000954	unit_type: requirement
+L00000955	status: accepted
+L00000956	owner_doc: Plans/feature-list.md
+L00000957	canonical_text: >-
+L00000958	  Markdown, Mermaid, HTML, browser, preview, and image rendering are first-class visible surfaces across chat, editor preview, document panes, planning documents, detached preview/browser windows, and Slint app image rendering.
+L00000959	gui_related: true
+L00000960	gui_classification_reason: This unit summarizes visible rendering, preview, browser, and image surfaces.
+L00000961	split_recommended: true
+L00000962	depends_on: []
+L00000963	unblocks: []
+L00000964	acceptance_criteria:
+L00000965	- The covered source span remains losslessly available for exact-text audit.
+L00000966	- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+L00000967	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00000968	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000969	validation_surfaces:
+L00000970	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000971	- python3 scripts/pm-plan-index.py validate
+L00000972	risk_class: feature_summary_drift
+L00000973	reasoning_tier: standard
+L00000974	context_scope: feature_list_standardization
+L00000975	implementation_surfaces:
+L00000976	- Plans/feature-list.md
+L00000977	node_compile_hint:
+L00000978	  mode: markdown_mermaid_browser_preview_surface_summary
+L00000979	  create_worknodes: false
+L00000980	source_lineage:
+L00000981	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0012
+L00000982	preserved_exact_tokens:
+L00000983	- Markdown rendering
+L00000984	- Mermaid
+L00000985	- .mmd
+L00000986	- SVG (canonical)
+L00000987	- PNG (derived)
+L00000988	- HTML files
+L00000989	- rendered browser-like viewing
+L00000990	- Built-in browser
+L00000991	- rendered preview
+L00000992	- Image files render natively in the Slint app surface
+L00000993	- Detached preview/browser windows
+L00000994	negative_constraints: []
+L00000995	compatibility_only_notes: []
+L00000996	stale_retired_dispositions: []
+L00000997	owner_boundary_notes:
+L00000998	- FinalGUISpec, PMConcept, and Crosswalk own detailed rendering and preview behavior.
+L00000999	owner_hints:
+L00001000	- Plans/feature-list.md
+L00001001	split_recommendation_reason: Source span also includes source-canonical/trust and external-inspiration constraints, split into FL-017.
+L00001002	```
+L00001003	
+L00001004	### FL-017 - Source Canonical Rendering Trust And External Inspiration Constraints
+L00001005	
+L00001006	```yaml
+L00001007	plan_unit_id: FL-017
+L00001008	unit_type: requirement
+L00001009	status: accepted
+L00001010	owner_doc: Plans/feature-list.md
+L00001011	canonical_text: >-
+L00001012	  Rendering summaries preserve source-canonical editing, avoid hidden WYSIWYG replacement, separate browser/editor-tab product surfaces from web/read discovery lineage, use trust tiers for generated previews and full HTML/browser mode, and treat xeditor-monorepo as inspiration only.
+L00001013	gui_related: false
+L00001014	gui_classification_reason: This unit defines source-canonical and trust boundary constraints, not GUI presentation.
+L00001015	split_recommended: true
+L00001016	depends_on: []
+L00001017	unblocks: []
+L00001018	acceptance_criteria:
+L00001019	- The covered source span remains losslessly available for exact-text audit.
+L00001020	- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+L00001021	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001022	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001023	validation_surfaces:
+L00001024	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001025	- python3 scripts/pm-plan-index.py validate
+L00001026	risk_class: feature_summary_drift
+L00001027	reasoning_tier: standard
+L00001028	context_scope: feature_list_standardization
+L00001029	implementation_surfaces:
+L00001030	- Plans/feature-list.md
+L00001031	node_compile_hint:
+L00001032	  mode: source_canonical_rendering_trust_and_external_inspiration_constraints
+L00001033	  create_worknodes: false
+L00001034	source_lineage:
+L00001035	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0012
+L00001036	preserved_exact_tokens:
+L00001037	- source remains canonical
+L00001038	- no hidden document model
+L00001039	- hidden WYSIWYG
+L00001040	- web_search
+L00001041	- web_fetch
+L00001042	- read-website
+L00001043	- /site-reader
+L00001044	- restricted trust tier
+L00001045	- full HTML/browser mode
+L00001046	- xeditor-monorepo
+L00001047	- inspiration only
+L00001048	negative_constraints:
+L00001049	- Built-in browser, rendered preview, and click-to-context are separate from web/read tool lineage.
+L00001050	- Full Markdown support is centered on source-canonical editing plus rendered preview, not replacing Markdown with a hidden WYSIWYG model.
+L00001051	- xeditor-monorepo is not a strong candidate for direct adoption as an MVP-native PM core feature.
+L00001052	compatibility_only_notes: []
+L00001053	stale_retired_dispositions: []
+L00001054	owner_boundary_notes:
+L00001055	- This unit isolates non-GUI trust/source constraints from visible rendering surfaces.
+L00001056	owner_hints:
+L00001057	- Plans/feature-list.md
+L00001058	split_recommendation_reason: Split from FL-016 so trust and ownership constraints remain non-GUI.
+L00001059	```
+L00001060	
+L00001061	### FL-018 - Source Control GitHub Actions Docker MVP Consolidation Scope
+L00001062	
+L00001063	```yaml
+L00001064	plan_unit_id: FL-018
+L00001065	unit_type: requirement
+L00001066	status: accepted
+L00001067	owner_doc: Plans/feature-list.md
+L00001068	canonical_text: >-
+L00001069	  The Source Control, GitHub Actions, and Docker Manager MVP consolidation exposes lineage and operational pivots across coordinated first-class panels without fragmenting state ownership or inventing panel-local recovery semantics.
+L00001070	gui_related: true
+L00001071	gui_classification_reason: This unit summarizes first-class coordinated GUI panel scope for Source Control, GitHub Actions, and Docker Manager.
+L00001072	split_recommended: false
+L00001073	depends_on: []
+L00001074	unblocks: []
+L00001075	acceptance_criteria:
+L00001076	- The covered source span remains losslessly available for exact-text audit.
+L00001077	- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+L00001078	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00001079	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00001080	validation_surfaces:
+L00001081	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001082	- python3 scripts/pm-plan-index.py validate
+L00001083	risk_class: feature_summary_drift
+L00001084	reasoning_tier: standard
+L00001085	context_scope: feature_list_standardization
+L00001086	implementation_surfaces:
+L00001087	- Plans/feature-list.md
+L00001088	node_compile_hint:
+L00001089	  mode: sc_gha_docker_mvp_consolidation_scope
+L00001090	  create_worknodes: false
+L00001091	source_lineage:
+L00001092	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0013
+L00001093	preserved_exact_tokens:
+L00001094	- Source Control, GitHub Actions, and Docker Manager MVP Consolidation Addendum (2026-03-12)
+L00001095	- repository operations
+L00001096	- CI visibility
+L00001097	- container/runtime management
+L00001098	- first-class panels
+L00001099	- lineage and operational pivots
+L00001100	- panel-local recovery semantics
+L00001101	negative_constraints:
+L00001102	- Panel-local recovery semantics must not replace product-wide state ownership.
+L00001103	compatibility_only_notes: []
+L00001104	stale_retired_dispositions: []
+L00001105	owner_boundary_notes:
+L00001106	- FinalGUISpec, GitHub_Integration, and Containers_Registry_and_Unraid own detailed panel behavior.
+L00001107	owner_hints:
+L00001108	- Plans/feature-list.md
+L00001109	```
+L00001110	
+
+<<< CONTEXT_AFTER canonical_document_lines=1111-1122 >>>
+L00001111	### FL-019 - Source Control GitHub Actions Docker GUI Views
+L00001112	
+L00001113	```yaml
+L00001114	plan_unit_id: FL-019
+L00001115	unit_type: requirement
+L00001116	status: accepted
+L00001117	owner_doc: Plans/feature-list.md
+L00001118	canonical_text: >-
+L00001119	  Source Control, GitHub Actions, and Docker Manager expose first-class side-panel views for source history/worktrees, workflow visibility/settings, containers/images/compose/registries/build/publish/Unraid, and project-focused Kubernetes.
+L00001120	gui_related: true
+L00001121	gui_classification_reason: This unit enumerates visible side-panel subviews and project-focused container/runtime views.
+L00001122	split_recommended: false

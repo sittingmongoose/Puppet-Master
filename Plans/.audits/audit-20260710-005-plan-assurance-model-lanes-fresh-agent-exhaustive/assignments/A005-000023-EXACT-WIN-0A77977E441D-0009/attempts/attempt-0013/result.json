@@ -1,0 +1,733 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000023-EXACT-WIN-0A77977E441D-0009",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0006_c_capacity_dispatcher_epoch_0013/a005_000023_exact_win_0009",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/storage_value_registry.json",
+    "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
+    "core_sha256": "b72cbba5fd669b716c26b00863fe7efb3a758e4d90160054e6fad97a28c18eba",
+    "core_range": [2907, 3052]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-000023-I001",
+      "item_type": "contract",
+      "title": "Coordination EventRecord family and event-key vocabulary",
+      "statement": "The registry defines a seglog-backed coordination event family whose key vocabulary covers registration, status, operation, file ownership, unregister, crash, abort, and debug-mirror export events.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["coordination_event_records"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2908,
+          "line_end": 2908,
+          "exact_quote": "      \"family_id\": \"coordination_event_records\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2912,
+          "line_end": 2912,
+          "exact_quote": "      \"key_shape\": \"coordination.agent_registered | coordination.agent_status_updated | coordination.agent_operation_updated | coordination.agent_file_ownership_updated | coordination.agent_unregistered | coordination.agent_crashed | coordination.agent_aborted | coordination.debug_mirror_exported\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I002",
+      "item_type": "gap",
+      "title": "Per-event payload contracts are intentionally deferred",
+      "statement": "Only schema_version is universally required while all identity, revision, operation, path, and checkpoint fields are optional, and the registry explicitly defers full payload schemas. The authoritative window therefore cannot determine which fields are mandatory for any named event or how an implementation rejects malformed event-specific payloads.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "deferred_payload_schema",
+      "impact": "Independent writers and readers can choose incompatible payload requirements, preventing deterministic implementation or validation of registration, ownership, crash, abort, and mirror-export records.",
+      "builder_discretion": "A builder would have to invent per-event discriminators, required field sets, field types, invariants, and invalid-record handling until the deferred schema is reopened.",
+      "feature_keys": ["coordination_event_records"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2929,
+          "line_end": 2929,
+          "exact_quote": "      \"required_fields\": [",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2961,
+          "line_end": 2961,
+          "exact_quote": "      \"deferred_reason\": \"Coordination event families are named for FABLE canon repair; executable runtime fixtures and full payload schemas remain outside this bounded repair.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I003",
+      "item_type": "behavior",
+      "title": "Event replay, duplicate prevention, and stale-update prevention",
+      "statement": "Coordination events replay in seglog order into redb projections, with idempotency keys and expected revisions designated to prevent duplicate or stale updates.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["coordination_event_records", "coordination_read_model_projections"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2955,
+          "line_end": 2955,
+          "exact_quote": "      \"replay_behavior\": \"Coordination events replay in seglog order into coordination redb projections; idempotency keys and expected revisions prevent duplicate or stale updates.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I004",
+      "item_type": "gap",
+      "title": "Replay conflict and recovery semantics are unspecified",
+      "statement": "The replay rule names seglog order, idempotency keys, and expected revisions but does not define the ordering scope, idempotency-key uniqueness scope or lifetime, the comparison rule for revisions, or the outcome and recovery path when a duplicate, gap, or stale revision is detected.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "replay_conflict_semantics",
+      "impact": "Projectors may diverge on whether to ignore, quarantine, retry, halt, or surface conflicting records, which can propagate inconsistent scheduling and prompt context.",
+      "builder_discretion": "A builder must select conflict detection scopes, terminal/error states, retry policy, quarantine behavior, and observability for replay failures.",
+      "feature_keys": ["coordination_event_records", "coordination_read_model_projections"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2955,
+          "line_end": 2955,
+          "exact_quote": "      \"replay_behavior\": \"Coordination events replay in seglog order into coordination redb projections; idempotency keys and expected revisions prevent duplicate or stale updates.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I005",
+      "item_type": "gap",
+      "title": "Coordination lifecycle transitions and event-specific authority are absent",
+      "statement": "The family names status, operation, ownership, unregister, crash, and abort events and lists three broad producers, but it does not define legal source states, destination states, terminality, side effects, or which producer is authorized to emit each event.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "state_machine_and_authority",
+      "impact": "Schedulers and conflict-prevention consumers cannot deterministically decide whether a transition is legal or whether ownership, operation, or agent state must be released after crash, abort, or unregister.",
+      "builder_discretion": "A builder must invent the lifecycle state machine, transition guards, event precedence, producer permissions, and release/cleanup effects.",
+      "feature_keys": ["coordination_event_records"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2912,
+          "line_end": 2912,
+          "exact_quote": "      \"key_shape\": \"coordination.agent_registered | coordination.agent_status_updated | coordination.agent_operation_updated | coordination.agent_file_ownership_updated | coordination.agent_unregistered | coordination.agent_crashed | coordination.agent_aborted | coordination.debug_mirror_exported\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2916,
+          "line_end": 2916,
+          "exact_quote": "      \"producer\": [",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I006",
+      "item_type": "consumer",
+      "title": "Event producers and downstream consumers are named",
+      "statement": "AgentCoordinator, platform adapters, and the mirror exporter can produce coordination events; the projector, scheduler, prompt context assembler, and debug mirror exporter consume them.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["coordination_event_records"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2917,
+          "line_end": 2917,
+          "exact_quote": "        \"AgentCoordinator\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2921,
+          "line_end": 2921,
+          "exact_quote": "      \"consumers\": [",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I007",
+      "item_type": "contract",
+      "title": "Legacy coordination files are compatibility inputs, not new-write authority",
+      "statement": "Legacy active-agents and state JSON paths may migrate only as compatibility or debug-mirror inputs; new writers emit EventRecord values.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["coordination_event_records", "coordination_debug_mirror_exports"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2956,
+          "line_end": 2956,
+          "exact_quote": "      \"migration\": \"Legacy active-agents.json and .puppet-master/state/*.json coordination paths migrate only as compatibility/debug mirror inputs; new writers emit EventRecord values.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I008",
+      "item_type": "gap",
+      "title": "Legacy import and cutover procedure is not specified",
+      "statement": "The migration disposition does not specify discovery boundaries, field mapping, ordering, deduplication against existing EventRecords, malformed-file handling, cutover timing, repeated-import idempotency, or an acceptance oracle proving legacy files no longer influence authority.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "migration_procedure",
+      "impact": "Compatibility import can duplicate or reorder coordination state, or leave file-backed state ambiguously active during cutover.",
+      "builder_discretion": "A builder must define the importer, precedence rules, convergence proof, error handling, and decommission criteria.",
+      "feature_keys": ["coordination_event_records", "coordination_debug_mirror_exports"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2956,
+          "line_end": 2956,
+          "exact_quote": "      \"migration\": \"Legacy active-agents.json and .puppet-master/state/*.json coordination paths migrate only as compatibility/debug mirror inputs; new writers emit EventRecord values.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I009",
+      "item_type": "contract",
+      "title": "EventRecord redaction and no-secret boundary",
+      "statement": "Coordination EventRecords may store ordinary redacted references, hashes, identifiers, paths, and status metadata, but not credentials, provider tokens, OAuth values, local credential paths, or machine secrets.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["coordination_event_records"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2958,
+          "line_end": 2958,
+          "exact_quote": "      \"redaction_no_secret_rule\": \"Store refs, hashes, ids, paths under normal path-redaction policy, and status metadata only; no raw credentials, provider tokens, OAuth values, local credential paths, or machine secrets.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I010",
+      "item_type": "contract",
+      "title": "Coordination projection keyspace and consumption surface",
+      "statement": "The redb read-model family defines agent, file, operation, snapshot, and projector-checkpoint keys and is consumed by the scheduler, AgentCoordinator, prompt assembler, mirror exporter, and inspection views.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["coordination_read_model_projections"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2969,
+          "line_end": 2969,
+          "exact_quote": "      \"key_shape\": \"coordination_agent_projection.v1:{project_id}:{agent_id} | coordination_file_projection.v1:{project_id}:{path_hash}:{agent_id} | coordination_operation_projection.v1:{project_id}:{agent_id}:{operation_id} | coordination_snapshot_projection.v1:{project_id}:{projection_scope} | projector.checkpoint.coordination:{project_id}\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2976,
+          "line_end": 2976,
+          "exact_quote": "      \"consumers\": [",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I011",
+      "item_type": "behavior",
+      "title": "Authoritative readers must gate on projector checkpoint coverage",
+      "statement": "Projection rows rebuild from coordination EventRecords, and authoritative scheduling or prompt consumers must verify projector checkpoint coverage before use.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["coordination_read_model_projections"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3000,
+          "line_end": 3000,
+          "exact_quote": "      \"replay_behavior\": \"Projection rows rebuild from coordination EventRecords; authoritative readers verify projector checkpoint coverage before scheduling or prompt use.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I012",
+      "item_type": "gap",
+      "title": "Checkpoint coverage gate lacks an executable oracle and recovery behavior",
+      "statement": "The window requires readers to verify checkpoint coverage but does not define the compared watermark or scope, acceptable lag, atomic read protocol, failure result, timeout, retry/rebuild behavior, or whether scheduling and prompt assembly fail closed.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "checkpoint_acceptance_oracle",
+      "impact": "A scheduler or prompt assembler can read stale or partially projected coordination state and make unsafe admission, ownership, or context decisions.",
+      "builder_discretion": "A builder must invent the checkpoint-coverage predicate, consistency boundary, stale-read response, rebuild trigger, and user/operator-visible failure behavior.",
+      "feature_keys": ["coordination_read_model_projections"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3000,
+          "line_end": 3000,
+          "exact_quote": "      \"replay_behavior\": \"Projection rows rebuild from coordination EventRecords; authoritative readers verify projector checkpoint coverage before scheduling or prompt use.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I013",
+      "item_type": "gap",
+      "title": "Projection value schemas and consistency invariants are deferred",
+      "statement": "The projection family requires only schema_version, makes all key-correlating and checkpoint fields optional, and explicitly defers materialized projection schemas. It does not define value types, key-to-value invariants, atomic update boundaries among rows and checkpoints, or crash recovery for a partially committed projection batch.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "deferred_projection_schema_and_atomicity",
+      "impact": "Readers cannot validate a row against its key or prove that agent, file, operation, snapshot, and checkpoint views represent the same event prefix.",
+      "builder_discretion": "A builder must invent projection record shapes, required identity fields, transactional batching, checkpoint commit order, and partial-write recovery.",
+      "feature_keys": ["coordination_read_model_projections"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2985,
+          "line_end": 2985,
+          "exact_quote": "      \"required_fields\": [",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3006,
+          "line_end": 3006,
+          "exact_quote": "      \"deferred_reason\": \"Read-model key families are named for canon repair; materialized projection schemas remain part of later runtime implementation.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I014",
+      "item_type": "failure_recovery",
+      "title": "Canonical history and rebuildability boundaries",
+      "statement": "EventRecords remain under runtime audit retention while projections and mirrors are rebuildable; projection rows are disposable and compactable by scope, with the canonical coordination history remaining in seglog EventRecords.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["coordination_event_records", "coordination_read_model_projections"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2957,
+          "line_end": 2957,
+          "exact_quote": "      \"retention_compaction\": \"Coordination EventRecords retain under runtime audit policy; projections and mirrors are rebuildable from seglog plus checkpoints.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3002,
+          "line_end": 3002,
+          "exact_quote": "      \"retention_compaction\": \"Projection rows are disposable and compactable by scope; canonical coordination history remains in seglog EventRecords.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I015",
+      "item_type": "contract",
+      "title": "Debug mirrors are migration-only compatibility aliases",
+      "statement": "The debug-mirror family is a migration-only compatibility alias covering named state JSON paths and a redb mirror-export key; it is intentionally non-canonical and not build-blocking.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["coordination_debug_mirror_exports"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3012,
+          "line_end": 3012,
+          "exact_quote": "      \"status\": \"compatibility_alias\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3014,
+          "line_end": 3014,
+          "exact_quote": "      \"key_shape\": \".puppet-master/state/active-agents.json | .puppet-master/state/agent-messages.json | .puppet-master/state/verification-{node_id}-end.json | .puppet-master/state/handoff-validation-{node_id}.json | coordination_mirror_export.v1:{project_id}:{mirror_kind}\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I016",
+      "item_type": "behavior",
+      "title": "Mirrors regenerate after projection commit and never replay authority",
+      "statement": "Mirror exports are generated from seglog/redb after projection commit, never serve as replay authority, and may be overwritten, quarantined, or deleted without losing canonical coordination state.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["coordination_debug_mirror_exports"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3042,
+          "line_end": 3042,
+          "exact_quote": "      \"replay_behavior\": \"Mirrors are regenerated from seglog/redb after projection commit and are never replay authority.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3044,
+          "line_end": 3044,
+          "exact_quote": "      \"retention_compaction\": \"Mirror files may be overwritten, quarantined, or deleted; canonical coordination state remains recoverable from seglog/redb.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I017",
+      "item_type": "contract",
+      "title": "Projection and mirror no-secret rules",
+      "statement": "Projection values are limited to coordination metadata, references, and redacted path hashes, while mirror exports must apply export redaction and exclude secrets, tokens, credentials, OAuth values, local credential paths, and machine secrets.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["coordination_read_model_projections", "coordination_debug_mirror_exports"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3003,
+          "line_end": 3003,
+          "exact_quote": "      \"redaction_no_secret_rule\": \"Projection values contain coordination metadata, refs, and redacted path hashes only; no raw provider secret or credential data persists.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3045,
+          "line_end": 3045,
+          "exact_quote": "      \"redaction_no_secret_rule\": \"Mirror exports must obey normal export redaction; no secrets, tokens, credentials, OAuth values, local credential paths, or machine secrets.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I018",
+      "item_type": "gap",
+      "title": "Mirror export failure and publication semantics are undefined",
+      "statement": "The value vocabulary includes export status, error code, and quarantine reference, and says exports occur after projection commit, but it does not define atomic file publication, partial-write/corruption handling, permissions, status values, retry policy, quarantine lifecycle, or whether a failed export affects the canonical operation.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "mirror_export_failure_contract",
+      "impact": "Interoperability and debug readers may observe partial or stale JSON and operators cannot consistently diagnose or recover failed exports.",
+      "builder_discretion": "A builder must choose the temporary-file/rename protocol, error taxonomy, retries, quarantine retention, permissions, and operational signals.",
+      "feature_keys": ["coordination_debug_mirror_exports"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3036,
+          "line_end": 3036,
+          "exact_quote": "        \"export_status\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3042,
+          "line_end": 3042,
+          "exact_quote": "      \"replay_behavior\": \"Mirrors are regenerated from seglog/redb after projection commit and are never replay authority.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I019",
+      "item_type": "gap",
+      "title": "Mirror non-authority is a reopen condition without an enforcement oracle",
+      "statement": "The registry orders reopening if any consumer uses a mirror for scheduling, admission, conflict prevention, prompt injection, lifecycle events, receipts, or validation authority, but it defines no runtime guard, dependency rule, test, or telemetry proving that consumers remain non-authoritative.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authority_boundary_enforcement",
+      "impact": "A compatibility reader can silently become an authority path and bypass checkpoint coverage, canonical replay, and stale-state protections.",
+      "builder_discretion": "A builder must invent enforcement at APIs or type boundaries and an acceptance test detecting prohibited authoritative reads.",
+      "feature_keys": ["coordination_debug_mirror_exports"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3049,
+          "line_end": 3049,
+          "exact_quote": "      \"reopen_condition\": \"Reopen if a consumer reads a coordination mirror for scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation authority.\"",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I020",
+      "item_type": "authority",
+      "title": "Ownership and reopen boundaries are explicit",
+      "statement": "Contracts_V0 owns the event family while storage-plan owns projection and mirror families; concrete runtime payload or projection schemas are reopened when lifecycle, scheduling, prompt injection, or implementation claims depend on them.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["coordination_event_records", "coordination_read_model_projections", "coordination_debug_mirror_exports"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2915,
+          "line_end": 2915,
+          "exact_quote": "      \"owner_doc\": \"Plans/Contracts_V0.md#stable-active-agent-coordination-event-families\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2972,
+          "line_end": 2972,
+          "exact_quote": "      \"owner_doc\": \"Plans/storage-plan.md#coordination-record-projection-and-mirror-export-families\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I021",
+      "item_type": "unknown",
+      "title": "GUI and inspection-view truth is not defined in this window",
+      "statement": "The event and projection families are tiered as later GUI or feature projections and inspection views are named as consumers, but the window does not define any user-visible fields, freshness indicator, error state, interaction, or accessibility behavior.",
+      "severity": "low",
+      "confidence": "high",
+      "gap_kind": "gui_truth_deferred",
+      "impact": "An inspection UI cannot derive a canonical presentation or communicate stale, rebuilding, quarantined, or unavailable coordination state from this registry alone.",
+      "builder_discretion": "A GUI builder would have to choose displayed fields, freshness semantics, user actions, and failure presentation until the later projection contract is supplied.",
+      "feature_keys": ["coordination_event_records", "coordination_read_model_projections"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2968,
+          "line_end": 2968,
+          "exact_quote": "      \"tier\": \"later_gui_or_feature_projection\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2981,
+          "line_end": 2981,
+          "exact_quote": "        \"inspection views\"",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I022",
+      "item_type": "gap",
+      "title": "Scale, performance, and compaction thresholds are unspecified",
+      "statement": "The window identifies compactable projections and retained audit history but supplies no event-rate, row-count, replay-time, checkpoint-lag, storage-growth, compaction-frequency, or mirror-export latency bounds.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "scale_performance_budget",
+      "impact": "Implementations cannot verify that replay, scheduling reads, prompt assembly, compaction, or export remains viable at expected coordination scale.",
+      "builder_discretion": "A builder must choose batching, indexes, checkpoint frequency, compaction triggers, backpressure, and performance budgets.",
+      "feature_keys": ["coordination_event_records", "coordination_read_model_projections", "coordination_debug_mirror_exports"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3002,
+          "line_end": 3002,
+          "exact_quote": "      \"retention_compaction\": \"Projection rows are disposable and compactable by scope; canonical coordination history remains in seglog EventRecords.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I023",
+      "item_type": "gap",
+      "title": "No executable acceptance fixtures are bound to the three families",
+      "statement": "All three families expose deferred schema references and the window names no concrete fixtures or validation oracles for canonical MessagePack/JSON encoding, replay convergence, checkpoint gating, redaction, migration, or mirror non-authority.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "acceptance_oracles",
+      "impact": "Conformance and semantic equivalence across producers, projector, scheduler, prompt assembler, and exporters cannot be mechanically certified.",
+      "builder_discretion": "A builder or tester must invent fixtures, expected bytes, event sequences, failure cases, and pass/fail assertions.",
+      "feature_keys": ["coordination_event_records", "coordination_read_model_projections", "coordination_debug_mirror_exports"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 2914,
+          "line_end": 2914,
+          "exact_quote": "      \"value_schema_ref\": \"deferred:Plans/storage_value_registry.json#/families/coordination_event_records\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3016,
+          "line_end": 3016,
+          "exact_quote": "      \"value_schema_ref\": \"deferred:Plans/storage_value_registry.json#/families/coordination_debug_mirror_exports\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000023-I024",
+      "item_type": "gap",
+      "title": "Operational observability and safe degradation remain builder discretion",
+      "statement": "The window does not assign metrics, logs, alerts, health states, operator actions, or fail-open/fail-closed behavior for replay conflict, checkpoint lag, projection rebuild, compaction, redaction failure, or mirror-export failure.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "operations_and_builder_discretion",
+      "impact": "Operators and dependent runtime components cannot consistently detect, contain, or recover from stale or failed coordination materialization.",
+      "builder_discretion": "Builders must choose all operational signals, escalation thresholds, degradation policy, and recovery controls for the named failure classes.",
+      "feature_keys": ["coordination_event_records", "coordination_read_model_projections", "coordination_debug_mirror_exports"],
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3007,
+          "line_end": 3007,
+          "exact_quote": "      \"reopen_condition\": \"Reopen when scheduler, prompt injection, or runtime lifecycle implementation depends on concrete coordination projection schemas.\"",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 3048,
+          "line_end": 3048,
+          "exact_quote": "      \"deferred_reason\": \"This compatibility alias records mirror-only disposition; it is intentionally non-canonical and not build-blocking.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "gap_found",
+      "summary": "Replay, rebuild, and mirror regeneration behaviors are named, but conflict, stale-read, and failure behavior remains under-specified.",
+      "evidence_item_ids": ["A005-000023-I003", "A005-000023-I004", "A005-000023-I011", "A005-000023-I012", "A005-000023-I016"]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "gap_found",
+      "summary": "The three storage families and their coarse capabilities are present, while concrete runtime payload and materialized projection capability is explicitly deferred.",
+      "evidence_item_ids": ["A005-000023-I001", "A005-000023-I002", "A005-000023-I010", "A005-000023-I013", "A005-000023-I015"]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "gap_found",
+      "summary": "Producers, consumers, key vocabularies, and mirror paths are identified, but event-specific payload and output-value requirements are not.",
+      "evidence_item_ids": ["A005-000023-I002", "A005-000023-I006", "A005-000023-I010", "A005-000023-I013", "A005-000023-I015"]
+    },
+    {
+      "dimension": "contracts",
+      "status": "gap_found",
+      "summary": "Storage kinds, versions, encodings, keys, redaction, and authority boundaries are stated; deferred value schemas prevent complete executable contracts.",
+      "evidence_item_ids": ["A005-000023-I001", "A005-000023-I002", "A005-000023-I009", "A005-000023-I010", "A005-000023-I013", "A005-000023-I015", "A005-000023-I017"]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "gap_found",
+      "summary": "Lifecycle event names exist without legal state transitions, guards, terminality, precedence, or release effects.",
+      "evidence_item_ids": ["A005-000023-I005"]
+    },
+    {
+      "dimension": "authority",
+      "status": "gap_found",
+      "summary": "Seglog is canonical and mirrors are non-authoritative, but per-event emit authority and mirror-boundary enforcement are missing.",
+      "evidence_item_ids": ["A005-000023-I005", "A005-000023-I014", "A005-000023-I016", "A005-000023-I019"]
+    },
+    {
+      "dimension": "ownership",
+      "status": "addressed",
+      "summary": "Owner documents and deferred owners are explicit for event, projection, and mirror families.",
+      "evidence_item_ids": ["A005-000023-I020"]
+    },
+    {
+      "dimension": "consumers",
+      "status": "addressed",
+      "summary": "Scheduler, AgentCoordinator, prompt assembler, projector, exporter, inspection, debug, and interoperability consumers are named.",
+      "evidence_item_ids": ["A005-000023-I006", "A005-000023-I010", "A005-000023-I015"]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "unknown",
+      "summary": "Inspection views are named and the tier anticipates later GUI projection, but no user-visible behavior or freshness/error presentation is defined here.",
+      "evidence_item_ids": ["A005-000023-I021"]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "Rebuildability and canonical recovery sources are stated, but conflict, partial projection, checkpoint failure, and mirror-export recovery are not executable.",
+      "evidence_item_ids": ["A005-000023-I004", "A005-000023-I012", "A005-000023-I013", "A005-000023-I014", "A005-000023-I018", "A005-000023-I024"]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "gap_found",
+      "summary": "Strong no-secret and path-redaction rules are explicit, but the window supplies no validation oracle or failure handling for redaction enforcement.",
+      "evidence_item_ids": ["A005-000023-I009", "A005-000023-I017", "A005-000023-I023", "A005-000023-I024"]
+    },
+    {
+      "dimension": "propagation",
+      "status": "gap_found",
+      "summary": "Event-to-projection-to-consumer-to-mirror propagation is described, but transactional boundaries, freshness gates, and prohibited mirror-authority propagation lack concrete enforcement.",
+      "evidence_item_ids": ["A005-000023-I003", "A005-000023-I011", "A005-000023-I012", "A005-000023-I013", "A005-000023-I016", "A005-000023-I019"]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Retention and rebuild intent exist, while observability, alerting, safe degradation, quarantine operations, and operator recovery controls are absent.",
+      "evidence_item_ids": ["A005-000023-I014", "A005-000023-I018", "A005-000023-I024"]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "gap_found",
+      "summary": "No capacity, throughput, latency, checkpoint-lag, replay, compaction, or storage-growth budgets are stated.",
+      "evidence_item_ids": ["A005-000023-I022"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Legacy files are constrained to compatibility/debug use and mirrors are migration-only, but import, cutover, convergence, and decommission mechanics are missing.",
+      "evidence_item_ids": ["A005-000023-I007", "A005-000023-I008", "A005-000023-I015", "A005-000023-I019"]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "The window has no bound fixtures or executable pass/fail oracles for payloads, encoding, replay, projection freshness, migration, redaction, or mirror non-authority.",
+      "evidence_item_ids": ["A005-000023-I012", "A005-000023-I019", "A005-000023-I023"]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Builders retain consequential choices over payloads, lifecycle semantics, replay conflicts, checkpoint gating, transactions, migration, exports, performance, and operations.",
+      "evidence_item_ids": ["A005-000023-I002", "A005-000023-I004", "A005-000023-I005", "A005-000023-I008", "A005-000023-I012", "A005-000023-I013", "A005-000023-I018", "A005-000023-I019", "A005-000023-I021", "A005-000023-I022", "A005-000023-I023", "A005-000023-I024"]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "The main unknowns are the explicitly deferred payload/projection schemas plus unresolved lifecycle, consistency, migration, GUI, scaling, validation, and operational semantics.",
+      "evidence_item_ids": ["A005-000023-I002", "A005-000023-I004", "A005-000023-I005", "A005-000023-I008", "A005-000023-I012", "A005-000023-I013", "A005-000023-I018", "A005-000023-I019", "A005-000023-I021", "A005-000023-I022", "A005-000023-I023", "A005-000023-I024"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

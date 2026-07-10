@@ -1,0 +1,14 @@
+{
+  "all_other_reads_forbidden": true,
+  "blind_window_authorized_reads": [
+    "dispatch_receipt",
+    "assigned_capsule",
+    "single_source_excerpt_referenced_by_assigned_capsule",
+    "assigned_result_schema",
+    "assigned_terminal_schema"
+  ],
+  "capsule_excerpt_resolution": "resolve source_excerpt_ref relative to frozen epoch root",
+  "external_research_in_blind_window_phase": false,
+  "terminal_seal_written_last": true,
+  "write_scope": "one assigned attempt directory only"
+}

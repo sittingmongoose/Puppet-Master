@@ -1,0 +1,407 @@
+<<< CONTEXT_BEFORE canonical_document_lines=383-394 >>>
+L00000383	  - "`Locally Complete`"
+L00000384	  - "`Available to Seam`"
+L00000385	  - "`Seam Complete`"
+L00000386	  - "ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md"
+L00000387	negative_constraints:
+L00000388	  - "Package completion alone is insufficient."
+L00000389	owner_hints:
+L00000390	  - Plans/Decision_Log.md
+L00000391	  - Plans/Orchestrator_Page.md
+L00000392	  - Plans/Run_Graph_View.md
+L00000393	```
+L00000394	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=395-772 >>>
+L00000395	### DL-008 - Weak Integration First Class Scope
+L00000396	
+L00000397	```yaml
+L00000398	plan_unit_id: DL-008
+L00000399	unit_type: requirement
+L00000400	status: accepted
+L00000401	owner_doc: Plans/Decision_Log.md
+L00000402	canonical_text: >-
+L00000403	  Weak integration remains first-class and includes runtime/GUI mismatch,
+L00000404	  contract mismatch, workflow gaps, and architecture drift.
+L00000405	gui_related: true
+L00000406	gui_classification_reason: Weak integration explicitly includes runtime/GUI mismatch and user-visible workflow gaps.
+L00000407	split_recommended: false
+L00000408	depends_on: [DL-007]
+L00000409	unblocks: [DL-020, DL-021]
+L00000410	acceptance_criteria:
+L00000411	  - Weak integration remains first-class.
+L00000412	  - Weak integration includes runtime/GUI mismatch, contract mismatch, workflow gaps, and architecture drift.
+L00000413	validation_surfaces:
+L00000414	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000415	  - python3 scripts/pm-plan-index.py validate
+L00000416	risk_class: weak_integration_underclassification
+L00000417	reasoning_tier: high
+L00000418	context_scope: weak_integration_first_class_scope
+L00000419	implementation_surfaces:
+L00000420	  - Plans/Decision_Log.md
+L00000421	  - Plans/Orchestrator_Page.md
+L00000422	  - Plans/Glossary.md
+L00000423	node_compile_hint:
+L00000424	  mode: weak_integration_first_class_scope
+L00000425	  create_worknodes: false
+L00000426	source_lineage:
+L00000427	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0009
+L00000428	preserved_exact_tokens:
+L00000429	  - "`Weak Integration`"
+L00000430	  - "runtime/GUI mismatch"
+L00000431	  - "ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Glossary.md"
+L00000432	negative_constraints:
+L00000433	  - "Weak integration must not be downgraded to a non-first-class concern."
+L00000434	owner_hints:
+L00000435	  - Plans/Decision_Log.md
+L00000436	  - Plans/Orchestrator_Page.md
+L00000437	  - Plans/Glossary.md
+L00000438	```
+L00000439	
+L00000440	### DL-009 - Corroboration Threshold Rule
+L00000441	
+L00000442	```yaml
+L00000443	plan_unit_id: DL-009
+L00000444	unit_type: requirement
+L00000445	status: accepted
+L00000446	owner_doc: Plans/Decision_Log.md
+L00000447	canonical_text: >-
+L00000448	  High-impact claims use deterministic 2-of-3 corroboration, while lesser
+L00000449	  unresolved concerns remain visible as non-blocking advisory concerns.
+L00000450	gui_related: false
+L00000451	gui_classification_reason: This unit defines corroboration policy rather than UI presentation.
+L00000452	split_recommended: false
+L00000453	depends_on: [DL-008]
+L00000454	unblocks: [DL-024]
+L00000455	acceptance_criteria:
+L00000456	  - High-impact claims use deterministic 2-of-3 corroboration.
+L00000457	  - Lesser unresolved concerns remain visible as non-blocking advisory concerns.
+L00000458	validation_surfaces:
+L00000459	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000460	  - python3 scripts/pm-plan-index.py validate
+L00000461	risk_class: corroboration_threshold_drift
+L00000462	reasoning_tier: high
+L00000463	context_scope: corroboration_threshold_rule
+L00000464	implementation_surfaces:
+L00000465	  - Plans/Decision_Log.md
+L00000466	  - Plans/Orchestrator_Page.md
+L00000467	  - Plans/Decision_Policy.md
+L00000468	node_compile_hint:
+L00000469	  mode: corroboration_threshold_rule
+L00000470	  create_worknodes: false
+L00000471	source_lineage:
+L00000472	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0010
+L00000473	preserved_exact_tokens:
+L00000474	  - "`2-of-3`"
+L00000475	  - "ContractRef: ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Decision_Policy.md"
+L00000476	negative_constraints:
+L00000477	  - "High-impact claims must not bypass deterministic 2-of-3 corroboration."
+L00000478	owner_hints:
+L00000479	  - Plans/Decision_Log.md
+L00000480	  - Plans/Orchestrator_Page.md
+L00000481	  - Plans/Decision_Policy.md
+L00000482	```
+L00000483	
+L00000484	### DL-010 - Graph Patch Lineage Generation
+L00000485	
+L00000486	```yaml
+L00000487	plan_unit_id: DL-010
+L00000488	unit_type: requirement
+L00000489	status: accepted
+L00000490	owner_doc: Plans/Decision_Log.md
+L00000491	canonical_text: >-
+L00000492	  Graph patching creates a new graph generation and preserves superseded
+L00000493	  historical paths as visible lineage.
+L00000494	gui_related: true
+L00000495	gui_classification_reason: Superseded historical paths remain visible in Run Graph lineage.
+L00000496	split_recommended: false
+L00000497	depends_on: [DL-005]
+L00000498	unblocks: [DL-019]
+L00000499	acceptance_criteria:
+L00000500	  - Graph patching creates a new graph generation.
+L00000501	  - Superseded historical paths remain visible lineage.
+L00000502	validation_surfaces:
+L00000503	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000504	  - python3 scripts/pm-plan-index.py validate
+L00000505	risk_class: graph_patch_lineage_loss
+L00000506	reasoning_tier: high
+L00000507	context_scope: graph_patch_lineage_generation
+L00000508	implementation_surfaces:
+L00000509	  - Plans/Decision_Log.md
+L00000510	  - Plans/Run_Graph_View.md
+L00000511	  - Plans/storage-plan.md
+L00000512	node_compile_hint:
+L00000513	  mode: graph_patch_lineage_generation
+L00000514	  create_worknodes: false
+L00000515	source_lineage:
+L00000516	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0011
+L00000517	preserved_exact_tokens:
+L00000518	  - "graph generation"
+L00000519	  - "visible lineage"
+L00000520	  - "ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/storage-plan.md"
+L00000521	negative_constraints:
+L00000522	  - "Graph patches must not overwrite superseded historical paths without visible lineage."
+L00000523	owner_hints:
+L00000524	  - Plans/Decision_Log.md
+L00000525	  - Plans/Run_Graph_View.md
+L00000526	  - Plans/storage-plan.md
+L00000527	```
+L00000528	
+L00000529	### DL-011 - Source Control Worktree First Boundary
+L00000530	
+L00000531	```yaml
+L00000532	plan_unit_id: DL-011
+L00000533	unit_type: requirement
+L00000534	status: accepted
+L00000535	owner_doc: Plans/Decision_Log.md
+L00000536	canonical_text: >-
+L00000537	  Source Control is worktree-first and compact, while Orchestrator carries
+L00000538	  lane/package/seam operational context.
+L00000539	gui_related: false
+L00000540	gui_classification_reason: This unit defines cross-document ownership boundaries for Source Control and Orchestrator.
+L00000541	split_recommended: false
+L00000542	depends_on: [DL-005]
+L00000543	unblocks: [DL-026]
+L00000544	acceptance_criteria:
+L00000545	  - Source Control stays worktree-first and compact.
+L00000546	  - Orchestrator carries lane/package/seam operational context.
+L00000547	validation_surfaces:
+L00000548	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000549	  - python3 scripts/pm-plan-index.py validate
+L00000550	risk_class: source_control_orchestrator_boundary_drift
+L00000551	reasoning_tier: high
+L00000552	context_scope: source_control_worktree_first_boundary
+L00000553	implementation_surfaces:
+L00000554	  - Plans/Decision_Log.md
+L00000555	  - Plans/WorktreeGitImprovement.md
+L00000556	  - Plans/GitHub_Integration.md
+L00000557	node_compile_hint:
+L00000558	  mode: source_control_worktree_first_boundary
+L00000559	  create_worknodes: false
+L00000560	source_lineage:
+L00000561	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0012
+L00000562	preserved_exact_tokens:
+L00000563	  - "worktree-first"
+L00000564	  - "lane/package/seam"
+L00000565	  - "ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/GitHub_Integration.md"
+L00000566	negative_constraints:
+L00000567	  - "Source Control must not absorb lane/package/seam operational context."
+L00000568	owner_hints:
+L00000569	  - Plans/Decision_Log.md
+L00000570	  - Plans/WorktreeGitImprovement.md
+L00000571	  - Plans/GitHub_Integration.md
+L00000572	```
+L00000573	
+L00000574	### DL-012 - Shared Runtime Identity Actor Scope
+L00000575	
+L00000576	```yaml
+L00000577	plan_unit_id: DL-012
+L00000578	unit_type: requirement
+L00000579	status: accepted
+L00000580	owner_doc: Plans/Decision_Log.md
+L00000581	canonical_text: >-
+L00000582	  Requested/effective runtime identity is shared across assistant, interviewer,
+L00000583	  builders, overseers, and node workers without collapsing those actors into
+L00000584	  one ontology.
+L00000585	gui_related: false
+L00000586	gui_classification_reason: This unit defines runtime identity scope and actor boundaries.
+L00000587	split_recommended: false
+L00000588	depends_on: [DL-005]
+L00000589	unblocks: [DL-016]
+L00000590	acceptance_criteria:
+L00000591	  - Requested/effective runtime identity spans all named runtime actors.
+L00000592	  - Actor types do not collapse into one ontology.
+L00000593	validation_surfaces:
+L00000594	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000595	  - python3 scripts/pm-plan-index.py validate
+L00000596	risk_class: runtime_identity_actor_conflation
+L00000597	reasoning_tier: high
+L00000598	context_scope: shared_runtime_identity_actor_scope
+L00000599	implementation_surfaces:
+L00000600	  - Plans/Decision_Log.md
+L00000601	  - Plans/Prompt_Pipeline.md
+L00000602	  - Plans/Multi-Account.md
+L00000603	node_compile_hint:
+L00000604	  mode: shared_runtime_identity_actor_scope
+L00000605	  create_worknodes: false
+L00000606	source_lineage:
+L00000607	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0013
+L00000608	preserved_exact_tokens:
+L00000609	  - "Requested/effective"
+L00000610	  - "assistant"
+L00000611	  - "interviewer"
+L00000612	  - "builders"
+L00000613	  - "overseers"
+L00000614	  - "node workers"
+L00000615	  - "ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md"
+L00000616	negative_constraints:
+L00000617	  - "Shared runtime identity must not collapse distinct actors into one ontology."
+L00000618	owner_hints:
+L00000619	  - Plans/Decision_Log.md
+L00000620	  - Plans/Prompt_Pipeline.md
+L00000621	  - Plans/Multi-Account.md
+L00000622	```
+L00000623	
+L00000624	### DL-013 - Blocked Approval Runtime Identity
+L00000625	
+L00000626	```yaml
+L00000627	plan_unit_id: DL-013
+L00000628	unit_type: requirement
+L00000629	status: accepted
+L00000630	owner_doc: Plans/Decision_Log.md
+L00000631	canonical_text: >-
+L00000632	  Blocked episodes anchored by run_id, node_id, blocked_sequence, and optional
+L00000633	  attempt_id supersede request-centric HITL identity as canonical runtime
+L00000634	  approval scope.
+L00000635	gui_related: false
+L00000636	gui_classification_reason: This unit defines runtime approval identity fields.
+L00000637	split_recommended: false
+L00000638	depends_on: [DL-006, DL-012]
+L00000639	unblocks: [DL-022, DL-023]
+L00000640	acceptance_criteria:
+L00000641	  - Blocked approval identity is anchored by run_id, node_id, blocked_sequence, and optional attempt_id.
+L00000642	  - Request-centric HITL identity is superseded as canonical runtime approval scope.
+L00000643	validation_surfaces:
+L00000644	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000645	  - python3 scripts/pm-plan-index.py validate
+L00000646	risk_class: blocked_approval_identity_drift
+L00000647	reasoning_tier: high
+L00000648	context_scope: blocked_approval_runtime_identity
+L00000649	implementation_surfaces:
+L00000650	  - Plans/Decision_Log.md
+L00000651	  - Plans/Contracts_V0.md
+L00000652	  - Plans/human-in-the-loop.md
+L00000653	node_compile_hint:
+L00000654	  mode: blocked_approval_runtime_identity
+L00000655	  create_worknodes: false
+L00000656	source_lineage:
+L00000657	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0014
+L00000658	preserved_exact_tokens:
+L00000659	  - "`run_id`"
+L00000660	  - "`node_id`"
+L00000661	  - "`blocked_sequence`"
+L00000662	  - "`attempt_id?`"
+L00000663	  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md"
+L00000664	negative_constraints:
+L00000665	  - "Request-centric HITL identity must not remain canonical runtime approval scope once blocked-episode identity is available."
+L00000666	owner_hints:
+L00000667	  - Plans/Decision_Log.md
+L00000668	  - Plans/Contracts_V0.md
+L00000669	  - Plans/human-in-the-loop.md
+L00000670	```
+L00000671	
+L00000672	### DL-014 - Navigation Primitive Boundary
+L00000673	
+L00000674	```yaml
+L00000675	plan_unit_id: DL-014
+L00000676	unit_type: requirement
+L00000677	status: accepted
+L00000678	owner_doc: Plans/Decision_Log.md
+L00000679	canonical_text: >-
+L00000680	  route_target is the canonical navigation contract, OpenSubject is the
+L00000681	  canonical identity-native source-open contract, and resume_url is serialized
+L00000682	  transport only.
+L00000683	gui_related: false
+L00000684	gui_classification_reason: This unit defines navigation contract boundaries, not a specific UI surface.
+L00000685	split_recommended: false
+L00000686	depends_on: [DL-013]
+L00000687	unblocks: []
+L00000688	acceptance_criteria:
+L00000689	  - route_target remains the canonical navigation contract.
+L00000690	  - OpenSubject remains the canonical identity-native source-open contract.
+L00000691	  - resume_url remains serialized transport only.
+L00000692	validation_surfaces:
+L00000693	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000694	  - python3 scripts/pm-plan-index.py validate
+L00000695	risk_class: navigation_primitive_boundary_drift
+L00000696	reasoning_tier: high
+L00000697	context_scope: navigation_primitive_boundary
+L00000698	implementation_surfaces:
+L00000699	  - Plans/Decision_Log.md
+L00000700	  - Plans/Crosswalk.md
+L00000701	  - Plans/FileManager.md
+L00000702	node_compile_hint:
+L00000703	  mode: navigation_primitive_boundary
+L00000704	  create_worknodes: false
+L00000705	source_lineage:
+L00000706	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0015
+L00000707	preserved_exact_tokens:
+L00000708	  - "`route_target`"
+L00000709	  - "`OpenSubject`"
+L00000710	  - "`resume_url`"
+L00000711	  - "ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/FileManager.md"
+L00000712	negative_constraints:
+L00000713	  - "resume_url must not become the canonical navigation contract."
+L00000714	owner_hints:
+L00000715	  - Plans/Decision_Log.md
+L00000716	  - Plans/Crosswalk.md
+L00000717	  - Plans/FileManager.md
+L00000718	```
+L00000719	
+L00000720	### DL-015 - Debug Evidence Capture Hygiene
+L00000721	
+L00000722	```yaml
+L00000723	plan_unit_id: DL-015
+L00000724	unit_type: requirement
+L00000725	status: accepted
+L00000726	owner_doc: Plans/Decision_Log.md
+L00000727	canonical_text: >-
+L00000728	  Debug instrumentation and investigation evidence follow a non-citation
+L00000729	  operational ledger rule: secrets in logs, PII, and diff fatigue must be
+L00000730	  planned for up front, and downstream captures use allowlisted log shapes or
+L00000731	  structured fields rather than free-form dump capture.
+L00000732	gui_related: true
+L00000733	gui_classification_reason: This unit governs debug/investigation evidence capture and runtime artifact inspection hygiene.
+L00000734	split_recommended: false
+L00000735	depends_on: [DL-010]
+L00000736	unblocks: []
+L00000737	acceptance_criteria:
+L00000738	  - Secrets in logs, PII, and diff fatigue are planned for up front.
+L00000739	  - Downstream debug captures use allowlisted log shapes or structured fields.
+L00000740	  - Free-form dump capture is avoided.
+L00000741	validation_surfaces:
+L00000742	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000743	  - python3 scripts/pm-plan-index.py validate
+L00000744	risk_class: debug_evidence_capture_hygiene_gap
+L00000745	reasoning_tier: high
+L00000746	context_scope: debug_evidence_capture_hygiene
+L00000747	implementation_surfaces:
+L00000748	  - Plans/Decision_Log.md
+L00000749	  - Plans/Contracts_V0.md
+L00000750	  - Plans/Architecture_Invariants.md
+L00000751	  - Plans/Runtime_Artifacts_Panel.md
+L00000752	node_compile_hint:
+L00000753	  mode: debug_evidence_capture_hygiene
+L00000754	  create_worknodes: false
+L00000755	source_lineage:
+L00000756	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Log-S0016
+L00000757	preserved_exact_tokens:
+L00000758	  - "secrets in logs"
+L00000759	  - "PII"
+L00000760	  - "diff fatigue"
+L00000761	  - "allowlisted log shapes"
+L00000762	  - "structured fields"
+L00000763	  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
+L00000764	negative_constraints:
+L00000765	  - "Debug captures should use allowlisted log shapes or structured fields rather than free-form dump capture."
+L00000766	owner_hints:
+L00000767	  - Plans/Decision_Log.md
+L00000768	  - Plans/Contracts_V0.md
+L00000769	  - Plans/Architecture_Invariants.md
+L00000770	  - Plans/Runtime_Artifacts_Panel.md
+L00000771	```
+L00000772	
+
+<<< CONTEXT_AFTER canonical_document_lines=773-784 >>>
+L00000773	### DL-016 - Provider Runtime Actor Envelope
+L00000774	
+L00000775	```yaml
+L00000776	plan_unit_id: DL-016
+L00000777	unit_type: requirement
+L00000778	status: accepted
+L00000779	owner_doc: Plans/Decision_Log.md
+L00000780	canonical_text: >-
+L00000781	  The shared provider-runtime contract applies beyond Orchestrator to assistant,
+L00000782	  interviewer, requirements builder, PRD builder, overseers, node workers, and
+L00000783	  provider-backed chat/tool turns; actor_kind and execution_role are required
+L00000784	  for auditability and storage must not key provider account snapshots only by

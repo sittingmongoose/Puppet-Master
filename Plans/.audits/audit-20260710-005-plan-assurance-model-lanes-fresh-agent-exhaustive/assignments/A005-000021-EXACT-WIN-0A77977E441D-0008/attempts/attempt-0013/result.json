@@ -1,0 +1,422 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000021-EXACT-WIN-0A77977E441D-0008",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0006_c_capacity_dispatcher_epoch_0013/a005_000021_exact_win_0008",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/storage_value_registry.json",
+    "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
+    "core_sha256": "0fc50919c8d25d3eaf0d89f2b1b037ecb5068455bd02ae03a34c6cb791c9d225",
+    "core_range": [2556, 2906]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-000021-I001",
+      "item_type": "capability",
+      "title": "Editor terminal panel state is a materialized per-panel projection",
+      "statement": "The registry defines a redb value keyed by project, workspace tab, and editor terminal panel; its required schema captures visibility and docking, with optional nullable active-tab and height fields.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["editor_terminal_panel_state"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2561, "line_end": 2561, "exact_quote": "      \"key_shape\": \"editor_terminal_panel_state.v1:{project_id}:{workspace_tab_id}:{editor_terminal_panel_id}\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2569, "line_end": 2569, "exact_quote": "      \"required_fields\": [\"schema_id\", \"schema_version\", \"project_id\", \"workspace_tab_id\", \"editor_terminal_panel_id\", \"visible\", \"dock_position\", \"updated_at_utc\", \"redaction_profile\"],", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2588, "line_end": 2588, "exact_quote": "          \"dock_position\": {\"type\": \"string\", \"enum\": [\"bottom\", \"right\", \"left\", \"floating\"]},", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I002",
+      "item_type": "authority",
+      "title": "Panel replay cannot assert terminal liveness",
+      "statement": "Replaying panel state restores presentation state only and is explicitly barred from claiming that a terminal session is live.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["editor_terminal_panel_state"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2572, "line_end": 2572, "exact_quote": "      \"replay_behavior\": \"Restores editor terminal panel visibility and docking without asserting terminal session liveness.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I003",
+      "item_type": "contract",
+      "title": "Terminal sessions persist ref-only identity and status",
+      "statement": "A terminal session record is keyed per project and session, requires pane, status, shell-profile, cwd, timestamps, and redaction fields, and may carry nullable exit, last-command, and process-identity refs.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["terminal_session_record"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2601, "line_end": 2601, "exact_quote": "      \"key_shape\": \"terminal_session_record.v1:{project_id}:{terminal_session_id}\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2609, "line_end": 2609, "exact_quote": "      \"required_fields\": [\"schema_id\", \"schema_version\", \"project_id\", \"terminal_session_id\", \"terminal_leaf_pane_id\", \"session_status\", \"shell_profile_ref\", \"cwd_ref\", \"created_at_utc\", \"updated_at_utc\", \"redaction_profile\"],", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2610, "line_end": 2610, "exact_quote": "      \"optional_fields\": [\"exit_code\", \"last_command_block_id\", \"process_identity_ref\"],", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I004",
+      "item_type": "authority",
+      "title": "Runtime must revalidate active process identity",
+      "statement": "Stored session identity and status are historical replay inputs; reuse of an active process identity requires runtime revalidation.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["terminal_session_record"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2612, "line_end": 2612, "exact_quote": "      \"replay_behavior\": \"Restores historical session identity and status; active process identity must be revalidated by runtime before reuse.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I005",
+      "item_type": "gap",
+      "title": "Terminal session transition contract is absent",
+      "statement": "The schema enumerates starting, running, closed, detached, and restore_required, but this window does not define legal transitions, triggering events, concurrency rules, or field invariants such as when exit_code or process_identity_ref must be present or cleared.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "state_transition_under_specification",
+      "impact": "Independent builders can produce incompatible lifecycle behavior and disagree about whether a persisted session can be resumed or must be restored.",
+      "builder_discretion": "Transition graph, event-to-transition mapping, idempotency, and status-dependent field rules remain open.",
+      "feature_keys": ["terminal_session_record"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2627, "line_end": 2627, "exact_quote": "          \"session_status\": {\"type\": \"string\", \"enum\": [\"starting\", \"running\", \"closed\", \"detached\", \"restore_required\"]},", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2630, "line_end": 2630, "exact_quote": "          \"exit_code\": {\"type\": [\"integer\", \"null\"]},", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2632, "line_end": 2632, "exact_quote": "          \"process_identity_ref\": {\"type\": [\"string\", \"null\"]},", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I006",
+      "item_type": "contract",
+      "title": "Command blocks persist scrubbed references and execution status",
+      "statement": "Command blocks are keyed within a terminal session, require a command-text ref, start time, status, and redaction profile, and support optional finish, exit, transcript, and evidence fields.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["terminal_command_block"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2644, "line_end": 2644, "exact_quote": "      \"key_shape\": \"terminal_command_block.v1:{project_id}:{terminal_session_id}:{command_block_id}\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2652, "line_end": 2652, "exact_quote": "      \"required_fields\": [\"schema_id\", \"schema_version\", \"project_id\", \"terminal_session_id\", \"command_block_id\", \"command_text_ref\", \"started_at_utc\", \"status\", \"redaction_profile\"],", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2674, "line_end": 2674, "exact_quote": "          \"status\": {\"type\": \"string\", \"enum\": [\"running\", \"succeeded\", \"failed\", \"cancelled\", \"redacted\"]},", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I007",
+      "item_type": "authority",
+      "title": "Command history is evidence, not runtime authority",
+      "statement": "Replayed command blocks restore history through scrubbed refs and cannot authorize or prove current runtime execution.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["terminal_command_block"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2655, "line_end": 2655, "exact_quote": "      \"replay_behavior\": \"Restores command history by scrubbed refs only; command blocks are historical evidence and not runtime authority.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I008",
+      "item_type": "gap",
+      "title": "Command completion invariants are unspecified",
+      "statement": "The window permits finish time and exit code to be absent or null and provides terminal statuses, but does not bind those fields to running versus terminal states or define legal status transitions and retry/cancellation races.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "cross_field_and_transition_invariants_missing",
+      "impact": "Persisted command blocks can be schema-valid while semantically contradictory, weakening history, receipt, and audit consumers.",
+      "builder_discretion": "Builders must invent status transitions and requirements for finished_at_utc and exit_code.",
+      "feature_keys": ["terminal_command_block"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2653, "line_end": 2653, "exact_quote": "      \"optional_fields\": [\"finished_at_utc\", \"exit_code\", \"transcript_ref\", \"evidence_refs\"],", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2672, "line_end": 2672, "exact_quote": "          \"finished_at_utc\": {\"type\": [\"string\", \"null\"], \"format\": \"date-time\"},", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2673, "line_end": 2673, "exact_quote": "          \"exit_code\": {\"type\": [\"integer\", \"null\"]},", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I009",
+      "item_type": "contract",
+      "title": "Terminal persistence excludes secret-bearing bodies",
+      "statement": "Session rows are refs and status only, while raw command text and transcripts may exist only behind scrubbed refs; environment dumps, credentials, keys, tokens, and secret-bearing values are forbidden.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["terminal_session_record", "terminal_command_block"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2615, "line_end": 2615, "exact_quote": "      \"redaction_no_secret_rule\": \"Session rows store refs and status only; no raw command output, environment, secrets, or credentials.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2658, "line_end": 2658, "exact_quote": "      \"redaction_no_secret_rule\": \"Raw command text and transcript bodies are stored only by scrubbed refs; secret-bearing values, API keys, OAuth tokens, and env dumps are forbidden.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I010",
+      "item_type": "gap",
+      "title": "Scrubbed-reference validation and failure behavior are not defined",
+      "statement": "The security contract requires scrubbed refs, but the window does not define ref format, scrubber provenance, validation timing, rejection/quarantine behavior, or what consumers render when referenced content fails redaction validation.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "security_enforcement_contract_missing",
+      "impact": "Implementations can satisfy the structural schema while persisting refs to inadequately scrubbed content or handling redaction failures inconsistently.",
+      "builder_discretion": "Ref validation, scrubber attestation, failure handling, and consumer fallback remain open.",
+      "feature_keys": ["terminal_command_block"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2670, "line_end": 2670, "exact_quote": "          \"command_text_ref\": {\"type\": \"string\", \"minLength\": 1},", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2658, "line_end": 2658, "exact_quote": "      \"redaction_no_secret_rule\": \"Raw command text and transcript bodies are stored only by scrubbed refs; secret-bearing values, API keys, OAuth tokens, and env dumps are forbidden.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I011",
+      "item_type": "consumer",
+      "title": "Terminal and editor projectors feed GUI and runtime-artifact consumers",
+      "statement": "The three materialized terminal families are owned by the storage plan, produced by terminal/editor projectors, and consumed by terminal GUI and Runtime Artifacts surfaces.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["editor_terminal_panel_state", "terminal_session_record", "terminal_command_block"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2647, "line_end": 2647, "exact_quote": "      \"owner_doc\": \"Plans/storage-plan.md\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2648, "line_end": 2648, "exact_quote": "      \"producer\": [\"terminal and editor projectors\"],", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2649, "line_end": 2649, "exact_quote": "      \"consumers\": [\"terminal GUI\", \"Runtime Artifacts panel\"],", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I012",
+      "item_type": "explicit_non_gap",
+      "title": "Tooling, skill, and debug projections are intentionally deferred",
+      "statement": "The grouped tooling/skill/debug family is explicitly non-build-blocking for Tier 0C-2, requires family-specific schemas and runtime-availability fixtures, and has an implementation-scope reopen condition.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["tooling_skill_debug_families"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2684, "line_end": 2684, "exact_quote": "      \"status\": \"deferred_not_build_blocking\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2711, "line_end": 2711, "exact_quote": "      \"migration\": \"Requires family-specific schemas and runtime availability fixtures.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2717, "line_end": 2717, "exact_quote": "      \"reopen_condition\": \"Reopen when tool/skill/debug storage is in implementation scope.\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I013",
+      "item_type": "explicit_non_gap",
+      "title": "GitHub, bundle, note, preview, and browser projections are intentionally deferred",
+      "statement": "The grouped GitHub/browser/preview family is non-launch-critical, cannot support mutating actions until family-specific schemas exist, and reopens with GUI/runtime implementation.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["github_bundle_note_preview_browser_families"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2749, "line_end": 2749, "exact_quote": "      \"migration\": \"Family-specific schemas required before mutating actions rely on these projections.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2754, "line_end": 2754, "exact_quote": "      \"deferred_reason\": \"GitHub/browser/preview GUI persistence is not Tier 0C-2 launch-critical.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2755, "line_end": 2755, "exact_quote": "      \"reopen_condition\": \"Reopen with GUI/runtime surface implementation.\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I014",
+      "item_type": "authority",
+      "title": "Goal projections are rebuildable and cannot certify stale completion",
+      "statement": "Goal events and materialized goal receipts are authoritative; derived goal projections rebuild and cannot be used to certify stale completion.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["goal_projection_families"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2786, "line_end": 2786, "exact_quote": "      \"replay_behavior\": \"Append-only goal events and materialized goal_receipt rows are authoritative; projections rebuild and cannot certify stale completion.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2792, "line_end": 2792, "exact_quote": "      \"deferred_reason\": \"Goal receipt is materialized; broader Goal Runtime projections remain blocked by lifecycle and harness evidence.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I015",
+      "item_type": "behavior",
+      "title": "Analytics rollups rebuild from named EventRecord families",
+      "statement": "Disposable checkpointed rollups rebuild from usage.event, run.completed, and tool.invoked events, while canonical usage events retain under the seglog policy.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["analytics_rollup_families"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2822, "line_end": 2822, "exact_quote": "      \"replay_behavior\": \"Rollups rebuild from usage.event, run.completed, and tool.invoked EventRecords.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2824, "line_end": 2824, "exact_quote": "      \"retention_compaction\": \"Rollups are disposable and checkpointed; canonical usage events retain under seglog policy.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I016",
+      "item_type": "gui_truth",
+      "title": "Project and GUI settings restore from versioned state but stale projections are inspectable only",
+      "statement": "This grouped family supplies dashboard, orchestrator, source-control, visualization, and notification state; restoration may use versioned settings and source events, while stale projections have no authority beyond inspection.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["storage_project_state_and_config_families"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2836, "line_end": 2836, "exact_quote": "      \"key_shape\": \"orchestrator.project_state.{project_id} | project_state:v1:{project_id} | projects:v1 | dashboard_layout:v1 | assistant_worktree_branching_config | source_control_accordion_state | source_control_worktree_filter | visualizer_state | notification_settings | notification_destination | notification_sound_mapping | sound_asset_manifest\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2860, "line_end": 2860, "exact_quote": "      \"replay_behavior\": \"Project/UI state restores from versioned settings and source events where applicable; stale projections remain inspectable only.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I017",
+      "item_type": "failure_recovery",
+      "title": "Recovery resume requires both marker events and safe-point or restore records",
+      "statement": "A projector checkpoint alone cannot authorize recovery resume; checkpoint marker events and safe-point or restore records are jointly required, namespaces remain distinct, and aliases require explicit migration records.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["permission_safe_point_restore_families"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2898, "line_end": 2898, "exact_quote": "      \"replay_behavior\": \"Recovery resume uses checkpoint marker events plus safe-point/restore records; projector checkpoints alone are insufficient.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2899, "line_end": 2899, "exact_quote": "      \"migration\": \"Safe-point and restore-point namespaces remain separate; aliases need explicit migration records.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I018",
+      "item_type": "gap",
+      "title": "Retention and compaction triggers are qualitative",
+      "statement": "Across materialized and deferred families, retention is expressed through terms such as recently closed, bounded retention, history policy, and recovery anchors without numeric bounds, anchor-resolution rules, compaction ordering, or deletion failure/retry behavior.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "operational_retention_policy_under_specification",
+      "impact": "Storage growth, evidence preservation, and deletion behavior can diverge between implementations and cannot be tested from this window alone.",
+      "builder_discretion": "Builders choose time/count limits, anchor precedence, compaction scheduling, and failure recovery.",
+      "feature_keys": ["editor_terminal_panel_state", "terminal_session_record", "terminal_command_block", "permission_safe_point_restore_families"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2574, "line_end": 2574, "exact_quote": "      \"retention_compaction\": \"Retain latest state per workspace tab; older panel-state generations may compact after layout history retention.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2614, "line_end": 2614, "exact_quote": "      \"retention_compaction\": \"Retain active and recently closed sessions while command blocks or receipts reference them; compact orphaned historical sessions under terminal retention policy.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2900, "line_end": 2900, "exact_quote": "      \"retention_compaction\": \"Retain through recovery, rollback, audit, and hold-state anchors.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I019",
+      "item_type": "gap",
+      "title": "Migration descriptions lack executable transforms and oracles",
+      "statement": "The window names split, forward-only, schema-alignment, and namespace migration intent but does not specify source-version detection, deterministic transformations, rollback/failure handling, idempotency, or acceptance fixtures for the materialized terminal migrations.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "migration_contract_and_acceptance_oracle_missing",
+      "impact": "Implementers cannot independently reproduce or certify compatible migrations from the prose in this window.",
+      "builder_discretion": "Transformation algorithms, error policy, retry/rollback behavior, and golden fixtures remain open.",
+      "feature_keys": ["editor_terminal_panel_state", "terminal_session_record", "terminal_command_block", "storage_project_state_and_config_families"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2573, "line_end": 2573, "exact_quote": "      \"migration\": \"Splits editor-panel terminal UI state out of legacy workspace blobs.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2613, "line_end": 2613, "exact_quote": "      \"migration\": \"Splits legacy terminal session snapshots into ref-only session records.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2861, "line_end": 2861, "exact_quote": "      \"migration\": \"Unversioned settings keys require forward-only migration before implementation authority.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I020",
+      "item_type": "gap",
+      "title": "Projection propagation and checkpoint semantics are incomplete",
+      "statement": "The window identifies producers and rebuild sources but does not define event ordering, duplicate handling, checkpoint atomicity, invalidation, partial-rebuild recovery, or how consumers detect a projection that is stale.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "projection_consistency_protocol_missing",
+      "impact": "Consumers can observe inconsistent or stale projections, and independent projectors can disagree after retries or partial failures.",
+      "builder_discretion": "Ordering, idempotency, checkpoint transactions, invalidation markers, and stale-read signaling remain open.",
+      "feature_keys": ["goal_projection_families", "analytics_rollup_families", "storage_project_state_and_config_families"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2766, "line_end": 2766, "exact_quote": "      \"producer\": [", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2767, "line_end": 2767, "exact_quote": "        \"Goal Runtime projector\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2822, "line_end": 2822, "exact_quote": "      \"replay_behavior\": \"Rollups rebuild from usage.event, run.completed, and tool.invoked EventRecords.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2860, "line_end": 2860, "exact_quote": "      \"replay_behavior\": \"Project/UI state restores from versioned settings and source events where applicable; stale projections remain inspectable only.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I021",
+      "item_type": "explicit_non_gap",
+      "title": "Deferred aggregate families are inventory placeholders, not implementation schemas",
+      "statement": "The grouped deferred families deliberately expose only coarse identifiers and schema_version, point to deferred refs, and carry explicit owners, reasons, and reopen conditions; their lack of full value schemas is acknowledged deferral rather than Tier 0C-2 closure.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["tooling_skill_debug_families", "github_bundle_note_preview_browser_families", "goal_projection_families", "analytics_rollup_families", "storage_project_state_and_config_families", "permission_safe_point_restore_families"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2688, "line_end": 2688, "exact_quote": "      \"value_schema_ref\": \"deferred:Plans/storage_value_registry.json#/families/tooling_skill_debug_families\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2700, "line_end": 2700, "exact_quote": "      \"required_fields\": [", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2701, "line_end": 2701, "exact_quote": "        \"schema_version\"", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2904, "line_end": 2904, "exact_quote": "      \"deferred_reason\": \"Security boundary fixtures are explicitly out of Tier 0C-2 scope.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I022",
+      "item_type": "gap",
+      "title": "Export masking policy is named but not operationalized",
+      "statement": "Several deferred families classify URLs, repository names, handles, screenshots, endpoints, and selected roots as sensitive, but the window does not define classification rules, masking forms, policy resolution, or acceptance tests for exports.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "privacy_export_policy_under_specification",
+      "impact": "Exporters can reveal different metadata or produce incompatible redactions while claiming policy compliance.",
+      "builder_discretion": "Classification, mask shape, policy precedence, and test vectors remain open until the deferred surfaces reopen.",
+      "feature_keys": ["github_bundle_note_preview_browser_families", "storage_project_state_and_config_families"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2751, "line_end": 2751, "exact_quote": "      \"redaction_no_secret_rule\": \"Remote URLs, private repo names, account handles, screenshots, and endpoints are sensitive metadata and must be masked unless export policy permits.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2863, "line_end": 2863, "exact_quote": "      \"redaction_no_secret_rule\": \"Selected roots, URLs, handles, and endpoints are sensitive metadata and must be masked or ref-only on export.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I023",
+      "item_type": "gap",
+      "title": "Scale and performance bounds are absent",
+      "statement": "Although all families identify an encoding and many identify compaction or checkpoint behavior, this window gives no maximum row sizes, collection cardinalities, scan bounds, latency targets, write amplification limits, or rebuild budgets.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "scale_and_performance_oracles_missing",
+      "impact": "A schema-conforming implementation can still be operationally unbounded or too slow for GUI and recovery consumers.",
+      "builder_discretion": "Sizing, indexing beyond the declared keys, batching, scan limits, and performance acceptance thresholds remain open.",
+      "feature_keys": ["editor_terminal_panel_state", "terminal_session_record", "terminal_command_block", "analytics_rollup_families"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2651, "line_end": 2651, "exact_quote": "      \"encoding\": \"messagepack_canonical\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2800, "line_end": 2800, "exact_quote": "      \"key_shape\": \"usage_5h.{platform} | usage_7d.{platform} | tool_latency.{window} | tool_usage.{window} | tool_usage_meta.{window} | analytics:scan_checkpoint\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2824, "line_end": 2824, "exact_quote": "      \"retention_compaction\": \"Rollups are disposable and checkpointed; canonical usage events retain under seglog policy.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    },
+    {
+      "item_id": "A005-000021-I024",
+      "item_type": "unknown",
+      "title": "Referenced policies and stale-state criteria are unresolved within the window",
+      "statement": "Terms including layout history retention, terminal retention policy, source policy, export policy, seglog policy, and stale projection are consequential but not defined in the authorized excerpt, so their exact behavior cannot be established in this blind review.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "external_contract_reference_unresolved_in_window",
+      "impact": "Behavior depends on definitions outside this authorized source window and therefore remains unknown here.",
+      "builder_discretion": "No implementation choice is endorsed; the controlling definitions must be bound when these families enter scope.",
+      "feature_keys": ["editor_terminal_panel_state", "terminal_session_record", "github_bundle_note_preview_browser_families", "analytics_rollup_families", "storage_project_state_and_config_families"],
+      "evidence": [
+        {"path": "Plans/storage_value_registry.json", "line_start": 2574, "line_end": 2574, "exact_quote": "      \"retention_compaction\": \"Retain latest state per workspace tab; older panel-state generations may compact after layout history retention.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2750, "line_end": 2750, "exact_quote": "      \"retention_compaction\": \"State rows compact under per-surface history/retention policy; evidence refs follow source policy.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"},
+        {"path": "Plans/storage_value_registry.json", "line_start": 2860, "line_end": 2860, "exact_quote": "      \"replay_behavior\": \"Project/UI state restores from versioned settings and source events where applicable; stale projections remain inspectable only.\",", "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"}
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension": "behavior", "status": "addressed", "summary": "Materialized terminal replay behaviors and deferred projection rebuild/restore behaviors are explicit.", "evidence_item_ids": ["A005-000021-I002", "A005-000021-I004", "A005-000021-I007", "A005-000021-I015", "A005-000021-I017"]},
+    {"dimension": "capabilities", "status": "addressed", "summary": "The window defines panel, session, command, analytics, goal, GUI-state, and recovery projection capabilities, with deferred groups clearly labeled.", "evidence_item_ids": ["A005-000021-I001", "A005-000021-I003", "A005-000021-I006", "A005-000021-I012", "A005-000021-I013"]},
+    {"dimension": "inputs_outputs", "status": "addressed", "summary": "Key shapes, required and optional fields, schema constraints, encodings, and producer/consumer edges provide structural input/output contracts.", "evidence_item_ids": ["A005-000021-I001", "A005-000021-I003", "A005-000021-I006", "A005-000021-I011"]},
+    {"dimension": "contracts", "status": "gap_found", "summary": "Structural schemas are concrete for materialized terminal families, but semantic cross-field, reference, and projection-consistency contracts remain incomplete.", "evidence_item_ids": ["A005-000021-I005", "A005-000021-I008", "A005-000021-I010", "A005-000021-I020"]},
+    {"dimension": "states_transitions", "status": "gap_found", "summary": "Session and command status enums exist without legal transition graphs, triggering events, or status-dependent field invariants.", "evidence_item_ids": ["A005-000021-I005", "A005-000021-I008"]},
+    {"dimension": "authority", "status": "addressed", "summary": "The excerpt distinguishes runtime authority from panel and command replay, identifies goal events and receipts as authoritative, and limits stale projections to inspection.", "evidence_item_ids": ["A005-000021-I002", "A005-000021-I004", "A005-000021-I007", "A005-000021-I014", "A005-000021-I016", "A005-000021-I017"]},
+    {"dimension": "ownership", "status": "addressed", "summary": "Each family provides an owner_doc or deferred_owner; the terminal families share storage-plan ownership.", "evidence_item_ids": ["A005-000021-I011", "A005-000021-I012", "A005-000021-I013", "A005-000021-I021"]},
+    {"dimension": "consumers", "status": "addressed", "summary": "Terminal GUI, Runtime Artifacts, tool/debug surfaces, GitHub/browser surfaces, orchestrator, goal views, certification readers, usage widgets, dashboard, source control, notifications, executor, and restore flows are enumerated.", "evidence_item_ids": ["A005-000021-I011", "A005-000021-I012", "A005-000021-I013", "A005-000021-I014", "A005-000021-I016", "A005-000021-I017"]},
+    {"dimension": "gui_truth", "status": "addressed", "summary": "Panel visibility/docking are explicit presentation truth; deferred GUI families restore presentation without launch authority, and stale GUI projections are inspectable only.", "evidence_item_ids": ["A005-000021-I001", "A005-000021-I002", "A005-000021-I013", "A005-000021-I016"]},
+    {"dimension": "failures_recovery", "status": "gap_found", "summary": "Runtime revalidation and recovery anchor requirements are explicit, but transition failures, scrub failures, compaction failures, and partial projection rebuild recovery are not.", "evidence_item_ids": ["A005-000021-I004", "A005-000021-I008", "A005-000021-I010", "A005-000021-I017", "A005-000021-I020"]},
+    {"dimension": "security_privacy", "status": "gap_found", "summary": "No-secret and sensitive-metadata rules are strong, but scrubbed-ref enforcement and export-masking semantics lack operational contracts and test vectors.", "evidence_item_ids": ["A005-000021-I009", "A005-000021-I010", "A005-000021-I022"]},
+    {"dimension": "propagation", "status": "gap_found", "summary": "Producers and rebuild sources are named, but event ordering, duplicate handling, invalidation, checkpoint atomicity, and stale-read signaling are absent.", "evidence_item_ids": ["A005-000021-I011", "A005-000021-I014", "A005-000021-I015", "A005-000021-I020"]},
+    {"dimension": "operations", "status": "gap_found", "summary": "Retention and compaction intentions exist without numeric bounds, scheduling, anchor precedence, or deletion failure/retry behavior.", "evidence_item_ids": ["A005-000021-I018", "A005-000021-I024"]},
+    {"dimension": "scale_performance", "status": "gap_found", "summary": "No row-size, cardinality, scan, latency, rebuild, or write-amplification acceptance bounds appear in the window.", "evidence_item_ids": ["A005-000021-I018", "A005-000021-I023"]},
+    {"dimension": "compatibility_migration", "status": "gap_found", "summary": "Migration direction and namespace constraints are named, but executable transforms, source-version detection, rollback, and idempotency are unspecified.", "evidence_item_ids": ["A005-000021-I012", "A005-000021-I013", "A005-000021-I017", "A005-000021-I019"]},
+    {"dimension": "acceptance_oracles", "status": "gap_found", "summary": "JSON-schema constraints provide structural oracles, but lifecycle, migration, security, performance, and projection-consistency fixtures or executable pass criteria are missing.", "evidence_item_ids": ["A005-000021-I005", "A005-000021-I008", "A005-000021-I010", "A005-000021-I019", "A005-000021-I023"]},
+    {"dimension": "builder_discretion", "status": "gap_found", "summary": "Builders retain consequential choices over state machines, ref enforcement, retention, migration, projection consistency, export masking, and performance budgets.", "evidence_item_ids": ["A005-000021-I005", "A005-000021-I008", "A005-000021-I010", "A005-000021-I018", "A005-000021-I019", "A005-000021-I020", "A005-000021-I022", "A005-000021-I023"]},
+    {"dimension": "ambiguity_unknowns", "status": "gap_found", "summary": "Consequential referenced policies and stale-state criteria are not defined within the authorized window; exact behavior therefore remains unknown here.", "evidence_item_ids": ["A005-000021-I024"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

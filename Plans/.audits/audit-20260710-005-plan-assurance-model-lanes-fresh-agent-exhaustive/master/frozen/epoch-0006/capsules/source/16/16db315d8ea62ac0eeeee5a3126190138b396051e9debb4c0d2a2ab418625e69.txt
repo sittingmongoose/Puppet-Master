@@ -1,0 +1,393 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4586-4597 >>>
+L00004586	- Legacy routing shorthand such as `/SSH`, `/WSL/container-or-similar`, `/render`, and `/replaces` is resolved through the same process-host, renderer, and requested/effective host contract; PM must not mask a remote, WSL, container, or unsupported runtime request by silently launching a local shell or generic GUI fallback.
+L00004587	preserved_contractrefs:
+L00004588	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md'
+L00004589	compatibility_only_notes:
+L00004590	- Legacy routing shorthand such as /SSH, /WSL/container-or-similar, /render, and /replaces resolves through process-host, renderer, and requested/effective host contracts.
+L00004591	stale_retired_dispositions: []
+L00004592	owner_hints:
+L00004593	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004594	- Plans/storage-plan.md
+L00004595	- Plans/Permissions_System.md
+L00004596	```
+L00004597	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4598-4961 >>>
+L00004598	### SMPFS-068 - Renderer Accessibility Text Model Matrix
+L00004599	
+L00004600	```yaml
+L00004601	plan_unit_id: SMPFS-068
+L00004602	unit_type: requirement
+L00004603	status: accepted
+L00004604	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004605	canonical_text: Renderer modes, clipboard, IME, accessibility, text/selection model, TUI capture, terminal shortcuts, and requested/effective renderer disclosure remain first-class acceptance requirements across platforms.
+L00004606	gui_related: true
+L00004607	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00004608	split_recommended: false
+L00004609	depends_on:
+L00004610	- PDS-003
+L00004611	- PDS-004
+L00004612	- PDS-005
+L00004613	- PNC-001
+L00004614	- SP-001
+L00004615	- PS-001
+L00004616	- UCC-001
+L00004617	unblocks: []
+L00004618	acceptance_criteria:
+L00004619	- SMPFS-068 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00004620	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004621	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004622	validation_surfaces:
+L00004623	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004624	- python3 scripts/pm-plan-index.py validate
+L00004625	risk_class: renderer_accessibility_drift
+L00004626	reasoning_tier: standard
+L00004627	context_scope: terminal_renderer_gui
+L00004628	implementation_surfaces:
+L00004629	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004630	node_compile_hint:
+L00004631	  mode: renderer_accessibility_text_model_matrix
+L00004632	  create_worknodes: false
+L00004633	source_lineage:
+L00004634	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0041
+L00004635	preserved_exact_tokens:
+L00004636	- /render-mode
+L00004637	- interactive rich
+L00004638	- plain /log/CI
+L00004639	- machine-readable /export
+L00004640	- degraded ASCII /low-capability
+L00004641	- /spectacle
+L00004642	- Clipboard
+L00004643	- IME
+L00004644	- accessibility
+L00004645	- Unicode
+L00004646	- TUI capture
+L00004647	- requested/effective
+L00004648	negative_constraints:
+L00004649	- Effective renderer mode MUST be disclosed whenever it differs from the requested preference.
+L00004650	- Legacy routing shorthand such as `/SSH`, `/WSL/container-or-similar`, `/render`, and `/replaces` is resolved through the same process-host, renderer, and requested/effective host contract; PM must not mask a remote, WSL, container, or unsupported runtime request by silently launching a local shell or generic GUI fallback.
+L00004651	preserved_contractrefs:
+L00004652	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md'
+L00004653	compatibility_only_notes: []
+L00004654	stale_retired_dispositions: []
+L00004655	owner_hints:
+L00004656	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004657	- Plans/storage-plan.md
+L00004658	- Plans/Permissions_System.md
+L00004659	- Plans/UI_Command_Catalog.md
+L00004660	```
+L00004661	
+L00004662	### SMPFS-069 - Platform Acceptance And Legacy Routing
+L00004663	
+L00004664	```yaml
+L00004665	plan_unit_id: SMPFS-069
+L00004666	unit_type: requirement
+L00004667	status: accepted
+L00004668	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004669	canonical_text: Platform acceptance covers macOS, Linux, Windows, WSL, Wayland, X11, dock/detach, package/runtime dependencies, and legacy shorthand resolved through process-host, renderer, and requested/effective capability contracts.
+L00004670	gui_related: false
+L00004671	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00004672	split_recommended: false
+L00004673	depends_on:
+L00004674	- PDS-003
+L00004675	- PDS-004
+L00004676	- PDS-005
+L00004677	- PNC-001
+L00004678	- SP-001
+L00004679	- PS-001
+L00004680	unblocks: []
+L00004681	acceptance_criteria:
+L00004682	- SMPFS-069 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00004683	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004684	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004685	validation_surfaces:
+L00004686	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004687	- python3 scripts/pm-plan-index.py validate
+L00004688	risk_class: platform_acceptance_drift
+L00004689	reasoning_tier: standard
+L00004690	context_scope: terminal_platforms
+L00004691	implementation_surfaces:
+L00004692	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004693	node_compile_hint:
+L00004694	  mode: platform_acceptance_legacy_routing
+L00004695	  create_worknodes: false
+L00004696	source_lineage:
+L00004697	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0041
+L00004698	preserved_exact_tokens:
+L00004699	- macOS
+L00004700	- Linux
+L00004701	- Windows
+L00004702	- WSL
+L00004703	- Wayland
+L00004704	- /X11
+L00004705	- /dock/detach
+L00004706	- package/runtime dependencies
+L00004707	- /SSH
+L00004708	- /WSL/container-or-similar
+L00004709	- /render
+L00004710	- /replaces
+L00004711	negative_constraints:
+L00004712	- PM must not mask a remote, WSL, container, or unsupported runtime request by silently launching a local shell or generic GUI fallback.
+L00004713	- Legacy routing shorthand such as `/SSH`, `/WSL/container-or-similar`, `/render`, and `/replaces` is resolved through the same process-host, renderer, and requested/effective host contract; PM must not mask a remote, WSL, container, or unsupported runtime request by silently launching a local shell or generic GUI fallback.
+L00004714	preserved_contractrefs:
+L00004715	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md'
+L00004716	compatibility_only_notes:
+L00004717	- /SSH, /WSL/container-or-similar, /render, and /replaces are legacy shorthand resolved through canonical host/render contracts.
+L00004718	stale_retired_dispositions: []
+L00004719	owner_hints:
+L00004720	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004721	- Plans/storage-plan.md
+L00004722	- Plans/Permissions_System.md
+L00004723	```
+L00004724	
+L00004725	### SMPFS-070 - Terminal Subsystem Layers And Gates
+L00004726	
+L00004727	```yaml
+L00004728	plan_unit_id: SMPFS-070
+L00004729	unit_type: requirement
+L00004730	status: accepted
+L00004731	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004732	canonical_text: Terminal subsystem architecture has explicit process-host, PTY transport, VT/ANSI grid buffer engine, renderer, shell-integration metadata, and workspace/session UI layers with acceptance gates for platform behavior.
+L00004733	gui_related: false
+L00004734	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00004735	split_recommended: false
+L00004736	depends_on:
+L00004737	- PDS-003
+L00004738	- PDS-004
+L00004739	- PDS-005
+L00004740	- PNC-001
+L00004741	- SP-001
+L00004742	- RM-025
+L00004743	unblocks: []
+L00004744	acceptance_criteria:
+L00004745	- SMPFS-070 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00004746	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004747	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004748	validation_surfaces:
+L00004749	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004750	- python3 scripts/pm-plan-index.py validate
+L00004751	risk_class: terminal_layer_drift
+L00004752	reasoning_tier: standard
+L00004753	context_scope: terminal_architecture
+L00004754	implementation_surfaces:
+L00004755	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004756	node_compile_hint:
+L00004757	  mode: terminal_subsystem_layers_gates
+L00004758	  create_worknodes: false
+L00004759	source_lineage:
+L00004760	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+L00004761	preserved_exact_tokens:
+L00004762	- process host
+L00004763	- PTY /session/process transport
+L00004764	- VT /ANSI/grid/buffer
+L00004765	- renderer
+L00004766	- shell-integration metadata
+L00004767	- workspace/session UI
+L00004768	- acceptance gates
+L00004769	negative_constraints:
+L00004770	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00004771	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00004772	- 'Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".'
+L00004773	preserved_contractrefs:
+L00004774	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
+L00004775	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
+L00004776	compatibility_only_notes: []
+L00004777	stale_retired_dispositions: []
+L00004778	owner_hints:
+L00004779	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004780	- Plans/storage-plan.md
+L00004781	- Plans/Run_Modes.md
+L00004782	```
+L00004783	
+L00004784	### SMPFS-071 - Terminal Parser Replay Requirements
+L00004785	
+L00004786	```yaml
+L00004787	plan_unit_id: SMPFS-071
+L00004788	unit_type: requirement
+L00004789	status: accepted
+L00004790	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004791	canonical_text: Terminal parser and replay requirements preserve mutable grid/buffer state, scrollback and selection anchors, command-block annotations, replay fixtures, resize/reflow, huge output, Unicode/IME, search, and TUI capture behavior.
+L00004792	gui_related: false
+L00004793	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00004794	split_recommended: false
+L00004795	depends_on:
+L00004796	- PDS-003
+L00004797	- PDS-004
+L00004798	- PDS-005
+L00004799	- PNC-001
+L00004800	- SP-001
+L00004801	unblocks: []
+L00004802	acceptance_criteria:
+L00004803	- SMPFS-071 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00004804	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004805	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004806	validation_surfaces:
+L00004807	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004808	- python3 scripts/pm-plan-index.py validate
+L00004809	risk_class: terminal_parser_replay_drift
+L00004810	reasoning_tier: standard
+L00004811	context_scope: terminal_parser
+L00004812	implementation_surfaces:
+L00004813	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004814	node_compile_hint:
+L00004815	  mode: terminal_parser_replay_requirements
+L00004816	  create_worknodes: false
+L00004817	source_lineage:
+L00004818	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+L00004819	preserved_exact_tokens:
+L00004820	- /VT
+L00004821	- /ANSI/grid/buffer
+L00004822	- scrollback
+L00004823	- selection anchors
+L00004824	- command-block annotations
+L00004825	- replay fixtures
+L00004826	- resize/reflow
+L00004827	- huge output
+L00004828	- Unicode
+L00004829	- IME
+L00004830	- search
+L00004831	- TUI capture
+L00004832	negative_constraints:
+L00004833	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00004834	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00004835	- 'Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".'
+L00004836	preserved_contractrefs:
+L00004837	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
+L00004838	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
+L00004839	compatibility_only_notes: []
+L00004840	stale_retired_dispositions: []
+L00004841	owner_hints:
+L00004842	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004843	- Plans/storage-plan.md
+L00004844	```
+L00004845	
+L00004846	### SMPFS-072 - Non Ship Terminal Rendering Constraints
+L00004847	
+L00004848	```yaml
+L00004849	plan_unit_id: SMPFS-072
+L00004850	unit_type: requirement
+L00004851	status: accepted
+L00004852	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004853	canonical_text: A DOM-style, document-style, line-widget-per-output, or string-concatenation terminal core is non-ship; terminal output is mutable grid/buffer state rendered by a purpose-built terminal engine.
+L00004854	gui_related: true
+L00004855	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00004856	split_recommended: false
+L00004857	depends_on:
+L00004858	- PDS-003
+L00004859	- PDS-004
+L00004860	- PDS-005
+L00004861	- PNC-001
+L00004862	- SP-001
+L00004863	unblocks: []
+L00004864	acceptance_criteria:
+L00004865	- SMPFS-072 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00004866	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004867	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004868	validation_surfaces:
+L00004869	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004870	- python3 scripts/pm-plan-index.py validate
+L00004871	risk_class: terminal_rendering_constraint_drift
+L00004872	reasoning_tier: standard
+L00004873	context_scope: terminal_rendering_gui
+L00004874	implementation_surfaces:
+L00004875	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004876	node_compile_hint:
+L00004877	  mode: non_ship_terminal_rendering_constraints
+L00004878	  create_worknodes: false
+L00004879	source_lineage:
+L00004880	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+L00004881	preserved_exact_tokens:
+L00004882	- DOM-style
+L00004883	- document-style
+L00004884	- one widget per line forever
+L00004885	- line-widget
+L00004886	- string-concatenation
+L00004887	- non-ship
+L00004888	- mutable grid/buffer state
+L00004889	negative_constraints:
+L00004890	- A DOM-style terminal rendering architecture for the terminal core is non-ship.
+L00004891	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00004892	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00004893	- 'Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".'
+L00004894	preserved_contractrefs:
+L00004895	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
+L00004896	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
+L00004897	compatibility_only_notes: []
+L00004898	stale_retired_dispositions: []
+L00004899	owner_hints:
+L00004900	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004901	- Plans/storage-plan.md
+L00004902	```
+L00004903	
+L00004904	### SMPFS-073 - Native Buffer Render Performance Model
+L00004905	
+L00004906	```yaml
+L00004907	plan_unit_id: SMPFS-073
+L00004908	unit_type: requirement
+L00004909	status: accepted
+L00004910	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004911	canonical_text: Terminal performance requires off-UI-thread PTY and buffer work, diff/dirty-region painting, throttled rendering, bounded memory, stable scroll/selection/focus, and platform performance tests.
+L00004912	gui_related: true
+L00004913	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00004914	split_recommended: false
+L00004915	depends_on:
+L00004916	- PDS-003
+L00004917	- PDS-004
+L00004918	- PDS-005
+L00004919	- PNC-001
+L00004920	- SP-001
+L00004921	unblocks: []
+L00004922	acceptance_criteria:
+L00004923	- SMPFS-073 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00004924	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004925	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004926	validation_surfaces:
+L00004927	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004928	- python3 scripts/pm-plan-index.py validate
+L00004929	risk_class: terminal_performance_drift
+L00004930	reasoning_tier: standard
+L00004931	context_scope: terminal_rendering_gui
+L00004932	implementation_surfaces:
+L00004933	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004934	node_compile_hint:
+L00004935	  mode: native_buffer_render_performance_model
+L00004936	  create_worknodes: false
+L00004937	source_lineage:
+L00004938	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0042
+L00004939	preserved_exact_tokens:
+L00004940	- off-UI-thread
+L00004941	- diff/dirty-region painting
+L00004942	- throttled rendering
+L00004943	- bounded memory
+L00004944	- scroll
+L00004945	- selection
+L00004946	- focus
+L00004947	- performance tests
+L00004948	negative_constraints:
+L00004949	- a DOM-style terminal rendering architecture for the terminal core is non-ship; the core MUST NOT be a DOM-style “one widget per line forever” model.
+L00004950	- Diagnostic logging records terminal subsystem events and failures as metadata, state transitions, failure codes, and performance counters; it must not indiscriminately capture or duplicate full shell content. Transcript capture remains a terminal review feature, not a blanket debug log sink, and logging boundaries distinguish metadata-only artifacts from transcript-including artifacts without unexpectedly exporting sensitive command content/environment data unless the user explicitly chooses that artifact class.
+L00004951	- 'Rollback/snapshot boundary is explicit: PM may snapshot terminal metadata, layout state, settings, and retained transcript artifacts, but PM must not imply that it can roll back arbitrary live PTY runtime/process state after commands already executed. Recovery actions are restart/rerun/reopen/restore-structure, not "undo terminal execution".'
+L00004952	preserved_contractrefs:
+L00004953	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileManager.md'
+L00004954	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/storage-plan.md'
+L00004955	compatibility_only_notes: []
+L00004956	stale_retired_dispositions: []
+L00004957	owner_hints:
+L00004958	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004959	- Plans/storage-plan.md
+L00004960	```
+L00004961	
+
+<<< CONTEXT_AFTER canonical_document_lines=4962-4973 >>>
+L00004962	### SMPFS-074 - Terminal Observability Events
+L00004963	
+L00004964	```yaml
+L00004965	plan_unit_id: SMPFS-074
+L00004966	unit_type: requirement
+L00004967	status: accepted
+L00004968	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00004969	canonical_text: Terminal observability records structured lifecycle and state-transition events including create, attach, ready, start/finish command, interrupt, terminate, kill, detach, reattach, move-window, resize, focus/visibility, cwd/profile changes, renderer errors, shell-integration changes, selection/clipboard failures, and capability fallback.
+L00004970	gui_related: false
+L00004971	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00004972	split_recommended: false
+L00004973	depends_on:

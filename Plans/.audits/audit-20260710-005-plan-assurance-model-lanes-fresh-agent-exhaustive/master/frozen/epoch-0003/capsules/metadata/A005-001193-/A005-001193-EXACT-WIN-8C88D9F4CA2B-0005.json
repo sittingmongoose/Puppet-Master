@@ -1,0 +1,56 @@
+{
+  "assignment_id": "A005-001193-EXACT-WIN-8C88D9F4CA2B-0005",
+  "attempt_id": "attempt-0003",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      1468,
+      1479
+    ],
+    [
+      1856,
+      1867
+    ]
+  ],
+  "core_range": [
+    1480,
+    1855
+  ],
+  "core_sha256": "e45b81a4467441b2c75743a1f841b1405cdf06fae2f97ae13274b7ccd58cf0b2",
+  "document_path": "Plans/Wiring_Matrix.production.json",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/7f/7f2c3500bd7de1d55d12f0882bc502d6ba0db8e680aea3e2839bc4002026ec4d.txt",
+  "source_excerpt_sha256": "7f2c3500bd7de1d55d12f0882bc502d6ba0db8e680aea3e2839bc4002026ec4d",
+  "source_sha256": "01b3f170ce11d2f53a01be423c14390354e6bea881fed5322807a0db7e65c36d",
+  "window_id": "WIN-8C88D9F4CA2B-0005"
+}

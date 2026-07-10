@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE canonical_document_lines=639-650 >>>
+L00000639	
+L00000640	---
+L00000641	
+L00000642	<a id="3"></a>
+L00000643	<a id="SLOT-EXTRACTION"></a>
+L00000644	## 3. Natural-language slot extraction grammar
+L00000645	
+L00000646	This section defines the deterministic, regex-based mini grammar for extracting structured parameters from user natural-language prompts. The extraction pipeline runs before `media.generate` is called and produces the request envelope fields (§2.2).
+L00000647	
+L00000648	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00000649	
+L00000650	### 3.1 Pre-processing
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=651-1048 >>>
+L00000651	
+L00000652	- Keep `raw` (original user text) and `s_lower` (normalized lowercased copy).
+L00000653	- If a trailing controls block exists (the prompt ends with `(...)` or `[...]` and the block contains at least one control token), split `body` + `controls` and parse controls first; remove the block from the prompt before creative-prompt cleaning.
+L00000654	- If the trailing block contains unmatched delimiters, control keys with empty values, or unsupported control names, ignore the malformed control token rather than failing the full request. The cleaned creative prompt still proceeds through deterministic extraction.
+L00000655	
+L00000656	Controls-block regex:
+L00000657	```
+L00000658	(?is)^(?P<body>.*?)(?:\s*(?P<bracket>\(|\[)\s*(?P<controls>[^)\]]{1,400})\s*(?:\)|\])\s*)$
+L00000659	```
+L00000660	
+L00000661	Control token gate (at least one must match inside the captured controls):
+L00000662	```
+L00000663	\b(model|aspect|ratio|size|resolution|duration|voice|format|bpm|seed|negative|quality)\b
+L00000664	```
+L00000665	
+L00000666	### 3.2 Kind detection
+L00000667	
+L00000668	- **Prefix form** (highest priority):
+L00000669	  ```
+L00000670	  (?is)^\s*(?P<prefix>image|video|tts|music)\s*:\s*
+L00000671	  ```
+L00000672	- **Keyword-based** (if no prefix match):
+L00000673	  - `image`: `\b(image|picture|photo|logo|poster|thumbnail|cover)\b`
+L00000674	  - `video`: `\b(video|clip|animation|broll|b-roll)\b`
+L00000675	  - `tts`: `\b(tts|text to speech|read aloud|say this|voiceover|voice-over)\b`
+L00000676	  - `music`: `\b(music|song|beat|instrumental|soundtrack)\b`
+L00000677	- **Verb fallback** — only if the above are unambiguous (single kind match).
+L00000678	
+L00000679	### 3.3 Deterministic precedence
+L00000680	
+L00000681	Controls-block key/values override everything. Then, in order:
+L00000682	
+L00000683	1. `model_override`
+L00000684	2. `count`
+L00000685	3. `aspect_ratio`
+L00000686	4. `size` / `resolution`
+L00000687	5. `duration`
+L00000688	6. `format`
+L00000689	7. `voice` / `style`
+L00000690	8. `quality`
+L00000691	9. `seed`
+L00000692	10. `bpm`
+L00000693	11. `negative_prompt`
+L00000694	
+L00000695	### 3.4 `model_override` extraction
+L00000696	
+L00000697	Keyword form:
+L00000698	```
+L00000699	(?is)\b(?:using|with|via|use|model)\s*(?:[:=]\s*)?(?P<model>@?[a-z0-9][a-z0-9._/\-\s]{0,80}?)(?=(?:\s*(?:,|;|\)|\]|\.$|$))|\s+\b(?:for|aspect|ratio|size|resolution|format|voice|duration|negative|quality|seed|bpm|variations?|versions?|options?)\b)
+L00000700	```
+L00000701	(?i)(?<!\w)@(?P<model2>[a-z0-9][a-z0-9._/\-]{1,64})(?!\w)
+L00000702	```
+L00000703	
+L00000704	**Normalize model key:** lowercase; collapse spaces, underscores, and hyphens.
+L00000705	
+L00000706	**Resolution order:** alias → exact model id → exact displayName → else `MODEL_UNAVAILABLE`.
+L00000707	
+L00000708	**Canonical media model aliases** (e.g., "Nano Banana", "Nano Banana Pro", "Veo fast", "TTS flash", "TTS pro") are defined in `Plans/Models_System.md` [§6.8](Plans/Models_System.md#MEDIA-ALIASES) (SSOT). Do not restate the alias table here.
+L00000709	
+L00000710	ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID, ContractName:Plans/Models_System.md#MEDIA-ALIASES
+L00000711	
+L00000712	### 3.5 `count` extraction
+L00000713	
+L00000714	Digits form:
+L00000715	```
+L00000716	(?i)\b(?:(?:make|generate|create|give me|output|render)\s+)?(?P<count>\d{1,2})\s*(?:x\s*)?(?:variations?|versions?|options?|images?|pics?|pictures?|clips?|frames?)\b
+L00000717	```
+L00000718	
+L00000719	Optional word forms (one through ten) follow the same pattern. Clamp to safe max (default 8). Last match wins.
+L00000720	
+L00000721	### 3.6 `aspect_ratio` extraction
+L00000722	
+L00000723	Numeric:
+L00000724	```
+L00000725	(?i)\b(?P<ar_w>\d{1,2})\s*:\s*(?P<ar_h>\d{1,2})\b
+L00000726	```
+L00000727	
+L00000728	Named:
+L00000729	```
+L00000730	(?i)\b(?P<ar_named>square|portrait|landscape|vertical|horizontal|widescreen)\b
+L00000731	```
+L00000732	
+L00000733	Mapping: `square` = `1:1`; `portrait` / `vertical` = `9:16`; `landscape` / `horizontal` / `widescreen` = `16:9`.
+L00000734	
+L00000735	### 3.7 `size` / `resolution` extraction
+L00000736	
+L00000737	Image keyworded:
+L00000738	```
+L00000739	(?i)\b(?:size|resolution|res)\s*[:=]?\s*(?P<size_px>512|768|1024|1152|1280|1536|2048|3072|4096)\s*(?:px|pixels)?\b
+L00000740	```
+L00000741	
+L00000742	Image keyworded (k-form):
+L00000743	```
+L00000744	(?i)\b(?:size|resolution|res)\s*[:=]?\s*(?P<size_k>2k|4k|8k)\b
+L00000745	```
+L00000746	
+L00000747	Video resolution:
+L00000748	```
+L00000749	(?i)\b(?P<vres>720p|1080p|1440p|2160p|4k)\b
+L00000750	```
+L00000751	
+L00000752	Bare numbers are **not** treated as size unless they appear in a controls block or trailing comma controls.
+L00000753	
+L00000754	Deterministic assignment to envelope fields:
+L00000755	- `size_px` populates `size`.
+L00000756	- `size_k` populates `size` using `2k -> 2048`, `4k -> 4096`, `8k -> 8192`, and also populates `resolution` with the symbolic token.
+L00000757	- `vres` populates `resolution` for `kind=video`; for `kind=image`, bare `vres` matches in creative prose are ignored unless provided in a keyed controls context.
+L00000758	- If both `size_k` and `vres` are present in an image request, `size_k` is authoritative and `resolution` remains the symbolic `size_k` token.
+L00000759	
+L00000760	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00000761	
+L00000762	### 3.8 `duration` extraction (video/music only)
+L00000763	
+L00000764	Keyworded:
+L00000765	```
+L00000766	(?i)\b(?:for|duration|length)\s*(?P<secs>\d{1,3}(?:\.\d+)?)\s*(?:s|sec|secs|second|seconds)\b
+L00000767	```
+L00000768	
+L00000769	Bare (only in controls block or trailing controls):
+L00000770	```
+L00000771	(?i)\b(?P<secs2>\d{1,3}(?:\.\d+)?)\s*(?:s|sec|secs)\b
+L00000772	```
+L00000773	
+L00000774	### 3.9 `format` extraction
+L00000775	
+L00000776	```
+L00000777	(?i)\b(?:format|output|export|as)\s*[:=]?\s*(?P<fmt>png|jpg|jpeg|webp|gif|mp4|mov|wav|mp3|flac|pcm16)\b
+L00000778	```
+L00000779	
+L00000780	### 3.10 `voice` extraction (TTS)
+L00000781	
+L00000782	Voice ID:
+L00000783	```
+L00000784	(?i)\bvoice\s*[:=]\s*(?P<voice>[a-z0-9][a-z0-9 _\-]{0,32})\b
+L00000785	```
+L00000786	
+L00000787	Voice style:
+L00000788	```
+L00000789	(?i)\bin\s+a[n]?\s+(?P<voice_style>[^,.;]{1,40})\s+voice\b
+L00000790	```
+L00000791	
+L00000792	### 3.11 `quality` extraction
+L00000793	
+L00000794	```
+L00000795	(?i)\b(?P<qual>draft|standard|high)\b
+L00000796	```
+L00000797	
+L00000798	Optional phrase mapping (e.g., "quick draft" → `draft`, "high quality" → `high`).
+L00000799	
+L00000800	Deterministic guard: bare lexical matches from the regex above are candidate tokens only. `quality` MUST be set only when the match is in a controls block or a quality-keyword phrase (`quality: high`, `quality=standard`, `high quality`, `draft quality`); plain descriptive adjectives in the creative prompt MUST NOT set `quality`.
+L00000801	
+L00000802	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00000803	
+L00000804	### 3.12 `seed` extraction
+L00000805	
+L00000806	```
+L00000807	(?i)\bseed\s*[:=]?\s*(?P<seed>\d{1,10})\b
+L00000808	```
+L00000809	
+L00000810	### 3.13 `bpm` extraction
+L00000811	
+L00000812	```
+L00000813	(?i)\b(?P<bpm>\d{2,3})\s*bpm\b|\bbpm\s*[:=]\s*(?P<bpm2>\d{2,3})\b
+L00000814	```
+L00000815	
+L00000816	### 3.14 `negative_prompt` extraction
+L00000817	
+L00000818	Explicit:
+L00000819	```
+L00000820	(?is)\bnegative\s+prompt\s*[:=]\s*(?P<neg>"[^"]{1,200}"|'[^']{1,200}'|[^,;\n]{1,200})
+L00000821	```
+L00000822	
+L00000823	Avoid-clauses (collect all):
+L00000824	```
+L00000825	(?is)\b(?:without|no|avoid)\s+(?P<avoid>[^,.;\n]{1,80})
+L00000826	```
+L00000827	
+L00000828	Combine explicit + avoid list (dedupe, preserve order).
+L00000829	
+L00000830	### 3.15 Prompt cleaning
+L00000831	
+L00000832	- If a controls block is present: remove it from the creative prompt.
+L00000833	- Remove only matched spans introduced by control keywords (`using`, `model`, `size`, `aspect`, `ratio`, `resolution`, `format`, `voice`, `duration`, `negative`, `quality`, `seed`, `bpm`).
+L00000834	- Preserve remaining text as the creative prompt.
+L00000835	
+L00000836	---
+L00000837	
+L00000838	<a id="4"></a>
+L00000839	<a id="CAPABILITY-PICKER"></a>
+L00000840	## 4. UI/UX behavior: capability picker dropdown
+L00000841	
+L00000842	### 4.1 Composer dropdown
+L00000843	
+L00000844	The composer area includes a capability picker dropdown showing the four media capabilities:
+L00000845	
+L00000846	| Item | Capability ID |
+L00000847	|------|---------------|
+L00000848	| Image | `media.image` |
+L00000849	| Video | `media.video` |
+L00000850	| TTS | `media.tts` |
+L00000851	| Music | `media.music` |
+L00000852	
+L00000853	ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md
+L00000854	
+L00000855	### 4.2 Disabled item presentation
+L00000856	
+L00000857	Disabled capabilities are **visible** in the dropdown but rendered **greyed out**. A tooltip on hover shows the human-readable reason for the disabled state (using the copy strings from §5).
+L00000858	
+L00000859	Disabled rows remain keyboard-focusable so the same reason text is available on hover **and** focus. The dropdown uses standard listbox semantics (`role=listbox` / `role=option` or framework equivalent), and the disabled reason must be exposed to assistive technologies via the tooltip/description channel rather than color alone.
+L00000860	
+L00000861	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00000862	
+L00000863	### 4.3 Banner/footnote
+L00000864	When visible media capabilities are disabled because no eligible media generation provider route is configured for the resolved request/policy, the dropdown footer displays this banner/footnote:
+L00000865	
+L00000866	> **"Configure a media generation provider in Settings -> Providers."** Add a supported route such as OpenAI/Codex, OpenAI API key, MiniMax Image-01, Antigravity internal image generation where available, or Gemini Direct where available.
+L00000867	
+L00000868	Provider-specific helper links may point to the relevant dashboard or API-key page, but the surrounding copy MUST NOT imply Gemini is the default or only valid media source.
+L00000869	
+L00000870	ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/rewrite-tie-in-memo.md
+L00000871	
+L00000872	When multiple visible capabilities are disabled for the same missing-configuration reason, show the footer banner once and keep it pinned at the bottom of the dropdown while the list scrolls. The banner is supplemental guidance; per-item disabled reasons remain visible on hover/focus.
+L00000873	
+L00000874	ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md
+L00000875	### 4.4 Cursor backend behavior
+L00000876	When the active backend is Cursor:
+L00000877	- image generation is enabled only if the Cursor route declares a verified generated-media route for image output
+L00000878	- image input/tooling evidence alone does not prove generated-image support
+L00000879	- video, TTS, and music remain disabled with `disabled_reason: BACKEND_UNSUPPORTED` unless Cursor later declares verified generated-media routes
+L00000880	- Cursor does not create a separate Gemini account model
+L00000881	- non-Cursor media follows the provider/model `generated_media_routes[]` taxonomy described in `### 2.4 Backend routing`
+L00000882	
+L00000883	ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+L00000884	### 4.5 Click behavior
+L00000885	
+L00000886	Clicking an **enabled** capability item inserts a pre-authored assistant prompt into the chat composer. The prompt guides the user to describe their generation request with relevant parameters. See §5 for the exact prompt strings per capability.
+L00000887	
+L00000888	### 4.6 Per-message model override example
+L00000889	
+L00000890	A user may specify a per-message model override inline in their prompt. For example:
+L00000891	
+L00000892	> "Generate an image of a sunset over mountains using Nano Banana Pro"
+L00000893	
+L00000894	This triggers the `model_override` slot extraction (§3.4). The model `Nano Banana Pro` is resolved via alias → exact model id → exact displayName → else `MODEL_UNAVAILABLE`. The override applies only to this single generation request and does not change the model configured in Settings.
+L00000895	
+L00000896	ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
+L00000897	
+L00000898	### 4.7 Runtime refresh behavior
+L00000899	
+L00000900	The capability picker refreshes after Settings or provider-state changes that affect capability evaluation (for example, adding an OpenAI/Codex subscription-backed route, saving an OpenAI API key, enabling MiniMax Image-01, enabling Antigravity OAuth/internal `gemini-3.1-flash-image`, saving a Gemini Direct API key, toggling a media capability off, switching providers, or recovering an MCP/provider bridge). Refresh MUST preserve composer text already typed by the user; only the picker contents and footer/banner state are recalculated.
+L00000901	
+L00000902	ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/FinalGUISpec.md
+L00000903	
+L00000904	---
+L00000905	
+L00000906	<a id="5"></a>
+L00000907	<a id="UI-COPY"></a>
+L00000908	## 5. UI copy strings
+L00000909	The following strings are the canonical verbatim copy for media UI surfaces.
+L00000910	
+L00000911	### 5.1 Capability click prompts
+L00000912	
+L00000913	**Image click prompt:**
+L00000914	> "What image are we generating? Describe the subject, style, and optionally aspect ratio (1:1, 16:9), size (1024, 2048), and how many variations you want."
+L00000915	
+L00000916	**Video click prompt:**
+L00000917	> "What video are we generating? Describe the scene, camera/style, duration, and aspect ratio/resolution if you have a preference."
+L00000918	
+L00000919	**TTS click prompt:**
+L00000920	> "What text should I speak, and what voice/style should it use? You can also choose output format (WAV/MP3) if available."
+L00000921	
+L00000922	**Music click prompt:**
+L00000923	> "What music are we generating? Share genre, mood, tempo (BPM), and duration. If you want, mention instruments or references."
+L00000924	
+L00000925	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00000926	
+L00000927	### 5.2 Disabled-reason messages
+L00000928	
+L00000929	**Not configured reason (`NOT_CONFIGURED`):**
+L00000930	> "This feature requires an eligible media generation provider route. Configure a supported provider account, profile, credential, or API key in Settings -> Providers, then try again."
+L00000931	
+L00000932	ContractRef: ToolID:capabilities.get, ContractName:Plans/rewrite-tie-in-memo.md
+L00000933	
+L00000934	**Model unavailable reason (`MODEL_UNAVAILABLE`):**
+L00000935	> "That model isn't available with the current provider account, profile, auth mode, API key, or media route (or it isn't enabled). Pick a different model in Settings, or ask 'What models are available?'"
+L00000936	
+L00000937	ContractRef: ToolID:capabilities.get, ContractName:Plans/Models_System.md#MODEL-ID
+L00000938	
+L00000939	**Admin disabled reason (`ADMIN_DISABLED`):**
+L00000940	> "This feature is disabled in Settings. Enable it under Media settings, then try again."
+L00000941	
+L00000942	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00000943	
+L00000944	**Backend unsupported reason (`BACKEND_UNSUPPORTED`):**
+L00000945	> "The current backend supports Image Generation only. To use Video/TTS/Music, use a non-Cursor backend with an eligible Gemini account, auth mode, or API key for media generation."
+L00000946	
+L00000947	ContractRef: ToolID:capabilities.get, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Multi-Account.md
+L00000948	
+L00000949	**Rate limited reason (`RATE_LIMITED`):**
+L00000950	> "This feature is temporarily rate-limited. Wait a moment and try again."
+L00000951	
+L00000952	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00000953	
+L00000954	**Quota exceeded reason (`QUOTA_EXCEEDED`):**
+L00000955	> "API quota for this feature has been exhausted. Check your provider usage dashboard or wait for quota to reset."
+L00000956	
+L00000957	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00000958	## 6. Acceptance criteria
+L00000959	These criteria are testable assertions that MUST hold for any conforming implementation.
+L00000960	
+L00000961	ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md, ContractName:Plans/Progression_Gates.md
+L00000962	
+L00000963	<a id="AC-MED01"></a>
+L00000964	**AC-MED01:** `capabilities.get` MUST return all media capabilities (`media.image`, `media.video`, `media.tts`, `media.music`) and all registered provider-tool capabilities, each with `enabled`, `disabled_reason`, and `setup_hint` fields.
+L00000965	
+L00000966	ContractRef: ToolID:capabilities.get
+L00000967	
+L00000968	<a id="AC-MED02"></a>
+L00000969	**AC-MED02:** `disabled_reason` values MUST be exactly one of the six canonical values defined in §1.3. No ad-hoc reason strings are permitted.
+L00000970	
+L00000971	ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
+L00000972	
+L00000973	<a id="AC-MED03"></a>
+L00000974	**AC-MED03:** When the active backend is Cursor and no verified Cursor generated-media route is configured, `media.image`, `media.video`, `media.tts`, and `media.music` MUST be disabled with `BACKEND_UNSUPPORTED` or a route-specific unavailable state. Cursor image-input/API-key proof alone MUST NOT enable generated-image output.
+L00000975	
+L00000976	ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/CLI_Bridged_Providers.md
+L00000977	
+L00000978	<a id="AC-MED03A"></a>
+L00000979	**AC-MED03A:** When the active backend is Cursor and another provider such as Gemini Direct is configured, Cursor media capabilities still depend on Cursor's own verified generated-media route. Other providers do not turn Cursor into a generated-media backend; requested/effective routing must show any switch to the provider that actually generated media.
+L00000980	
+L00000981	ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
+L00000982	
+L00000983	<a id="AC-MED04"></a>
+L00000984	**AC-MED04:** When the active backend is non-Cursor and at least one eligible provider/model `generated_media_routes[]` entry exists for the resolved request/policy, only the media kinds declared by that route are eligible for enablement, **subject to**: (a) the per-capability Settings > Media toggle (if toggled OFF -> `ADMIN_DISABLED`), and (b) the underlying model/route being available for that kind (if unavailable -> `MODEL_UNAVAILABLE` or the provider-specific disabled state). An eligible account alone does NOT guarantee all media kinds are enabled.
+L00000985	
+L00000986	ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Multi-Account.md
+L00000987	
+L00000988	<a id="AC-MED05"></a>
+L00000989	**AC-MED05:** When the active backend is non-Cursor and no eligible provider/model generated-media route exists for the resolved request/policy, generated-media capabilities MUST be disabled with `NOT_CONFIGURED`, `UNSUPPORTED`, `CAPABILITY_GATED`, or the more specific route/account state.
+L00000990	
+L00000991	ContractRef: ToolID:capabilities.get, ToolID:media.generate, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+L00000992	
+L00000993	<a id="AC-MED06"></a>
+L00000994	**AC-MED06:** The `model_override` field in `media.generate` MUST resolve via alias -> exact model id -> exact displayName -> else `MODEL_UNAVAILABLE`. The override MUST NOT change the persistent model in Settings.
+L00000995	
+L00000996	ContractRef: ToolID:media.generate, ContractName:Plans/Models_System.md#MODEL-ID
+L00000997	
+L00000998	<a id="AC-MED07"></a>
+L00000999	**AC-MED07:** The capability picker dropdown MUST display disabled capabilities as greyed-out items with a tooltip showing the appropriate disabled-reason message from §5.2.
+L00001000	
+L00001001	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00001002	
+L00001003	<a id="AC-MED08"></a>
+L00001004	**AC-MED08:** Clicking an enabled capability in the picker MUST insert the corresponding verbatim prompt from §5.1 into the chat composer.
+L00001005	
+L00001006	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00001007	
+L00001008	<a id="AC-MED09"></a>
+L00001009	**AC-MED09:** The Assistant and Interviewer MUST call `capabilities.get` when the user asks about capabilities or features. When Assistant is operating in the PRD Builder workflow, the same requirement applies.
+L00001010	
+L00001011	ContractRef: ToolID:capabilities.get, ContractName:Plans/Personas.md, ContractName:Plans/chain-wizard-flexibility.md
+L00001012	
+L00001013	<a id="AC-MED10"></a>
+L00001014	**AC-MED10:** All media-generation and capability references across plan documents MUST reference `Plans/Media_Generation_and_Capabilities.md` anchors rather than restating rules (DRY).
+L00001015	
+L00001016	ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
+L00001017	
+L00001018	<a id="AC-MED11"></a>
+L00001019	**AC-MED11:** When a capability is otherwise available but its Settings > Media toggle is OFF, `capabilities.get` MUST return that capability as disabled with `ADMIN_DISABLED`.
+L00001020	
+L00001021	ContractRef: ToolID:capabilities.get, Invariant:INV-003
+L00001022	
+L00001023	<a id="AC-MED12"></a>
+L00001024	**AC-MED12:** When both an infrastructure-disabled condition (`BACKEND_UNSUPPORTED`, `NOT_CONFIGURED`, `RATE_LIMITED`, or `QUOTA_EXCEEDED`) and an admin-toggle disable are simultaneously true, `capabilities.get` MUST return the infrastructure-disabled reason based on the precedence in §1.4 (not `ADMIN_DISABLED`).
+L00001025	
+L00001026	ContractRef: ToolID:capabilities.get, PolicyRule:Decision_Policy.md§2
+L00001027	
+L00001028	<a id="AC-MED13"></a>
+L00001029	**AC-MED13:** When the active backend is non-Cursor, `media.generate` MUST use standard requested/effective provider/account/route auth resolution. Explicit `oauth`, explicit `api_key`, and explicit provider-route requests MUST NOT silently cross-fallback to another auth surface or provider route.
+L00001030	
+L00001031	**AC-MED13A:** Media availability, usage/quota disclosure, and account/plan UI are route-dependent. Gemini Direct is key-only/API-key-backed where verified; Gemini CLI OAuth, API-key, Google/Vertex rows, and Nanobanana are retired/source-lineage only. UI MUST NOT collapse provider/media routes into one stale-canon mixed-account bucket.
+L00001032	
+L00001033	ContractRef: ToolID:media.generate, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+L00001034	
+L00001035	<a id="AC-MED14"></a>
+L00001036	**AC-MED14:** `media.generate` MUST write generated artifacts to `.puppet-master/artifacts/media/<request_id>/output_000.<ext>` and co-locate a `manifest.json` in the same directory. Each artifact entry MUST include `artifact_id`, `kind`, `mime`, `artifact://` URI, `sha256`, `bytes`, and `meta`. No inline `data_uri` field is permitted in the response.
+L00001037	
+L00001038	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00001039	
+L00001040	<a id="AC-MED15"></a>
+L00001041	**AC-MED15:** `error.code` values in `media.generate` failure responses MUST be exactly one of the nine canonical stable error codes defined in §2.6. No ad-hoc error code strings are permitted.
+L00001042	
+L00001043	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00001044	
+L00001045	<a id="AC-MED16"></a>
+L00001046	**AC-MED16:** `capabilities.get` MUST evaluate provider-tool capabilities from the current runtime registry snapshot at call time, including built-ins, enabled MCP-discovered tools, and provider-exposed tools for the active backend. Tools hidden because an MCP server/provider bridge is unhealthy MUST be omitted or marked disabled based on the current snapshot; stale cached enablement MUST NOT be returned after Settings/provider changes.
+L00001047	
+L00001048	ContractRef: ToolID:capabilities.get, ContractName:Plans/Tools.md
+
+<<< CONTEXT_AFTER canonical_document_lines=1049-1060 >>>
+L00001049	
+L00001050	<a id="AC-MED17"></a>
+L00001051	**AC-MED17:** Successful `media.generate` calls MUST write artifact files before `manifest.json`, and `manifest.json` MUST include at least `schema_version`, `request_id`, `kind`, `engine`, `generated_at_utc`, `artifacts[]`, and `usage` (when available). A failed or partial request MUST NOT leave behind a manifest that claims artifacts that were not durably written.
+L00001052	
+L00001053	ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2
+L00001054	
+L00001055	<a id="AC-MED18"></a>
+L00001056	**AC-MED18:** The capability picker MUST support keyboard navigation for disabled items, expose disabled-reason text to assistive technology, keep the missing-configuration footer pinned when applicable, and refresh after capability-affecting Settings/provider changes without clearing existing composer text.
+L00001057	
+L00001058	ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/FinalGUISpec.md
+L00001059	## Appendix A. Slot extraction rules (regex-ish, deterministic)
+L00001060	

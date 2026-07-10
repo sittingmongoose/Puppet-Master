@@ -1,0 +1,408 @@
+<<< CONTEXT_BEFORE canonical_document_lines=26674-26685 >>>
+L00026674	        "custom_click_target_missing_role"
+L00026675	      ],
+L00026676	      "disposition": "concept_only_owner_adjudicated",
+L00026677	      "canonical_command_id": null,
+L00026678	      "wiring_matrix_key": null,
+L00026679	      "notes": [
+L00026680	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00026681	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00026682	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00026683	      ],
+L00026684	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00026685	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=26686-27064 >>>
+L00026686	    {
+L00026687	      "inventory_id": "pmconcept.l14474.1019",
+L00026688	      "line": 14474,
+L00026689	      "tag": "button",
+L00026690	      "html_id": "collapseBottom",
+L00026691	      "name": null,
+L00026692	      "role": null,
+L00026693	      "class": "collapse-btn",
+L00026694	      "ui_location": "bottomPanel",
+L00026695	      "label": "\u25bc",
+L00026696	      "attrs": {
+L00026697	        "aria-expanded": "true",
+L00026698	        "aria-controls": "bottomTabsContent"
+L00026699	      },
+L00026700	      "inline_handlers": {},
+L00026701	      "command_tokens": [],
+L00026702	      "local_or_demo_markers": [],
+L00026703	      "accessibility_gaps": [],
+L00026704	      "disposition": "concept_only_owner_adjudicated",
+L00026705	      "canonical_command_id": null,
+L00026706	      "wiring_matrix_key": null,
+L00026707	      "notes": [
+L00026708	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00026709	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00026710	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00026711	      ],
+L00026712	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00026713	    },
+L00026714	    {
+L00026715	      "inventory_id": "pmconcept.l14477.1020",
+L00026716	      "line": 14477,
+L00026717	      "tag": "div",
+L00026718	      "html_id": "bottomTabsContent",
+L00026719	      "name": null,
+L00026720	      "role": null,
+L00026721	      "class": "bottom-tabs-content",
+L00026722	      "ui_location": "bottomPanel",
+L00026723	      "label": "Initializing terminal workspace\u2026 Linked dev_session_id: dev-sess-vite-01 terminal_session_id: ts-sess-alpha Reveal in Terminal Focus shell only Sev Code Message File E E0433 unresolved import `slint` src/main.rs:12 W unused unused variable ",
+L00026724	      "attrs": {},
+L00026725	      "inline_handlers": {},
+L00026726	      "command_tokens": [],
+L00026727	      "local_or_demo_markers": [
+L00026728	        "localhost:3000"
+L00026729	      ],
+L00026730	      "accessibility_gaps": [
+L00026731	        "custom_click_target_missing_role"
+L00026732	      ],
+L00026733	      "disposition": "concept_fixture_only",
+L00026734	      "canonical_command_id": null,
+L00026735	      "wiring_matrix_key": null,
+L00026736	      "notes": [
+L00026737	        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+L00026738	      ]
+L00026739	    },
+L00026740	    {
+L00026741	      "inventory_id": "pmconcept.l14484.1021",
+L00026742	      "line": 14484,
+L00026743	      "tag": "button",
+L00026744	      "html_id": null,
+L00026745	      "name": null,
+L00026746	      "role": null,
+L00026747	      "class": "pm-tiny-btn",
+L00026748	      "ui_location": "bottomPanel",
+L00026749	      "label": "Reveal in Terminal",
+L00026750	      "attrs": {
+L00026751	        "type": "button",
+L00026752	        "title": "cmd.terminal.show",
+L00026753	        "onclick": "PM_TERMINAL_DEMO.revealSession(PM_TERMINAL_DEMO.linkedSessions.problems)"
+L00026754	      },
+L00026755	      "inline_handlers": {
+L00026756	        "onclick": "PM_TERMINAL_DEMO.revealSession(PM_TERMINAL_DEMO.linkedSessions.problems)"
+L00026757	      },
+L00026758	      "command_tokens": [
+L00026759	        "cmd.terminal.show"
+L00026760	      ],
+L00026761	      "local_or_demo_markers": [],
+L00026762	      "accessibility_gaps": [],
+L00026763	      "disposition": "concept_fixture_only",
+L00026764	      "canonical_command_id": null,
+L00026765	      "wiring_matrix_key": null,
+L00026766	      "notes": [
+L00026767	        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+L00026768	      ]
+L00026769	    },
+L00026770	    {
+L00026771	      "inventory_id": "pmconcept.l14485.1022",
+L00026772	      "line": 14485,
+L00026773	      "tag": "button",
+L00026774	      "html_id": null,
+L00026775	      "name": null,
+L00026776	      "role": null,
+L00026777	      "class": "pm-tiny-btn",
+L00026778	      "ui_location": "bottomPanel",
+L00026779	      "label": "Focus shell only",
+L00026780	      "attrs": {
+L00026781	        "type": "button",
+L00026782	        "title": "cmd.terminal.focus_session",
+L00026783	        "onclick": "PM_TERMINAL_DEMO.focusSession(PM_TERMINAL_DEMO.linkedSessions.problems)"
+L00026784	      },
+L00026785	      "inline_handlers": {
+L00026786	        "onclick": "PM_TERMINAL_DEMO.focusSession(PM_TERMINAL_DEMO.linkedSessions.problems)"
+L00026787	      },
+L00026788	      "command_tokens": [
+L00026789	        "cmd.terminal.focus_session"
+L00026790	      ],
+L00026791	      "local_or_demo_markers": [],
+L00026792	      "accessibility_gaps": [],
+L00026793	      "disposition": "concept_fixture_only",
+L00026794	      "canonical_command_id": null,
+L00026795	      "wiring_matrix_key": null,
+L00026796	      "notes": [
+L00026797	        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+L00026798	      ]
+L00026799	    },
+L00026800	    {
+L00026801	      "inventory_id": "pmconcept.l14491.1023",
+L00026802	      "line": 14491,
+L00026803	      "tag": "tr",
+L00026804	      "html_id": null,
+L00026805	      "name": null,
+L00026806	      "role": null,
+L00026807	      "class": null,
+L00026808	      "ui_location": "bottomPanel",
+L00026809	      "label": "E E0433 unresolved import `slint` src/main.rs:12",
+L00026810	      "attrs": {
+L00026811	        "onclick": "PM_TERMINAL_DEMO.revealSession('ts-sess-alpha')"
+L00026812	      },
+L00026813	      "inline_handlers": {
+L00026814	        "onclick": "PM_TERMINAL_DEMO.revealSession('ts-sess-alpha')"
+L00026815	      },
+L00026816	      "command_tokens": [],
+L00026817	      "local_or_demo_markers": [],
+L00026818	      "accessibility_gaps": [
+L00026819	        "custom_click_target_missing_role",
+L00026820	        "click_handler_without_keyboard_parity"
+L00026821	      ],
+L00026822	      "disposition": "concept_fixture_only",
+L00026823	      "canonical_command_id": null,
+L00026824	      "wiring_matrix_key": null,
+L00026825	      "notes": [
+L00026826	        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+L00026827	      ]
+L00026828	    },
+L00026829	    {
+L00026830	      "inventory_id": "pmconcept.l14492.1024",
+L00026831	      "line": 14492,
+L00026832	      "tag": "tr",
+L00026833	      "html_id": null,
+L00026834	      "name": null,
+L00026835	      "role": null,
+L00026836	      "class": null,
+L00026837	      "ui_location": "bottomPanel",
+L00026838	      "label": "W unused unused variable `cfg` src/config.rs:4",
+L00026839	      "attrs": {
+L00026840	        "onclick": "PM_TERMINAL_DEMO.revealSession('ts-sess-alpha')"
+L00026841	      },
+L00026842	      "inline_handlers": {
+L00026843	        "onclick": "PM_TERMINAL_DEMO.revealSession('ts-sess-alpha')"
+L00026844	      },
+L00026845	      "command_tokens": [],
+L00026846	      "local_or_demo_markers": [],
+L00026847	      "accessibility_gaps": [
+L00026848	        "custom_click_target_missing_role",
+L00026849	        "click_handler_without_keyboard_parity"
+L00026850	      ],
+L00026851	      "disposition": "concept_fixture_only",
+L00026852	      "canonical_command_id": null,
+L00026853	      "wiring_matrix_key": null,
+L00026854	      "notes": [
+L00026855	        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+L00026856	      ]
+L00026857	    },
+L00026858	    {
+L00026859	      "inventory_id": "pmconcept.l14501.1025",
+L00026860	      "line": 14501,
+L00026861	      "tag": "button",
+L00026862	      "html_id": null,
+L00026863	      "name": null,
+L00026864	      "role": null,
+L00026865	      "class": "pm-tiny-btn",
+L00026866	      "ui_location": "bottomPanel",
+L00026867	      "label": "Focus shell",
+L00026868	      "attrs": {
+L00026869	        "type": "button",
+L00026870	        "onclick": "PM_TERMINAL_DEMO.focusSession('ts-sess-alpha')"
+L00026871	      },
+L00026872	      "inline_handlers": {
+L00026873	        "onclick": "PM_TERMINAL_DEMO.focusSession('ts-sess-alpha')"
+L00026874	      },
+L00026875	      "command_tokens": [],
+L00026876	      "local_or_demo_markers": [],
+L00026877	      "accessibility_gaps": [],
+L00026878	      "disposition": "concept_fixture_only",
+L00026879	      "canonical_command_id": null,
+L00026880	      "wiring_matrix_key": null,
+L00026881	      "notes": [
+L00026882	        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+L00026883	      ]
+L00026884	    },
+L00026885	    {
+L00026886	      "inventory_id": "pmconcept.l14516.1026",
+L00026887	      "line": 14516,
+L00026888	      "tag": "input",
+L00026889	      "html_id": null,
+L00026890	      "name": null,
+L00026891	      "role": null,
+L00026892	      "class": null,
+L00026893	      "ui_location": "bottomPanel",
+L00026894	      "label": "input",
+L00026895	      "attrs": {
+L00026896	        "type": "checkbox",
+L00026897	        "disabled": ""
+L00026898	      },
+L00026899	      "inline_handlers": {},
+L00026900	      "command_tokens": [],
+L00026901	      "local_or_demo_markers": [],
+L00026902	      "accessibility_gaps": [
+L00026903	        "disabled_control_missing_visible_reason_ref"
+L00026904	      ],
+L00026905	      "disposition": "concept_only_owner_adjudicated",
+L00026906	      "canonical_command_id": null,
+L00026907	      "wiring_matrix_key": null,
+L00026908	      "notes": [
+L00026909	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00026910	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00026911	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00026912	      ],
+L00026913	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00026914	    },
+L00026915	    {
+L00026916	      "inventory_id": "pmconcept.l14523.1027",
+L00026917	      "line": 14523,
+L00026918	      "tag": "button",
+L00026919	      "html_id": null,
+L00026920	      "name": null,
+L00026921	      "role": null,
+L00026922	      "class": "pm-tiny-btn",
+L00026923	      "ui_location": "bottomPanel",
+L00026924	      "label": "Open",
+L00026925	      "attrs": {
+L00026926	        "type": "button",
+L00026927	        "onclick": "PM_TERMINAL_DEMO.revealSession('ts-sess-gamma')"
+L00026928	      },
+L00026929	      "inline_handlers": {
+L00026930	        "onclick": "PM_TERMINAL_DEMO.revealSession('ts-sess-gamma')"
+L00026931	      },
+L00026932	      "command_tokens": [],
+L00026933	      "local_or_demo_markers": [],
+L00026934	      "accessibility_gaps": [],
+L00026935	      "disposition": "concept_fixture_only",
+L00026936	      "canonical_command_id": null,
+L00026937	      "wiring_matrix_key": null,
+L00026938	      "notes": [
+L00026939	        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+L00026940	      ]
+L00026941	    },
+L00026942	    {
+L00026943	      "inventory_id": "pmconcept.l14534.1028",
+L00026944	      "line": 14534,
+L00026945	      "tag": "select",
+L00026946	      "html_id": "pmBottomBrowserSessionSelect",
+L00026947	      "name": null,
+L00026948	      "role": null,
+L00026949	      "class": null,
+L00026950	      "ui_location": "bottomPanel",
+L00026951	      "label": "workspace_preview \u2014 localhost:3000 automation_session \u2014 test-runner",
+L00026952	      "attrs": {},
+L00026953	      "inline_handlers": {},
+L00026954	      "command_tokens": [],
+L00026955	      "local_or_demo_markers": [
+L00026956	        "localhost:3000"
+L00026957	      ],
+L00026958	      "accessibility_gaps": [],
+L00026959	      "disposition": "concept_fixture_only",
+L00026960	      "canonical_command_id": null,
+L00026961	      "wiring_matrix_key": null,
+L00026962	      "notes": [
+L00026963	        "Contains mock/demo/local fixture state and is excluded from acceptance evidence unless replaced by a real state contract."
+L00026964	      ]
+L00026965	    },
+L00026966	    {
+L00026967	      "inventory_id": "pmconcept.l14541.1029",
+L00026968	      "line": 14541,
+L00026969	      "tag": "span",
+L00026970	      "html_id": null,
+L00026971	      "name": null,
+L00026972	      "role": null,
+L00026973	      "class": "subtab active",
+L00026974	      "ui_location": "bottomPanel",
+L00026975	      "label": "Console",
+L00026976	      "attrs": {
+L00026977	        "data-browser-subtab": "console",
+L00026978	        "onclick": "switchBrowserSubtab('console')"
+L00026979	      },
+L00026980	      "inline_handlers": {
+L00026981	        "onclick": "switchBrowserSubtab('console')"
+L00026982	      },
+L00026983	      "command_tokens": [],
+L00026984	      "local_or_demo_markers": [],
+L00026985	      "accessibility_gaps": [
+L00026986	        "custom_click_target_missing_role",
+L00026987	        "click_handler_without_keyboard_parity"
+L00026988	      ],
+L00026989	      "disposition": "concept_only_owner_adjudicated",
+L00026990	      "canonical_command_id": null,
+L00026991	      "wiring_matrix_key": null,
+L00026992	      "notes": [
+L00026993	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00026994	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00026995	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00026996	      ],
+L00026997	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00026998	    },
+L00026999	    {
+L00027000	      "inventory_id": "pmconcept.l14542.1030",
+L00027001	      "line": 14542,
+L00027002	      "tag": "span",
+L00027003	      "html_id": null,
+L00027004	      "name": null,
+L00027005	      "role": null,
+L00027006	      "class": "subtab",
+L00027007	      "ui_location": "bottomPanel",
+L00027008	      "label": "Network",
+L00027009	      "attrs": {
+L00027010	        "data-browser-subtab": "network",
+L00027011	        "onclick": "switchBrowserSubtab('network')"
+L00027012	      },
+L00027013	      "inline_handlers": {
+L00027014	        "onclick": "switchBrowserSubtab('network')"
+L00027015	      },
+L00027016	      "command_tokens": [],
+L00027017	      "local_or_demo_markers": [],
+L00027018	      "accessibility_gaps": [
+L00027019	        "custom_click_target_missing_role",
+L00027020	        "click_handler_without_keyboard_parity"
+L00027021	      ],
+L00027022	      "disposition": "concept_only_owner_adjudicated",
+L00027023	      "canonical_command_id": null,
+L00027024	      "wiring_matrix_key": null,
+L00027025	      "notes": [
+L00027026	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00027027	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00027028	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00027029	      ],
+L00027030	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00027031	    },
+L00027032	    {
+L00027033	      "inventory_id": "pmconcept.l14543.1031",
+L00027034	      "line": 14543,
+L00027035	      "tag": "span",
+L00027036	      "html_id": null,
+L00027037	      "name": null,
+L00027038	      "role": null,
+L00027039	      "class": "subtab",
+L00027040	      "ui_location": "bottomPanel",
+L00027041	      "label": "Evidence",
+L00027042	      "attrs": {
+L00027043	        "data-browser-subtab": "evidence",
+L00027044	        "onclick": "switchBrowserSubtab('evidence')"
+L00027045	      },
+L00027046	      "inline_handlers": {
+L00027047	        "onclick": "switchBrowserSubtab('evidence')"
+L00027048	      },
+L00027049	      "command_tokens": [],
+L00027050	      "local_or_demo_markers": [],
+L00027051	      "accessibility_gaps": [
+L00027052	        "custom_click_target_missing_role",
+L00027053	        "click_handler_without_keyboard_parity"
+L00027054	      ],
+L00027055	      "disposition": "concept_only_owner_adjudicated",
+L00027056	      "canonical_command_id": null,
+L00027057	      "wiring_matrix_key": null,
+L00027058	      "notes": [
+L00027059	        "Production-looking control needs a concrete UICommand or explicit retirement before implementation.",
+L00027060	        "No production command is assigned in this repair; remains concept lineage until an owner doc promotes it and adds command/state/handler/receipt/test evidence.",
+L00027061	        "PMConcept concept-only control; final GUI ownership remains with Plans owner docs and production wiring."
+L00027062	      ],
+L00027063	      "owner_rationale": "Owner-adjudicated as concept/source-lineage only. This control is not production evidence and is not promoted until a canonical owner doc accepts the behavior and a production wiring row supplies command/state/receipt/test evidence."
+L00027064	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=27065-27076 >>>
+L00027065	    {
+L00027066	      "inventory_id": "pmconcept.l14604.1032",
+L00027067	      "line": 14604,
+L00027068	      "tag": "button",
+L00027069	      "html_id": null,
+L00027070	      "name": null,
+L00027071	      "role": null,
+L00027072	      "class": "pm-tiny-btn",
+L00027073	      "ui_location": "bottomPanel",
+L00027074	      "label": "Show Problems",
+L00027075	      "attrs": {
+L00027076	        "type": "button",

@@ -1,0 +1,405 @@
+<<< CONTEXT_BEFORE 1086-1097 >>>
+- SSOT
+negative_constraints:
+- Stable IDs MUST NOT be re-invented as ad-hoc string literals in multiple places.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 1098-1473 >>>
+### AI-012 - GitHub Operations Are API Only
+
+```yaml
+plan_unit_id: AI-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: GitHub hosting, auth, repo, fork, and PR operations use the GitHub HTTPS API only; the GitHub CLI gh MUST
+  NOT be used for these operations.
+gui_related: false
+gui_classification_reason: This unit covers GitHub API integration policy, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: github_operations_are_api_only
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: github_operations_api_only
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0010
+preserved_exact_tokens:
+- INV-008 -- GitHub operations are API-only
+- GitHub hosting/auth/repo/fork/PR operations
+- GitHub HTTPS API
+- GitHub CLI
+- gh
+negative_constraints:
+- The GitHub CLI (`gh`) MUST NOT be used for GitHub hosting/auth/repo/fork/PR operations.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: SchemaID:Spec_Lock.json#locked_decisions.github_operations, ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+```
+
+### AI-013 - Cursor Transport Provider Facade
+
+```yaml
+plan_unit_id: AI-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Cursor supports stream-json and ACP transports behind one Provider facade, and consumers MUST NOT branch on
+  transport type.
+gui_related: false
+gui_classification_reason: This unit covers provider transport abstraction, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: cursor_transport_provider_facade
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: cursor_transport_provider_facade
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0011
+preserved_exact_tokens:
+- INV-009 -- Cursor transport is invisible to consumers
+- stream-json
+- ACP
+- Provider facade
+- transport type
+negative_constraints:
+- Consumers MUST NOT branch on transport type.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: SchemaID:Spec_Lock.json#locked_decisions.providers, ContractName:Plans/CLI_Bridged_Providers.md'
+```
+
+### AI-014 - Platform Naming Compliance
+
+```yaml
+plan_unit_id: AI-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: The platform name is Puppet Master only, and older naming is referenced only as legacy naming without quoting
+  the older name.
+gui_related: false
+gui_classification_reason: This unit covers platform naming policy, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: platform_naming_compliance
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: platform_naming_compliance
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0012
+preserved_exact_tokens:
+- INV-010 -- Platform naming compliance
+- Puppet Master
+- legacy naming
+- without quoting the older name
+negative_constraints: []
+compatibility_only_notes:
+- Any older naming must be referred to only as legacy naming without quoting the older name.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:Glossary'
+```
+
+### AI-015 - UI Command Dispatch Rule One
+
+```yaml
+plan_unit_id: AI-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Command ownership follows mutation domain rather than menu location, and the UI layer dispatches only typed
+  UICommand envelopes for non-trivial behavior without calling backend services, storage, domain logic, or provider integrations
+  directly.
+gui_related: true
+gui_classification_reason: This unit governs interactive UI command dispatch and user-initiated interaction routing.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_dispatch_rule_one
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: ui_command_dispatch_rule_one
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0013
+preserved_exact_tokens:
+- INV-011 -- UI command dispatch only (Rule 1)
+- Add to Assistant Chat
+- cmd.chat.add_file_reference { project_id, thread_id?, path, line_range? }
+- cmd.file
+- cmd.terminal.open
+- cmd.terminal.show
+- typed UICommand envelopes
+- UI Command Dispatcher boundary
+negative_constraints:
+- The UI MUST NOT call backend services, storage, domain logic, or provider integrations directly.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Command ownership follows mutation domain, not menu location.
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:UICommand, ContractName:Plans/UI_Wiring_Rules.md#section-1, ContractName:Plans/Contracts_V0.md#7-uicommand,
+  ContractName:Plans/UI_Command_Catalog.md'
+```
+
+### AI-016 - Wiring Matrix Rule Two Coverage
+
+```yaml
+plan_unit_id: AI-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: UI command coverage keeps the command catalog, wiring matrix, examples, and templates mechanically consistent
+  so catalog examples, command templates, and wiring rows cannot drift into miswired surfaces.
+gui_related: true
+gui_classification_reason: This unit governs UI command catalog and wiring matrix consistency for interactive surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: wiring_matrix_rule_two_coverage
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: wiring_matrix_rule_two_coverage
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0014
+preserved_exact_tokens:
+- INV-012 -- Wiring matrix coverage (Rule 2)
+- Plans/UI_Command_Catalog.md
+- command/catalog/template/example integrity
+- catalog examples
+- command templates
+- wiring rows
+- miswired
+negative_constraints:
+- Command catalog, wiring matrix, examples, and templates must not drift from each other.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs: []
+```
+
+### AI-017 - Pre Dispatch Tool Validation
+
+```yaml
+plan_unit_id: AI-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: policy.may_execute_tool() is required for every tool dispatch at every nesting depth, regardless of child-run,
+  plugin path, provider surface, or shell bridge; direct calls to tool implementations without this permission gate are prohibited.
+gui_related: false
+gui_classification_reason: This unit covers permission/tool dispatch enforcement, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: pre_dispatch_tool_validation
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: pre_dispatch_tool_validation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0015
+preserved_exact_tokens:
+- INV-013 -- Pre-dispatch tool validation
+- policy.may_execute_tool()
+- every tool dispatch
+- every nesting depth
+- child-run
+- plugin path
+- provider surface
+- shell bridge
+- direct calls
+negative_constraints:
+- No child-run, plugin path, provider surface, or shell bridge may bypass policy.may_execute_tool().
+- Direct calls to tool implementations without this permission gate are prohibited.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Tools.md'
+- 'ContractRef: Invariant:INV-013, ContractName:Plans/Architecture_Invariants.md'
+```
+
+### AI-018 - Shared Mutable State Lock Invariant
+
+```yaml
+plan_unit_id: AI-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Any mutable data structure shared across threads or async tasks requires RwLock, RWMutex, or equivalent protection;
+  lock-free approaches require formal justification, and silent data races are prohibited, including permission state mutations
+  in Permissions_System EXEC paths.
+gui_related: false
+gui_classification_reason: This unit covers concurrency and mutable state safety, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: shared_mutable_state_lock_invariant
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: shared_mutable_state_lock_invariant
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0016
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0017
+preserved_exact_tokens:
+- INV-014 -- Shared mutable state requires RWMutex
+- RwLock
+- RWMutex
+- lock-free
+- formally justified
+- Silent data races
+- Permission state mutations
+- Permissions_System
+negative_constraints:
+- Silent data races are prohibited.
+- Lock-free approaches are allowed only when formally justified.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md'
+- 'ContractRef: Invariant:INV-014'
+```
+
+
+<<< CONTEXT_AFTER 1474-1485 >>>
+### AI-019 - Monetary Values Are Microdollars
+
+```yaml
+plan_unit_id: AI-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Persisted and in-memory monetary cost values are stored and accumulated as integer microdollars u64; float
+  storage is forbidden, cost_usd is display-derived only, and linting rejects f64/f32 fields named cost*, price*, or amount*
+  in persisted structs.
+gui_related: false
+gui_classification_reason: This unit covers usage/cost data representation, not GUI behavior.

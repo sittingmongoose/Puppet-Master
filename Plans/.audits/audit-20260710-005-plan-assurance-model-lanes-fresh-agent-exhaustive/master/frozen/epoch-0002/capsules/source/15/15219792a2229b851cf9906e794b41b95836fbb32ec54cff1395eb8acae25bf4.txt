@@ -1,0 +1,373 @@
+<<< CONTEXT_BEFORE 4532-4543 >>>
+- 'account-switch / pressure-episode family'
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- 'Plans/usage-feature.md'
+- 'Plans/Multi-Account.md'
+- 'Plans/storage-plan.md'
+split_recommendation_reason: 'The source span contains multiple distinct routing, export, history, subject identity, and provenance constraints.'
+```
+
+
+<<< AUTHORITATIVE_CORE 4544-4887 >>>
+### UF-068 - Usage Contract Evidence And Consolidation Gate
+
+```yaml
+plan_unit_id: UF-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: 'Gate-side Usage contract changes require verifiable `/schema` evidence before prose expands; matrix/schema drift and gate-side drift are one contract-risk pattern, and A2A duplicate attempt-continuity plus tier-boundary schema signals wait for version-governed consolidation.'
+gui_related: false
+gui_classification_reason: 'The unit defines governance and schema evidence constraints rather than GUI presentation.'
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-068 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_196
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: usage_contract_evidence_gate
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0103
+preserved_exact_tokens:
+- 'Gate-side usage contract changes'
+- '/schema'
+- 'matrix/schema drift'
+- 'gate-side drift'
+- 'same contract-risk pattern'
+- 'A2A duplicate attempt-continuity addenda'
+- 'tier-boundary schema signal'
+- 'version-governed consolidation requirement'
+- 'Usage waits'
+negative_constraints:
+- 'Gate-side usage contract changes must land with verifiable `/schema` evidence before prose expands.'
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- 'Plans/usage-feature.md'
+- 'Plans/Contracts_V0.md'
+- 'Plans/Wiring_Matrix.md'
+- 'Plans/Progression_Gates.md'
+split_recommendation_reason: 'The source span contains multiple distinct routing, export, history, subject identity, and provenance constraints.'
+```
+
+### UF-069 - Subject Routing And Inspector History Focus
+
+```yaml
+plan_unit_id: UF-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: 'Runtime artifacts and receipts preserve canonical usage identity plus run `/thread/attempt/worktree` linkage, and `inspector_target = history` changes chronological or detail-history focus inside the already-selected object rather than the selected subject identity.'
+gui_related: true
+gui_classification_reason: 'The unit defines user-visible routing and inspector/history focus behavior.'
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- UF-004
+- UF-033
+unblocks: []
+acceptance_criteria:
+- UF-069 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_196
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: subject_routing_inspector_history_focus
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0103
+preserved_exact_tokens:
+- 'Runtime artifacts and receipts'
+- 'canonical usage identity'
+- '/thread/attempt/worktree'
+- 'Usage must not invent feature-local routing semantics'
+- 'inspector_target = history'
+- 'chronological'
+- '/detail-history'
+- 'selected object'
+- 'selected subject identity'
+negative_constraints:
+- 'Runtime artifacts and receipts preserve canonical usage identity plus run `/thread/attempt/worktree` linkage; Usage must not invent feature-local routing semantics when a receipt or runtime artifact already carries the shared subject.'
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- 'Plans/usage-feature.md'
+- 'Plans/Runtime_Artifacts_Panel.md'
+- 'Plans/UI_Command_Catalog.md'
+- 'Plans/FinalGUISpec.md'
+split_recommendation_reason: 'The source span contains multiple distinct routing, export, history, subject identity, and provenance constraints.'
+```
+
+### UF-070 - Export Labels And View Export Boundary
+
+```yaml
+plan_unit_id: UF-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: 'Usage export labels distinguish exact record payload, filtered table dump, and convenience summary; filtered ledger CSV, filtered concern `/table` CSV, and analytics chart/table export are view exports unless they carry the exact record envelope required for canonical record export.'
+gui_related: true
+gui_classification_reason: 'The unit defines user-visible export labels and export surface boundaries.'
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- UF-005
+unblocks: []
+acceptance_criteria:
+- UF-070 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_196
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: usage_export_view_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0103
+preserved_exact_tokens:
+- 'JSON export labels'
+- 'exact record payload'
+- 'filtered table dump'
+- 'convenience summary'
+- 'record envelope'
+- 'view export'
+- 'filtered ledger CSV'
+- 'filtered concern `/table` CSV'
+- 'analytics chart/table export'
+- 'canonical record export'
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- 'Plans/usage-feature.md'
+- 'Plans/storage-plan.md'
+- 'Plans/Runtime_Artifacts_Panel.md'
+split_recommendation_reason: 'The source span contains multiple distinct routing, export, history, subject identity, and provenance constraints.'
+```
+
+### UF-071 - Source Control Views And History Dimensions
+
+```yaml
+plan_unit_id: UF-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: 'Historical-only projects are not degraded solely because of unrelated completed historical runs; Source Control usage views stay compact around current `/live` worktree rows with toggles for retained, cleanup-eligible, and archived `/removed` history, while Usage history preserves distinct chronological-first dimensions.'
+gui_related: true
+gui_classification_reason: 'The unit defines user-visible Source Control usage view and history presentation constraints.'
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-071 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_196
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: source_control_usage_history_dimensions
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0103
+preserved_exact_tokens:
+- 'Historical-only projects'
+- 'no-active-run'
+- 'absence of current execution'
+- 'not a problem state'
+- 'Source Control usage views'
+- 'current `/live` worktree rows'
+- '/toggles'
+- 'retained'
+- 'cleanup-eligible'
+- 'archived `/removed` history'
+- 'graph generation history'
+- 'safe-point and recovery history'
+- 'promotion `/revocation` audit'
+- 'cleanup `/archive/remove` traceability'
+- 'chronological-first'
+- '/continuation'
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- 'Plans/usage-feature.md'
+- 'Plans/WorktreeGitImprovement.md'
+- 'Plans/Orchestrator_Page.md'
+- 'Plans/storage-plan.md'
+split_recommendation_reason: 'The source span contains multiple distinct routing, export, history, subject identity, and provenance constraints.'
+```
+
+### UF-072 - Effective Resolution Display Boundary
+
+```yaml
+plan_unit_id: UF-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: 'The `effective-resolution` record carries blocked and `/degraded` reason fields plus confidence and `/source` hooks so Usage can display why resolution changed without owning provider or runtime truth.'
+gui_related: true
+gui_classification_reason: 'The unit defines user-visible explanation of effective-resolution changes while preserving owner boundaries.'
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-072 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_196
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: effective_resolution_display_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0103
+preserved_exact_tokens:
+- 'effective-resolution'
+- 'blocked'
+- '/degraded'
+- 'reason fields'
+- 'confidence'
+- '/source'
+- 'display why resolution changed'
+- 'without owning provider or runtime truth'
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- 'Plans/usage-feature.md'
+- 'Plans/Contracts_V0.md'
+- 'Plans/Executor_Protocol.md'
+- 'Plans/FinalGUISpec.md'
+split_recommendation_reason: 'The source span contains multiple distinct routing, export, history, subject identity, and provenance constraints.'
+```
+
+### UF-073 - Provider Provenance Before Resolved Facts
+
+```yaml
+plan_unit_id: UF-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: 'OpenCode bridge limits, DAE enforcement, promoted-feature shell ownership, and runtime identity provenance remain explicit architectural edges before Usage presents those events as fully resolved provider/account facts.'
+gui_related: false
+gui_classification_reason: 'The unit defines architectural provenance constraints before Usage may treat provider/account facts as resolved.'
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-073 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_196
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: provider_provenance_before_resolved_facts
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0103
+preserved_exact_tokens:
+- 'OpenCode bridge limits'
+- 'DAE enforcement'
+- 'promoted-feature shell ownership'
+- 'runtime identity provenance'
+- 'architectural edges'
+- 'fully resolved provider/account facts'
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- 'Plans/usage-feature.md'
+- 'Plans/Provider_OpenCode.md'
+- 'Plans/Executor_Protocol.md'
+- 'Plans/Section15_MVP_Promoted_Features_Spec.md'
+- 'Plans/Contracts_V0.md'
+split_recommendation_reason: 'The source span contains multiple distinct routing, export, history, subject identity, and provenance constraints.'
+```
+
+<<< CONTEXT_AFTER 4888-4899 >>>
+### UF-001 - Usage Feature Source-Preserving Bridge Retired
+
+```yaml
+plan_unit_id: UF-001
+unit_type: generated_artifact_residual
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: 'UF-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 197 because usage-feature-S0104 through S0107 are generated standardization tail material: Owner / Consumer Map, PlanUnits heading, former generated UF-001 bridge, and Migration Coverage. usage-feature-S0001 through S0103 are covered by UF-002 through UF-073 or explicit structural/reference dispositions. UF-001 no longer carries source_preserving_planunit compile mode and must not own product coverage.'
+gui_related: false
+gui_classification_reason: 'The retired bridge is generated migration lineage rather than implementation-facing GUI behavior, even though the retired source lineage preserved earlier GUI-related product tokens.'
+split_recommended: false
+depends_on:

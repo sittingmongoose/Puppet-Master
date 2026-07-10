@@ -1,138 +1,175 @@
     /* --- Glassmorphic: LIQUID GLASS multi-layer panels --- */
-    /* PMConcept6 rebuild: single-element liquid glass.
-       - No SVG filters, no ::before/::after backdrop-blur pseudo stacks.
-       - Backdrop-filter budget: 7 declarations in this block (title-bar,
-         activity-bar, files/left panel, chat panel, floating chat,
-         status-bar + bottom-panel chrome, modal/popover layer).
-       - Every other surface is a pre-baked rgba fill driven by
-         --glass-alpha (transparency slider) + inset specular/hairline.
-       - Identity accents: --pm6-glass-a-rgb (teal dark / sky-blue light),
-         --pm6-glass-b-rgb (pink dark / magenta light) — set per variant
-         in the glass-b block. */
+    /* PMConcept6 "one pane of glass" (approved glass mockup):
+       - The ENTIRE app shell is ONE continuous glass slab floating over
+         the cloudscape stage (#glass-bg). It carries the ONLY
+         backdrop-filter inside the viewport; the floating chat (fixed,
+         outside the pane) keeps its own frost.
+       - Interior structure = transparency steps, all plain rgba fills
+         derived from --glass-alpha (transparency slider):
+           --pm6-glass-step-1  clearest see-through (side panels)
+           --pm6-glass-step-2  light frosted (toolbars, controls, cards)
+           --pm6-glass-step-3  lighter frosted pill (selection)
+           --pm6-glass-plate   near-opaque reading plate (code/popover)
+       - Identity accents: --pm6-glass-a-rgb (violet), --pm6-glass-b-rgb
+         (dusk pink) — quiet, no neon glow rings. */
 
     /* Safety token definitions — theme-tokens owns the canonical :root
-       copies; values here match design_system §1/§2 exactly and are
-       overridden per variant in the glass-b block. */
+       copies; values here are the glass-dark set and are overridden per
+       variant in the glass-b block. */
     [data-theme^="glass"] {
-      --glass-alpha: .55;
-      --glass-tint-rgb: 16, 20, 34;
+      --glass-alpha: .60;
+      --glass-tint-rgb: 46, 34, 72;
       --panel-blur: 16px;
       --panel-blur-sm: 10px;
-      --glass-edge: rgba(255, 255, 255, .35);
-      --glass-hairline: rgba(255, 255, 255, .08);
+      --glass-edge: rgba(255, 255, 255, .40);
+      --glass-hairline: rgba(255, 255, 255, .16);
       --motion-fast: 120ms;
       --motion-med: 320ms;
       --ease-out: cubic-bezier(.22, 1, .36, 1);
-      --pm6-glass-a-rgb: 45, 212, 191;
-      --pm6-glass-b-rgb: 244, 114, 182;
-      --pm6-glass-sat: 1.5;
+      --pm6-glass-a-rgb: 183, 156, 255;
+      --pm6-glass-b-rgb: 229, 139, 200;
+      --pm6-glass-sat: 1.6;
       --pm6-glass-floor: rgba(255, 255, 255, .10);
-      --pm6-glass-drop: 0 8px 24px rgba(0, 0, 0, .38);
+      --pm6-glass-drop: 0 12px 30px rgba(10, 5, 25, .45);
+      /* pane material (the one slab) */
+      --pm6-glass-pane-edge: rgba(255, 255, 255, .28);
+      --pm6-glass-pane-k1: .73;
+      --pm6-glass-pane-k2: .57;
+      --pm6-glass-pane-k3: .67;
+      --pm6-glass-pane-shadow: rgba(10, 5, 25, .60);
+      --pm6-glass-pane-shadow2: rgba(10, 5, 25, .40);
+      --pm6-glass-pane-sheen: rgba(255, 255, 255, .16);
+      --pm6-glass-pane-sheen2: rgba(255, 255, 255, .08);
+      /* transparency steps (all slider-driven) */
+      --pm6-glass-step-1: rgba(255, 255, 255, calc(var(--glass-alpha) * .10));
+      --pm6-glass-step-2: rgba(255, 255, 255, calc(var(--glass-alpha) * .16));
+      --pm6-glass-step-3: rgba(255, 255, 255, calc(var(--glass-alpha) * .28));
+      --pm6-glass-plate: rgba(16, 10, 32, calc(.35 + var(--glass-alpha) * .78));
     }
 
     /* ======================================================
-       KEEPER CHROME — the only backdrop-filter surfaces
+       THE PANE — the app shell is the glass slab. Sky shows
+       around it (inset margin); everything inside is clipped
+       to the rounded pane, including status bar + terminal
+       drawer. Position:fixed descendants (toasts, detached
+       terminal) resolve against the pane because backdrop-
+       filter makes it their containing block — acceptable.
+       ====================================================== */
+    [data-theme^="glass"] .app-shell {
+      position: relative;
+      z-index: 1;
+      height: calc(100vh - 24px);
+      margin: 12px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--pm6-glass-pane-edge);
+      background: linear-gradient(165deg,
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k1))),
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k2))) 40%,
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k3))));
+      backdrop-filter: blur(34px) saturate(160%);
+      -webkit-backdrop-filter: blur(34px) saturate(160%);
+      box-shadow:
+        0 40px 90px var(--pm6-glass-pane-shadow),
+        0 6px 18px var(--pm6-glass-pane-shadow2),
+        inset 0 1.5px 0 var(--glass-edge),
+        inset 0 0 0 1px rgba(255, 255, 255, .05);
+    }
+    /* soft sheen across the slab */
+    [data-theme^="glass"] .app-shell::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 80;
+      border-radius: inherit;
+      pointer-events: none;
+      background: linear-gradient(120deg,
+        var(--pm6-glass-pane-sheen), transparent 30%,
+        transparent 82%, var(--pm6-glass-pane-sheen2));
+      mix-blend-mode: screen;
+    }
+
+    /* ======================================================
+       INTERIOR STEPS — plain rgba fills on the sheet
+       (no nested backdrop-filter anywhere inside the pane)
        ====================================================== */
 
-    /* 1. Title bar — 16px */
+    /* 1. Title bar sits directly on the glass */
     [data-theme^="glass"] .title-bar {
-      background: linear-gradient(180deg,
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06)),
-        rgba(var(--glass-tint-rgb), var(--glass-alpha)));
-      backdrop-filter: blur(var(--panel-blur)) saturate(var(--pm6-glass-sat));
-      -webkit-backdrop-filter: blur(var(--panel-blur)) saturate(var(--pm6-glass-sat));
+      background: transparent;
       border-bottom: none;
-      box-shadow: inset 0 1px 0 var(--glass-edge),
-        inset 0 0 0 1px var(--glass-hairline);
+      box-shadow: none;
     }
 
-    /* 2. Activity bar — 14px */
+    /* 2. Activity bar — on the glass; the left panel behind it
+          is the clearest step */
     [data-theme^="glass"] .activity-bar {
-      background: linear-gradient(180deg,
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .04)),
-        rgba(var(--glass-tint-rgb), var(--glass-alpha)));
-      backdrop-filter: blur(14px) saturate(var(--pm6-glass-sat));
-      -webkit-backdrop-filter: blur(14px) saturate(var(--pm6-glass-sat));
+      background: transparent;
       border-right: none;
-      box-shadow: inset -1px 0 0 var(--glass-hairline),
-        inset 0 1px 0 var(--glass-edge);
+      box-shadow: inset -1px 0 0 var(--glass-hairline);
     }
 
-    /* 3. Files panel + left panel — 12px */
+    /* 3. Files panel + left panel — deepest see-through region */
     [data-theme^="glass"] .files-panel,
     [data-theme^="glass"] .left-panel {
-      background: linear-gradient(180deg,
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .04)),
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) - .02)));
-      backdrop-filter: blur(12px) saturate(var(--pm6-glass-sat));
-      -webkit-backdrop-filter: blur(12px) saturate(var(--pm6-glass-sat));
+      background: var(--pm6-glass-step-1);
       border: none;
       box-shadow: inset 0 1px 0 var(--glass-edge),
         inset 0 0 0 1px var(--glass-hairline);
     }
     [data-theme^="glass"] .left-panel {
-      --surface-alt: rgba(var(--glass-tint-rgb), .20);
+      --surface-alt: transparent;
     }
     [data-theme^="glass"] .files-panel-header {
-      border-left: 4px solid var(--accent-blue);
       border-bottom: none;
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06));
+      background: transparent;
     }
 
-    /* 4. Chat panel — 12px */
+    /* 4. Chat panel — same clear step of the sheet */
     [data-theme^="glass"] .chat-panel {
-      background: linear-gradient(180deg,
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06)),
-        rgba(var(--glass-tint-rgb), var(--glass-alpha)));
-      backdrop-filter: blur(12px) saturate(var(--pm6-glass-sat));
-      -webkit-backdrop-filter: blur(12px) saturate(var(--pm6-glass-sat));
+      background: var(--pm6-glass-step-1);
       border-left: none;
       box-shadow: inset 0 1px 0 var(--glass-edge),
-        inset 0 0 0 1px var(--glass-hairline),
-        inset 0 -12px 24px -18px var(--pm6-glass-floor);
+        inset 0 0 0 1px var(--glass-hairline);
     }
 
-    /* 5. Floating chat — 20px hero */
+    /* 5. Floating chat — fixed OUTSIDE the pane: its own small
+          slab of the same material (second backdrop-filter is
+          not nested; it floats over sky + pane) */
     [data-theme^="glass"] .floating-chat {
       overflow: hidden;
-      border: none;
-      border-radius: var(--border-radius);
-      background: linear-gradient(180deg,
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10)),
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .02)));
-      backdrop-filter: blur(20px) saturate(var(--pm6-glass-sat));
-      -webkit-backdrop-filter: blur(20px) saturate(var(--pm6-glass-sat));
-      box-shadow: inset 0 1px 0 var(--glass-edge),
+      border: 1px solid var(--pm6-glass-pane-edge);
+      border-radius: 20px;
+      background: linear-gradient(165deg,
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k1))),
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k2))) 40%,
+        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) * var(--pm6-glass-pane-k3))));
+      backdrop-filter: blur(34px) saturate(160%);
+      -webkit-backdrop-filter: blur(34px) saturate(160%);
+      box-shadow: inset 0 1.5px 0 var(--glass-edge),
         inset 0 0 0 1px var(--glass-hairline),
-        inset 0 -12px 24px -18px var(--pm6-glass-floor),
         var(--pm6-glass-drop);
     }
 
-    /* 6. Status bar + bottom panel — 10px */
-    [data-theme^="glass"] .status-bar,
+    /* 6. Status bar + bottom panel — stay INSIDE the rounded pane */
+    [data-theme^="glass"] .status-bar {
+      background: transparent;
+      border-top: none;
+      box-shadow: inset 0 1px 0 var(--glass-hairline);
+    }
     [data-theme^="glass"] .bottom-panel {
-      background: linear-gradient(180deg,
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .04)),
-        rgba(var(--glass-tint-rgb), var(--glass-alpha)));
-      backdrop-filter: blur(var(--panel-blur-sm)) saturate(var(--pm6-glass-sat));
-      -webkit-backdrop-filter: blur(var(--panel-blur-sm)) saturate(var(--pm6-glass-sat));
+      background: var(--pm6-glass-step-1);
       border-top: none;
       box-shadow: inset 0 1px 0 var(--glass-edge),
         inset 0 0 0 1px var(--glass-hairline);
     }
 
-    /* 7. Modal / popover layer — 20px */
+    /* 7. Modal / popover layer — near-opaque reading plate */
     [data-theme^="glass"] .chat-dropdown-popover,
     [data-theme^="glass"] .settings-inspector-panel {
-      background: linear-gradient(180deg,
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .16)),
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08)));
-      backdrop-filter: blur(20px) saturate(var(--pm6-glass-sat));
-      -webkit-backdrop-filter: blur(20px) saturate(var(--pm6-glass-sat));
-      border: none;
+      background: var(--pm6-glass-plate);
+      border: 1px solid var(--glass-hairline);
       box-shadow: inset 0 1px 0 var(--glass-edge),
-        inset 0 0 0 1px var(--glass-hairline),
-        inset 0 -12px 24px -18px var(--pm6-glass-floor),
         var(--pm6-glass-drop);
     }
     [data-theme^="glass"] .chat-dropdown-popover {
@@ -170,14 +207,15 @@
       position: relative;
       border: none;
       background: linear-gradient(180deg,
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .16)),
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10)));
+        var(--pm6-glass-step-2),
+        var(--pm6-glass-step-1));
       box-shadow: inset 0 1px 0 var(--glass-edge),
         inset 0 0 0 1px var(--glass-hairline),
         inset 0 -12px 24px -18px var(--pm6-glass-floor),
-        0 4px 14px rgba(0, 0, 0, .16);
+        0 4px 14px var(--pm6-glass-pane-shadow2);
       transition: box-shadow var(--motion-med) var(--ease-out),
-        transform var(--motion-med) var(--ease-out);
+        transform var(--motion-med) var(--ease-out),
+        background var(--motion-med) var(--ease-out);
     }
     [data-theme^="glass"] .bento-card {
       overflow: hidden auto;
@@ -187,24 +225,29 @@
       overflow: hidden;
       border-radius: 12px;
     }
+    /* hover = lighter frost + brighter rim (no glow rings) */
     [data-theme^="glass"] .bento-card:hover {
+      background: linear-gradient(180deg,
+        var(--pm6-glass-step-3),
+        var(--pm6-glass-step-2));
       box-shadow: inset 0 1px 0 var(--glass-edge),
-        inset 0 0 0 1px var(--glass-hairline),
-        0 0 20px rgba(var(--pm6-glass-a-rgb), .18),
-        0 8px 28px rgba(0, 0, 0, .22);
+        inset 0 0 0 1px var(--glass-edge),
+        0 8px 28px var(--pm6-glass-pane-shadow2);
     }
     [data-theme^="glass"] .project-card-bento:hover {
       transform: translateY(-4px);
+      background: linear-gradient(180deg,
+        var(--pm6-glass-step-3),
+        var(--pm6-glass-step-2));
       box-shadow: inset 0 1px 0 var(--glass-edge),
-        inset 0 0 0 1px rgba(var(--pm6-glass-a-rgb), .30),
-        0 0 16px rgba(var(--pm6-glass-a-rgb), .14),
-        0 10px 30px rgba(0, 0, 0, .24);
+        inset 0 0 0 1px var(--glass-edge),
+        0 10px 30px var(--pm6-glass-pane-shadow2);
     }
     [data-theme^="glass"] .project-card-bento.current {
-      border-left: 6px solid var(--accent-blue);
-      background: linear-gradient(to right,
-        rgba(var(--pm6-glass-a-rgb), .10),
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10)));
+      background: var(--pm6-glass-step-3);
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-edge),
+        0 4px 14px var(--pm6-glass-pane-shadow2);
     }
 
     /* Secondary containers */
@@ -214,23 +257,22 @@
     [data-theme^="glass"] .runtime-snapshot {
       border: none;
       border-radius: 12px;
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+      background: var(--pm6-glass-step-2);
       box-shadow: inset 0 1px 0 var(--glass-edge),
         inset 0 0 0 1px var(--glass-hairline);
     }
     [data-theme^="glass"] .chat-thread-sidebar {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .02));
+      background: var(--pm6-glass-step-1);
       border-right: none;
       box-shadow: inset -1px 0 0 var(--glass-hairline);
     }
     [data-theme^="glass"] .panel-header {
-      border-left-color: var(--accent-blue);
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
+      background: var(--pm6-glass-step-2);
     }
     [data-theme^="glass"] .sticky-plan-tracker {
       border-bottom-color: var(--accent-blue);
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
-      box-shadow: 0 4px 16px rgba(0, 0, 0, .18);
+      background: var(--pm6-glass-step-2);
+      box-shadow: 0 4px 16px var(--pm6-glass-pane-shadow2);
     }
 
     /* ======================================================
@@ -239,9 +281,9 @@
     [data-theme^="glass"] .title-bar .project-dropdown,
     [data-theme^="glass"] .title-bar .theme-select,
     [data-theme^="glass"] .title-bar .search-bar {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+      background: var(--pm6-glass-step-2);
       border: 1px solid var(--glass-hairline);
-      border-radius: 8px;
+      border-radius: var(--radius-pill);
       box-shadow: inset 0 1px 0 var(--glass-edge);
     }
     [data-theme^="glass"] .title-bar .project-dropdown {
@@ -263,97 +305,102 @@
     /* ======================================================
        INTERACTIVE ACCENTS
        ====================================================== */
+    /* selection = lighter frosted pill on the sheet — no glow rings */
+    [data-theme^="glass"] .title-bar .page-tabs .page-tab {
+      border-radius: var(--radius-pill);
+    }
     [data-theme^="glass"] .title-bar .page-tabs .page-tab.active {
-      background: rgba(var(--pm6-glass-a-rgb), .18);
-      color: var(--accent-blue);
-      border-color: rgba(var(--pm6-glass-a-rgb), .40);
-      box-shadow: 0 0 12px rgba(var(--pm6-glass-a-rgb), .22),
-        inset 0 1px 0 var(--glass-edge);
+      background: var(--pm6-glass-step-3);
+      color: var(--text-primary);
+      font-weight: 600;
+      border-color: transparent;
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        0 2px 8px var(--pm6-glass-pane-shadow2);
     }
     [data-theme^="glass"] .activity-bar .icon.active {
-      color: var(--accent-blue);
+      color: var(--text-primary);
     }
     [data-theme^="glass"] .activity-bar .icon.active::before {
       background: var(--accent-blue);
-      box-shadow: 0 0 8px rgba(var(--pm6-glass-a-rgb), .45);
+      box-shadow: none;
     }
     [data-theme^="glass"] .wizard-btn {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      background: var(--pm6-glass-step-2);
       border: 1px solid var(--glass-hairline);
       border-radius: 8px;
       box-shadow: inset 0 1px 0 var(--glass-edge);
       transition: all var(--motion-fast) var(--ease-out);
     }
     [data-theme^="glass"] .wizard-btn:hover:not(:disabled) {
-      background: rgba(var(--pm6-glass-a-rgb), .12);
-      border-color: rgba(var(--pm6-glass-a-rgb), .40);
-      box-shadow: 0 0 12px rgba(var(--pm6-glass-a-rgb), .18);
-      color: var(--accent-blue);
+      background: var(--pm6-glass-step-3);
+      border-color: var(--glass-edge);
+      box-shadow: inset 0 1px 0 var(--glass-edge);
+      color: var(--text-primary);
     }
     [data-theme^="glass"] .wizard-btn.primary {
       background: linear-gradient(135deg,
-        rgba(var(--pm6-glass-a-rgb), .30),
-        rgba(var(--pm6-glass-a-rgb), .16));
+        rgba(var(--pm6-glass-a-rgb), .22),
+        rgba(var(--pm6-glass-a-rgb), .10));
       color: var(--text-primary);
-      border: 1px solid rgba(var(--pm6-glass-a-rgb), .50);
-      box-shadow: 0 0 14px rgba(var(--pm6-glass-a-rgb), .18),
-        inset 0 1px 0 var(--glass-edge);
+      border: 1px solid rgba(var(--pm6-glass-a-rgb), .45);
+      box-shadow: inset 0 1px 0 var(--glass-edge);
     }
     [data-theme^="glass"] .wizard-btn.primary:hover:not(:disabled) {
       background: linear-gradient(135deg,
-        rgba(var(--pm6-glass-a-rgb), .45),
-        rgba(var(--pm6-glass-a-rgb), .28));
-      box-shadow: 0 0 20px rgba(var(--pm6-glass-a-rgb), .30),
-        inset 0 1px 0 var(--glass-edge);
+        rgba(var(--pm6-glass-a-rgb), .32),
+        rgba(var(--pm6-glass-a-rgb), .16));
+      border-color: rgba(var(--pm6-glass-a-rgb), .60);
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        0 4px 14px var(--pm6-glass-pane-shadow2);
     }
     [data-theme^="glass"] .page-projects .projects-actions button:hover {
-      background: rgba(var(--pm6-glass-a-rgb), .14);
-      color: var(--accent-blue);
-      border-color: rgba(var(--pm6-glass-a-rgb), .40);
-      box-shadow: 0 4px 16px rgba(var(--pm6-glass-a-rgb), .14);
+      background: var(--pm6-glass-step-3);
+      color: var(--text-primary);
+      border-color: var(--glass-edge);
+      box-shadow: 0 4px 16px var(--pm6-glass-pane-shadow2);
     }
     [data-theme^="glass"] .page-projects .projects-actions button.primary {
       background: linear-gradient(135deg,
-        rgba(var(--pm6-glass-a-rgb), .24),
-        rgba(var(--pm6-glass-a-rgb), .12));
+        rgba(var(--pm6-glass-a-rgb), .22),
+        rgba(var(--pm6-glass-a-rgb), .10));
       color: var(--text-primary);
-      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      border-color: rgba(var(--pm6-glass-a-rgb), .45);
     }
 
-    /* Status badges */
+    /* Status badges — soft translucent chips, semantic hues, no glow */
     [data-theme^="glass"] .status-badge {
-      background: rgba(var(--pm6-glass-a-rgb), .16);
+      background: color-mix(in srgb, var(--accent-lime) 16%, transparent);
       color: var(--accent-lime);
-      border: 1px solid rgba(var(--pm6-glass-a-rgb), .38);
+      border: 1px solid color-mix(in srgb, var(--accent-lime) 38%, transparent);
       border-radius: 6px;
-      box-shadow: 0 0 8px rgba(var(--pm6-glass-a-rgb), .16);
+      box-shadow: none;
     }
     [data-theme^="glass"] .status-badge.idle {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      background: var(--pm6-glass-step-2);
       color: var(--text-secondary);
       border-color: var(--glass-hairline);
       box-shadow: none;
     }
     [data-theme^="glass"] .status-badge.paused {
-      background: rgba(251, 146, 60, .18);
+      background: color-mix(in srgb, var(--accent-orange) 16%, transparent);
       color: var(--accent-orange);
-      border-color: rgba(251, 146, 60, .40);
+      border-color: color-mix(in srgb, var(--accent-orange) 38%, transparent);
       box-shadow: none;
     }
     [data-theme^="glass"] .status-badge.error {
-      background: rgba(var(--pm6-glass-b-rgb), .16);
-      color: var(--accent-magenta);
-      border-color: rgba(var(--pm6-glass-b-rgb), .40);
+      background: color-mix(in srgb, var(--accent-error) 16%, transparent);
+      color: var(--accent-error);
+      border-color: color-mix(in srgb, var(--accent-error) 38%, transparent);
       box-shadow: none;
     }
 
     /* Progress bars */
     [data-theme^="glass"] .progress-bar {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .14));
+      background: var(--pm6-glass-step-2);
       border-radius: 4px;
     }
     [data-theme^="glass"] .progress-bar .fill {
-      background: linear-gradient(90deg, var(--accent-blue), var(--accent-lime));
+      background: var(--accent-blue);
       border-radius: 4px;
     }
 
@@ -371,90 +418,88 @@
     /* ======================================================
        CHAT COMPONENTS
        ====================================================== */
+    /* message stream = near-opaque reading plate; bubbles are steps on it */
+    [data-theme^="glass"] .message-stream,
+    [data-theme^="glass"] .messageStream {
+      background: var(--pm6-glass-plate);
+      box-shadow: inset 0 1px 0 var(--glass-hairline);
+    }
     [data-theme^="glass"] .chat-thread-item {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
+      background: var(--pm6-glass-step-1);
       border: 1px solid transparent;
       border-radius: 8px;
       box-shadow: inset 0 1px 0 var(--glass-edge);
       transition: all var(--motion-fast) var(--ease-out);
     }
     [data-theme^="glass"] .chat-thread-item:hover {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .16));
-      border-color: rgba(var(--pm6-glass-b-rgb), .16);
+      background: var(--pm6-glass-step-2);
+      border-color: var(--glass-hairline);
     }
     [data-theme^="glass"] .chat-thread-item.active {
-      background: rgba(var(--pm6-glass-b-rgb), .08);
-      border-color: rgba(var(--pm6-glass-b-rgb), .38);
-      box-shadow: 0 0 12px rgba(var(--pm6-glass-b-rgb), .14),
-        inset 0 1px 0 var(--glass-edge);
+      background: var(--pm6-glass-step-3);
+      border-color: var(--glass-edge);
+      box-shadow: inset 0 1px 0 var(--glass-edge);
     }
     [data-theme^="glass"] .message.assistant .msg-body {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .14));
+      background: var(--pm6-glass-step-2);
       border: none;
       border-left: none;
       border-radius: 0 12px 12px 12px;
-      box-shadow: inset 0 0 0 1px var(--glass-hairline),
-        -10px 0 14px -10px rgba(var(--pm6-glass-b-rgb), .40);
+      box-shadow: inset 0 1px 0 var(--glass-edge),
+        inset 0 0 0 1px var(--glass-hairline);
     }
     [data-theme^="glass"] .message.user .msg-body {
       background:
         linear-gradient(135deg,
-          rgba(var(--pm6-glass-a-rgb), .18),
-          rgba(var(--pm6-glass-a-rgb), .08)),
-        rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06));
+          rgba(var(--pm6-glass-a-rgb), .16),
+          rgba(var(--pm6-glass-a-rgb), .07)),
+        var(--pm6-glass-step-1);
       color: var(--text-primary);
       border: none;
       border-radius: 12px 0 12px 12px;
-      box-shadow: inset 0 0 0 1px rgba(var(--pm6-glass-a-rgb), .25),
-        10px 0 14px -10px rgba(var(--pm6-glass-a-rgb), .40);
+      box-shadow: inset 0 0 0 1px rgba(var(--pm6-glass-a-rgb), .25);
     }
     [data-theme^="glass"] .message.msg-focused .msg-body {
       border-color: var(--accent-blue) !important;
       background: rgba(var(--pm6-glass-a-rgb), .10) !important;
       box-shadow: 0 0 0 1px rgba(var(--pm6-glass-a-rgb), .45),
-        0 0 18px rgba(var(--pm6-glass-a-rgb), .25) !important;
-    }
-    [data-theme^="glass"] .message.assistant .message-block {
-      border-left-color: var(--accent-magenta);
-    }
-    [data-theme^="glass"] .message-block {
-      border-left-color: var(--accent-blue);
+        inset 0 1px 0 var(--glass-edge) !important;
     }
     [data-theme^="glass"] .chat-modes {
       border-bottom: none;
     }
     [data-theme^="glass"] .chat-modes .mode {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06));
+      background: var(--pm6-glass-step-1);
     }
     [data-theme^="glass"] .chat-modes .mode.active {
-      background: rgba(var(--pm6-glass-b-rgb), .14);
-      color: var(--accent-magenta);
-      border: 1px solid rgba(var(--pm6-glass-b-rgb), .35);
-      box-shadow: 0 0 10px rgba(var(--pm6-glass-b-rgb), .20);
+      background: var(--pm6-glass-step-3);
+      color: var(--text-primary);
+      border: 1px solid var(--glass-edge);
+      box-shadow: inset 0 1px 0 var(--glass-edge);
     }
     [data-theme^="glass"] .chat-panel-header-stacked {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06));
+      background: var(--pm6-glass-step-1);
       border-bottom: none;
       position: relative;
       z-index: 10;
     }
     [data-theme^="glass"] .chat-footer {
       border-top: none;
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .04));
+      background: var(--pm6-glass-step-1);
     }
     [data-theme^="glass"] .chat-footer select {
       border: none;
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      background: var(--pm6-glass-step-2);
     }
     [data-theme^="glass"] .composer-chip {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
-      border-color: var(--accent-blue);
+      background: var(--pm6-glass-step-2);
+      border-color: rgba(var(--pm6-glass-a-rgb), .45);
     }
     [data-theme^="glass"] .chat-thread-sidebar .sidebar-title {
       border-bottom: none;
     }
     [data-theme^="glass"] .chat-input-area textarea {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      background: var(--pm6-glass-step-2);
       border: 1px solid var(--glass-hairline);
       border-radius: 8px;
     }
@@ -479,7 +524,7 @@
       position: absolute;
       inset: -4px;
       border-radius: 50%;
-      box-shadow: 0 0 8px 2px rgba(var(--pm6-glass-b-rgb), .55);
+      box-shadow: 0 0 6px 2px rgba(var(--pm6-glass-b-rgb), .35);
       opacity: 0;
       animation: pm6-glass-pulse 1.6s var(--ease-out) infinite;
       pointer-events: none;
@@ -502,26 +547,26 @@
       padding: 1px 6px;
       border-radius: 4px;
       border: none;
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06));
+      background: var(--pm6-glass-step-1);
       transition: all var(--motion-fast) var(--ease-out);
       font-size: 10px;
     }
     [data-theme^="glass"] .bottom-tabs .tab:hover {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .14));
+      background: var(--pm6-glass-step-2);
     }
     [data-theme^="glass"] .bottom-tabs .tab.active {
-      color: var(--accent-blue);
-      background: rgba(var(--pm6-glass-a-rgb), .14);
+      color: var(--text-primary);
+      background: var(--pm6-glass-step-3);
       box-shadow: inset 0 1px 0 var(--glass-edge);
     }
     [data-theme^="glass"] .pm-tiny-btn {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
+      background: var(--pm6-glass-step-2);
       border-color: var(--glass-hairline);
       border-radius: 8px;
     }
     [data-theme^="glass"] .pm-tiny-btn:hover {
-      background: rgba(var(--pm6-glass-a-rgb), .12);
-      border-color: rgba(var(--pm6-glass-a-rgb), .22);
+      background: var(--pm6-glass-step-3);
+      border-color: var(--glass-edge);
     }
     [data-theme^="glass"] .terminal-pane {
       background: var(--terminal-bg);
@@ -544,38 +589,37 @@
        ====================================================== */
     [data-theme^="glass"] .settings-tab:hover,
     [data-theme^="glass"] .psm-tab:hover {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08));
+      background: var(--pm6-glass-step-2);
     }
     [data-theme^="glass"] .settings-tab.active,
     [data-theme^="glass"] .psm-tab.active {
-      border-left-color: var(--accent-blue);
-      background: rgba(var(--pm6-glass-a-rgb), .10);
+      background: var(--pm6-glass-step-3);
       color: var(--text-primary);
-      box-shadow: 0 0 10px rgba(var(--pm6-glass-a-rgb), .14);
+      box-shadow: inset 0 1px 0 var(--glass-edge);
     }
     [data-theme^="glass"] .psm-pane {
       background: transparent;
     }
     [data-theme^="glass"] .psm-btn {
       border: none;
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+      background: var(--pm6-glass-step-2);
       box-shadow: inset 0 1px 0 var(--glass-edge);
     }
     [data-theme^="glass"] .psm-btn.primary {
       background: linear-gradient(135deg,
-        rgba(var(--pm6-glass-a-rgb), .28),
-        rgba(var(--pm6-glass-a-rgb), .14));
+        rgba(var(--pm6-glass-a-rgb), .22),
+        rgba(var(--pm6-glass-a-rgb), .10));
       color: var(--text-primary);
-      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      border-color: rgba(var(--pm6-glass-a-rgb), .45);
     }
     [data-theme^="glass"] .bento-action {
       border-color: rgba(var(--pm6-glass-a-rgb), .40);
       color: var(--accent-blue);
     }
     [data-theme^="glass"] .bento-action:hover {
-      background: rgba(var(--pm6-glass-a-rgb), .14);
+      background: var(--pm6-glass-step-3);
       color: var(--text-primary);
-      box-shadow: 0 0 12px rgba(var(--pm6-glass-a-rgb), .18);
+      box-shadow: inset 0 1px 0 var(--glass-edge);
     }
 
     /* ======================================================
@@ -583,7 +627,7 @@
        ====================================================== */
     [data-theme^="glass"] .wizard-nav-step.active::after {
       background: var(--accent-blue);
-      box-shadow: 0 0 10px rgba(var(--pm6-glass-a-rgb), .45);
+      box-shadow: none;
     }
     [data-theme^="glass"] .wizard-nav-step.complete {
       color: var(--accent-blue);
@@ -593,7 +637,7 @@
     }
     [data-theme^="glass"] .wizard-input,
     [data-theme^="glass"] .wizard-select {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+      background: var(--pm6-glass-step-2);
       border: 1px solid var(--glass-hairline);
       border-radius: 8px;
     }
@@ -613,16 +657,16 @@
     [data-theme^="glass"] .interview-chip {
       border-radius: 20px;
       border: 1px solid var(--glass-hairline);
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      background: var(--pm6-glass-step-2);
     }
     [data-theme^="glass"] .interview-chip:hover {
-      background: rgba(var(--pm6-glass-a-rgb), .14);
-      color: var(--accent-blue);
-      border-color: rgba(var(--pm6-glass-a-rgb), .40);
+      background: var(--pm6-glass-step-3);
+      color: var(--text-primary);
+      border-color: var(--glass-edge);
     }
     [data-theme^="glass"] .wizard-activity-pulse {
       background: var(--accent-blue);
-      box-shadow: 0 0 8px rgba(var(--pm6-glass-a-rgb), .45);
+      box-shadow: none;
     }
 
     /* ======================================================
@@ -648,7 +692,7 @@
     [data-theme^="glass"] input[type="checkbox"] {
       border-radius: 4px;
       border: 1px solid var(--glass-hairline);
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .12));
+      background: var(--pm6-glass-step-2);
     }
     [data-theme^="glass"] input[type="checkbox"]:checked {
       background: rgba(var(--pm6-glass-a-rgb), .30);
@@ -722,12 +766,13 @@
     }
     [data-theme^="glass"] .editor-tabs .tab.active {
       color: var(--text-primary);
-      background: rgba(var(--pm6-glass-a-rgb), .12);
+      background: var(--pm6-glass-step-3);
       border-color: transparent;
+      box-shadow: inset 0 1px 0 var(--glass-edge);
     }
     [data-theme^="glass"] .editor-tabs .tab:hover:not(.active) {
       color: var(--text-secondary);
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .06));
+      background: var(--pm6-glass-step-1);
     }
     [data-theme^="glass"] .editor-tabs .tab.active::after {
       background: linear-gradient(90deg,

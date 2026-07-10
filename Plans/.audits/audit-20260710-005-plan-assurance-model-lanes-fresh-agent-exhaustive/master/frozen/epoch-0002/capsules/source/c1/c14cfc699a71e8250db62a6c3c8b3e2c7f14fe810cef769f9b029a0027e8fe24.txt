@@ -1,0 +1,364 @@
+<<< CONTEXT_BEFORE 779-790 >>>
+- superseded objects
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Prompt_Pipeline.md, Plans/Executor_Protocol.md, and Plans/Contracts_V0.md own detailed recovery and runtime contract semantics.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 791-1125 >>>
+### N-014 - Browser Preview Summary And Debug Adapter Boundary
+
+```yaml
+plan_unit_id: N-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  The built-in browser preview is summarized as a live rendering surface for web content produced by the active project.
+  It participates in the product's visual-debugging and UI-validation loop, shared navigation, evidence capture, and
+  source-opening flows. Agents may drive it as a first-class web debug adapter for navigation, reproduction steps, and
+  visible client-side signal capture; it must not degrade into external-automation-only or paste-only workflows.
+gui_related: true
+gui_classification_reason: The unit covers browser preview, visual debugging, UI validation, and user-visible source-opening flows.
+split_recommended: false
+depends_on:
+- N-010
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Browser preview remains part of visual-debugging and UI-validation.
+- Browser preview participates in shared navigation, evidence capture, and source-opening flows.
+- Agent-driven browser preview does not degrade into external-automation-only or paste-only workflows.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: browser_preview_boundary
+reasoning_tier: standard
+context_scope: newfeatures_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: browser_preview_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0012
+preserved_exact_tokens:
+- built-in browser preview
+- visual-debugging
+- UI-validation
+- evidence capture
+- source-opening
+- first-class web debug adapter
+- /client-side
+negative_constraints:
+- Agent browser preview workflows must not degrade into external-automation-only or paste-only workflows.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Normative browser behavior remains in subsystem owner docs; this document preserves promoted-feature summary coverage.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs: []
+```
+
+### N-015 - Browser Click-To-Context Summary
+
+```yaml
+plan_unit_id: N-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  Built-in browser preview and click-to-context connect live rendered UI state, corresponding source code, and assistant
+  context. Integration points preserve browser preview to editor click-to-source, browser preview to chat
+  screenshot-to-context, and browser DevTools to debug mode DOM inspection as evidence.
+gui_related: true
+gui_classification_reason: The unit covers user-visible browser preview, click-to-context, screenshot, and DevTools interactions.
+split_recommended: false
+depends_on:
+- N-014
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Click-to-context remains linked to corresponding source code.
+- Rendered UI state, editable source, and assistant context remain part of the same troubleshooting loop.
+- click-to-source, screenshot-to-context, and DOM inspection as evidence remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: browser_context_linkage
+reasoning_tier: standard
+context_scope: newfeatures_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: browser_click_to_context_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0013
+preserved_exact_tokens:
+- Click-to-Context
+- click-to-source
+- screenshot-to-context
+- DOM inspection as evidence
+- rendered UI state
+- editable source
+- assistant context
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/FinalGUISpec.md, Plans/assistant-chat-design.md, and Plans/Glossary.md own detailed GUI and terminology behavior.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Glossary.md'
+```
+
+### N-016 - Web Operations And Approval Alignment
+
+```yaml
+plan_unit_id: N-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  The promoted rewrite feature summary preserves the repaired web/provider/question/planning canon, including six
+  canonical web operations plus native batch variants, the four-step approval ladder, and MCP owner-doc alignment.
+gui_related: false
+gui_classification_reason: The unit summarizes web operation and approval semantics rather than GUI presentation.
+split_recommended: true
+depends_on:
+- N-002
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Six canonical web operations plus native batch variants remain preserved.
+- The four-step approval ladder remains preserved.
+- MCP owner-doc alignment remains preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_operations_summary
+reasoning_tier: standard
+context_scope: newfeatures_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: web_operations_approval_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0014
+preserved_exact_tokens:
+- six canonical web operations
+- native batch variants
+- four-step approval ladder
+- MCP owner-doc alignment
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Tools.md owns detailed web-operation behavior.
+- Plans/assistant-chat-design.md and Plans/FinalGUISpec.md own detailed UI consumption.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md'
+split_recommendation_reason: newfeatures-S0014 mixes web operations, provider disclosure, schemas, visualizers, consumer lineage, and Docker registry parity.
+```
+
+### N-017 - Provider Disclosure Questions TODOs And Visualizers
+
+```yaml
+plan_unit_id: N-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  The promoted feature summary preserves routing-aware provider disclosure, support-tier visibility, reserved
+  slash-command set, /web family behavior, Agent Config naming, shared question and TODO schemas across chat, widgets,
+  storage, and delegated work, plus distinct Mermaid and inline visualizer behavior.
+gui_related: true
+gui_classification_reason: The unit covers user-visible provider disclosure, slash commands, shared schemas, Mermaid, and visualizer behavior.
+split_recommended: true
+depends_on:
+- N-016
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Routing-aware provider disclosure and support-tier visibility remain preserved.
+- Reserved slash-command set and /web family behavior stay aligned to owner docs.
+- Shared question and TODO schemas remain preserved.
+- Mermaid and inline visualizer behavior remain distinct.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: promoted_feature_ui_summary
+reasoning_tier: standard
+context_scope: newfeatures_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: provider_disclosure_visualizer_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0014
+preserved_exact_tokens:
+- routing-aware provider disclosure
+- support-tier visibility
+- reserved slash-command set
+- /web
+- Agent Config naming
+- shared question and TODO schemas
+- Mermaid
+- inline visualizer
+negative_constraints:
+- Reserved slash-command set, /web family behavior, and Agent Config naming must stay aligned to owner docs rather than older promoted-feature summaries.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Owner docs for tools, prompts, gates, widgets, storage, and chat own detailed schemas and behavior.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md'
+split_recommendation_reason: newfeatures-S0014 contains multiple GUI and backend consumer surfaces.
+```
+
+### N-018 - Web Consumer And Extraction Lineage Boundary
+
+```yaml
+plan_unit_id: N-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  Cross-reference consumers remain explicit across feature-list.md, Prompt_Pipeline.md, Progression_Gates.md,
+  OpenCode_Coverage_Matrix.md, newfeatures.md, MiscPlan.md, and FileManager.md. OpenCode_Deep_Extraction.md remains
+  extraction/reference lineage rather than a competing owner.
+gui_related: false
+gui_classification_reason: The unit preserves cross-document consumer and extraction-lineage boundaries rather than GUI presentation.
+split_recommended: false
+depends_on:
+- N-016
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Cross-reference consumers remain explicit.
+- OpenCode_Deep_Extraction.md remains extraction/reference lineage.
+- OpenCode_Deep_Extraction.md does not become a competing owner.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: consumer_lineage_boundary
+reasoning_tier: standard
+context_scope: newfeatures_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: web_consumer_extraction_lineage
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0014
+preserved_exact_tokens:
+- Cross-reference consumers remain explicit
+- Plans/feature-list.md
+- Plans/Prompt_Pipeline.md
+- Plans/Progression_Gates.md
+- Plans/OpenCode_Coverage_Matrix.md
+- Plans/newfeatures.md
+- Plans/MiscPlan.md
+- Plans/FileManager.md
+- Plans/OpenCode_Deep_Extraction.md
+negative_constraints:
+- Plans/OpenCode_Deep_Extraction.md must remain extraction/reference lineage rather than a competing owner.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Older promoted-feature summaries do not override the explicit owner-doc alignment described here.
+owner_boundary_notes:
+- Cross-reference consumers preserve alignment without becoming owner docs for the detailed web/tool canon.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md'
+```
+
+### N-019 - Docker Reference Parity And Registry Management
+
+```yaml
+plan_unit_id: N-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  Docker reference parity combines docker/vscode-extension and /vscode-extension authoring cues with Container Tools
+  management and /registry behavior. Docker Hub management parity is not satisfied by the extension reference alone.
+gui_related: true
+gui_classification_reason: The unit covers user-visible Container Tools management and registry behavior summary.
+split_recommended: false
+depends_on:
+- N-017
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- docker/vscode-extension and /vscode-extension authoring cues remain preserved.
+- Container Tools management and /registry behavior remain preserved.
+- Docker Hub management parity is not treated as satisfied by the extension reference alone.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: docker_reference_parity
+reasoning_tier: standard
+context_scope: newfeatures_standardization
+implementation_surfaces:
+- Plans/newfeatures.md
+node_compile_hint:
+  mode: docker_reference_registry_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0014
+preserved_exact_tokens:
+- docker/vscode-extension
+- /vscode-extension
+- Container Tools
+- /registry
+- Docker Hub management parity
+negative_constraints:
+- Docker Hub management parity is not satisfied by the extension reference alone.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Detailed Docker and container behavior remains with the relevant owner docs.
+owner_hints:
+- Plans/newfeatures.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md'
+```
+
+
+<<< CONTEXT_AFTER 1126-1137 >>>
+### N-001 - New Features Retired Source-Preserving Bridge
+
+```yaml
+plan_unit_id: N-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/newfeatures.md
+canonical_text: >-
+  N-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 103 because
+  newfeatures-S0001 through newfeatures-S0018 are covered by N-002 through N-019 or explicit structural, retired, and
+  migration-coverage dispositions. N-001 no longer carries source_preserving_planunit compile mode and must not own
+  product coverage.

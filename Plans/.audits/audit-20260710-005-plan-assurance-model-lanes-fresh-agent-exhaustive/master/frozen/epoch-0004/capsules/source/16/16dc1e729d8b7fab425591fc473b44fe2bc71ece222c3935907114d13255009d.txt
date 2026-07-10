@@ -1,0 +1,425 @@
+<<< CONTEXT_BEFORE 344-355 >>>
+            "type": "integer",
+            "minimum": 0
+          },
+          "last_error_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+
+<<< AUTHORITATIVE_CORE 356-751 >>>
+    {
+      "family_id": "plan_compile_run",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "tier_0_launch_critical",
+      "key_shape": "plan_compile_run.v1:{project_id}:{plan_compile_run_id}",
+      "value_schema_id": "pm.storage_value.plan_compile_run.v1",
+      "value_schema_ref": "Plans/storage_value_registry.json#/families/plan_compile_run/value_schema",
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md#PNC-010",
+      "producer": [
+        "PlanCompile bootstrap authority"
+      ],
+      "consumers": [
+        "PlanCompile resume/restart",
+        "Planning Wizard disabled-state projection",
+        "implementation-readiness gate"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "plan_compile_run_id",
+        "approved_plan_pack_id",
+        "source_plan_index_hash",
+        "acceptance_unit_index_hash",
+        "launch_source",
+        "contract_mode",
+        "runtime_adapter",
+        "status",
+        "current_stage",
+        "cursor",
+        "currentness_status",
+        "blockers",
+        "receipts",
+        "created_at_utc",
+        "updated_at_utc",
+        "redaction_profile"
+      ],
+      "optional_fields": [
+        "last_green_stage",
+        "next_required_stage",
+        "source_hashes",
+        "artifacts",
+        "cancellation",
+        "supersession",
+        "runtime_enablement_ref",
+        "runtime_policy_snapshot_ref"
+      ],
+      "nullable_fields": [
+        "last_green_stage",
+        "next_required_stage",
+        "runtime_enablement_ref",
+        "runtime_policy_snapshot_ref"
+      ],
+      "replay_behavior": "Resume by exact run id; stale currentness, unsupported contract mode, or missing receipts keep PlanCompile disabled.",
+      "migration": "No runtime PlanCompile rows are accepted without schema_version and contract_mode; old draft fields are imported only as non-buildable lineage.",
+      "retention_compaction": "Retain through all child receipts and audit evidence; superseded runs are historical but not resumable unless currentness says so.",
+      "redaction_no_secret_rule": "Stores ids, refs, hashes, stages, and enum status only; provider/account sensitive material remains external ref-only.",
+      "legacy_canonical_crosswalk_status": "Canonical Tier 0C-2 PlanCompileRun storage contract, still blocked by PNC-019 runtime lifecycle.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "project_id",
+          "plan_compile_run_id",
+          "approved_plan_pack_id",
+          "source_plan_index_hash",
+          "acceptance_unit_index_hash",
+          "launch_source",
+          "contract_mode",
+          "runtime_adapter",
+          "status",
+          "current_stage",
+          "cursor",
+          "currentness_status",
+          "blockers",
+          "receipts",
+          "created_at_utc",
+          "updated_at_utc",
+          "redaction_profile"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.plan_compile_run.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "plan_compile_run_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "approved_plan_pack_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_plan_index_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "acceptance_unit_index_hash": {
+            "type": "string",
+            "minLength": 1
+          },
+          "launch_source": {
+            "type": "string",
+            "enum": [
+              "planning_wizard_approve_and_build"
+            ]
+          },
+          "contract_mode": {
+            "type": "string",
+            "enum": [
+              "bootstrap_authority_only",
+              "runtime_disabled"
+            ]
+          },
+          "runtime_adapter": {
+            "type": "string",
+            "enum": [
+              "disabled_until_pnc019"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "draft",
+              "blocked",
+              "ready_for_bootstrap_validation",
+              "superseded",
+              "cancelled"
+            ]
+          },
+          "current_stage": {
+            "type": "string",
+            "minLength": 1
+          },
+          "cursor": {
+            "type": "object"
+          },
+          "currentness_status": {
+            "type": "object"
+          },
+          "blockers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "receipts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "created_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at_utc": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "redaction_profile": {
+            "type": "string",
+            "enum": [
+              "no_secrets",
+              "redacted_refs_only"
+            ]
+          },
+          "last_green_stage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "next_required_stage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_hashes": {
+            "type": "object"
+          },
+          "artifacts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cancellation": {
+            "type": "object"
+          },
+          "supersession": {
+            "type": "object"
+          },
+          "runtime_enablement_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "runtime_policy_snapshot_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "family_id": "compiler_wave_contract",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "tier_0_launch_critical",
+      "key_shape": "compiler_wave.v1:{project_id}:{plan_compile_run_id}:{assignment_id}",
+      "value_schema_id": "pm.storage_value.compiler_wave_contract.v1",
+      "value_schema_ref": "Plans/storage_value_registry.json#/families/compiler_wave_contract/value_schema",
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md#PNC-010",
+      "producer": [
+        "PlanCompile wave allocator"
+      ],
+      "consumers": [
+        "PlanCompile parent writeback",
+        "bootstrap validator",
+        "evidence projector"
+      ],
+      "schema_version": "1.0.0",
+      "encoding": "messagepack_canonical",
+      "required_fields": [
+        "schema_id",
+        "schema_version",
+        "project_id",
+        "plan_compile_run_id",
+        "assignment_id",
+        "assigned_agent_role",
+        "source_item_refs",
+        "read_set",
+        "write_set",
+        "forbidden_writes",
+        "parent_only_writes",
+        "result_status",
+        "retry_route",
+        "resume_ref",
+        "durable_evidence_refs",
+        "assignment_receipt",
+        "completion_receipt",
+        "parent_writeback_required",
+        "redaction_profile"
+      ],
+      "optional_fields": [],
+      "nullable_fields": [
+        "resume_ref",
+        "completion_receipt"
+      ],
+      "replay_behavior": "Replay restores assignment state and parent-only write obligations without dispatching product work.",
+      "migration": "Wave rows without read/write/forbidden boundaries are invalid for runtime bootstrap and remain source-lineage only.",
+      "retention_compaction": "Retain until the parent PlanCompileRun is superseded and all evidence refs are preserved.",
+      "redaction_no_secret_rule": "Wave rows store document/PlanUnit refs and write boundaries only, never provider transcripts or credentials.",
+      "legacy_canonical_crosswalk_status": "Canonical value schema for design-only compiler waves.",
+      "value_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "project_id",
+          "plan_compile_run_id",
+          "assignment_id",
+          "assigned_agent_role",
+          "source_item_refs",
+          "read_set",
+          "write_set",
+          "forbidden_writes",
+          "parent_only_writes",
+          "result_status",
+          "retry_route",
+          "resume_ref",
+          "durable_evidence_refs",
+          "assignment_receipt",
+          "completion_receipt",
+          "parent_writeback_required",
+          "redaction_profile"
+        ],
+        "properties": {
+          "schema_id": {
+            "const": "pm.storage_value.compiler_wave_contract.v1"
+          },
+          "schema_version": {
+            "const": "1.0.0"
+          },
+          "project_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "plan_compile_run_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assignment_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "assigned_agent_role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_item_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "read_set": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "write_set": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "forbidden_writes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "parent_only_writes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "result_status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "completed",
+              "blocked",
+              "failed",
+              "superseded"
+            ]
+          },
+          "retry_route": {
+            "type": "string",
+            "minLength": 1
+          },
+          "resume_ref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "durable_evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "assignment_receipt": {
+            "type": "string",
+            "minLength": 1
+          },
+          "completion_receipt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "parent_writeback_required": {
+            "type": "boolean"
+          },
+          "redaction_profile": {
+            "type": "string",
+            "enum": [
+              "no_secrets",
+              "redacted_refs_only"
+            ]
+          }
+        }
+      }
+    },
+
+<<< CONTEXT_AFTER 752-763 >>>
+    {
+      "family_id": "workgraph_draft",
+      "storage_kind": "redb",
+      "status": "materialized",
+      "tier": "tier_0_launch_critical",
+      "key_shape": "workgraph_draft.v1:{project_id}:{plan_compile_run_id}:{workgraph_id}:{revision}",
+      "value_schema_id": "pm.storage_value.workgraph_draft.v1",
+      "value_schema_ref": "Plans/storage_value_registry.json#/families/workgraph_draft/value_schema",
+      "owner_doc": "Plans/Plan_To_Node_Compilation.md#PNC-013",
+      "producer": [
+        "PlanCompile graph draft stage"
+      ],

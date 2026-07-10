@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE canonical_document_lines=752-763 >>>
+L00000752	- Global ~/.config/puppet-master/skills
+L00000753	- shadowed
+L00000754	negative_constraints: []
+L00000755	preserved_contractrefs:
+L00000756	- 'ContractRef: ContractName:Plans/MiscPlan.md, ContractName:Plans/FinalGUISpec.md'
+L00000757	compatibility_only_notes: []
+L00000758	stale_retired_dispositions: []
+L00000759	owner_hints:
+L00000760	- Plans/Skills_System.md
+L00000761	- Plans/MiscPlan.md
+L00000762	```
+L00000763	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=764-1120 >>>
+L00000764	### SS-008 - Shadowed And Invalid Skill GUI Visibility
+L00000765	
+L00000766	```yaml
+L00000767	plan_unit_id: SS-008
+L00000768	unit_type: requirement
+L00000769	status: accepted
+L00000770	owner_doc: Plans/Skills_System.md
+L00000771	canonical_text: The GUI exposes shadowed duplicates and invalid skills with validation errors even though invalid skills are not loadable by ID.
+L00000772	gui_related: true
+L00000773	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00000774	split_recommended: false
+L00000775	depends_on:
+L00000776	- PDS-003
+L00000777	- PDS-004
+L00000778	- PDS-005
+L00000779	- PNC-001
+L00000780	- UCC-001
+L00000781	unblocks: []
+L00000782	acceptance_criteria:
+L00000783	- SS-008 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+L00000784	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000785	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000786	validation_surfaces:
+L00000787	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000788	- python3 scripts/pm-plan-index.py validate
+L00000789	risk_class: skills_system_drift
+L00000790	reasoning_tier: standard
+L00000791	context_scope: skills_system
+L00000792	implementation_surfaces:
+L00000793	- Plans/Skills_System.md
+L00000794	node_compile_hint:
+L00000795	  mode: shadowed_invalid_skill_gui_visibility
+L00000796	  create_worknodes: false
+L00000797	source_lineage:
+L00000798	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0013
+L00000799	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0014
+L00000800	preserved_exact_tokens:
+L00000801	- shadowed duplicates
+L00000802	- GUI
+L00000803	- warning indicator
+L00000804	- invalid
+L00000805	- validation errors
+L00000806	- loadable by ID
+L00000807	negative_constraints:
+L00000808	- Invalid skills MUST NOT be loadable by ID, but MUST be listed in the GUI with their validation errors.
+L00000809	preserved_contractrefs:
+L00000810	- 'ContractRef: ContractName:Plans/MiscPlan.md, ContractName:Plans/FinalGUISpec.md'
+L00000811	- 'ContractRef: ContractName:Plans/MiscPlan.md'
+L00000812	compatibility_only_notes: []
+L00000813	stale_retired_dispositions: []
+L00000814	owner_hints:
+L00000815	- Plans/Skills_System.md
+L00000816	- Plans/FinalGUISpec.md
+L00000817	```
+L00000818	
+L00000819	### SS-009 - Discovery Validation Loader Rules
+L00000820	
+L00000821	```yaml
+L00000822	plan_unit_id: SS-009
+L00000823	unit_type: requirement
+L00000824	status: accepted
+L00000825	owner_doc: Plans/Skills_System.md
+L00000826	canonical_text: During discovery the loader parses YAML frontmatter, validates name and description, enforces directory-name equals Skill ID, marks invalid skills, and prevents invalid lookup by ID.
+L00000827	gui_related: false
+L00000828	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00000829	split_recommended: false
+L00000830	depends_on:
+L00000831	- PDS-003
+L00000832	- PDS-004
+L00000833	- PDS-005
+L00000834	- PNC-001
+L00000835	- T-001
+L00000836	unblocks: []
+L00000837	acceptance_criteria:
+L00000838	- SS-009 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+L00000839	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000840	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000841	validation_surfaces:
+L00000842	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000843	- python3 scripts/pm-plan-index.py validate
+L00000844	risk_class: skills_system_drift
+L00000845	reasoning_tier: standard
+L00000846	context_scope: skills_system
+L00000847	implementation_surfaces:
+L00000848	- Plans/Skills_System.md
+L00000849	node_compile_hint:
+L00000850	  mode: discovery_validation_loader_rules
+L00000851	  create_worknodes: false
+L00000852	source_lineage:
+L00000853	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0014
+L00000854	preserved_exact_tokens:
+L00000855	- Parse YAML frontmatter
+L00000856	- invalid
+L00000857	- name
+L00000858	- description
+L00000859	- directory-name match
+L00000860	- enclosing folder name
+L00000861	- Skill ID
+L00000862	negative_constraints:
+L00000863	- Invalid skills MUST NOT be loadable by ID.
+L00000864	- Invalid skills MUST NOT be loadable by ID, but MUST be listed in the GUI with their validation errors.
+L00000865	preserved_contractrefs:
+L00000866	- 'ContractRef: ContractName:Plans/MiscPlan.md'
+L00000867	compatibility_only_notes: []
+L00000868	stale_retired_dispositions: []
+L00000869	owner_hints:
+L00000870	- Plans/Skills_System.md
+L00000871	- Plans/MiscPlan.md
+L00000872	- Plans/Tools.md
+L00000873	```
+L00000874	
+L00000875	### SS-010 - Runtime Registry And Persona Skill Refs
+L00000876	
+L00000877	```yaml
+L00000878	plan_unit_id: SS-010
+L00000879	unit_type: requirement
+L00000880	status: accepted
+L00000881	owner_doc: Plans/Skills_System.md
+L00000882	canonical_text: The skill registry is the provider-agnostic discovery and validation source, and Persona default_skill_refs resolve against it during prompt/context assembly without implying provider-native runtime installation.
+L00000883	gui_related: false
+L00000884	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00000885	split_recommended: false
+L00000886	depends_on:
+L00000887	- PDS-003
+L00000888	- PDS-004
+L00000889	- PDS-005
+L00000890	- PNC-001
+L00000891	- T-001
+L00000892	unblocks: []
+L00000893	acceptance_criteria:
+L00000894	- SS-010 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+L00000895	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000896	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000897	validation_surfaces:
+L00000898	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000899	- python3 scripts/pm-plan-index.py validate
+L00000900	risk_class: skills_system_drift
+L00000901	reasoning_tier: standard
+L00000902	context_scope: skills_system
+L00000903	implementation_surfaces:
+L00000904	- Plans/Skills_System.md
+L00000905	node_compile_hint:
+L00000906	  mode: runtime_registry_persona_skill_refs
+L00000907	  create_worknodes: false
+L00000908	source_lineage:
+L00000909	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0015
+L00000910	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0016
+L00000911	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0017
+L00000912	preserved_exact_tokens:
+L00000913	- MVP runtime surface
+L00000914	- provider-agnostic
+L00000915	- skill registry
+L00000916	- default_skill_refs
+L00000917	- context assembly
+L00000918	- provider-native skill file installation
+L00000919	negative_constraints: []
+L00000920	preserved_contractrefs: []
+L00000921	compatibility_only_notes: []
+L00000922	stale_retired_dispositions: []
+L00000923	owner_hints:
+L00000924	- Plans/Skills_System.md
+L00000925	- Plans/Tools.md
+L00000926	- Plans/Personas.md
+L00000927	```
+L00000928	
+L00000929	### SS-011 - Skill Invocation Payload Contract
+L00000930	
+L00000931	```yaml
+L00000932	plan_unit_id: SS-011
+L00000933	unit_type: requirement
+L00000934	status: accepted
+L00000935	owner_doc: Plans/Skills_System.md
+L00000936	canonical_text: The canonical skill invocation payload uses skill_id with input, optional context, optional timeout, active project/thread context, and manifest-defined input schema validation.
+L00000937	gui_related: false
+L00000938	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00000939	split_recommended: false
+L00000940	depends_on:
+L00000941	- PDS-003
+L00000942	- PDS-004
+L00000943	- PDS-005
+L00000944	- PNC-001
+L00000945	- T-001
+L00000946	- CV-215
+L00000947	unblocks: []
+L00000948	acceptance_criteria:
+L00000949	- SS-011 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+L00000950	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000951	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000952	validation_surfaces:
+L00000953	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000954	- python3 scripts/pm-plan-index.py validate
+L00000955	risk_class: skills_system_drift
+L00000956	reasoning_tier: standard
+L00000957	context_scope: skills_system
+L00000958	implementation_surfaces:
+L00000959	- Plans/Skills_System.md
+L00000960	node_compile_hint:
+L00000961	  mode: skill_invocation_payload_contract
+L00000962	  create_worknodes: false
+L00000963	source_lineage:
+L00000964	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0018
+L00000965	preserved_exact_tokens:
+L00000966	- skill_id
+L00000967	- invoke_skill
+L00000968	- input
+L00000969	- context
+L00000970	- timeout
+L00000971	- project_root
+L00000972	- active_file
+L00000973	- selection
+L00000974	- conversation_id
+L00000975	- input schema
+L00000976	negative_constraints:
+L00000977	- Skill-driven file tree, evidence root, restore, and `/revert` flows MUST NOT assume a single `active-worktree`; they carry active project/worktree identity in context and degrade when the target worktree is absent, archived, or no longer current.
+L00000978	preserved_contractrefs: []
+L00000979	compatibility_only_notes:
+L00000980	- The canonical invocation key is `skill_id`. Legacy or provider-style inputs such as `path_or_name` and `path_or_name -> content, name` MAY be normalized only as compatibility aliases; they do not bypass Skill ID validation, permission checks by exact skill name, registry lookup, or readiness gating.
+L00000981	- 'The `skill` result is a structured `skill-content` envelope: `skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, and `metadata?`; `name` is a compatibility display alias for `title`. Resource guidance is relative-resource guidance only: assistant-visible paths must be relative to `resource_base_dir` and remain within FileSafe-permitted skill resources. `source_type` uses the canonical source vocabulary below; legacy `built-in` or `/built-in` wording normalizes to `bundled` / PM-bundled, `resource-root` normalizes to `resource_base_dir?`, and provider-private skill injection is not a canonical runtime path.'
+L00000982	- Skill-triggered runtime actions normalize legacy `allowed_actions[]` displays to canonical `allowed_action_ids[]`; `allowed_actions` is a compatibility label, while `allowed_action_ids` is the stable ordered action vocabulary used by runtime blocked/recovery contracts.
+L00000983	stale_retired_dispositions: []
+L00000984	owner_hints:
+L00000985	- Plans/Skills_System.md
+L00000986	- Plans/Tools.md
+L00000987	- Plans/Contracts_V0.md
+L00000988	```
+L00000989	
+L00000990	### SS-012 - Skill Result Envelope And Resource Safety
+L00000991	
+L00000992	```yaml
+L00000993	plan_unit_id: SS-012
+L00000994	unit_type: requirement
+L00000995	status: accepted
+L00000996	owner_doc: Plans/Skills_System.md
+L00000997	canonical_text: The skill result is a structured skill-content envelope with source_type, resource_base_dir?, resource_entries_sample?, metadata?, compatibility display aliases, and FileSafe-constrained relative resource guidance.
+L00000998	gui_related: false
+L00000999	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00001000	split_recommended: false
+L00001001	depends_on:
+L00001002	- PDS-003
+L00001003	- PDS-004
+L00001004	- PDS-005
+L00001005	- PNC-001
+L00001006	- T-001
+L00001007	- PS-001
+L00001008	unblocks: []
+L00001009	acceptance_criteria:
+L00001010	- SS-012 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+L00001011	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001012	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001013	validation_surfaces:
+L00001014	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001015	- python3 scripts/pm-plan-index.py validate
+L00001016	risk_class: skills_system_drift
+L00001017	reasoning_tier: standard
+L00001018	context_scope: skills_system
+L00001019	implementation_surfaces:
+L00001020	- Plans/Skills_System.md
+L00001021	node_compile_hint:
+L00001022	  mode: skill_result_envelope_resource_safety
+L00001023	  create_worknodes: false
+L00001024	source_lineage:
+L00001025	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0018
+L00001026	preserved_exact_tokens:
+L00001027	- skill-content
+L00001028	- title
+L00001029	- content
+L00001030	- source_type
+L00001031	- resource_base_dir?
+L00001032	- resource_entries_sample?
+L00001033	- metadata?
+L00001034	- name
+L00001035	- built-in
+L00001036	- /built-in
+L00001037	- bundled
+L00001038	- resource-root
+L00001039	- FileSafe-permitted skill resources
+L00001040	negative_constraints:
+L00001041	- Skill-driven file tree, evidence root, restore, and `/revert` flows MUST NOT assume a single `active-worktree`; they carry active project/worktree identity in context and degrade when the target worktree is absent, archived, or no longer current.
+L00001042	preserved_contractrefs: []
+L00001043	compatibility_only_notes:
+L00001044	- The canonical invocation key is `skill_id`. Legacy or provider-style inputs such as `path_or_name` and `path_or_name -> content, name` MAY be normalized only as compatibility aliases; they do not bypass Skill ID validation, permission checks by exact skill name, registry lookup, or readiness gating.
+L00001045	- 'The `skill` result is a structured `skill-content` envelope: `skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, and `metadata?`; `name` is a compatibility display alias for `title`. Resource guidance is relative-resource guidance only: assistant-visible paths must be relative to `resource_base_dir` and remain within FileSafe-permitted skill resources. `source_type` uses the canonical source vocabulary below; legacy `built-in` or `/built-in` wording normalizes to `bundled` / PM-bundled, `resource-root` normalizes to `resource_base_dir?`, and provider-private skill injection is not a canonical runtime path.'
+L00001046	- Skill-triggered runtime actions normalize legacy `allowed_actions[]` displays to canonical `allowed_action_ids[]`; `allowed_actions` is a compatibility label, while `allowed_action_ids` is the stable ordered action vocabulary used by runtime blocked/recovery contracts.
+L00001047	stale_retired_dispositions: []
+L00001048	owner_hints:
+L00001049	- Plans/Skills_System.md
+L00001050	- Plans/Tools.md
+L00001051	- Plans/Permissions_System.md
+L00001052	```
+L00001053	
+L00001054	### SS-013 - Runtime Readiness And Auto-Invoke Gating
+L00001055	
+L00001056	```yaml
+L00001057	plan_unit_id: SS-013
+L00001058	unit_type: requirement
+L00001059	status: accepted
+L00001060	owner_doc: Plans/Skills_System.md
+L00001061	canonical_text: Assistant auto-invocation is limited to runtime-ready, eligible, permission-allowed, auto_invokable skills; warning, invalid, disabled, shadowed, and blocked entries require explicit selection while the tool description exposes the live runtime-ready roster.
+L00001062	gui_related: false
+L00001063	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00001064	split_recommended: false
+L00001065	depends_on:
+L00001066	- PDS-003
+L00001067	- PDS-004
+L00001068	- PDS-005
+L00001069	- PNC-001
+L00001070	- T-001
+L00001071	- PS-001
+L00001072	unblocks: []
+L00001073	acceptance_criteria:
+L00001074	- SS-013 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+L00001075	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001076	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001077	validation_surfaces:
+L00001078	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001079	- python3 scripts/pm-plan-index.py validate
+L00001080	risk_class: skills_system_drift
+L00001081	reasoning_tier: standard
+L00001082	context_scope: skills_system
+L00001083	implementation_surfaces:
+L00001084	- Plans/Skills_System.md
+L00001085	node_compile_hint:
+L00001086	  mode: runtime_readiness_auto_invoke_gating
+L00001087	  create_worknodes: false
+L00001088	source_lineage:
+L00001089	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0018
+L00001090	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0027
+L00001091	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0028
+L00001092	preserved_exact_tokens:
+L00001093	- assistant-awareness
+L00001094	- runtime-ready
+L00001095	- auto_invokable
+L00001096	- runtime-ready-with-warnings
+L00001097	- ready_with_warnings
+L00001098	- imported-with-warnings
+L00001099	- invalid
+L00001100	- disabled
+L00001101	- shadowed
+L00001102	- warning-blocked
+L00001103	- dynamic tool-description
+L00001104	- ready
+L00001105	negative_constraints:
+L00001106	- Skill-driven file tree, evidence root, restore, and `/revert` flows MUST NOT assume a single `active-worktree`; they carry active project/worktree identity in context and degrade when the target worktree is absent, archived, or no longer current.
+L00001107	preserved_contractrefs:
+L00001108	- 'ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md'
+L00001109	- 'ContractRef: Plans/Commands_System.md#7. Reserved built-in slash commands, Plans/assistant-chat-design.md#5.2 `/web` and `/skill`'
+L00001110	compatibility_only_notes:
+L00001111	- The canonical invocation key is `skill_id`. Legacy or provider-style inputs such as `path_or_name` and `path_or_name -> content, name` MAY be normalized only as compatibility aliases; they do not bypass Skill ID validation, permission checks by exact skill name, registry lookup, or readiness gating.
+L00001112	- 'The `skill` result is a structured `skill-content` envelope: `skill_id`, `title`, `content`, `source_type`, `resource_base_dir?`, `resource_entries_sample?`, and `metadata?`; `name` is a compatibility display alias for `title`. Resource guidance is relative-resource guidance only: assistant-visible paths must be relative to `resource_base_dir` and remain within FileSafe-permitted skill resources. `source_type` uses the canonical source vocabulary below; legacy `built-in` or `/built-in` wording normalizes to `bundled` / PM-bundled, `resource-root` normalizes to `resource_base_dir?`, and provider-private skill injection is not a canonical runtime path.'
+L00001113	- Skill-triggered runtime actions normalize legacy `allowed_actions[]` displays to canonical `allowed_action_ids[]`; `allowed_actions` is a compatibility label, while `allowed_action_ids` is the stable ordered action vocabulary used by runtime blocked/recovery contracts.
+L00001114	stale_retired_dispositions: []
+L00001115	owner_hints:
+L00001116	- Plans/Skills_System.md
+L00001117	- Plans/Tools.md
+L00001118	- Plans/Permissions_System.md
+L00001119	```
+L00001120	
+
+<<< CONTEXT_AFTER canonical_document_lines=1121-1132 >>>
+L00001121	### SS-014 - Skill Triggered Execution Boundaries
+L00001122	
+L00001123	```yaml
+L00001124	plan_unit_id: SS-014
+L00001125	unit_type: requirement
+L00001126	status: accepted
+L00001127	owner_doc: Plans/Skills_System.md
+L00001128	canonical_text: The skill tool does not create hidden nested-task work or own shell/PTX execution; skill-triggered tool work remains under tool permission, Terminal, audit, route-target, project/worktree context, and blocked/recovery contracts.
+L00001129	gui_related: false
+L00001130	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00001131	split_recommended: false
+L00001132	depends_on:

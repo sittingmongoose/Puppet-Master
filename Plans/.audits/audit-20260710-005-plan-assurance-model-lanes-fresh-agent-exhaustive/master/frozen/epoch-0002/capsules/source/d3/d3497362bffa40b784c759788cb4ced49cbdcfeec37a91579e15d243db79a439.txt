@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE 2357-2368 >>>
+  - **Timeout:** Card auto-dismisses after **60 seconds** with message "Timed out -- command skipped."
+  - **Logging:** Blocked commands are logged to the FileSafe event log; accessible from Settings > Advanced (event log viewer or link).
+- **Terminal (FinalGUISpec §7.16):** When a command is blocked by FileSafe, terminal output uses **RED** with prefix **"[BLOCKED] Blocked by FileSafe"**.
+
+**3. Dashboard / status (FinalGUISpec §7.2)**
+
+- **FileSafe status (optional):** Compact card showing guard count (e.g. "FileSafe: 3/3 guards active") with link to **Settings > Advanced > FileSafe**.
+
+**4. Message enum and update flow**
+
+- Add FileSafe-related messages (e.g. `FileSafeBashGuardToggled(bool)`, `FileSafeAllowDestructiveToggled(bool)`, `FileSafeFileGuardToggled(bool)`, `FileSafeFileGuardStrictToggled(bool)`, `FileSafeSecurityFilterToggled(bool)`, `FileSafeAllowSensitiveDuringInterviewToggled(bool)`, `FileSafeRemoveApprovedCommand(usize)`, `FileSafeAddApprovedCommandClicked`, `FileSafeAddApprovedCommand(String)`, `FileSafeViewEventLog`).
+- Config save: FileSafe changes persist with the rest of Advanced tab (Save Changes per tab or global).
+
+<<< AUTHORITATIVE_CORE 2369-2767 >>>
+
+**5. Config Wiring (Critical):**
+- FileSafe config must be wired to `PuppetMasterConfig` (orchestrator config).
+- Follow Option B pattern from `Plans/WorktreeGitImprovement.md` §5.2 (Chosen approach: Option B -- Build run config from GUI): build run config from GUI config at orchestrator start.
+- Ensure FileSafe settings (and `approved_commands`) are available to `BaseRunner` initialization so the command blocklist whitelist is applied at runtime.
+
+### 15.6 Integration with Verification Gates
+
+**Current Architecture:**
+- Verification gates run AFTER iteration completion
+- Gates check evidence, run tests, verify acceptance criteria
+- Gate operations may legitimately need destructive commands (e.g., test database resets)
+
+**Integration Points:**
+
+1. **Gate Operation Tagging:**
+   - When orchestrator calls `run_verification_gate()`, tag the operation
+   - Pass tag to `BaseRunner` via `ExecutionRequest`
+   - Guards check tag before blocking
+
+2. **Gate-Specific Allowances:**
+   - QA operations may need `migrate:fresh` for test database setup
+   - Security audits may need to read `.env` files
+   - Add gate-specific override list:
+
+```rust
+pub struct FileSafeConfig {
+    // ... existing fields ...
+    pub gate_overrides: GateOverrideConfig,
+}
+
+pub struct GateOverrideConfig {
+    pub qa_destructive_override_policy: ScopedOverridePolicy,
+    pub security_audit_sensitive_access_policy: ScopedOverridePolicy,
+}
+```
+
+3. **Gate Evidence Integration:**
+   - Blocked commands should be logged as gate evidence
+   - Add to `GateReport` if guard blocks occur during gate execution
+   - Helps track FileSafe violations during verification
+   - `GATE-010` must have a verification home for route-aware FileSafe checks: stale or `/degraded` revalidation, `allowed_action_ids[]`, blocked-action admissibility, route-payload mismatch, alias/deprecation findings, and passthrough/correlation failures use named machine-readable-detail arrays aligned with `GATE-011` and `GATE-012`, not text-heavy freeform `details`.
+
+### 15.7 Integration with State Management
+**Current Architecture:**
+- State is managed via `prd.json`, `progress.txt`, `AGENTS.md`, and rewrite-owned runtime stores.
+- Orchestrator tracks tier state, iterations, gate results, and child lineage.
+- State persists across sessions.
+
+**Integration Points:**
+
+1. **FileSafe event state**
+   - FileSafe history is canonical in seglog.
+   - State snapshots, dashboards, or diagnostic mirrors derive from seglog or its projector state.
+   - A standalone `filesafe-events.jsonl` file may exist only as a rebuildable mirror, not as an owner store.
+
+ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md
+
+2. **Guard configuration state**
+   - Guard config is part of `GuiConfig` -> `puppet-master.yaml`.
+   - Guard settings persist across sessions.
+   - Default values remain safe (guards enabled by default).
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md
+
+3. **Plan metadata for write scope**
+   - Write scope needs the current plan's allowed-files list.
+   - Plan metadata must be accessible to `BaseRunner` through canonical request context.
+   - Scope checks compare only canonical real paths rooted in the active worktree or project root.
+
+ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/WorktreeGitImprovement.md
+### 15.8 Integration with Cleanup (MiscPlan)
+
+**Current Architecture:**
+- Cleanup runs `prepare_working_directory` and `cleanup_after_execution`
+- Uses git clean with allowlist
+- Write scope should coordinate with cleanup
+
+**Integration Points:**
+
+1. **Cleanup vs write scope:**
+   - Cleanup removes untracked files (except allowlist)
+   - Write scope blocks writes to files not in plan
+   - These are complementary but need coordination:
+     - Write scope blocks DURING execution
+     - Cleanup removes files AFTER execution
+     - Write-scope allowed files should be in cleanup allowlist
+
+2. **Security Filter vs Cleanup:**
+   - Cleanup should NEVER delete sensitive files (even if untracked)
+   - Security filter patterns should be added to cleanup allowlist
+   - Prevents accidental deletion of credentials
+
+### 15.9 Gaps Identified
+
+
+#### Gap 1: ExecutionRequest Metadata
+
+
+**Issue:** No way to tag operations as verification gates, interview phases, etc.
+**Impact:** Guards can't distinguish legitimate destructive operations
+**Fix:** AutoDecision: use `ExecutionRequest.env_vars["PUPPET_MASTER_OPERATION_TYPE"]` (fixed values: `normal`, `verification_gate`, `interview`). (ContractRef: EnvVar:PUPPET_MASTER_OPERATION_TYPE)
+
+#### Gap 2: Plan Metadata Access
+**Issue:** Write scope needs current plan's allowed files list, but plans aren't accessible to `BaseRunner`
+**Impact:** Write scope can't enforce plan boundaries
+**Fix:** Pass plan metadata via `ExecutionRequest` or context files
+
+#### Gap 3: Config Wiring
+**Issue:** FileSafe config in GUI may not be wired to orchestrator config (same issue as WorktreeGitImprovement)
+**Impact:** FileSafe settings from GUI won't be applied at runtime
+**Fix:** Implement Option B config wiring (build run config from GUI at orchestrator start)
+
+#### Gap 4: Worktree Path Resolution
+
+**Issue:** Write-scope checks must resolve relative paths correctly in worktree context without trusting symlink aliases.
+
+**Impact:** Inconsistent normalization can either block legitimate writes or allow writes outside the intended worktree scope.
+
+**Resolved contract:** Normalize candidate paths relative to `working_directory`, then resolve `realpath()` before any scope check. If canonicalization fails, deny access. The real worktree root, not a symlink alias, is the base path for guard comparison.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/WorktreeGitImprovement.md
+
+#### Gap 5: Interview Phase Detection
+**Issue:** No way to detect interview operations for relaxed security filter
+**Impact:** Security filter may block legitimate research operations
+**Fix:** Tag interview operations in `ExecutionRequest`, check tag in guards
+
+#### Gap 6: Event Log Integration
+**Issue:** FileSafe events logged separately from other events
+**Impact:** Difficult to correlate FileSafe violations with execution context
+**Fix:** Integrate with existing event logging system or add FileSafe events to gate reports
+
+### 15.10 Potential Issues
+
+#### Issue 1: False Positives in Documentation
+
+
+**Problem:** Agents may include destructive commands in documentation or comments
+**Risk:** Guards block legitimate documentation work
+**Mitigation:** 
+- Check prompt context (code block vs markdown)
+- Allow override via environment variable
+- Log all blocks for review and pattern refinement
+
+#### Issue 2: Performance Impact
+**Problem:** Pattern matching on every command adds latency
+**Risk:** Slows down iteration execution
+**Mitigation:**
+- Compile regex patterns once at initialization
+- Use efficient regex engine (Rust's `regex` crate)
+- Benchmark and optimize hot paths
+- Consider async guard checks if needed
+
+#### Issue 3: Plan File List Completeness
+**Problem:** Plans may not list all files that need to be written
+**Risk:** Write scope too restrictive, blocks legitimate operations
+**Mitigation:**
+- Support wildcard patterns in plan file lists
+- Allow directory-level permissions
+- Provide clear error messages with override instructions
+- Optional advisory mode may reduce non-authoritative warning severity only after a valid allowlist exists; missing or empty authoritative allowlists still block fail-closed.
+
+#### Issue 4: Multi-Platform Prompt Parsing
+**Problem:** Different platforms format prompts differently
+**Risk:** Prompt content checking misses destructive commands
+**Mitigation:**
+- Platform-specific prompt parsers
+- Fallback to simple pattern matching
+- Test across all providers
+- Document platform-specific behavior
+
+#### Issue 5: Guard Initialization Failure
+**Problem:** If guard initialization fails, execution may be blocked entirely
+**Risk:** System unusable if pattern file corrupted or missing
+**Mitigation:**
+- Surface a typed startup/runtime diagnostic with `filesafe.guard_init_failed`
+- Block the affected guarded execution path until an authenticated operator repairs the guard inputs or chooses an explicit scoped config-off state with audit receipt
+- Doctor check validates guard initialization
+
+### 15.11 Enhancements for Existing Systems
+
+
+#### Enhancement 1: Doctor check for FileSafe
+**Add to `src/doctor/checks/`:**
+```rust
+// DRY:FN:check_filesafe — Verify FileSafe guards are initialized correctly
+pub fn check_filesafe() -> DoctorCheck {
+    // Check pattern file exists and is readable
+    // Check patterns compile as valid regex
+    // Check guards initialize without errors
+    // Check config is valid
+}
+```
+
+#### Enhancement 2: FileSafe events in gate reports
+
+
+**Enhance `GateReport` to include FileSafe violations:**
+```rust
+pub struct GateReport {
+    // ... existing fields ...
+    pub filesafe_violations: Vec<FileSafeViolation>,  // New field
+}
+
+pub struct FileSafeViolation {
+    pub guard_type: String,  // "bash_guard", "file_guard", "security_filter"
+    pub violation_type: String,  // "destructive_command", "file_not_in_plan", etc.
+    pub details: String,
+    pub timestamp: DateTime<Utc>,
+    pub allowed: bool,  // Was override applied?
+}
+```
+
+#### Enhancement 3: FileSafe metrics dashboard
+**Add to GUI status/overview:**
+- Count of blocked commands (total, by guard type)
+- Most common violations
+- Override usage statistics
+- FileSafe event timeline
+
+#### Enhancement 4: Plan File List Validation
+**Enhance plan generation to include file lists:**
+- Interview/planning phases should generate file lists for write scope
+- Validate file lists are complete before execution
+- Doctor check validates plan file lists
+
+#### Enhancement 5: Guard Configuration Profiles
+Allow different guard strictness by **runtime profile**, not by deprecated tier names.
+
+```rust
+pub struct FileSafeProfileSet {
+    pub plan_read_only: FileSafeConfig,
+    pub standard_execution: FileSafeConfig,
+    pub debug_investigation: FileSafeConfig,
+    pub delegated_child: FileSafeConfig,
+    pub maintenance_recovery: FileSafeConfig,
+}
+```
+
+Profile rules:
+- `plan_read_only` is the strictest profile and denies mutation-capable execution except explicitly allowed read-only planning tools.
+- `standard_execution` is the default for normal agent execution.
+- `debug_investigation` allows bounded temporary instrumentation and cleanup-sensitive operations under stronger disclosure/logging rules.
+- `delegated_child` may be narrower than its parent run based on the delegated work package.
+- `maintenance_recovery` is reserved for restore/cleanup/recovery flows and must not silently broaden into general execution.
+
+Profile selection derives from effective run mode, operation class, and target capabilities. It MUST NOT depend on legacy Phase/Task/Subtask/Iteration naming.
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md
+
+### 15.12 Integration Checklist
+This section is a resolved integration map for implementers. It does not reopen design questions; the owner sections above define the canonical FileSafe behavior.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md
+
+**ExecutionRequest integration**
+- operation metadata continues to travel through `env_vars`, using `PUPPET_MASTER_OPERATION_TYPE` for operation classification and `PUPPET_MASTER_ALLOWED_FILES` for write-scope declarations
+- FileSafe does not require new `ExecutionRequest` fields; every launch path that constructs an `ExecutionRequest` MUST populate those canonical env vars before BaseRunner executes the request
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/storage-plan.md
+
+**BaseRunner integration**
+- `BaseRunner` owns guard initialization, full rendered-command validation, write-scope checks, and security-filter checks before any managed spawn path executes
+- helper functions such as `is_verification_gate_operation`, `is_interview_operation`, and `extract_file_paths_from_request` remain implementation obligations, not open design questions
+- any FileSafe denial in BaseRunner surfaces a canonical blocked outcome and does not silently downgrade to a best-effort retry path
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+
+**Orchestrator and interview integration**
+- orchestrator-owned verification-gate operations tag their operation type, pass allowed-file metadata, and integrate FileSafe violations into gate reporting rather than inventing a parallel error channel
+- interview-owned operations tag interview context explicitly; any security-filter relaxation during interview phases requires explicit configuration and remains scoped to the interview flow that requested it
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Permissions_System.md
+
+**Worktree integration**
+- canonical path/worktree guard behavior is already locked by this owner doc and `Plans/WorktreeGitImprovement.md`; implementers consume that canon rather than reopening it as checklist uncertainty
+- candidate paths are normalized relative to `working_directory`, canonicalized with fail-closed behavior, compared against the real worktree root rather than a symlink alias, and rejected when unresolved-path aliases remain
+- The stale TODOs for real-worktree-root comparison and unresolved-alias rejection are already-resolved owner canon; checklist prose must use this /cross-reference instead of presenting them as open TODO / TODOs.
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Architecture_Invariants.md
+
+**GUI and derived projections**
+- `GuiConfig` carries FileSafe configuration, the Config surface owns FileSafe controls, and orchestrator startup consumes that config without inventing a second configuration path
+- FileSafe-related UI messages remain projections over canonical runtime/FileSafe state
+- any FileSafe event-log viewer is a derived projection only; seglog remains the canonical event source
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md
+## 16. References
+
+- **AGENTS.md:** DRY Method, platform_specs, Pre-Completion Verification Checklist
+- **Plans/FinalGUISpec.md:** §7.4 (Settings > Advanced, FileSafe Guards card), §7.16 (Assistant Chat, YOLO + FileSafe, in-chat approval)
+- **Plans/orchestrator-subagent-integration.md:** BaseRunner execution flow, verification gates, tier execution
+- **Plans/interview-subagent-integration.md:** Interview execution flow, research operations
+- **Plans/WorktreeGitImprovement.md:** Worktree execution context, path resolution, Option B config wiring
+- **Plans/MiscPlan.md:** Cleanup policies, runner contract, file management
+- **Plans/storage-plan.md:** Seglog, redb, analytics scan (for FileSafe event emission post-rewrite)
+- **Plans/rewrite-tie-in-memo.md:** Central tool registry, patch pipeline, event stream alignment
+- **puppet-master-rs/src/platforms/runner.rs:** BaseRunner implementation
+- **puppet-master-rs/src/platforms/context_files.rs:** Context file handling, append_prompt_attachments
+- **puppet-master-rs/src/config/gui_config.rs:** GUI config structure
+- **puppet-master-rs/src/types/execution.rs:** ExecutionRequest structure
+- **puppet-master-rs/src/core/orchestrator.rs:** Orchestrator execution flow
+- **docs/gui-widget-catalog.md:** Widget reuse for FileSafe UI
+
+---
+
+## 17. Implementation Order and Dependencies
+
+
+Use this section to derive a phased implementation plan. Dependencies are stated so an agent can order tasks and avoid gaps.
+
+**Phase 1 -- Core guards (no GUI, no Assistant)**  
+1. Create the `crates/puppet-master-core/src/filesafe/` module files listed in §9 Implementation Checklist.
+2. Implement pattern loading (§2.3), bundled + project-local resolution (§2.2).  
+3. Implement `BashGuard` (new, disabled, check_command, **commands_match** §2.2, approved_commands from config).  
+4. Implement **check_prompt** and **extract_commands_from_prompt** (§11.3).  
+5. Implement write-scope enforcement (**per-request update** §11.1, check-file-write behavior).  
+6. Implement sensitive-file filtering (**default_sensitive_patterns** §11.2, check-file-access behavior).  
+7. Add `FileSafeConfig` to `GuiConfig` and YAML (§2.4, §5.2); config load/save only (no UI yet).  
+8. Integrate into **BaseRunner**: add guard fields, init in `new()` (with config from orchestrator when wired), in **execute_command()** call check_command (after building full command string), then compute `allowed_files` from request (§11.1), then check_file_write and check_file_access for extracted file paths.  
+9. **ExecutionRequest:** ensure allowed files and operation type are passed via env_vars (`PUPPET_MASTER_ALLOWED_FILES`, `PUPPET_MASTER_OPERATION_TYPE`).  
+10. Implement **extract_file_paths_from_request** (§15.2), **is_verification_gate_operation**, **is_interview_operation** (§15.2).  
+11. In **platform runners** (e.g. Cursor): after **append_prompt_attachments**, call **check_prompt** on compiled prompt and **security_filter** on context files; respect `PUPPET_MASTER_OPERATION_TYPE` (`verification_gate`/`interview`).  
+12. Event logging: **FileSafeEvent** struct (§6), write to seglog; any `filesafe-events.jsonl` surface is rebuildable mirror output only.  
+13. Pattern file: create `config/destructive-commands.txt` (§4); verify regexes.  
+14. Unit tests: pattern match, commands_match, check_prompt extraction, FileGuard allowed/blocked, SecurityFilter, disabled/override behavior.
+
+**Phase 2 -- Config wiring and GUI**  
+15. Wire **GuiConfig::filesafe** → **PuppetMasterConfig::filesafe** at orchestrator start (Option B per `Plans/WorktreeGitImprovement.md` §5.2).  
+16. Pass FileSafe config (and approved_commands) into BaseRunner construction.  
+17. **Advanced tab:** Add **FileSafe Guards** collapsible card (§15.5, FinalGUISpec §7.4): three toggles, override with warning, approved commands list (scrollable, remove, optional add), optional event log link. Use existing widgets and help_tooltip keys.  
+18. Message enum and update handlers for all FileSafe toggles and list actions.  
+19. Persist approved_commands; ensure runtime blocklist checks whitelist from config.
+
+**Phase 3 -- Assistant Chat and YOLO**  
+20. When YOLO is on and FileSafe enabled: show **warning chip** "YOLO active -- FileSafe guards still apply" (§15.5, FinalGUISpec §7.16).  
+21. **In-chat approval UI:** On block, show inline card (orange border, command in mono, guard name, "Approve once" / "Approve & add to list"), 60s timeout, log to event log.  
+22. Terminal: on block, output RED with "[BLOCKED] Blocked by FileSafe".  
+23. Optional: Dashboard FileSafe status card with link to Settings > Advanced.
+
+**Phase 4 -- Prompt Pipeline-owned context compilation follow-up**  
+24. Implement context compiler, delta context, cache, handoff schemas, compaction marker, and skill bundling from `Plans/Prompt_Pipeline.md`; FileSafe participates only through compiled-prompt safety checks and event logging integration.
+
+**Risks and mitigations:**  
+- **Gap -- plan metadata:** Orchestrator must set allowed files on each ExecutionRequest for write scope; implement **get_allowed_files_for_current_subtask** and pass via env or request field (§15.9 Gap 2).  
+- **Worktree paths (resolved):** Path normalization and symlink handling are specified by §11.1.1 (realpath-before-scope-check invariant) and §11.1.3 (case-folding and probe-file detection contract), including the OC-FILE-201/202 symlink-scope pair.
+- **False positives:** Log all blocks; allow override and approved list; tune patterns from feedback (§12.2).
+
+---
+
+**End of Implementation Plan**
+
+## Runtime Blocked-State Integration Addendum (2026-03-08)
+
+### 1. FileSafe outcomes are first-class blocked outcomes
+
+
+FileSafe decisions must integrate with the shared runtime blocked taxonomy.
+
+Required rule:
+- a FileSafe block becomes `blocked_reason_code = filesafe_blocked`
+- it is not an execution failure and is not auto-retryable
+
+### 2. Recovery options
+
+When FileSafe allows user recovery, runtime/UI surfaces must expose exact options.
+- Align `tool.denied` emission with the normalized `filesafe_blocked` outcome taxonomy so guard events and terminal outcomes tell the same story.
+- Blocked-state payloads use `blocked_reason_code`, ordered `allowed_action_ids[]`, `blocked_sequence`, `preserved-local-work`, prerequisite metadata, and `detail_ref?`; deprecated field names such as `allowed_actions[]` and `blocked_reason` must not appear in new canonical schemas.
+- Graph-local `Retry/Replan/Reopen/Approve/Deny` and `/Replan/Reopen/Approve/Deny` labels normalize to canonical `cmd.runtime` / `cmd.runtime.*` recovery commands before display or persistence.
+- `/interview` and `/remediation` flows use the shared `failure_class`, `blocked_reason_code`, and `allowed_action_ids[]` taxonomy; wizard/interview blocked-state is persistent runtime state, not thread-local conversational metadata.
+- Durable FileSafe event families include switch outcomes such as `threshold_preemptive_switch` and `no eligible backup` instead of relying only on notification copy.
+- Account-pressure and switching outcomes preserve projected pressure before hard failure, confidence `/source`, soft vs hard switching, `no-backup-account`, `policy-disallowed`, and role/account interactions so FileSafe recovery does not flatten guard-relevant `/account` state into a generic denial.
+- non-blocking pressure remains advisory until it changes execution authority: use a warning banner, optional toast, and quiet period first, and escalate further only if the condition becomes execution-blocking.
+- Bulk recovery actions require exact target preview: retry-many-node, graph-patch-multiple-scope, approve-many-`HITL` `/runtime` blocked actions, and cleanup `/remove` over live lanes or `/worktrees` must not share one generic confirm.
+- `UI_Command_Catalog.md` (`UI_Command_Catalog`) is a projection over canonical FileSafe `/recovery` payloads; catalog copy must not contradict the runtime action IDs or allowed-action ordering.
+- Attention routing for blocked state includes Dashboard, Orchestrator, and `chat-thread` surfaces for `live-run` status, Docker `/registry` side effects, FileSafe blocks, and optional `HITL` boundaries.
+
+Allowed examples:
+- `Approve once`
+- `Approve & add to list`
+- `Cancel`
+
+If recovery is not allowed for the specific guard, the runtime must say so explicitly.
+
+### 3. Event and analytics requirements
+
+FileSafe event payloads must remain rich enough for both analytics and runtime recovery surfaces.
+
+Minimum fields:
+- `guard_type`
+- `pattern_id` or pattern name
+- `timestamp`
+- `command_or_path_summary`
+- `recovery_allowed`
+- `allowed_action_ids[]`
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Permissions_System.md
+### 4. Safe-point interaction
+
+<<< CONTEXT_AFTER 2768-2779 >>>
+
+
+A FileSafe block that occurs before execution does not consume a mutation safe point and does not require rollback.
+
+### 5. Acceptance criteria
+
+- FileSafe blocks appear as blocked outcomes with explicit reason codes.
+- FileSafe blocks are not auto-retried.
+- Recovery-capable FileSafe blocks present exact allowed actions.
+- FileSafe analytics data remains usable after runtime integration.
+## FileSafe Blocked Outcome Alignment Addendum (2026-03-09)
+

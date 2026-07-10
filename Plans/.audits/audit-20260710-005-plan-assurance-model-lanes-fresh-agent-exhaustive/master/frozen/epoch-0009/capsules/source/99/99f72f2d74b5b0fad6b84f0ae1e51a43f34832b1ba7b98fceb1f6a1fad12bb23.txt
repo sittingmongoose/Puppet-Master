@@ -1,0 +1,377 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1676-1687 >>>
+L00001676	- Role hints MUST NOT override terminal_session_id ownership, actual pane runtime status, cwd/profile/runtime context of an already running session, explicit user labels, or explicit user default overrides.
+L00001677	preserved_contractrefs:
+L00001678	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md'
+L00001679	compatibility_only_notes: []
+L00001680	stale_retired_dispositions: []
+L00001681	owner_hints:
+L00001682	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001683	- Plans/storage-plan.md
+L00001684	- Plans/UI_Command_Catalog.md
+L00001685	- Plans/assistant-chat-design.md
+L00001686	```
+L00001687	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1688-2035 >>>
+L00001688	### SMPFS-017 - Terminal Reveal Ownership
+L00001689	
+L00001690	```yaml
+L00001691	plan_unit_id: SMPFS-017
+L00001692	unit_type: requirement
+L00001693	status: accepted
+L00001694	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001695	canonical_text: Open in Terminal and Show Terminal reveal existing sessions first, historical state shows transcript or recovery state, and only explicit new/split/restart actions mint a new terminal runtime identity.
+L00001696	gui_related: true
+L00001697	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00001698	split_recommended: false
+L00001699	depends_on:
+L00001700	- PDS-003
+L00001701	- PDS-004
+L00001702	- PDS-005
+L00001703	- PNC-001
+L00001704	- SP-001
+L00001705	- UCC-001
+L00001706	unblocks: []
+L00001707	acceptance_criteria:
+L00001708	- SMPFS-017 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00001709	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001710	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001711	validation_surfaces:
+L00001712	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001713	- python3 scripts/pm-plan-index.py validate
+L00001714	risk_class: terminal_reveal_drift
+L00001715	reasoning_tier: standard
+L00001716	context_scope: terminal_reveal_gui
+L00001717	implementation_surfaces:
+L00001718	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001719	node_compile_hint:
+L00001720	  mode: terminal_reveal_ownership
+L00001721	  create_worknodes: false
+L00001722	source_lineage:
+L00001723	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0014
+L00001724	preserved_exact_tokens:
+L00001725	- Cross-surface ownership and reveal rules
+L00001726	- Open in Terminal
+L00001727	- Show Terminal
+L00001728	- existing terminal sessions
+L00001729	- historical state
+L00001730	- new/split/restart
+L00001731	- terminal_session_id
+L00001732	negative_constraints:
+L00001733	- Adjacent run/debug, IDE, remote, and workflow-heavy systems may reference or reveal Terminal, but they MUST NOT redefine terminal ownership or runtime identity.
+L00001734	preserved_contractrefs:
+L00001735	- 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
+L00001736	compatibility_only_notes: []
+L00001737	stale_retired_dispositions: []
+L00001738	owner_hints:
+L00001739	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001740	- Plans/UI_Command_Catalog.md
+L00001741	- Plans/Wiring_Matrix.md
+L00001742	- Plans/storage-plan.md
+L00001743	```
+L00001744	
+L00001745	### SMPFS-018 - Dev-Session Linkback And Adoption
+L00001746	
+L00001747	```yaml
+L00001748	plan_unit_id: SMPFS-018
+L00001749	unit_type: requirement
+L00001750	status: accepted
+L00001751	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001752	canonical_text: Derived artifacts preserve terminal_session_id and dev_session_id linkbacks; adoption into a dev session is explicit and must never silently attach arbitrary shell sessions from weak heuristics.
+L00001753	gui_related: false
+L00001754	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00001755	split_recommended: false
+L00001756	depends_on:
+L00001757	- PDS-003
+L00001758	- PDS-004
+L00001759	- PDS-005
+L00001760	- PNC-001
+L00001761	- SP-001
+L00001762	- CV-215
+L00001763	- RM-025
+L00001764	unblocks: []
+L00001765	acceptance_criteria:
+L00001766	- SMPFS-018 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00001767	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001768	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001769	validation_surfaces:
+L00001770	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001771	- python3 scripts/pm-plan-index.py validate
+L00001772	risk_class: dev_session_adoption_drift
+L00001773	reasoning_tier: standard
+L00001774	context_scope: dev_session_linkback
+L00001775	implementation_surfaces:
+L00001776	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001777	node_compile_hint:
+L00001778	  mode: dev_session_linkback_adoption
+L00001779	  create_worknodes: false
+L00001780	source_lineage:
+L00001781	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0014
+L00001782	preserved_exact_tokens:
+L00001783	- terminal_session_id
+L00001784	- dev_session_id
+L00001785	- derived artifacts
+L00001786	- adoption is explicit
+L00001787	- weak heuristics
+L00001788	negative_constraints:
+L00001789	- PM must not silently adopt arbitrary shell sessions into a dev session from weak heuristics.
+L00001790	preserved_contractrefs:
+L00001791	- 'ContractRef: ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
+L00001792	compatibility_only_notes: []
+L00001793	stale_retired_dispositions: []
+L00001794	owner_hints:
+L00001795	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001796	- Plans/storage-plan.md
+L00001797	- Plans/Contracts_V0.md
+L00001798	```
+L00001799	
+L00001800	### SMPFS-019 - Terminal Interaction Mode State Machine
+L00001801	
+L00001802	```yaml
+L00001803	plan_unit_id: SMPFS-019
+L00001804	unit_type: requirement
+L00001805	status: accepted
+L00001806	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001807	canonical_text: Terminal interaction modes preserve live_input, scrollback_review, selection_active, search_active, tui_capture, shortcut precedence, PTY/TUI ownership, and accessible state disclosure.
+L00001808	gui_related: true
+L00001809	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00001810	split_recommended: true
+L00001811	depends_on:
+L00001812	- PDS-003
+L00001813	- PDS-004
+L00001814	- PDS-005
+L00001815	- PNC-001
+L00001816	- SP-001
+L00001817	- UCC-001
+L00001818	unblocks: []
+L00001819	acceptance_criteria:
+L00001820	- SMPFS-019 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00001821	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001822	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001823	validation_surfaces:
+L00001824	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001825	- python3 scripts/pm-plan-index.py validate
+L00001826	risk_class: terminal_interaction_state_drift
+L00001827	reasoning_tier: standard
+L00001828	context_scope: terminal_interaction_gui
+L00001829	implementation_surfaces:
+L00001830	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001831	node_compile_hint:
+L00001832	  mode: terminal_interaction_mode_state_machine
+L00001833	  create_worknodes: false
+L00001834	source_lineage:
+L00001835	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0015
+L00001836	preserved_exact_tokens:
+L00001837	- Interaction modes and selection semantics
+L00001838	- live_input
+L00001839	- scrollback_review
+L00001840	- selection_active
+L00001841	- search_active
+L00001842	- tui_capture
+L00001843	- PTY
+L00001844	- TUI
+L00001845	- shortcut precedence
+L00001846	negative_constraints:
+L00001847	- One keystroke MUST NOT trigger both a terminal action and an application action.
+L00001848	- Selection-active keeps copy and selection-adjustment terminal-owned; non-selection terminal actions must not clear active selection unless they inherently replace it.
+L00001849	preserved_contractrefs:
+L00001850	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/Glossary.md'
+L00001851	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00001852	compatibility_only_notes: []
+L00001853	stale_retired_dispositions: []
+L00001854	owner_hints:
+L00001855	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001856	- Plans/FinalGUISpec.md
+L00001857	- Plans/FileManager.md
+L00001858	- Plans/Permissions_System.md
+L00001859	```
+L00001860	
+L00001861	### SMPFS-020 - Terminal Selection Copy Search Semantics
+L00001862	
+L00001863	```yaml
+L00001864	plan_unit_id: SMPFS-020
+L00001865	unit_type: requirement
+L00001866	status: accepted
+L00001867	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001868	canonical_text: Terminal selection, copy, paste, and search semantics preserve linear selection, logical wrapped-line copy, live/review copy behavior, active-owner paste, TUI override paths, search/review transitions, and unicode/grapheme integrity.
+L00001869	gui_related: true
+L00001870	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00001871	split_recommended: true
+L00001872	depends_on:
+L00001873	- PDS-003
+L00001874	- PDS-004
+L00001875	- PDS-005
+L00001876	- PNC-001
+L00001877	- SP-001
+L00001878	- UCC-001
+L00001879	unblocks: []
+L00001880	acceptance_criteria:
+L00001881	- SMPFS-020 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00001882	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001883	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001884	validation_surfaces:
+L00001885	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001886	- python3 scripts/pm-plan-index.py validate
+L00001887	risk_class: terminal_selection_drift
+L00001888	reasoning_tier: standard
+L00001889	context_scope: terminal_interaction_gui
+L00001890	implementation_surfaces:
+L00001891	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001892	node_compile_hint:
+L00001893	  mode: terminal_selection_copy_search_semantics
+L00001894	  create_worknodes: false
+L00001895	source_lineage:
+L00001896	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0015
+L00001897	preserved_exact_tokens:
+L00001898	- linear selection
+L00001899	- logical wrapped-line copy
+L00001900	- live/review copy
+L00001901	- active-owner paste
+L00001902	- TUI override
+L00001903	- search
+L00001904	- unicode
+L00001905	- grapheme
+L00001906	negative_constraints:
+L00001907	- Terminal copy/paste/search behavior must not double-trigger app-wide actions or silently discard active terminal selection state.
+L00001908	preserved_contractrefs:
+L00001909	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/FileManager.md, ContractName:Plans/Glossary.md'
+L00001910	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FileManager.md'
+L00001911	compatibility_only_notes: []
+L00001912	stale_retired_dispositions: []
+L00001913	owner_hints:
+L00001914	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001915	- Plans/FinalGUISpec.md
+L00001916	- Plans/FileManager.md
+L00001917	```
+L00001918	
+L00001919	### SMPFS-021 - Shell Integration Confidence
+L00001920	
+L00001921	```yaml
+L00001922	plan_unit_id: SMPFS-021
+L00001923	unit_type: requirement
+L00001924	status: accepted
+L00001925	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001926	canonical_text: Shell integration confidence tiers rich, basic, and opaque constrain command-boundary claims; Puppet Master must not fabricate command text, success, block markers, exact boundaries, or exit status beyond observed data.
+L00001927	gui_related: false
+L00001928	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00001929	split_recommended: false
+L00001930	depends_on:
+L00001931	- PDS-003
+L00001932	- PDS-004
+L00001933	- PDS-005
+L00001934	- PNC-001
+L00001935	- SP-001
+L00001936	- T-001
+L00001937	- RM-025
+L00001938	unblocks: []
+L00001939	acceptance_criteria:
+L00001940	- SMPFS-021 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00001941	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00001942	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00001943	validation_surfaces:
+L00001944	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001945	- python3 scripts/pm-plan-index.py validate
+L00001946	risk_class: shell_integration_fabrication
+L00001947	reasoning_tier: standard
+L00001948	context_scope: shell_integration_runtime
+L00001949	implementation_surfaces:
+L00001950	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001951	node_compile_hint:
+L00001952	  mode: shell_integration_confidence
+L00001953	  create_worknodes: false
+L00001954	source_lineage:
+L00001955	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0016
+L00001956	preserved_exact_tokens:
+L00001957	- Command-block and shell-integration rules
+L00001958	- rich
+L00001959	- basic
+L00001960	- opaque
+L00001961	- command boundaries
+L00001962	- command text
+L00001963	- success semantics
+L00001964	- exit status
+L00001965	negative_constraints:
+L00001966	- Puppet Master MUST NOT fabricate exact command boundaries, command text, success semantics, block markers, or exit status when shell integration is weaker than the observed data supports.
+L00001967	preserved_contractrefs:
+L00001968	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md'
+L00001969	compatibility_only_notes: []
+L00001970	stale_retired_dispositions: []
+L00001971	owner_hints:
+L00001972	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001973	- Plans/storage-plan.md
+L00001974	- Plans/assistant-chat-design.md
+L00001975	- Plans/Tools.md
+L00001976	```
+L00001977	
+L00001978	### SMPFS-022 - Command Block Identity Metadata
+L00001979	
+L00001980	```yaml
+L00001981	plan_unit_id: SMPFS-022
+L00001982	unit_type: requirement
+L00001983	status: accepted
+L00001984	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00001985	canonical_text: Command blocks are transcript-oriented metadata with command_block_id, terminal_session_id ownership, lifecycle states, marker references, nullable command/cwd/exit fields, confidence, and compatibility mapping from session_terminated_while_running to session-end.
+L00001986	gui_related: false
+L00001987	gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+L00001988	split_recommended: false
+L00001989	depends_on:
+L00001990	- PDS-003
+L00001991	- PDS-004
+L00001992	- PDS-005
+L00001993	- PNC-001
+L00001994	- SP-001
+L00001995	- CV-215
+L00001996	unblocks: []
+L00001997	acceptance_criteria:
+L00001998	- SMPFS-022 remains addressable as a fine-grained Section 15 PlanUnit with source-span coverage.
+L00001999	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002000	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002001	validation_surfaces:
+L00002002	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002003	- python3 scripts/pm-plan-index.py validate
+L00002004	risk_class: command_block_identity_drift
+L00002005	reasoning_tier: standard
+L00002006	context_scope: command_block_runtime
+L00002007	implementation_surfaces:
+L00002008	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00002009	node_compile_hint:
+L00002010	  mode: command_block_identity_metadata
+L00002011	  create_worknodes: false
+L00002012	source_lineage:
+L00002013	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Section15_MVP_Promoted_Features_Spec-S0016
+L00002014	preserved_exact_tokens:
+L00002015	- command_block_id
+L00002016	- terminal_session_id
+L00002017	- block-start
+L00002018	- block-end
+L00002019	- session_terminated_while_running
+L00002020	- session-end
+L00002021	- confidence
+L00002022	- nullable cwd
+L00002023	negative_constraints:
+L00002024	- Command-block identity is transcript-oriented metadata, not rendered UI fragments.
+L00002025	preserved_contractrefs:
+L00002026	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md'
+L00002027	compatibility_only_notes:
+L00002028	- session_terminated_while_running maps to session-end compatibility vocabulary.
+L00002029	stale_retired_dispositions: []
+L00002030	owner_hints:
+L00002031	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00002032	- Plans/storage-plan.md
+L00002033	- Plans/Contracts_V0.md
+L00002034	```
+L00002035	
+
+<<< CONTEXT_AFTER canonical_document_lines=2036-2047 >>>
+L00002036	### SMPFS-023 - Command Review Retention Degradation
+L00002037	
+L00002038	```yaml
+L00002039	plan_unit_id: SMPFS-023
+L00002040	unit_type: requirement
+L00002041	status: accepted
+L00002042	owner_doc: Plans/Section15_MVP_Promoted_Features_Spec.md
+L00002043	canonical_text: Command review surfaces, cards, navigation, and sticky headers degrade honestly when transcript retention is pruned; restored panes restore structure and recent transcript first and reconnect only when runtime support exists.
+L00002044	gui_related: true
+L00002045	gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+L00002046	split_recommended: true
+L00002047	depends_on:

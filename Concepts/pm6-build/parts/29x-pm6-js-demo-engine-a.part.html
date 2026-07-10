@@ -58,6 +58,40 @@
         scope: 'Media pipeline, import worker, deployment storage', includedPlan: true, openQuestions: 1, hasGui: true
       },
       hashes: { planningRunRev: 12, topicMapVersion: 'v9', planUnitIdx: '8f3a91', testingPolicy: 'c41d20', auditClosure: 'e77b02' },
+      reqs: {
+        prd: { packId: 'prd-9c2e41', version: 'v1' },
+        sampleDocs: [
+          { id: 'd1', name: 'media-pipeline-brief.docx', kind: 'docx', size: '184 KB', hash: 'sha 9c11f2…', atoms: 14,
+            warnings: null, finalStatus: 'parsed', fills: ['sec-media'],
+            receipt: 'MIME verified · size within intake limits · no active content' },
+          { id: 'd2', name: 'import-hardening-notes.md', kind: 'md', size: '12 KB', hash: 'sha 4be07a…', atoms: 9,
+            warnings: null, finalStatus: 'parsed', fills: ['sec-import'],
+            receipt: 'MIME verified · size within intake limits · no active content' },
+          { id: 'd3', name: 'storage-vendor-quotes.pdf', kind: 'pdf', size: '631 KB', hash: 'sha e2c9d4…', atoms: 6,
+            warnings: '2 pages skipped (scanned images)', finalStatus: 'parsed_warn', fills: ['sec-open'],
+            receipt: 'MIME verified · size within intake limits · no active content' }
+        ],
+        builderTurns: [
+          { id: 'bt1', agent: 'What is the one-line goal for this run?',
+            chips: ['Media pipeline + import hardening', 'Media pipeline only'], freeform: true,
+            fills: ['sec-overview', 'sec-goals'], ack: 'Recorded to the PRD ledger.' },
+          { id: 'bt2', agent: 'Where do the boundaries sit — what is explicitly out?',
+            chips: ['No mobile app work', 'No billing changes'], freeform: true,
+            fills: ['sec-scope'], ack: 'Recorded to the PRD ledger.' },
+          { id: 'bt3', agent: 'One open question remains from the chat import: where should images and backups live? I can carry it into planning as an open question.',
+            chips: ['Carry it into planning', 'Decide now'], freeform: false,
+            fills: ['sec-open'], ack: 'Recorded to the PRD ledger — carried into planning as an open question.',
+            ackAlt: 'The storage call needs the deployment topic evidence, so it stays an open question — planning surfaces it in the deployment topic.' }
+        ],
+        outline: [
+          { id: 'sec-overview', label: 'Overview' },
+          { id: 'sec-goals', label: 'Goals' },
+          { id: 'sec-scope', label: 'Scope boundaries' },
+          { id: 'sec-media', label: 'Media pipeline behavior' },
+          { id: 'sec-import', label: 'Import hardening' },
+          { id: 'sec-open', label: 'Open questions' }
+        ]
+      },
       topics: [
         { id: 't1', num: 1, title: 'Recipe data model', state: 'ready',
           summary: 'Recipes, ingredients, steps, tags — Postgres schema + sqlx migrations.',
@@ -65,15 +99,20 @@
         { id: 't2', num: 2, title: 'Auth & accounts', state: 'ready',
           summary: 'Email + OAuth sign-in, session cookies, account deletion path.',
           questions: [{ id: 'q-oauth', text: 'Which OAuth providers at launch?', chips: ['GitHub + Google', 'Google only', 'None yet'], freeform: 'Something else', answer: 'GitHub + Google' }] },
-        { id: 't3', num: 3, title: 'Editor & media upload', state: 'ready',
-          summary: 'Step-by-step recipe editor with drag-in photos; image-processing package resizes + strips EXIF.',
-          questions: [{ id: 'q-size', text: 'Max photo upload size?', chips: ['10 MB', '25 MB', 'Unlimited'], freeform: 'Something else', answer: '25 MB' }] },
+        { id: 't3', num: 3, title: 'Editor & media upload', state: 'active',
+          summary: 'Step-by-step recipe editor with drag-in photos; image-processing package resizes uploads on a ladder.',
+          intro: 'This topic covers the editor and the media pipeline. Evidence answered the resize path; two product calls are left.',
+          questions: [
+            { id: 'q-size', text: 'Max photo upload size?', chips: ['10 MB', '25 MB', 'Unlimited'], freeform: 'Something else', answer: null },
+            { id: 'q-exif', text: 'Keep photo location data (EXIF GPS)?', chips: ['Always strip', 'Keep with consent', 'Keep everything'], freeform: 'Something else', answer: null }
+          ] },
         { id: 't4', num: 4, title: 'Search', state: 'ready',
           summary: 'Postgres full-text search over titles, ingredients and tags; typo tolerance deferred.',
           questions: [{ id: 'q-scope', text: 'Search scope at launch?', chips: ['Titles + ingredients', 'Everything', 'Titles only'], freeform: 'Something else', answer: 'Titles + ingredients' }] },
-        { id: 't5', num: 5, title: 'Comments & ratings', state: 'ready',
+        { id: 't5', num: 5, title: 'Comments & ratings', state: 'not_started',
           summary: 'Five-star ratings, threaded comments, one rating per account per recipe.',
-          questions: [{ id: 'q-mod', text: 'Comment moderation model?', chips: ['Report + hide', 'Pre-approval', 'Off at launch'], freeform: 'Something else', answer: 'Report + hide' }] },
+          intro: 'Ratings and comments are already scoped by the evidence — the data model and rate limits are settled. One product call is left: the moderation model at launch.',
+          questions: [{ id: 'q-mod', text: 'Comment moderation model?', chips: ['Report + hide', 'Pre-approval', 'Off at launch'], freeform: 'Something else', answer: null }] },
         { id: 't6', num: 6, title: 'Import from URL', state: 'auditing',
           summary: 'Paste a recipe URL, worker scrapes structured data; retries + sanitization under audit.',
           progress: 'audit pass 2 of 3 · 4 findings fixed',
@@ -83,6 +122,7 @@
           questions: [{ id: 'q-chan', text: 'Notification channels at launch?', chips: ['In-app only', 'In-app + email', 'Email digest weekly'], freeform: 'Something else', answer: 'In-app + email' }] },
         { id: 't8', num: 8, title: 'Deployment & backups', state: 'blocked',
           summary: 'Docker on Unraid; nightly Postgres dumps. Blocked: storage location needs a product decision.',
+          intro: 'Deployment is mapped from repo evidence: Docker on Unraid, nightly Postgres dumps. Storage is a credentials + cost call the wizard will not make for you.',
           questions: [{ id: 'q-storage', text: 'Where should images and backups live?', chips: ['AWS S3', 'Cloudflare R2', 'Local volume'], freeform: 'Something else', answer: null }] }
       ]
     },
@@ -586,6 +626,14 @@
     return nodes;
   }
 
+  function pristineReqs() {
+    return {
+      docs: [], turns: [], answers: {}, turnIdx: 0, filled: {},
+      readiness: 'blocked',
+      prd: { approved: false, packId: null, version: null }
+    };
+  }
+
   var S = {
     clock: { t: 0, playing: true, speed: 1, _resumeOnVisible: false },
     story: { c1_wizard_done: false, c2_compiled: false, c3_run_complete: false, c4_pr_merged: false, c5_published: false },
@@ -597,7 +645,9 @@
       approved: false,
       hashes: DATA.wizard.hashes,
       imported: true,
-      activeTopic: null
+      activeTopic: null,
+      reqs: pristineReqs(),
+      _ambient: false
     },
     run: {
       id: null, stage: 'idle', planUnits: 0,
@@ -641,7 +691,7 @@
     ffwd: false
   };
   DATA.wizard.topics.forEach(function (t) {
-    S.wizard.topics[t.id] = { id: t.id, num: t.num, title: t.title, state: t.state, progress: t.progress || null, summary: t.summary, questions: JSON.parse(JSON.stringify(t.questions)), accepted: t.state === 'ready' };
+    S.wizard.topics[t.id] = { id: t.id, num: t.num, title: t.title, state: t.state, progress: t.progress || null, summary: t.summary, intro: t.intro || null, thread: [], questions: JSON.parse(JSON.stringify(t.questions)), accepted: t.state === 'ready' };
   });
 
   var LOG = [];
@@ -853,6 +903,7 @@
       emit('demo.jump', { marker: marker });
       emit('run.state', runSnapshot());
       emit('wizard.state', wizardSnapshot());
+      emit('wizard.reqs', { reqs: S.wizard.reqs });
       emit('git.changed', {}); emit('docker.chain', S.docker.publishChain); emit('usage.tick', usageSnapshot());
     }
   };
@@ -862,7 +913,7 @@
     return { id: S.run.id, state: S.run.stage, stage: S.run.stage, planUnits: S.run.planUnits, freshness: S.run.freshness, lanes: S.run.lanes, gates: S.run.gates, history: S.run.history };
   }
   function wizardSnapshot() {
-    return { stage: S.wizard.stage, topics: S.wizard.topics, pack: S.wizard.pack, approved: S.wizard.approved, hashes: S.wizard.hashes };
+    return { stage: S.wizard.stage, topics: S.wizard.topics, pack: S.wizard.pack, approved: S.wizard.approved, hashes: S.wizard.hashes, reqs: S.wizard.reqs };
   }
   function usageSnapshot() {
     return { quotas: S.usage.quotas, cooldown: fmtClock(S.usage.cooldownSec), cooldownSec: S.usage.cooldownSec, ledger: S.usage.ledger, anomalies: S.usage.anomalies };
@@ -1114,14 +1165,16 @@
     if (!silent) emit('docker.stats', { cpu: (3 + Math.random() * 9).toFixed(1) + '%', mem: (212 + Math.random() * 60).toFixed(0) + ' MB' });
   };
 
-  /* wizard ambient beats: t6 audit finishing, t7 impact review resolving */
+  /* wizard ambient beats: t6 audit finishing, t7 impact review resolving.
+     Anchored to workspace entry: the track starts inside wizardFacade.enterWorkspace,
+     never at page load — times below are seconds after the user opens the workspace. */
   var WIZ_BEATS = [
-    { at: 8,  action: 'wizard.topicState', args: { id: 't7', state: 'review-impact' } },
-    { at: 12, action: 'wizard.topicState', args: { id: 't6', state: 'auditing', progress: 'audit pass 3 of 3 · all findings fixed' } },
-    { at: 14, action: 'wizard.topicState', args: { id: 't7', state: 'reopened' } },
-    { at: 17, action: 'wizard.topicState', args: { id: 't7', state: 'ledger_syncing' } },
-    { at: 20, action: 'wizard.topicState', args: { id: 't6', state: 'ready', progress: null } },
-    { at: 21, action: 'wizard.topicState', args: { id: 't7', state: 'ready', progress: null } }
+    { at: 4,  action: 'wizard.topicState', args: { id: 't7', state: 'review-impact' } },
+    { at: 8,  action: 'wizard.topicState', args: { id: 't6', state: 'auditing', progress: 'audit pass 3 of 3 · all findings fixed' } },
+    { at: 10, action: 'wizard.topicState', args: { id: 't7', state: 'reopened' } },
+    { at: 13, action: 'wizard.topicState', args: { id: 't7', state: 'ledger_syncing' } },
+    { at: 16, action: 'wizard.topicState', args: { id: 't6', state: 'ready', progress: null } },
+    { at: 19, action: 'wizard.topicState', args: { id: 't7', state: 'ready', progress: null } }
   ];
   M['wizard.topicState'] = function (a, silent) {
     var t = S.wizard.topics[a.id];
@@ -1510,7 +1563,37 @@
   }
 
   /* ================= chapter backfills (silent fast-forward) ================= */
+  function backfillReqs() {
+    var rq = S.wizard.reqs;
+    DATA.wizard.reqs.sampleDocs.forEach(function (spec) {
+      var doc = null;
+      rq.docs.forEach(function (x) { if (x.id === spec.id) doc = x; });
+      if (!doc) {
+        doc = { id: spec.id, name: spec.name, kind: spec.kind, size: spec.size, hash: spec.hash,
+                atoms: spec.atoms, warnings: spec.warnings || null, receipt: spec.receipt };
+        rq.docs.push(doc);
+      }
+      doc.status = spec.finalStatus;
+      doc.security = 'cleared';
+      reqsFill(spec.fills, 'reconciled from ' + spec.name);
+    });
+    DATA.wizard.reqs.builderTurns.forEach(function (turn, i) {
+      if (rq.answers[turn.id]) return;
+      var v = (turn.chips && turn.chips[0]) || 'Recorded';
+      if (!rq.turns.some(function (en) { return en.role === 'agent' && en.turnId === turn.id && !en.ack; })) {
+        rq.turns.push({ role: 'agent', turnId: turn.id, text: turn.agent });
+      }
+      rq.turns.push({ role: 'user', turnId: turn.id, text: v });
+      rq.answers[turn.id] = v;
+      rq.turns.push({ role: 'agent', turnId: turn.id, ack: true, text: turn.ack });
+      reqsFill(turn.fills, 'from builder turn ' + (i + 1));
+    });
+    rq.turnIdx = DATA.wizard.reqs.builderTurns.length;
+    rq.readiness = 'ready_with_warnings';
+    rq.prd = { approved: true, packId: DATA.wizard.reqs.prd.packId, version: DATA.wizard.reqs.prd.version };
+  }
   function backfillWizard() {
+    backfillReqs();
     Object.keys(S.wizard.topics).forEach(function (k) {
       var t = S.wizard.topics[k];
       t.state = 'ready'; t.progress = null; t.accepted = true;

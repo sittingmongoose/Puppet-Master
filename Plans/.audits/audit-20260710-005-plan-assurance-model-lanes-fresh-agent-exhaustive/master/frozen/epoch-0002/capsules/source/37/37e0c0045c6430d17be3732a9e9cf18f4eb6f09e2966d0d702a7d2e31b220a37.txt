@@ -1,0 +1,400 @@
+<<< CONTEXT_BEFORE 5434-5445 >>>
+- DAE execution-context JSON payloads
+- cwd-based execution contract
+negative_constraints:
+- The cwd-based execution contract does not require separate prompt-only worktree injection.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Assistant Chat consumes thread worktree binding and passes a frozen cwd-oriented execution context to executor surfaces.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+
+<<< AUTHORITATIVE_CORE 5446-5816 >>>
+### EP-091 - Executor Worktree Operation Resolution And Removed-Worktree Revert
+
+```yaml
+plan_unit_id: EP-091
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: >-
+  Executor worktree operations resolve files, git commands, terminals, and LSP
+  root identity through working_directory, store absolute mutation paths, and
+  report a non-recreating error when cmd.chat.revert targets an edit whose
+  original worktree path no longer exists.
+gui_related: false
+gui_classification_reason: This unit defines executor file/git/terminal/LSP and revert behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- File operations resolve relative to working_directory.
+- Git operations target the worktree, terminal sessions start in working_directory, and LSP root identity uses the worktree path when bound worktree context is present.
+- File mutation logs store absolute paths.
+- A removed-worktree cmd.chat.revert reports the preserved error message and does not recreate missing directories.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: executor_worktree_operation_resolution_and_removed_worktree_revert
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066
+preserved_exact_tokens:
+- File operations resolve relative to `working_directory`
+- Git operations target the worktree, not the main repo
+- Terminal sessions start in `working_directory`
+- LSP root identity uses worktree path when `is_worktree` is true
+- File mutation logs store absolute paths
+- cmd.chat.revert
+- /project/.puppet-master/worktrees/thread-abc/src/main.rs
+- 'Cannot restore file: original path no longer exists. The worktree may have been removed.'
+- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/Commands_System.md'
+negative_constraints:
+- is_worktree is a source-lineage token only; it must not become an execution_unit_context field in schema_version 1.0.0.
+- The executor does not recreate missing directories when a removed worktree makes the original path unavailable.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- FileManager, LSPSupport, and Commands_System consume this executor worktree resolution behavior.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-092 - Execution Unit Context Canonical Contract
+
+```yaml
+plan_unit_id: EP-092
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: >-
+  Executor Protocol owns the canonical execution_unit_context contract through
+  Plans/execution_unit_context.schema.json with schema_id pm.execution_unit_context
+  and schema_version 1.0.0. The contract defines a closed required field list,
+  closed optional field set, field types, nullability, closed enums, identity
+  and linkage fields, persistence and replay rules, redaction and no-secret
+  constraints, lifecycle ownership, and producer/consumer boundaries.
+gui_related: false
+gui_classification_reason: This unit defines runtime identity schema and labels, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- All required fields from the schema remain explicit and closed.
+- Optional fields, nullability, enum values, persistence/replay constraints, and redaction rules remain explicit.
+- Consumer docs reference this owner and schema instead of redefining execution_unit_context.
+- The labels execution unit context and blocked episode remain preserved.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-implementation-readiness.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+- Plans/execution_unit_context.schema.json
+- scripts/pm-implementation-readiness.py
+node_compile_hint:
+  mode: execution_unit_context_canonical_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066
+preserved_exact_tokens:
+- run_id
+- node_id
+- attempt_id
+- schema_id
+- schema_version
+- execution_unit_type
+- execution_unit_id
+- lane_id
+- package_id
+- seam_id
+- worktree_id
+- execution_role
+- requested_account_binding
+- requested_account_id
+- effective_account_id
+- operational_identity
+- blocked_sequence
+- allowed_action_ids[]
+- approval_scope_key
+- created_at_utc
+- execution unit context
+- blocked episode
+- 'ContractRef: Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor'
+negative_constraints:
+- No consumer may redefine the execution_unit_context required or optional field set.
+- No persisted execution_unit_context payload is valid without schema_version.
+- execution_unit_context must not persist secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Required identity fields align executor runtime scope with the canonical blocked-episode approval anchor.
+- Executor Protocol is the sole owner of the execution_unit_context contract; Prompt Pipeline, Contracts_V0, storage-plan, orchestrator-subagent-integration, Plan_To_Node_Compilation, and Planning_Wizard are consumers.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-093 - Runtime Scope Blocked Episode And Permission Carry-Through
+
+```yaml
+plan_unit_id: EP-093
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: >-
+  Execution Protocol defines runtime scope through execution-unit context rather
+  than tier roots, keeps blocked-episode identity explicit in recovery paths,
+  and carries effective account, execution role, and blocked-episode approval
+  scope through execution handoff.
+gui_related: false
+gui_classification_reason: This unit defines runtime scope, recovery identity, and permission handoff behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- Runtime scope is defined through execution-unit context rather than tier roots.
+- Blocked-episode identity remains explicit in execution-relevant recovery paths.
+- effective account, execution role, and blocked-episode approval scope survive execution handoff.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: runtime_scope_blocked_episode_and_permission_carry_through
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0066
+preserved_exact_tokens:
+- Behavioral rules
+- runtime scope through execution-unit context rather than tier roots
+- Blocked-episode identity
+- Permission carry-through
+- effective account
+- execution role
+- blocked-episode approval scope
+negative_constraints:
+- Runtime scope must not be derived from tier roots.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Permission carry-through binds execution handoff to blocked-episode recovery identity.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-094 - Assistant Chat Mode Worktree Behavior Matrix
+
+```yaml
+plan_unit_id: EP-094
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: >-
+  Ask, Agent, Plan, Deep Plan, and Debug modes operate within the thread's
+  bound worktree, with reads, edits, plan execution, and debug operations
+  routed to the worktree context according to mode behavior.
+gui_related: false
+gui_classification_reason: This unit defines Assistant Chat runtime mode routing, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- Ask mode reads context from worktree files.
+- Agent mode writes file edits to the worktree.
+- Plan and Deep Plan modes execute plans in worktree context.
+- Debug mode targets the worktree for debug operations.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: assistant_chat_mode_worktree_behavior_matrix
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0067
+preserved_exact_tokens:
+- Ask
+- Agent
+- Plan
+- Deep Plan
+- Debug
+- thread's worktree
+- read-only context from worktree files
+- file edits go to worktree
+- plans execute in worktree context
+- debug operations target worktree
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Run Modes and Assistant Chat consume this mode matrix through the thread worktree binding.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-095 - Thread-Level Worktree Binding Across Mode Transitions
+
+```yaml
+plan_unit_id: EP-095
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: >-
+  Assistant Chat mode transitions do not affect worktree binding because the
+  binding is thread-level, not mode-level.
+gui_related: false
+gui_classification_reason: This unit defines runtime binding invariants across mode transitions, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- Mode transitions do not change the active worktree binding.
+- Worktree binding remains thread-level rather than mode-level.
+- ContractRefs and source lineage remain traceable.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: executor_protocol_drift
+reasoning_tier: standard
+context_scope: executor_protocol_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: thread_level_worktree_binding_across_mode_transitions
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0067
+preserved_exact_tokens:
+- Mode transitions do not affect worktree binding
+- thread-level
+- not mode-level
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md'
+negative_constraints:
+- Mode transitions must not affect worktree binding.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Worktree binding is owned at the Assistant Chat thread level and is consumed by individual modes.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+
+### EP-001 - Executor Protocol Retired Source-Preserving Bridge
+
+```yaml
+plan_unit_id: EP-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: >-
+  The former Executor Protocol source-preserving bridge is retired after Phase
+  2B atomized Executor_Protocol-S0001 through Executor_Protocol-S0067 into
+  EP-002 through EP-095 and structurally dispositioned the owner map, PlanUnits
+  heading, retired bridge lineage, and Migration Coverage. EP-001 remains only
+  as migration lineage for the retired bridge span and must not re-own atomized
+  source coverage.
+gui_related: false
+gui_classification_reason: The retired bridge is migration lineage and no longer owns GUI or product behavior; coverage_map still preserves S0070 gui_related_inferred=true from the historical broad bridge span.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- EP-001 no longer uses the source-preserving PlanUnit compile hint.
+- EP-002 through EP-095 own product coverage for Executor_Protocol-S0001 through Executor_Protocol-S0067.
+- Executor_Protocol-S0068, S0069, and S0071 are structural owner-map, heading, and migration-coverage dispositions.
+- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: migration_lineage
+reasoning_tier: standard
+context_scope: plan_standardization
+implementation_surfaces:
+- Plans/Executor_Protocol.md
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Executor_Protocol-S0070
+preserved_exact_tokens:
+- EP-001
+- source_preserving_planunit
+- source_preserving_bridge_retired
+- EP-002
+- EP-095
+- Executor_Protocol-S0001
+- Executor_Protocol-S0071
+- 'Execution Context: Worktree Handoff'
+- Mode interaction
+- Owner / Consumer Map
+- PlanUnits
+- Migration Coverage
+negative_constraints:
+- Do not remap atomized Executor_Protocol spans back to EP-001.
+- Do not treat the retired bridge as implementation-ready product coverage.
+- Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this migration-lineage unit.
+compatibility_only_notes:
+- The old source-preserving bridge is retained only so migration lineage and historical references to EP-001 remain auditable.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- EP-002 through EP-095 own product coverage for Executor_Protocol-S0001 through Executor_Protocol-S0067.
+- S0068, S0069, and S0071 are structural owner-map, PlanUnits-heading, and Migration Coverage dispositions.
+owner_hints:
+- Plans/Executor_Protocol.md
+```
+## Migration Coverage
+
+Original hash: `fd77b8360e92673ca0bf6bad5015f8075a545c30216b71a5df0107f1e8db47f3`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+
+Phase 2B batch 050 atomized or structurally dispositioned `Executor_Protocol-S0001` through `Executor_Protocol-S0029` into `EP-002` through `EP-033`. Phase 2B batch 051 atomized or structurally dispositioned `Executor_Protocol-S0030` through `Executor_Protocol-S0065` into `EP-034` through `EP-086`. Phase 2B batch 052 atomized `Executor_Protocol-S0066` through `Executor_Protocol-S0067` into `EP-087` through `EP-095`, structurally dispositioned `Executor_Protocol-S0068`, `Executor_Protocol-S0069`, and `Executor_Protocol-S0071`, and retired `EP-001` as migration lineage for `Executor_Protocol-S0070`. No residual source-preserving Executor Protocol PlanUnit remains. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-001
+
+
+<<< CONTEXT_AFTER 5817-5828 >>>
+### EP-096 - Runtime Consumer Header Recovery Compile Addendum
+
+```yaml
+plan_unit_id: EP-096
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Executor_Protocol.md
+canonical_text: >-
+  Executor_Protocol missing Section 5 and top owner stubs recover as runtime consumer sections. Executor consumes tier-era retirement,
+  blocked-policy transfer, provider/model carry-through, approval scope, durable approver identity, and worktree allocation from their owners;
+  it must not revive tier as primary execution canon or replace Models_System provider/model precedence ownership.
+gui_related: false

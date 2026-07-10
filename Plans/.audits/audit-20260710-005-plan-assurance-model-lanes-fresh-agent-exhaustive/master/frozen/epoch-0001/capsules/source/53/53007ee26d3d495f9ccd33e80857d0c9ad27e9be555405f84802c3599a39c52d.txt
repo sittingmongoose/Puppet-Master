@@ -1,0 +1,94 @@
+<<< CONTEXT_BEFORE 4718-4729 >>>
+            "source_control_repair",
+            "block"
+          ]
+        },
+        "allowed_write_refs": {
+          "$ref": "#/$defs/ref_list"
+        },
+        "rollback_route": {
+          "type": "string"
+        }
+      }
+    },
+
+<<< AUTHORITATIVE_CORE 4730-4794 >>>
+    "validator_outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "validator_id",
+        "command",
+        "status",
+        "evidence_refs"
+      ],
+      "properties": {
+        "validator_id": {
+          "type": "string"
+        },
+        "command": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail",
+            "blocked",
+            "skipped"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    },
+    "risk_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "risk_id",
+        "risk_class",
+        "status",
+        "mitigation",
+        "evidence_refs"
+      ],
+      "properties": {
+        "risk_id": {
+          "type": "string"
+        },
+        "risk_class": {
+          "$ref": "#/$defs/risk_class"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "mitigated",
+            "accepted",
+            "blocked"
+          ]
+        },
+        "mitigation": {
+          "type": "string"
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/ref_list"
+        }
+      }
+    }
+  },
+
+<<< CONTEXT_AFTER 4795-4806 >>>
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "artifact_kind": {
+            "const": "handoff_matrix"
+          }
+        },
+        "required": [
+          "artifact_kind"
+        ]
+      },

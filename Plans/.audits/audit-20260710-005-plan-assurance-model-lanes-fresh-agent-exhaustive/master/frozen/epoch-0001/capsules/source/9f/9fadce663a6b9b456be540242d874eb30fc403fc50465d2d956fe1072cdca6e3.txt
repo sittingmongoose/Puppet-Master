@@ -1,0 +1,402 @@
+<<< CONTEXT_BEFORE 1153-1164 >>>
+  - "requested_target"
+  - "effective_target?"
+  - "truncation_state"
+negative_constraints:
+  - "Raw unbounded DOM dumps or page bodies MUST NOT be injected into the prompt through this attachment path."
+  - "Blocked or expired chips MUST NOT be serialized as successful user attachments."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 1165-1537 >>>
+### PP-012 - Document Selection Structured Revision Payloads
+
+```yaml
+plan_unit_id: PP-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Document selection attachments serialize in stable order with bounded selection, routing, sensitivity, truncation, and revision payload metadata; structured revision providers use schema-enforced or locally validated revision shapes.
+gui_related: true
+gui_classification_reason: This unit concerns document review UI selection and revision prompt behavior.
+split_recommended: false
+depends_on:
+  - "PP-010"
+unblocks: []
+acceptance_criteria:
+  - "Document Selection Structured Revision Payloads remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0010
+preserved_exact_tokens:
+  - "document_selection_context"
+  - "source_surface"
+  - "bundle_id?"
+  - "doc_id"
+  - "doc_path/display_name"
+  - "selected_text"
+  - "requested_target"
+  - "effective_target?"
+  - "sensitivity_state"
+  - "truncation_state"
+  - "annotation_id"
+  - "operation"
+  - "intent_kind"
+  - "operation_payload"
+  - "anchor"
+  - "schema_enforced_structured_revision"
+  - "validated_structured_revision"
+  - "/order/shape"
+negative_constraints:
+  - "Raw unbounded document bodies MUST NOT be injected into the prompt through this attachment path."
+  - "Blocked or expired chips MUST NOT be serialized as successful user attachments."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md"
+  - "ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-013 - Debug Investigation Context Normalization
+
+```yaml
+plan_unit_id: PP-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Active Debug investigation context is normalized after context compilation and before final conversation serialization, with deterministic evidence ordering, source grouping identities, bounded summaries/refs, and explicit redaction/truncation state.
+gui_related: false
+gui_classification_reason: This unit defines debug prompt context normalization rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-008"
+unblocks: []
+acceptance_criteria:
+  - "Debug Investigation Context Normalization remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0011
+preserved_exact_tokens:
+  - "investigation_id"
+  - "bundle_id?"
+  - "terminal_session_id"
+  - "dev_session_id"
+  - "browser_session_id"
+  - "debug_target_kind"
+  - "primary_target_summary"
+  - "current_phase"
+  - "state"
+  - "verification_strength?"
+  - "artifact_refs?"
+  - "redaction_state"
+  - "truncation_state"
+negative_constraints:
+  - "Revoked, blocked, expired, and omitted items must not be serialized as successful prompt content."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md"
+  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/assistant-chat-design.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-014 - Instruction Bundle Minimum Fields
+
+```yaml
+plan_unit_id: PP-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  The compiled prompt includes an Instruction Bundle with active execution context, requested/effective overlay, Persona IDs, rules context, tool policy, Injected Context breakdown, and active Investigation Context summary when applicable.
+gui_related: true
+gui_classification_reason: This unit includes user-visible Injected Context and Debug investigation bundle surfaces.
+split_recommended: false
+depends_on:
+  - "PP-008"
+  - "PP-013"
+unblocks: []
+acceptance_criteria:
+  - "Instruction Bundle Minimum Fields remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0012
+preserved_exact_tokens:
+  - "INSTRUCTION-BUNDLE"
+  - "InstructionBundleAssembly"
+  - "node_id"
+  - "package_id"
+  - "lane_id?"
+  - "seam_id?"
+  - "requested and effective workflow overlay"
+  - "active Persona identifier(s)"
+  - "rules context"
+  - "tool-policy snapshot"
+  - "Injected Context breakdown"
+  - "active Investigation Context summary"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Contracts_V0.md#InstructionBundleAssembly, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-015 - Instruction Source Budgeting And Projection Boundary
+
+```yaml
+plan_unit_id: PP-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Instruction Bundle rules keep Investigation Context additive, bound debug summaries, preserve revoked/blocked/expired/omitted visibility without serialization success, budget external instruction sources, treat PM-owned AGENTS.md as canonical, and keep provider-native instruction files as generated/import/export projections.
+gui_related: false
+gui_classification_reason: This unit defines instruction source authority and budgeting rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-014"
+unblocks: []
+acceptance_criteria:
+  - "Instruction Source Budgeting And Projection Boundary remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0012
+preserved_exact_tokens:
+  - "Investigation Context"
+  - "AGENTS.md"
+  - "CLAUDE.md"
+  - "bounded instruction-source budget"
+  - "path"
+  - "byte count"
+  - "truncation reason"
+  - "system prompt"
+  - "persona instructions"
+  - "active tool schemas"
+  - "untouchable set"
+negative_constraints:
+  - "Provider-native instruction files are generated/import/export projections, not peer authorities."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-016 - Compaction Immune Content Cap
+
+```yaml
+plan_unit_id: PP-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Compaction and pruning preserve system, persona, instruction-source commitments, active tool schemas, user-pinned context, compaction_immune blocks, and required reasoning blocks while enforcing max_compaction_immune_pct default 30 for the total immune set.
+gui_related: false
+gui_classification_reason: This unit defines compaction policy rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-015"
+unblocks: []
+acceptance_criteria:
+  - "Compaction Immune Content Cap remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0013
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0014
+preserved_exact_tokens:
+  - "Compaction and pruning"
+  - "compaction_immune: true"
+  - "max_compaction_immune_pct"
+  - "default: 30"
+  - "system prompt"
+  - "persona instructions"
+  - "active tool schemas"
+  - "user-pinned context"
+negative_constraints:
+  - "A compaction LLM or summary pass must never replace those commitments with an empty or weakened system prompt."
+  - "The total immune set MUST NOT exceed max_compaction_immune_pct default 30 percent of the effective context window."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md"
+  - "ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Architecture_Invariants.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-017 - Compaction Overflow Algorithm
+
+```yaml
+plan_unit_id: PP-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  The compaction-immune set is partitioned into untouchable and truncatable tiers; only truncatable content is trimmed when over cap, and untouchable overflow emits diag.compaction_immune_overflow while execution continues.
+gui_related: false
+gui_classification_reason: This unit defines overflow handling rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-016"
+unblocks: []
+acceptance_criteria:
+  - "Compaction Overflow Algorithm remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0015
+preserved_exact_tokens:
+  - "Untouchable set"
+  - "/truncatable"
+  - "/compaction-immune"
+  - "diag.compaction_immune_overflow"
+  - "system prompt"
+  - "persona instructions"
+  - "active tool schemas"
+  - "FIFO"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Contracts_V0.md"
+  - "ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Architecture_Invariants.md"
+  - "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-018 - Context Assembly Cache Strategies
+
+```yaml
+plan_unit_id: PP-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Context assembly preserves cache-friendly stable prefixes and applies explicit provider cache strategies for Anthropic, Google/Gemini, OpenAI, and unsupported surfaces without PM managing provider-owned cache state where not applicable.
+gui_related: false
+gui_classification_reason: This unit defines provider cache strategy rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-007"
+unblocks: []
+acceptance_criteria:
+  - "Context Assembly Cache Strategies remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0016
+preserved_exact_tokens:
+  - "cache_control"
+  - "type: \"ephemeral\""
+  - "cachedContent"
+  - "Gemini Caching API"
+  - "default: 5 minutes"
+  - "cachedContentTokenCount"
+  - "cache_with_oauth"
+  - "OpenAI"
+  - "Unsupported surfaces"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md"
+  - "ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+
+<<< CONTEXT_AFTER 1538-1549 >>>
+### PP-019 - Reasoning Replay Preservation
+
+```yaml
+plan_unit_id: PP-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Reasoning-block payloads are replay-safe state: PM preserves or converts them before compaction, maps provider-native reasoning_tokens into the UF-085 JSON-safe reasoning bucket / reasoning/thoughts display bucket with counting_semantics and no-double-count rules, tolerates out-of-order proxy delivery, and does not silently strip reasoning content due to adapter limitations.
+gui_related: false
+gui_classification_reason: This unit defines replay and usage preservation rather than visual presentation.
+split_recommended: false

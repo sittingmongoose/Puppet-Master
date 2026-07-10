@@ -1,0 +1,58 @@
+{
+  "assignment_id": "A005-002338-ADVERSARIAL-WIN-E0E9CAF5963F-0002",
+  "attempt_id": "attempt-0012",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      205,
+      216
+    ],
+    [
+      481,
+      492
+    ]
+  ],
+  "core_range": [
+    217,
+    480
+  ],
+  "core_sha256": "6198419591203137ed841e42bbb469ad85d61ed761a50a49d37ca60d527a6400",
+  "document_path": "Plans/FileManager.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/67/6756fe1800dfb717b9cfa91c106bb67829544f15688bccc6d2dd8bdf6c70c3d5.txt",
+  "source_excerpt_sha256": "6756fe1800dfb717b9cfa91c106bb67829544f15688bccc6d2dd8bdf6c70c3d5",
+  "source_sha256": "eba865c52fd3ce123ed9ec45af477b915c42c6acafd17b83da4c7e8725b0bf80",
+  "window_id": "WIN-E0E9CAF5963F-0002"
+}

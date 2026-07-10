@@ -1,0 +1,424 @@
+<<< CONTEXT_BEFORE canonical_document_lines=384-395 >>>
+L00000384	compatibility_only_notes: []
+L00000385	stale_retired_dispositions: []
+L00000386	owner_boundary_notes:
+L00000387	- Contracts_V0.md CV-315 owns governance runtime record schemas and state machines for corroboration, promotion, graph-patch, and projection_trust.
+L00000388	- storage-plan.md SP-233 owns the durable storage keys and projection trust revalidation gates.
+L00000389	- Crosswalk.md owns referenced /open contracts; this document preserves high-level feature-summary coverage only.
+L00000390	owner_hints:
+L00000391	- Plans/newfeatures.md
+L00000392	preserved_contractrefs:
+L00000393	- 'ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md'
+L00000394	```
+L00000395	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=396-790 >>>
+L00000396	### N-007 - Broad Summary Compression Guard
+L00000397	
+L00000398	```yaml
+L00000399	plan_unit_id: N-007
+L00000400	unit_type: constraint
+L00000401	status: accepted
+L00000402	owner_doc: Plans/newfeatures.md
+L00000403	canonical_text: >-
+L00000404	  feature-list, feature-list.md, and newfeatures.md are broad drift amplifiers. Their summaries must stay aligned to
+L00000405	  owner docs and cannot compress detailed rules, field schemas, examples, or operational policies into vague high-level
+L00000406	  copy.
+L00000407	gui_related: false
+L00000408	gui_classification_reason: The unit is a documentation drift guard rather than GUI presentation.
+L00000409	split_recommended: false
+L00000410	depends_on:
+L00000411	- N-002
+L00000412	unblocks: []
+L00000413	acceptance_criteria:
+L00000414	- Covered source spans remain losslessly available for exact-text audit.
+L00000415	- Broad summaries remain aligned to owner docs.
+L00000416	- Detailed rules, field schemas, examples, and operational policies are not compressed into vague copy.
+L00000417	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000418	validation_surfaces:
+L00000419	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000420	- python3 scripts/pm-plan-index.py validate
+L00000421	risk_class: broad_summary_drift
+L00000422	reasoning_tier: standard
+L00000423	context_scope: newfeatures_standardization
+L00000424	implementation_surfaces:
+L00000425	- Plans/newfeatures.md
+L00000426	node_compile_hint:
+L00000427	  mode: broad_summary_compression_guard
+L00000428	  create_worknodes: false
+L00000429	source_lineage:
+L00000430	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0003
+L00000431	preserved_exact_tokens:
+L00000432	- feature-list
+L00000433	- feature-list.md
+L00000434	- newfeatures.md
+L00000435	- broad drift amplifiers
+L00000436	negative_constraints:
+L00000437	- Broad summaries must not compress detailed rules, field schemas, examples, or operational policies into vague high-level copy.
+L00000438	compatibility_only_notes: []
+L00000439	stale_retired_dispositions: []
+L00000440	owner_boundary_notes:
+L00000441	- Owner docs remain authoritative over detailed rules, field schemas, examples, and operational policies.
+L00000442	owner_hints:
+L00000443	- Plans/newfeatures.md
+L00000444	preserved_contractrefs:
+L00000445	- 'ContractRef: ContractName:Plans/Decision_Log.md, ContractName:Plans/Crosswalk.md, ContractName:Plans/Orchestrator_Page.md'
+L00000446	```
+L00000447	
+L00000448	### N-008 - Orchestration Governance Feature Themes
+L00000449	
+L00000450	```yaml
+L00000451	plan_unit_id: N-008
+L00000452	unit_type: requirement
+L00000453	status: accepted
+L00000454	owner_doc: Plans/newfeatures.md
+L00000455	canonical_text: >-
+L00000456	  The high-level feature themes preserve package-local governance through Package Overseer, seam-level integration
+L00000457	  governance through Seam Overseer, and promotion, corroboration, concern, graph-patch, and recovery records as
+L00000458	  first-class governance/runtime objects.
+L00000459	gui_related: false
+L00000460	gui_classification_reason: The unit summarizes governance/runtime object themes rather than GUI presentation.
+L00000461	split_recommended: false
+L00000462	depends_on:
+L00000463	- N-003
+L00000464	unblocks: []
+L00000465	acceptance_criteria:
+L00000466	- Covered source spans remain losslessly available for exact-text audit.
+L00000467	- Package Overseer remains preserved as package-local governance.
+L00000468	- Seam Overseer remains preserved as seam-level integration governance.
+L00000469	- promotion, corroboration, concern, graph-patch, and recovery records remain first-class governance/runtime objects.
+L00000470	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000471	validation_surfaces:
+L00000472	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000473	- python3 scripts/pm-plan-index.py validate
+L00000474	risk_class: governance_summary_drift
+L00000475	reasoning_tier: standard
+L00000476	context_scope: newfeatures_standardization
+L00000477	implementation_surfaces:
+L00000478	- Plans/newfeatures.md
+L00000479	node_compile_hint:
+L00000480	  mode: orchestration_governance_summary
+L00000481	  create_worknodes: false
+L00000482	source_lineage:
+L00000483	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0006
+L00000484	preserved_exact_tokens:
+L00000485	- Package Overseer
+L00000486	- Seam Overseer
+L00000487	- promotion
+L00000488	- corroboration
+L00000489	- concern
+L00000490	- graph-patch
+L00000491	- recovery records
+L00000492	negative_constraints: []
+L00000493	compatibility_only_notes: []
+L00000494	stale_retired_dispositions: []
+L00000495	owner_boundary_notes:
+L00000496	- Detailed orchestration behavior remains owned by orchestration owner docs.
+L00000497	owner_hints:
+L00000498	- Plans/newfeatures.md
+L00000499	preserved_contractrefs: []
+L00000500	```
+L00000501	
+L00000502	### N-009 - Runtime Identity And Provider Feature Themes
+L00000503	
+L00000504	```yaml
+L00000505	plan_unit_id: N-009
+L00000506	unit_type: requirement
+L00000507	status: accepted
+L00000508	owner_doc: Plans/newfeatures.md
+L00000509	canonical_text: >-
+L00000510	  Runtime identity and provider behavior summaries preserve requested/effective runtime identity across personas,
+L00000511	  models, accounts, and execution roles, with multi-account switching tied to concrete account binding and durable
+L00000512	  switch/pressure history.
+L00000513	gui_related: false
+L00000514	gui_classification_reason: The unit summarizes runtime identity and provider behavior rather than GUI presentation.
+L00000515	split_recommended: false
+L00000516	depends_on:
+L00000517	- N-003
+L00000518	unblocks: []
+L00000519	acceptance_criteria:
+L00000520	- Covered source spans remain losslessly available for exact-text audit.
+L00000521	- requested/effective runtime identity remains preserved across personas, models, accounts, and roles.
+L00000522	- Multi-account switching remains tied to concrete account binding.
+L00000523	- Durable switch/pressure history remains preserved.
+L00000524	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000525	validation_surfaces:
+L00000526	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000527	- python3 scripts/pm-plan-index.py validate
+L00000528	risk_class: runtime_identity_summary_drift
+L00000529	reasoning_tier: standard
+L00000530	context_scope: newfeatures_standardization
+L00000531	implementation_surfaces:
+L00000532	- Plans/newfeatures.md
+L00000533	node_compile_hint:
+L00000534	  mode: runtime_identity_provider_summary
+L00000535	  create_worknodes: false
+L00000536	source_lineage:
+L00000537	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0007
+L00000538	preserved_exact_tokens:
+L00000539	- requested/effective runtime identity
+L00000540	- personas
+L00000541	- models
+L00000542	- accounts
+L00000543	- execution roles
+L00000544	- multi-account switching
+L00000545	- durable switch/pressure history
+L00000546	negative_constraints: []
+L00000547	compatibility_only_notes: []
+L00000548	stale_retired_dispositions: []
+L00000549	owner_boundary_notes:
+L00000550	- Runtime identity detail remains owned by the runtime identity owner docs and Multi-Account contract.
+L00000551	owner_hints:
+L00000552	- Plans/newfeatures.md
+L00000553	preserved_contractrefs: []
+L00000554	```
+L00000555	
+L00000556	### N-010 - UI Navigation Product Surface Summary
+L00000557	
+L00000558	```yaml
+L00000559	plan_unit_id: N-010
+L00000560	unit_type: requirement
+L00000561	status: accepted
+L00000562	owner_doc: Plans/newfeatures.md
+L00000563	canonical_text: >-
+L00000564	  UI and navigation summaries preserve tab-first Orchestrator, worktree-first Source Control, route/open primitives
+L00000565	  shared across chat, runtime, usage, artifacts, and orchestration, and the coherent left-panel /product model as MVP.
+L00000566	  Source Control, GitHub Actions, Docker Manager, Assistant/Chat, Files, Artifacts/Runtime, Usage, and Settings are
+L00000567	  first-class owner surfaces, not individually listed /underdefined pieces.
+L00000568	gui_related: true
+L00000569	gui_classification_reason: The unit summarizes user-visible navigation, left-panel surfaces, and route/open GUI behavior.
+L00000570	split_recommended: false
+L00000571	depends_on:
+L00000572	- N-003
+L00000573	unblocks: []
+L00000574	acceptance_criteria:
+L00000575	- Covered source spans remain losslessly available for exact-text audit.
+L00000576	- tab-first Orchestrator remains preserved.
+L00000577	- worktree-first Source Control remains preserved.
+L00000578	- The coherent left-panel /product model remains MVP.
+L00000579	- First-class owner surfaces are not reduced to /underdefined pieces.
+L00000580	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000581	validation_surfaces:
+L00000582	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000583	- python3 scripts/pm-plan-index.py validate
+L00000584	risk_class: navigation_summary_drift
+L00000585	reasoning_tier: standard
+L00000586	context_scope: newfeatures_standardization
+L00000587	implementation_surfaces:
+L00000588	- Plans/newfeatures.md
+L00000589	node_compile_hint:
+L00000590	  mode: ui_navigation_product_summary
+L00000591	  create_worknodes: false
+L00000592	source_lineage:
+L00000593	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0008
+L00000594	preserved_exact_tokens:
+L00000595	- tab-first Orchestrator
+L00000596	- worktree-first Source Control
+L00000597	- route/open primitives
+L00000598	- /product
+L00000599	- Source Control
+L00000600	- GitHub Actions
+L00000601	- Docker Manager
+L00000602	- Assistant/Chat
+L00000603	- Files
+L00000604	- Artifacts/Runtime
+L00000605	- Usage
+L00000606	- Settings
+L00000607	- /underdefined
+L00000608	negative_constraints:
+L00000609	- First-class owner surfaces must not be reduced to a bag of individually listed /underdefined pieces.
+L00000610	compatibility_only_notes: []
+L00000611	stale_retired_dispositions: []
+L00000612	owner_boundary_notes:
+L00000613	- Detailed surface behavior remains owned by the relevant surface owner docs.
+L00000614	owner_hints:
+L00000615	- Plans/newfeatures.md
+L00000616	preserved_contractrefs: []
+L00000617	```
+L00000618	
+L00000619	### N-011 - Workbench Feature Cluster Requirements
+L00000620	
+L00000621	```yaml
+L00000622	plan_unit_id: N-011
+L00000623	unit_type: requirement
+L00000624	status: accepted
+L00000625	owner_doc: Plans/newfeatures.md
+L00000626	canonical_text: >-
+L00000627	  PM preserves competitive workbench feature clusters as product requirements: visible plans/tasks/artifacts/approval
+L00000628	  state, multi-surface orchestration across editor, terminal, browser/preview, docs, and review, reusable diff/review
+L00000629	  pipelines with hunk-level actions, project/framework autodetection, honest loading/indexing and degraded state,
+L00000630	  durable tabs/splits/workspace recovery, reconnect/offline resilience with read-only/fallback messaging,
+L00000631	  source-canonical rich previews, virtualized lazy file trees, background indexing/search, IME correctness, and
+L00000632	  skepticism toward demo-friendly thin-wrapper UIs.
+L00000633	gui_related: true
+L00000634	gui_classification_reason: The unit summarizes user-visible workbench surfaces, previews, tabs, file trees, and UI resilience.
+L00000635	split_recommended: true
+L00000636	depends_on:
+L00000637	- N-010
+L00000638	unblocks: []
+L00000639	acceptance_criteria:
+L00000640	- Covered source spans remain losslessly available for exact-text audit.
+L00000641	- Visible plans/tasks/artifacts/approval state remains preserved.
+L00000642	- Multi-surface orchestration across editor, terminal, browser/preview, docs, and review remains preserved.
+L00000643	- Durable tabs/splits/workspace recovery and reconnect/offline resilience remain preserved.
+L00000644	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000645	validation_surfaces:
+L00000646	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000647	- python3 scripts/pm-plan-index.py validate
+L00000648	risk_class: workbench_feature_cluster_drift
+L00000649	reasoning_tier: standard
+L00000650	context_scope: newfeatures_standardization
+L00000651	implementation_surfaces:
+L00000652	- Plans/newfeatures.md
+L00000653	node_compile_hint:
+L00000654	  mode: workbench_feature_cluster_summary
+L00000655	  create_worknodes: false
+L00000656	source_lineage:
+L00000657	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0009
+L00000658	preserved_exact_tokens:
+L00000659	- /tasks/artifacts/approval
+L00000660	- browser/preview
+L00000661	- hunk-level actions
+L00000662	- /loading/indexing
+L00000663	- /splits/workspace
+L00000664	- /reconnect/offline
+L00000665	- /read-only/fallback
+L00000666	- source-canonical rich previews
+L00000667	- virtualized lazy file trees
+L00000668	- IME correctness
+L00000669	negative_constraints:
+L00000670	- PM must preserve skepticism toward demo-friendly thin-wrapper UIs.
+L00000671	compatibility_only_notes: []
+L00000672	stale_retired_dispositions: []
+L00000673	owner_boundary_notes:
+L00000674	- Detailed workbench behavior remains owned by workbench and surface owner docs.
+L00000675	owner_hints:
+L00000676	- Plans/newfeatures.md
+L00000677	preserved_contractrefs: []
+L00000678	split_recommendation_reason: newfeatures-S0009 mixes workbench product features with ownership and interop constraints.
+L00000679	```
+L00000680	
+L00000681	### N-012 - Native Workbench Ownership And Interop Boundary
+L00000682	
+L00000683	```yaml
+L00000684	plan_unit_id: N-012
+L00000685	unit_type: constraint
+L00000686	status: accepted
+L00000687	owner_doc: Plans/newfeatures.md
+L00000688	canonical_text: >-
+L00000689	  PM may learn from file-heavy systems and delegated-backend container/control-plane products, but it must not become a
+L00000690	  monolithic request layer or delegate core file-manager/diff/LSP, editor, storage, routing, or shell ownership to an
+L00000691	  upstream IDE. A native Rust + Slint workbench keeps file-manager operations as typed services with policy/error
+L00000692	  handling, treats remote/runtime orchestration as an explicit control-plane with bootstrap diagnostics, and bounds
+L00000693	  external editor/workbench interop as a subsystem rather than the hidden owner.
+L00000694	gui_related: true
+L00000695	gui_classification_reason: The unit constrains visible workbench ownership, editor interop, and file-manager surface behavior.
+L00000696	split_recommended: true
+L00000697	depends_on:
+L00000698	- N-011
+L00000699	unblocks: []
+L00000700	acceptance_criteria:
+L00000701	- Covered source spans remain losslessly available for exact-text audit.
+L00000702	- PM does not become a monolithic request layer.
+L00000703	- Core file-manager/diff/LSP, editor, storage, routing, and shell ownership are not delegated to an upstream IDE.
+L00000704	- Native Rust + Slint /workbench remains preserved as the summary implementation direction.
+L00000705	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000706	validation_surfaces:
+L00000707	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000708	- python3 scripts/pm-plan-index.py validate
+L00000709	risk_class: ownership_boundary
+L00000710	reasoning_tier: standard
+L00000711	context_scope: newfeatures_standardization
+L00000712	implementation_surfaces:
+L00000713	- Plans/newfeatures.md
+L00000714	node_compile_hint:
+L00000715	  mode: native_workbench_ownership_boundary
+L00000716	  create_worknodes: false
+L00000717	source_lineage:
+L00000718	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0009
+L00000719	preserved_exact_tokens:
+L00000720	- /container/control-plane
+L00000721	- /file-manager/diff/LSP
+L00000722	- /workbench
+L00000723	- Rust + Slint
+L00000724	- /bootstrap
+L00000725	negative_constraints:
+L00000726	- PM must not become a monolithic request layer.
+L00000727	- PM must not delegate core /file-manager/diff/LSP, editor, storage, routing, or shell ownership to an upstream IDE.
+L00000728	compatibility_only_notes: []
+L00000729	stale_retired_dispositions: []
+L00000730	owner_boundary_notes:
+L00000731	- External editor/workbench interop is bounded as a subsystem rather than the hidden owner.
+L00000732	owner_hints:
+L00000733	- Plans/newfeatures.md
+L00000734	preserved_contractrefs: []
+L00000735	split_recommendation_reason: newfeatures-S0009 mixes GUI workbench features, backend typed services, and owner-boundary constraints.
+L00000736	```
+L00000737	
+L00000738	### N-013 - Recovery And Historical Truth Summary
+L00000739	
+L00000740	```yaml
+L00000741	plan_unit_id: N-013
+L00000742	unit_type: requirement
+L00000743	status: accepted
+L00000744	owner_doc: Plans/newfeatures.md
+L00000745	canonical_text: >-
+L00000746	  Recovery and historical truth summaries preserve blocked episodes as canonical recovery anchors, graph generations as
+L00000747	  visible lineage, and historical runs as distinct from superseded objects unless explicit lineage says otherwise.
+L00000748	gui_related: false
+L00000749	gui_classification_reason: The unit summarizes recovery and lineage semantics rather than GUI presentation.
+L00000750	split_recommended: false
+L00000751	depends_on:
+L00000752	- N-003
+L00000753	unblocks: []
+L00000754	acceptance_criteria:
+L00000755	- Covered source spans remain losslessly available for exact-text audit.
+L00000756	- Blocked episodes remain canonical recovery anchors.
+L00000757	- Graph generations remain visible lineage.
+L00000758	- Historical runs remain distinct from superseded objects unless explicit lineage says otherwise.
+L00000759	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00000760	validation_surfaces:
+L00000761	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000762	- python3 scripts/pm-plan-index.py validate
+L00000763	risk_class: recovery_lineage_summary
+L00000764	reasoning_tier: standard
+L00000765	context_scope: newfeatures_standardization
+L00000766	implementation_surfaces:
+L00000767	- Plans/newfeatures.md
+L00000768	node_compile_hint:
+L00000769	  mode: recovery_historical_truth_summary
+L00000770	  create_worknodes: false
+L00000771	source_lineage:
+L00000772	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newfeatures-S0010
+L00000773	preserved_exact_tokens:
+L00000774	- blocked episodes
+L00000775	- canonical recovery anchors
+L00000776	- graph generations
+L00000777	- visible lineage
+L00000778	- historical runs
+L00000779	- superseded objects
+L00000780	negative_constraints: []
+L00000781	compatibility_only_notes: []
+L00000782	stale_retired_dispositions: []
+L00000783	owner_boundary_notes:
+L00000784	- Plans/Prompt_Pipeline.md, Plans/Executor_Protocol.md, and Plans/Contracts_V0.md own detailed recovery and runtime contract semantics.
+L00000785	owner_hints:
+L00000786	- Plans/newfeatures.md
+L00000787	preserved_contractrefs:
+L00000788	- 'ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md'
+L00000789	```
+L00000790	
+
+<<< CONTEXT_AFTER canonical_document_lines=791-802 >>>
+L00000791	### N-014 - Browser Preview Summary And Debug Adapter Boundary
+L00000792	
+L00000793	```yaml
+L00000794	plan_unit_id: N-014
+L00000795	unit_type: requirement
+L00000796	status: accepted
+L00000797	owner_doc: Plans/newfeatures.md
+L00000798	canonical_text: >-
+L00000799	  The built-in browser preview is summarized as a live rendering surface for web content produced by the active project.
+L00000800	  It participates in the product's visual-debugging and UI-validation loop, shared navigation, evidence capture, and
+L00000801	  source-opening flows. Agents may drive it as a first-class web debug adapter for navigation, reproduction steps, and
+L00000802	  visible client-side signal capture; it must not degrade into external-automation-only or paste-only workflows.

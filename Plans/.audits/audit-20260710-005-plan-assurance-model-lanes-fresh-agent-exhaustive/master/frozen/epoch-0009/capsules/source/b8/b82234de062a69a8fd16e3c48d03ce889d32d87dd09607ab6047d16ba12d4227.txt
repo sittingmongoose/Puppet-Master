@@ -1,0 +1,338 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4341-4352 >>>
+L00004341	- "worktree-specific baseline"
+L00004342	- "explicit target"
+L00004343	- "dirty/conflict blocking"
+L00004344	negative_constraints:
+L00004345	- "Recovery actions must not run without an explicit target worktree or safe-point context."
+L00004346	preserved_contractrefs: []
+L00004347	compatibility_only_notes: []
+L00004348	stale_retired_dispositions: []
+L00004349	owner_hints:
+L00004350	- "Plans/WorktreeGitImprovement.md"
+L00004351	```
+L00004352	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4353-4661 >>>
+L00004353	### W-065 - Dirty Conflict Runtime Alignment
+L00004354	
+L00004355	```yaml
+L00004356	plan_unit_id: W-065
+L00004357	unit_type: constraint
+L00004358	status: accepted
+L00004359	owner_doc: Plans/WorktreeGitImprovement.md
+L00004360	canonical_text: "Runtime worktree conflict alignment treats the addendum as historical context, preserves worktree_conflict and dirty_worktree as canonical blocked reasons, uses ordered allowed actions and dirty/conflict state fields, and keeps cleanup distinct from conflict resolution."
+L00004361	gui_related: false
+L00004362	gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+L00004363	split_recommended: false
+L00004364	depends_on:
+L00004365	- PDS-003
+L00004366	- PDS-004
+L00004367	- PDS-005
+L00004368	- PNC-001
+L00004369	- W-002
+L00004370	- W-019
+L00004371	- W-033
+L00004372	- W-064
+L00004373	unblocks: []
+L00004374	acceptance_criteria:
+L00004375	- "W-065 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+L00004376	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00004377	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00004378	validation_surfaces:
+L00004379	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004380	- python3 scripts/pm-plan-index.py validate
+L00004381	risk_class: worktree_git_drift
+L00004382	reasoning_tier: standard
+L00004383	context_scope: worktree_git_batch_203
+L00004384	implementation_surfaces:
+L00004385	- Plans/WorktreeGitImprovement.md
+L00004386	node_compile_hint:
+L00004387	  mode: dirty_conflict_runtime_alignment
+L00004388	  create_worknodes: false
+L00004389	source_lineage:
+L00004390	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0098
+L00004391	preserved_exact_tokens:
+L00004392	- "Runtime Worktree Conflict Canonical Alignment (2026-03-09)"
+L00004393	- "historical context only"
+L00004394	- "worktree_conflict"
+L00004395	- "dirty_worktree"
+L00004396	- "blocked_reason_code"
+L00004397	- "blocked_reason_detail"
+L00004398	- "remediation_actions_allowed"
+L00004399	- "dirty_state"
+L00004400	- "conflict_state"
+L00004401	negative_constraints:
+L00004402	- "Do not fabricate a new failure class when clearing the underlying worktree issue."
+L00004403	- "Conflict and cleanup semantics must remain distinct."
+L00004404	preserved_contractrefs:
+L00004405	- "ContractRef: Plans/Orchestrator_Page.md#Source Control boundary"
+L00004406	compatibility_only_notes: []
+L00004407	stale_retired_dispositions: []
+L00004408	owner_hints:
+L00004409	- "Plans/WorktreeGitImprovement.md"
+L00004410	- "Plans/Orchestrator_Page.md"
+L00004411	```
+L00004412	
+L00004413	### W-066 - Package Lane Worktree Allocation Policy
+L00004414	
+L00004415	```yaml
+L00004416	plan_unit_id: W-066
+L00004417	unit_type: requirement
+L00004418	status: accepted
+L00004419	owner_doc: Plans/WorktreeGitImprovement.md
+L00004420	canonical_text: "Worktree allocation is package/lane based: Orchestrator owns the active run lane-pool truth while Source Control owns repo/worktree execution and inspection, and old run/tier/subtask allocation patterns are compatibility context until mapped to package lane pools."
+L00004421	gui_related: false
+L00004422	gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+L00004423	split_recommended: false
+L00004424	depends_on:
+L00004425	- PDS-003
+L00004426	- PDS-004
+L00004427	- PDS-005
+L00004428	- PNC-001
+L00004429	- W-002
+L00004430	- W-013
+L00004431	- W-015
+L00004432	- W-016
+L00004433	unblocks: []
+L00004434	acceptance_criteria:
+L00004435	- "W-066 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+L00004436	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00004437	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00004438	validation_surfaces:
+L00004439	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004440	- python3 scripts/pm-plan-index.py validate
+L00004441	risk_class: worktree_git_drift
+L00004442	reasoning_tier: standard
+L00004443	context_scope: worktree_git_batch_203
+L00004444	implementation_surfaces:
+L00004445	- Plans/WorktreeGitImprovement.md
+L00004446	node_compile_hint:
+L00004447	  mode: lane_pool_allocation_policy
+L00004448	  create_worknodes: false
+L00004449	source_lineage:
+L00004450	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0099
+L00004451	preserved_exact_tokens:
+L00004452	- "Worktree Lane Allocation and Source Control Reconciliation"
+L00004453	- "package/lane based"
+L00004454	- "lane-pool truth"
+L00004455	- "old run/tier/subtask"
+L00004456	- "branch-per-run"
+L00004457	- "subtask-per-worktree"
+L00004458	- "package-based lane pools"
+L00004459	negative_constraints:
+L00004460	- "Do not treat old run/tier/subtask allocation as canonical ownership."
+L00004461	- "Do not replace per-package lane ceilings with flat provider-only limits."
+L00004462	preserved_contractrefs: []
+L00004463	compatibility_only_notes:
+L00004464	- "Old run/tier/subtask, branch-per-run, subtask-per-worktree, wizard-centric, /iteration-scoped, and /seam-aware SCM assumptions are compatibility context only."
+L00004465	stale_retired_dispositions: []
+L00004466	owner_hints:
+L00004467	- "Plans/WorktreeGitImprovement.md"
+L00004468	- "Plans/orchestrator-subagent-integration.md"
+L00004469	- "Plans/Crosswalk.md"
+L00004470	```
+L00004471	
+L00004472	### W-067 - Source Control Lane Worktree Ownership UX
+L00004473	
+L00004474	```yaml
+L00004475	plan_unit_id: W-067
+L00004476	unit_type: requirement
+L00004477	status: accepted
+L00004478	owner_doc: Plans/WorktreeGitImprovement.md
+L00004479	canonical_text: "Source Control remains the primary operational surface for worktree inventory and actions while exposing package/lane ownership, lifecycle state, blocked/recovery state, and action ownership for open, compare, diff, history, recover, archive, prune, and remove."
+L00004480	gui_related: true
+L00004481	gui_classification_reason: "This unit defines user-visible Source Control, Git/worktree GUI, configuration, checklist, or runtime disclosure behavior."
+L00004482	split_recommended: false
+L00004483	depends_on:
+L00004484	- PDS-003
+L00004485	- PDS-004
+L00004486	- PDS-005
+L00004487	- PNC-001
+L00004488	- W-002
+L00004489	- W-014
+L00004490	- W-031
+L00004491	- W-032
+L00004492	- W-033
+L00004493	- W-035
+L00004494	- W-036
+L00004495	- W-066
+L00004496	unblocks: []
+L00004497	acceptance_criteria:
+L00004498	- "W-067 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+L00004499	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00004500	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00004501	validation_surfaces:
+L00004502	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004503	- python3 scripts/pm-plan-index.py validate
+L00004504	risk_class: worktree_git_drift
+L00004505	reasoning_tier: standard
+L00004506	context_scope: worktree_git_batch_203
+L00004507	implementation_surfaces:
+L00004508	- Plans/WorktreeGitImprovement.md
+L00004509	node_compile_hint:
+L00004510	  mode: source_control_lane_worktree_owner_surface
+L00004511	  create_worknodes: false
+L00004512	source_lineage:
+L00004513	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0099
+L00004514	preserved_exact_tokens:
+L00004515	- "Source Control"
+L00004516	- "Feature Seam"
+L00004517	- "Work Package"
+L00004518	- "Lane"
+L00004519	- "Worktree"
+L00004520	- "open"
+L00004521	- "compare"
+L00004522	- "diff"
+L00004523	- "history/graph"
+L00004524	- "recover"
+L00004525	- "archive"
+L00004526	- "prune"
+L00004527	- "remove"
+L00004528	negative_constraints:
+L00004529	- "Source Control must not hide known package/lane ownership for worktree rows."
+L00004530	preserved_contractrefs: []
+L00004531	compatibility_only_notes: []
+L00004532	stale_retired_dispositions: []
+L00004533	owner_hints:
+L00004534	- "Plans/WorktreeGitImprovement.md"
+L00004535	- "Plans/Orchestrator_Page.md"
+L00004536	- "Plans/FinalGUISpec.md"
+L00004537	```
+L00004538	
+L00004539	### W-068 - Compatibility And Route Identity Guardrails
+L00004540	
+L00004541	```yaml
+L00004542	plan_unit_id: W-068
+L00004543	unit_type: constraint
+L00004544	status: accepted
+L00004545	owner_doc: Plans/WorktreeGitImprovement.md
+L00004546	canonical_text: "Tier-era ownership keys and route-detail fields remain compatibility hazards: tier_id must not propagate as canonical worktree identity, and cross-surface openings must not pollute base route identity with line, range, wizard_step, shell-tab, or panel-subview detail."
+L00004547	gui_related: false
+L00004548	gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+L00004549	split_recommended: false
+L00004550	depends_on:
+L00004551	- PDS-003
+L00004552	- PDS-004
+L00004553	- PDS-005
+L00004554	- PNC-001
+L00004555	- W-002
+L00004556	- W-066
+L00004557	- W-067
+L00004558	unblocks: []
+L00004559	acceptance_criteria:
+L00004560	- "W-068 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+L00004561	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00004562	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00004563	validation_surfaces:
+L00004564	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004565	- python3 scripts/pm-plan-index.py validate
+L00004566	risk_class: worktree_git_drift
+L00004567	reasoning_tier: standard
+L00004568	context_scope: worktree_git_batch_203
+L00004569	implementation_surfaces:
+L00004570	- Plans/WorktreeGitImprovement.md
+L00004571	node_compile_hint:
+L00004572	  mode: compat_route_identity_guardrails
+L00004573	  create_worknodes: false
+L00004574	source_lineage:
+L00004575	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0099
+L00004576	preserved_exact_tokens:
+L00004577	- "tier_id"
+L00004578	- "tier_type"
+L00004579	- "worker_provider"
+L00004580	- "GraphNode"
+L00004581	- "GraphNodeUI"
+L00004582	- "base route identity"
+L00004583	- "line"
+L00004584	- "range"
+L00004585	- "wizard_step"
+L00004586	- "shell-tab"
+L00004587	- "panel-subview"
+L00004588	negative_constraints:
+L00004589	- "tier_id must not propagate as the canonical ownership key."
+L00004590	- "Cross-surface openings must not pollute base route identity."
+L00004591	preserved_contractrefs: []
+L00004592	compatibility_only_notes:
+L00004593	- "Tier-era low-level ownership examples are compatibility inputs until migrated to lane, node, attempt, runtime-lineage, and worktree identity."
+L00004594	stale_retired_dispositions: []
+L00004595	owner_hints:
+L00004596	- "Plans/WorktreeGitImprovement.md"
+L00004597	- "Plans/Orchestrator_Page.md"
+L00004598	- "Plans/Crosswalk.md"
+L00004599	```
+L00004600	
+L00004601	### W-069 - Cross-Lane Reuse Cleanup Scale Policy
+L00004602	
+L00004603	```yaml
+L00004604	plan_unit_id: W-069
+L00004605	unit_type: constraint
+L00004606	status: accepted
+L00004607	owner_doc: Plans/WorktreeGitImprovement.md
+L00004608	canonical_text: "Cross-lane reuse requires contamination checks, contamination-triggered shrink, per-package lane ceilings, lane-named worktrees, preview-heavy archive/remove operations, split Orchestrator versus Source Control action ownership, and package/lane policy as the scale owner."
+L00004609	gui_related: false
+L00004610	gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+L00004611	split_recommended: false
+L00004612	depends_on:
+L00004613	- PDS-003
+L00004614	- PDS-004
+L00004615	- PDS-005
+L00004616	- PNC-001
+L00004617	- W-002
+L00004618	- W-015
+L00004619	- W-033
+L00004620	- W-063
+L00004621	- W-066
+L00004622	unblocks: []
+L00004623	acceptance_criteria:
+L00004624	- "W-069 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+L00004625	- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+L00004626	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+L00004627	validation_surfaces:
+L00004628	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004629	- python3 scripts/pm-plan-index.py validate
+L00004630	risk_class: worktree_git_drift
+L00004631	reasoning_tier: standard
+L00004632	context_scope: worktree_git_batch_203
+L00004633	implementation_surfaces:
+L00004634	- Plans/WorktreeGitImprovement.md
+L00004635	node_compile_hint:
+L00004636	  mode: cross_lane_cleanup_policy
+L00004637	  create_worknodes: false
+L00004638	source_lineage:
+L00004639	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0099
+L00004640	preserved_exact_tokens:
+L00004641	- "cross-lane reuse"
+L00004642	- "safe-point restore"
+L00004643	- "contamination-triggered"
+L00004644	- "provider-only"
+L00004645	- "per-package"
+L00004646	- "lane-named"
+L00004647	- "Bulk /archive/remove"
+L00004648	- "preview-heavy"
+L00004649	- "package/lane policy"
+L00004650	negative_constraints:
+L00004651	- "Cross-lane reuse is not a best-effort cleanup path."
+L00004652	- "Bulk archive/remove operations must not become one-button destructive worktree actions."
+L00004653	preserved_contractrefs: []
+L00004654	compatibility_only_notes: []
+L00004655	stale_retired_dispositions: []
+L00004656	owner_hints:
+L00004657	- "Plans/WorktreeGitImprovement.md"
+L00004658	- "Plans/Orchestrator_Page.md"
+L00004659	- "Plans/Crosswalk.md"
+L00004660	```
+L00004661	
+
+<<< CONTEXT_AFTER canonical_document_lines=4662-4673 >>>
+L00004662	### W-001 - Worktree Git Source-Preserving Bridge Retired
+L00004663	
+L00004664	```yaml
+L00004665	plan_unit_id: W-001
+L00004666	unit_type: generated_artifact_residual
+L00004667	status: accepted
+L00004668	owner_doc: Plans/WorktreeGitImprovement.md
+L00004669	canonical_text: "W-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 204 because WorktreeGitImprovement-S0100 through S0103 are generated standardization tail material: Owner / Consumer Map, PlanUnits heading, former generated W-001 bridge, and Migration Coverage. WorktreeGitImprovement-S0001 through S0099 are covered by W-002 through W-069 or explicit structural/reference dispositions. W-001 no longer carries source_preserving_planunit compile mode and must not own product coverage."
+L00004670	gui_related: false
+L00004671	gui_classification_reason: "The retired bridge is generated migration lineage rather than implementation-facing GUI behavior, even though its retired source lineage preserved earlier GUI-related Worktree/Git product tokens."
+L00004672	split_recommended: false
+L00004673	depends_on:

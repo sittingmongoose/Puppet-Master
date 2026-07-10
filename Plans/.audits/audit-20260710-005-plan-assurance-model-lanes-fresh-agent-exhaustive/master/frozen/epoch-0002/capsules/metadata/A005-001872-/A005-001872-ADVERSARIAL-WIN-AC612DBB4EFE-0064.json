@@ -1,0 +1,57 @@
+{
+  "assignment_id": "A005-001872-ADVERSARIAL-WIN-AC612DBB4EFE-0064",
+  "attempt_id": "attempt-0002",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      23014,
+      23025
+    ],
+    [
+      23415,
+      23426
+    ]
+  ],
+  "core_range": [
+    23026,
+    23414
+  ],
+  "core_sha256": "a6bebdc0d1eb20a98454049491a12124ef2492fcf4acda22947f01740dd7fe3d",
+  "document_path": "Plans/FinalGUISpec.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/2c/2cd22507bf56adfad18ea0409843c9c7cf695a9ac1a3dd4e1d8b59885c26f0a6.txt",
+  "source_excerpt_sha256": "2cd22507bf56adfad18ea0409843c9c7cf695a9ac1a3dd4e1d8b59885c26f0a6",
+  "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5",
+  "window_id": "WIN-AC612DBB4EFE-0064"
+}

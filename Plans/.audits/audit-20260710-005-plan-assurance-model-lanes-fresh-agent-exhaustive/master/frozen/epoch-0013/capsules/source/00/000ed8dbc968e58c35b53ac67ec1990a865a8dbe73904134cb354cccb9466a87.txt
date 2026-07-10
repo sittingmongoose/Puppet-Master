@@ -1,0 +1,231 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1417-1428 >>>
+L00001417	          }
+L00001418	        },
+L00001419	        "output_ref": {
+L00001420	          "type": "string",
+L00001421	          "minLength": 1
+L00001422	        },
+L00001423	        "created_at_utc": {
+L00001424	          "type": "string",
+L00001425	          "minLength": 1
+L00001426	        }
+L00001427	      }
+L00001428	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1429-1644 >>>
+L00001429	    "ResearchSubagentRecord": {
+L00001430	      "type": "object",
+L00001431	      "additionalProperties": false,
+L00001432	      "required": [
+L00001433	        "subagent_record_id",
+L00001434	        "assignment",
+L00001435	        "status",
+L00001436	        "created_at_utc"
+L00001437	      ],
+L00001438	      "properties": {
+L00001439	        "subagent_record_id": {
+L00001440	          "type": "string",
+L00001441	          "minLength": 1
+L00001442	        },
+L00001443	        "source_subagent_id": {
+L00001444	          "type": "string"
+L00001445	        },
+L00001446	        "assignment": {
+L00001447	          "type": "string",
+L00001448	          "minLength": 1
+L00001449	        },
+L00001450	        "source_scope_refs": {
+L00001451	          "type": "array",
+L00001452	          "items": {
+L00001453	            "type": "string"
+L00001454	          }
+L00001455	        },
+L00001456	        "status": {
+L00001457	          "type": "string",
+L00001458	          "enum": [
+L00001459	            "assigned",
+L00001460	            "running",
+L00001461	            "completed",
+L00001462	            "failed",
+L00001463	            "cancelled"
+L00001464	          ]
+L00001465	        },
+L00001466	        "result_ref": {
+L00001467	          "type": "string"
+L00001468	        },
+L00001469	        "failure_reason_code": {
+L00001470	          "type": "string"
+L00001471	        },
+L00001472	        "created_at_utc": {
+L00001473	          "type": "string",
+L00001474	          "minLength": 1
+L00001475	        },
+L00001476	        "finished_at_utc": {
+L00001477	          "type": "string"
+L00001478	        }
+L00001479	      }
+L00001480	    },
+L00001481	    "ResearchRun": {
+L00001482	      "type": "object",
+L00001483	      "additionalProperties": false,
+L00001484	      "allOf": [
+L00001485	        {
+L00001486	          "if": {
+L00001487	            "properties": {
+L00001488	              "invocation": {
+L00001489	                "properties": {
+L00001490	                  "invocation_source": {
+L00001491	                    "enum": [
+L00001492	                      "prd",
+L00001493	                      "planning_wizard"
+L00001494	                    ]
+L00001495	                  }
+L00001496	                },
+L00001497	                "required": [
+L00001498	                  "invocation_source"
+L00001499	                ]
+L00001500	              }
+L00001501	            },
+L00001502	            "required": [
+L00001503	              "invocation"
+L00001504	            ]
+L00001505	          },
+L00001506	          "then": {
+L00001507	            "anyOf": [
+L00001508	              {
+L00001509	                "required": [
+L00001510	                  "ledger_source_evidence_ref"
+L00001511	                ]
+L00001512	              },
+L00001513	              {
+L00001514	                "required": [
+L00001515	                  "plan_source_evidence_ref"
+L00001516	                ]
+L00001517	              }
+L00001518	            ]
+L00001519	          }
+L00001520	        }
+L00001521	      ],
+L00001522	      "required": [
+L00001523	        "research_run_id",
+L00001524	        "mode",
+L00001525	        "task",
+L00001526	        "invocation",
+L00001527	        "sources",
+L00001528	        "read_receipts",
+L00001529	        "citations",
+L00001530	        "closure_state"
+L00001531	      ],
+L00001532	      "properties": {
+L00001533	        "research_run_id": {
+L00001534	          "type": "string",
+L00001535	          "minLength": 1
+L00001536	        },
+L00001537	        "mode": {
+L00001538	          "type": "string",
+L00001539	          "enum": [
+L00001540	            "standard",
+L00001541	            "deep"
+L00001542	          ]
+L00001543	        },
+L00001544	        "task": {
+L00001545	          "type": "string",
+L00001546	          "minLength": 1
+L00001547	        },
+L00001548	        "invocation": {
+L00001549	          "$ref": "#/$defs/InvocationProvenance"
+L00001550	        },
+L00001551	        "provider_mode": {
+L00001552	          "type": "string",
+L00001553	          "enum": [
+L00001554	            "pm_composed",
+L00001555	            "provider_autonomous"
+L00001556	          ]
+L00001557	        },
+L00001558	        "sources": {
+L00001559	          "type": "array",
+L00001560	          "minItems": 1,
+L00001561	          "items": {
+L00001562	            "$ref": "#/$defs/ResearchSource"
+L00001563	          }
+L00001564	        },
+L00001565	        "read_receipts": {
+L00001566	          "type": "array",
+L00001567	          "minItems": 1,
+L00001568	          "items": {
+L00001569	            "$ref": "#/$defs/ReadReceipt"
+L00001570	          }
+L00001571	        },
+L00001572	        "citations": {
+L00001573	          "type": "array",
+L00001574	          "minItems": 1,
+L00001575	          "items": {
+L00001576	            "$ref": "#/$defs/CitationRecord"
+L00001577	          }
+L00001578	        },
+L00001579	        "synthesis_steps": {
+L00001580	          "type": "array",
+L00001581	          "items": {
+L00001582	            "$ref": "#/$defs/ResearchSynthesisStep"
+L00001583	          }
+L00001584	        },
+L00001585	        "subagent_records": {
+L00001586	          "type": "array",
+L00001587	          "items": {
+L00001588	            "$ref": "#/$defs/ResearchSubagentRecord"
+L00001589	          }
+L00001590	        },
+L00001591	        "closure_state": {
+L00001592	          "type": "string",
+L00001593	          "enum": [
+L00001594	            "sufficient",
+L00001595	            "partial",
+L00001596	            "failed",
+L00001597	            "denied",
+L00001598	            "cancelled"
+L00001599	          ]
+L00001600	        },
+L00001601	        "subagent_refs": {
+L00001602	          "type": "array",
+L00001603	          "items": {
+L00001604	            "type": "string"
+L00001605	          }
+L00001606	        },
+L00001607	        "subquestion_refs": {
+L00001608	          "type": "array",
+L00001609	          "items": {
+L00001610	            "type": "string"
+L00001611	          }
+L00001612	        },
+L00001613	        "coverage_report_ref": {
+L00001614	          "type": "string"
+L00001615	        },
+L00001616	        "failure_reason_code": {
+L00001617	          "type": "string"
+L00001618	        },
+L00001619	        "ledger_source_evidence_ref": {
+L00001620	          "type": "string"
+L00001621	        },
+L00001622	        "plan_source_evidence_ref": {
+L00001623	          "type": "string"
+L00001624	        }
+L00001625	      }
+L00001626	    },
+L00001627	    "DeepResearchRun": {
+L00001628	      "allOf": [
+L00001629	        {
+L00001630	          "$ref": "#/$defs/ResearchRun"
+L00001631	        },
+L00001632	        {
+L00001633	          "type": "object",
+L00001634	          "properties": {
+L00001635	            "mode": {
+L00001636	              "type": "string",
+L00001637	              "const": "deep"
+L00001638	            }
+L00001639	          }
+L00001640	        }
+L00001641	      ]
+L00001642	    }
+L00001643	  }
+L00001644	}

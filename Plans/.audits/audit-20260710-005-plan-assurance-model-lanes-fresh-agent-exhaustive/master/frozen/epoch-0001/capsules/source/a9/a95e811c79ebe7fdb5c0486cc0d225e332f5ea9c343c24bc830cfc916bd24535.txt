@@ -1,0 +1,415 @@
+<<< CONTEXT_BEFORE 3592-3603 >>>
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0008
+preserved_exact_tokens:
+  - "Assistant & Chat UI -- Design Plan"
+  - "Canonical owner-section requirements"
+  - "Shared conversational/runtime boundary"
+  - "Canonical route payload"
+  - "Calls to Action (CtAs)"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+
+<<< AUTHORITATIVE_CORE 3604-3989 >>>
+### ACD-003 - Rewrite Runtime Identity Boundary
+
+```yaml
+plan_unit_id: ACD-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant Chat targets the rewrite architecture while displaying concrete
+  requested/effective runtime identity and preserving shared provider/auth
+  fields without reopening the Contracts_V0 additive field set.
+gui_related: true
+gui_classification_reason: Runtime identity, platform, account, and auth state are user-visible chat display requirements.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Assistant Chat displays concrete requested/effective provider identity instead of collapsing Gemini Direct, Antigravity, or retired Gemini CLI lineage into one generic badge.
+  - Assistant Chat consumes shared provider/auth fields and does not invent a parallel field set.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: runtime_identity_drift
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+  - Plans/Multi-Account.md
+node_compile_hint:
+  mode: runtime_identity_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0006
+preserved_exact_tokens:
+  - "Rust + Slint"
+  - "gemini"
+  - "gemini_cli"
+  - "Gemini Direct"
+  - "Gemini CLI"
+  - "provider_family_id = gemini"
+negative_constraints:
+  - "Assistant Chat must not invent a parallel provider/auth field set."
+  - "Reconciliation may align wording and placement but must not reopen the shared field set."
+  - "Do not display Gemini CLI as an active provider row."
+compatibility_only_notes:
+  - "gemini_cli and Gemini CLI are preserved only as retired/source-lineage tokens."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+```
+
+### ACD-004 - Primary Assistant Mode Strip
+
+```yaml
+plan_unit_id: ACD-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant exposes stable Ask, Agent, Debug, Plan, and Deep Plan choices.
+  Specialized Interview, BrainStorm, and Crew workflows remain overlays or
+  routed flows that normalize through the shared requested/effective runtime
+  and overlay model.
+gui_related: true
+gui_classification_reason: The Assistant mode strip and workflow choices are visible chat controls.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - The Assistant mode strip exposes Ask, Agent, Debug, Plan, and Deep Plan as stable choices.
+  - Specialized workflows remain overlays rather than replacements for the primary mode strip.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: mode_routing_drift
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: visible_mode_strip
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0007
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0009
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0010
+preserved_exact_tokens:
+  - "Ask"
+  - "Agent"
+  - "Debug"
+  - "Plan"
+  - "Deep Plan"
+  - "Interview"
+  - "BrainStorm"
+  - "Crew"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+### ACD-005 - Planning Read-Only Approval Boundary
+
+```yaml
+plan_unit_id: ACD-005
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Plan and Deep Plan are read-only planning runs. Execution requires approval
+  and then runs under regular or yolo, never under plan; queueing applies only
+  to post-approval execution.
+gui_related: false
+gui_classification_reason: This unit governs runtime execution posture and approval boundaries rather than visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Planning-time runs do not mutate project files.
+  - Execution after approval reuses approved plan/TODO state under regular or yolo, never plan.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: execution_boundary
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: read_only_planning_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0011
+preserved_exact_tokens:
+  - "planning is read-only"
+  - "Puppet Master-controlled draft"
+  - "regular"
+  - "yolo"
+  - "plan"
+negative_constraints:
+  - "Queueing affects only post-approval execution, never the planning-time read-only run."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+### ACD-006 - Debug Overlay Entrypoint
+
+```yaml
+plan_unit_id: ACD-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Debug Mode is an Assistant workflow overlay, stronger than a behavioral hint,
+  that persists requested/effective debug overlay fields, remains
+  execution-capable, and is visually distinct in transcript and status
+  labeling.
+gui_related: true
+gui_classification_reason: Debug overlay selection, transcript treatment, and status labeling are visible chat UI behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - /mode debug preserves requested and effective debug overlay fields through restore and resume.
+  - Debug transcript and status labeling remain visually distinct from Agent and Plan threads.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: debug_mode_drift
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/Run_Modes.md
+node_compile_hint:
+  mode: debug_overlay_entrypoint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0012
+preserved_exact_tokens:
+  - "requested_mode_overlay = debug"
+  - "effective_mode_overlay = debug"
+  - "/mode debug"
+  - "Debug + ask"
+negative_constraints:
+  - "There is no stable `Debug + ask` combination for automated investigations."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-007 - Debug Phase And Revalidation Loop
+
+```yaml
+plan_unit_id: ACD-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Debug investigations follow closed phases from target_binding through cleanup.
+  Drift triggers explicit revalidation, verification is mandatory, and cleanup
+  is the terminal mutation-capable phase unless preservation is explicit.
+gui_related: true
+gui_classification_reason: Investigation Context, attention status, and cleanup/resolution state are user-visible in the chat surface.
+depends_on: [ACD-006]
+unblocks: []
+acceptance_criteria:
+  - Target, runtime, worktree, auth, instrumentation, and evidence drift trigger explicit revalidation before mutation-capable steps continue.
+  - A fix attempt without recorded verification remains attention_required or failed_cleanup, not resolved.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: evidence_loop
+reasoning_tier: high
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: debug_revalidation_loop
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0012
+preserved_exact_tokens:
+  - "target_binding"
+  - "baseline_capture"
+  - "instrumentation"
+  - "verification"
+  - "cleanup"
+  - "attention_required"
+  - "failed_cleanup"
+  - "resolved"
+negative_constraints:
+  - "A revalidation gate surfaces an explicit reason in the Investigation Context; it MUST NOT silently continue as though the earlier target binding were still valid."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-008 - Runtime Mode Normalization And Project Gating
+
+```yaml
+plan_unit_id: ACD-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Assistant workflow identity is closed to ask, agent, debug, plan, and
+  deep_plan. Only runtime posture normalizes to the run-envelope mode, and
+  project-scoped capabilities require a selected project.
+gui_related: true
+gui_classification_reason: Workflow identity, mode display, and project-gated capability disclosure are user-visible chat behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Debug and deep_plan do not mint extra canonical runtime-mode enum values.
+  - Project-scoped capabilities are unavailable or gated when no project is selected.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: runtime_mode_drift
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Contracts_V0.md
+  - Plans/Run_Modes.md
+node_compile_hint:
+  mode: runtime_mode_normalization
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0013
+preserved_exact_tokens:
+  - "ask | agent | debug | plan | deep_plan"
+  - "run-envelope"
+  - "regular"
+  - "yolo"
+  - "Requires a project"
+  - "@"
+negative_constraints:
+  - "Subordinate behavior/profile fields may describe investigation or planning depth, but they do not replace this workflow-mode enum."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+### ACD-009 - Chat Header Runtime Controls
+
+```yaml
+plan_unit_id: ACD-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The chat header exposes platform, model, reasoning/effort, and worktree
+  controls. Selections apply to the next turn and do not interrupt a streaming
+  response.
+gui_related: true
+gui_classification_reason: Header dropdowns, icons, and worktree visual states are direct UI controls.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Provider and model lists come from the account-bound Provider -> models registry plus the Models_System capability resolver rather than hardcoded UI lists.
+  - Platform, model, effort, and worktree changes apply to the next turn while an in-flight response completes with its prior selection.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: gui_state_sync
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Models_System.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: chat_header_controls
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0014
+preserved_exact_tokens:
+  - "Provider -> models"
+  - "fallback_chain"
+  - "Reasoning / effort"
+  - "Worktree"
+  - "bound-dirty"
+  - "bound-conflict"
+  - "turn"
+negative_constraints:
+  - "Do not use legacy `platform_specs` or `platform_specs.rs` as the active provider/model capability source."
+compatibility_only_notes:
+  - "Legacy `platform_specs` and `fallback_model_ids(platform)` tokens are retired source-lineage only."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Models_System.md
+```
+
+### ACD-010 - Dual ELI5 Toggle Contract
+
+```yaml
+plan_unit_id: ACD-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Chat ELI5 and app-level ELI5 are separate toggles with independent scope.
+  Generated docs stay technical, and authored copy maintains Expert/ELI5
+  variants without creating concept-help drift.
+gui_related: true
+gui_classification_reason: The ELI5 toggles, tooltips, and authored user-facing copy variants are visible product UI.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Chat ELI5 affects Assistant chat behavior only and is not passed into generated interview documentation prompts.
+  - App-level ELI5 affects tooltips and interviewer Q&A responses without changing generated documentation.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: copy_policy_drift
+reasoning_tier: standard
+context_scope: assistant_chat_window_001
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: dual_copy_toggle_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0015
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0016
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0017
+preserved_exact_tokens:
+  - "two separate ELI5 toggles"
+  - "Interaction Mode (Expert/ELI5)"
+  - "Expert"
+  - "ELI5"
+  - "concept-help"
+negative_constraints:
+  - "There are two separate ELI5 toggles; they are independent and must not be conflated."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+
+<<< CONTEXT_AFTER 3990-4001 >>>
+### ACD-011 - Permission Posture And Approval Ladder
+
+```yaml
+plan_unit_id: ACD-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Chat supports YOLO and Regular permission postures. Regular uses the
+  canonical deny, once, for session, and always approval ladder, while durable
+  approval defaults remain owned by Permissions_System.
+gui_related: true

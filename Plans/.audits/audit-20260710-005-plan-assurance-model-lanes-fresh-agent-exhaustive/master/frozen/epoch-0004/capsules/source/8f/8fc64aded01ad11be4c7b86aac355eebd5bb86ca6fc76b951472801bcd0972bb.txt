@@ -1,0 +1,147 @@
+<<< CONTEXT_BEFORE 378-389 >>>
+      "canonical_route": "Plans/Planning_Ledger_System.md",
+      "evidence_refs": [
+        "AGENTS.md",
+        "Plans/Planning_Ledger_System.md"
+      ],
+      "allowed_contexts": [
+        "Bootstrap ledger layout shorthand"
+      ],
+      "validator_policy": "warn",
+      "replacement_ref": "Plans/ledgers/v2/*/manifest.json",
+      "notes": "Structured v2 ledgers use per-ledger manifest files; no aggregate Plans/ledgers/v2/manifest.json exists."
+    },
+
+<<< AUTHORITATIVE_CORE 390-521 >>>
+    {
+      "raw_ref": "crates/ui_commands/",
+      "classification": "allowed_exception",
+      "surface_type": "future_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/UI_Command_Catalog.md",
+      "evidence_refs": [
+        "Plans/UI_Command_Catalog.md",
+        "Plans/BinaryLocator_Spec.md"
+      ],
+      "allowed_contexts": [
+        "Future typed command implementation crate",
+        "Preserved source-lineage command tokens"
+      ],
+      "validator_policy": "allow",
+      "replacement_ref": "future typed UICommand implementation crate",
+      "notes": "The current repo has no runtime crate; typed UICommand implementation belongs to a future Rust/Slint build lane."
+    },
+    {
+      "raw_ref": "Plans/FinalGUISpec.md#178-interviewbuilderorchestrator-mapping-editors",
+      "classification": "typo",
+      "surface_type": "concrete_path",
+      "match_kind": "doc_anchor",
+      "canonical_route": "Plans/FinalGUISpec.md",
+      "evidence_refs": [
+        "Plans/FinalGUISpec.md"
+      ],
+      "allowed_contexts": [
+        "Legacy Chain Wizard owner-anchor references"
+      ],
+      "validator_policy": "warn",
+      "replacement_ref": "Plans/FinalGUISpec.md",
+      "notes": "The anchor is source-lineage shorthand; implementation surfaces should name the owner doc."
+    },
+    {
+      "raw_ref": "Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD",
+      "classification": "typo",
+      "surface_type": "concrete_path",
+      "match_kind": "doc_anchor",
+      "canonical_route": "Plans/Prompt_Pipeline.md",
+      "evidence_refs": [
+        "Plans/Prompt_Pipeline.md"
+      ],
+      "allowed_contexts": [
+        "Legacy effective-resolution owner-anchor references"
+      ],
+      "validator_policy": "warn",
+      "replacement_ref": "Plans/Prompt_Pipeline.md",
+      "notes": "The anchor is source-lineage shorthand; implementation surfaces should name the owner doc."
+    },
+    {
+      "raw_ref": ".puppet-master/state/active-agents.json",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "process_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/storage-plan.md",
+      "evidence_refs": [
+        "Plans/storage-plan.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "allowed_contexts": [
+        "Compatibility/debug mirror references",
+        "Preserved source-lineage tokens",
+        "Explicit export or corruption-recovery notes"
+      ],
+      "validator_policy": "allow",
+      "replacement_ref": "coordination EventRecord family plus coordination_* redb projections",
+      "notes": "Non-canonical debug/export mirror of coordination agent projection; canonical truth is seglog coordination events and redb projections."
+    },
+    {
+      "raw_ref": ".puppet-master/state/agent-messages.json",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "process_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/storage-plan.md",
+      "evidence_refs": [
+        "Plans/storage-plan.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "allowed_contexts": [
+        "Compatibility/debug mirror references",
+        "Preserved source-lineage tokens",
+        "Explicit export or corruption-recovery notes"
+      ],
+      "validator_policy": "allow",
+      "replacement_ref": "coordination EventRecord family plus coordination_* redb projections",
+      "notes": "Non-canonical debug/interoperability mirror of crew-board coordination records; canonical truth is EventRecord-backed crew coordination."
+    },
+    {
+      "raw_ref": ".puppet-master/state/verification-{node_id}-end.json",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "process_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/storage-plan.md",
+      "evidence_refs": [
+        "Plans/storage-plan.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "allowed_contexts": [
+        "Compatibility/debug mirror references",
+        "Preserved source-lineage tokens",
+        "Explicit export or corruption-recovery notes"
+      ],
+      "validator_policy": "allow",
+      "replacement_ref": "coordination EventRecord family plus coordination_* redb projections",
+      "notes": "Retired source-lineage/debug export for verification result mirrors; canonical truth is runtime verification/receipt records and redb projections."
+    },
+    {
+      "raw_ref": ".puppet-master/state/handoff-validation-{node_id}.json",
+      "classification": "historical_source_lineage_ref",
+      "surface_type": "process_artifact",
+      "match_kind": "exact",
+      "canonical_route": "Plans/storage-plan.md",
+      "evidence_refs": [
+        "Plans/storage-plan.md",
+        "Plans/orchestrator-subagent-integration.md",
+        "Plans/Contracts_V0.md"
+      ],
+      "allowed_contexts": [
+        "Compatibility/debug mirror references",
+        "Preserved source-lineage tokens",
+        "Explicit export or corruption-recovery notes"
+      ],
+      "validator_policy": "allow",
+      "replacement_ref": "coordination EventRecord family plus coordination_* redb projections",
+      "notes": "Retired source-lineage/debug export for handoff validation mirrors; canonical truth is runtime verification/receipt records and redb projections."
+    }
+  ]
+}

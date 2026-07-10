@@ -1,0 +1,416 @@
+<<< CONTEXT_BEFORE canonical_document_lines=355-366 >>>
+L00000355	negative_constraints: []
+L00000356	preserved_contractrefs:
+L00000357	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Contracts_V0.md'
+L00000358	compatibility_only_notes: []
+L00000359	stale_retired_dispositions: []
+L00000360	owner_hints:
+L00000361	- 'Plans/Widget_System.md'
+L00000362	- 'Plans/UI_Command_Catalog.md'
+L00000363	- 'Plans/Contracts_V0.md'
+L00000364	- 'Plans/FinalGUISpec.md'
+L00000365	```
+L00000366	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=367-753 >>>
+L00000367	### WS-006 - Stable Projection Data Contract
+L00000368	
+L00000369	```yaml
+L00000370	plan_unit_id: WS-006
+L00000371	unit_type: requirement
+L00000372	status: accepted
+L00000373	owner_doc: Plans/Widget_System.md
+L00000374	canonical_text: 'Widgets consume stable orchestrator projections, canonical record `/query` contracts, widget identity `/type`, scope, filter `/sort/display` config, and projection refs; they do not subscribe to raw event streams or bespoke queries.'
+L00000375	gui_related: false
+L00000376	gui_classification_reason: 'The unit defines backend projection and data-contract semantics consumed by widgets rather than visual presentation.'
+L00000377	split_recommended: false
+L00000378	depends_on:
+L00000379	- PDS-003
+L00000380	- PDS-004
+L00000381	- PDS-005
+L00000382	- PNC-001
+L00000383	- WS-003
+L00000384	unblocks: []
+L00000385	acceptance_criteria:
+L00000386	- WS-006 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
+L00000387	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000388	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000389	validation_surfaces:
+L00000390	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000391	- python3 scripts/pm-plan-index.py validate
+L00000392	risk_class: widget_system_drift
+L00000393	reasoning_tier: standard
+L00000394	context_scope: widget_system_batch_198
+L00000395	implementation_surfaces:
+L00000396	- Plans/Widget_System.md
+L00000397	node_compile_hint:
+L00000398	  mode: projection_data_contract
+L00000399	  create_worknodes: false
+L00000400	source_lineage:
+L00000401	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0005
+L00000402	preserved_exact_tokens:
+L00000403	- 'stable orchestrator projections'
+L00000404	- 'canonical record `/query` contracts'
+L00000405	- 'widget identity `/type`'
+L00000406	- 'scope'
+L00000407	- 'filter `/sort/display` config'
+L00000408	- 'projection ref'
+L00000409	- 'shared projections'
+L00000410	- 'raw event streams'
+L00000411	- 'bespoke queries'
+L00000412	- 'compact projections'
+L00000413	- 'deep-link to the native tab'
+L00000414	negative_constraints:
+L00000415	- 'Widgets must not define meaning by subscribing directly to legacy event names or tier-specific objects.'
+L00000416	preserved_contractrefs: []
+L00000417	compatibility_only_notes: []
+L00000418	stale_retired_dispositions: []
+L00000419	owner_hints:
+L00000420	- 'Plans/Widget_System.md'
+L00000421	- 'Plans/storage-plan.md'
+L00000422	- 'Plans/Contracts_V0.md'
+L00000423	- 'Plans/Orchestrator_Page.md'
+L00000424	```
+L00000425	
+L00000426	### WS-007 - Projection Trust And Historical Run Scope
+L00000427	
+L00000428	```yaml
+L00000429	plan_unit_id: WS-007
+L00000430	unit_type: constraint
+L00000431	status: accepted
+L00000432	owner_doc: Plans/Widget_System.md
+L00000433	canonical_text: '`historical-run` rendering follows active `/page` route context and `focused_run_id`; live or historical moves must not require manual per-widget retargeting. Widget trust chrome uses shared projection-trust `/freshness` semantics.'
+L00000434	gui_related: true
+L00000435	gui_classification_reason: 'The unit defines user-visible historical run scope and trust chrome behavior.'
+L00000436	split_recommended: false
+L00000437	depends_on:
+L00000438	- PDS-003
+L00000439	- PDS-004
+L00000440	- PDS-005
+L00000441	- PNC-001
+L00000442	- WS-004
+L00000443	- WS-006
+L00000444	unblocks: []
+L00000445	acceptance_criteria:
+L00000446	- WS-007 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
+L00000447	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000448	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000449	validation_surfaces:
+L00000450	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000451	- python3 scripts/pm-plan-index.py validate
+L00000452	risk_class: widget_system_drift
+L00000453	reasoning_tier: standard
+L00000454	context_scope: widget_system_batch_198
+L00000455	implementation_surfaces:
+L00000456	- Plans/Widget_System.md
+L00000457	node_compile_hint:
+L00000458	  mode: projection_trust_scope
+L00000459	  create_worknodes: false
+L00000460	source_lineage:
+L00000461	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0005
+L00000462	preserved_exact_tokens:
+L00000463	- 'historical-run'
+L00000464	- 'active `/page` route context'
+L00000465	- 'focused_run_id'
+L00000466	- 'live and historical mode'
+L00000467	- 'per-widget manual retargeting'
+L00000468	- 'projection-trust `/freshness`'
+L00000469	- 'stale-state copy'
+L00000470	- 'local stale-state categories'
+L00000471	negative_constraints:
+L00000472	- 'Moving between live and historical mode must not require per-widget manual retargeting or preserve stale per-widget scope.'
+L00000473	- 'Individual widgets must not invent stale-state copy or local stale-state categories outside the common projection-trust model.'
+L00000474	preserved_contractrefs: []
+L00000475	compatibility_only_notes: []
+L00000476	stale_retired_dispositions:
+L00000477	- 'Widget trust chrome uses shared projection-trust `/freshness` semantics rather than widget-local stale-state categories.'
+L00000478	owner_hints:
+L00000479	- 'Plans/Widget_System.md'
+L00000480	- 'Plans/Orchestrator_Page.md'
+L00000481	- 'Plans/Run_Graph_View.md'
+L00000482	- 'Plans/FinalGUISpec.md'
+L00000483	```
+L00000484	
+L00000485	### WS-008 - Legacy Tier And Event Compatibility Retirements
+L00000486	
+L00000487	```yaml
+L00000488	plan_unit_id: WS-008
+L00000489	unit_type: compatibility_disposition
+L00000490	status: accepted
+L00000491	owner_doc: Plans/Widget_System.md
+L00000492	canonical_text: '`/Tiers`, `Orch/Tiers`, `widget.tier_tree`, `PuppetMasterEvent`, `PuppetMasterEvent::TierChanged`, `PuppetMasterEvent::UserInteractionRequired`, `TierChanged`, `UserInteractionRequired`, tier-targeted filters, PTY filtering, and the older six-tab `Progress / Tiers / Node Graph / Evidence / History / Ledger` list are compatibility lineage only; the active Orchestrator shell is `Progress`, `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, `Ledger`.'
+L00000493	gui_related: true
+L00000494	gui_classification_reason: 'The unit preserves GUI-era compatibility terms and retired widget tabs as non-live lineage.'
+L00000495	split_recommended: false
+L00000496	depends_on:
+L00000497	- PDS-003
+L00000498	- PDS-004
+L00000499	- PDS-005
+L00000500	- PNC-001
+L00000501	- WS-002
+L00000502	- WS-010
+L00000503	unblocks: []
+L00000504	acceptance_criteria:
+L00000505	- WS-008 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
+L00000506	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000507	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000508	validation_surfaces:
+L00000509	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000510	- python3 scripts/pm-plan-index.py validate
+L00000511	risk_class: widget_system_drift
+L00000512	reasoning_tier: standard
+L00000513	context_scope: widget_system_batch_198
+L00000514	implementation_surfaces:
+L00000515	- Plans/Widget_System.md
+L00000516	node_compile_hint:
+L00000517	  mode: stale_lineage_only
+L00000518	  create_worknodes: false
+L00000519	source_lineage:
+L00000520	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0005
+L00000521	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0008
+L00000522	preserved_exact_tokens:
+L00000523	- '/Tiers'
+L00000524	- 'Orch/Tiers'
+L00000525	- 'widget.tier_tree'
+L00000526	- 'PuppetMasterEvent'
+L00000527	- 'PuppetMasterEvent::TierChanged'
+L00000528	- 'PuppetMasterEvent::UserInteractionRequired'
+L00000529	- 'TierChanged'
+L00000530	- 'UserInteractionRequired'
+L00000531	- 'tier-targeted filters'
+L00000532	- 'PTY filtering'
+L00000533	- 'older six-tab Progress / Tiers / Node Graph / Evidence / History / Ledger list'
+L00000534	- 'Progress, Plan Compile, Seams, Node Graph, Evidence, History, Ledger'
+L00000535	- 'Dashboard, Usage, Orchestrator widget tabs'
+L00000536	- '### 15.1'
+L00000537	- '### 15.9'
+L00000538	negative_constraints:
+L00000539	- 'Live hostability does not restore Dashboard, Usage, Orchestrator widget tabs.'
+L00000540	- 'Tier-first widget catalog assumptions are compatibility-only; Widget_System hostability follows the Orchestrator Progress-only rule and must not broaden widgetization across native Orchestrator tabs.'
+L00000541	preserved_contractrefs: []
+L00000542	compatibility_only_notes:
+L00000543	- 'Legacy Orchestrator widget inputs and older tier/page lists are compatibility evidence only.'
+L00000544	stale_retired_dispositions:
+L00000545	- '`widget.tier_tree` is retired as a first-class Orchestrator widget in favor of native Seams and native graph/history/evidence/ledger tabs.'
+L00000546	owner_hints:
+L00000547	- 'Plans/Widget_System.md'
+L00000548	- 'Plans/Orchestrator_Page.md'
+L00000549	- 'Plans/Run_Graph_View.md'
+L00000550	- 'Plans/FinalGUISpec.md'
+L00000551	```
+L00000552	
+L00000553	### WS-009 - Layout Namespace And Migration
+L00000554	
+L00000555	```yaml
+L00000556	plan_unit_id: WS-009
+L00000557	unit_type: requirement
+L00000558	status: accepted
+L00000559	owner_doc: Plans/Widget_System.md
+L00000560	canonical_text: 'Layout persistence uses app-default with project override. `dashboard_layout:v1` is import or rollback only; Dashboard writes use `widget_layout:v1:dashboard`; retired Orchestrator layout namespaces remain compatibility-only; `orchestrator:progress` has its own namespace.'
+L00000561	gui_related: true
+L00000562	gui_classification_reason: 'The unit defines user-visible layout persistence and migration behavior.'
+L00000563	split_recommended: false
+L00000564	depends_on:
+L00000565	- PDS-003
+L00000566	- PDS-004
+L00000567	- PDS-005
+L00000568	- PNC-001
+L00000569	- WS-002
+L00000570	- WS-010
+L00000571	unblocks: []
+L00000572	acceptance_criteria:
+L00000573	- WS-009 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
+L00000574	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000575	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000576	validation_surfaces:
+L00000577	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000578	- python3 scripts/pm-plan-index.py validate
+L00000579	risk_class: widget_system_drift
+L00000580	reasoning_tier: standard
+L00000581	context_scope: widget_system_batch_198
+L00000582	implementation_surfaces:
+L00000583	- Plans/Widget_System.md
+L00000584	node_compile_hint:
+L00000585	  mode: layout_persistence
+L00000586	  create_worknodes: false
+L00000587	source_lineage:
+L00000588	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0005
+L00000589	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0006
+L00000590	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0008
+L00000591	preserved_exact_tokens:
+L00000592	- 'Layout persistence'
+L00000593	- 'app-default with project override'
+L00000594	- 'default layout key'
+L00000595	- 'project-specific overrides'
+L00000596	- 'run-level layout persistence is not canonical'
+L00000597	- 'dashboard_layout:v1'
+L00000598	- 'widget_layout:v1:dashboard'
+L00000599	- 'dashboard_layout'
+L00000600	- 'widget_layout:v1:orchestrator:tiers'
+L00000601	- 'widget_layout:v1:orchestrator:evidence'
+L00000602	- 'widget_layout:v1:orchestrator:history'
+L00000603	- 'widget_layout:v1:orchestrator:ledger'
+L00000604	- 'orchestrator:progress'
+L00000605	negative_constraints: []
+L00000606	preserved_contractrefs:
+L00000607	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Orchestrator_Page.md'
+L00000608	compatibility_only_notes:
+L00000609	- 'Retired Orchestrator layout namespaces remain compatibility-only import evidence, not live widget layout targets.'
+L00000610	stale_retired_dispositions:
+L00000611	- 'Migration from legacy `dashboard_layout:v1` must retire stale orchestration-hostability assumptions rather than preserve them as peer canon.'
+L00000612	owner_hints:
+L00000613	- 'Plans/Widget_System.md'
+L00000614	- 'Plans/storage-plan.md'
+L00000615	- 'Plans/FinalGUISpec.md'
+L00000616	- 'Plans/Decision_Policy.md'
+L00000617	- 'Plans/Orchestrator_Page.md'
+L00000618	```
+L00000619	
+L00000620	### WS-010 - Orchestrator Progress Only Composition
+L00000621	
+L00000622	```yaml
+L00000623	plan_unit_id: WS-010
+L00000624	unit_type: constraint
+L00000625	status: accepted
+L00000626	owner_doc: Plans/Widget_System.md
+L00000627	canonical_text: 'Only Orchestrator `Progress` is widget-composed. `Plan Compile`, `Seams`, `Node Graph`, `Evidence`, `History`, and `Ledger` remain native views. The Orchestrator UI composes exactly one consumer widget, `widget-orchestrator-progress`.'
+L00000628	gui_related: true
+L00000629	gui_classification_reason: 'The unit defines user-visible Orchestrator widget composition boundaries.'
+L00000630	split_recommended: false
+L00000631	depends_on:
+L00000632	- PDS-003
+L00000633	- PDS-004
+L00000634	- PDS-005
+L00000635	- PNC-001
+L00000636	- WS-002
+L00000637	unblocks: []
+L00000638	acceptance_criteria:
+L00000639	- WS-010 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
+L00000640	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000641	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000642	validation_surfaces:
+L00000643	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000644	- python3 scripts/pm-plan-index.py validate
+L00000645	risk_class: widget_system_drift
+L00000646	reasoning_tier: standard
+L00000647	context_scope: widget_system_batch_198
+L00000648	implementation_surfaces:
+L00000649	- Plans/Widget_System.md
+L00000650	node_compile_hint:
+L00000651	  mode: progress_widget_hostability
+L00000652	  create_worknodes: false
+L00000653	source_lineage:
+L00000654	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0003
+L00000655	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0004
+L00000656	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0007
+L00000657	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0008
+L00000658	preserved_exact_tokens:
+L00000659	- 'Progress-only widget hostability'
+L00000660	- 'Only the Orchestrator `Progress` surface is widget-composed'
+L00000661	- 'Seams'
+L00000662	- 'Node Graph'
+L00000663	- 'Evidence'
+L00000664	- 'History'
+L00000665	- 'Ledger'
+L00000666	- 'native views'
+L00000667	- 'no other Orchestrator tab may opt into widget composition'
+L00000668	- 'widget-orchestrator-progress'
+L00000669	- 'Progress is widget-heavy'
+L00000670	negative_constraints:
+L00000671	- 'No other Orchestrator tab may opt into widget composition.'
+L00000672	- 'Tier-era operator surfaces must not preserve multi-tab widget composition, weak hostability, or missing `/effective` governance-object identity as live canon.'
+L00000673	preserved_contractrefs: []
+L00000674	compatibility_only_notes:
+L00000675	- 'Broad Orchestrator widget tabs in GUI prose are compatibility signals only.'
+L00000676	stale_retired_dispositions: []
+L00000677	owner_hints:
+L00000678	- 'Plans/Widget_System.md'
+L00000679	- 'Plans/Orchestrator_Page.md'
+L00000680	- 'Plans/FinalGUISpec.md'
+L00000681	```
+L00000682	
+L00000683	### WS-011 - Promoted Progress Catalog Source And Drill Targets
+L00000684	
+L00000685	```yaml
+L00000686	plan_unit_id: WS-011
+L00000687	unit_type: requirement
+L00000688	status: accepted
+L00000689	owner_doc: Plans/Widget_System.md
+L00000690	canonical_text: 'The Progress catalog source is `Plans/FinalGUISpec.md` Appendix C. Widget_System consumes the named catalog and preserves the 13 Progress IDs and their default drill targets without inventing an independent catalog.'
+L00000691	gui_related: true
+L00000692	gui_classification_reason: 'The unit defines user-visible Progress widget catalog linkage and drill targets.'
+L00000693	split_recommended: false
+L00000694	depends_on:
+L00000695	- PDS-003
+L00000696	- PDS-004
+L00000697	- PDS-005
+L00000698	- PNC-001
+L00000699	- WS-010
+L00000700	unblocks: []
+L00000701	acceptance_criteria:
+L00000702	- WS-011 remains addressable as a fine-grained Widget System PlanUnit with source-span coverage.
+L00000703	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00000704	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00000705	validation_surfaces:
+L00000706	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000707	- python3 scripts/pm-plan-index.py validate
+L00000708	risk_class: widget_system_drift
+L00000709	reasoning_tier: standard
+L00000710	context_scope: widget_system_batch_198
+L00000711	implementation_surfaces:
+L00000712	- Plans/Widget_System.md
+L00000713	node_compile_hint:
+L00000714	  mode: catalog_consumer
+L00000715	  create_worknodes: false
+L00000716	source_lineage:
+L00000717	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0005
+L00000718	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0007
+L00000719	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Widget_System-S0009
+L00000720	preserved_exact_tokens:
+L00000721	- 'Plans/FinalGUISpec.md'
+L00000722	- 'Appendix C'
+L00000723	- 'C.2'
+L00000724	- 'C.4'
+L00000725	- '13-widget Progress catalog'
+L00000726	- 'progress.run-overview'
+L00000727	- 'progress.current-task'
+L00000728	- 'progress.lane-health'
+L00000729	- 'progress.node-throughput'
+L00000730	- 'progress.blocked-concerns'
+L00000731	- 'progress.approval-queue'
+L00000732	- 'progress.recovery-status'
+L00000733	- 'progress.artifact-receipts'
+L00000734	- 'progress.worktree-state'
+L00000735	- 'progress.account-pressure'
+L00000736	- 'progress.account-switches'
+L00000737	- 'progress.escalation-stack'
+L00000738	- 'progress.attention-summary'
+L00000739	- 'drill targets'
+L00000740	- 'progress -> node'
+L00000741	- 'progress -> lane'
+L00000742	- 'progress -> evidence'
+L00000743	negative_constraints:
+L00000744	- 'Widget_System consumes that named catalog source directly and does not invent an independent catalog or additional widget cards.'
+L00000745	preserved_contractrefs: []
+L00000746	compatibility_only_notes: []
+L00000747	stale_retired_dispositions: []
+L00000748	owner_hints:
+L00000749	- 'Plans/Widget_System.md'
+L00000750	- 'Plans/FinalGUISpec.md'
+L00000751	- 'Plans/Orchestrator_Page.md'
+L00000752	```
+L00000753	
+
+<<< CONTEXT_AFTER canonical_document_lines=754-765 >>>
+L00000754	### WS-012 - Progress Labels Taxonomy And Condition Aging
+L00000755	
+L00000756	```yaml
+L00000757	plan_unit_id: WS-012
+L00000758	unit_type: requirement
+L00000759	status: accepted
+L00000760	owner_doc: Plans/Widget_System.md
+L00000761	canonical_text: 'Progress preserves transferred state labels, action labels, alert taxonomy, event taxonomy, and condition-aging policy, including `queued`, `running`, `attention_required`, `blocked`, `recovering`, `degraded`, `complete`, and the rule that `blocked` and `escalated` never auto-quiet.'
+L00000762	gui_related: true
+L00000763	gui_classification_reason: 'The unit defines user-visible Progress labels, actions, alerts, events, and aging behavior.'
+L00000764	split_recommended: false
+L00000765	depends_on:

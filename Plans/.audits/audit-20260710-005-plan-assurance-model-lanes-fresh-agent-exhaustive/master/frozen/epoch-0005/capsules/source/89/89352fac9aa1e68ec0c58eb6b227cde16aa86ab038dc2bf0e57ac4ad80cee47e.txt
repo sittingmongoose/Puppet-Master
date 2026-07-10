@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE canonical_document_lines=20206-20217 >>>
+L00020206	          "requirement": "cmd.plan_compile.retry records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00020207	        },
+L00020208	        {
+L00020209	          "test_id": "wiring.catalog.plan_compile_retry.accessibility",
+L00020210	          "evidence_kind": "accessibility_regression",
+L00020211	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00020212	        }
+L00020213	      ],
+L00020214	      "event_test_requirements": [
+L00020215	        "Assert cmd.plan_compile.retry records dispatch receipt cmd.plan_compile.retry.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00020216	      ]
+L00020217	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=20218-20616 >>>
+L00020218	    "catalog.planning_wizard_amendment_accept": {
+L00020219	      "ui_element_id": "catalog.planning_wizard_amendment_accept",
+L00020220	      "ui_location": "Planning Wizard workspace",
+L00020221	      "ui_command_id": "cmd.planning_wizard.amendment.accept",
+L00020222	      "handler_location": "handlers::planning_wizard::amendment_accept",
+L00020223	      "expected_event_types": [],
+L00020224	      "acceptance_checks": [
+L00020225	        "cmd.planning_wizard.amendment.accept must be registered in the UICommand dispatcher with typed args and result contract",
+L00020226	        "cmd.planning_wizard.amendment.accept must expose projected state selector and disabled reason before dispatch",
+L00020227	        "cmd.planning_wizard.amendment.accept dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00020228	        "cmd.planning_wizard.amendment.accept must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00020229	        "cmd.planning_wizard.amendment.accept must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00020230	      ],
+L00020231	      "evidence_required": "Production wiring contract for cmd.planning_wizard.amendment.accept; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00020232	      "state_selector": "state.commands.planning_wizard_amendment_accept.availability",
+L00020233	      "disabled_reason_projection": "state.commands.planning_wizard_amendment_accept.disabled_reason",
+L00020234	      "effect_contract": {
+L00020235	        "effect_kind": "receipt",
+L00020236	        "description": "cmd.planning_wizard.amendment.accept records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00020237	        "receipt_or_event_refs": [
+L00020238	          "cmd.planning_wizard.amendment.accept.dispatch_receipt"
+L00020239	        ]
+L00020240	      },
+L00020241	      "accessibility_contract": {
+L00020242	        "role_or_semantics": "catalog.planning_wizard_amendment_accept exposes a stable role/name/description matching cmd.planning_wizard.amendment.accept.",
+L00020243	        "keyboard_access": "catalog.planning_wizard_amendment_accept is reachable and activatable by keyboard where the control is visible.",
+L00020244	        "focus_management": "catalog.planning_wizard_amendment_accept preserves visible focus and returns focus deterministically after dispatch or error.",
+L00020245	        "disabled_announcement": "catalog.planning_wizard_amendment_accept surfaces state.commands.planning_wizard_amendment_accept.disabled_reason to assistive technology when unavailable."
+L00020246	      },
+L00020247	      "test_evidence": [
+L00020248	        {
+L00020249	          "test_id": "wiring.catalog.planning_wizard_amendment_accept.dispatcher",
+L00020250	          "evidence_kind": "dispatcher_fixture",
+L00020251	          "requirement": "Dispatching cmd.planning_wizard.amendment.accept reaches handlers::planning_wizard::amendment_accept with typed args/result contract."
+L00020252	        },
+L00020253	        {
+L00020254	          "test_id": "wiring.catalog.planning_wizard_amendment_accept.state_projection",
+L00020255	          "evidence_kind": "state_projection",
+L00020256	          "requirement": "Availability reads state.commands.planning_wizard_amendment_accept.availability and disabled copy reads state.commands.planning_wizard_amendment_accept.disabled_reason."
+L00020257	        },
+L00020258	        {
+L00020259	          "test_id": "wiring.catalog.planning_wizard_amendment_accept.effect",
+L00020260	          "evidence_kind": "receipt_or_event_assertion",
+L00020261	          "requirement": "cmd.planning_wizard.amendment.accept records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00020262	        },
+L00020263	        {
+L00020264	          "test_id": "wiring.catalog.planning_wizard_amendment_accept.accessibility",
+L00020265	          "evidence_kind": "accessibility_regression",
+L00020266	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00020267	        }
+L00020268	      ],
+L00020269	      "event_test_requirements": [
+L00020270	        "Assert cmd.planning_wizard.amendment.accept records dispatch receipt cmd.planning_wizard.amendment.accept.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00020271	      ]
+L00020272	    },
+L00020273	    "catalog.planning_wizard_approve_and_build": {
+L00020274	      "ui_element_id": "catalog.planning_wizard_approve_and_build",
+L00020275	      "ui_location": "Planning Wizard workspace",
+L00020276	      "ui_command_id": "cmd.planning_wizard.approve_and_build",
+L00020277	      "handler_location": "handlers::planning_wizard::approve_and_build",
+L00020278	      "expected_event_types": [
+L00020279	        "planning.approval_cas_receipt.written",
+L00020280	        "planning.plan_approved",
+L00020281	        "plan_compile.run_created_or_bound"
+L00020282	      ],
+L00020283	      "acceptance_checks": [
+L00020284	        "Final-review CAS fields match the displayed ApprovedPlanPack, PlanningRun, topic map, index, testing policy, and audit/closure hashes",
+L00020285	        "Duplicate idempotency key returns the same PlanCompileRun identity and does not create a second ordinary launch",
+L00020286	        "Orchestrator Plan Compile opens pending-launch state and binds to durable PlanCompileRun without tab-switch-only success",
+L00020287	        "cmd.planning_wizard.approve_and_build must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00020288	        "Approve And Build creates or binds only the durable PlanCompileRun contract identity under pre-enable governance; executable runtime dispatch/build work remains disabled until PNC runtime activation gates pass.",
+L00020289	        "cmd.planning_wizard.approve_and_build must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00020290	      ],
+L00020291	      "evidence_required": "Production wiring contract for cmd.planning_wizard.approve_and_build; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Pre-enable disposition: approval/wiring evidence must not be treated as executable build, WorkNode, queue, runtime dispatch, or production-build evidence.",
+L00020292	      "state_selector": "state.planning_wizard.final_review.approve_and_build.availability",
+L00020293	      "disabled_reason_projection": "state.planning_wizard.final_review.approve_and_build.disabled_reason",
+L00020294	      "effect_contract": {
+L00020295	        "effect_kind": "event",
+L00020296	        "description": "cmd.planning_wizard.approve_and_build must emit the declared event types and record dispatch correlation evidence.",
+L00020297	        "receipt_or_event_refs": [
+L00020298	          "planning.approval_cas_receipt.written",
+L00020299	          "planning.plan_approved",
+L00020300	          "plan_compile.run_created_or_bound"
+L00020301	        ]
+L00020302	      },
+L00020303	      "accessibility_contract": {
+L00020304	        "role_or_semantics": "catalog.planning_wizard_approve_and_build exposes a stable role/name/description matching cmd.planning_wizard.approve_and_build.",
+L00020305	        "keyboard_access": "catalog.planning_wizard_approve_and_build is reachable and activatable by keyboard where the control is visible.",
+L00020306	        "focus_management": "catalog.planning_wizard_approve_and_build preserves visible focus and returns focus deterministically after dispatch or error.",
+L00020307	        "disabled_announcement": "catalog.planning_wizard_approve_and_build surfaces state.planning_wizard.final_review.approve_and_build.disabled_reason to assistive technology when unavailable."
+L00020308	      },
+L00020309	      "test_evidence": [
+L00020310	        {
+L00020311	          "test_id": "wiring.catalog.planning_wizard_approve_and_build.dispatcher",
+L00020312	          "evidence_kind": "dispatcher_fixture",
+L00020313	          "requirement": "Dispatching cmd.planning_wizard.approve_and_build reaches handlers::planning_wizard::approve_and_build with typed args/result contract."
+L00020314	        },
+L00020315	        {
+L00020316	          "test_id": "wiring.catalog.planning_wizard_approve_and_build.state_projection",
+L00020317	          "evidence_kind": "state_projection",
+L00020318	          "requirement": "Availability reads state.planning_wizard.final_review.approve_and_build.availability and disabled copy reads state.planning_wizard.final_review.approve_and_build.disabled_reason."
+L00020319	        },
+L00020320	        {
+L00020321	          "test_id": "wiring.catalog.planning_wizard_approve_and_build.effect",
+L00020322	          "evidence_kind": "receipt_or_event_assertion",
+L00020323	          "requirement": "cmd.planning_wizard.approve_and_build must emit the declared event types and record dispatch correlation evidence."
+L00020324	        },
+L00020325	        {
+L00020326	          "test_id": "wiring.catalog.planning_wizard_approve_and_build.accessibility",
+L00020327	          "evidence_kind": "accessibility_regression",
+L00020328	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00020329	        },
+L00020330	        {
+L00020331	          "test_id": "wiring.catalog.planning_wizard_approve_and_build.events",
+L00020332	          "evidence_kind": "event_test",
+L00020333	          "requirement": "Assert cmd.planning_wizard.approve_and_build emits expected event type planning.approval_cas_receipt.written with command_id, origin, correlation_id, and handler target.; Assert cmd.planning_wizard.approve_and_build emits expected event type planning.plan_approved with command_id, origin, correlation_id, and handler target.; Assert cmd.planning_wizard.approve_and_build emits expected event type plan_compile.run_created_or_bound with command_id, origin, correlation_id, and handler target."
+L00020334	        }
+L00020335	      ],
+L00020336	      "event_test_requirements": [
+L00020337	        "Assert cmd.planning_wizard.approve_and_build emits expected event type planning.approval_cas_receipt.written with command_id, origin, correlation_id, and handler target.",
+L00020338	        "Assert cmd.planning_wizard.approve_and_build emits expected event type planning.plan_approved with command_id, origin, correlation_id, and handler target.",
+L00020339	        "Assert cmd.planning_wizard.approve_and_build emits expected event type plan_compile.run_created_or_bound with command_id, origin, correlation_id, and handler target."
+L00020340	      ]
+L00020341	    },
+L00020342	    "catalog.planning_wizard_start": {
+L00020343	      "ui_element_id": "catalog.planning_wizard_start",
+L00020344	      "ui_location": "Planning Wizard workspace",
+L00020345	      "ui_command_id": "cmd.planning_wizard.start",
+L00020346	      "handler_location": "handlers::planning_wizard::start",
+L00020347	      "expected_event_types": [],
+L00020348	      "acceptance_checks": [
+L00020349	        "cmd.planning_wizard.start must be registered in the UICommand dispatcher with typed args and result contract",
+L00020350	        "cmd.planning_wizard.start must expose projected state selector and disabled reason before dispatch",
+L00020351	        "cmd.planning_wizard.start dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00020352	        "cmd.planning_wizard.start must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00020353	        "cmd.planning_wizard.start must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00020354	      ],
+L00020355	      "evidence_required": "Production wiring contract for cmd.planning_wizard.start; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00020356	      "state_selector": "state.commands.planning_wizard_start.availability",
+L00020357	      "disabled_reason_projection": "state.commands.planning_wizard_start.disabled_reason",
+L00020358	      "effect_contract": {
+L00020359	        "effect_kind": "receipt",
+L00020360	        "description": "cmd.planning_wizard.start records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00020361	        "receipt_or_event_refs": [
+L00020362	          "cmd.planning_wizard.start.dispatch_receipt"
+L00020363	        ]
+L00020364	      },
+L00020365	      "accessibility_contract": {
+L00020366	        "role_or_semantics": "catalog.planning_wizard_start exposes a stable role/name/description matching cmd.planning_wizard.start.",
+L00020367	        "keyboard_access": "catalog.planning_wizard_start is reachable and activatable by keyboard where the control is visible.",
+L00020368	        "focus_management": "catalog.planning_wizard_start preserves visible focus and returns focus deterministically after dispatch or error.",
+L00020369	        "disabled_announcement": "catalog.planning_wizard_start surfaces state.commands.planning_wizard_start.disabled_reason to assistive technology when unavailable."
+L00020370	      },
+L00020371	      "test_evidence": [
+L00020372	        {
+L00020373	          "test_id": "wiring.catalog.planning_wizard_start.dispatcher",
+L00020374	          "evidence_kind": "dispatcher_fixture",
+L00020375	          "requirement": "Dispatching cmd.planning_wizard.start reaches handlers::planning_wizard::start with typed args/result contract."
+L00020376	        },
+L00020377	        {
+L00020378	          "test_id": "wiring.catalog.planning_wizard_start.state_projection",
+L00020379	          "evidence_kind": "state_projection",
+L00020380	          "requirement": "Availability reads state.commands.planning_wizard_start.availability and disabled copy reads state.commands.planning_wizard_start.disabled_reason."
+L00020381	        },
+L00020382	        {
+L00020383	          "test_id": "wiring.catalog.planning_wizard_start.effect",
+L00020384	          "evidence_kind": "receipt_or_event_assertion",
+L00020385	          "requirement": "cmd.planning_wizard.start records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00020386	        },
+L00020387	        {
+L00020388	          "test_id": "wiring.catalog.planning_wizard_start.accessibility",
+L00020389	          "evidence_kind": "accessibility_regression",
+L00020390	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00020391	        }
+L00020392	      ],
+L00020393	      "event_test_requirements": [
+L00020394	        "Assert cmd.planning_wizard.start records dispatch receipt cmd.planning_wizard.start.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00020395	      ]
+L00020396	    },
+L00020397	    "catalog.planning_wizard_topic_add": {
+L00020398	      "ui_element_id": "catalog.planning_wizard_topic_add",
+L00020399	      "ui_location": "Planning Wizard workspace",
+L00020400	      "ui_command_id": "cmd.planning_wizard.topic.add",
+L00020401	      "handler_location": "handlers::planning_wizard::topic_add",
+L00020402	      "expected_event_types": [],
+L00020403	      "acceptance_checks": [
+L00020404	        "cmd.planning_wizard.topic.add must be registered in the UICommand dispatcher with typed args and result contract",
+L00020405	        "cmd.planning_wizard.topic.add must expose projected state selector and disabled reason before dispatch",
+L00020406	        "cmd.planning_wizard.topic.add dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00020407	        "cmd.planning_wizard.topic.add must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00020408	        "cmd.planning_wizard.topic.add must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00020409	      ],
+L00020410	      "evidence_required": "Production wiring contract for cmd.planning_wizard.topic.add; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00020411	      "state_selector": "state.commands.planning_wizard_topic_add.availability",
+L00020412	      "disabled_reason_projection": "state.commands.planning_wizard_topic_add.disabled_reason",
+L00020413	      "effect_contract": {
+L00020414	        "effect_kind": "receipt",
+L00020415	        "description": "cmd.planning_wizard.topic.add records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00020416	        "receipt_or_event_refs": [
+L00020417	          "cmd.planning_wizard.topic.add.dispatch_receipt"
+L00020418	        ]
+L00020419	      },
+L00020420	      "accessibility_contract": {
+L00020421	        "role_or_semantics": "catalog.planning_wizard_topic_add exposes a stable role/name/description matching cmd.planning_wizard.topic.add.",
+L00020422	        "keyboard_access": "catalog.planning_wizard_topic_add is reachable and activatable by keyboard where the control is visible.",
+L00020423	        "focus_management": "catalog.planning_wizard_topic_add preserves visible focus and returns focus deterministically after dispatch or error.",
+L00020424	        "disabled_announcement": "catalog.planning_wizard_topic_add surfaces state.commands.planning_wizard_topic_add.disabled_reason to assistive technology when unavailable."
+L00020425	      },
+L00020426	      "test_evidence": [
+L00020427	        {
+L00020428	          "test_id": "wiring.catalog.planning_wizard_topic_add.dispatcher",
+L00020429	          "evidence_kind": "dispatcher_fixture",
+L00020430	          "requirement": "Dispatching cmd.planning_wizard.topic.add reaches handlers::planning_wizard::topic_add with typed args/result contract."
+L00020431	        },
+L00020432	        {
+L00020433	          "test_id": "wiring.catalog.planning_wizard_topic_add.state_projection",
+L00020434	          "evidence_kind": "state_projection",
+L00020435	          "requirement": "Availability reads state.commands.planning_wizard_topic_add.availability and disabled copy reads state.commands.planning_wizard_topic_add.disabled_reason."
+L00020436	        },
+L00020437	        {
+L00020438	          "test_id": "wiring.catalog.planning_wizard_topic_add.effect",
+L00020439	          "evidence_kind": "receipt_or_event_assertion",
+L00020440	          "requirement": "cmd.planning_wizard.topic.add records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00020441	        },
+L00020442	        {
+L00020443	          "test_id": "wiring.catalog.planning_wizard_topic_add.accessibility",
+L00020444	          "evidence_kind": "accessibility_regression",
+L00020445	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00020446	        }
+L00020447	      ],
+L00020448	      "event_test_requirements": [
+L00020449	        "Assert cmd.planning_wizard.topic.add records dispatch receipt cmd.planning_wizard.topic.add.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00020450	      ]
+L00020451	    },
+L00020452	    "catalog.planning_wizard_topic_defer": {
+L00020453	      "ui_element_id": "catalog.planning_wizard_topic_defer",
+L00020454	      "ui_location": "Planning Wizard workspace",
+L00020455	      "ui_command_id": "cmd.planning_wizard.topic.defer",
+L00020456	      "handler_location": "handlers::planning_wizard::topic_defer",
+L00020457	      "expected_event_types": [],
+L00020458	      "acceptance_checks": [
+L00020459	        "cmd.planning_wizard.topic.defer must be registered in the UICommand dispatcher with typed args and result contract",
+L00020460	        "cmd.planning_wizard.topic.defer must expose projected state selector and disabled reason before dispatch",
+L00020461	        "cmd.planning_wizard.topic.defer dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00020462	        "cmd.planning_wizard.topic.defer must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00020463	        "cmd.planning_wizard.topic.defer must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00020464	      ],
+L00020465	      "evidence_required": "Production wiring contract for cmd.planning_wizard.topic.defer; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00020466	      "state_selector": "state.commands.planning_wizard_topic_defer.availability",
+L00020467	      "disabled_reason_projection": "state.commands.planning_wizard_topic_defer.disabled_reason",
+L00020468	      "effect_contract": {
+L00020469	        "effect_kind": "receipt",
+L00020470	        "description": "cmd.planning_wizard.topic.defer records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00020471	        "receipt_or_event_refs": [
+L00020472	          "cmd.planning_wizard.topic.defer.dispatch_receipt"
+L00020473	        ]
+L00020474	      },
+L00020475	      "accessibility_contract": {
+L00020476	        "role_or_semantics": "catalog.planning_wizard_topic_defer exposes a stable role/name/description matching cmd.planning_wizard.topic.defer.",
+L00020477	        "keyboard_access": "catalog.planning_wizard_topic_defer is reachable and activatable by keyboard where the control is visible.",
+L00020478	        "focus_management": "catalog.planning_wizard_topic_defer preserves visible focus and returns focus deterministically after dispatch or error.",
+L00020479	        "disabled_announcement": "catalog.planning_wizard_topic_defer surfaces state.commands.planning_wizard_topic_defer.disabled_reason to assistive technology when unavailable."
+L00020480	      },
+L00020481	      "test_evidence": [
+L00020482	        {
+L00020483	          "test_id": "wiring.catalog.planning_wizard_topic_defer.dispatcher",
+L00020484	          "evidence_kind": "dispatcher_fixture",
+L00020485	          "requirement": "Dispatching cmd.planning_wizard.topic.defer reaches handlers::planning_wizard::topic_defer with typed args/result contract."
+L00020486	        },
+L00020487	        {
+L00020488	          "test_id": "wiring.catalog.planning_wizard_topic_defer.state_projection",
+L00020489	          "evidence_kind": "state_projection",
+L00020490	          "requirement": "Availability reads state.commands.planning_wizard_topic_defer.availability and disabled copy reads state.commands.planning_wizard_topic_defer.disabled_reason."
+L00020491	        },
+L00020492	        {
+L00020493	          "test_id": "wiring.catalog.planning_wizard_topic_defer.effect",
+L00020494	          "evidence_kind": "receipt_or_event_assertion",
+L00020495	          "requirement": "cmd.planning_wizard.topic.defer records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00020496	        },
+L00020497	        {
+L00020498	          "test_id": "wiring.catalog.planning_wizard_topic_defer.accessibility",
+L00020499	          "evidence_kind": "accessibility_regression",
+L00020500	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00020501	        }
+L00020502	      ],
+L00020503	      "event_test_requirements": [
+L00020504	        "Assert cmd.planning_wizard.topic.defer records dispatch receipt cmd.planning_wizard.topic.defer.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00020505	      ]
+L00020506	    },
+L00020507	    "catalog.planning_wizard_topic_mark_impacted": {
+L00020508	      "ui_element_id": "catalog.planning_wizard_topic_mark_impacted",
+L00020509	      "ui_location": "Planning Wizard workspace",
+L00020510	      "ui_command_id": "cmd.planning_wizard.topic.mark_impacted",
+L00020511	      "handler_location": "handlers::planning_wizard::topic_mark_impacted",
+L00020512	      "expected_event_types": [],
+L00020513	      "acceptance_checks": [
+L00020514	        "cmd.planning_wizard.topic.mark_impacted must be registered in the UICommand dispatcher with typed args and result contract",
+L00020515	        "cmd.planning_wizard.topic.mark_impacted must expose projected state selector and disabled reason before dispatch",
+L00020516	        "cmd.planning_wizard.topic.mark_impacted dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00020517	        "cmd.planning_wizard.topic.mark_impacted must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00020518	        "cmd.planning_wizard.topic.mark_impacted must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00020519	      ],
+L00020520	      "evidence_required": "Production wiring contract for cmd.planning_wizard.topic.mark_impacted; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00020521	      "state_selector": "state.commands.planning_wizard_topic_mark_impacted.availability",
+L00020522	      "disabled_reason_projection": "state.commands.planning_wizard_topic_mark_impacted.disabled_reason",
+L00020523	      "effect_contract": {
+L00020524	        "effect_kind": "receipt",
+L00020525	        "description": "cmd.planning_wizard.topic.mark_impacted records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00020526	        "receipt_or_event_refs": [
+L00020527	          "cmd.planning_wizard.topic.mark_impacted.dispatch_receipt"
+L00020528	        ]
+L00020529	      },
+L00020530	      "accessibility_contract": {
+L00020531	        "role_or_semantics": "catalog.planning_wizard_topic_mark_impacted exposes a stable role/name/description matching cmd.planning_wizard.topic.mark_impacted.",
+L00020532	        "keyboard_access": "catalog.planning_wizard_topic_mark_impacted is reachable and activatable by keyboard where the control is visible.",
+L00020533	        "focus_management": "catalog.planning_wizard_topic_mark_impacted preserves visible focus and returns focus deterministically after dispatch or error.",
+L00020534	        "disabled_announcement": "catalog.planning_wizard_topic_mark_impacted surfaces state.commands.planning_wizard_topic_mark_impacted.disabled_reason to assistive technology when unavailable."
+L00020535	      },
+L00020536	      "test_evidence": [
+L00020537	        {
+L00020538	          "test_id": "wiring.catalog.planning_wizard_topic_mark_impacted.dispatcher",
+L00020539	          "evidence_kind": "dispatcher_fixture",
+L00020540	          "requirement": "Dispatching cmd.planning_wizard.topic.mark_impacted reaches handlers::planning_wizard::topic_mark_impacted with typed args/result contract."
+L00020541	        },
+L00020542	        {
+L00020543	          "test_id": "wiring.catalog.planning_wizard_topic_mark_impacted.state_projection",
+L00020544	          "evidence_kind": "state_projection",
+L00020545	          "requirement": "Availability reads state.commands.planning_wizard_topic_mark_impacted.availability and disabled copy reads state.commands.planning_wizard_topic_mark_impacted.disabled_reason."
+L00020546	        },
+L00020547	        {
+L00020548	          "test_id": "wiring.catalog.planning_wizard_topic_mark_impacted.effect",
+L00020549	          "evidence_kind": "receipt_or_event_assertion",
+L00020550	          "requirement": "cmd.planning_wizard.topic.mark_impacted records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00020551	        },
+L00020552	        {
+L00020553	          "test_id": "wiring.catalog.planning_wizard_topic_mark_impacted.accessibility",
+L00020554	          "evidence_kind": "accessibility_regression",
+L00020555	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00020556	        }
+L00020557	      ],
+L00020558	      "event_test_requirements": [
+L00020559	        "Assert cmd.planning_wizard.topic.mark_impacted records dispatch receipt cmd.planning_wizard.topic.mark_impacted.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00020560	      ]
+L00020561	    },
+L00020562	    "catalog.planning_wizard_topic_merge": {
+L00020563	      "ui_element_id": "catalog.planning_wizard_topic_merge",
+L00020564	      "ui_location": "Planning Wizard workspace",
+L00020565	      "ui_command_id": "cmd.planning_wizard.topic.merge",
+L00020566	      "handler_location": "handlers::planning_wizard::topic_merge",
+L00020567	      "expected_event_types": [],
+L00020568	      "acceptance_checks": [
+L00020569	        "cmd.planning_wizard.topic.merge must be registered in the UICommand dispatcher with typed args and result contract",
+L00020570	        "cmd.planning_wizard.topic.merge must expose projected state selector and disabled reason before dispatch",
+L00020571	        "cmd.planning_wizard.topic.merge dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00020572	        "cmd.planning_wizard.topic.merge must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00020573	        "cmd.planning_wizard.topic.merge must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00020574	      ],
+L00020575	      "evidence_required": "Production wiring contract for cmd.planning_wizard.topic.merge; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00020576	      "state_selector": "state.commands.planning_wizard_topic_merge.availability",
+L00020577	      "disabled_reason_projection": "state.commands.planning_wizard_topic_merge.disabled_reason",
+L00020578	      "effect_contract": {
+L00020579	        "effect_kind": "receipt",
+L00020580	        "description": "cmd.planning_wizard.topic.merge records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00020581	        "receipt_or_event_refs": [
+L00020582	          "cmd.planning_wizard.topic.merge.dispatch_receipt"
+L00020583	        ]
+L00020584	      },
+L00020585	      "accessibility_contract": {
+L00020586	        "role_or_semantics": "catalog.planning_wizard_topic_merge exposes a stable role/name/description matching cmd.planning_wizard.topic.merge.",
+L00020587	        "keyboard_access": "catalog.planning_wizard_topic_merge is reachable and activatable by keyboard where the control is visible.",
+L00020588	        "focus_management": "catalog.planning_wizard_topic_merge preserves visible focus and returns focus deterministically after dispatch or error.",
+L00020589	        "disabled_announcement": "catalog.planning_wizard_topic_merge surfaces state.commands.planning_wizard_topic_merge.disabled_reason to assistive technology when unavailable."
+L00020590	      },
+L00020591	      "test_evidence": [
+L00020592	        {
+L00020593	          "test_id": "wiring.catalog.planning_wizard_topic_merge.dispatcher",
+L00020594	          "evidence_kind": "dispatcher_fixture",
+L00020595	          "requirement": "Dispatching cmd.planning_wizard.topic.merge reaches handlers::planning_wizard::topic_merge with typed args/result contract."
+L00020596	        },
+L00020597	        {
+L00020598	          "test_id": "wiring.catalog.planning_wizard_topic_merge.state_projection",
+L00020599	          "evidence_kind": "state_projection",
+L00020600	          "requirement": "Availability reads state.commands.planning_wizard_topic_merge.availability and disabled copy reads state.commands.planning_wizard_topic_merge.disabled_reason."
+L00020601	        },
+L00020602	        {
+L00020603	          "test_id": "wiring.catalog.planning_wizard_topic_merge.effect",
+L00020604	          "evidence_kind": "receipt_or_event_assertion",
+L00020605	          "requirement": "cmd.planning_wizard.topic.merge records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00020606	        },
+L00020607	        {
+L00020608	          "test_id": "wiring.catalog.planning_wizard_topic_merge.accessibility",
+L00020609	          "evidence_kind": "accessibility_regression",
+L00020610	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00020611	        }
+L00020612	      ],
+L00020613	      "event_test_requirements": [
+L00020614	        "Assert cmd.planning_wizard.topic.merge records dispatch receipt cmd.planning_wizard.topic.merge.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00020615	      ]
+L00020616	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=20617-20628 >>>
+L00020617	    "catalog.planning_wizard_topic_open": {
+L00020618	      "ui_element_id": "catalog.planning_wizard_topic_open",
+L00020619	      "ui_location": "Planning Wizard workspace",
+L00020620	      "ui_command_id": "cmd.planning_wizard.topic.open",
+L00020621	      "handler_location": "handlers::planning_wizard::topic_open",
+L00020622	      "expected_event_types": [],
+L00020623	      "acceptance_checks": [
+L00020624	        "cmd.planning_wizard.topic.open must be registered in the UICommand dispatcher with typed args and result contract",
+L00020625	        "cmd.planning_wizard.topic.open must expose projected state selector and disabled reason before dispatch",
+L00020626	        "cmd.planning_wizard.topic.open dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00020627	        "cmd.planning_wizard.topic.open must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00020628	        "cmd.planning_wizard.topic.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

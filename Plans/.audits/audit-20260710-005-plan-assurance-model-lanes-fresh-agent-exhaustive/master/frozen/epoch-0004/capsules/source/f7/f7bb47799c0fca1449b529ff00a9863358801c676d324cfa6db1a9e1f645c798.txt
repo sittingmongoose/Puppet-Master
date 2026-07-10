@@ -1,0 +1,413 @@
+<<< AUTHORITATIVE_CORE 1-398 >>>
+# Plugins System (Canonical SSOT)
+
+
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+
+## 0. Scope and SSOT status
+
+This document is the **single canonical source of truth** for the Puppet Master plugin system — discovery, loading, hook lifecycle, custom tool registration, and structured logging. All other plan documents MUST reference this document by anchor (e.g., `Plans/Plugins_System.md#HOOK-EVENTS`) rather than restating plugin definitions, hook signatures, or load-order rules.
+
+ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md
+
+### SSOT references (DRY)
+- Locked decisions: `Plans/Spec_Lock.json`
+- Canonical contracts (events/tools/auth): `Plans/Contracts_V0.md`
+- DRY + ContractRef rule: `Plans/DRY_Rules.md`
+- Canonical terms: `Plans/Glossary.md`
+- Deterministic ambiguity handling: `Plans/Decision_Policy.md` + `Plans/auto_decisions.jsonl`
+- Tool registry + tool semantics: `Plans/Tools.md`
+- Permissions system: `Plans/Permissions_System.md`
+- Persona system: `Plans/Personas.md`
+- OpenCode baseline (plugins): `Plans/OpenCode_Deep_Extraction.md` §7G
+- Formatters system: `Plans/Formatters_System.md`
+- Models system: `Plans/Models_System.md`
+- GUI specification: `Plans/FinalGUISpec.md`
+
+### P5 plugin boundary recovery
+
+Plugin-owned Persona and model references must link through `Plans/Glossary.md`, `/Glossary.md`, `Plans/00-plans-index.md`, `/00-plans-index.md`, `Plans/Personas.md`, `/Personas.md`, `Plans/Models_System.md`, and `/Models_System.md` rather than defining duplicate terminology.
+
+Plugin UI and runtime references must also link through `Plans/FinalGUISpec.md`, `/FinalGUISpec.md`, `Plans/Glossary.md`, `/Glossary.md`, `Plans/Personas.md`, `/Personas.md`, `Plans/Models_System.md`, and `/Models_System.md` when presenting plugin-facing Persona or model metadata.
+
+Tooling enforcement boundaries are central policy, not plugin-private behavior: `Plans/Formatters_System.md`, Formatters_System, `Plans/Plugins_System.md`, Plugins_System, `Plans/Skills_System.md`, Skills_System, `Plans/LSPSupport.md`, LSPSupport.md, `/policy`, `/runtime`, `/DAE`, DAE, HTE, read-only, mutation-capable, env-var, bundling-off, internal-service, and multi-project-tab cases must all rejoin the same mutation and attribution model.
+
+Plugin hooks may expose package, seam, corroboration, and concern integration points through `Plans/Executor_Protocol.md`, Executor_Protocol, Executor_Protocol.md, and `/seam/corroboration/concern`, but those hooks remain subject to this plugin lifecycle and permission model.
+
+---
+
+## 1. Definitions
+
+<a id="DEF-PLUGIN"></a>
+### 1.1 Plugin
+
+A **Plugin** is a self-contained extension module that hooks into the Puppet Master lifecycle via a defined set of events. A plugin is loaded once at session start (or when first discovered) and remains active for the session duration. Plugins MAY register custom tools, modify prompts, intercept tool execution, and inject context during compaction.
+
+<a id="DEF-HOOK"></a>
+### 1.2 Hook
+
+A **Hook** is a named callback registered by a plugin for a specific lifecycle event. When the event fires, all registered hooks are invoked in deterministic order (§3.3). A hook receives a typed context object and returns a result that may continue, modify, or block the pipeline.
+
+ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Tools.md
+
+---
+
+## 2. Discovery and storage
+
+<a id="DISCOVERY"></a>
+
+### 2.1 Discovery paths
+
+Plugins are discovered from three sources in strict order:
+
+| Priority | Source | Path / Config |
+|----------|--------|---------------|
+| 1 (first) | **Internal plugins** | Compiled into the Puppet Master binary (e.g., auth adapters). Not user-editable. |
+| 2 | **Project-local** | `.puppet-master/plugins/<plugin_id>/` in the active project root. |
+| 3 | **Global** | `~/.config/puppet-master/plugins/<plugin_id>/` |
+| 4 (last) | **Config package list** | `config.plugins[]` — package specifiers or `file://` local paths. |
+
+ContractRef: PolicyRule:Decision_Policy.md§2
+
+### 2.2 Plugin manifest
+
+Each plugin directory MUST contain a `plugin.json` manifest:
+
+```json
+{
+  "id": "my-plugin",
+  "name": "My Plugin",
+  "version": "0.1.0",
+  "description": "Short description of what this plugin does.",
+  "hooks": ["tool.execute.before", "tool.execute.after"],
+  "tools": ["my-custom-tool"],
+  "entry": "plugin.wasm"
+}
+```
+
+| Field | Required | Type | Description |
+|-------|----------|------|-------------|
+| `id` | **Required** | `string` | Unique plugin ID. Regex: `^[a-z][a-z0-9-]{1,48}[a-z0-9]$`. MUST match directory name. |
+| `name` | **Required** | `string` | Human-readable display name. Max 100 characters. |
+| `version` | **Required** | `string` | Semver version string. |
+| `description` | **Required** | `string` | Max 500 characters. |
+| `hooks` | Recommended | `string[]` | List of hook event names this plugin subscribes to (from §4). |
+| `tools` | Optional | `string[]` | List of custom tool names this plugin registers (§6). |
+| `entry` | **Required** | `string` | Relative path to the plugin entry point (WASM module, subprocess-based entry, or dynamic library). JavaScript/TypeScript/Bun entries are OpenCode compatibility evidence only and are not a Puppet Master runtime dependency. |
+
+ContractRef: ContractName:Plans/Plugins_System.md#DISCOVERY
+
+### 2.3 Deduplication
+
+If the same `id` appears in multiple sources, the **first-discovered instance wins** (by priority order in §2.1). Later duplicates are skipped and a warning is logged.
+
+---
+
+## 3. Load order and execution model
+
+### 3.1 Auto-load prohibition
+
+PM MUST NOT auto-load executable plugin code from config without explicit user approval. This is the plugin no-auto-load executable-code rule.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+
+Required behavior:
+- first-time plugin load shows source, declared hooks, requested capabilities, and trust implications
+- approval is version/hash-sensitive; source change requires new approval
+- config-only discovery does not imply execution approval
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 3.2 Deterministic load order
+
+Plugins are loaded in strict priority order (§2.1). Within a single source (e.g., project-local), plugins are loaded in lexicographic order by `id`.
+
+Rule: Given the same set of plugins on disk and in config, the load order MUST be identical across runs.
+
+ContractRef: PolicyRule:Decision_Policy.md§3
+
+### 3.2 Plugin lifecycle
+
+1. **Discover:** Walk discovery paths (§2.1); collect valid manifests.
+2. **Validate:** Parse `plugin.json`; reject plugins with invalid manifests (log warning, skip).
+3. **Initialize:** Load the entry module; pass a `PluginContext` object (§3.4). The plugin registers hooks and custom tools.
+4. **Active:** Hooks are invoked throughout the session.
+5. **Teardown:** On session end, a `session.end` event fires; plugins perform cleanup. Puppet Master then unloads plugins.
+
+### 3.3 Hook execution order
+
+<a id="HOOK-EXECUTION-ORDER"></a>
+
+When an event fires, all registered hooks for that event are invoked in **plugin load order** (§3.1). Within a single plugin, if multiple handlers exist for the same event, they execute in registration order.
+
+Rule: Hook execution order MUST be deterministic. Internal plugins execute first, then project-local, then global, then config-sourced.
+
+ContractRef: ContractName:Plans/Plugins_System.md#LOAD-ORDER
+
+### 3.4 Plugin context object
+
+<a id="PLUGIN-CONTEXT"></a>
+
+When a plugin is initialized, it receives a `PluginContext`:
+
+```
+PluginContext {
+  project_root: Option<PathBuf>,       // Active project root (None if no project)
+  global_config_dir: PathBuf,          // ~/.config/puppet-master/
+  plugin_data_dir: PathBuf,            // Per-plugin persistent storage dir
+  register_hook: fn(event, handler),   // Register a hook callback
+  register_tool: fn(tool_def),         // Register a custom tool (§6)
+  log: fn(level, message),             // Structured log emitter (§8)
+}
+```
+
+The `PluginContext` is the sole API surface for plugins. Plugins MUST NOT access Puppet Master internals outside this interface.
+
+ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+
+---
+
+## 4. Hook events
+
+<a id="HOOK-EVENTS"></a>
+
+The following hook events are defined. Each event specifies its input shape and the allowed return actions.
+
+Rule: Every hook event MUST be listed in this table. New events require an update to this document.
+
+ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Tools.md
+
+### 4.1 Tool execution hooks
+
+#### 4.1.1 Hook re-check invariant
+
+If a plugin hook modifies tool arguments, the modified arguments MUST be re-run through permission and validation checks before dispatch. Hooks may not widen permissions after the original check has passed.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+
+Required sequence:
+1. evaluate permission/validation on original arguments
+2. run arg-touching hook
+3. re-run permission/validation on modified arguments
+4. dispatch only if the re-check passes
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Executor_Protocol.md
+
+Plugins that declare arg-touching hooks require a higher-trust approval posture (signed or explicitly `/approved` elevated approval) than read-only hooks.
+
+ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/FinalGUISpec.md
+
+#### 4.1.2 Signed verification for arg-touching hooks
+
+Plugins that declare arg-touching hooks MUST be signed or explicitly approved at a higher trust level than read-only hooks. This is because arg-touching hooks can be used to inject malicious arguments after permission checks.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md
+
+
+<a id="HOOK-TOOL-EXECUTE"></a>
+
+#### `tool.execute.before`
+
+| Field | Value |
+|-------|-------|
+| **Fires** | Before a tool invocation is executed (after permission check passes). |
+| **Input** | `{ tool_name: String, args: Value, invocation_id: String }` |
+| **Returns** | `Continue` (proceed), `Continue(modified_args)` (proceed with changed args), or `Block(reason)` (abort tool call with reason). |
+
+#### `tool.execute.after`
+
+
+| Field | Value |
+|-------|-------|
+| **Fires** | After a tool invocation completes (success or error). |
+| **Input** | `{ tool_name: String, args: Value, result: ToolResult, invocation_id: String, duration_ms: u64 }` |
+| **Returns** | `Continue` (pass result through), or `Continue(modified_result)` (return modified result to the agent). |
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Contracts_V0.md#EventRecord
+
+### 4.2 Permission hooks
+
+<a id="HOOK-PERMISSION"></a>
+
+#### `permission.ask`
+
+| Field | Value |
+|-------|-------|
+| **Fires** | When the permission engine resolves a tool invocation to `ask` (before presenting to user). |
+| **Input** | `{ tool_name: String, args: Value, resolved_action: "ask" }` |
+| **Returns** | `Continue` (present ask UI), `Allow` (auto-approve), or `Deny(reason)`. |
+
+Rule: Plugin overrides of permission decisions MUST be logged to the event ledger as `plugin.permission.override` events.
+
+ContractRef: ContractName:Plans/Permissions_System.md#ASK-FLOW
+
+### 4.3 Session hooks
+
+<a id="HOOK-SESSION"></a>
+
+#### `session.start`
+
+| Field | Value |
+|-------|-------|
+| **Fires** | After all plugins are initialized and before the first user message is processed. |
+| **Input** | `{ session_id: String, project_root: Option<PathBuf> }` |
+| **Returns** | `Continue` only. |
+
+#### `session.end`
+
+| Field | Value |
+|-------|-------|
+| **Fires** | Before plugin teardown, after the last interaction in the session. |
+| **Input** | `{ session_id: String, summary: Option<String> }` |
+| **Returns** | `Continue` only. |
+
+### 4.4 Message hooks
+
+<a id="HOOK-MESSAGE"></a>
+
+#### `chat.message`
+
+| Field | Value |
+|-------|-------|
+| **Fires** | When a new user message is received, before prompt assembly. |
+| **Input** | `{ message_text: String, session_id: String }` |
+| **Returns** | `Continue` or `Continue(modified_text)`. |
+
+#### `chat.params`
+
+| Field | Value |
+|-------|-------|
+| **Fires** | Before sending the assembled prompt to the LLM provider. |
+| **Input** | `{ temperature: Option<f64>, top_p: Option<f64>, max_tokens: Option<u32>, model: String }` |
+| **Returns** | `Continue` or `Continue(modified_params)`. |
+
+### 4.5 Compaction hook
+
+<a id="HOOK-COMPACTION"></a>
+
+#### `session.compacting`
+
+| Field | Value |
+|-------|-------|
+| **Fires** | When auto-compaction is triggered (context usage exceeds threshold). |
+| **Input** | `{ session_id: String, current_context: Vec<ContextItem>, compaction_prompt: String }` |
+| **Returns** | `Continue` (use default compaction), `InjectContext(additional_items: Vec<ContextItem>)` (append items to compaction context), or `ReplacePrompt(new_prompt: String)` (replace the entire compaction prompt). |
+
+Rule: Only one plugin MAY return `ReplacePrompt` per compaction event. If multiple plugins attempt `ReplacePrompt`, the **first by load order** wins; subsequent `ReplacePrompt` returns are downgraded to `InjectContext` with a warning logged.
+
+ContractRef: ContractName:Plans/Plugins_System.md#HOOK-EXECUTION-ORDER
+
+### 4.6 Shell environment hook
+
+#### `shell.env`
+
+| Field | Value |
+|-------|-------|
+| **Fires** | Before a bash/shell tool invocation, after environment is assembled. |
+| **Input** | `{ env: HashMap<String, String> }` |
+| **Returns** | `Continue` or `Continue(modified_env)`. |
+
+### 4.7 System prompt hook
+
+#### `system.prompt.transform`
+
+| Field | Value |
+|-------|-------|
+| **Fires** | After the system prompt is assembled, before sending to the provider. |
+| **Input** | `{ system_parts: Vec<String> }` |
+| **Returns** | `Continue` or `Continue(modified_parts)`. |
+
+---
+
+## 5. Hook return semantics
+
+<a id="HOOK-RETURNS"></a>
+
+All hooks return one of the following actions:
+
+| Action | Meaning |
+|--------|---------|
+| `Continue` | Proceed with the pipeline unchanged. |
+| `Continue(modified)` | Proceed with the modified payload. The next hook in the chain receives the modified version. |
+| `Block(reason)` | Abort the pipeline. Only applicable to `tool.execute.before`. The reason is returned to the agent as an error. |
+| `Allow` | Auto-approve (only for `permission.ask`). |
+| `Deny(reason)` | Auto-deny (only for `permission.ask`). |
+| `InjectContext(items)` | Append context items (only for `session.compacting`). |
+| `ReplacePrompt(prompt)` | Replace compaction prompt (only for `session.compacting`). |
+
+Rule: If a hook raises an unhandled error (panic, timeout), it is treated as `Continue` and a warning is logged. Default hook timeout: 5 seconds (configurable via `config.plugins.hook_timeout_ms`, default `5000`).
+
+ContractRef: PolicyRule:Decision_Policy.md§2
+
+---
+
+## 6. Custom tool registration
+
+<a id="CUSTOM-TOOLS"></a>
+
+### 6.1 Registration
+
+Plugins MAY register custom tools via `PluginContext.register_tool(tool_def)`. The `tool_def` includes:
+
+```
+ToolDefinition {
+  name: String,                        // Tool name (validated per Plans/Tools.md §3)
+  description: String,                 // Tool description shown to agents
+  input_schema: Value,                 // JSON Schema for tool input
+  execute: fn(args: Value) -> Result<ToolResult>,  // Execution handler
+}
+```
+
+### 6.2 Name collision behavior
+
+<a id="TOOL-COLLISION"></a>
+
+Rule: When a plugin registers a tool whose name collides with a built-in tool, the **built-in tool takes precedence** by default. The plugin tool is registered under a namespaced alias: `<plugin_id>.<tool_name>` (e.g., `my-plugin.read`).
+
+A config flag `config.plugins.allow_tool_override` (default `false`) MAY be set to `true` to allow plugin tools to override built-in tools. When enabled, plugin tools registered later in load order override earlier ones.
+
+ContractRef: ContractName:Plans/Tools.md
+
+### 6.3 Central registry routing
+
+All plugin-registered tools are added to the central tool registry (`Plans/Tools.md`). They are subject to the same permission policy engine (`Plans/Permissions_System.md`). Unknown tools default to `ask` permission.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md#DEFAULTS
+
+### 6.4 Core-surface /extensibility and host-policy boundaries
+
+Plugin-added subviews/cards/actions (`/cards/actions`) may extend core surfaces, but they MUST NOT replace reserved surface IDs, panel routes, command-family meaning, or deep-link target meaning. Plugin-added navigation into core surfaces must use the canonical context payloads owned by the target surface.
+
+Plugin-added tools, hooks, MCP bridges, and other `/extensibility` capabilities that contact external hosts, registry hosts, or Kubernetes clusters must declare contacted domains/hosts before execution. They inherit `registry_hosts[]`, `k8s_host_policy`, `/network/trust`, proxy, and permission policy checks before dispatch; policy denial uses canonical host-policy blocked reasons and ordered `allowed_action_ids[]`, not plugin-private recovery semantics.
+
+Hooks must not silently rewrite protected routing fields, including remote host/base URL, registry host, kube context, namespace, or receipt identity keys. If a plugin hook changes any protected routing field, the modified invocation is revalidated through the permission engine and may be blocked with canonical `/denied` outcomes.
+
+ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/UI_Command_Catalog.md
+
+---
+
+## 7. Plugin configuration
+
+<a id="PLUGIN-CONFIG"></a>
+
+### 7.1 Config shape
+
+```toml
+[plugins]
+hook_timeout_ms = 5000
+allow_tool_override = false
+
+
+<<< CONTEXT_AFTER 399-410 >>>
+# Package list (config-sourced plugins)
+packages = [
+  "puppet-master-lint-hook@0.1.0",
+  "file:///home/user/my-local-plugin",
+]
+
+# Per-plugin enable/disable
+[plugins.disabled]
+"noisy-plugin" = true
+```
+
+### 7.2 Enable/disable

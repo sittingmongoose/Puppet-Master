@@ -1,0 +1,421 @@
+<<< CONTEXT_BEFORE canonical_document_lines=19033-19044 >>>
+L00019033	- src/core/detection/
+L00019034	- language.rs
+L00019035	- framework.rs
+L00019036	negative_constraints: []
+L00019037	compatibility_only_notes: []
+L00019038	stale_retired_dispositions: []
+L00019039	owner_boundary_notes: []
+L00019040	owner_hints:
+L00019041	- Plans/orchestrator-subagent-integration.md
+L00019042	preserved_contractrefs: []
+L00019043	```
+L00019044	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=19045-19436 >>>
+L00019045	### OSI-211 - Project Context Detection And Cache API
+L00019046	
+L00019047	```yaml
+L00019048	plan_unit_id: OSI-211
+L00019049	unit_type: requirement
+L00019050	status: accepted
+L00019051	owner_doc: Plans/orchestrator-subagent-integration.md
+L00019052	canonical_text: >-
+L00019053	  Project context detection implements ProjectContext, DetectedLanguage, workspace-path scanning for Cargo.toml,
+L00019054	  package.json, and similar markers, caches results per workspace path or in memory for the run, and exposes a
+L00019055	  detect_project_context(workspace: &Path) -> Result<ProjectContext> style API.
+L00019056	gui_related: false
+L00019057	gui_classification_reason: >-
+L00019058	  This unit covers backend detection and caching behavior rather than GUI presentation.
+L00019059	split_recommended: false
+L00019060	depends_on:
+L00019061	- OSI-038
+L00019062	- OSI-096
+L00019063	- OSI-204
+L00019064	unblocks: []
+L00019065	acceptance_criteria:
+L00019066	- Covered source spans remain losslessly available for exact-text audit.
+L00019067	- Detection results are cached so selector and orchestrator consumers do not recompute every time.
+L00019068	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00019069	validation_surfaces:
+L00019070	- >-
+L00019071	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00019072	- python3 scripts/pm-plan-index.py validate
+L00019073	reasoning_tier: standard
+L00019074	context_scope: orchestrator_subagent_standardization
+L00019075	implementation_surfaces:
+L00019076	- Plans/orchestrator-subagent-integration.md
+L00019077	risk_class: project_context_detection_cache_api
+L00019078	node_compile_hint:
+L00019079	  mode: project_context_detection_cache_api
+L00019080	  create_worknodes: false
+L00019081	source_lineage:
+L00019082	- >-
+L00019083	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0127
+L00019084	preserved_exact_tokens:
+L00019085	- ProjectContext
+L00019086	- DetectedLanguage
+L00019087	- Cargo.toml
+L00019088	- package.json
+L00019089	- Cache results per workspace path
+L00019090	- in-memory for the run
+L00019091	- "detect_project_context(workspace: &Path) -> Result<ProjectContext>"
+L00019092	negative_constraints:
+L00019093	- Phase 2 and the orchestrator must not recompute project context every time.
+L00019094	compatibility_only_notes: []
+L00019095	stale_retired_dispositions: []
+L00019096	owner_boundary_notes: []
+L00019097	owner_hints:
+L00019098	- Plans/orchestrator-subagent-integration.md
+L00019099	preserved_contractrefs: []
+L00019100	```
+L00019101	
+L00019102	### OSI-212 - Registry-Backed Selector Canonical List
+L00019103	
+L00019104	```yaml
+L00019105	plan_unit_id: OSI-212
+L00019106	unit_type: requirement
+L00019107	status: accepted
+L00019108	owner_doc: Plans/orchestrator-subagent-integration.md
+L00019109	canonical_text: >-
+L00019110	  The subagent selector uses the Known subagent names table from Gaps section 4 as canonical list lineage, preserving the
+L00019111	  DRY:DATA:subagent_names source token while aligning implementation to the shared subagent_registry module.
+L00019112	gui_related: false
+L00019113	gui_classification_reason: >-
+L00019114	  This unit covers selector registry data ownership rather than GUI presentation.
+L00019115	split_recommended: false
+L00019116	depends_on:
+L00019117	- OSI-060
+L00019118	- OSI-205
+L00019119	unblocks: []
+L00019120	acceptance_criteria:
+L00019121	- Covered source spans remain losslessly available for exact-text audit.
+L00019122	- Selector name lists are routed through shared registry/data ownership rather than local hardcoded lists.
+L00019123	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00019124	validation_surfaces:
+L00019125	- >-
+L00019126	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00019127	- python3 scripts/pm-plan-index.py validate
+L00019128	reasoning_tier: standard
+L00019129	context_scope: orchestrator_subagent_standardization
+L00019130	implementation_surfaces:
+L00019131	- Plans/orchestrator-subagent-integration.md
+L00019132	risk_class: registry_backed_selector_canonical_list
+L00019133	node_compile_hint:
+L00019134	  mode: registry_backed_selector_canonical_list
+L00019135	  create_worknodes: false
+L00019136	source_lineage:
+L00019137	- >-
+L00019138	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0128
+L00019139	preserved_exact_tokens:
+L00019140	- Known subagent names
+L00019141	- Gaps §4
+L00019142	- DRY:DATA:subagent_names
+L00019143	- subagent_registry
+L00019144	negative_constraints:
+L00019145	- Selector implementation must not hardcode subagent names outside the canonical registry/data owner.
+L00019146	compatibility_only_notes:
+L00019147	- >-
+L00019148	  DRY:DATA:subagent_names is preserved as source lineage while current canonical naming also uses DRY:DATA:subagent_registry.
+L00019149	stale_retired_dispositions: []
+L00019150	owner_boundary_notes: []
+L00019151	owner_hints:
+L00019152	- Plans/orchestrator-subagent-integration.md
+L00019153	preserved_contractrefs: []
+L00019154	```
+L00019155	
+L00019156	### OSI-213 - Pure Subagent Selector API
+L00019157	
+L00019158	```yaml
+L00019159	plan_unit_id: OSI-213
+L00019160	unit_type: requirement
+L00019161	status: accepted
+L00019162	owner_doc: Plans/orchestrator-subagent-integration.md
+L00019163	canonical_text: >-
+L00019164	  SubagentSelector exposes SubagentSelector::new(project_context) and select_for_tier(tier_type, tier_context) -> Vec<String>
+L00019165	  over language, framework, and domain mappings from Tier-Level Subagent Strategy, with no platform calls in selector logic.
+L00019166	gui_related: false
+L00019167	gui_classification_reason: >-
+L00019168	  This unit covers backend selector API behavior rather than GUI presentation.
+L00019169	split_recommended: false
+L00019170	depends_on:
+L00019171	- OSI-060
+L00019172	- OSI-206
+L00019173	unblocks: []
+L00019174	acceptance_criteria:
+L00019175	- Covered source spans remain losslessly available for exact-text audit.
+L00019176	- Selector behavior remains pure logic and does not invoke platform runners directly.
+L00019177	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00019178	validation_surfaces:
+L00019179	- >-
+L00019180	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00019181	- python3 scripts/pm-plan-index.py validate
+L00019182	reasoning_tier: standard
+L00019183	context_scope: orchestrator_subagent_standardization
+L00019184	implementation_surfaces:
+L00019185	- Plans/orchestrator-subagent-integration.md
+L00019186	risk_class: pure_subagent_selector_api
+L00019187	node_compile_hint:
+L00019188	  mode: pure_subagent_selector_api
+L00019189	  create_worknodes: false
+L00019190	source_lineage:
+L00019191	- >-
+L00019192	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0128
+L00019193	preserved_exact_tokens:
+L00019194	- SubagentSelector::new(project_context)
+L00019195	- "select_for_tier(tier_type, tier_context) -> Vec<String>"
+L00019196	- language/framework/domain mappings
+L00019197	- Tier-Level Subagent Strategy
+L00019198	- No platform calls yet; pure logic
+L00019199	negative_constraints:
+L00019200	- The selector API must not make platform calls.
+L00019201	compatibility_only_notes: []
+L00019202	stale_retired_dispositions: []
+L00019203	owner_boundary_notes: []
+L00019204	owner_hints:
+L00019205	- Plans/orchestrator-subagent-integration.md
+L00019206	preserved_contractrefs: []
+L00019207	```
+L00019208	
+L00019209	### OSI-214 - Orchestrator Tier Config And Subagent Merge Policy
+L00019210	
+L00019211	```yaml
+L00019212	plan_unit_id: OSI-214
+L00019213	unit_type: requirement
+L00019214	status: accepted
+L00019215	owner_doc: Plans/orchestrator-subagent-integration.md
+L00019216	canonical_text: >-
+L00019217	  Orchestrator integration uses src/core/orchestrator.rs and tier_config_for(tier_type) -> &TierConfig as the source for
+L00019218	  platform, model, and plan_mode, then reads enable_tier_subagents and subagent config, applies tier_overrides, filters
+L00019219	  disabled_subagents, and adds required_subagents.
+L00019220	gui_related: false
+L00019221	gui_classification_reason: >-
+L00019222	  This unit covers backend orchestration configuration merge behavior rather than GUI presentation.
+L00019223	split_recommended: false
+L00019224	depends_on:
+L00019225	- OSI-044
+L00019226	- OSI-061
+L00019227	- OSI-105
+L00019228	- OSI-206
+L00019229	unblocks: []
+L00019230	acceptance_criteria:
+L00019231	- Covered source spans remain losslessly available for exact-text audit.
+L00019232	- The same config source as tier config governs subagent enablement and overrides.
+L00019233	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00019234	validation_surfaces:
+L00019235	- >-
+L00019236	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00019237	- python3 scripts/pm-plan-index.py validate
+L00019238	reasoning_tier: standard
+L00019239	context_scope: orchestrator_subagent_standardization
+L00019240	implementation_surfaces:
+L00019241	- Plans/orchestrator-subagent-integration.md
+L00019242	risk_class: orchestrator_tier_config_subagent_merge_policy
+L00019243	node_compile_hint:
+L00019244	  mode: orchestrator_tier_config_subagent_merge_policy
+L00019245	  create_worknodes: false
+L00019246	source_lineage:
+L00019247	- >-
+L00019248	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0129
+L00019249	preserved_exact_tokens:
+L00019250	- src/core/orchestrator.rs
+L00019251	- "tier_config_for(tier_type) -> &TierConfig"
+L00019252	- enable_tier_subagents
+L00019253	- GuiConfig
+L00019254	- tier_overrides
+L00019255	- disabled_subagents
+L00019256	- required_subagents
+L00019257	negative_constraints: []
+L00019258	compatibility_only_notes: []
+L00019259	stale_retired_dispositions: []
+L00019260	owner_boundary_notes: []
+L00019261	owner_hints:
+L00019262	- Plans/orchestrator-subagent-integration.md
+L00019263	preserved_contractrefs: []
+L00019264	```
+L00019265	
+L00019266	### OSI-215 - Subagent ExecutionRequest Runner Boundary
+L00019267	
+L00019268	```yaml
+L00019269	plan_unit_id: OSI-215
+L00019270	unit_type: requirement
+L00019271	status: accepted
+L00019272	owner_doc: Plans/orchestrator-subagent-integration.md
+L00019273	canonical_text: >-
+L00019274	  Subagent execution builds an ExecutionRequest with coordination context, model, and plan_mode from tier_config, then runs
+L00019275	  through the existing platform runner path; build_subagent_invocation and execute_with_subagent may take tier_config and use
+L00019276	  tier_config_for(...).platform and .model without a separate get_platform_for_tier helper.
+L00019277	gui_related: false
+L00019278	gui_classification_reason: >-
+L00019279	  This unit covers backend runner invocation boundaries rather than GUI presentation.
+L00019280	split_recommended: false
+L00019281	depends_on:
+L00019282	- OSI-044
+L00019283	- OSI-046
+L00019284	- OSI-061
+L00019285	unblocks: []
+L00019286	acceptance_criteria:
+L00019287	- Covered source spans remain losslessly available for exact-text audit.
+L00019288	- Subagent runs use the existing platform runner path and ExecutionRequest contract.
+L00019289	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00019290	validation_surfaces:
+L00019291	- >-
+L00019292	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00019293	- python3 scripts/pm-plan-index.py validate
+L00019294	reasoning_tier: standard
+L00019295	context_scope: orchestrator_subagent_standardization
+L00019296	implementation_surfaces:
+L00019297	- Plans/orchestrator-subagent-integration.md
+L00019298	risk_class: subagent_executionrequest_runner_boundary
+L00019299	node_compile_hint:
+L00019300	  mode: subagent_executionrequest_runner_boundary
+L00019301	  create_worknodes: false
+L00019302	source_lineage:
+L00019303	- >-
+L00019304	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0129
+L00019305	preserved_exact_tokens:
+L00019306	- ExecutionRequest
+L00019307	- prompt with coordination context
+L00019308	- plan_mode from tier_config
+L00019309	- existing platform runner
+L00019310	- build_subagent_invocation
+L00019311	- execute_with_subagent
+L00019312	- .platform
+L00019313	- .model
+L00019314	- get_platform_for_tier
+L00019315	negative_constraints:
+L00019316	- No separate get_platform_for_tier is needed when tier_config_for provides platform and model.
+L00019317	compatibility_only_notes: []
+L00019318	stale_retired_dispositions: []
+L00019319	owner_boundary_notes:
+L00019320	- Consumes the executor/run request boundary from Plans/Executor_Protocol.md.
+L00019321	owner_hints:
+L00019322	- Plans/orchestrator-subagent-integration.md
+L00019323	preserved_contractrefs: []
+L00019324	```
+L00019325	
+L00019326	### OSI-216 - Orchestrator Coordination State Around Execution
+L00019327	
+L00019328	```yaml
+L00019329	plan_unit_id: OSI-216
+L00019330	unit_type: requirement
+L00019331	status: accepted
+L00019332	owner_doc: Plans/orchestrator-subagent-integration.md
+L00019333	canonical_text: >-
+L00019334	  Orchestrator subagent execution registers the agent in coordination state before execution, gets coordination context for
+L00019335	  prompt injection, updates coordination state during execution for active files and operations, and unregisters after
+L00019336	  completion.
+L00019337	gui_related: false
+L00019338	gui_classification_reason: >-
+L00019339	  This unit covers backend coordination-state lifecycle behavior rather than GUI presentation.
+L00019340	split_recommended: false
+L00019341	depends_on:
+L00019342	- OSI-026
+L00019343	- OSI-044
+L00019344	- OSI-046
+L00019345	unblocks: []
+L00019346	acceptance_criteria:
+L00019347	- Covered source spans remain losslessly available for exact-text audit.
+L00019348	- Coordination state is updated before, during, and after subagent execution.
+L00019349	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00019350	validation_surfaces:
+L00019351	- >-
+L00019352	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00019353	- python3 scripts/pm-plan-index.py validate
+L00019354	reasoning_tier: standard
+L00019355	context_scope: orchestrator_subagent_standardization
+L00019356	implementation_surfaces:
+L00019357	- Plans/orchestrator-subagent-integration.md
+L00019358	risk_class: orchestrator_coordination_state_around_execution
+L00019359	node_compile_hint:
+L00019360	  mode: orchestrator_coordination_state_around_execution
+L00019361	  create_worknodes: false
+L00019362	source_lineage:
+L00019363	- >-
+L00019364	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0129
+L00019365	preserved_exact_tokens:
+L00019366	- Register agent in coordination state
+L00019367	- Get coordination context
+L00019368	- Update coordination state
+L00019369	- Unregister agent
+L00019370	- files being edited
+L00019371	- current operation
+L00019372	negative_constraints: []
+L00019373	compatibility_only_notes: []
+L00019374	stale_retired_dispositions: []
+L00019375	owner_boundary_notes: []
+L00019376	owner_hints:
+L00019377	- Plans/orchestrator-subagent-integration.md
+L00019378	preserved_contractrefs: []
+L00019379	```
+L00019380	
+L00019381	### OSI-217 - Error Pattern Detection Selection Feed
+L00019382	
+L00019383	```yaml
+L00019384	plan_unit_id: OSI-217
+L00019385	unit_type: requirement
+L00019386	status: accepted
+L00019387	owner_doc: Plans/orchestrator-subagent-integration.md
+L00019388	canonical_text: >-
+L00019389	  Error pattern detection parses iteration output in the orchestrator or a small stdout/stderr helper, updates
+L00019390	  ExecutionUnitContext.has_errors or error_patterns from the last iteration result, and uses simple v1 checks such as regex,
+L00019391	  exit codes, non-zero exit, and stderr keywords for compilation error, test failure, and security issue signals.
+L00019392	gui_related: false
+L00019393	gui_classification_reason: >-
+L00019394	  This unit covers backend output parsing and selector feed behavior rather than GUI presentation.
+L00019395	split_recommended: false
+L00019396	depends_on:
+L00019397	- OSI-060
+L00019398	- OSI-061
+L00019399	unblocks: []
+L00019400	acceptance_criteria:
+L00019401	- Covered source spans remain losslessly available for exact-text audit.
+L00019402	- Error signals can feed the next subagent selection pass.
+L00019403	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00019404	validation_surfaces:
+L00019405	- >-
+L00019406	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00019407	- python3 scripts/pm-plan-index.py validate
+L00019408	reasoning_tier: standard
+L00019409	context_scope: orchestrator_subagent_standardization
+L00019410	implementation_surfaces:
+L00019411	- Plans/orchestrator-subagent-integration.md
+L00019412	risk_class: error_pattern_detection_selection_feed
+L00019413	node_compile_hint:
+L00019414	  mode: error_pattern_detection_selection_feed
+L00019415	  create_worknodes: false
+L00019416	source_lineage:
+L00019417	- >-
+L00019418	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0130
+L00019419	preserved_exact_tokens:
+L00019420	- ExecutionUnitContext.has_errors
+L00019421	- error_patterns
+L00019422	- compilation error
+L00019423	- test failure
+L00019424	- security issue
+L00019425	- regex on stderr
+L00019426	- exit codes
+L00019427	- non-zero exit + keyword in stderr
+L00019428	negative_constraints: []
+L00019429	compatibility_only_notes: []
+L00019430	stale_retired_dispositions: []
+L00019431	owner_boundary_notes: []
+L00019432	owner_hints:
+L00019433	- Plans/orchestrator-subagent-integration.md
+L00019434	preserved_contractrefs: []
+L00019435	```
+L00019436	
+
+<<< CONTEXT_AFTER canonical_document_lines=19437-19448 >>>
+L00019437	### OSI-218 - SubagentManager Optional V1 Boundary
+L00019438	
+L00019439	```yaml
+L00019440	plan_unit_id: OSI-218
+L00019441	unit_type: requirement
+L00019442	status: accepted
+L00019443	owner_doc: Plans/orchestrator-subagent-integration.md
+L00019444	canonical_text: >-
+L00019445	  SubagentManager is referenced as coming from the interview plan, but for v1 it is optional: if unavailable, implement only
+L00019446	  the selection and invocation needed by Phase 3 through the existing runner, with no separate manager required beyond a thin
+L00019447	  workspace-path wrapper.
+L00019448	gui_related: false

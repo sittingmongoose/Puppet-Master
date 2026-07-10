@@ -1,0 +1,380 @@
+<<< CONTEXT_BEFORE 364-375 >>>
+## Runtime Attempt Identity vs Provider Continuity (2026-03-09)
+
+Runtime `attempt_id` is Puppet Master's per-dispatch identity.
+
+Rules:
+- retries, prerequisite resumes, remediation reruns, and restore-before-reruns always create a new runtime `attempt_id`
+- upstream provider/session continuity uses a separate `provider_attempt_ref?`
+- provider/session IDs MUST NOT be reused as runtime `attempt_id`
+- reconnect flows may observe or resume streaming for the same runtime attempt but MUST NOT create hidden provider-local retry identity
+## Canonical data-shape reconciliation
+### Required data shape
+
+
+<<< AUTHORITATIVE_CORE 376-726 >>>
+#### Acceptance carry-through
+- Move OpenCode session IDs to provider-native correlation fields instead of canonical thread_id
+- Define Approval Scope Key across actor/lane/run/account context and reuse it across permissions, HITL, doom-loop, and session approval caching
+- In `## Canonical data-shape reconciliation` -> `### Required data shape`, store upstream OpenCode/A2A session identifiers in provider-native correlation fields rather than canonical `thread_id`.
+- Keep runtime/provider continuity split by requiring bridge-only correlation fields plus `provider_attempt_ref?` without replacing PM runtime identity.
+- Define and reuse `approval_scope_key` across permissions, HITL, doom-loop protection, and session approval caching for this bridge surface.
+
+#### P5 provider-stream continuity recovery requirements
+
+Provider-stream continuity is resolved through the versioned common diagnostic-details slot in §5.1A and the facade owner in `Plans/CLI_Bridged_Providers.md`.
+
+Normative requirements:
+- every runtime-scoped reserved diagnostic category exposes PM runtime `attempt_id` through `ProviderDiagnosticDetailsV1`
+- reconnect and observe-only provider flows preserve the same PM `attempt_id`
+- retries, remediation reruns, prerequisite resumes, and restore-before-reruns create a new PM `attempt_id`
+- `provider_attempt_ref?` records upstream provider/session/task continuity and MUST NOT replace PM runtime identity
+- `correlation_id?` and `sequence?` preserve bridge ordering and replay/repair evidence when the upstream protocol provides it
+- actor, account, trust, switch, and pressure signals are carried as references to owner records through `actor_ref?`, `account_ref?`, `trust_state_ref?`, and `pressure_state_ref?`
+- `tier_boundary`, `from_tier`, and `to_tier` are compatibility/source diagnostic labels only; they do not reintroduce tier-era runtime ownership
+- Treat interview-phase `tier_id`-style coordination keys as legacy/local labels only; do not let them become canonical ownership or routing keys.
+- Add explicit versioning/migration notes when A2A or bridged fields grow beyond `ProviderDiagnosticDetailsV1`.
+- Model-wave synthesis from Claude Opus 4.6 fleet sweep across Plans/**. Focuses on Orchestrator-model impact from the transition away from Phase/Task/Subtask/Iteration tier hierarchy toward a node-graph / work-package / feature-seam execution model.
+- OpenCode and other bridged runtimes may switch or obscure upstream accounts behind the bridge; the docs currently do not say whether this is capturable, opaque-but-accepted, or a hard gap.
+- Keep page-tab and panel-subview resolution as destination-layer concepts, not core identity concepts.
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Provider_Stream_Mapping_External_Reference_A2A.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### PSMERA-002 - Document Authority And Compliance Anchor
+
+```yaml
+plan_unit_id: PSMERA-002
+unit_type: structural_anchor
+status: accepted
+owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+canonical_text: >-
+  This document remains the canonical live owner-section external reference for provider/A2A stream mapping
+  and preserves product, runtime, storage, UI, and governance authority while following DRY_Rules,
+  Contracts_V0, Puppet Master naming, and Decision_Policy deterministic defaults.
+gui_related: true
+gui_classification_reason: "This unit preserves owner-section metadata that names product/runtime/storage/UI/governance authority."
+split_recommended: true
+depends_on:
+  - "PDS-003"
+  - "PDS-004"
+  - "PNC-001"
+  - "BPM-004"
+unblocks: []
+acceptance_criteria:
+  - "Document Authority And Compliance Anchor remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: provider_stream_mapping_drift
+reasoning_tier: standard
+context_scope: provider_stream_mapping
+implementation_surfaces:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+node_compile_hint:
+  mode: plan_doc_authority_anchor
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0001"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0002"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0003"
+preserved_exact_tokens:
+  - "Provider Stream Mapping — External Reference (A2A Bridge)"
+  - "Canonical owner-section requirements"
+  - "product, runtime, storage, UI, and governance details"
+  - "Provider-native correlation and approval scope"
+  - "Compliance"
+  - "Plans/DRY_Rules.md"
+  - "Plans/Contracts_V0.md"
+  - "Puppet Master"
+  - "No open questions"
+  - "Plans/Decision_Policy.md"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md, PolicyRule:Decision_Policy.md"
+owner_hints:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+  - "Plans/DRY_Rules.md"
+  - "Plans/Contracts_V0.md"
+  - "Plans/Decision_Policy.md"
+split_recommendation_reason: "The authority span names mixed product/runtime/storage/UI/governance surfaces but remains a structural owner-section anchor, not implementation coverage by itself."
+```
+
+### PSMERA-003 - External-Only A2A Interop Boundary
+
+```yaml
+plan_unit_id: PSMERA-003
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+canonical_text: >-
+  A2A mappings are future-interop-only external bridge guidance: they inform adapter implementors but are
+  rejected for PM-internal orchestration and must not redefine child-run supervision, crew coordination,
+  timeout propagation, requested/effective runtime state, retry, resume, lineage, budgets, permissions, tools,
+  billing, FileSafe, storage, prompt/cache, MCP lifecycle, or orchestrator ownership.
+gui_related: false
+gui_classification_reason: "This unit constrains external bridge ownership rather than visual presentation."
+split_recommended: false
+depends_on:
+  - "PDS-003"
+  - "PDS-004"
+  - "PNC-001"
+  - "BPM-004"
+  - "CBP-004"
+unblocks: []
+acceptance_criteria:
+  - "External-Only A2A Interop Boundary remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: provider_stream_mapping_drift
+reasoning_tier: standard
+context_scope: provider_stream_mapping
+implementation_surfaces:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+node_compile_hint:
+  mode: external_a2a_boundary
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0004"
+preserved_exact_tokens:
+  - "V0 normalized stream events"
+  - "Plans/CLI_Bridged_Providers.md"
+  - "canonical external-reference guide"
+  - "not the SSOT for Puppet Master internal orchestration"
+  - "/future-interop-only"
+  - "A2A is REJECTED for internal PM orchestration"
+  - "run budgets"
+  - "permissions"
+  - "tool dispatch"
+  - "provider adapters"
+  - "billing"
+  - "file safety"
+  - "storage integrity"
+  - "prompt/cache behavior"
+  - "MCP lifecycle"
+  - "orchestrator ownership"
+  - "/resume"
+  - "circuit-breaker contract"
+negative_constraints:
+  - "A2A is rejected for internal PM orchestration."
+  - "The external-only bridge may map provider reconnect /resume evidence to the circuit-breaker contract, but it must not redefine PM-internal retry, resume, or child-run semantics."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md"
+  - "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md"
+owner_hints:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+  - "Plans/CLI_Bridged_Providers.md"
+  - "Plans/Contracts_V0.md"
+  - "Plans/orchestrator-subagent-integration.md"
+  - "Plans/storage-plan.md"
+```
+
+### PSMERA-004 - Backend Non-Goal Owner Boundaries
+
+```yaml
+plan_unit_id: PSMERA-004
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+canonical_text: >-
+  This external-reference document does not own the V0 event envelope, persistent storage semantics, tool
+  schemas, permissions, policy, transport mechanics beyond external bridge mapping, or PM-internal
+  orchestration, child-run control messages, crew scheduling, or runtime ceilings.
+gui_related: false
+gui_classification_reason: "This unit preserves backend and runtime owner boundaries rather than visual presentation."
+split_recommended: true
+depends_on:
+  - "PDS-003"
+  - "PDS-004"
+  - "PNC-001"
+  - "BPM-004"
+  - "CBP-004"
+unblocks: []
+acceptance_criteria:
+  - "Backend Non-Goal Owner Boundaries remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: provider_stream_mapping_drift
+reasoning_tier: standard
+context_scope: provider_stream_mapping
+implementation_surfaces:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+node_compile_hint:
+  mode: non_goal_owner_boundary
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0005"
+preserved_exact_tokens:
+  - "Redefining the V0 event envelope"
+  - "SSOT: `Plans/CLI_Bridged_Providers.md`"
+  - "Defining persistent storage semantics"
+  - "SSOT: `Plans/storage-plan.md`"
+  - "Defining tool schemas, permissions, or policy"
+  - "Plans/Tools.md"
+  - "Plans/FileSafe.md"
+  - "Specifying transport mechanics"
+  - "external bridge mapping surface"
+  - "PM-internal orchestration"
+  - "child-run control messages"
+  - "crew scheduling"
+  - "runtime ceilings"
+negative_constraints:
+  - "This document must not redefine V0 event envelopes, persistent storage semantics, tool schemas, permissions, policy, or PM-internal orchestration."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/orchestrator-subagent-integration.md"
+owner_hints:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+  - "Plans/CLI_Bridged_Providers.md"
+  - "Plans/storage-plan.md"
+  - "Plans/Tools.md"
+  - "Plans/FileSafe.md"
+  - "Plans/orchestrator-subagent-integration.md"
+```
+
+### PSMERA-005 - UI And Widget Non-Goal Boundary
+
+```yaml
+plan_unit_id: PSMERA-005
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+canonical_text: >-
+  This document must not define UI/UX behavior or widget rendering; GUI, widget, and user-visible rendering
+  consumers remain owned by the UI owner documents and only consume provider stream mapping outputs.
+gui_related: true
+gui_classification_reason: "This unit explicitly routes UI/UX and widget behavior to GUI owner documents."
+split_recommended: true
+depends_on:
+  - "PDS-003"
+  - "PDS-004"
+  - "PNC-001"
+  - "BPM-004"
+  - "AI-007"
+  - "AI-008"
+unblocks: []
+acceptance_criteria:
+  - "UI And Widget Non-Goal Boundary remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: provider_stream_mapping_drift
+reasoning_tier: standard
+context_scope: provider_stream_mapping
+implementation_surfaces:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+node_compile_hint:
+  mode: gui_consumer_boundary
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0005"
+preserved_exact_tokens:
+  - "Defining UI/UX behavior or widget rendering"
+  - "UI/UX"
+  - "widget rendering"
+  - "consumer"
+  - "provider stream mapping"
+negative_constraints:
+  - "Provider Stream Mapping must not define UI/UX behavior or widget rendering."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Widget_System.md, ContractName:Plans/UI_Command_Catalog.md"
+owner_hints:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+  - "Plans/FinalGUISpec.md"
+  - "Plans/Widget_System.md"
+  - "Plans/UI_Command_Catalog.md"
+```
+
+### PSMERA-006 - DRY Reference Routing Table
+
+```yaml
+plan_unit_id: PSMERA-006
+unit_type: reference
+status: accepted
+owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+canonical_text: >-
+  The DRY reference table preserves SSOT routing for the V0 event envelope, INV-001 tool correlation,
+  canonical terms, user-project output artifacts, Decision Policy, HITL semantics, and Overseer
+  responsibilities.
+gui_related: false
+gui_classification_reason: "This unit preserves reference routing and SSOT boundaries rather than visual presentation."
+split_recommended: false
+depends_on:
+  - "PDS-003"
+  - "PDS-004"
+  - "PNC-001"
+  - "BPM-004"
+  - "CBP-004"
+  - "AI-003"
+unblocks: []
+acceptance_criteria:
+  - "DRY Reference Routing Table remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: provider_stream_mapping_drift
+reasoning_tier: standard
+context_scope: provider_stream_mapping
+implementation_surfaces:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+node_compile_hint:
+  mode: reference_routing
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0006"
+preserved_exact_tokens:
+  - "References (DRY)"
+  - "V0 event envelope + event types table"
+  - "Architecture invariant INV-001"
+  - "Canonical terms"
+  - "User-project output artifacts"
+  - "Decision policy"
+  - "HITL semantics"
+  - "Overseer responsibilities"
+  - "Plans/Glossary.md"
+  - "Plans/Project_Output_Artifacts.md"
+  - "Plans/human-in-the-loop.md"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-001"
+owner_hints:
+  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+  - "Plans/DRY_Rules.md"
+  - "Plans/CLI_Bridged_Providers.md"
+  - "Plans/Architecture_Invariants.md"
+  - "Plans/Glossary.md"
+  - "Plans/Project_Output_Artifacts.md"
+  - "Plans/Decision_Policy.md"
+  - "Plans/human-in-the-loop.md"
+```
+
+
+<<< CONTEXT_AFTER 727-738 >>>
+### PSMERA-007 - V0 Event Type Whitelist
+
+```yaml
+plan_unit_id: PSMERA-007
+unit_type: runtime_contract
+status: accepted
+owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+canonical_text: >-
+  External bridge mappings may emit only the existing V0 event types text_delta, thinking_delta, tool_use,
+  tool_result, usage, auth_state, diagnostic, error, and done; this document introduces no new event types and
+  defers authoritative payload fields to CLI_Bridged_Providers.
+gui_related: false

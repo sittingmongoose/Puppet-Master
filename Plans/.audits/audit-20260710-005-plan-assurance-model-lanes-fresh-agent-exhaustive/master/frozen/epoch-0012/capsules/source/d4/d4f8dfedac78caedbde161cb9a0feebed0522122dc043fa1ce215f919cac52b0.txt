@@ -1,0 +1,418 @@
+<<< CONTEXT_BEFORE canonical_document_lines=8772-8783 >>>
+L00008772	- OpenCode
+L00008773	- Codex
+L00008774	- Cline
+L00008775	- Pi
+L00008776	negative_constraints: []
+L00008777	observed_signal: OpenCode issues report subagent reasoning-effort config gaps, Anthropic thinking signature failures, and TUI display mismatches; Codex issues report reasoning resetting, ignored custom model slugs, xhigh stalls, and model/effort change failures; Pi and Cline show provider-specific thinking controls causing errors or stale settings.
+L00008778	pm_current_coverage: Models_System already requires requested effort, effective provider wire value, unsupported/clamped effort disclosure, and runtime-qualified effort capability.
+L00008779	pm_gap_or_delta: PM needs a settlement object that proves whether effort was honored, clamped, ignored, transformed, blocked, reset during continuation, or unsupported per provider attempt and per child/subagent.
+L00008780	proposal_or_recommendation: Add EffortSettlementReceipt with requested_effort, policy_effort, effective_wire_effort, provider_native_field, display_label, support_source, transform_version, fallback_reason, reset_detection, first_response_latency_bucket, and model-switch replay rule.
+L00008781	compile_disposition: create_new_planunit
+L00008782	```
+L00008783	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=8784-9172 >>>
+L00008784	### MS-127 - P0-PROVIDER-CAPABILITY-EPOCH-2
+L00008785	
+L00008786	```yaml
+L00008787	plan_unit_id: MS-127
+L00008788	unit_type: requirement
+L00008789	status: accepted
+L00008790	owner_doc: Plans/Models_System.md
+L00008791	canonical_text: >-
+L00008792	  P0-PROVIDER-CAPABILITY-EPOCH-2 (P0) is compiled as canonical Puppet Master intent for Provider/model capability freshness and route-specific support: Define ProviderCapabilityEpoch with source, fetched_at, account/profile scope, route scope, provider endpoint, cache policy, modalities, tool capability, reasoning support, context limits, usage fields, transport support, evidence state, and invalidation triggers. The preserved PM gap/delta is: Capabilities need epoch identity and source confidence across model catalog, context window, cache support, tool-calling, vision/media, reasoning effort, usage accounting, transport, and provider-native replay. The observed external-repo signal remains source-lineage evidence: Repos show stale/wrong context-window metadata, route-specific limits, ghost models, model variant quirks, modality gaps, effort support uncertainty, and provider-native reasoning/tool replay drift.
+L00008793	gui_related: true
+L00008794	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008795	depends_on:
+L00008796	- PDS-003
+L00008797	- PNC-001
+L00008798	unblocks: []
+L00008799	acceptance_criteria:
+L00008800	- Changing account/profile/route/model invalidates capability epoch.
+L00008801	- Unknown or stale capabilities cannot present controls as supported.
+L00008802	- Model limit and cached-token accounting show measured/provider_reported/estimated/unknown.
+L00008803	- Provider-native replay rules are keyed by epoch.
+L00008804	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008805	validation_surfaces:
+L00008806	- python3 scripts/pm-plan-index.py validate
+L00008807	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008808	- Changing account/profile/route/model invalidates capability epoch.
+L00008809	- Unknown or stale capabilities cannot present controls as supported.
+L00008810	- Model limit and cached-token accounting show measured/provider_reported/estimated/unknown.
+L00008811	- Provider-native replay rules are keyed by epoch.
+L00008812	risk_class: p0_provider_capability_and_metadata_hardening
+L00008813	reasoning_tier: high
+L00008814	context_scope: provider_capability_and_metadata
+L00008815	implementation_surfaces:
+L00008816	- Plans/Models_System.md
+L00008817	- Plans/Provider_OpenCode.md
+L00008818	- Plans/MCP_Integration.md
+L00008819	- Plans/usage-feature.md
+L00008820	node_compile_hint:
+L00008821	  mode: p0_provider_capability_epoch_2
+L00008822	  create_worknodes: false
+L00008823	  create_nodeseeds: false
+L00008824	source_lineage:
+L00008825	- pldg-20260703-001-feature-intake:atom-0064
+L00008826	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0064
+L00008827	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0060/P0-PROVIDER-CAPABILITY-EPOCH-2@line=60
+L00008828	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0060/P0-PROVIDER-CAPABILITY-EPOCH-2
+L00008829	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008830	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00008831	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:6
+L00008832	source_atom_ids:
+L00008833	- atom-0064
+L00008834	external_atom_id: extrepo-20260703-0060
+L00008835	source_row_id: P0-PROVIDER-CAPABILITY-EPOCH-2
+L00008836	priority: P0
+L00008837	finding_family: Provider/model capability freshness and route-specific support
+L00008838	source_repos:
+L00008839	- OpenCode
+L00008840	- Cline
+L00008841	- Pi
+L00008842	- Codex
+L00008843	target_docs:
+L00008844	- Plans/Models_System.md
+L00008845	- Plans/Provider_OpenCode.md
+L00008846	- Plans/MCP_Integration.md
+L00008847	- Plans/usage-feature.md
+L00008848	owner_hints:
+L00008849	- Plans/Models_System.md
+L00008850	- Plans/Provider_OpenCode.md
+L00008851	- Plans/MCP_Integration.md
+L00008852	- Plans/usage-feature.md
+L00008853	preserved_exact_tokens:
+L00008854	- extrepo-20260703-0060
+L00008855	- P0-PROVIDER-CAPABILITY-EPOCH-2
+L00008856	- P0
+L00008857	- Provider/model capability freshness and route-specific support
+L00008858	- OpenCode
+L00008859	- Cline
+L00008860	- Pi
+L00008861	- Codex
+L00008862	negative_constraints: []
+L00008863	observed_signal: Repos show stale/wrong context-window metadata, route-specific limits, ghost models, model variant quirks, modality gaps, effort support uncertainty, and provider-native reasoning/tool replay drift.
+L00008864	pm_current_coverage: Models_System has provider-owned catalogs, capability/cost gating, requested/effective identity, provider capability matrix application gate, and Vision Bridge route resolution.
+L00008865	pm_gap_or_delta: Capabilities need epoch identity and source confidence across model catalog, context window, cache support, tool-calling, vision/media, reasoning effort, usage accounting, transport, and provider-native replay.
+L00008866	proposal_or_recommendation: Define ProviderCapabilityEpoch with source, fetched_at, account/profile scope, route scope, provider endpoint, cache policy, modalities, tool capability, reasoning support, context limits, usage fields, transport support, evidence state, and invalidation triggers.
+L00008867	compile_disposition: create_new_planunit
+L00008868	```
+L00008869	
+L00008870	### MS-128 - P1-MODEL-SELECTION-ROUTER
+L00008871	
+L00008872	```yaml
+L00008873	plan_unit_id: MS-128
+L00008874	unit_type: requirement
+L00008875	status: accepted
+L00008876	owner_doc: Plans/Models_System.md
+L00008877	canonical_text: >-
+L00008878	  P1-MODEL-SELECTION-ROUTER (P1) is compiled as canonical Puppet Master intent for Model selection per role/skill/tool/subagent: Add ModelSelectionRouter with task_kind, risk_class, context_size, modalities, tool_need, verification_tier, cost_policy, latency_policy, provider availability, and fallback chain. Do not hardcode model names; use capability tiers. The preserved PM gap/delta is: PM should map tasks to model/effort through a scored router instead of static defaults while preserving user policy and certification-tier rules. The observed external-repo signal remains source-lineage evidence: Codex discussions request per-skill model selection and issues show custom subagent model config not honored; OpenCode issues request model variants and subagent model/effort selection; Cline SDK centralizes session/Plan/Act coordination and provider migration.
+L00008879	gui_related: true
+L00008880	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008881	depends_on:
+L00008882	- PDS-003
+L00008883	- PNC-001
+L00008884	unblocks: []
+L00008885	acceptance_criteria:
+L00008886	- Low-risk summarization can select cheaper model only when certification policy allows.
+L00008887	- Verifier/adjudicator model cannot downgrade below risk tier.
+L00008888	- Router output is requested/effective and auditable.
+L00008889	- User can pin or forbid providers per project/account.
+L00008890	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008891	validation_surfaces:
+L00008892	- python3 scripts/pm-plan-index.py validate
+L00008893	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008894	- Low-risk summarization can select cheaper model only when certification policy allows.
+L00008895	- Verifier/adjudicator model cannot downgrade below risk tier.
+L00008896	- Router output is requested/effective and auditable.
+L00008897	- User can pin or forbid providers per project/account.
+L00008898	risk_class: p1_provider_capability_and_metadata_hardening
+L00008899	reasoning_tier: standard
+L00008900	context_scope: provider_capability_and_metadata
+L00008901	implementation_surfaces:
+L00008902	- Plans/Models_System.md
+L00008903	- Plans/Goal_Runtime_System.md
+L00008904	- Plans/Plan_To_Node_Compilation.md
+L00008905	node_compile_hint:
+L00008906	  mode: p1_model_selection_router
+L00008907	  create_worknodes: false
+L00008908	  create_nodeseeds: false
+L00008909	source_lineage:
+L00008910	- pldg-20260703-001-feature-intake:atom-0068
+L00008911	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0068
+L00008912	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0064/P1-MODEL-SELECTION-ROUTER@line=64
+L00008913	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0064/P1-MODEL-SELECTION-ROUTER
+L00008914	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008915	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00008916	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:10
+L00008917	source_atom_ids:
+L00008918	- atom-0068
+L00008919	external_atom_id: extrepo-20260703-0064
+L00008920	source_row_id: P1-MODEL-SELECTION-ROUTER
+L00008921	priority: P1
+L00008922	finding_family: Model selection per role/skill/tool/subagent
+L00008923	source_repos:
+L00008924	- Codex
+L00008925	- OpenCode
+L00008926	- Cline
+L00008927	target_docs:
+L00008928	- Plans/Models_System.md
+L00008929	- Plans/Goal_Runtime_System.md
+L00008930	- Plans/Plan_To_Node_Compilation.md
+L00008931	owner_hints:
+L00008932	- Plans/Models_System.md
+L00008933	- Plans/Goal_Runtime_System.md
+L00008934	- Plans/Plan_To_Node_Compilation.md
+L00008935	preserved_exact_tokens:
+L00008936	- extrepo-20260703-0064
+L00008937	- P1-MODEL-SELECTION-ROUTER
+L00008938	- P1
+L00008939	- Model selection per role/skill/tool/subagent
+L00008940	- Codex
+L00008941	- OpenCode
+L00008942	- Cline
+L00008943	negative_constraints: []
+L00008944	observed_signal: Codex discussions request per-skill model selection and issues show custom subagent model config not honored; OpenCode issues request model variants and subagent model/effort selection; Cline SDK centralizes session/Plan/Act coordination and provider migration.
+L00008945	pm_current_coverage: PM already has provider/model precedence by scope and Goal Runtime model-role policy.
+L00008946	pm_gap_or_delta: PM should map tasks to model/effort through a scored router instead of static defaults while preserving user policy and certification-tier rules.
+L00008947	proposal_or_recommendation: Add ModelSelectionRouter with task_kind, risk_class, context_size, modalities, tool_need, verification_tier, cost_policy, latency_policy, provider availability, and fallback chain. Do not hardcode model names; use capability tiers.
+L00008948	compile_disposition: create_new_planunit
+L00008949	```
+L00008950	
+L00008951	### MS-129 - P2-MODEL-CATALOG-CONFIDENCE-UI
+L00008952	
+L00008953	```yaml
+L00008954	plan_unit_id: MS-129
+L00008955	unit_type: requirement
+L00008956	status: accepted
+L00008957	owner_doc: Plans/Models_System.md
+L00008958	canonical_text: >-
+L00008959	  P2-MODEL-CATALOG-CONFIDENCE-UI (P2) is compiled as canonical Puppet Master intent for Provider/catalog confidence and user explanation: Add ModelCapabilityConfidence UI: verified_live, provider_reported, inferred, configured_static, stale, unknown, unsupported, with last_refresh and route/account scope. The preserved PM gap/delta is: Expose capability source confidence in Settings/model picker so users understand why a model shows/hides vision, effort, cache, or context controls. The observed external-repo signal remains source-lineage evidence: Recent issues show model catalogs with wrong context windows, missing modalities, ghost models, static capability assumptions, and route-specific gaps.
+L00008960	gui_related: true
+L00008961	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00008962	depends_on:
+L00008963	- PDS-003
+L00008964	- PNC-001
+L00008965	unblocks: []
+L00008966	acceptance_criteria:
+L00008967	- A custom OpenAI-compatible model with unknown vision shows unknown/not supported until proven.
+L00008968	- User can refresh/retest capability.
+L00008969	- Hidden controls include reason.
+L00008970	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00008971	validation_surfaces:
+L00008972	- python3 scripts/pm-plan-index.py validate
+L00008973	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00008974	- A custom OpenAI-compatible model with unknown vision shows unknown/not supported until proven.
+L00008975	- User can refresh/retest capability.
+L00008976	- Hidden controls include reason.
+L00008977	risk_class: p2_provider_capability_and_metadata_coverage
+L00008978	reasoning_tier: standard
+L00008979	context_scope: provider_capability_and_metadata
+L00008980	implementation_surfaces:
+L00008981	- Plans/Models_System.md
+L00008982	- Plans/FinalGUISpec.md
+L00008983	- Plans/Provider_OpenCode.md
+L00008984	node_compile_hint:
+L00008985	  mode: p2_model_catalog_confidence_ui
+L00008986	  create_worknodes: false
+L00008987	  create_nodeseeds: false
+L00008988	source_lineage:
+L00008989	- pldg-20260703-001-feature-intake:atom-0077
+L00008990	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0077
+L00008991	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0073/P2-MODEL-CATALOG-CONFIDENCE-UI@line=73
+L00008992	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0073/P2-MODEL-CATALOG-CONFIDENCE-UI
+L00008993	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00008994	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00008995	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:19
+L00008996	source_atom_ids:
+L00008997	- atom-0077
+L00008998	external_atom_id: extrepo-20260703-0073
+L00008999	source_row_id: P2-MODEL-CATALOG-CONFIDENCE-UI
+L00009000	priority: P2
+L00009001	finding_family: Provider/catalog confidence and user explanation
+L00009002	source_repos:
+L00009003	- OpenCode
+L00009004	- Cline
+L00009005	- Pi
+L00009006	target_docs:
+L00009007	- Plans/Models_System.md
+L00009008	- Plans/FinalGUISpec.md
+L00009009	- Plans/Provider_OpenCode.md
+L00009010	owner_hints:
+L00009011	- Plans/Models_System.md
+L00009012	- Plans/FinalGUISpec.md
+L00009013	- Plans/Provider_OpenCode.md
+L00009014	preserved_exact_tokens:
+L00009015	- extrepo-20260703-0073
+L00009016	- P2-MODEL-CATALOG-CONFIDENCE-UI
+L00009017	- P2
+L00009018	- Provider/catalog confidence and user explanation
+L00009019	- OpenCode
+L00009020	- Cline
+L00009021	- Pi
+L00009022	negative_constraints: []
+L00009023	observed_signal: Recent issues show model catalogs with wrong context windows, missing modalities, ghost models, static capability assumptions, and route-specific gaps.
+L00009024	pm_current_coverage: Models_System has provider-owned catalogs and evidence states; GUI disclosure surfaces exist.
+L00009025	pm_gap_or_delta: Expose capability source confidence in Settings/model picker so users understand why a model shows/hides vision, effort, cache, or context controls.
+L00009026	proposal_or_recommendation: 'Add ModelCapabilityConfidence UI: verified_live, provider_reported, inferred, configured_static, stale, unknown, unsupported, with last_refresh and route/account scope.'
+L00009027	compile_disposition: create_new_planunit
+L00009028	```
+L00009029	
+L00009030	### MS-130 - P0-ENTITLEMENT-QUOTA-SETTLEMENT
+L00009031	
+L00009032	```yaml
+L00009033	plan_unit_id: MS-130
+L00009034	unit_type: requirement
+L00009035	status: accepted
+L00009036	owner_doc: Plans/Models_System.md
+L00009037	canonical_text: >-
+L00009038	  P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0) is compiled as canonical Puppet Master intent for Provider/product entitlement, quota, credit, subscription, and rate-limit state: Imported external-repo finding extrepo-20260703-0079 / P0-ENTITLEMENT-QUOTA-SETTLEMENT (P0). The preserved PM gap/delta is: UsageCacheEnvelope and model/provider identity covered token accounting, but PM also needs billing/entitlement/quota classification and user-visible remediation.  The observed external-repo signal remains source-lineage evidence: OpenCode recent issues include active subscription reporting as free-tier exceeded. | Cline recent issues include payment succeeding but no credits. | Warp fixed quota/credit errors being misclassified as Warp faults. | Codex issue #20301 shows token-cache/cost anomalies can be operationally severe.
+L00009039	gui_related: true
+L00009040	gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
+L00009041	depends_on:
+L00009042	- PDS-003
+L00009043	- PNC-001
+L00009044	unblocks: []
+L00009045	acceptance_criteria:
+L00009046	- 'Every provider attempt returns EntitlementQuotaSettlement: quota_exhausted|billing_inactive|subscription_mismatch|rate_limited|cache_anomaly|provider_fault|pm_fault|unknown.'
+L00009047	- Quota/credit/subscription errors are not shown as generic PM faults.
+L00009048	- Usage anomaly guard ties cache-hit drop, context size, selected model, account, and billing state into one diagnostic bundle.
+L00009049	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00009050	validation_surfaces:
+L00009051	- python3 scripts/pm-plan-index.py validate
+L00009052	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00009053	- 'Every provider attempt returns EntitlementQuotaSettlement: quota_exhausted|billing_inactive|subscription_mismatch|rate_limited|cache_anomaly|provider_fault|pm_fault|unknown.'
+L00009054	- Quota/credit/subscription errors are not shown as generic PM faults.
+L00009055	- Usage anomaly guard ties cache-hit drop, context size, selected model, account, and billing state into one diagnostic bundle.
+L00009056	risk_class: p0_provider_capability_and_metadata_hardening
+L00009057	reasoning_tier: high
+L00009058	context_scope: provider_capability_and_metadata
+L00009059	implementation_surfaces:
+L00009060	- Plans/Models_System.md
+L00009061	node_compile_hint:
+L00009062	  mode: p0_entitlement_quota_settlement
+L00009063	  create_worknodes: false
+L00009064	  create_nodeseeds: false
+L00009065	source_lineage:
+L00009066	- pldg-20260703-001-feature-intake:atom-0083
+L00009067	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0083
+L00009068	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0079/P0-ENTITLEMENT-QUOTA-SETTLEMENT@line=79
+L00009069	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0079/P0-ENTITLEMENT-QUOTA-SETTLEMENT
+L00009070	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00009071	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00009072	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_final_external_repo_closure_backlog_2026-07-03.jsonl:6
+L00009073	source_atom_ids:
+L00009074	- atom-0083
+L00009075	external_atom_id: extrepo-20260703-0079
+L00009076	source_row_id: P0-ENTITLEMENT-QUOTA-SETTLEMENT
+L00009077	priority: P0
+L00009078	finding_family: Provider/product entitlement, quota, credit, subscription, and rate-limit state
+L00009079	target_docs:
+L00009080	- Models_System.md
+L00009081	- Provider_OpenCode.md
+L00009082	- FinalGUISpec.md
+L00009083	- Runtime_Artifacts_Panel.md
+L00009084	- Contracts_V0.md
+L00009085	owner_hints:
+L00009086	- Models_System.md
+L00009087	- Provider_OpenCode.md
+L00009088	- FinalGUISpec.md
+L00009089	- Runtime_Artifacts_Panel.md
+L00009090	- Contracts_V0.md
+L00009091	preserved_exact_tokens:
+L00009092	- extrepo-20260703-0079
+L00009093	- P0-ENTITLEMENT-QUOTA-SETTLEMENT
+L00009094	- P0
+L00009095	- Provider/product entitlement, quota, credit, subscription, and rate-limit state
+L00009096	negative_constraints: []
+L00009097	observed_signal: 'OpenCode recent issues include active subscription reporting as free-tier exceeded. | Cline recent issues include payment succeeding but no credits. | Warp fixed quota/credit errors being misclassified as Warp faults. | Codex issue #20301 shows token-cache/cost anomalies can be operationally severe.'
+L00009098	pm_gap_or_delta: 'UsageCacheEnvelope and model/provider identity covered token accounting, but PM also needs billing/entitlement/quota classification and user-visible remediation. '
+L00009099	relationship_to_prior_reports: New P0 operational UX/cost surface.
+L00009100	compile_disposition: create_new_planunit
+L00009101	```
+L00009102	
+L00009103	### MS-131 - provider_policy
+L00009104	
+L00009105	```yaml
+L00009106	plan_unit_id: MS-131
+L00009107	unit_type: requirement
+L00009108	status: accepted
+L00009109	owner_doc: Plans/Models_System.md
+L00009110	canonical_text: >-
+L00009111	  provider_policy (P0) is compiled as canonical Puppet Master intent for provider_policy: Add ProviderPolicyRuleset owner section and precedence rules The preserved PM gap/delta is: Provider use policy not separated from generic permissions with same clarity The observed external-repo signal remains source-lineage evidence: OpenCode v2 separates provider config from provider policy with wildcard/precedence
+L00009112	gui_related: false
+L00009113	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00009114	depends_on:
+L00009115	- PDS-003
+L00009116	- PNC-001
+L00009117	unblocks: []
+L00009118	acceptance_criteria:
+L00009119	- Provider denied/configured fixtures
+L00009120	- repo cannot re-enable user deny
+L00009121	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00009122	validation_surfaces:
+L00009123	- python3 scripts/pm-plan-index.py validate
+L00009124	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00009125	- Provider denied/configured fixtures
+L00009126	- repo cannot re-enable user deny
+L00009127	risk_class: p0_provider_capability_and_metadata_hardening
+L00009128	reasoning_tier: high
+L00009129	context_scope: provider_capability_and_metadata
+L00009130	implementation_surfaces:
+L00009131	- Plans/Models_System.md
+L00009132	- Plans/Permissions_System.md
+L00009133	- Plans/Multi-Account.md
+L00009134	node_compile_hint:
+L00009135	  mode: provider_policy
+L00009136	  create_worknodes: false
+L00009137	  create_nodeseeds: false
+L00009138	source_lineage:
+L00009139	- pldg-20260703-001-feature-intake:atom-0106
+L00009140	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0106
+L00009141	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0102/provider_policy@line=102
+L00009142	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0102/provider_policy
+L00009143	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00009144	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00009145	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:4
+L00009146	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:3448-3472
+L00009147	source_atom_ids:
+L00009148	- atom-0106
+L00009149	external_atom_id: extrepo-20260703-0102
+L00009150	source_row_id: provider_policy
+L00009151	priority: P0
+L00009152	finding_family: provider_policy
+L00009153	target_docs:
+L00009154	- Plans/Models_System.md
+L00009155	- Plans/Permissions_System.md
+L00009156	- Plans/Multi-Account.md
+L00009157	owner_hints:
+L00009158	- Plans/Models_System.md
+L00009159	- Plans/Permissions_System.md
+L00009160	- Plans/Multi-Account.md
+L00009161	preserved_exact_tokens:
+L00009162	- extrepo-20260703-0102
+L00009163	- provider_policy
+L00009164	- P0
+L00009165	negative_constraints: []
+L00009166	observed_signal: OpenCode v2 separates provider config from provider policy with wildcard/precedence
+L00009167	pm_current_coverage: Requested/effective model/account identity and permission ceilings
+L00009168	pm_gap_or_delta: Provider use policy not separated from generic permissions with same clarity
+L00009169	proposal_or_recommendation: Add ProviderPolicyRuleset owner section and precedence rules
+L00009170	compile_disposition: create_new_planunit
+L00009171	```
+L00009172	
+
+<<< CONTEXT_AFTER canonical_document_lines=9173-9184 >>>
+L00009173	### MS-132 - provider_metadata_replay
+L00009174	
+L00009175	```yaml
+L00009176	plan_unit_id: MS-132
+L00009177	unit_type: requirement
+L00009178	status: accepted
+L00009179	owner_doc: Plans/Models_System.md
+L00009180	canonical_text: >-
+L00009181	  provider_metadata_replay (P0) is compiled as canonical Puppet Master intent for provider_metadata_replay: Add ProviderMetadataReplayPolicy by provider/model/context boundary The preserved PM gap/delta is: No explicit provider-native replay-required/forbidden matrix The observed external-repo signal remains source-lineage evidence: Anthropic thinking/signature preservation PRs; stale provider item ID fixes
+L00009182	gui_related: true
+L00009183	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00009184	depends_on:

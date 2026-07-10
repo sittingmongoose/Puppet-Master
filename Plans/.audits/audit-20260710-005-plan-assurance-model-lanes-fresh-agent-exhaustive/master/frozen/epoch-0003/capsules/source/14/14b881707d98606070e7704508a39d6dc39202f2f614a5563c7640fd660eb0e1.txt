@@ -1,0 +1,387 @@
+<<< CONTEXT_BEFORE 7772-7783 >>>
+- allow → forward
+- deny → return
+- ask → map to deny or HITL
+- No hardcoded tool names
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 7784-8141 >>>
+### T-103 - HTE DAE Tool Enforcement Boundary
+
+```yaml
+plan_unit_id: T-103
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: The before-forwarding tool-filter wording applies only to HTE; DAE requires deterministic pre-spawn restriction
+  and post-run reconciliation because the provider executes tools inside a jail.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-102
+unblocks: []
+acceptance_criteria:
+- Providers without deterministic restriction support cannot advertise `dae_allowed = true`.
+- HTE and DAE enforcement boundaries remain distinct.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: hte_dae_tool_enforcement_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0072
+preserved_exact_tokens:
+- HTE
+- DAE
+- before forwarding
+- provider executes tools inside a jail
+- deterministic pre-spawn restriction
+- post-run reconciliation
+- dae_allowed = true
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Permissions_System.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-104 - Tools Owner Consumer Reference Map
+
+```yaml
+plan_unit_id: T-104
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: The relationship table remains a consumer/owner map for rewrite tie-in, newtools, storage, agent context,
+  orchestrator, interview, FileSafe, usage, LSP, HITL, and media capability docs.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The table does not re-own referenced docs.
+- Media capability tool registration defers full contracts to the media capabilities doc.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tools_owner_consumer_reference_map
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0073
+preserved_exact_tokens:
+- rewrite-tie-in-memo.md
+- newtools.md
+- storage-plan.md
+- agent-rules-context.md
+- orchestrator-subagent-integration.md
+- interview-subagent-integration.md
+- FileSafe.md
+- usage-feature.md
+- LSPSupport.md
+- human-in-the-loop.md
+- Media_Generation_and_Capabilities.md
+- 42 subagents
+- subagent_registry
+- capabilities.get
+- media.generate
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-105 - Tool Implementation Readiness Checklist
+
+```yaml
+plan_unit_id: T-105
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: The ordered implementation checklist is readiness metadata only; it preserves dependencies and gates without
+  creating WorkNodes, tasks, or executable queues.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Checklist items remain ordered readiness metadata.
+- No WorkNodes, NodeSeeds, executable tasks, or queues are created from this checklist.
+- Addenda consolidation and machine verification remain gate/readiness language.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_implementation_readiness_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0074
+preserved_exact_tokens:
+- Config schema
+- Default policy table as code
+- Resolution function
+- FileSafe and YOLO order
+- Per-tool adapters
+- Event emission
+- GUI Tool permissions
+- Usage widget and rollups
+- Central registry and policy engine
+- Registry → CLI derivation
+- MCP integration
+- Ask UI and headless
+- LSP tool promotion
+- Addenda consolidation gate
+- merge-and-dedup
+- Machine verification gates
+- /gate
+- Doctor and docs
+- subagent_tool_overrides
+negative_constraints:
+- Do not interpret this checklist as a WorkNode manifest or executable build queue.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-106 - Tool Outcome Runtime Taxonomy Mapping
+
+```yaml
+plan_unit_id: T-106
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tool-layer policy outcomes map deterministically to runtime blocked/failure classes, and non-executed calls
+  are classified as blocked/denied rather than execution failures.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Outcome mappings are deterministic.
+- Calls that never execute are not mislabeled as execution failures.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_outcome_runtime_taxonomy_mapping
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0077
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0078
+preserved_exact_tokens:
+- permission_denied
+- user_declined
+- headless_ask_denied
+- filesafe_blocked
+- validation_blocked
+- blocked / `permission_denied`
+- blocked/denied
+- not execution failure
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-107 - Tool Blocked Recovery Metadata
+
+```yaml
+plan_unit_id: T-107
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Blocked tool outcomes carry guard or policy source, reason code, recovery options where applicable, and executed-at-all
+  evidence for runtime recovery UI.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Runtime recovery UI receives enough metadata to bind recovery paths.
+- Tool-layer outcomes map deterministically into the shared runtime taxonomy.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_blocked_recovery_metadata
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0079
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0080
+preserved_exact_tokens:
+- guard / policy source
+- reason code
+- recovery options
+- whether the action executed at all
+- UI/assistant/orchestrator surfaces
+- Acceptance criteria
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-108 - Tool Denied Event Runtime Fields
+
+```yaml
+plan_unit_id: T-108
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: When `tool.denied` blocks progress, its event or mapped payload includes blocked reason, optional failure
+  class, permission snapshot, allowed actions, headless flag, and remote side-effect metadata.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Blocking denial events collapse into canonical runtime taxonomy.
+- Required fields remain available to UI and scheduling layers.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_denied_event_runtime_fields
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0081
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0082
+preserved_exact_tokens:
+- tool.denied
+- blocked_reason_code
+- failure_class
+- effective permission snapshot identifier
+- allowed_action_ids[]
+- headless_denied
+- side-effect metadata
+- remote mutation
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-109 - Tool Denial Canonical Action Alignment
+
+```yaml
+plan_unit_id: T-109
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Denied work must not return success-shaped fallbacks; runtime-facing denial paths preserve blocked state and
+  use canonical action fields instead of a parallel `recovery_options[]` schema.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Scheduler, chat, and GUI inspect the blocked state.
+- Runtime-facing paths use canonical action fields only.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_184
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_denial_canonical_action_alignment
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0083
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0084
+preserved_exact_tokens:
+- MUST NOT return success-shaped fallbacks
+- blocked outcome
+- scheduler
+- chat
+- GUI
+- allowed_action_ids[]
+- executed_at_all
+- MUST NOT publish a parallel `recovery_options[]` schema
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Parallel `recovery_options[]` schema is retired for runtime-facing tool-denial paths.
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 8142-8153 >>>
+### T-110 - Tool Denial Payload Consolidation
+
+```yaml
+plan_unit_id: T-110
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Runtime-facing tool denial payloads consolidate source mapping rules and preserve blocked state instead of
+  converting denied work into success-shaped or generic-failure fallbacks.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, transparency, or
+  visual tool surfaces.

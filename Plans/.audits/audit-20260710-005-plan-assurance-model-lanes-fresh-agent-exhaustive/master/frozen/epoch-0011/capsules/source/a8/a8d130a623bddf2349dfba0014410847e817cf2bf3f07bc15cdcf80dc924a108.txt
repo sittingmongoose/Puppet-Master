@@ -1,0 +1,370 @@
+<<< CONTEXT_BEFORE canonical_document_lines=15776-15787 >>>
+L00015776	negative_constraints:
+L00015777	- Output format detection MUST use platform_specs; do not hardcode Copilot text behavior.
+L00015778	compatibility_only_notes:
+L00015779	- The Rust Copilot task/downstream parser snippet is plan evidence only, not an executable node output.
+L00015780	stale_retired_dispositions: []
+L00015781	owner_boundary_notes: []
+L00015782	owner_hints:
+L00015783	- Plans/orchestrator-subagent-integration.md
+L00015784	preserved_contractrefs:
+L00015785	- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md'
+L00015786	```
+L00015787	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=15788-16128 >>>
+L00015788	### OSI-162 - Copilot Findings Regex Parser Example
+L00015789	
+L00015790	```yaml
+L00015791	plan_unit_id: OSI-162
+L00015792	unit_type: requirement
+L00015793	status: accepted
+L00015794	owner_doc: Plans/orchestrator-subagent-integration.md
+L00015795	canonical_text: >-
+L00015796	  Copilot findings parsing extracts Findings sections with severity, category, description, file, line, and suggestion fields,
+L00015797	  mapping Critical, Major, Minor, and Info strings to Severity values before returning SubagentOutput.
+L00015798	gui_related: false
+L00015799	gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
+L00015800	split_recommended: false
+L00015801	depends_on:
+L00015802	- OSI-161
+L00015803	- OSI-155
+L00015804	- OSI-150
+L00015805	- OSI-093
+L00015806	unblocks: []
+L00015807	acceptance_criteria:
+L00015808	- Covered source lines remain losslessly available for exact-text audit.
+L00015809	- >-
+L00015810	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00015811	  bridge.
+L00015812	- >-
+L00015813	  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00015814	  retain their own contracts.
+L00015815	- >-
+L00015816	  Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00015817	  final node manifests, or production build tasks.
+L00015818	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00015819	validation_surfaces:
+L00015820	- >-
+L00015821	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015822	- python3 scripts/pm-plan-index.py validate
+L00015823	reasoning_tier: standard
+L00015824	context_scope: orchestrator_subagent_standardization
+L00015825	implementation_surfaces:
+L00015826	- Plans/orchestrator-subagent-integration.md
+L00015827	risk_class: copilot_findings_regex_parser_example
+L00015828	node_compile_hint:
+L00015829	  mode: copilot_findings_regex_parser_example
+L00015830	  create_worknodes: false
+L00015831	source_lineage:
+L00015832	- >-
+L00015833	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0110
+L00015834	preserved_exact_tokens:
+L00015835	- '## Findings'
+L00015836	- findings_re
+L00015837	- Critical
+L00015838	- Major
+L00015839	- Minor
+L00015840	- Info
+L00015841	- Severity::*
+L00015842	- category
+L00015843	- description
+L00015844	- file
+L00015845	- line
+L00015846	- suggestion
+L00015847	- PathBuf
+L00015848	negative_constraints: []
+L00015849	compatibility_only_notes:
+L00015850	- The Rust Copilot findings parser snippet is plan evidence only, not an executable node output.
+L00015851	- Lines 2775-2778 are boundary/ContractRef coverage attached to the parser-example group.
+L00015852	stale_retired_dispositions: []
+L00015853	owner_boundary_notes: []
+L00015854	owner_hints:
+L00015855	- Plans/orchestrator-subagent-integration.md
+L00015856	preserved_contractrefs:
+L00015857	- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md'
+L00015858	- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7'
+L00015859	```
+L00015860	
+L00015861	### OSI-163 - Hook-Level Handoff Validation Function
+L00015862	
+L00015863	```yaml
+L00015864	plan_unit_id: OSI-163
+L00015865	unit_type: requirement
+L00015866	status: accepted
+L00015867	owner_doc: Plans/orchestrator-subagent-integration.md
+L00015868	canonical_text: >-
+L00015869	  The hook-level validate_subagent_output function creates an output parser and delegates parse_subagent_output for output,
+L00015870	  stderr, and platform, while create_parser(platform) remains aligned with platform_specs-driven selection.
+L00015871	gui_related: false
+L00015872	gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
+L00015873	split_recommended: false
+L00015874	depends_on:
+L00015875	- OSI-151
+L00015876	- OSI-154
+L00015877	- OSI-150
+L00015878	- OSI-147
+L00015879	unblocks: []
+L00015880	acceptance_criteria:
+L00015881	- Covered source lines remain losslessly available for exact-text audit.
+L00015882	- >-
+L00015883	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00015884	  bridge.
+L00015885	- >-
+L00015886	  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00015887	  retain their own contracts.
+L00015888	- >-
+L00015889	  Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00015890	  final node manifests, or production build tasks.
+L00015891	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00015892	validation_surfaces:
+L00015893	- >-
+L00015894	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015895	- python3 scripts/pm-plan-index.py validate
+L00015896	reasoning_tier: standard
+L00015897	context_scope: orchestrator_subagent_standardization
+L00015898	implementation_surfaces:
+L00015899	- Plans/orchestrator-subagent-integration.md
+L00015900	risk_class: hook_level_handoff_validation_function
+L00015901	node_compile_hint:
+L00015902	  mode: hook_level_handoff_validation_function
+L00015903	  create_worknodes: false
+L00015904	source_lineage:
+L00015905	- >-
+L00015906	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0110
+L00015907	preserved_exact_tokens:
+L00015908	- src/core/hooks/handoff_validator.rs
+L00015909	- validate_subagent_output
+L00015910	- OutputParser
+L00015911	- create_parser
+L00015912	- SubagentOutput
+L00015913	- ValidationError
+L00015914	- parser.parse_subagent_output(output, stderr)
+L00015915	negative_constraints:
+L00015916	- >-
+L00015917	  create_parser(platform) must remain aligned to OSI-154 platform_specs-driven selection and must not become hardcoded parser
+L00015918	  selection.
+L00015919	compatibility_only_notes:
+L00015920	- The Rust hook validation snippet is plan evidence only, not an executable node output.
+L00015921	stale_retired_dispositions: []
+L00015922	owner_boundary_notes: []
+L00015923	owner_hints:
+L00015924	- Plans/orchestrator-subagent-integration.md
+L00015925	preserved_contractrefs: []
+L00015926	```
+L00015927	
+L00015928	### OSI-164 - AfterTier Handoff Validation Retry Policy
+L00015929	
+L00015930	```yaml
+L00015931	plan_unit_id: OSI-164
+L00015932	unit_type: requirement
+L00015933	status: accepted
+L00015934	owner_doc: Plans/orchestrator-subagent-integration.md
+L00015935	canonical_text: >-
+L00015936	  AfterTier handoff validation logs platform, error type, and partial output snippet details, requests one retry with structured
+L00015937	  JSON output instruction, and after retry failure proceeds with partial output fail-safe while preserving complete-with-warnings
+L00015938	  source wording.
+L00015939	gui_related: false
+L00015940	gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
+L00015941	split_recommended: false
+L00015942	depends_on:
+L00015943	- OSI-147
+L00015944	- OSI-154
+L00015945	- OSI-157
+L00015946	- OSI-093
+L00015947	- OSI-094
+L00015948	unblocks: []
+L00015949	acceptance_criteria:
+L00015950	- Covered source lines remain losslessly available for exact-text audit.
+L00015951	- >-
+L00015952	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00015953	  bridge.
+L00015954	- >-
+L00015955	  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00015956	  retain their own contracts.
+L00015957	- >-
+L00015958	  Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00015959	  final node manifests, or production build tasks.
+L00015960	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00015961	validation_surfaces:
+L00015962	- >-
+L00015963	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015964	- python3 scripts/pm-plan-index.py validate
+L00015965	reasoning_tier: standard
+L00015966	context_scope: orchestrator_subagent_standardization
+L00015967	implementation_surfaces:
+L00015968	- Plans/orchestrator-subagent-integration.md
+L00015969	risk_class: aftertier_handoff_validation_retry_policy
+L00015970	node_compile_hint:
+L00015971	  mode: aftertier_handoff_validation_retry_policy
+L00015972	  create_worknodes: false
+L00015973	source_lineage:
+L00015974	- >-
+L00015975	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0110
+L00015976	preserved_exact_tokens:
+L00015977	- AfterTier hook
+L00015978	- Log error with details
+L00015979	- platform
+L00015980	- error type
+L00015981	- partial output snippet
+L00015982	- one retry
+L00015983	- format your output as structured JSON
+L00015984	- partial output (fail-safe)
+L00015985	- complete with warnings
+L00015986	- ExecutionUnitContext
+L00015987	negative_constraints: []
+L00015988	compatibility_only_notes:
+L00015989	- >-
+L00015990	  The complete with warnings wording is preserved as source text and does not override OSI-093/OSI-157 resolved parser failure
+L00015991	  behavior.
+L00015992	stale_retired_dispositions: []
+L00015993	owner_boundary_notes: []
+L00015994	owner_hints:
+L00015995	- Plans/orchestrator-subagent-integration.md
+L00015996	preserved_contractrefs: []
+L00015997	```
+L00015998	
+L00015999	### OSI-165 - ParsedOutput SubagentOutput Population Example
+L00016000	
+L00016001	```yaml
+L00016002	plan_unit_id: OSI-165
+L00016003	unit_type: requirement
+L00016004	status: accepted
+L00016005	owner_doc: Plans/orchestrator-subagent-integration.md
+L00016006	canonical_text: >-
+L00016007	  Existing ParsedOutput integration populates output.subagent_output by attempting parse_subagent_output during platform output
+L00016008	  parsing, but the .ok() example must not silently drop parser failures contrary to structured handoff failure policy.
+L00016009	gui_related: false
+L00016010	gui_classification_reason: This unit covers backend parser, hook, or runtime-validation behavior rather than GUI presentation.
+L00016011	split_recommended: false
+L00016012	depends_on:
+L00016013	- OSI-151
+L00016014	- OSI-152
+L00016015	- OSI-093
+L00016016	- OSI-094
+L00016017	unblocks: []
+L00016018	acceptance_criteria:
+L00016019	- Covered source lines remain losslessly available for exact-text audit.
+L00016020	- >-
+L00016021	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00016022	  bridge.
+L00016023	- >-
+L00016024	  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00016025	  retain their own contracts.
+L00016026	- >-
+L00016027	  Source examples and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds, executable queues,
+L00016028	  final node manifests, or production build tasks.
+L00016029	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00016030	validation_surfaces:
+L00016031	- >-
+L00016032	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016033	- python3 scripts/pm-plan-index.py validate
+L00016034	reasoning_tier: standard
+L00016035	context_scope: orchestrator_subagent_standardization
+L00016036	implementation_surfaces:
+L00016037	- Plans/orchestrator-subagent-integration.md
+L00016038	risk_class: parsedoutput_subagentoutput_population_example
+L00016039	node_compile_hint:
+L00016040	  mode: parsedoutput_subagentoutput_population_example
+L00016041	  create_worknodes: false
+L00016042	source_lineage:
+L00016043	- >-
+L00016044	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0110
+L00016045	preserved_exact_tokens:
+L00016046	- Integration with existing ParsedOutput
+L00016047	- src/platforms/output_parser.rs
+L00016048	- CursorOutputParser
+L00016049	- ParsedOutput::new
+L00016050	- output.subagent_output = self.parse_subagent_output(stdout, stderr).ok();
+L00016051	negative_constraints:
+L00016052	- >-
+L00016053	  The .ok() example is source evidence only and must not silently drop output contrary to OSI-093/OSI-094 structured parser
+L00016054	  failure handling.
+L00016055	compatibility_only_notes:
+L00016056	- The Rust ParsedOutput integration snippet is plan evidence only, not an executable node output.
+L00016057	- >-
+L00016058	  Line 2821 benefits text is coverage-only summary attached to OSI-148, OSI-149, OSI-164, OSI-165, and the next remediation-loop
+L00016059	  section.
+L00016060	stale_retired_dispositions: []
+L00016061	owner_boundary_notes: []
+L00016062	owner_hints:
+L00016063	- Plans/orchestrator-subagent-integration.md
+L00016064	preserved_contractrefs: []
+L00016065	```
+L00016066	
+L00016067	### OSI-166 - Remediation Severity Completion Gate
+L00016068	
+L00016069	```yaml
+L00016070	plan_unit_id: OSI-166
+L00016071	unit_type: requirement
+L00016072	status: accepted
+L00016073	owner_doc: Plans/orchestrator-subagent-integration.md
+L00016074	canonical_text: >-
+L00016075	  Quality verification findings gate tier completion by severity: Critical and Major findings block completion and enter remediation,
+L00016076	  while Minor and Info findings are logged and proceed.
+L00016077	gui_related: false
+L00016078	gui_classification_reason: >-
+L00016079	  This unit covers backend orchestration, runtime continuity, parser, hook, remediation, storage projection, or lifecycle
+L00016080	  behavior rather than GUI presentation.
+L00016081	split_recommended: false
+L00016082	depends_on:
+L00016083	- OSI-150
+L00016084	- OSI-155
+L00016085	unblocks: []
+L00016086	acceptance_criteria:
+L00016087	- Covered source spans or source lines remain losslessly available for exact-text audit.
+L00016088	- >-
+L00016089	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00016090	  bridge.
+L00016091	- >-
+L00016092	  Plans/orchestrator-subagent-integration.md remains the owner for PM-native child orchestration while referenced owner docs
+L00016093	  retain their own contracts.
+L00016094	- >-
+L00016095	  Source examples, tables, YAML snippets, and Rust snippets are preserved as plan evidence and do not create WorkNodes, NodeSeeds,
+L00016096	  executable queues, final node manifests, or production build tasks.
+L00016097	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00016098	validation_surfaces:
+L00016099	- >-
+L00016100	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016101	- python3 scripts/pm-plan-index.py validate
+L00016102	reasoning_tier: standard
+L00016103	context_scope: orchestrator_subagent_standardization
+L00016104	implementation_surfaces:
+L00016105	- Plans/orchestrator-subagent-integration.md
+L00016106	risk_class: remediation_severity_completion_gate
+L00016107	node_compile_hint:
+L00016108	  mode: remediation_severity_completion_gate
+L00016109	  create_worknodes: false
+L00016110	source_lineage:
+L00016111	- >-
+L00016112	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0111
+L00016113	preserved_exact_tokens:
+L00016114	- Critical
+L00016115	- Major
+L00016116	- Minor
+L00016117	- Info
+L00016118	- block completion
+L00016119	- log and proceed
+L00016120	negative_constraints: []
+L00016121	compatibility_only_notes: []
+L00016122	stale_retired_dispositions: []
+L00016123	owner_boundary_notes: []
+L00016124	owner_hints:
+L00016125	- Plans/orchestrator-subagent-integration.md
+L00016126	preserved_contractrefs: []
+L00016127	```
+L00016128	
+
+<<< CONTEXT_AFTER canonical_document_lines=16129-16140 >>>
+L00016129	### OSI-167 - Reviewer Findings Filter And Nonblocking Exit
+L00016130	
+L00016131	```yaml
+L00016132	plan_unit_id: OSI-167
+L00016133	unit_type: requirement
+L00016134	status: accepted
+L00016135	owner_doc: Plans/orchestrator-subagent-integration.md
+L00016136	canonical_text: >-
+L00016137	  The remediation loop filters reviewer findings for Critical or Major severity and exits complete when only Minor or Info
+L00016138	  findings remain, logging nonblocking findings.
+L00016139	gui_related: false
+L00016140	gui_classification_reason: >-

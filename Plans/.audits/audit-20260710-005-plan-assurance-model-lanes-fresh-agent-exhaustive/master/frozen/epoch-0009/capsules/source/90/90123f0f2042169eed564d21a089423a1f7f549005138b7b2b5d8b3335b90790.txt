@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4166-4177 >>>
+L00004166	compatibility_only_notes: []
+L00004167	stale_retired_dispositions:
+L00004168	- 'source-confidence / stale label where needed'
+L00004169	owner_hints:
+L00004170	- 'Plans/usage-feature.md'
+L00004171	- 'Plans/Widget_System.md'
+L00004172	- 'Plans/Multi-Account.md'
+L00004173	- 'Plans/FinalGUISpec.md'
+L00004174	- 'Plans/Provider_OpenCode.md'
+L00004175	- 'Plans/storage-plan.md'
+L00004176	```
+L00004177	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4178-4543 >>>
+L00004178	### UF-062 - Dashboard Add Widget Reuse For Usage Widgets
+L00004179	
+L00004180	```yaml
+L00004181	plan_unit_id: UF-062
+L00004182	unit_type: requirement
+L00004183	status: accepted
+L00004184	owner_doc: Plans/usage-feature.md
+L00004185	canonical_text: 'All Usage widgets are also Dashboard-hostable through the add-widget flow: Add Widget opens a catalog overlay, selecting and adding a Usage widget places it on the Dashboard grid at its default size, and the user can then configure and resize it.'
+L00004186	gui_related: true
+L00004187	gui_classification_reason: 'The unit defines user-visible Dashboard add-widget reuse for Usage widgets.'
+L00004188	split_recommended: false
+L00004189	depends_on:
+L00004190	- PDS-003
+L00004191	- PDS-004
+L00004192	- PDS-005
+L00004193	- PNC-001
+L00004194	unblocks: []
+L00004195	acceptance_criteria:
+L00004196	- UF-062 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00004197	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004198	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004199	validation_surfaces:
+L00004200	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004201	- python3 scripts/pm-plan-index.py validate
+L00004202	risk_class: usage_feature_drift
+L00004203	reasoning_tier: standard
+L00004204	context_scope: usage_feature_batch_196
+L00004205	implementation_surfaces:
+L00004206	- Plans/usage-feature.md
+L00004207	node_compile_hint:
+L00004208	  mode: dashboard_add_widget_reuse_for_usage_widgets
+L00004209	  create_worknodes: false
+L00004210	source_lineage:
+L00004211	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0097
+L00004212	preserved_exact_tokens:
+L00004213	- 'Reuse on Dashboard via Add-Widget Flow'
+L00004214	- 'Add Widget'
+L00004215	- 'catalog overlay'
+L00004216	- 'Dashboard-compatible widgets'
+L00004217	- 'widget.quota_summary'
+L00004218	- 'default size'
+L00004219	- 'Configure and resize as needed'
+L00004220	- 'usage information alongside orchestrator status'
+L00004221	negative_constraints: []
+L00004222	preserved_contractrefs:
+L00004223	- 'ContractRef: ContractName:Plans/Widget_System.md#4'
+L00004224	compatibility_only_notes: []
+L00004225	stale_retired_dispositions: []
+L00004226	owner_hints:
+L00004227	- 'Plans/usage-feature.md'
+L00004228	- 'Plans/Widget_System.md'
+L00004229	- 'Plans/FinalGUISpec.md'
+L00004230	```
+L00004231	
+L00004232	### UF-063 - Runtime Recovery Counters And Metrics Integrity
+L00004233	
+L00004234	```yaml
+L00004235	plan_unit_id: UF-063
+L00004236	unit_type: requirement
+L00004237	status: accepted
+L00004238	owner_doc: Plans/usage-feature.md
+L00004239	canonical_text: 'Usage rollups keep runtime recovery observability queryable with blocked attempts by `blocked_reason_code`, retries by `failure_class`, remediation child activity, queue-analysis passes, safe-point creates/restores, `escalation_level`, `action_available`, and blocked outcomes distinct from failures.'
+L00004240	gui_related: false
+L00004241	gui_classification_reason: 'The unit defines runtime observability and rollup metrics semantics rather than GUI implementation.'
+L00004242	split_recommended: false
+L00004243	depends_on:
+L00004244	- PDS-003
+L00004245	- PDS-004
+L00004246	- PDS-005
+L00004247	- PNC-001
+L00004248	- UF-006
+L00004249	unblocks: []
+L00004250	acceptance_criteria:
+L00004251	- UF-063 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00004252	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004253	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004254	validation_surfaces:
+L00004255	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004256	- python3 scripts/pm-plan-index.py validate
+L00004257	risk_class: usage_feature_drift
+L00004258	reasoning_tier: standard
+L00004259	context_scope: usage_feature_batch_196
+L00004260	implementation_surfaces:
+L00004261	- Plans/usage-feature.md
+L00004262	node_compile_hint:
+L00004263	  mode: runtime_recovery_usage_counters
+L00004264	  create_worknodes: false
+L00004265	source_lineage:
+L00004266	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0100
+L00004267	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0101
+L00004268	preserved_exact_tokens:
+L00004269	- 'Runtime Scheduler / Recovery Observability Addendum'
+L00004270	- 'blocked_reason_code'
+L00004271	- 'failure_class'
+L00004272	- 'remediation children spawned and resolved'
+L00004273	- 'queue-analysis passes and wake reasons'
+L00004274	- 'safe-point creates/restores'
+L00004275	- 'blocked outcomes remain distinct from failures'
+L00004276	- 'escalation_level'
+L00004277	- 'action_available'
+L00004278	- 'usage rollups'
+L00004279	- 'executed-tool metrics separate'
+L00004280	negative_constraints: []
+L00004281	preserved_contractrefs: []
+L00004282	compatibility_only_notes: []
+L00004283	stale_retired_dispositions: []
+L00004284	owner_hints:
+L00004285	- 'Plans/usage-feature.md'
+L00004286	- 'Plans/Executor_Protocol.md'
+L00004287	- 'Plans/Contracts_V0.md'
+L00004288	- 'Plans/storage-plan.md'
+L00004289	- 'Plans/Orchestrator_Page.md'
+L00004290	- 'Plans/Run_Graph_View.md'
+L00004291	```
+L00004292	
+L00004293	### UF-064 - Cross Surface Cost Routing And View Ban
+L00004294	
+L00004295	```yaml
+L00004296	plan_unit_id: UF-064
+L00004297	unit_type: requirement
+L00004298	status: accepted
+L00004299	owner_doc: Plans/usage-feature.md
+L00004300	canonical_text: 'Source Control, GitHub Actions, Docker Manager, Kubernetes, and Orchestrator receipts do not create feature-local cost views; `usage_event_ref` or equivalent canonical usage identity routes `Show in Ledger` and `Show in Usage` to canonical Usage surfaces, with feature-local summaries only secondary.'
+L00004301	gui_related: true
+L00004302	gui_classification_reason: 'The unit defines user-visible routing from receipts into canonical Usage/Ledger surfaces.'
+L00004303	split_recommended: true
+L00004304	depends_on:
+L00004305	- PDS-003
+L00004306	- PDS-004
+L00004307	- PDS-005
+L00004308	- PNC-001
+L00004309	- UF-025
+L00004310	- UF-033
+L00004311	unblocks: []
+L00004312	acceptance_criteria:
+L00004313	- UF-064 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00004314	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004315	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004316	validation_surfaces:
+L00004317	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004318	- python3 scripts/pm-plan-index.py validate
+L00004319	risk_class: usage_feature_drift
+L00004320	reasoning_tier: standard
+L00004321	context_scope: usage_feature_batch_196
+L00004322	implementation_surfaces:
+L00004323	- Plans/usage-feature.md
+L00004324	node_compile_hint:
+L00004325	  mode: cross_surface_cost_usage_routing
+L00004326	  create_worknodes: false
+L00004327	source_lineage:
+L00004328	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0102
+L00004329	preserved_exact_tokens:
+L00004330	- 'Source Control, GitHub Actions, Docker Manager, Kubernetes, and Orchestrator'
+L00004331	- 'must not create feature-local cost views'
+L00004332	- 'usage_event_ref'
+L00004333	- 'Show in Ledger'
+L00004334	- 'Show in Usage'
+L00004335	- 'canonical Usage surfaces'
+L00004336	- 'canonical usage records'
+L00004337	- 'feature-local summary is secondary presentation only'
+L00004338	negative_constraints:
+L00004339	- 'Cross-surface receipts from Source Control, GitHub Actions, Docker Manager, Kubernetes, and Orchestrator must not create feature-local cost views.'
+L00004340	- 'Any feature-local summary is secondary presentation only and must not replace the canonical Usage/Ledger pipeline.'
+L00004341	preserved_contractrefs:
+L00004342	- 'ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md'
+L00004343	compatibility_only_notes: []
+L00004344	stale_retired_dispositions: []
+L00004345	owner_hints:
+L00004346	- 'Plans/usage-feature.md'
+L00004347	- 'Plans/Runtime_Artifacts_Panel.md'
+L00004348	- 'Plans/storage-plan.md'
+L00004349	- 'Plans/GitHub_Integration.md'
+L00004350	split_recommendation_reason: 'The source span mixes cost routing, undo disclosure, bulk receipt shape, high-cost warnings, and owner-precedence compatibility constraints.'
+L00004351	```
+L00004352	
+L00004353	### UF-065 - Reversibility Undo And High Cost Disclosure
+L00004354	
+L00004355	```yaml
+L00004356	plan_unit_id: UF-065
+L00004357	unit_type: requirement
+L00004358	status: accepted
+L00004359	owner_doc: Plans/usage-feature.md
+L00004360	canonical_text: 'Cost-bearing actions disclose reversibility and undo/accounting before execution, including undo-window duration, `local-only` versus `remote-compensating`, invalidators, and high-cost warning semantics for repeated or long-lived remote actions when platform/provider data allows it.'
+L00004361	gui_related: true
+L00004362	gui_classification_reason: 'The unit defines user-facing receipts, confirmations, and warning disclosures.'
+L00004363	split_recommended: true
+L00004364	depends_on:
+L00004365	- PDS-003
+L00004366	- PDS-004
+L00004367	- PDS-005
+L00004368	- PNC-001
+L00004369	unblocks: []
+L00004370	acceptance_criteria:
+L00004371	- UF-065 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00004372	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004373	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004374	validation_surfaces:
+L00004375	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004376	- python3 scripts/pm-plan-index.py validate
+L00004377	risk_class: usage_feature_drift
+L00004378	reasoning_tier: standard
+L00004379	context_scope: usage_feature_batch_196
+L00004380	implementation_surfaces:
+L00004381	- Plans/usage-feature.md
+L00004382	node_compile_hint:
+L00004383	  mode: cost_action_accounting_disclosure
+L00004384	  create_worknodes: false
+L00004385	source_lineage:
+L00004386	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0102
+L00004387	preserved_exact_tokens:
+L00004388	- 'Reversibility and undo disclosure'
+L00004389	- '/accounting'
+L00004390	- 'immediately undoable'
+L00004391	- 'reversible with a compensating action'
+L00004392	- 'non-reversible but confirmable'
+L00004393	- 'destructive and `non-undoable`'
+L00004394	- 'non-reversible'
+L00004395	- 'undo-window duration'
+L00004396	- 'local-only'
+L00004397	- 'remote-compensating'
+L00004398	- 'background refresh'
+L00004399	- '/poll'
+L00004400	- 'high-cost'
+L00004401	- 'rerun-many-workflows'
+L00004402	- 'bulk log retrieval'
+L00004403	- 'repeated registry refreshes'
+L00004404	- 'many `/Kubernetes` refreshes'
+L00004405	- 'user-requested long-lived observation'
+L00004406	negative_constraints:
+L00004407	- 'Non-reversible and non-undoable actions must disclose that before execution rather than only in `/history`.'
+L00004408	preserved_contractrefs: []
+L00004409	compatibility_only_notes: []
+L00004410	stale_retired_dispositions: []
+L00004411	owner_hints:
+L00004412	- 'Plans/usage-feature.md'
+L00004413	- 'Plans/GitHub_Integration.md'
+L00004414	- 'Plans/Containers_Registry_and_Unraid.md'
+L00004415	- 'Plans/Orchestrator_Page.md'
+L00004416	split_recommendation_reason: 'The source span mixes cost routing, undo disclosure, bulk receipt shape, high-cost warnings, and owner-precedence compatibility constraints.'
+L00004417	```
+L00004418	
+L00004419	### UF-066 - Bulk Receipt Shape And Owner Precedence
+L00004420	
+L00004421	```yaml
+L00004422	plan_unit_id: UF-066
+L00004423	unit_type: requirement
+L00004424	status: accepted
+L00004425	owner_doc: Plans/usage-feature.md
+L00004426	canonical_text: 'Bulk-operation receipts preserve parent aggregate `/failed/blocked/skipped` counts and child `per-target` result, `usage_event_ref`, rollback or `/undo` expectation, and blocked reason; owner precedence keeps `usage-feature.md` on cost_usage routing while legacy `allowed_actions[]` remains compatibility-only and ordered `allowed_action_ids[]` stays live.'
+L00004427	gui_related: false
+L00004428	gui_classification_reason: 'The unit defines receipt data shape and cross-doc owner precedence rather than visual presentation.'
+L00004429	split_recommended: true
+L00004430	depends_on:
+L00004431	- PDS-003
+L00004432	- PDS-004
+L00004433	- PDS-005
+L00004434	- PNC-001
+L00004435	unblocks: []
+L00004436	acceptance_criteria:
+L00004437	- UF-066 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00004438	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004439	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004440	validation_surfaces:
+L00004441	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004442	- python3 scripts/pm-plan-index.py validate
+L00004443	risk_class: usage_feature_drift
+L00004444	reasoning_tier: standard
+L00004445	context_scope: usage_feature_batch_196
+L00004446	implementation_surfaces:
+L00004447	- Plans/usage-feature.md
+L00004448	node_compile_hint:
+L00004449	  mode: bulk_receipt_shape_owner_precedence
+L00004450	  create_worknodes: false
+L00004451	source_lineage:
+L00004452	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0102
+L00004453	preserved_exact_tokens:
+L00004454	- 'Bulk-operation receipts'
+L00004455	- 'parent/child shape'
+L00004456	- '/failed/blocked/skipped'
+L00004457	- 'per-target'
+L00004458	- 'usage_event_ref'
+L00004459	- 'rollback'
+L00004460	- '/undo'
+L00004461	- 'Orchestrator and history must not flatten'
+L00004462	- 'Small-sweep owner precedence'
+L00004463	- 'cost_usage routing'
+L00004464	- 'deprecated-alias doctor IDs'
+L00004465	- '/precedence'
+L00004466	- '/Docker/Orchestrator'
+L00004467	- 'deprecated-alias'
+L00004468	- 'allowed_actions[]'
+L00004469	- 'compatibility-only'
+L00004470	- 'allowed_action_ids[]'
+L00004471	- 'without accidental global find/replace'
+L00004472	negative_constraints:
+L00004473	- 'Bulk-operation receipts preserve the parent/child shape for usage and history.'
+L00004474	- 'Orchestrator and history must not flatten a bulk action into one ambiguous line item.'
+L00004475	preserved_contractrefs: []
+L00004476	compatibility_only_notes:
+L00004477	- 'Legacy `allowed_actions[]` remains compatibility-only; blocked/recovery flows use ordered `allowed_action_ids[]` without accidental global find/replace.'
+L00004478	stale_retired_dispositions:
+L00004479	- 'deprecated-alias handling is preserved as owner-precedence compatibility lineage.'
+L00004480	owner_hints:
+L00004481	- 'Plans/usage-feature.md'
+L00004482	- 'Plans/newtools.md'
+L00004483	- 'Plans/Crosswalk.md'
+L00004484	- 'Plans/Runtime_Artifacts_Panel.md'
+L00004485	- 'Plans/storage-plan.md'
+L00004486	split_recommendation_reason: 'The source span mixes cost routing, undo disclosure, bulk receipt shape, high-cost warnings, and owner-precedence compatibility constraints.'
+L00004487	```
+L00004488	
+L00004489	### UF-067 - Requested Account And Pressure Record Boundary
+L00004490	
+L00004491	```yaml
+L00004492	plan_unit_id: UF-067
+L00004493	unit_type: requirement
+L00004494	status: accepted
+L00004495	owner_doc: Plans/usage-feature.md
+L00004496	canonical_text: '`manual_preferred_account_id` is a run-request field, not a project policy default; account pressure and switching are append-only account-switch and pressure-episode `/record` families consumed by Usage, Ledger, History, routing, and account-pressure projections.'
+L00004497	gui_related: false
+L00004498	gui_classification_reason: 'The unit defines durable routing/projection record boundaries rather than GUI presentation.'
+L00004499	split_recommended: true
+L00004500	depends_on:
+L00004501	- PDS-003
+L00004502	- PDS-004
+L00004503	- PDS-005
+L00004504	- PNC-001
+L00004505	- UF-007
+L00004506	unblocks: []
+L00004507	acceptance_criteria:
+L00004508	- UF-067 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+L00004509	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004510	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004511	validation_surfaces:
+L00004512	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004513	- python3 scripts/pm-plan-index.py validate
+L00004514	risk_class: usage_feature_drift
+L00004515	reasoning_tier: standard
+L00004516	context_scope: usage_feature_batch_196
+L00004517	implementation_surfaces:
+L00004518	- Plans/usage-feature.md
+L00004519	node_compile_hint:
+L00004520	  mode: requested_account_pressure_record_boundary
+L00004521	  create_worknodes: false
+L00004522	source_lineage:
+L00004523	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0103
+L00004524	preserved_exact_tokens:
+L00004525	- 'manual_preferred_account_id'
+L00004526	- 'run-request field'
+L00004527	- 'project policy default'
+L00004528	- 'append-only event `/record` family'
+L00004529	- 'account-pressure'
+L00004530	- 'account-switch records'
+L00004531	- 'Usage, Ledger, History, and routing projections'
+L00004532	- 'account-switch / pressure-episode family'
+L00004533	negative_constraints: []
+L00004534	preserved_contractrefs: []
+L00004535	compatibility_only_notes: []
+L00004536	stale_retired_dispositions: []
+L00004537	owner_hints:
+L00004538	- 'Plans/usage-feature.md'
+L00004539	- 'Plans/Multi-Account.md'
+L00004540	- 'Plans/storage-plan.md'
+L00004541	split_recommendation_reason: 'The source span contains multiple distinct routing, export, history, subject identity, and provenance constraints.'
+L00004542	```
+L00004543	
+
+<<< CONTEXT_AFTER canonical_document_lines=4544-4555 >>>
+L00004544	### UF-068 - Usage Contract Evidence And Consolidation Gate
+L00004545	
+L00004546	```yaml
+L00004547	plan_unit_id: UF-068
+L00004548	unit_type: requirement
+L00004549	status: accepted
+L00004550	owner_doc: Plans/usage-feature.md
+L00004551	canonical_text: 'Gate-side Usage contract changes require verifiable `/schema` evidence before prose expands; matrix/schema drift and gate-side drift are one contract-risk pattern, and A2A duplicate attempt-continuity plus tier-boundary schema signals wait for version-governed consolidation.'
+L00004552	gui_related: false
+L00004553	gui_classification_reason: 'The unit defines governance and schema evidence constraints rather than GUI presentation.'
+L00004554	split_recommended: true
+L00004555	depends_on:

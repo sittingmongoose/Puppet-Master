@@ -1,0 +1,295 @@
+<<< CONTEXT_BEFORE canonical_document_lines=19954-19965 >>>
+L00019954	  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, generated governance artifacts, or governance seal outputs from this contract unit.
+L00019955	owner_hints:
+L00019956	  - Plans/Contracts_V0.md
+L00019957	  - Plans/Executor_Protocol.md
+L00019958	  - Plans/Goal_Runtime_System.md
+L00019959	  - Plans/orchestrator-subagent-integration.md
+L00019960	```
+L00019961	
+L00019962	## FABLE Residual Feature-Contract Cleanup Addendum - 2026-07-07
+L00019963	
+L00019964	This addendum closes the residual FABLE feature-contract rows assigned to Contracts_V0 for empty owner-section bodies and the explicit WebSocket auth, runtime-surface readiness, and session-prompt admission inbox gaps. It does not reopen the earlier contract-runtime core closure and does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime certification evidence, production build tasks, generated governance artifacts, or a buildability pass claim.
+L00019965	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=19966-20245 >>>
+L00019966	### CV-314 - FABLE Residual Contracts Feature Boundary
+L00019967	
+L00019968	```yaml
+L00019969	plan_unit_id: CV-314
+L00019970	unit_type: schema_contract
+L00019971	status: accepted
+L00019972	owner_doc: Plans/Contracts_V0.md
+L00019973	canonical_text: >-
+L00019974	  Contracts_V0 closes the residual FABLE feature-contract gaps for owner-section bodies, remote/tunnel
+L00019975	  WebSocket authentication, runtime-surface readiness probing, and session-prompt admission inbox events.
+L00019976	  Remote or tunneled WebSocket setup uses a proof-of-possession bearer session token bound to
+L00019977	  runtime_id, project_id, session_id, origin, csrf_nonce, and permission_snapshot_id; the server rejects
+L00019978	  missing, expired, mismatched, replayed, or origin-invalid handshakes before initialize and emits redacted
+L00019979	  auth receipts. Runtime readiness is a typed probe with request fields, result states, reasons, and roundtrip
+L00019980	  evidence refs. Session-prompt admission is a typed inbox event family with idempotency derived from
+L00019981	  session_id, prompt_id, target_thread_id, and normalized prompt hash.
+L00019982	gui_related: true
+L00019983	gui_classification_reason: WebSocket/session readiness errors and session-prompt admission are visible to runtime/chat surfaces, while the fields themselves are backend contracts.
+L00019984	depends_on: [CV-306, CV-307, CV-308, CV-313]
+L00019985	unblocks: []
+L00019986	acceptance_criteria:
+L00019987	  - Owner-section headings in Contracts_V0 either carry live typed contract text or are explicitly source-lineage only.
+L00019988	  - WebSocket handshake requests carry runtime_id, project_id, session_id, origin, csrf_nonce, token_binding, permission_snapshot_id, requested_capabilities, protocol_version, and client_nonce.
+L00019989	  - WebSocket rejections use closed error codes: missing_token, expired_token, invalid_signature, origin_mismatch, csrf_mismatch, runtime_id_mismatch, insufficient_scope, replay_detected, and protocol_version_unsupported.
+L00019990	  - Runtime-surface readiness probes use request fields probe_id, runtime_id, session_id, surface_id, requested_checks, timeout_ms, and trace_level.
+L00019991	  - Runtime-surface readiness results use state = not_ready, model_visible, ui_visible, roundtrip_ready, degraded, or failed, with reason_code, checked_at, evidence_refs, and retry_after_ms when applicable.
+L00019992	  - Session-prompt inbox events include session_prompt.admitted, session_prompt.rejected, session_prompt.cancelled, and session_prompt.expired with prompt_id, target_thread_id, admission_state, idempotency_key, source_session_id, and redacted_prompt_ref.
+L00019993	  - None of these records stores raw credentials, raw prompts beyond redacted refs, or runtime certification evidence.
+L00019994	validation_surfaces:
+L00019995	  - python3 scripts/pm-plan-index.py validate
+L00019996	  - python3 scripts/pm-plans-verify.py lint-contractrefs
+L00019997	  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status
+L00019998	risk_class: fable_residual_contract_feature_gap
+L00019999	reasoning_tier: high
+L00020000	context_scope: residual_feature_contract_cleanup
+L00020001	implementation_surfaces:
+L00020002	  - Plans/Contracts_V0.md
+L00020003	  - Plans/Permissions_System.md
+L00020004	  - Plans/assistant-chat-design.md
+L00020005	node_compile_hint:
+L00020006	  mode: residual_contract_feature_boundary
+L00020007	  create_worknodes: false
+L00020008	  create_nodeseeds: false
+L00020009	source_lineage:
+L00020010	  - fablereport.md:505
+L00020011	  - fablereport.md:517
+L00020012	  - fablereport.md:518
+L00020013	  - fablereport.md:519
+L00020014	  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+L00020015	source_atom_ids: []
+L00020016	preserved_exact_tokens:
+L00020017	  - "Canonical owner-section requirements"
+L00020018	  - "P0-security WS-auth contract"
+L00020019	  - "runtime-surface readiness probe"
+L00020020	  - "session-prompt-admission-inbox"
+L00020021	  - "wrong Origin/CSRF/runtime id"
+L00020022	  - "session_prompt.admitted"
+L00020023	negative_constraints:
+L00020024	  - Do not treat this residual feature-contract cleanup as contract-runtime core, FileSafe, storage, GUI wiring, Slint/web, runtime certification, or buildability closure.
+L00020025	  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, runtime certification evidence, production build tasks, generated governance artifacts, or governance seal outputs.
+L00020026	owner_hints:
+L00020027	  - Plans/Contracts_V0.md
+L00020028	  - Plans/Permissions_System.md
+L00020029	  - Plans/assistant-chat-design.md
+L00020030	```
+L00020031	
+L00020032	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00020033	
+L00020034	This addendum is canonical contract text for deferred non-runtime FABLE rows. It does not create WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not change `buildability_gate_passed`.
+L00020035	
+L00020036	### Investigation Context Attachment Contract
+L00020037	
+L00020038	Repairs row `sfk-7ec50090ea0b8781484ed25b`.
+L00020039	
+L00020040	`InvestigationContextAttachment` fields:
+L00020041	
+L00020042	| Field | Type | Required | Notes |
+L00020043	| --- | --- | --- | --- |
+L00020044	| `attachment_id` | string | yes | Stable id within the parent attempt. |
+L00020045	| `scope_id` | string | yes | The bounded investigation scope. |
+L00020046	| `instruction_scope_ref` | string | yes | Ref to the instruction subset applied to the child context. |
+L00020047	| `attempt_journal_ref` | string | yes | Ref to the append-only attempt journal segment. |
+L00020048	| `parent_summary_ref` | string | yes | Redacted parent summary used by the child. |
+L00020049	| `agents_policy_ref` | string | yes | Ref to the AGENTS.md/rules snapshot. |
+L00020050	| `included_artifact_refs` | array<string> | no | Evidence made visible to the child. |
+L00020051	| `excluded_reason_codes` | array<string> | no | Why candidate material was withheld. |
+L00020052	
+L00020053	The four promised mechanisms are therefore concrete: instruction scoping uses `instruction_scope_ref`, attempt journaling uses `attempt_journal_ref`, parent summary uses `parent_summary_ref`, and AGENTS.md enforcement uses `agents_policy_ref`.
+L00020054	
+L00020055	### Scheduler Pass Field Name
+L00020056	
+L00020057	Repairs row `sfk-987077b2d8d09e719846688d`.
+L00020058	
+L00020059	- The canonical wire field is `non_selected_nodes`.
+L00020060	- `non_selected` is a retired source-lineage alias accepted only by migration readers.
+L00020061	- New scheduler pass payloads must use `non_selected_nodes[]` with entries `{ node_id, exclusion_reason_code, dependency_ref?, ready_state }`.
+L00020062	
+L00020063	### Usage Cost Adjustment Events
+L00020064	
+L00020065	Repairs row `sfk-9e981aa42224e876d0371772`.
+L00020066	
+L00020067	- Event family names are `usage.cost_adjusted` and `usage.cost_clamped`.
+L00020068	- `usage.cost_adjusted` payload fields are `event_id`, `project_id`, `run_id?`, `usage_record_id`, `delta_microdollars`, `reason_code`, `source_ref`, `permission_snapshot_id?`, and `created_at_utc`.
+L00020069	- `usage.cost_clamped` payload fields are `event_id`, `project_id`, `run_id?`, `usage_record_id`, `requested_microdollars`, `effective_microdollars`, `clamp_reason_code`, `budget_ref`, and `created_at_utc`.
+L00020070	- Closed `reason_code` values are `provider_reconciliation`, `rounding_correction`, `refund_credit`, `manual_admin_adjustment`, and `redaction_correction`.
+L00020071	- Closed `clamp_reason_code` values are `budget_limit`, `policy_ceiling`, `account_quota`, and `safety_cap`.
+L00020072	
+L00020073	### Snapshot Identifier Field Names
+L00020074	
+L00020075	Repairs row `sfk-80c0f018eaeeef152d592c97`.
+L00020076	
+L00020077	- Persisted payloads must name the permission snapshot field `permission_snapshot_id`.
+L00020078	- Persisted payloads must name model capability snapshots `requested_model_snapshot_id` and `effective_model_snapshot_id`.
+L00020079	- Persisted payloads must name account snapshots `requested_account_snapshot_id` and `effective_account_snapshot_id` when account identity affects interpretation.
+L00020080	- Freeform phrases such as "effective permission snapshot identifier" are prose aliases only and must not appear as wire field names.
+L00020081	
+L00020082	### Runtime Continuity And Shared Route Object Model
+L00020083	
+L00020084	Repairs row `sfk-ca66bb490466433a5eb1986b`.
+L00020085	
+L00020086	- The runtime-continuity contract records spec-level continuity only; it is not executable lifecycle certification.
+L00020087	- Event families: `runtime_continuity.actor_bound`, `runtime_continuity.route_resolved`, `runtime_continuity.redaction_applied`, and `runtime_continuity.replay_checkpointed`.
+L00020088	- Storage keys: `runtime_continuity_record.v1:{project_id}:{continuity_id}` and `route_object.v1:{project_id}:{route_id}`.
+L00020089	- `route_object` fields are `route_id`, `surface_id`, `route_kind`, `target_ref`, `owner_doc_ref`, `permission_snapshot_id?`, `requested_model_snapshot_id?`, `effective_model_snapshot_id?`, `created_at_utc`, and `schema_version`.
+L00020090	- `route_kind` values are `page`, `panel`, `tab`, `modal`, `toast`, `external_uri`, `artifact`, and `command`.
+L00020091	
+L00020092	### Governance Runtime Records And Projection Trust
+L00020093	
+L00020094	Repairs FABLE row `sfk-382a8aaadd071809899261b5`.
+L00020095	
+L00020096	The governance runtime record contract owns the minimum schemas and state machines for corroboration, promotion, graph patch, and projection trust. These records are contract/storage records only; they do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, or PNC-019 evidence.
+L00020097	
+L00020098	Shared envelope fields for every record family:
+L00020099	
+L00020100	| Field | Type | Required | Notes |
+L00020101	| --- | --- | --- | --- |
+L00020102	| `record_id` | string | yes | Stable id for the concrete record. |
+L00020103	| `record_family` | enum | yes | `corroboration`, `promotion`, `graph_patch`, or `projection_trust`. |
+L00020104	| `project_id` | string | yes | Project scope. |
+L00020105	| `run_id` | string | no | Runtime run scope when applicable. |
+L00020106	| `target_ref` | object | yes | `{ object_kind, object_id, owner_doc_ref }`. |
+L00020107	| `created_by_ref` | string | yes | Actor, worker, verifier, or system ref. |
+L00020108	| `created_at_utc` | string | yes | RFC3339 UTC. |
+L00020109	| `status` | string | yes | Family state from the table below. |
+L00020110	| `evidence_refs` | array<string> | no | Canonical evidence refs. |
+L00020111	| `artifact_refs` | array<string> | no | Artifact refs when the record points to rendered or generated material. |
+L00020112	| `source_refs` | array<string> | no | Source/doc/event refs used to form the record. |
+L00020113	| `superseded_by_record_id` | string | no | Present only after lineage-changing supersession. |
+L00020114	| `schema_version` | string | yes | `pm.governance_runtime_record.v1`. |
+L00020115	
+L00020116	Family payloads and state machines:
+L00020117	
+L00020118	| Family | Required payload fields | States | Transitions |
+L00020119	| --- | --- | --- | --- |
+L00020120	| `corroboration` | `corroboration_id`, `claim_ref`, `policy_ref`, `required_reviewer_count`, `supporting_reviewer_refs[]`, `dissenting_reviewer_refs[]`, `verdict`, `confidence`, `concern_refs[]?` | `requested`, `collecting`, `confirmed`, `denied`, `downgraded`, `escalated`, `superseded` | `requested -> collecting -> confirmed|denied|downgraded|escalated`; any terminal state may move to `superseded` with lineage. |
+L00020121	| `promotion` | `promotion_id`, `promotion_class`, `source_scope_ref`, `target_scope_ref`, `gate_verdict_ref`, `required_evidence_refs[]`, `hitl_required`, `promotion_receipt_ref?` | `draft`, `eligible`, `paused_hitl`, `approved`, `rejected`, `revoked`, `superseded` | `draft -> eligible -> approved|rejected|paused_hitl`; `paused_hitl -> approved|rejected`; approved records may move to `revoked` or `superseded` only by compensating record. |
+L00020122	| `graph_patch` | `graph_patch_id`, `graph_generation_id`, `patch_kind`, `requested_change_ref`, `affected_node_refs[]`, `decision_ref`, `state_transition_report_ref?`, `concern_refs[]?` | `requested`, `validated`, `applied`, `rejected`, `rolled_back`, `superseded` | `requested -> validated -> applied|rejected`; `applied -> rolled_back|superseded` only with a decision and transition report. |
+L00020123	| `projection_trust` | `projection_id`, `projection_freshness`, `projection_health`, `generation_match`, `canonical_revalidation_required`, `last_revalidated_at_utc?`, `fallback_route_ref?` | `current`, `refreshing`, `stale`, `degraded`, `unavailable` | `current -> refreshing|stale|degraded|unavailable`; non-current states return to `current` only after canonical revalidation evidence. |
+L00020124	
+L00020125	Trust-state aliases resolve to `projection_trust` and must not mint a separate state family. Graph-patch, promotion, and corroboration records may nominate or update concerns, but they do not replace concern lifecycle states.
+L00020126	
+L00020127	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/Run_Graph_View.md
+L00020128	
+L00020129	### CV-315 - Governance Runtime Record Schemas And State Machines
+L00020130	
+L00020131	```yaml
+L00020132	plan_unit_id: CV-315
+L00020133	unit_type: schema_contract
+L00020134	status: accepted
+L00020135	owner_doc: Plans/Contracts_V0.md
+L00020136	canonical_text: >-
+L00020137	  Governance runtime records define schemas and state machines for corroboration, promotion, graph_patch, and projection_trust.
+L00020138	  Each record uses a shared governance_runtime_record envelope, family-specific payload fields, closed status values, and
+L00020139	  explicit transitions. Trust-state aliases resolve to projection_trust, and these records remain contract/storage
+L00020140	  specifications rather than runtime certification or WorkNode generation.
+L00020141	gui_related: false
+L00020142	gui_classification_reason: Defines backend governance/runtime records and state machines consumed by GUI/runtime views.
+L00020143	depends_on: [CV-309, CV-314]
+L00020144	unblocks: [N-006, RGV-008]
+L00020145	acceptance_criteria:
+L00020146	  - Corroboration, promotion, graph_patch, and projection_trust each have required payload fields.
+L00020147	  - Each family has closed states and allowed transitions.
+L00020148	  - trust-state aliases resolve to projection_trust rather than a new state family.
+L00020149	  - The contract creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, final manifests, or PNC-019 evidence.
+L00020150	validation_surfaces:
+L00020151	  - python3 scripts/pm-plan-index.py validate
+L00020152	  - python3 scripts/pm-plans-verify.py lint-contractrefs
+L00020153	risk_class: governance_runtime_record_schema_gap
+L00020154	reasoning_tier: high
+L00020155	context_scope: fable_newfeatures_governance_records
+L00020156	implementation_surfaces:
+L00020157	  - Plans/Contracts_V0.md
+L00020158	  - Plans/storage-plan.md
+L00020159	  - Plans/Orchestrator_Page.md
+L00020160	  - Plans/Run_Graph_View.md
+L00020161	node_compile_hint:
+L00020162	  mode: governance_runtime_record_schema_contract
+L00020163	  create_worknodes: false
+L00020164	  create_nodeseeds: false
+L00020165	source_lineage:
+L00020166	  - fablereport.md:1179
+L00020167	  - Plans/.audits/fable-20260706/final_fable_action_state.jsonl
+L00020168	source_atom_ids: []
+L00020169	preserved_exact_tokens:
+L00020170	  - "corroboration"
+L00020171	  - "promotion"
+L00020172	  - "graph-patch"
+L00020173	  - "trust state"
+L00020174	negative_constraints:
+L00020175	  - Do not treat these records as PNC-019 runtime lifecycle or clean-room certification evidence.
+L00020176	  - Do not create implementation files, WorkNodes, NodeSeeds, queues, runtime launches, final manifests, or production build tasks.
+L00020177	owner_hints:
+L00020178	  - Plans/Contracts_V0.md
+L00020179	  - Plans/storage-plan.md
+L00020180	  - Plans/Orchestrator_Page.md
+L00020181	  - Plans/Run_Graph_View.md
+L00020182	```
+L00020183	
+L00020184	## Usage GUI Propagation Addendum - 2026-07-09
+L00020185	
+L00020186	This addendum binds shared route/open contracts to canonical UsageRecord identity. It creates no WorkNodes, NodeSeeds, executable queues, implementation files, runtime artifacts, generated wiring rows, production build tasks, final manifests, or PNC-019 receipts.
+L00020187	
+L00020188	### CV-316 - GUI Usage Route Subject Payload Contract
+L00020189	
+L00020190	```yaml
+L00020191	plan_unit_id: CV-316
+L00020192	unit_type: schema_contract
+L00020193	status: accepted
+L00020194	owner_doc: Plans/Contracts_V0.md
+L00020195	canonical_text: >-
+L00020196	  GUI Usage route/open payloads normalize every usage drill-through target into route_target.object_kind = usage_event and route_target.object_id = the canonical usage event id when usage_event_ref exists. OpenSubject carries the display subject, while usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, thread_id, source_class, source_confidence, source_authority, settlement_status, projection_freshness, and projection_health remain correlation and projection fields. Thread_id, tier_id, timestamp, and run_id can filter or scope a view but cannot replace UsageRecord identity. Raw/Curated consumers share the same redaction contract: Curated receives normalized fields and Raw receives redacted refs/hashes/omitted counts/permission state, not unredacted provider payloads.
+L00020197	gui_related: true
+L00020198	gui_classification_reason: Shared route/open payloads drive visible Usage, Ledger, chat, artifact, graph, and orchestrator navigation.
+L00020199	depends_on: [CV-309, UF-087, UF-088]
+L00020200	unblocks: [SP-234, WM-043]
+L00020201	acceptance_criteria:
+L00020202	  - Route payload fixtures fail if usage_event_ref remains a top-level route selector without object_kind = usage_event and object_id normalization.
+L00020203	  - OpenSubject fixtures preserve usage_event_ref, usage_record_id, provider_attempt_ref, attempt_id, node_id, tool_call_id, trace_ref, receipt refs, raw_payload_ref, artifact_id, run_id, and thread_id.
+L00020204	  - Cross-surface drill-through fixtures fail timestamp/run/thread/tier primary routing when usage_event_ref is available.
+L00020205	  - Raw/Curated fixtures prove redacted Raw refs and normalized Curated fields share the same UsageRecord identity.
+L00020206	validation_surfaces:
+L00020207	  - python3 scripts/pm-plan-index.py validate
+L00020208	  - python3 scripts/pm-plans-verify.py lint-contractrefs
+L00020209	  - future GUI-ROUTE-001 fixture suite
+L00020210	risk_class: usage_route_payload_identity_drift
+L00020211	reasoning_tier: high
+L00020212	context_scope: gui_usage_route_payload
+L00020213	implementation_surfaces:
+L00020214	  - Plans/Contracts_V0.md
+L00020215	  - Plans/UI_Command_Catalog.md
+L00020216	  - Plans/storage-plan.md
+L00020217	node_compile_hint:
+L00020218	  mode: gui_usage_route_subject_payload_contract
+L00020219	  create_worknodes: false
+L00020220	  create_nodeseeds: false
+L00020221	source_lineage:
+L00020222	  - "Plans/Contracts_V0.md:619-719"
+L00020223	  - "Plans/Contracts_V0.md:5665-5676"
+L00020224	  - "Plans/storage-plan.md:109"
+L00020225	  - "Plans/UI_Command_Catalog.md:1121-1122"
+L00020226	  - "Plans/Runtime_Artifacts_Panel.md:316"
+L00020227	preserved_exact_tokens:
+L00020228	  - route_target.object_kind = usage_event
+L00020229	  - object_id
+L00020230	  - OpenSubject
+L00020231	  - usage_event_ref
+L00020232	  - usage_record_id
+L00020233	  - provider_attempt_ref
+L00020234	  - raw_payload_ref
+L00020235	  - source_confidence
+L00020236	  - settlement_status
+L00020237	negative_constraints:
+L00020238	  - Do not let usage_event_ref bypass object-first route normalization.
+L00020239	  - Do not use timestamp, run_id, thread_id, or tier_id as primary Usage route identity when usage_event_ref exists.
+L00020240	  - Do not expose unredacted Raw provider payloads through route/open payloads.
+L00020241	owner_hints:
+L00020242	  - Plans/Contracts_V0.md
+L00020243	  - Plans/UI_Command_Catalog.md
+L00020244	  - Plans/storage-plan.md
+L00020245	```

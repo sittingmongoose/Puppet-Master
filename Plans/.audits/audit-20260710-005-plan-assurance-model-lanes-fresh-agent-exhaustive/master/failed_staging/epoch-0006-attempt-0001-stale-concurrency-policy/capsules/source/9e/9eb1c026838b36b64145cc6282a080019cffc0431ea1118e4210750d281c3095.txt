@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1728-1739 >>>
+L00001728	  - "`cmd.docker.k8s.apply/diff/logs/exec/port_forward/select_context/select_namespace`"
+L00001729	  - "`cmd.docker.k8s.apply|diff|logs|exec|port_forward|set_context|set_namespace|helm_preview|helm_install`"
+L00001730	  - "`cmd.docker.k8s.apply`"
+L00001731	  - "`cmd.k8s.*`"
+L00001732	  - "`cluster-wide`"
+L00001733	  - "`/attempt/action`"
+L00001734	negative_constraints:
+L00001735	  - "Docker Manager must not become a general cluster admin console or make full cluster inventory default."
+L00001736	owner_hints:
+L00001737	  - Plans/Containers_Registry_and_Unraid.md
+L00001738	```
+L00001739	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1740-2096 >>>
+L00001740	### CRAU-015 - Receipts Routes Blocked State And Governance
+L00001741	
+L00001742	```yaml
+L00001743	plan_unit_id: CRAU-015
+L00001744	unit_type: constraint
+L00001745	status: accepted
+L00001746	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001747	canonical_text: >-
+L00001748	  Docker Manager receipts, route/open handling, blocked-state integration,
+L00001749	  confirmation taxonomy, policy-blocked outcomes, registry/tag governance, and
+L00001750	  protected environment flows use shared contracts: receipts are compact UI
+L00001751	  objects derived from canonical run, publish, and event records; object-bearing
+L00001752	  navigation uses shared route targets instead of hidden panel-switch payloads;
+L00001753	  hard-gated remote-side-effect actions enter canonical approval or blocked
+L00001754	  flows; disabled controls expose reason, CTA, and Explain this state; and
+L00001755	  policy revalidation preserves exact remediation semantics.
+L00001756	gui_related: true
+L00001757	gui_classification_reason: Receipts, routes, disabled controls, blocked banners, CTAs, and Explain this state are user-visible interaction contracts.
+L00001758	split_recommended: true
+L00001759	split_recommendation_reason: Source span S0008 mixes GUI presentation with backend approval, policy, route, and receipt semantics; further splitting could duplicate tightly-coupled blocked-state invariants.
+L00001760	depends_on: [CRAU-009, CRAU-012, CRAU-014]
+L00001761	unblocks: [CRAU-021, CRAU-031]
+L00001762	acceptance_criteria:
+L00001763	  - Receipts record requested action, effective action, actor, targets, result ids, allowed action ids, approval source, executing subsystem, and source event ids.
+L00001764	  - Route/open adoption uses the shared target contract rather than treating object-bearing shell commands as local layout state.
+L00001765	  - cmd.panel.switch and panel-switch style commands select Docker Manager only as shell-state.
+L00001766	  - Hard-gated Docker, Unraid, and Kubernetes remote side effects enter canonical approval or blocked flow rather than generic UI confirmation.
+L00001767	  - Disabled controls remain explainable with exact blocking condition, missing capability, degraded reason, reason code, last validation time, and primary recovery CTA when one exists.
+L00001768	  - Policy, immutable-tag, protected-environment, and destination-policy violations preserve namespace/repository/tag or environment context and remediation pivots.
+L00001769	validation_surfaces:
+L00001770	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001771	  - python3 scripts/pm-plan-index.py validate
+L00001772	risk_class: policy_bypass_or_route_drift
+L00001773	reasoning_tier: high
+L00001774	context_scope: receipts_routes_blocked_state_governance
+L00001775	implementation_surfaces:
+L00001776	  - Plans/Containers_Registry_and_Unraid.md
+L00001777	  - Plans/UI_Command_Catalog.md
+L00001778	  - Plans/Contracts_V0.md
+L00001779	  - Plans/Permissions_System.md
+L00001780	  - Plans/GitHub_Integration.md
+L00001781	  - Plans/Orchestrator_Page.md
+L00001782	node_compile_hint:
+L00001783	  mode: blocked_state_readiness
+L00001784	  create_worknodes: false
+L00001785	source_lineage:
+L00001786	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0008
+L00001787	preserved_exact_tokens:
+L00001788	  - "`allowed_action_ids[]`"
+L00001789	  - "`hard_gate`"
+L00001790	  - "`/blocked`"
+L00001791	  - "`Explain this state`"
+L00001792	  - "`target_kind`"
+L00001793	  - "`cmd.panel.switch`"
+L00001794	  - "`route-activation`"
+L00001795	  - "`reason_code`"
+L00001796	  - "`/receipts`"
+L00001797	negative_constraints:
+L00001798	  - "Docker Manager panels must not add one-off local recovery actions that drift from the shared blocked contract."
+L00001799	  - "Object-bearing targeting must route through the shared route/open target contract instead of extending panel-switch args."
+L00001800	owner_hints:
+L00001801	  - Plans/Containers_Registry_and_Unraid.md
+L00001802	  - Plans/Contracts_V0.md
+L00001803	  - Plans/Permissions_System.md
+L00001804	```
+L00001805	
+L00001806	### CRAU-016 - Repo Root And Deep-Link Identity
+L00001807	
+L00001808	```yaml
+L00001809	plan_unit_id: CRAU-016
+L00001810	unit_type: constraint
+L00001811	status: accepted
+L00001812	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001813	canonical_text: >-
+L00001814	  Docker and Kubernetes detection, panel state, restore behavior, repo
+L00001815	  selection, GitHub binding, manifest-source versus image-source references, and
+L00001816	  deep links are repo/root aware: panel state is keyed to repo/root identity,
+L00001817	  restores validate that the repo still exists, chooser state replaces silent
+L00001818	  rebinding, selection precedence is deterministic, hosted bindings use explicit
+L00001819	  remotes, and deep links resolve to normalized route targets rather than raw
+L00001820	  local IDs or one-off URL shapes.
+L00001821	gui_related: false
+L00001822	gui_classification_reason: This unit governs identity, routing, and storage semantics behind visible surfaces.
+L00001823	split_recommended: true
+L00001824	split_recommendation_reason: Source span S0009 mixes backend identity routing with GUI-facing disclosure and row-action behavior split into adjacent units.
+L00001825	depends_on: [CRAU-015]
+L00001826	unblocks: [CRAU-017, CRAU-018, CRAU-019, CRAU-021]
+L00001827	acceptance_criteria:
+L00001828	  - Direct receipt or deep-link target wins repo-selection precedence before explicit panel selection, active run/tier repo, active editor repo, or chooser fallback.
+L00001829	  - Panels disclose whether a repo is pinned or inferred.
+L00001830	  - Hosted GitHub features bind through explicit remotes rather than nearest active repo fallback.
+L00001831	  - Docker/Kubernetes receipts distinguish manifest-source repo from image-source repo.
+L00001832	  - Docker Manager deep-link forms decode into the same internal routing path and must not expose raw local IDs as the routing contract.
+L00001833	validation_surfaces:
+L00001834	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001835	  - python3 scripts/pm-plan-index.py validate
+L00001836	risk_class: route_identity_drift
+L00001837	reasoning_tier: high
+L00001838	context_scope: repo_root_deep_link_identity
+L00001839	implementation_surfaces:
+L00001840	  - Plans/Containers_Registry_and_Unraid.md
+L00001841	  - Plans/Crosswalk.md
+L00001842	  - Plans/Contracts_V0.md
+L00001843	  - Plans/storage-plan.md
+L00001844	node_compile_hint:
+L00001845	  mode: identity_routing_contract
+L00001846	  create_worknodes: false
+L00001847	source_lineage:
+L00001848	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0009
+L00001849	preserved_exact_tokens:
+L00001850	  - "`repo_id`"
+L00001851	  - "`project_root_id`"
+L00001852	  - "`worktree_id`"
+L00001853	  - "`publish_result_id`"
+L00001854	  - "`k8s_ref`"
+L00001855	  - "`target_object`"
+L00001856	  - "`cmd.docker.open_target`"
+L00001857	negative_constraints:
+L00001858	  - "Docker Manager deep-link handling must not expose raw local IDs as the routing contract."
+L00001859	owner_hints:
+L00001860	  - Plans/Containers_Registry_and_Unraid.md
+L00001861	  - Plans/Contracts_V0.md
+L00001862	```
+L00001863	
+L00001864	### CRAU-017 - Runtime And Workload Identity State
+L00001865	
+L00001866	```yaml
+L00001867	plan_unit_id: CRAU-017
+L00001868	unit_type: requirement
+L00001869	status: accepted
+L00001870	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001871	canonical_text: >-
+L00001872	  Docker Manager runtime identity is durable and requested-vs-effective:
+L00001873	  k8s_workload_ref, container_id, compose_project, runtime_context, and
+L00001874	  workload_ref survive beyond preview_session_id, use delete/recreate history
+L00001875	  classification, local-runtime blocked/degraded reason codes, receipt
+L00001876	  joinability, and typed extension rules for reason codes.
+L00001877	gui_related: false
+L00001878	gui_classification_reason: Durable runtime and workload identity state is backend routing, history, and storage semantics.
+L00001879	split_recommended: true
+L00001880	split_recommendation_reason: Source span S0009 also contains visible identity disclosure, compatibility, and row-action rules.
+L00001881	depends_on: [CRAU-016]
+L00001882	unblocks: [CRAU-019, CRAU-021]
+L00001883	acceptance_criteria:
+L00001884	  - Kubernetes workload identity is subject-aware and survives delete/recreate by marking stale or historical instead of silently rebinding same-name replacements.
+L00001885	  - Local-runtime reason codes include runtime_context_missing, runtime_context_unreachable, compose_invalid, compose_service_missing, buildx_unavailable, bake_unavailable, image_missing, container_unreachable, port_unbound, auth_expired, registry_unreachable, and project_not_containerized.
+L00001886	  - Unknown/new provider codes extend the typed namespace without becoming free-form UI copy.
+L00001887	  - Runtime identity includes runtime_asset_ref, compose_project_ref, publish_result_id, template_repo_id, and k8s_workload_ref where applicable.
+L00001888	validation_surfaces:
+L00001889	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001890	  - python3 scripts/pm-plan-index.py validate
+L00001891	risk_class: stale_runtime_rebind
+L00001892	reasoning_tier: high
+L00001893	context_scope: runtime_workload_identity_state
+L00001894	implementation_surfaces:
+L00001895	  - Plans/Containers_Registry_and_Unraid.md
+L00001896	  - Plans/storage-plan.md
+L00001897	  - Plans/Contracts_V0.md
+L00001898	node_compile_hint:
+L00001899	  mode: runtime_identity_contract
+L00001900	  create_worknodes: false
+L00001901	source_lineage:
+L00001902	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0009
+L00001903	preserved_exact_tokens:
+L00001904	  - "`k8s_workload_ref`"
+L00001905	  - "`container_id`"
+L00001906	  - "`compose_project`"
+L00001907	  - "`runtime_context`"
+L00001908	  - "`workload_ref`"
+L00001909	  - "`preview_session_id`"
+L00001910	  - "`runtime_asset_ref`"
+L00001911	  - "`compose_project_ref`"
+L00001912	  - "`template_repo_id`"
+L00001913	negative_constraints:
+L00001914	  - "A new Kubernetes object with the same name must not silently become the same workload in history."
+L00001915	owner_hints:
+L00001916	  - Plans/Containers_Registry_and_Unraid.md
+L00001917	  - Plans/storage-plan.md
+L00001918	```
+L00001919	
+L00001920	### CRAU-018 - Lane Package Effective Identity Disclosure
+L00001921	
+L00001922	```yaml
+L00001923	plan_unit_id: CRAU-018
+L00001924	unit_type: requirement
+L00001925	status: accepted
+L00001926	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001927	canonical_text: >-
+L00001928	  Docker Manager mirrors lane/package requested-versus-effective identity for
+L00001929	  account, provider, model, persona, runtime, and worker policy, records override
+L00001930	  source, selection_reason, switch and clamped history, and exposes user-facing
+L00001931	  grammar for Requested account, Requested binding, Effective account, and Switch
+L00001932	  reason so runtime identity divergence is visible.
+L00001933	gui_related: true
+L00001934	gui_classification_reason: The unit defines user-visible identity grammar, disclosures, and switch reason presentation.
+L00001935	split_recommended: true
+L00001936	split_recommendation_reason: Source span S0009 mixes backend identity fields with GUI disclosure rules.
+L00001937	depends_on: [CRAU-016, CRAU-017]
+L00001938	unblocks: [CRAU-020, CRAU-021]
+L00001939	acceptance_criteria:
+L00001940	  - UI disclosure does not stop at persona, platform, or model when runtime identity diverges.
+L00001941	  - requested_account_binding, effective_account_binding, provider_instance_id, model_id, persona_id, runtime_target_id, worker_pool_policy, override source, selection_reason, and switch/clamped history remain available to Docker Manager projections.
+L00001942	  - Docker Manager uses the exact grammar Requested account, Requested binding, Effective account, and Switch reason.
+L00001943	validation_surfaces:
+L00001944	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001945	  - python3 scripts/pm-plan-index.py validate
+L00001946	risk_class: identity_visibility_gap
+L00001947	reasoning_tier: high
+L00001948	context_scope: lane_package_effective_identity_disclosure
+L00001949	implementation_surfaces:
+L00001950	  - Plans/Containers_Registry_and_Unraid.md
+L00001951	  - Plans/Multi-Account.md
+L00001952	  - Plans/Personas.md
+L00001953	  - Plans/orchestrator-subagent-integration.md
+L00001954	  - Plans/Contracts_V0.md
+L00001955	node_compile_hint:
+L00001956	  mode: identity_disclosure_contract
+L00001957	  create_worknodes: false
+L00001958	source_lineage:
+L00001959	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0009
+L00001960	preserved_exact_tokens:
+L00001961	  - "`requested_account_binding`"
+L00001962	  - "`effective_account_binding`"
+L00001963	  - "`provider_instance_id`"
+L00001964	  - "`model_id`"
+L00001965	  - "`persona_id`"
+L00001966	  - "`runtime_target_id`"
+L00001967	  - "`worker_pool_policy`"
+L00001968	  - "`selection_reason`"
+L00001969	  - "`Requested account`"
+L00001970	  - "`Requested binding`"
+L00001971	  - "`Effective account`"
+L00001972	  - "`Switch reason`"
+L00001973	negative_constraints:
+L00001974	  - "Docker Manager UI must not hide runtime identity divergence behind persona/platform/model-only labels."
+L00001975	owner_hints:
+L00001976	  - Plans/Containers_Registry_and_Unraid.md
+L00001977	```
+L00001978	
+L00001979	### CRAU-019 - Project State And Projection Truth Boundary
+L00001980	
+L00001981	```yaml
+L00001982	plan_unit_id: CRAU-019
+L00001983	unit_type: constraint
+L00001984	status: accepted
+L00001985	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00001986	canonical_text: >-
+L00001987	  Docker Manager project state preserves runtime asset, publish result, template
+L00001988	  repository, Kubernetes operation refs, compose scenarios, drift baselines,
+L00001989	  cleanup preferences, requested/effective runtime/build/compose/registry/K8s
+L00001990	  capability fields, and receipt joins under
+L00001991	  container_manager.project_state.{project_id}; dashboard, orchestrator, Docker
+L00001992	  Manager page and widget presentation, and source-control summaries are
+L00001993	  projections over canonical runtime facts, not separate truths.
+L00001994	gui_related: false
+L00001995	gui_classification_reason: This unit governs project-state storage, canonical fact ownership, and projection boundaries.
+L00001996	split_recommended: true
+L00001997	split_recommendation_reason: Source span S0009 mixes storage projection semantics with GUI identity disclosure and row actions.
+L00001998	depends_on: [CRAU-010, CRAU-016, CRAU-017]
+L00001999	unblocks: [CRAU-020, CRAU-022, CRAU-025]
+L00002000	acceptance_criteria:
+L00002001	  - container_manager.project_state.{project_id} remains the canonical project key for Docker Manager project state.
+L00002002	  - Project state stores durable reopen targets and comparison baselines, not transient runtime observations.
+L00002003	  - Persisted projection objects include project, run, feature_seam, work_package, node, attempt, lane, snapshot, promotion, review, resolution_thread, and event.
+L00002004	  - Dashboard, orchestrator, Docker Manager /page, widget presentation, and source-control summaries project from canonical runtime facts instead of becoming separate truth sources.
+L00002005	validation_surfaces:
+L00002006	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002007	  - python3 scripts/pm-plan-index.py validate
+L00002008	risk_class: duplicate_truth_drift
+L00002009	reasoning_tier: high
+L00002010	context_scope: docker_manager_project_state_projection_boundary
+L00002011	implementation_surfaces:
+L00002012	  - Plans/Containers_Registry_and_Unraid.md
+L00002013	  - Plans/storage-plan.md
+L00002014	  - Plans/Orchestrator_Page.md
+L00002015	node_compile_hint:
+L00002016	  mode: storage_projection_contract
+L00002017	  create_worknodes: false
+L00002018	source_lineage:
+L00002019	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0009
+L00002020	preserved_exact_tokens:
+L00002021	  - "`container_manager.project_state.{project_id}`"
+L00002022	  - "`requested_runtime`"
+L00002023	  - "`effective_runtime`"
+L00002024	  - "`requested_registry_capability`"
+L00002025	  - "`effective_registry_capability`"
+L00002026	  - "`runtime_fact_ref`"
+L00002027	  - "`projection freshness`"
+L00002028	negative_constraints:
+L00002029	  - "Projected dashboard, orchestrator, Docker Manager, widget, and source-control summaries must not become separate truths."
+L00002030	owner_hints:
+L00002031	  - Plans/Containers_Registry_and_Unraid.md
+L00002032	  - Plans/storage-plan.md
+L00002033	```
+L00002034	
+L00002035	### CRAU-020 - Compatibility Labels And Remote-First Boundaries
+L00002036	
+L00002037	```yaml
+L00002038	plan_unit_id: CRAU-020
+L00002039	unit_type: constraint
+L00002040	status: accepted
+L00002041	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00002042	canonical_text: >-
+L00002043	  Docker Manager consumes package/lane state without reviving tier-era ownership:
+L00002044	  labels such as Tiers, Phase/Task/Subtask, singular Overseer, /Task/Subtask,
+L00002045	  requested_persona_id, and effective_persona_id are compatibility/source
+L00002046	  lineage only; remote-capable Docker, Kubernetes, registry, and template-repo
+L00002047	  surfaces preserve read-only/offline, degraded/offline, fallback/index,
+L00002048	  reveal, one-bounded-auto-retry, and owner-surface handoff boundaries without
+L00002049	  re-owning file, editor, browser, LSP, search, or language-detection behavior.
+L00002050	gui_related: true
+L00002051	gui_classification_reason: Compatibility labels, read-only/degraded disclosures, fallback/reveal links, and browser-hosting boundaries are user-visible cross-surface behavior.
+L00002052	split_recommended: true
+L00002053	split_recommendation_reason: Source span S0009 mixes compatibility boundary rules with project state and row-action semantics.
+L00002054	depends_on: [CRAU-018, CRAU-019]
+L00002055	unblocks: [CRAU-021, CRAU-022]
+L00002056	acceptance_criteria:
+L00002057	  - Tiers, Phase/Task/Subtask, singular Overseer, Task/Subtask, requested_persona_id, and effective_persona_id remain migration/source-lineage labels only.
+L00002058	  - Docker Manager consumes package/lane state rather than reviving tier-era ownership.
+L00002059	  - Remote-capable surfaces preserve /read-only/offline, /degraded/offline, /fallback/index, /reveal, and one-bounded-auto-retry behavior.
+L00002060	  - Docker Manager does not become the remote owner for file, editor, browser, LSP, search, or language-detection behavior.
+L00002061	  - Bottom-panel-primary browser hosting is not reintroduced where editor-tab-first browser model is the owner.
+L00002062	validation_surfaces:
+L00002063	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002064	  - python3 scripts/pm-plan-index.py validate
+L00002065	risk_class: stale_architecture_revival
+L00002066	reasoning_tier: high
+L00002067	context_scope: compatibility_labels_remote_first_boundaries
+L00002068	implementation_surfaces:
+L00002069	  - Plans/Containers_Registry_and_Unraid.md
+L00002070	  - Plans/Orchestrator_Page.md
+L00002071	  - Plans/Crosswalk.md
+L00002072	  - Plans/FinalGUISpec.md
+L00002073	node_compile_hint:
+L00002074	  mode: compatibility_boundary
+L00002075	  create_worknodes: false
+L00002076	source_lineage:
+L00002077	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Containers_Registry_and_Unraid-S0009
+L00002078	preserved_exact_tokens:
+L00002079	  - "`Tiers`"
+L00002080	  - "`Phase/Task/Subtask`"
+L00002081	  - "`Overseer`"
+L00002082	  - "`/Task/Subtask`"
+L00002083	  - "`requested_persona_id`"
+L00002084	  - "`effective_persona_id`"
+L00002085	  - "`/read-only/offline`"
+L00002086	  - "`/degraded/offline`"
+L00002087	  - "`/fallback/index`"
+L00002088	  - "`/reveal`"
+L00002089	compatibility_only_notes:
+L00002090	  - "Tier-era labels and requested/effective persona fields are compatibility/source-lineage labels, not new Docker Manager ownership keys."
+L00002091	negative_constraints:
+L00002092	  - "Docker Manager must not re-own file, editor, /browser/LSP/search, or language-detection behavior."
+L00002093	owner_hints:
+L00002094	  - Plans/Containers_Registry_and_Unraid.md
+L00002095	```
+L00002096	
+
+<<< CONTEXT_AFTER canonical_document_lines=2097-2108 >>>
+L00002097	### CRAU-021 - Identity Drift Indeterminate Outcomes And Row Actions
+L00002098	
+L00002099	```yaml
+L00002100	plan_unit_id: CRAU-021
+L00002101	unit_type: constraint
+L00002102	status: accepted
+L00002103	owner_doc: Plans/Containers_Registry_and_Unraid.md
+L00002104	canonical_text: >-
+L00002105	  Docker Manager handles runtime and remote identity drift, indeterminate remote
+L00002106	  outcomes, capability-level degradation, active-run ownership, and row actions
+L00002107	  explicitly: stale or unowned state revalidates before publish or promotion,
+L00002108	  remote mutations can report indeterminate_remote_outcome with refresh/reconcile

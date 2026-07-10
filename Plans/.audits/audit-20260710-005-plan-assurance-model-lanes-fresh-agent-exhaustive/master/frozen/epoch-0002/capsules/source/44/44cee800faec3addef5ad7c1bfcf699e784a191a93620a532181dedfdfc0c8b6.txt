@@ -1,0 +1,391 @@
+<<< CONTEXT_BEFORE 6242-6253 >>>
+  - "/worktree/run"
+  - "Open in Source Control"
+  - "Compare run output"
+  - "GITHUB ACTIONS"
+  - "Git (GitHub)"
+negative_constraints:
+  - "Chat never treats tier-level, run-scoped, or completed-work SCM /ownership badges as canonical ownership."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Graph_View.md
+```
+
+
+<<< AUTHORITATIVE_CORE 6254-6615 >>>
+### ACD-060 - Chat Search Owner Boundary
+
+```yaml
+plan_unit_id: ACD-060
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Chat search and history retrieval are chat-domain retrieval only; project-wide
+  find and replace remain Search side-panel owned, and semantic symbol or
+  reference lookup remains editor/LSP owned even when chat launches it.
+gui_related: true
+gui_classification_reason: Search results and owner-surface routing are user-visible, while ownership stays with the relevant surfaces.
+depends_on: []
+unblocks: [ACD-061, ACD-062]
+acceptance_criteria:
+  - Chat-domain retrieval does not become project-wide find/replace ownership.
+  - Symbol and reference lookup route to editor/LSP ownership.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: search_owner_boundary
+reasoning_tier: standard
+context_scope: search
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/LSPSupport.md
+  - Plans/FileManager.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: chat_search_owner_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0045
+preserved_exact_tokens:
+  - "chat search/history retrieval"
+  - "Search side-panel"
+  - "editor/LSP"
+negative_constraints:
+  - "project-wide find-in-files and replace-in-files remain Search side-panel owned"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/LSPSupport.md
+```
+
+### ACD-061 - Human Chat History Search
+
+```yaml
+plan_unit_id: ACD-061
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Human chat history search is a first-class UI feature for searching across
+  chats and history, with search box, filters, results list, and a Tantivy chat
+  index fed by the seglog projector.
+gui_related: true
+gui_classification_reason: Search box, filters, and results list are visible user-facing UI.
+depends_on: [ACD-060]
+unblocks: [ACD-062, ACD-063]
+acceptance_criteria:
+  - Users can search within current chat and, where applicable, across past chats or sessions.
+  - Human chat history search uses a Tantivy chat index fed by seglog projection.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: chat_history_search
+reasoning_tier: standard
+context_scope: chat_history
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: human_chat_history_search
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0046
+preserved_exact_tokens:
+  - "search across chats / history"
+  - "search box"
+  - "filters"
+  - "results list"
+  - "Tantivy chat index"
+  - "seglog projector"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-062 - Agent Chat History Search
+
+```yaml
+plan_unit_id: ACD-062
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Agents can query chat history through tool, API, MCP-equivalent, or context
+  pipeline access to retrieve prior decisions, explanations, and outcomes for
+  continuity.
+gui_related: false
+gui_classification_reason: Agent retrieval interfaces are backend/context-pipeline behavior, not GUI implementation.
+depends_on: [ACD-061]
+unblocks: [ACD-063]
+acceptance_criteria:
+  - Assistant, Interview, and subagents can retrieve relevant prior messages or sessions when answering or planning.
+  - Agent search can share the same storage/index as human chat search while exposing an agent-callable interface.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: context_continuity
+reasoning_tier: standard
+context_scope: chat_history
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: agent_chat_history_search
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0046
+preserved_exact_tokens:
+  - "Assistant, Interview, or subagent"
+  - "tool/MCP"
+  - "context pipeline"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+```
+
+### ACD-063 - Auto Retrieval Scope
+
+```yaml
+plan_unit_id: ACD-063
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Smart auto-retrieval is project-only by default across chat history, project
+  workspace code, and project logs; it must not search other projects or
+  external sources unless the user explicitly requests external navigation or
+  import.
+gui_related: false
+gui_classification_reason: Retrieval scope is context-pipeline behavior, not GUI implementation.
+depends_on: [ACD-061, ACD-062]
+unblocks: [ACD-064, ACD-065, ACD-066]
+acceptance_criteria:
+  - Auto-retrieval searches only within the current project by default.
+  - External or cross-project retrieval requires explicit user request.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: retrieval_scope
+reasoning_tier: high
+context_scope: auto_retrieval
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: auto_retrieval_scope
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+preserved_exact_tokens:
+  - "Project-only by default"
+  - "current project"
+  - "chat/code/logs"
+negative_constraints:
+  - "It MUST NOT search other projects or external sources unless the user explicitly requests external navigation/import."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-064 - Auto Retrieval Triggers And Budget
+
+```yaml
+plan_unit_id: ACD-064
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Auto-retrieval is triggered and budgeted, not always-on for everything, with
+  deterministic per-source query, hit, and byte caps plus deterministic trigger
+  heuristics for chat, code, and log retrieval.
+gui_related: false
+gui_classification_reason: Retrieval trigger and budget rules are context-pipeline behavior, not GUI implementation.
+depends_on: [ACD-063]
+unblocks: [ACD-066]
+acceptance_criteria:
+  - Auto-retrieval does not search everything every turn.
+  - Per-source query, hit, and byte caps prevent retrieved context from crowding out user/assistant messages.
+  - Trigger heuristics remain deterministic.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: retrieval_budget
+reasoning_tier: standard
+context_scope: auto_retrieval
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: auto_retrieval_triggers_budget
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+preserved_exact_tokens:
+  - "Not always-on for everything"
+  - "Deterministic budget caps"
+  - "Chat-history triggers"
+  - "Code triggers"
+  - "Logs triggers"
+negative_constraints:
+  - "Auto-retrieval MUST be triggered and budgeted, not \"search everything every turn.\""
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+```
+
+### ACD-065 - Auto Retrieval Settings Surface
+
+```yaml
+plan_unit_id: ACD-065
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Retrieval settings expose off, auto, and always per retrieval source, default
+  chat, code, and logs to auto, and provide a thread-local Auto Retrieval chip
+  with On and Off states.
+gui_related: true
+gui_classification_reason: Settings rows and the thread-local Auto Retrieval chip are visible UI controls.
+depends_on: [ACD-063]
+unblocks: []
+acceptance_criteria:
+  - Each retrieval source supports off, auto, and always settings.
+  - Chat, code, and logs default to auto.
+  - A thread-local Auto Retrieval chip can toggle On or Off without changing project defaults.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: retrieval_settings
+reasoning_tier: standard
+context_scope: auto_retrieval
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: auto_retrieval_settings_surface
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+preserved_exact_tokens:
+  - "off"
+  - "auto"
+  - "always"
+  - "Auto Retrieval chip"
+  - "On/Off"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-066 - Retrieved Context Memory Boundary
+
+```yaml
+plan_unit_id: ACD-066
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Retrieved results enter the Work bundle as a Retrieved Context block with
+  source type, provenance, snippet sizes, and truncation notes. Retrieved
+  Context is not Assistant memory and must respect Context Lens overlays.
+gui_related: false
+gui_classification_reason: Retrieved Context assembly and memory boundaries are prompt/context pipeline behavior.
+depends_on: [ACD-063, ACD-064]
+unblocks: []
+acceptance_criteria:
+  - Retrieved Context carries source type, provenance, byte/token sizes, and truncation notes.
+  - Retrieved Context is not written to Assistant memory unless separately captured as a verified gist.
+  - Context Lens muted, focused, and subcompacted rules affect retrieval injection.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_boundary
+reasoning_tier: high
+context_scope: auto_retrieval
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+  - Plans/Prompt_Pipeline.md
+node_compile_hint:
+  mode: retrieved_context_memory_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0047
+preserved_exact_tokens:
+  - "Retrieved Context"
+  - "Work bundle"
+  - "memory"
+  - "Plans/assistant-memory-subsystem.md"
+  - "Context Lens"
+negative_constraints:
+  - "Retrieved Context is not \"memory\" and must not be written into the Assistant memory store unless separately captured as a verified gist."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/assistant-memory-subsystem.md
+```
+
+### ACD-067 - Agent Search Tool Contracts
+
+```yaml
+plan_unit_id: ACD-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Project-scoped agent search tools expose chatsearch, codesearch, logsearch,
+  logread, and grep contracts over project indices to support explicit agent
+  reasoning and smart retrieval.
+gui_related: false
+gui_classification_reason: Agent search tools and query contracts are backend/tool behavior.
+depends_on: [ACD-063]
+unblocks: [ACD-068, ACD-069]
+acceptance_criteria:
+  - chatsearch, codesearch, logsearch, logread, and grep expose project-scoped query contracts.
+  - logread payloads are bounded by size caps and stricter permission defaults.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: search_tool_contract
+reasoning_tier: standard
+context_scope: agent_search
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/Permissions_System.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: agent_search_tool_contracts
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0048
+preserved_exact_tokens:
+  - "chatsearch(query, filters={thread_id?, time_range?}, k)"
+  - "codesearch(query, path?, mode={text|symbol}, k)"
+  - "logsearch(query, filters={time_range?, run_id?, thread_id?, tool_name?, level?}, k)"
+  - "logread(ref)"
+  - "grep(pattern, path?, glob?)"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 6616-6627 >>>
+### ACD-068 - Search Freshness And Grep Fallback
+
+```yaml
+plan_unit_id: ACD-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Grep and search freshness disclosure distinguishes valid stale snapshots,
+  raw-ripgrep fallback, dirty-layer freshness protection, and sparse n-gram
+  acceleration without re-owning Tools implementation details.
+gui_related: false

@@ -1,0 +1,408 @@
+<<< CONTEXT_BEFORE canonical_document_lines=10105-10116 >>>
+L00010105	  - "`provider_account_id`"
+L00010106	  - "`execution_role`"
+L00010107	  - "`operational_identity`"
+L00010108	  - "ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Multi-Account.md#4.5 Selectable unit and runtime resolution"
+L00010109	compatibility_only_notes:
+L00010110	  - "provider_account_id is provider-native metadata subordinate to stable internal identity unless explicitly governed."
+L00010111	negative_constraints:
+L00010112	  - "provider_account_id must not replace stable internal identity."
+L00010113	owner_hints:
+L00010114	  - Plans/Contracts_V0.md
+L00010115	```
+L00010116	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=10117-10495 >>>
+L00010117	### CV-146 - Non-Persona Runtime Field Adoption Guard
+L00010118	
+L00010119	```yaml
+L00010120	plan_unit_id: CV-146
+L00010121	unit_type: constraint
+L00010122	status: accepted
+L00010123	owner_doc: Plans/Contracts_V0.md
+L00010124	canonical_text: >-
+L00010125	  Non-persona runtime fields must land in shared runtime contracts before
+L00010126	  question, todowrite, web, tool/chat, or other feature-specific packets depend
+L00010127	  on them, and those packets reuse canonical runtime names with only additive
+L00010128	  child payloads.
+L00010129	gui_related: false
+L00010130	gui_classification_reason: This unit defines cross-contract runtime field adoption boundaries.
+L00010131	split_recommended: true
+L00010132	depends_on: [CV-145]
+L00010133	unblocks: []
+L00010134	acceptance_criteria:
+L00010135	  - "accepted non-persona fields land in shared runtime contracts first."
+L00010136	  - "Feature-specific packets reuse canonical runtime field names."
+L00010137	  - "Feature-specific packets attach only additive child payloads for feature-specific execution details."
+L00010138	validation_surfaces:
+L00010139	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010140	  - python3 scripts/pm-plan-index.py validate
+L00010141	risk_class: runtime_field_shadow_name_drift
+L00010142	reasoning_tier: high
+L00010143	context_scope: non_persona_runtime_field_adoption
+L00010144	implementation_surfaces:
+L00010145	  - Plans/Contracts_V0.md
+L00010146	  - Plans/Prompt_Pipeline.md
+L00010147	  - Plans/Multi-Account.md
+L00010148	  - Plans/storage-plan.md
+L00010149	node_compile_hint:
+L00010150	  mode: runtime_field_adoption_constraint
+L00010151	  create_worknodes: false
+L00010152	source_lineage:
+L00010153	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0050
+L00010154	preserved_exact_tokens:
+L00010155	  - "`if/when`"
+L00010156	  - "`question`"
+L00010157	  - "`todowrite`"
+L00010158	  - "`/tool/chat/etc`"
+L00010159	  - "`projection_freshness`"
+L00010160	  - "`projection_health`"
+L00010161	negative_constraints:
+L00010162	  - "Feature-specific docs must not invent shadow names or ad-hoc local versions of shared runtime fields."
+L00010163	owner_hints:
+L00010164	  - Plans/Contracts_V0.md
+L00010165	```
+L00010166	
+L00010167	### CV-147 - Provider Runtime Record Families
+L00010168	
+L00010169	```yaml
+L00010170	plan_unit_id: CV-147
+L00010171	unit_type: requirement
+L00010172	status: accepted
+L00010173	owner_doc: Plans/Contracts_V0.md
+L00010174	canonical_text: >-
+L00010175	  Provider/runtime storage uses provider_account_state, model_catalog_entry,
+L00010176	  provider_preferences, and requested_effective_runtime as canonical record
+L00010177	  families, preserving requested/effective separation and treating preferences
+L00010178	  as resolver inputs rather than proof of effective execution.
+L00010179	gui_related: false
+L00010180	gui_classification_reason: This unit defines provider runtime record families.
+L00010181	split_recommended: true
+L00010182	depends_on: [CV-145]
+L00010183	unblocks: []
+L00010184	acceptance_criteria:
+L00010185	  - "provider_account_state stores provider/account current-state snapshot facts."
+L00010186	  - "model_catalog_entry stores provider/model/runtime availability, display metadata, capability facts, and runtime compatibility."
+L00010187	  - "provider_preferences stores resolver inputs and is not proof of effective execution."
+L00010188	  - "requested_effective_runtime keeps requested runtime/provider/model/auth/account/preferences distinct from effective selections."
+L00010189	validation_surfaces:
+L00010190	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010191	  - python3 scripts/pm-plan-index.py validate
+L00010192	risk_class: provider_runtime_record_family_drift
+L00010193	reasoning_tier: high
+L00010194	context_scope: provider_runtime_record_families
+L00010195	implementation_surfaces:
+L00010196	  - Plans/Contracts_V0.md
+L00010197	  - Plans/storage-plan.md
+L00010198	  - Plans/Multi-Account.md
+L00010199	node_compile_hint:
+L00010200	  mode: provider_runtime_record_family_contract
+L00010201	  create_worknodes: false
+L00010202	source_lineage:
+L00010203	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0050
+L00010204	preserved_exact_tokens:
+L00010205	  - "`provider_account_state`"
+L00010206	  - "`model_catalog_entry`"
+L00010207	  - "`provider_preferences`"
+L00010208	  - "`requested_effective_runtime`"
+L00010209	negative_constraints:
+L00010210	  - "provider_preferences are resolver inputs rather than proof of effective execution."
+L00010211	owner_hints:
+L00010212	  - Plans/Contracts_V0.md
+L00010213	```
+L00010214	
+L00010215	### CV-148 - Account Binding Permission Carry-Through
+L00010216	
+L00010217	```yaml
+L00010218	plan_unit_id: CV-148
+L00010219	unit_type: requirement
+L00010220	status: accepted
+L00010221	owner_doc: Plans/Contracts_V0.md
+L00010222	canonical_text: >-
+L00010223	  Requested state remains historically recoverable, requested_account_binding
+L00010224	  distinguishes preference from requirement, and permission/approval snapshots
+L00010225	  retain requested binding plus effective_account_id for effective-account-scoped
+L00010226	  permission resolution.
+L00010227	gui_related: false
+L00010228	gui_classification_reason: This unit defines permission and approval identity carry-through.
+L00010229	split_recommended: true
+L00010230	depends_on: [CV-145]
+L00010231	unblocks: []
+L00010232	acceptance_criteria:
+L00010233	  - "Requested state remains recoverable in historical snapshots."
+L00010234	  - "requested_account_binding distinguishes preference from requirement."
+L00010235	  - "effective-account-scoped permission resolution reads requested_account_binding."
+L00010236	  - "effective_account_id remains available to approval and permission snapshots."
+L00010237	validation_surfaces:
+L00010238	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010239	  - python3 scripts/pm-plan-index.py validate
+L00010240	risk_class: account_binding_permission_lineage_loss
+L00010241	reasoning_tier: high
+L00010242	context_scope: account_binding_permission_carry_through
+L00010243	implementation_surfaces:
+L00010244	  - Plans/Contracts_V0.md
+L00010245	  - Plans/Decision_Policy.md
+L00010246	  - Plans/human-in-the-loop.md
+L00010247	node_compile_hint:
+L00010248	  mode: account_binding_permission_contract
+L00010249	  create_worknodes: false
+L00010250	source_lineage:
+L00010251	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0050
+L00010252	preserved_exact_tokens:
+L00010253	  - "`requested_account_binding`"
+L00010254	  - "`effective_account_id`"
+L00010255	  - "Permission carry-through"
+L00010256	compatibility_only_notes:
+L00010257	  - "provider_account_id is retired or explicitly governed as provider-native metadata subordinate to stable internal identity."
+L00010258	negative_constraints:
+L00010259	  - "Policy-only routes cannot replace requested_account_binding for effective-account-scoped permission resolution."
+L00010260	owner_hints:
+L00010261	  - Plans/Contracts_V0.md
+L00010262	```
+L00010263	
+L00010264	### CV-149 - Context Management Runtime Identity Scope
+L00010265	
+L00010266	```yaml
+L00010267	plan_unit_id: CV-149
+L00010268	unit_type: requirement
+L00010269	status: accepted
+L00010270	owner_doc: Plans/Contracts_V0.md
+L00010271	canonical_text: >-
+L00010272	  Context management keeps runtime identity explicit across prompt assembly,
+L00010273	  execution, approval, and historical review.
+L00010274	gui_related: false
+L00010275	gui_classification_reason: This unit defines context-management runtime identity scope.
+L00010276	split_recommended: false
+L00010277	depends_on: [CV-026, CV-145]
+L00010278	unblocks: [CV-150, CV-151]
+L00010279	acceptance_criteria:
+L00010280	  - "Runtime identity remains explicit across prompt assembly."
+L00010281	  - "Runtime identity remains explicit across execution and approval."
+L00010282	  - "Runtime identity remains explicit for historical review."
+L00010283	validation_surfaces:
+L00010284	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010285	  - python3 scripts/pm-plan-index.py validate
+L00010286	risk_class: context_runtime_identity_loss
+L00010287	reasoning_tier: standard
+L00010288	context_scope: context_management_runtime_identity
+L00010289	implementation_surfaces:
+L00010290	  - Plans/Contracts_V0.md
+L00010291	  - Plans/Prompt_Pipeline.md
+L00010292	  - Plans/Executor_Protocol.md
+L00010293	node_compile_hint:
+L00010294	  mode: context_runtime_identity_contract
+L00010295	  create_worknodes: false
+L00010296	source_lineage:
+L00010297	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0051
+L00010298	preserved_exact_tokens:
+L00010299	  - "Context management"
+L00010300	  - "`AGENTS.md`"
+L00010301	  - "runtime identity"
+L00010302	owner_hints:
+L00010303	  - Plans/Contracts_V0.md
+L00010304	```
+L00010305	
+L00010306	### CV-150 - Investigation Attachment Additivity
+L00010307	
+L00010308	```yaml
+L00010309	plan_unit_id: CV-150
+L00010310	unit_type: constraint
+L00010311	status: accepted
+L00010312	owner_doc: Plans/Contracts_V0.md
+L00010313	canonical_text: >-
+L00010314	  InvestigationContextAttachment remains additive and must not rename or shadow
+L00010315	  shared runtime snapshot fields.
+L00010316	gui_related: false
+L00010317	gui_classification_reason: This unit defines investigation attachment boundaries.
+L00010318	split_recommended: false
+L00010319	depends_on: [CV-149]
+L00010320	unblocks: []
+L00010321	acceptance_criteria:
+L00010322	  - "Investigation attachments remain additive."
+L00010323	  - "Investigation attachments use shared runtime snapshot field names."
+L00010324	  - "Investigation attachments do not rename or shadow shared runtime snapshot fields."
+L00010325	validation_surfaces:
+L00010326	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010327	  - python3 scripts/pm-plan-index.py validate
+L00010328	risk_class: investigation_attachment_runtime_shadow
+L00010329	reasoning_tier: standard
+L00010330	context_scope: investigation_attachment_additivity
+L00010331	implementation_surfaces:
+L00010332	  - Plans/Contracts_V0.md
+L00010333	  - Plans/assistant-chat-design.md
+L00010334	  - Plans/Runtime_Artifacts_Panel.md
+L00010335	node_compile_hint:
+L00010336	  mode: investigation_attachment_constraint
+L00010337	  create_worknodes: false
+L00010338	source_lineage:
+L00010339	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0052
+L00010340	preserved_exact_tokens:
+L00010341	  - "`InvestigationContextAttachment`"
+L00010342	  - "additive"
+L00010343	  - "runtime snapshot fields"
+L00010344	negative_constraints:
+L00010345	  - "InvestigationContextAttachment must not rename or shadow shared runtime snapshot fields."
+L00010346	owner_hints:
+L00010347	  - Plans/Contracts_V0.md
+L00010348	```
+L00010349	
+L00010350	### CV-151 - Persona Runtime Snapshot Canonical Persona Fields
+L00010351	
+L00010352	```yaml
+L00010353	plan_unit_id: CV-151
+L00010354	unit_type: compatibility_disposition
+L00010355	status: accepted
+L00010356	owner_doc: Plans/Contracts_V0.md
+L00010357	canonical_text: >-
+L00010358	  Runtime snapshots preserve requested_persona and effective_persona as
+L00010359	  canonical Persona identity fields, while requested_persona_id and
+L00010360	  effective_persona_id are retired migration-only aliases.
+L00010361	gui_related: false
+L00010362	gui_classification_reason: This unit defines runtime persona identity fields and alias retirement.
+L00010363	split_recommended: true
+L00010364	depends_on: [CV-027, CV-149]
+L00010365	unblocks: [CV-152, CV-153]
+L00010366	acceptance_criteria:
+L00010367	  - "requested_persona and effective_persona remain canonical Persona identity fields."
+L00010368	  - "requested_persona_id and effective_persona_id remain migration-only aliases."
+L00010369	  - "Live tool, chat, and storage payloads do not reintroduce retired persona alias fields."
+L00010370	validation_surfaces:
+L00010371	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010372	  - python3 scripts/pm-plan-index.py validate
+L00010373	risk_class: persona_runtime_alias_revival
+L00010374	reasoning_tier: high
+L00010375	context_scope: persona_runtime_snapshot_fields
+L00010376	implementation_surfaces:
+L00010377	  - Plans/Contracts_V0.md
+L00010378	  - Plans/Prompt_Pipeline.md
+L00010379	  - Plans/storage-plan.md
+L00010380	node_compile_hint:
+L00010381	  mode: persona_runtime_alias_disposition
+L00010382	  create_worknodes: false
+L00010383	source_lineage:
+L00010384	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0053
+L00010385	preserved_exact_tokens:
+L00010386	  - "`requested_persona`"
+L00010387	  - "`effective_persona`"
+L00010388	  - "`requested_persona_id`"
+L00010389	  - "`effective_persona_id`"
+L00010390	compatibility_only_notes:
+L00010391	  - "requested_persona_id and effective_persona_id may appear only in migration or source-lineage metadata."
+L00010392	negative_constraints:
+L00010393	  - "Retired persona aliases must not be reintroduced into live tool, chat, or storage payload shapes."
+L00010394	owner_hints:
+L00010395	  - Plans/Contracts_V0.md
+L00010396	```
+L00010397	
+L00010398	### CV-152 - PersonaSnapshot Compatibility Label And Mode Fields
+L00010399	
+L00010400	```yaml
+L00010401	plan_unit_id: CV-152
+L00010402	unit_type: compatibility_disposition
+L00010403	status: accepted
+L00010404	owner_doc: Plans/Contracts_V0.md
+L00010405	canonical_text: >-
+L00010406	  PersonaSnapshot is a migration compatibility label, not a separate schema
+L00010407	  family; when a runtime snapshot is embedded in EventRecord.payload, mode
+L00010408	  fields remain part of the runtime snapshot as runtime_mode, mode_family?, and
+L00010409	  mode_policy_ref?.
+L00010410	gui_related: false
+L00010411	gui_classification_reason: This unit defines runtime snapshot compatibility naming.
+L00010412	split_recommended: true
+L00010413	depends_on: [CV-078, CV-151]
+L00010414	unblocks: []
+L00010415	acceptance_criteria:
+L00010416	  - "PersonaSnapshot remains a migration compatibility label."
+L00010417	  - "PersonaSnapshot does not become a separate schema family."
+L00010418	  - "Embedded EventRecord.payload runtime snapshots preserve runtime_mode, mode_family?, and mode_policy_ref?."
+L00010419	validation_surfaces:
+L00010420	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010421	  - python3 scripts/pm-plan-index.py validate
+L00010422	risk_class: personasnapshot_schema_fork
+L00010423	reasoning_tier: high
+L00010424	context_scope: personasnapshot_compatibility_label
+L00010425	implementation_surfaces:
+L00010426	  - Plans/Contracts_V0.md
+L00010427	  - Plans/storage-plan.md
+L00010428	node_compile_hint:
+L00010429	  mode: personasnapshot_compatibility_disposition
+L00010430	  create_worknodes: false
+L00010431	source_lineage:
+L00010432	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0053
+L00010433	preserved_exact_tokens:
+L00010434	  - "`PersonaSnapshot`"
+L00010435	  - "`EventRecord.payload`"
+L00010436	  - "`runtime_mode`"
+L00010437	  - "`mode_family?`"
+L00010438	  - "`mode_policy_ref?`"
+L00010439	compatibility_only_notes:
+L00010440	  - "PersonaSnapshot is a migration compatibility label."
+L00010441	negative_constraints:
+L00010442	  - "PersonaSnapshot must not become a separate schema family."
+L00010443	owner_hints:
+L00010444	  - Plans/Contracts_V0.md
+L00010445	```
+L00010446	
+L00010447	### CV-153 - Legacy Persona Snapshot Vocabulary Disposition
+L00010448	
+L00010449	```yaml
+L00010450	plan_unit_id: CV-153
+L00010451	unit_type: compatibility_disposition
+L00010452	status: accepted
+L00010453	owner_doc: Plans/Contracts_V0.md
+L00010454	canonical_text: >-
+L00010455	  Legacy persona and mode-overlay snapshot labels are source-lineage aliases
+L00010456	  only; live payloads use requested/effective Persona fields, runtime identity
+L00010457	  fields, and canonical runtime_mode, mode_family?, and mode_policy_ref? names.
+L00010458	gui_related: false
+L00010459	gui_classification_reason: This unit retires legacy Persona snapshot vocabulary.
+L00010460	split_recommended: true
+L00010461	depends_on: [CV-151]
+L00010462	unblocks: []
+L00010463	acceptance_criteria:
+L00010464	  - "Legacy persona snapshot labels remain source-lineage aliases only."
+L00010465	  - "Live payloads use requested/effective Persona fields and canonical runtime mode names."
+L00010466	  - "Legacy snapshot vocabulary is not revived in live payloads."
+L00010467	validation_surfaces:
+L00010468	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010469	  - python3 scripts/pm-plan-index.py validate
+L00010470	risk_class: legacy_persona_snapshot_vocabulary_revival
+L00010471	reasoning_tier: high
+L00010472	context_scope: legacy_persona_snapshot_vocabulary
+L00010473	implementation_surfaces:
+L00010474	  - Plans/Contracts_V0.md
+L00010475	  - Plans/Prompt_Pipeline.md
+L00010476	node_compile_hint:
+L00010477	  mode: legacy_persona_snapshot_disposition
+L00010478	  create_worknodes: false
+L00010479	source_lineage:
+L00010480	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0053
+L00010481	preserved_exact_tokens:
+L00010482	  - "`persona_active_persona_id`"
+L00010483	  - "`persona_display_label`"
+L00010484	  - "`persona_display_icon`"
+L00010485	  - "`persona_system_prompt_sha`"
+L00010486	  - "`mode_overlay_runtime_mode`"
+L00010487	  - "`mode_overlay_ceiling`"
+L00010488	compatibility_only_notes:
+L00010489	  - "Legacy source labels are source-lineage aliases only."
+L00010490	negative_constraints:
+L00010491	  - "Legacy snapshot vocabulary must not be revived in live payloads."
+L00010492	owner_hints:
+L00010493	  - Plans/Contracts_V0.md
+L00010494	```
+L00010495	
+
+<<< CONTEXT_AFTER canonical_document_lines=10496-10507 >>>
+L00010496	### CV-154 - Execution Unit Context Consumer Envelope
+L00010497	
+L00010498	```yaml
+L00010499	plan_unit_id: CV-154
+L00010500	unit_type: consumer_requirement
+L00010501	status: accepted
+L00010502	owner_doc: Plans/Contracts_V0.md
+L00010503	canonical_text: >-
+L00010504	  Contracts_V0 consumes the Executor-owned execution_unit_context runtime
+L00010505	  snapshot packet from Plans/Executor_Protocol.md and
+L00010506	  Plans/execution_unit_context.schema.json for shared envelope and join behavior;
+L00010507	  it does not redefine required fields, optional fields, enum values,

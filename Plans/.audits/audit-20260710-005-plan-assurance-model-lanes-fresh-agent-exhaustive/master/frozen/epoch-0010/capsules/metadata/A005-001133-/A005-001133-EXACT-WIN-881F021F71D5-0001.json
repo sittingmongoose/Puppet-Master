@@ -1,0 +1,48 @@
+{
+  "assignment_id": "A005-001133-EXACT-WIN-881F021F71D5-0001",
+  "attempt_id": "attempt-0010",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [],
+  "core_range": [
+    1,
+    396
+  ],
+  "core_sha256": "d8fb28074b82828d9c400f66cc85c303aea28448e4bb556bcba6bb566008eea1",
+  "document_path": "Plans/Bootstrap_Planning_Migration.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/81/81321cbfa3b1cd15f67bbf9a49f9e017cfdce6e79c02c15b59d39d7c9312cb6c.txt",
+  "source_excerpt_sha256": "81321cbfa3b1cd15f67bbf9a49f9e017cfdce6e79c02c15b59d39d7c9312cb6c",
+  "source_sha256": "d8fb28074b82828d9c400f66cc85c303aea28448e4bb556bcba6bb566008eea1",
+  "window_id": "WIN-881F021F71D5-0001"
+}

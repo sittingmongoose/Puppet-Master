@@ -1,0 +1,894 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000012-ADVERSARIAL-WIN-0A77977E441D-0003",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0006_b_capacity_dispatcher_epoch_0013/a005_000012_adversarial_0013",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/storage_value_registry.json",
+    "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc",
+    "core_sha256": "5627ba9ad290d0e8dd6d8a29ea459ab2b8ad103f95baaf70debdea98ad968f00",
+    "core_range": [752, 1120]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "GAP-001",
+      "item_type": "gap",
+      "title": "Derived request loses graph revision and compile-run provenance",
+      "statement": "The draft identity includes plan_compile_run_id and revision, but the derived request key and value omit both and carry no source draft revision reference. Two compile runs or draft revisions can therefore collide semantically under one project/workgraph/request tuple, and consumers cannot prove which validated draft produced a request.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "cross_document_provenance",
+      "impact": "Stale or wrong-revision work can pass Executor intake and implementation-readiness checks without a falsifiable lineage chain.",
+      "builder_discretion": "Define an immutable source draft identity in the request value and key or specify a transactionally enforced equivalent binding.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 757,
+          "line_end": 757,
+          "exact_quote": "      \"key_shape\": \"workgraph_draft.v1:{project_id}:{plan_compile_run_id}:{workgraph_id}:{revision}\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 906,
+          "line_end": 906,
+          "exact_quote": "      \"key_shape\": \"worknode_request.v1:{project_id}:{workgraph_id}:{request_id}\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-002",
+      "item_type": "gap",
+      "title": "Graph topology is structurally unvalidated",
+      "statement": "Nodes and dependency edges accept arbitrary objects and entrypoints accept arbitrary strings. The schema does not require node identifiers, uniqueness, endpoint existence, entrypoint membership, permitted cycles, edge kinds, or deterministic ordering.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "invalid_graph_state",
+      "impact": "Malformed, ambiguous, cyclic, or non-deterministic graphs can be materialized and presented to integrity validation as schema-valid.",
+      "builder_discretion": "Specify the node and edge shapes plus graph-wide invariants and canonical ordering rules.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 844,
+          "line_end": 844,
+          "exact_quote": "          \"nodes\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 856,
+          "line_end": 856,
+          "exact_quote": "          \"dependency_edges\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-003",
+      "item_type": "gap",
+      "title": "Integrity and validation truth are opaque claims",
+      "statement": "graph_integrity and validation_state are unconstrained objects. No status vocabulary, validator identity/version, input digest, failure details, expiry, or rule connects a claimed valid state to the exact graph bytes.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "unfalsifiable_validation",
+      "impact": "A producer can store an empty or stale validation claim that downstream consumers cannot independently interpret or falsify.",
+      "builder_discretion": "Bind validation receipts to graph content and define exhaustive states and transition rules.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 865,
+          "line_end": 865,
+          "exact_quote": "          \"graph_integrity\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 877,
+          "line_end": 877,
+          "exact_quote": "          \"validation_state\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-004",
+      "item_type": "acceptance_oracle",
+      "title": "Request test and acceptance contracts are not executable or falsifiable",
+      "statement": "Acceptance criteria and validator candidates are free-form string arrays while test_binding is an unconstrained object. The schema supplies no oracle identifiers, expected outcomes, environment binding, coverage rule, or requirement that any criterion or validator exist.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "An implementation-readiness gate can accept a request whose completion cannot be objectively tested.",
+      "builder_discretion": "Define typed acceptance clauses and validator/test receipt bindings with minimum cardinality where readiness requires them.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1037,
+          "line_end": 1037,
+          "exact_quote": "          \"acceptance_criteria\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1086,
+          "line_end": 1086,
+          "exact_quote": "          \"test_binding\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-005",
+      "item_type": "state_transition",
+      "title": "Revision lineage permits missing, cyclic, and future supersession",
+      "statement": "supersedes_revision is optional and nullable and is constrained only to an integer of at least one. There is no requirement that revisions above one name a predecessor, that the predecessor exist and be lower, that lineage stay in the same graph and compile run, or that branches and cycles be rejected.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "revision_transition",
+      "impact": "Replay and migration can select an ambiguous or impossible predecessor chain and preserve the wrong revision.",
+      "builder_discretion": "Define genesis and successor invariants and enforce them transactionally against the key namespace.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 789,
+          "line_end": 789,
+          "exact_quote": "      \"optional_fields\": [",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 891,
+          "line_end": 891,
+          "exact_quote": "          \"supersedes_revision\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-006",
+      "item_type": "authority",
+      "title": "Authority is an unconstrained payload with no principal binding",
+      "statement": "Both families require authority but type it only as object. There is no principal, issuer, capability scope, signature, expiry, delegation chain, approval state, or rule tying authority to project, graph, revision, read/write candidates, or producer.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "authority_boundary",
+      "impact": "Untrusted producers can manufacture authority-shaped values and consumers have no schema-level basis to reject escalation or cross-project access.",
+      "builder_discretion": "Define a signed or otherwise verifiable authority envelope and the exact consumer verification contract.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 868,
+          "line_end": 868,
+          "exact_quote": "          \"authority\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1095,
+          "line_end": 1095,
+          "exact_quote": "          \"authority\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-007",
+      "item_type": "gap",
+      "title": "Unbounded collections and undefined canonical ordering create scale and determinism risks",
+      "statement": "The families declare canonical MessagePack but arrays have no maximum size, uniqueness, or order semantics and opaque objects have no bounded depth or member count. Very large inputs can exhaust storage, encoding, validation, replay, or GUI consumers, while semantically identical values can encode differently.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "scale_and_canonicalization",
+      "impact": "Resource exhaustion and digest instability can undermine replay, idempotency, caching, and evidence binding.",
+      "builder_discretion": "Specify canonical collection ordering/deduplication and enforce byte, cardinality, and nesting limits.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 770,
+          "line_end": 770,
+          "exact_quote": "      \"encoding\": \"messagepack_canonical\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1009,
+          "line_end": 1009,
+          "exact_quote": "          \"source_plan_unit_refs\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-008",
+      "item_type": "failure_recovery",
+      "title": "Replay rules omit atomicity, torn-write detection, and rollback semantics",
+      "statement": "Replay prose describes allowed outcomes but neither family contains commit state, content digest, transaction identity, producer checkpoint, or recovery disposition. The contract does not state what happens if draft and request writes, evidence writes, validation, or cancellation partially succeed.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "partial_failure_recovery",
+      "impact": "Crash recovery can expose orphan requests, partially persisted revisions, duplicated intake, or evidence that refers to values never committed.",
+      "builder_discretion": "Specify atomic write boundaries, durable commit markers, reconciliation, and rollback/roll-forward ownership.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 795,
+          "line_end": 795,
+          "exact_quote": "      \"replay_behavior\": \"Replay restores graph draft revisions for inspection and validation only; activation stays blocked until PNC-019.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 953,
+          "line_end": 953,
+          "exact_quote": "      \"replay_behavior\": \"Replay may reconstruct pending intake requests but must not materialize WorkNodes while PNC-019 remains blocked.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-009",
+      "item_type": "gap",
+      "title": "Workgraph no-secret rule is not enforceable against opaque nodes",
+      "statement": "The prose prohibits raw provider output and secret-bearing local content, but nodes are arbitrary objects, evidence is arbitrary strings, and redaction_profile is only a caller-selected enum. No typed ref shape, scanner receipt, provenance, or rejection rule proves that bytes are secret-free.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_enforcement",
+      "impact": "Secrets and local machine data can be persisted indefinitely under a value that merely claims no_secrets.",
+      "builder_discretion": "Constrain node/evidence content to typed references and bind redaction claims to validation receipts.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 798,
+          "line_end": 798,
+          "exact_quote": "      \"redaction_no_secret_rule\": \"Graph nodes carry refs and readiness metadata, not raw provider output or local secret-bearing file content.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 847,
+          "line_end": 847,
+          "exact_quote": "              \"type\": \"object\"",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-010",
+      "item_type": "state_transition",
+      "title": "Request has no lifecycle state despite replay and denial requirements",
+      "statement": "The contract speaks of pending and denied requests, but the required value has no state, timestamps, intake attempt, denial reason, consumed marker, retry state, or terminal disposition. blocked_reason_refs is optional and cannot distinguish blocked, denied, pending, cancelled, or ready.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "missing_request_state_machine",
+      "impact": "Replay cannot select pending requests reliably, retention cannot identify denied requests, and consumers can disagree about readiness.",
+      "builder_discretion": "Define the request state machine, transition authority, monotonic timestamps, and terminal receipt linkage.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 955,
+          "line_end": 955,
+          "exact_quote": "      \"retention_compaction\": \"Retain until referenced GoalRun/PlanCompile evidence is preserved; denied requests retain rejection receipts.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1112,
+          "line_end": 1112,
+          "exact_quote": "          \"blocked_reason_refs\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-011",
+      "item_type": "failure_recovery",
+      "title": "Idempotency and cancellation lack concurrency semantics",
+      "statement": "idempotency_key is merely a non-empty string and cancellation_policy is an arbitrary object. The contract does not define uniqueness scope, request fingerprinting, expiry, duplicate-result behavior, compare-and-swap, cancellation acknowledgement, or the race between cancellation and intake/materialization.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "concurrency_race",
+      "impact": "Concurrent producers or retries can duplicate work, suppress distinct work, or execute after cancellation while each participant remains schema-compliant.",
+      "builder_discretion": "Specify atomic idempotency acquisition and an exhaustive cancellation race protocol.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1098,
+          "line_end": 1098,
+          "exact_quote": "          \"idempotency_key\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1102,
+          "line_end": 1102,
+          "exact_quote": "          \"cancellation_policy\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-012",
+      "item_type": "gui_truth",
+      "title": "GUI and frontend flags can misrepresent derived truth",
+      "statement": "gui_related and frontend_related are bare booleans with no source, derivation rule, confidence, review state, or consistency constraint against implementation surfaces and acceptance criteria. The implementation-readiness consumer can therefore display or route a false classification.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "misleading_gui_state",
+      "impact": "Required GUI, web, visual, accessibility, or review work may be silently omitted or incorrectly shown as not applicable.",
+      "builder_discretion": "Bind the flags to a deterministic classification receipt and define mismatch handling.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 916,
+          "line_end": 916,
+          "exact_quote": "        \"implementation-readiness gate\"",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1059,
+          "line_end": 1059,
+          "exact_quote": "          \"gui_related\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-013",
+      "item_type": "authority",
+      "title": "Write candidates have no destructive-action or approval boundary",
+      "statement": "write_set_candidates are arbitrary strings and authority is opaque. No schema rule classifies destructive targets, prevents writes outside the project, requires user approval, expresses reversibility, or binds the requested write set to a verified capability.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "destructive_action_boundary",
+      "impact": "A request can nominate destructive or out-of-scope surfaces without carrying enforceable approval or rollback requirements.",
+      "builder_discretion": "Use typed resource locators and explicit destructive-action classification, approval, and recovery contracts.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1031,
+          "line_end": 1031,
+          "exact_quote": "          \"write_set_candidates\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1096,
+          "line_end": 1096,
+          "exact_quote": "            \"type\": \"object\"",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-014",
+      "item_type": "gap",
+      "title": "Request redaction rule conflicts with unconstrained user text",
+      "statement": "The request claims to contain refs, candidates, and policies only, yet objective, acceptance criteria, implementation surfaces, read/write candidates, and related fields are arbitrary strings. redaction_profile records an assertion but supplies no sanitization result or typed-ref enforcement.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Provider material, secrets, personal data, and local paths can enter retained requests and rejection receipts.",
+      "builder_discretion": "Separate user-visible text from reference-only fields and require redaction/scanning evidence before persistence.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 956,
+          "line_end": 956,
+          "exact_quote": "      \"redaction_no_secret_rule\": \"Requests contain refs, candidates, and policies only; local machine state and provider material stay outside the value.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1015,
+          "line_end": 1015,
+          "exact_quote": "          \"objective\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-015",
+      "item_type": "gap",
+      "title": "Identifiers, references, and surfaces lack untrusted-input constraints",
+      "statement": "Identifiers and reference/surface fields are mostly arbitrary non-empty or even empty-capable strings. There are no length limits, allowed alphabets, namespace rules, URI/path schemes, normalization, traversal protections, or referent existence checks.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "untrusted_input",
+      "impact": "Hostile or malformed identifiers can create aliasing, path or parser ambiguity, denial of service, log injection, and references outside the intended authority domain.",
+      "builder_discretion": "Define typed normalized identifier and locator formats with bounded lengths and consumer-safe encoding.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 828,
+          "line_end": 828,
+          "exact_quote": "          \"project_id\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1019,
+          "line_end": 1019,
+          "exact_quote": "          \"implementation_surfaces\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-016",
+      "item_type": "gap",
+      "title": "Version bump prose lacks an interoperable migration contract",
+      "statement": "The schemas reject unknown fields and pin 1.0.0, while migration prose says only to create a new family version. There is no reader/writer compatibility matrix, upgrader identity, atomic cutover, downgrade rule, mixed-version behavior, or proof that old references remain resolvable.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "compatibility_migration",
+      "impact": "Rolling upgrades, replay of historical values, and mixed-version consumers can fail or silently fork semantics.",
+      "builder_discretion": "Specify supported version ranges, deterministic migrations, cutover/rollback, and historical-read guarantees.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 954,
+          "line_end": 954,
+          "exact_quote": "      \"migration\": \"Request value changes require a new version before Executor intake accepts them.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 960,
+          "line_end": 960,
+          "exact_quote": "        \"additionalProperties\": false,",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-017",
+      "item_type": "gap",
+      "title": "GUI-related requests have no accessibility or localization contract",
+      "statement": "The request can declare GUI and frontend relevance but carries no locale, source-language, translatability, text-expansion, bidirectional-layout, keyboard, screen-reader, contrast, reduced-motion, or other accessibility requirements or validation bindings.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "accessibility_localization",
+      "impact": "Readiness can be certified for GUI work while accessibility and localization obligations are absent and therefore untestable.",
+      "builder_discretion": "Define conditional accessibility and localization requirement/test bindings for GUI/frontend requests.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 935,
+          "line_end": 935,
+          "exact_quote": "        \"gui_related\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 936,
+          "line_end": 936,
+          "exact_quote": "        \"frontend_related\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-018",
+      "item_type": "failure_recovery",
+      "title": "No delivery, offline, retry, or support telemetry contract exists",
+      "statement": "model_routing and ordering_metadata are opaque, and the request has no creation time, attempt counter, delivery state, lease, retry/backoff, offline queue marker, last error, correlation trace, or support-safe diagnostic receipt.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "offline_observability",
+      "impact": "Network loss or consumer downtime can leave requests duplicated or stranded with no reliable operator diagnosis or recovery decision.",
+      "builder_discretion": "Define durable delivery state and bounded retry/offline semantics with redacted support telemetry.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1089,
+          "line_end": 1089,
+          "exact_quote": "          \"model_routing\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1092,
+          "line_end": 1092,
+          "exact_quote": "          \"ordering_metadata\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-019",
+      "item_type": "acceptance_oracle",
+      "title": "Key-to-value identity equality is not specified or testable",
+      "statement": "Both keys embed identity fields that are also stored in the value, but the value schema cannot assert equality with the decoded key. No producer or consumer rule states which side is authoritative or requires rejection of mismatches.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "storage_identity_invariant",
+      "impact": "A value can be retrieved under one project, graph, request, or revision while claiming another, enabling corruption and authority-boundary bypass.",
+      "builder_discretion": "Define key decoding and mandatory equality checks as storage acceptance oracles.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 757,
+          "line_end": 757,
+          "exact_quote": "      \"key_shape\": \"workgraph_draft.v1:{project_id}:{plan_compile_run_id}:{workgraph_id}:{revision}\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 997,
+          "line_end": 997,
+          "exact_quote": "          \"project_id\": {",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-020",
+      "item_type": "gap",
+      "title": "Retention rules omit bounded deletion and privacy lifecycle",
+      "statement": "Referenced revisions and requests are retained, but neither rule defines unreferenced collection, TTL, legal hold, user deletion, secret-discovery purge, tombstones, secure erasure, compaction races, or how retained rejection receipts are redacted.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "retention_privacy",
+      "impact": "Storage can grow without bound and sensitive or user-deleted content can remain reachable indefinitely.",
+      "builder_discretion": "Define liveness roots, deletion eligibility, hold precedence, purge evidence, and compaction concurrency rules.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 797,
+          "line_end": 797,
+          "exact_quote": "      \"retention_compaction\": \"Retain every revision referenced by PlanCompileRun, WorkNodeRequest, or Goal receipt evidence.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 955,
+          "line_end": 955,
+          "exact_quote": "      \"retention_compaction\": \"Retain until referenced GoalRun/PlanCompile evidence is preserved; denied requests retain rejection receipts.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-021",
+      "item_type": "consumer",
+      "title": "Operational consumers for migration, compaction, audit, and recovery are unnamed",
+      "statement": "The declared consumer lists cover derivation, validation, certification, intake, and readiness, but no consumer owns migration, compaction, privacy deletion, corruption repair, replay reconciliation, or support diagnostics even though prose requires those behaviors.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_callers_consumers",
+      "impact": "Required lifecycle duties can remain unimplemented because no component is contractually responsible for invoking them.",
+      "builder_discretion": "Name each lifecycle consumer and its trigger, authority, inputs, outputs, and failure disposition.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 764,
+          "line_end": 764,
+          "exact_quote": "      \"consumers\": [",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 913,
+          "line_end": 913,
+          "exact_quote": "      \"consumers\": [",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "GAP-022",
+      "item_type": "gap",
+      "title": "Required collections can be semantically empty",
+      "statement": "Required arrays such as nodes, entrypoints, source plan units, acceptance criteria, validators, capability requirements, and dependency references have no minItems constraints. Schema-valid drafts and requests can therefore lack the content their consumers need.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_empty_state",
+      "impact": "Empty graphs and criterion-free requests can reach integrity, certification, intake, and readiness consumers.",
+      "builder_discretion": "Define conditional and unconditional cardinality requirements for each collection.",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 845,
+          "line_end": 845,
+          "exact_quote": "            \"type\": \"array\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1038,
+          "line_end": 1038,
+          "exact_quote": "            \"type\": \"array\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "NON-GAP-001",
+      "item_type": "explicit_non_gap",
+      "title": "Draft replay is explicitly non-activating",
+      "statement": "The workgraph draft contract expressly limits replay to inspection and validation and blocks activation until PNC-019, reducing the risk that mere storage replay is interpreted as execution authority.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 795,
+          "line_end": 795,
+          "exact_quote": "      \"replay_behavior\": \"Replay restores graph draft revisions for inspection and validation only; activation stays blocked until PNC-019.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "NON-GAP-002",
+      "item_type": "explicit_non_gap",
+      "title": "Request is explicitly not an executable task",
+      "statement": "The crosswalk text explicitly excludes WorkNode, NodeSeed, queue, and executable-task interpretations, and replay separately forbids WorkNode materialization while PNC-019 is blocked.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 957,
+          "line_end": 957,
+          "exact_quote": "      \"legacy_canonical_crosswalk_status\": \"Canonical request schema; not a WorkNode, NodeSeed, candidate queue, or executable task.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "NON-GAP-003",
+      "item_type": "explicit_non_gap",
+      "title": "Top-level schemas are closed and version-pinned",
+      "statement": "Both value objects reject additional top-level properties and pin schema identity/version constants, providing a clear baseline against accidental top-level drift.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 802,
+          "line_end": 802,
+          "exact_quote": "        \"additionalProperties\": false,",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 992,
+          "line_end": 992,
+          "exact_quote": "            \"const\": \"pm.storage_value.worknode_request.v1\"",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "NON-GAP-004",
+      "item_type": "explicit_non_gap",
+      "title": "Redaction profiles use a bounded vocabulary",
+      "statement": "Both families constrain redaction_profile to no_secrets or redacted_refs_only rather than accepting arbitrary labels. This is useful declaration-level normalization even though enforcement evidence remains a separate gap.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 886,
+          "line_end": 886,
+          "exact_quote": "            \"enum\": [",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        },
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1107,
+          "line_end": 1107,
+          "exact_quote": "            \"enum\": [",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "NON-GAP-005",
+      "item_type": "explicit_non_gap",
+      "title": "Reasoning tier has an explicit bounded enum",
+      "statement": "reasoning_tier is limited to standard or high, avoiding arbitrary tier spellings and providing a stable validation surface for this field.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 1071,
+          "line_end": 1071,
+          "exact_quote": "            \"enum\": [",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "NON-GAP-006",
+      "item_type": "explicit_non_gap",
+      "title": "Historical reachability and rejection evidence are explicitly retained",
+      "statement": "The retention prose preserves revisions referenced by compile, request, or goal evidence and preserves rejection receipts for denied requests, reducing silent loss of provenance during ordinary compaction.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 797,
+          "line_end": 797,
+          "exact_quote": "      \"retention_compaction\": \"Retain every revision referenced by PlanCompileRun, WorkNodeRequest, or Goal receipt evidence.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    },
+    {
+      "item_id": "NON-GAP-007",
+      "item_type": "explicit_non_gap",
+      "title": "Shape changes are required to use a new version",
+      "statement": "Both families state that shape changes require a version change, which is a sound compatibility boundary even though the actual mixed-version migration mechanism is unspecified.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/storage_value_registry.json",
+          "line_start": 796,
+          "line_end": 796,
+          "exact_quote": "      \"migration\": \"Any value-shape change increments workgraph_draft family version and preserves prior revision reachability.\",",
+          "source_sha256": "bf8cf1ceb33f175e144a44699996c0f981eda8a6cb6e05503ec281b9d6dc77dc"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Lifecycle callers for migration, compaction, deletion, reconciliation, and support are not named.",
+      "evidence_item_ids": ["GAP-021"]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Opaque graph state, ambiguous revision lineage, empty required collections, and the absent request state machine admit invalid states and transitions.",
+      "evidence_item_ids": ["GAP-002", "GAP-003", "GAP-005", "GAP-010", "GAP-022"]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "No atomic idempotency, revision CAS, cancellation race, or compaction concurrency contract is defined.",
+      "evidence_item_ids": ["GAP-005", "GAP-008", "GAP-011", "GAP-020"]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "The schemas lack commit and reconciliation state for partially persisted drafts, requests, validation, evidence, or cancellation.",
+      "evidence_item_ids": ["GAP-008", "GAP-011"]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "Replay is bounded but rollback, roll-forward, orphan reconciliation, and retry ownership are unspecified.",
+      "evidence_item_ids": ["GAP-005", "GAP-008", "GAP-010", "NON-GAP-001", "NON-GAP-002"]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "Authority objects and write candidates lack verifiable principal, scope, approval, and project bindings.",
+      "evidence_item_ids": ["GAP-006", "GAP-013", "GAP-019"]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "No-secret declarations and bounded labels exist, but typed-ref enforcement, purge, deletion, and retention privacy rules do not.",
+      "evidence_item_ids": ["GAP-009", "GAP-014", "GAP-020", "NON-GAP-004"]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Opaque objects and unbounded, unnormalized identifiers and locators allow hostile or malformed content.",
+      "evidence_item_ids": ["GAP-002", "GAP-006", "GAP-007", "GAP-009", "GAP-014", "GAP-015"]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Bare GUI/frontend flags and absent request lifecycle truth can mislead readiness displays and routing.",
+      "evidence_item_ids": ["GAP-010", "GAP-012", "GAP-017", "GAP-022"]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "No durable delivery, offline queue, retry/backoff, lease, or network-failure disposition is represented.",
+      "evidence_item_ids": ["GAP-008", "GAP-018"]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Collections and opaque objects are unbounded and retention has no deletion eligibility, exposing compute and storage exhaustion.",
+      "evidence_item_ids": ["GAP-007", "GAP-020", "GAP-022"]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "GUI-related requests have no conditional accessibility requirements or test bindings.",
+      "evidence_item_ids": ["GAP-017"]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "GUI/frontend requests carry no locale, translatability, text-expansion, or bidirectional-layout contract.",
+      "evidence_item_ids": ["GAP-017"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Version bump intent is explicit, but interoperable mixed-version migration, cutover, rollback, and historical read mechanics are absent.",
+      "evidence_item_ids": ["GAP-005", "GAP-016", "NON-GAP-003", "NON-GAP-007"]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Validation receipts, request state, delivery telemetry, trace correlation, and support-safe diagnostics are unspecified.",
+      "evidence_item_ids": ["GAP-003", "GAP-010", "GAP-018"]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "Write candidates can name destructive targets without typed scope, approval, reversibility, or recovery obligations.",
+      "evidence_item_ids": ["GAP-006", "GAP-013"]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "The central draft-to-request seam drops compile-run and revision provenance and owner/consumer strings provide no machine-checkable contract.",
+      "evidence_item_ids": ["GAP-001", "GAP-016", "GAP-019", "GAP-021"]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Graph invariants, validation claims, test bindings, key/value equality, and readiness criteria lack executable oracles.",
+      "evidence_item_ids": ["GAP-002", "GAP-003", "GAP-004", "GAP-019", "GAP-022"]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "unknown",
+      "summary": "Residual behavior hidden inside unconstrained nested objects cannot be exhaustively evaluated from this authoritative window; the identified opacity is itself a material risk boundary.",
+      "evidence_item_ids": ["GAP-002", "GAP-003", "GAP-006", "GAP-018"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

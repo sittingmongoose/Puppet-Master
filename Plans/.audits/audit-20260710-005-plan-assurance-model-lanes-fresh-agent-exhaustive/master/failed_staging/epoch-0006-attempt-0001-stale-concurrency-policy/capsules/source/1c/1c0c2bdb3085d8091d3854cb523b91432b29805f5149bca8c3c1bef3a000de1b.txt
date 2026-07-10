@@ -1,0 +1,359 @@
+<<< CONTEXT_BEFORE canonical_document_lines=575-586 >>>
+L00000575	- When the worktree is removed, the associated LSP session is shut down gracefully
+L00000576	- Multiple worktrees may each have their own LSP session for the same server_id (each with a different root_identity)
+L00000577	
+L00000578	**Thread switch behavior:**
+L00000579	- Switching threads does NOT kill LSP sessions for the previous thread's worktree — they remain available for background diagnostics and are reused if the user switches back
+L00000580	- LSP session lifecycle is tied to worktree existence, not thread focus
+L00000581	
+L00000582	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Executor_Protocol.md
+L00000583	
+L00000584	### 14.1.1 Remote LSP over SSH transport
+L00000585	
+L00000586	Remote LSP uses SSH as a stdio tunnel instead of a port-forwarded secondary protocol.
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=587-916 >>>
+L00000587	
+L00000588	Rules:
+L00000589	- transport is stdio over SSH; the remote LSP server stdin/stdout are tunneled through the SSH connection rather than exposed by port forwarding
+L00000590	- connection lifecycle is: SSH connection established → remote LSP server spawned → stdio streams connected → initialize handshake → ready
+L00000591	- multiple LSP servers may share the same SSH connection via multiplexed channels
+L00000592	- Remote paths preserve the user-visible SSH authority: examples such as `user@host:/path/to/project` and `/path/to/project` describe the same remote project identity, not a local mirror. Remote LSP is MVP for remote edit intelligence and diagnostics, but remote run/debug remains outside FileManager's edit contract unless another runtime owner enables it. On connection-loss, LSP state follows the FileManager/GUI pattern: show `Connection lost`, offer `Reconnect` or `Work offline (cached files only)` when a validated cache exists, keep credentials in system keychain/agent flows rather than config, and expose keep-alive/backoff state through `ssh_connections` compatibility lineage or the current SSH remote profile model.
+L00000593	- if SSH disconnects, all remote LSP servers on that connection are marked `degraded`, reconnect is attempted, servers are re-initialized, and pending requests are replayed when safe
+L00000594	- remote LSP has higher latency by design; PM applies a timeout multiplier for remote operations (default `3x`)
+L00000595	- remote LSP uses the remote filesystem directly; there is no hidden local sync or mirror for LSP operations
+L00000596	
+L00000597	Remote identity, SSH ownership, and degraded-state locks:
+L00000598	- Remote LSP is part of the `remote-mode-project` model, not a `remote-edit-only` feature and not a broad-sweep local editor patch. This seam is research-locked for implementation transfer. `GitHub_Integration.md §C` is the SSH `/ownership` anchor for `/edit/test/remove`, validation `/auth/host-key`, add-existing-project, remote terminal, remote agents, remote `/providers`, and remote runtime execution. `GitHub_Integration.md §C.3-C.4` / `C.3-C.4` is the operational reconnect authority: keep the 30s keepalive, allow one bounded auto-retry (`one-auto-retry` in older notes), then require explicit `Reconnect`.
+L00000599	- The canonical remote working-folder identity is `user@host:remote/path`; `remote-host`, `working-folder`, and path authority are part of the project/runtime identity. Puppet Master must not create a hidden local `/mirror`, must not silently retarget `/multi-context` work to the local host, and must fail unsupported remote/multi-context launches deterministically with a visible `/risk` reason.
+L00000600	- `Settings > SSH` and GUI remote-editor surfaces expose remote capability, editor-state, and degraded copy, but they consume the SSH owner contract instead of redefining it. `file-editor`, FileManager, Terminal, Source Control, provider, `/debug`, and `/runtime` surfaces share the same `/read-only/offline/refresh`, `/offline/degraded`, `/enabled`, and unavailable vocabulary.
+L00000601	- The stale local-only phrase `(server_id, root)` is retained only as migration contrast. Live LSP attach/session keys are `(host_id, server_id, root_identity)`, and remote documents use host-scoped `/path-mapping` so a file-local URI on host A cannot collide with the same path on host B.
+L00000602	- Diagnostics storage remains per `(server/session, uri)` and per `(session, uri)` and is merged only in presentation. Editor markers and `/gutter` are file-local projections; Problems owns `/merging`; Assistant/Interview and Search consume `/completion/definition/diagnostics`, `/symbols`, and status summaries without becoming the LSP owner.
+L00000603	- Remote install `/provisioning`, `/SSH` placement, large-workspace scaling, and change-annotation behavior are implementation-relevant MVP requirements. Remote LSP stays the same architecture as local LSP, with different host/provisioning/path identity, rather than becoming a second subsystem.
+L00000604	- Remote mutation and availability modes are user-visible. Preview-worthy rename, multi-file code-action, and broad format operations require the same safe preview `/confirmation` path as other FileSafe edits; partial workspace-edit failure reports per-file results, and read-only, locked, unavailable, or `/degraded` targets fail with explicit reason copy. Remote effective modes include `full_remote_lsp`, `degraded_remote_diagnostics_only`, and `remote_edit_no_lsp`; unsupported local-LSP-on-remote-paths behavior must not masquerade as `on-remote-paths` correctness.
+L00000605	- Remote host-placement is explicit: server-originated paths, diagnostics, code actions, and workspace edits are interpreted in the effective remote host context, then passed through host-aware `/path-mapping` before any editor/FileSafe projection. `/degraded/unavailable` remote states keep `/revert/editor`, save, rename, format, and code-action affordances visible only when the same FileSafe and remote write-availability checks would allow the mutation.
+L00000606	- Remote outages affect adjacent consumers without redefining them. Prior Search results may remain as stale snapshots, while new queries that need remote round-trips block or show unavailable; Source Control may expose stale status or `/diff` but must not silently fall back to local Git; Problems and LSP diagnostics may remain visible only when marked stale or unavailable; open remote buffers may retain local text and `/offline/pending-sync` state without implying remote write success. Hunk-level `/diff` interaction, fallback-open actions, read-only reasons, and remote LSP disable/defer decisions use the same capability vocabulary.
+L00000607	- Remote/local parity covers save/dirty state, file watches/reload, diff generation and compare targets, LSP execution/fallback, and rich previews `/renderers`; parity means explicit capability state, not hidden local fallback.
+L00000608	- Browser and recovery residue must not be reintroduced through LSP wording: `Bottom Panel Browser tab (§7.20)`, `preview_mode = browser_panel`, and `preview_mode` are preview/browser migration tokens owned by FileManager/FinalGUISpec/storage-plan cleanup, while `recover-unsaved` remains an editor/storage recovery contract outside the LSP session key.
+L00000609	
+L00000610	ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md
+L00000611	
+L00000612	### 14.2 Module and crate layout
+L00000613	
+L00000614	- **Decision:** LSP client and server registry live in the **same crate as the editor** (e.g. `puppet-master-rs/src/`) in a dedicated **submodule `src/lsp/`** containing:
+L00000615	  - `client.rs` -- LSP client wrapper (stdio transport, lifecycle, request/response).
+L00000616	  - `registry.rs` -- Server registry (id, extensions, root finder, spawn); reads config.
+L00000617	  - `session.rs` or `server_handle.rs` -- Per-`(host_id, server_id, root_identity)` process handle and state.
+L00000618	  - `document.rs` or `sync.rs` -- Document version tracking and didOpen/didChange/didClose/didSave.
+L00000619	- **Dependencies:** `lsp-types`, chosen LSP client crate (e.g. `lsp-client` or `async_lsp_client`), `tokio` for async. No need for tower-lsp unless implementing a server.
+L00000620	
+L00000621	### 14.3 Core data structures (conceptual)
+L00000622	
+L00000623	```text
+L00000624	LspSessionKey {
+L00000625	  project_id
+L00000626	  host_id
+L00000627	  server_id
+L00000628	  root_identity
+L00000629	}
+L00000630	
+L00000631	LspSessionProjection {
+L00000632	  key
+L00000633	  lifecycle_state
+L00000634	  freshness
+L00000635	  health
+L00000636	  requested_enabled
+L00000637	  effective_enabled
+L00000638	  capability_summary
+L00000639	  restart_budget
+L00000640	  last_error
+L00000641	}
+L00000642	
+L00000643	DocumentBinding {
+L00000644	  document_id
+L00000645	  path
+L00000646	  version
+L00000647	  host_id
+L00000648	  root_identity
+L00000649	  attached_servers[]
+L00000650	}
+L00000651	```
+L00000652	
+L00000653	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md
+L00000654	
+L00000655	LSP server lifecycle state machine:
+L00000656	
+L00000657	Canonical user/state names are `Starting`, `Initializing`, `Ready`, `RestartBackoff`, `Degraded`, `ShuttingDown`, and `Stopped`. Only `Ready` emits normal feature traffic; `Starting` and `Initializing` may queue sync work, `RestartBackoff` exposes countdown plus last error, and `Degraded` can mean paused recovery or diagnostics-only / diagnostics-only attachment. Each document is attached once per session, including virtual-doc buffers, and `didClose` is emitted when the final attachment for that `(session, uri)` disappears. The session/model boundary records `/URI` identity so virtual-doc and real-file URI values do not collide.
+L00000658	
+L00000659	The `/supervision` boundary is `LspSupervisor` plus `DocumentStore`: `/document-pane` surfaces, editor tabs, chat virtual documents, restore/reload, and `/revert` all consume the same authoritative buffer and pending-sync state. LSP never reads a second document authority for an open file, and `didSave` is emitted only after the shared document store records a successful save for the current version.
+L00000660	
+L00000661	States: `stopped → starting → initializing → ready → degraded → stopping → crashed`
+L00000662	
+L00000663	| From | To | Trigger | Action |
+L00000664	|---|---|---|---|
+L00000665	| stopped | starting | file opened matching server's language | spawn server process |
+L00000666	| starting | initializing | process started, stdio connected | send `initialize` request |
+L00000667	| initializing | ready | `initialized` notification received | enable capabilities |
+L00000668	| ready | degraded | server error / timeout / partial failure | reduce capabilities, show warning |
+L00000669	| degraded | ready | server recovers / error clears | restore full capabilities |
+L00000670	| ready | stopping | last file of language closed / user request | send `shutdown` + `exit` |
+L00000671	| stopping | stopped | server process exits | cleanup resources |
+L00000672	| any | crashed | server process dies unexpectedly | log error, attempt restart |
+L00000673	| crashed | starting | auto-restart (max 3 attempts, backoff 2s/4s/8s) | respawn |
+L00000674	| crashed | stopped | restart limit exceeded | show error, require manual restart |
+L00000675	
+L00000676	Resource limits:
+L00000677	- max memory per server is configurable, default `512MB`
+L00000678	- max CPU time for a single request is `30s`
+L00000679	
+L00000680	### 14.4 Message flow
+L00000681	
+L00000682	1. **User opens file** → Editor loads buffer → Resolve (path → extension → server id → effective host/root identity) → If server not running for `(host_id, server_id, root_identity)`, spawn process → Initialize handshake → Send `didOpen` with content + version.
+L00000683	2. **User edits** → Buffer content changes → Increment version; **debounce** (e.g. 100 ms) → Send `didChange` (incremental if supported) with version.
+L00000684	3. **Server sends publishDiagnostics** → Client receives → Update DiagnosticsCache for that URI → Notify UI (main thread) → Problems tab and gutter update.
+L00000685	4. **User hovers** → Editor sends (uri, position) → Client sends `textDocument/hover` (with timeout) → On response, check document version; if stale, discard → Show tooltip.
+L00000686	5. **User triggers completion** → Client sends `textDocument/completion` with context → On response, filter/discard if stale → Show list; on select, apply and optionally `completionItem/resolve`.
+L00000687	
+L00000688	All LSP I/O on **async task** (tokio); route UI updates to the Slint event loop (e.g. via `slint::invoke_from_event_loop` or `Weak::upgrade_in_event_loop`). Never block UI on LSP.
+L00000689	
+L00000690	**Stale response policy:** When a response arrives for a document-scoped request (hover, completion, definition, references, signatureHelp), the client must check whether the document version has changed since the request was sent. Store the document version (from `DocumentState.version` for that URI) at request time; when the response is received, compare to the current `DocumentState.version`. If the current version is **greater** than the version at request time, **discard** the response (do not show tooltip, do not apply completion, do not navigate). Optionally match by request id so only the correct response is discarded. **Do not** automatically re-request; the user can repeat the action (e.g. hover again, trigger completion again) to get a fresh result. For workspace-level requests (e.g. workspace/symbol), version check is per relevant document or omit if no single document applies.
+L00000691	
+L00000692	Document identity, freshness, and `/position` conversion are one contract. Before `didClose`, PM cancels in-flight document-scoped requests for `(session, uri)` and clears diagnostics per `(server/session, uri)`. Each document-scoped request carries `session_epoch`, `uri`, `document_version`, and `request_generation` or an equivalent latest-of-class marker; responses apply only for the same live session epoch, same URI, matching current document version, and latest relevant request class. Late replies are discarded in UX but remain visible in trace `/logs`.
+L00000693	
+L00000694	At open time, PM creates one canonical `DocumentUri` per document/host and reuses it consistently. The same physical file must not gain duplicate identities through case, `/slash/drive-letter`, URI spelling, `(session, uri)` pairing, or `/path/position` conversion differences. UI/editor surfaces stay 1-based where already planned; the LSP boundary remains 0-based and uses one position-mapper / position-mapping service backed by `DocumentStore`. `capabilities.positionEncoding` and `position_encoding` are negotiated per session; PM uses compatibility-first position-encoding, keeps UTF-16 as the guaranteed baseline, may prefer `utf-8` only after compatibility proof, and must not hard-code UTF assumptions into hover, `/completion/diagnostics/rename`, diagnostics, rename, or formatting handlers. Conversion uses fast per-line helpers/cache so multi-server correctness, remote `/SSH`, and performance tuning stay protocol-safe.
+L00000695	
+L00000696	LSP coordinates use the protocol's code-unit conventions at the boundary; the centralized conversion layer records whether a server uses UTF-16 code-unit offsets, another negotiated encoding, or compatibility fallback, so individual feature handlers never hand-roll code-unit math.
+L00000697	
+L00000698	Sync ordering and request-class rules:
+L00000699	- Sync events are FIFO per session. A document-scoped request must not leave the queue until the target session is `Ready`, the prior `didOpen`/`didChange` work for that document in that session has flushed, and the document is no longer in pending-sync state.
+L00000700	- Hover, `/completion/signatureHelp`, and similar soft requests keep only the newest pending request per document `/request-class`; older in-flight or not-yet-ready requests are canceled or dropped on `/close`, cursor movement, or newer input.
+L00000701	- Explicit navigation and editing requests such as definition, references, rename, format, and `codeAction` wait behind the sync barrier once and then execute only if still relevant.
+L00000702	- `didChange` debounce is resetting `/coalescing`, not fixed-window batching. All mutations since the last sent sync for that session/doc become one batch; if incremental confidence is lost, send a whole-document replacement to re-baseline; if confidence is still not trustworthy, restart the session and replay currently attached docs.
+L00000703	- A successful save may emit `didSave` for the current document version/content state. Failed save does not emit `didSave`, and stale-result handling must not make the UI look saved or synchronized.
+L00000704	
+L00000705	ContractRef: ContractName:Plans/LSPSupport.md
+L00000706	
+L00000707	### 14.5 Config schema and storage
+L00000708	
+L00000709	- **Keys:** `lsp.enabled` (bool, default true), `lsp.servers.<id>.disabled` (bool), `lsp.servers.<id>.command` (string array), `lsp.servers.<id>.extensions` (string array), `lsp.servers.<id>.env` (object), `lsp.servers.<id>.initialization` (object). **Decision:** Config namespace is `lsp.servers.<id>.*`; support legacy alias `lsp.<id>.disabled` (read/write maps to `lsp.servers.<id>.disabled`). Align with OpenCode schema for compatibility.
+L00000710	- **Storage:** App-level in **redb** (or existing config YAML) under a key like `config.lsp`. Project-level override: optional file in project root (e.g. `.puppet-master/lsp.json`) or key under project id in redb.
+L00000711	- **Debounce / timeouts:** Store in Settings → Editor or Developer: `lsp.didChangeDebounceMs` (default **100**, range 50-500), `lsp.hoverTimeoutMs` (default **5000**), `lsp.completionTimeoutMs` (default **5000**), `lsp.workspaceSymbolTimeoutMs` (default **10000**), `lsp.hoverDelayMs` (default **300**, range 100-1000, delay before sending hover request). All timeouts user-configurable. Document in implementation guide.
+L00000712	
+L00000713	### 14.6 Trigger and refresh behavior
+L00000714	
+L00000715	- **Completion:** Trigger on typing (all characters) or on explicit shortcut (e.g. Ctrl+Space). Send `CompletionContext` with `triggerKind`: Invoked or TriggerCharacter.
+L00000716	- **Hover:** Trigger on cursor idle; delay **300 ms** (config `lsp.hoverDelayMs`, default 300) before sending hover request to avoid flooding; cancel previous hover request on cursor move.
+L00000717	- **Inlay hints:** Request on document open and on `didChange` (after debounce); optionally on visible range change (scroll). Server may support refresh on demand.
+L00000718	- **Code actions:** Request on context menu open or lightbulb click; pass current range + diagnostics for that range (`CodeActionContext`).
+L00000719	- **Signature help:** Trigger when cursor enters a call (e.g. after `(`); re-request on cursor move within the call.
+L00000720	
+L00000721	### 14.7 workspaceFolders policy (decision)
+L00000722	
+L00000723	- **Recommendation:** At initialize, send **only roots that have at least one open document**, capped at **10** roots. If user has no open files, send project root if single-root, else empty list. Reduces startup cost and memory; document in implementation guide. Re-initialize not required when opening a file in a new root; the matching host-aware server session handles that.
+L00000724	
+L00000725	### 14.8 Virtual documents (Chat code blocks)
+L00000726	
+L00000727	
+L00000728	Code blocks in Chat messages (§5.1) that are not backed by a project file use **virtual documents** so hover and go-to-definition can still call the LSP.
+L00000729	
+L00000730	- **URI scheme:** Use a dedicated scheme so the client and server can distinguish virtual docs from file paths. Example: `puppet-master-virtual://chat/{language_id}/{opaque_id}` where `opaque_id` is a unique id per block (e.g. UUID or message-id + block index). Language id (e.g. `rust`, `typescript`) comes from the block's language tag.
+L00000731	- **Creation:** When the user focuses or hovers over a code block in a Chat message that has a known language id and the project has an LSP server for that language, create a virtual document: assign a URI, set content to the block text, and attach it to the **server for that language and the effective host/root identity for the current project context** (same session that would handle a real file with that extension). If the block maps to a real project file (e.g. "snippet from src/main.rs"), use the real file URI instead and do not create a virtual doc.
+L00000732	- **Attachment:** Virtual documents are attached to the same `(host_id, server_id, root_identity)` as would be used for a real file of that language in the project. Resolve language id → server id from the registry (e.g. `rust` → rust-analyzer); resolve against the effective host context rather than assuming local project root; then send `textDocument/didOpen` with the virtual URI, language id, and content so the server has the document.
+L00000733	- **Lifecycle:** Send `textDocument/didOpen` when the virtual document is "opened" (e.g. when the user first hovers or requests definition in that block). Send `textDocument/didClose` when the block is no longer needed: when the user scrolls away from that message, when the message is collapsed, or when the Chat view is closed; or after T seconds idle (e.g. 300 s) if implementing eviction by timeout. Optionally retain a bounded set of recently used virtual docs (e.g. last 5) to avoid repeated didOpen/didClose on quick hover. Do not send `didChange` for virtual docs (blocks are immutable); if the user edits the message and the block content changes, treat as a new block (new opaque_id) and close the old virtual doc.
+L00000734	- **Contract for implementer:** (1) Virtual URI never points to disk; (2) one virtual doc per code block instance (same block in UI = same opaque_id); (3) didOpen is sent when the block needs LSP (hover/definition); (4) didClose is sent when the block is evicted or the view is closed; (5) hover/definition requests for that block use the virtual URI and the same `(host_id, server_id, root_identity)` as for that language in the current project context.
+L00000735	
+L00000736	ContractRef: ContractName:Plans/LSPSupport.md
+L00000737	
+L00000738	### 14.9 Registry contract (ServerSpec)
+L00000739	
+L00000740	`ServerSpec` is the canonical machine-friendly catalog record for both built-in and custom servers.
+L00000741	
+L00000742	Minimum fields:
+L00000743	- `server_id`
+L00000744	- `display_name`
+L00000745	- `sources[]` (`microsoft`, `opencode`, `pm` for catalog provenance; custom rows use `kind = custom`)
+L00000746	- `source_names[]` / `aliases[]`
+L00000747	- `kind` (`managed_builtin`, `managed_catalog`, `custom`)
+L00000748	- `language_tags[]`
+L00000749	- `extensions[]`
+L00000750	- `selectors[]` / `file_globs[]`
+L00000751	- `platforms[]`
+L00000752	- `requirements[]`
+L00000753	- `root_rules`
+L00000754	- `root_discovery_mode`
+L00000755	- `selection_mode`
+L00000756	- `selection_family`
+L00000757	- `primary_priority`
+L00000758	- `context_require[]`
+L00000759	- `context_exclude[]`
+L00000760	- `supplementary_for_families[]`
+L00000761	- `capability_profile`
+L00000762	- `role_default` (`primary`, `supplementary`, `contextual`)
+L00000763	- `support_classification` (`supported-by-registry`, `default-managed`, `toolchain-bound/manual`, `experimental/degraded`, `deprecated/replaced`)
+L00000764	- `default_enabled`
+L00000765	- `provisioning_strategy`
+L00000766	- `availability_probe`
+L00000767	- `command_template` / launch hint
+L00000768	- `initialization_defaults`
+L00000769	- `notes`
+L00000770	- `host_support`
+L00000771	- `degraded_attach_rules`
+L00000772	
+L00000773	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Decision_Policy.md
+L00000774	
+L00000775	Registry rules:
+L00000776	- the effective support catalog is the deduped union of Microsoft implementor data, OpenCode catalog data, and Puppet Master overlay metadata
+L00000777	- user enable/disable and custom-server settings layer on top of the catalog instead of replacing it
+L00000778	- derived prose tables and `/readable` `/settings/docs` views may be generated from this support-catalog registry, but this structure remains the SSOT and prevents the large union catalog from becoming duplicate-prone prose
+L00000779	- Support scope and support classification stay separate in the `/catalog`: supported-by-registry, default-managed, toolchain-bound `/manual`, experimental `/degraded`, and deprecated or `/replaced` are classification outcomes layered over stable `server_id` identity, not reasons to fork the catalog SSOT. Effective resolution order is catalog base entry, global override, project override, then runtime availability and `/effective-state` evaluation.
+L00000780	
+L00000781	ContractRef: ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md
+L00000782	
+L00000783	## 15. Implementation phases and acceptance criteria
+L00000784	
+L00000785	Order for an agent to build a step-by-step implementation guide. Each phase has clear deliverables and acceptance criteria.
+L00000786	
+L00000787	| Phase | Deliverables | Acceptance criteria |
+L00000788	|-------|--------------|---------------------|
+L00000789	| **1. Foundation** | LSP client crate integrated; server registry (in-memory); config loading (lsp.* from redb/config). | App starts; config can disable LSP globally; registry returns server id by extension. |
+L00000790	| **2. Spawn and lifecycle** | Spawn server process per (id, root); stdio transport; initialize handshake; shutdown/exit on close. | Opening a `.rs` file (with rust-analyzer in PATH) spawns one process; closing all files in that root shuts down server. |
+L00000791	| **3. Document sync** | didOpen, didChange (debounced), didClose, didSave; version tracking; incremental sync when server supports. | Editing file sends didChange after debounce; version increments; no flood of messages. |
+L00000792	| **4. Diagnostics** | Subscribe to publishDiagnostics; store per URI; expose to UI. | Problems tab shows errors/warnings for open files; gutter shows markers; click opens file at line. |
+L00000793	| **5. Hover and completion** | textDocument/hover and textDocument/completion; timeout and cancel; tooltip and completion list in editor. | Hover shows type/docs; completion list appears on trigger; stale responses discarded. |
+L00000794	| **6. Navigation** | documentSymbol, textDocument/definition (and references); breadcrumbs and go-to-symbol use LSP when available. | Breadcrumbs reflect LSP outline; go to symbol/definition jump to correct location. |
+L00000795	| **7. Inlay hints, semantic tokens, signature help** | inlayHint, semanticTokens, signatureHelp; render in editor. | Inlay hints and signature help visible; semantic highlighting improves colors when supported. |
+L00000796	| **8. Code actions and code lens** | codeAction (context menu/lightbulb), codeLens; apply via workspace/applyEdit through FileSafe. | Quick fixes appear and apply correctly; code lens links invoke. |
+L00000797	| **9. Status and fallback** | LSP status in status bar; per-server enable/disable; fallback to heuristic when no server; optional install hint. | Status bar shows server state; disabling server stops LSP for that language; heuristic outline used when LSP off. |
+L00000798	| **10. LLM diagnostics** | Include current diagnostics in Assistant/Interview context. | Agent receives diagnostic list for relevant files when composing context. |
+L00000799	
+L00000800	---
+L00000801	
+L00000802	## 16. Open points and decisions for implementer
+L00000803	This section closes the remaining implementation-time policy choices for MVP LSP behavior.
+L00000804	
+L00000805	### Canonical config location and precedence
+L00000806	App-level configuration lives under `config.lsp`.
+L00000807	
+L00000808	Project overrides live at `.puppet-master/lsp.json`.
+L00000809	
+L00000810	Merge order:
+L00000811	1. app-level `config.lsp`
+L00000812	2. project override `.puppet-master/lsp.json`
+L00000813	
+L00000814	Merge rules:
+L00000815	- scalar keys override
+L00000816	- object keys override by nested key
+L00000817	- arrays replace rather than merge
+L00000818	- absent keys inherit
+L00000819	- server-specific settings resolve by server id first, then by language/filetype mapping only when no explicit server-id override exists
+L00000820	
+L00000821	### Locked defaults
+L00000822	| Setting | Value |
+L00000823	|---|---|
+L00000824	| `didChangeDebounceMs` | `100` |
+L00000825	| `hoverTimeoutMs` | `5000` |
+L00000826	| `completionTimeoutMs` | `5000` |
+L00000827	| `workspaceSymbolTimeoutMs` | `10000` |
+L00000828	| `hoverDelayMs` | `300` |
+L00000829	| `workspaceFolders` cap | `10` roots with at least one open document |
+L00000830	
+L00000831	### Trigger and refresh behavior
+L00000832	- completion uses server-advertised trigger characters when provided
+L00000833	- when a server does not advertise trigger characters, completion still supports normal typing plus explicit manual invocation
+L00000834	- inlay hints refresh on document open and after debounced `didChange`
+L00000835	- scroll-only refresh is not required for MVP
+L00000836	- hover uses the canonical `hoverDelayMs` and `hoverTimeoutMs` values above
+L00000837	
+L00000838	### `workspaceFolders` policy
+L00000839	Only roots containing at least one open document are included, up to the cap above. Overflow roots are excluded deterministically and MUST be visible in logs/evidence when exclusion affects behavior.
+L00000840	
+L00000841	### Apply-edit path
+L00000842	`workspace/applyEdit`, rename, and code-action application use the same FileSafe-backed apply-edit path as other agent mutations.
+L00000843	- multi-file edits are treated as multi-file mutations
+L00000844	- destructive edits use the same safety and approval rules as any other file mutation path
+L00000845	- LSP does not bypass FileSafe, tool policy, or blocked-state reporting
+L00000846	
+L00000847	### Virtual documents
+L00000848	Chat/code-block virtual documents keep the existing virtual-document stance already defined in §14.7. This section does not reopen that decision.
+L00000849	
+L00000850	No core runtime LSP behavior remains implementation-defined after this section.
+L00000851	
+L00000852	ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
+L00000853	## Appendix: Implementation plan checklist (single ordered list for implementers)
+L00000854	
+L00000855	
+L00000856	Use this as the **single, implementation-ready checklist** an agent can follow. Cross-references: §5.1 = LSP in the Chat Window; §9.1 = Additional enhancements (optional/recommended). FinalGUISpec §7.16 = Chat, §7.20 = Bottom Panel (Problems), §7.4.2 = Settings > LSP; FileManager §10.
+L00000857	
+L00000858	**Acceptance (done when):** Each Phase 1-4 item is done when: (1) **Prerequisites:** App builds with lsp-types + chosen client crate; config schema and keys exist in storage. (2) **Phase 1:** Opening a file with a matching server spawns the server; diagnostics appear in Problems tab and gutter; hover and completion work with timeout/stale discard; status bar shows server state. (3) **Phase 2:** Go to definition, Find references, Rename, Format work; code actions apply via FileSafe; code lens invokes; Settings > LSP lists all servers and custom entries with validation. (4) **Phase 3:** Assistant/Interview context includes diagnostic summary (capped 10 files, 50 diagnostics); @ symbol includes LSP workspace/symbol; code blocks in Chat support hover and click-to-definition; Problems link in Chat footer opens Problems tab. (5) **Phase 4:** Optional gate, evidence snapshot, subagent bias, and Chat/Interview enhancements implemented per §9.1 or explicitly deferred and documented.
+L00000859	
+L00000860	### Prerequisites
+L00000861	
+L00000862	- [ ] Choose Rust LSP client crate (lsp-types + stdio-capable client; e.g. lsp-client or async_lsp_client). Add to Cargo.toml.
+L00000863	- [ ] Define LSP config schema (OpenCode-aligned: lsp.enabled, lsp.servers.<id>.disabled, command, extensions, env, initialization). Store in redb; document in §14.4.
+L00000864	- [ ] Add config keys for debounce and timeouts (lsp.didChangeDebounceMs, lsp.hoverTimeoutMs, lsp.completionTimeoutMs, lsp.workspaceSymbolTimeoutMs). See §14.4.
+L00000865	
+L00000866	### Phase 1: Core LSP
+L00000867	
+L00000868	- [ ] Implement server registry: id, extensions, root finder, spawn; load config (disabled, command, extensions, env, initialization). Include all built-in servers from §3.2 (OpenCode table plus slint-lsp). ESLint §3.3, slint-lsp §3.3.1; root discovery per server.
+L00000869	- [ ] Implement document sync: didOpen, didChange (debounced, default 100 ms), didClose, didSave; track document version per buffer; prefer incremental sync when server supports.
+L00000870	- [ ] Subscribe to textDocument/publishDiagnostics; map to editor underlines and gutter markers; add Problems panel in bottom panel (FinalGUISpec §7.20): table with file, line, message, severity, source; click opens file at line.
+L00000871	- [ ] Implement textDocument/hover; show tooltip at cursor (timeout and cancel on navigate/edit).
+L00000872	- [ ] Implement textDocument/completion on trigger; render inline list; apply on select; optional completionItem/resolve.
+L00000873	- [ ] Show LSP status in status bar (e.g. "rust-analyzer: Ready", "Initializing...", "Error: ..."). FinalGUISpec §8.1 StatusBar.
+L00000874	
+L00000875	### Phase 2: Editor (navigation and editing)
+L00000876	
+L00000877	- [ ] Implement textDocument/definition (Go to definition); F12 or Ctrl+Click opens definition in File Editor. Fallback: heuristic/index (FileManager §10.2).
+L00000878	- [ ] Implement textDocument/codeAction; show context menu or lightbulb; apply via workspace/applyEdit through FileSafe.
+L00000879	- [ ] Implement textDocument/codeLens; render actionable links above symbols; support invoke (e.g. run test).
+L00000880	- [ ] Implement textDocument/signatureHelp when cursor in call; show popup with signature and parameter highlight.
+L00000881	- [ ] Implement textDocument/inlayHint; render as inline decorations (no buffer change).
+L00000882	- [ ] Implement textDocument/semanticTokens when supported; fall back to syntax-only.
+L00000883	- [ ] Implement textDocument/references (Find references); add References panel or inline list in bottom panel; shortcut Shift+F12; click opens file at location.
+L00000884	- [ ] Implement textDocument/rename and textDocument/prepareRename (Rename symbol); F2; show preview; apply via workspace/applyEdit (FileSafe).
+L00000885	- [ ] Implement textDocument/formatting and textDocument/rangeFormatting (Format document / Format selection); shortcut e.g. Shift+Alt+F; apply via workspace/applyEdit.
+L00000886	- [ ] Use documentSymbol (and workspace/symbol) for breadcrumbs and Go to symbol (FileManager §10.1, §10.2). Fallback: regex outline §10.1.
+L00000887	- [ ] Request timeout and cancellation; discard or re-request on stale document version. Per-server enable/disable: honor lsp.<id>.disabled and lsp: false. Settings > LSP per FinalGUISpec §7.4.2.
+L00000888	- [ ] Server lifecycle: spawn on first file open for `(host_id, server_id, root_identity)`; restart on crash with backoff. Bridge pattern: custom command can be stdio↔TCP bridge (e.g. Godot); document for users.
+L00000889	
+L00000890	### Phase 3: Chat LSP (§5.1)
+L00000891	
+L00000892	- [ ] **Diagnostics in Assistant context:** When building context for next Assistant/Interview turn, include summary of current LSP diagnostics (file, line, message, severity, source) for project or @'d/recently edited files.
+L00000893	- [ ] **@ symbol with LSP:** When LSP is available, @ menu includes symbols from LSP workspace/symbol (and optionally documentSymbol); results show path, line, kind.
+L00000894	- [ ] **Code blocks in messages:** Code blocks in assistant/user messages support LSP hover (tooltip) and click-to-definition (e.g. Ctrl+Click); use virtual document or real file URI when block maps to project file; definition opens in File Editor.
+L00000895	- [ ] **Problems link from Chat:** Chat footer or message area offers link or badge (e.g. "N problems") that opens Problems panel (FinalGUISpec §7.20) filtered to project or context.
+L00000896	- [ ] **Optional:** When user has @'d files, show compact hint (e.g. "2 errors in @'d files") with click-through to Problems or first error.
+L00000897	- [ ] Fallback when LSP unavailable: @ symbol uses text-based or indexed symbol search (FileManager §10.2); code blocks no hover/definition; omit diagnostics from context.
+L00000898	
+L00000899	### Phase 4: Optional (§9.1)
+L00000900	
+L00000901	- [ ] **Optional LSP diagnostics gate:** Verification criterion at tier boundaries: "No LSP errors in scope" (or "no errors; warnings allowed"). Configurable per tier (e.g. Verification tab). See feature-list §4 Verification gates.
+L00000902	- [ ] **Optional LSP snapshot in evidence:** When collecting evidence for a run, attach LSP diagnostics snapshot (file, line, severity, message, source) for project or changed files; store under .puppet-master/evidence/.
+L00000903	- [ ] **Optional subagent selection from LSP:** When files in scope have LSP errors for a language, prefer subagent that matches that language (e.g. rust-engineer for Rust errors).
+L00000904	- [ ] **Optional/recommended Chat:** "Fix all" / quick fixes from Chat; "Rename X to Y" from Chat (LSP Rename symbol with confirmation); "Where is this used?" (Find references in Chat or References panel); "Format this file" (LSP Format document); Copy type/signature to Chat from editor hover.
+L00000905	- [ ] **Optional:** Promote lsp tool to MVP (Tools.md): agents can call lsp.references, lsp.definition, lsp.hover; optionally lsp.rename with user approval. Remove or relax OPENCODE_EXPERIMENTAL_LSP_TOOL gate when ready.
+L00000906	- [ ] **Optional:** Interview "Structure of this file" via documentSymbol; diagnostics in interview context (same as Assistant). Other §9.1 editor enhancements (go to type definition, implementation, document links, call hierarchy, folding range, selection range, document highlight) as natural next steps.
+L00000907	
+L00000908	---
+L00000909	
+L00000910	## 17. LSP verification gate, evidence, subagent selection (implementation spec)
+L00000911	
+L00000912	This section defines the **contract, config, failure handling, evidence schema, and integration points** for the LSP diagnostics verification gate, LSP snapshot in evidence, and subagent selection from LSP so an agent can implement with no gaps. Cross-reference: Plans/feature-list.md (Verifier registry, LSP additional enhancements), Plans/Tools.md (§3.1 lsp tool), Plans/orchestrator-subagent-integration.md (subagent selection).
+L00000913	
+L00000914	### 17.1 LSP diagnostics verification gate
+L00000915	
+L00000916	#### Contract
+
+<<< CONTEXT_AFTER canonical_document_lines=917-928 >>>
+L00000917	
+L00000918	- **When it runs:** At configured **tier boundaries** before promotion. It MAY be enabled for `phase`, `task`, and/or `subtask`; default: **phase boundary only**. Implementations MAY also run an iteration-local preflight, but that is advisory and MUST NOT replace the configured boundary gate.
+L00000919	- **Tier boundaries:** Configurable per tier: phase, task, subtask. At least one of these must be enabled for the gate to run; when the orchestrator reaches that boundary (e.g. "subtask passed"), the LSP gate runs as one of the criteria before the tier is marked passed.
+L00000920	- **Scope:** What files are checked. One of:
+L00000921	  - **`changed_files`** -- Only files that were modified in the last iteration (or in the current subtask). Requires tracking changed paths (e.g. from git diff or execution engine "files touched").
+L00000922	  - **`open`** -- Only files currently open in the editor (or in the run context). Requires LSP client to know "open" set for the run.
+L00000923	  - **`project`** -- All project files that have an LSP server (bounded: e.g. under project root, or only files with open documents). Default: **`changed_files`** to keep checks fast and relevant.
+L00000924	- **"No LSP errors" meaning:** Configurable severity threshold:
+L00000925	  - **`error`** -- Gate passes if there are **no diagnostics with severity Error** in scope. Warnings and Info are ignored.
+L00000926	  - **`error_and_warning`** -- Gate passes if there are **no diagnostics with severity Error or Warning** in scope. Info is ignored.
+L00000927	  - Default: **`error`**.
+L00000928	

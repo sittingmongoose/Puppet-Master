@@ -1,0 +1,300 @@
+<<< CONTEXT_BEFORE canonical_document_lines=19683-19694 >>>
+L00019683	  - "`replay_policy`"
+L00019684	negative_constraints:
+L00019685	  - Do not persist `type` as a second top-level EventRecord field.
+L00019686	  - Do not store raw secrets, tokens, passwords, credentials, API keys, OAuth values, or local machine secrets in EventRecord.
+L00019687	  - Do not treat EventRecord schema materialization as proof that all event payload schemas, provider streams, runtime lifecycle, clean-room harness, GUI wiring, security boundaries, or behavioral acceptance are complete.
+L00019688	  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, or production build tasks from this contract unit.
+L00019689	owner_hints:
+L00019690	  - Plans/Contracts_V0.md
+L00019691	  - Plans/event_record.schema.json
+L00019692	  - Plans/storage-plan.md
+L00019693	```
+L00019694	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=19695-19965 >>>
+L00019695	### CV-310 - Active-Agent Coordination Event Family Contract
+L00019696	
+L00019697	```yaml
+L00019698	plan_unit_id: CV-310
+L00019699	unit_type: schema_contract
+L00019700	status: accepted
+L00019701	owner_doc: Plans/Contracts_V0.md
+L00019702	canonical_text: >-
+L00019703	  Contracts_V0 names the stable active-agent coordination EventRecord families consumed by Orchestrator and storage:
+L00019704	  `coordination.agent_registered`, `coordination.agent_status_updated`, `coordination.agent_operation_updated`,
+L00019705	  `coordination.agent_file_ownership_updated`, `coordination.agent_unregistered`, `coordination.agent_crashed`,
+L00019706	  `coordination.agent_aborted`, and `coordination.debug_mirror_exported`. These events feed redb coordination projections;
+L00019707	  `active-agents.json`, `agent-messages.json`, and `.puppet-master/state/*.json` paths are compatibility/debug/export
+L00019708	  mirrors only and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash,
+L00019709	  abort, receipt, or validation decisions.
+L00019710	gui_related: false
+L00019711	gui_classification_reason: This unit defines runtime event contracts and storage authority, not GUI presentation.
+L00019712	depends_on: [CV-309, SP-230, SP-232, OSI-432]
+L00019713	unblocks: []
+L00019714	acceptance_criteria:
+L00019715	  - Stable `coordination.*` event rows list payload minima for registration, status, operation, file-activity, unregister, crash, abort, and debug mirror export.
+L00019716	  - Coordination payloads preserve project/run/thread/agent lineage, platform, revision/checkpoint/idempotency fields, and relevant operation/file/mirror metadata.
+L00019717	  - File-activity events are coordination claims only and do not create FileSafe locks or durable exclusive leases.
+L00019718	  - Coordination consumers use redb projections and `projector.checkpoint.coordination:{project_id}` for authority.
+L00019719	  - JSON side files remain compatibility/debug/export mirrors and cannot drive scheduling, execution admission, conflict prevention, prompt injection, unregister, crash, abort, receipt, or validation decisions.
+L00019720	validation_surfaces:
+L00019721	  - python3 scripts/pm-plan-index.py validate
+L00019722	  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+L00019723	  - python3 scripts/pm-plans-verify.py run-gates
+L00019724	risk_class: coordination_contract_file_canon_regression
+L00019725	reasoning_tier: high
+L00019726	context_scope: storage_coordination_canon
+L00019727	implementation_surfaces:
+L00019728	  - Plans/Contracts_V0.md
+L00019729	  - Plans/storage-plan.md
+L00019730	  - Plans/orchestrator-subagent-integration.md
+L00019731	  - Plans/storage_value_registry.json
+L00019732	node_compile_hint:
+L00019733	  mode: storage_coordination_canon_repair
+L00019734	  create_worknodes: false
+L00019735	  create_nodeseeds: false
+L00019736	source_lineage:
+L00019737	  - fablereport.md
+L00019738	  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:6
+L00019739	source_atom_ids: []
+L00019740	preserved_exact_tokens:
+L00019741	  - "`coordination.agent_registered`"
+L00019742	  - "`coordination.agent_status_updated`"
+L00019743	  - "`coordination.agent_operation_updated`"
+L00019744	  - "`coordination.agent_file_ownership_updated`"
+L00019745	  - "`coordination.agent_unregistered`"
+L00019746	  - "`coordination.agent_crashed`"
+L00019747	  - "`coordination.agent_aborted`"
+L00019748	  - "`coordination.debug_mirror_exported`"
+L00019749	  - "`active-agents.json`"
+L00019750	  - "`.puppet-master/state/*.json`"
+L00019751	negative_constraints:
+L00019752	  - Do not define loose JSON files as active-agent coordination canon.
+L00019753	  - Do not let coordination events bypass the EventRecord envelope.
+L00019754	  - Do not treat coordination file-activity claims as FileSafe locks or leases.
+L00019755	owner_hints:
+L00019756	  - Plans/Contracts_V0.md
+L00019757	  - Plans/storage-plan.md
+L00019758	  - Plans/orchestrator-subagent-integration.md
+L00019759	```
+L00019760	
+L00019761	### CV-311 - Provider Model Capability Snapshot Reference Envelope
+L00019762	
+L00019763	```yaml
+L00019764	plan_unit_id: CV-311
+L00019765	unit_type: schema_contract
+L00019766	status: accepted
+L00019767	owner_doc: Plans/Contracts_V0.md
+L00019768	canonical_text: >-
+L00019769	  Contracts_V0 owns the cross-surface provider/model capability snapshot reference
+L00019770	  envelope with capability_snapshot_ref, requested_effective_snapshot_ref,
+L00019771	  provider_entry_id, model_id, optional effective_model_id, context_budget_ref,
+L00019772	  fallback_chain_ref, capability_provenance_refs, capability_state, and
+L00019773	  capability_state_reason. Models_System owns the capability field semantics,
+L00019774	  context-window and max-token limits, fallback-chain shape, provenance, and
+L00019775	  requested/effective model resolution. Legacy `platform_specs` and
+L00019776	  `platform_specs.rs` are not valid capability snapshot refs.
+L00019777	gui_related: false
+L00019778	gui_classification_reason: This unit defines a cross-surface reference envelope and owner boundary, not visual presentation.
+L00019779	depends_on: [CV-293, MS-134]
+L00019780	unblocks: [ACD-009, ACD-184, ACD-220, ACD-255, ACD-257, MS-134]
+L00019781	acceptance_criteria:
+L00019782	  - Cross-surface provider/model payloads reference `capability_snapshot_ref` instead of copying provider capability tables.
+L00019783	  - "`fallback_chain_ref?` and `context_budget_ref?` point to Models_System snapshot fields."
+L00019784	  - Capability states use the closed state set supported, unsupported, capability_gated, clamped, inferred, opaque, stale, and unverified.
+L00019785	  - Legacy `platform_specs` and `platform_specs.rs` are invalid as capability snapshot refs.
+L00019786	validation_surfaces:
+L00019787	  - python3 scripts/pm-plan-index.py validate
+L00019788	  - python3 scripts/pm-plans-verify.py lint-contractrefs
+L00019789	risk_class: provider_model_capability_ref_drift
+L00019790	reasoning_tier: high
+L00019791	context_scope: provider_model_capability_ref_envelope
+L00019792	implementation_surfaces:
+L00019793	  - Plans/Contracts_V0.md
+L00019794	  - Plans/Models_System.md
+L00019795	  - Plans/assistant-chat-design.md
+L00019796	node_compile_hint:
+L00019797	  mode: provider_model_capability_snapshot_ref_envelope
+L00019798	  create_worknodes: false
+L00019799	  create_nodeseeds: false
+L00019800	source_lineage:
+L00019801	  - fablereport.md
+L00019802	  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:7
+L00019803	source_atom_ids: []
+L00019804	preserved_exact_tokens:
+L00019805	  - "`capability_snapshot_ref`"
+L00019806	  - "`requested_effective_snapshot_ref`"
+L00019807	  - "`context_budget_ref?`"
+L00019808	  - "`fallback_chain_ref?`"
+L00019809	  - "`capability_provenance_refs[]`"
+L00019810	  - "`capability_state`"
+L00019811	  - "`platform_specs`"
+L00019812	negative_constraints:
+L00019813	  - Do not define `platform_specs` or `platform_specs.rs` as active provider/model capability contracts.
+L00019814	  - Do not copy Models_System capability tables into feature-local payloads.
+L00019815	owner_hints:
+L00019816	  - Plans/Contracts_V0.md
+L00019817	  - Plans/Models_System.md
+L00019818	  - Plans/assistant-chat-design.md
+L00019819	```
+L00019820	
+L00019821	### CV-312 - FileSafe Fail Closed Security Event Payloads
+L00019822	
+L00019823	```yaml
+L00019824	plan_unit_id: CV-312
+L00019825	unit_type: schema_contract
+L00019826	status: accepted
+L00019827	owner_doc: Plans/Contracts_V0.md
+L00019828	canonical_text: >-
+L00019829	  Contracts_V0 defines FileSafe fail-closed security EventRecord payloads for
+L00019830	  filesafe.guard_init_failed, filesafe.command_denied, filesafe.path_denied,
+L00019831	  filesafe.destructive_override_requested, filesafe.destructive_override_granted,
+L00019832	  filesafe.destructive_override_denied, and filesafe.policy_degraded. The payloads preserve
+L00019833	  guard type, denial/diagnostic codes, normalized command/path identity, permission and FileSafe
+L00019834	  scope refs, project/run/worktree scope, authenticated operator override request/grant/denial
+L00019835	  fields, expiry, receipt refs, event refs, and redaction posture. policy_degraded is limited to
+L00019836	  non-authoritative/advisory degradation or embedded fallback use where fail-closed enforcement
+L00019837	  remains intact.
+L00019838	gui_related: false
+L00019839	gui_classification_reason: This unit defines security event payload contracts, not visual presentation.
+L00019840	depends_on: [CV-309, CV-081, F2-199]
+L00019841	unblocks: [F2-024, F2-028, F2-031, F2-052, F2-114, F2-116]
+L00019842	acceptance_criteria:
+L00019843	  - FileSafe init failure emits filesafe.guard_init_failed and blocks affected guarded execution.
+L00019844	  - Command denial emits filesafe.command_denied with normalized command identity and denial_code.
+L00019845	  - Path denial emits filesafe.path_denied with path/canonicalization denial_code and scope refs.
+L00019846	  - Destructive override requires authenticated operator identity, auth realm, reason, scope, expiry, event refs, and receipt fields.
+L00019847	  - policy_degraded is not used when authoritative allowlist, baseline, root, canonical path, or override authority is absent.
+L00019848	validation_surfaces:
+L00019849	  - python3 scripts/pm-plans-verify.py validate-filesafe-security-policy
+L00019850	  - python3 scripts/pm-plan-index.py validate
+L00019851	  - python3 scripts/pm-plans-verify.py run-gates
+L00019852	risk_class: filesafe_event_payload_drift
+L00019853	reasoning_tier: high
+L00019854	context_scope: filesafe_fail_closed_security_repair
+L00019855	implementation_surfaces:
+L00019856	  - Plans/Contracts_V0.md
+L00019857	  - Plans/FileSafe.md
+L00019858	  - scripts/pm-plans-verify.py
+L00019859	node_compile_hint:
+L00019860	  mode: filesafe_fail_closed_security_event_payloads
+L00019861	  create_worknodes: false
+L00019862	  create_nodeseeds: false
+L00019863	source_lineage:
+L00019864	  - fablereport.md
+L00019865	  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl:10
+L00019866	source_atom_ids: []
+L00019867	preserved_exact_tokens:
+L00019868	  - "`filesafe.guard_init_failed`"
+L00019869	  - "`filesafe.command_denied`"
+L00019870	  - "`filesafe.path_denied`"
+L00019871	  - "`filesafe.destructive_override_requested`"
+L00019872	  - "`filesafe.destructive_override_granted`"
+L00019873	  - "`filesafe.destructive_override_denied`"
+L00019874	  - "`filesafe.policy_degraded`"
+L00019875	  - "`approved_command_identity_mismatch`"
+L00019876	  - "`path_toc_tou_recheck_failed`"
+L00019877	  - "`override_expired`"
+L00019878	negative_constraints:
+L00019879	  - Do not treat PUPPET_MASTER_ALLOW_DESTRUCTIVE as sufficient destructive override authority.
+L00019880	  - Do not use policy_degraded as a success-shaped substitute for missing allowlists, baselines, roots, canonical paths, or authorization.
+L00019881	  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime launches, or production build tasks from this contract unit.
+L00019882	owner_hints:
+L00019883	  - Plans/Contracts_V0.md
+L00019884	  - Plans/FileSafe.md
+L00019885	  - Plans/Permissions_System.md
+L00019886	```
+L00019887	
+L00019888	### CV-313 - FABLE Contract Runtime Core Schema Closure
+L00019889	
+L00019890	```yaml
+L00019891	plan_unit_id: CV-313
+L00019892	unit_type: schema_contract
+L00019893	status: accepted
+L00019894	owner_doc: Plans/Contracts_V0.md
+L00019895	canonical_text: >-
+L00019896	  Contracts_V0 closes the FABLE contract-runtime core schema drift for scheduler wake, stop, attention,
+L00019897	  budget, blocked, unblocked, safe-point, conflict, command, concern, auth, and package identity records.
+L00019898	  Runtime payloads carry per-event payload schema_version in addition to the EventRecord envelope
+L00019899	  schema_version. wake_reason, stop_reason_code, attention_required_reason_code, budget_kind,
+L00019900	  node.unblocked.resolution, conflict_reason_code, blocked_reason_code auth handling, UICommandResponse
+L00019901	  error codes, ConcernRecord lifecycle fields, AuthEvent minima, and package_id/work_package_id alias
+L00019902	  behavior are closed here and consumed by Executor and Goal Runtime. `package_id` is canonical;
+L00019903	  `work_package_id`, `attention_reason_code`, and `worktree_branch` are compatibility aliases only.
+L00019904	gui_related: false
+L00019905	gui_classification_reason: This unit defines backend/runtime schema closure, not visual presentation.
+L00019906	depends_on: [CV-215, CV-220, CV-224, CV-248, CV-287, CV-288, CV-309, GRS-035, GRS-036, GRS-037, GRS-038, EP-026, EP-028, EP-030, EP-032, EP-085, EP-098]
+L00019907	unblocks: [GRS-041, EP-114]
+L00019908	acceptance_criteria:
+L00019909	  - "`wake_reason` is closed to prerequisite_resolved, approval_resolved, clarification_resolved, auth_recovered, startup_recovered, backoff_expired, verification_completed, remediation_resolved, safe_point_restored, capacity_available, replan_applied, and watchdog_recheck."
+L00019910	  - "`stop_reason_code`, `attention_required_reason_code`, and `budget_kind` are machine-readable closed fields on stop, user-attention, and budget-affecting payloads."
+L00019911	  - "`node.unblocked.resolution` and `conflict_reason_code` use closed value sets and do not preserve prose-only or ellipsis-based values."
+L00019912	  - "`blocked_reason_code` includes `auth_required`; credential expiry remains `failure_class = auth_expired`."
+L00019913	  - "`safe_point.created` captures schema_version, safe_point_id, run_id, node_id, attempt_id, baseline_ref, replan_generation, creation_reason, worktree_id?, worktree_path?, branch_name?, HEAD_sha?, and ts."
+L00019914	  - UI command dispatch returns `UICommandResponse` with ack/result status, closed error code, reason, event refs, and receipt ref.
+L00019915	  - Concern and AuthEvent records expose their required identity, lifecycle, evidence, redaction, and recovery fields without storing raw secrets.
+L00019916	  - "`package_id` is canonical and `work_package_id` remains import/export compatibility only."
+L00019917	validation_surfaces:
+L00019918	  - python3 scripts/pm-plan-index.py validate
+L00019919	  - python3 scripts/pm-plans-verify.py lint-contractrefs
+L00019920	  - python3 scripts/pm-plans-verify.py run-gates
+L00019921	risk_class: fable_contract_runtime_core_schema_drift
+L00019922	reasoning_tier: high
+L00019923	context_scope: contract_runtime_core_repair
+L00019924	implementation_surfaces:
+L00019925	  - Plans/Contracts_V0.md
+L00019926	  - Plans/Executor_Protocol.md
+L00019927	  - Plans/Goal_Runtime_System.md
+L00019928	  - Plans/orchestrator-subagent-integration.md
+L00019929	node_compile_hint:
+L00019930	  mode: contract_runtime_core_schema_closure
+L00019931	  create_worknodes: false
+L00019932	  create_nodeseeds: false
+L00019933	source_lineage:
+L00019934	  - fablereport.md
+L00019935	  - Plans/.audits/fable-20260706/P0_P1_REPAIR_PLAN.md
+L00019936	  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+L00019937	source_atom_ids: []
+L00019938	preserved_exact_tokens:
+L00019939	  - "`wake_reason`"
+L00019940	  - "`stop_reason_code`"
+L00019941	  - "`attention_required_reason_code`"
+L00019942	  - "`budget_kind`"
+L00019943	  - "`node.unblocked.resolution`"
+L00019944	  - "`conflict_reason_code`"
+L00019945	  - "`blocked_reason_code`"
+L00019946	  - "`safe_point.created`"
+L00019947	  - "`UICommandResponse`"
+L00019948	  - "`ConcernRecord`"
+L00019949	  - "`AuthEvent`"
+L00019950	  - "`package_id`"
+L00019951	  - "`work_package_id`"
+L00019952	negative_constraints:
+L00019953	  - Do not treat this schema closure as UI command catalog, wiring matrix, FileSafe, storage, platform, GUI, runtime certification, or implementation-readiness closure.
+L00019954	  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime launches, production build tasks, generated governance artifacts, or governance seal outputs from this contract unit.
+L00019955	owner_hints:
+L00019956	  - Plans/Contracts_V0.md
+L00019957	  - Plans/Executor_Protocol.md
+L00019958	  - Plans/Goal_Runtime_System.md
+L00019959	  - Plans/orchestrator-subagent-integration.md
+L00019960	```
+L00019961	
+L00019962	## FABLE Residual Feature-Contract Cleanup Addendum - 2026-07-07
+L00019963	
+L00019964	This addendum closes the residual FABLE feature-contract rows assigned to Contracts_V0 for empty owner-section bodies and the explicit WebSocket auth, runtime-surface readiness, and session-prompt admission inbox gaps. It does not reopen the earlier contract-runtime core closure and does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime certification evidence, production build tasks, generated governance artifacts, or a buildability pass claim.
+L00019965	
+
+<<< CONTEXT_AFTER canonical_document_lines=19966-19977 >>>
+L00019966	### CV-314 - FABLE Residual Contracts Feature Boundary
+L00019967	
+L00019968	```yaml
+L00019969	plan_unit_id: CV-314
+L00019970	unit_type: schema_contract
+L00019971	status: accepted
+L00019972	owner_doc: Plans/Contracts_V0.md
+L00019973	canonical_text: >-
+L00019974	  Contracts_V0 closes the residual FABLE feature-contract gaps for owner-section bodies, remote/tunnel
+L00019975	  WebSocket authentication, runtime-surface readiness probing, and session-prompt admission inbox events.
+L00019976	  Remote or tunneled WebSocket setup uses a proof-of-possession bearer session token bound to
+L00019977	  runtime_id, project_id, session_id, origin, csrf_nonce, and permission_snapshot_id; the server rejects

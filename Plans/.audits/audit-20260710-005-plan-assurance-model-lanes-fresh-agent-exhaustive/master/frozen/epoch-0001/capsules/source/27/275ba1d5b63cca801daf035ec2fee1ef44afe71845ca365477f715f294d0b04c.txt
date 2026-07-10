@@ -1,0 +1,382 @@
+<<< CONTEXT_BEFORE 17759-17770 >>>
+- "Search/filter"
+- "Open setting: {name}"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "`Settings page tab count (24 tabs)` and `24 tabs across 5 groups` are stale risk-lineage labels, not the live Settings count."
+owner_boundary_notes:
+- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 17771-18123 >>>
+### F3-265 - Project Switch Reload Performance Risk
+
+```yaml
+plan_unit_id: F3-265
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The `Project switch state reload performance` risk is mitigated as follows: Project
+  switching loads config, file tree, editor tabs, LSP/Search/Source Control projections, then
+  chat threads in priority order with skeleton placeholders and a sub-500ms interactive
+  target.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_risk
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: project_switch_reload_performance_risk
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+preserved_exact_tokens:
+- "Project switch state reload performance"
+- "priority order"
+- "skeleton placeholders"
+- "<500ms to interactive"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-266 - File Watcher Resource Risk
+
+```yaml
+plan_unit_id: F3-266
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The `File watcher resource consumption` risk is mitigated as follows: Hot reload and preview
+  watchers use notify debounced mode, watch relevant source dirs, cap watchers, and disclose
+  fallback when root-only watching is required.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves one row of the user-visible Slint migration risks and mitigations table.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_risk
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: file_watcher_resource_risk
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0155"
+preserved_exact_tokens:
+- "File watcher resource consumption"
+- "notify"
+- "debounced mode"
+- ">10k files"
+- "inotify/FSEvents"
+- "root-only watching"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The row remains part of the FinalGUISpec risk/mitigation matrix."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-267 - Promoted Feature Directionality Decision
+
+```yaml
+plan_unit_id: F3-267
+unit_type: decision
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Ledger directionality is closed for items `#18`, `#19`, `#28`, `#29`, `#31`, `#36`, `#50`,
+  `#52`, and `#56`; these are locked requirements, not directional ideas, and only sections
+  explicitly labeled FUTURE FEATURE or OPEN QUESTION remain open by intent.
+gui_related: true
+gui_classification_reason: >-
+  This unit locks promoted feature status and user-visible scope.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: promoted_feature_directionality_decision
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0156"
+preserved_exact_tokens:
+- "#18"
+- "#19"
+- "#28"
+- "#29"
+- "#31"
+- "#36"
+- "#50"
+- "#52"
+- "#56"
+- "locked requirements"
+- "directional ideas"
+- "FUTURE FEATURE"
+- "OPEN QUESTION"
+- "No features in this specification are deferred."
+negative_constraints:
+- "Do not treat promoted features in this specification as deferred."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-268 - Promoted Feature Owner Matrix
+
+```yaml
+plan_unit_id: F3-268
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Former future considerations are MVP scope and route to their owner docs for
+  browser/click-to-context, search, instant project switch, sound effects, hot reload,
+  instructions editor, custom themes, language/LSP navigation, catalog, sync, SSH, run/debug,
+  and browser/terminal tabs.
+gui_related: true
+gui_classification_reason: >-
+  This unit maps user-visible promoted features to owner documents and surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: promoted_feature_owner_matrix
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0156"
+preserved_exact_tokens:
+- "Built-in browser / click-to-context"
+- "Search / find in files / replace in files"
+- "Instant project switch"
+- "Sound effects"
+- "Hot reload controls"
+- "In-app instructions editor"
+- "Additional themes / custom themes"
+- "Language/framework auto-detection and LSP-aware navigation"
+- "Catalog / one-click install"
+- "Sync bundle manager"
+- "SSH remote editing"
+- "Run/debug configurations"
+- "Browser/terminal tabs, pinning, and preview modes"
+- "ContractName:Plans/FileManager.md"
+- "ContractName:Plans/GitHub_Integration.md"
+- "ContractName:Plans/LSPSupport.md"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "Promoted feature details remain fully specified in their owner docs."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-269 - Appendix Reference Hygiene
+
+```yaml
+plan_unit_id: F3-269
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Appendix A reference rows must point at live owner documents or live section anchors, and
+  LF-007 stale-reference cleanup requires FinalGUISpec and assistant-chat references to keep
+  live explicit links or remove stale references rather than leaving repairs implicit in
+  packet scope.
+gui_related: false
+gui_classification_reason: >-
+  This unit is a cross-reference governance constraint rather than a GUI surface.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: appendix_reference_hygiene
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0157"
+preserved_exact_tokens:
+- "Reference rows"
+- "live owner documents"
+- "live section anchors"
+- "nonexistent section numbers"
+- "LF-007"
+- "Plans/assistant-chat-design.md#20. References"
+- "Plans/FinalGUISpec.md#Appendix A: Cross-References"
+- "stale-reference repairs"
+- "packet scope"
+negative_constraints:
+- "Reference rows must not point at nonexistent section numbers."
+- "Stale-reference repairs must not remain implicit in packet scope."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-270 - Appendix Cross Reference Inventory
+
+```yaml
+plan_unit_id: F3-270
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Appendix A preserves the cross-reference inventory that routes FinalGUISpec consumers to
+  live owner docs for chat, FileManager, usage, HITL, wizard, storage, rules context,
+  Glossary, newfeatures, subagent integrations, worktree/FileSafe/MiscPlan, Skills,
+  feature-list, tools, providers, widgets/artifacts, Run Graph, LSP, rewrite tie-in, and
+  internal clipboard coverage.
+gui_related: true
+gui_classification_reason: >-
+  This unit preserves GUI-relevant owner/consumer cross-reference inventory rows.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: appendix_cross_reference_inventory
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0157"
+preserved_exact_tokens:
+- "Plans/assistant-chat-design.md"
+- "Plans/FileManager.md"
+- "Plans/usage-feature.md"
+- "Plans/human-in-the-loop.md"
+- "Plans/chain-wizard-flexibility.md"
+- "Plans/storage-plan.md"
+- "Plans/agent-rules-context.md"
+- "Plans/Glossary.md"
+- "Plans/newfeatures.md"
+- "Plans/interview-subagent-integration.md"
+- "Plans/orchestrator-subagent-integration.md"
+- "Plans/WorktreeGitImprovement.md"
+- "Plans/FileSafe.md"
+- "Plans/MiscPlan.md"
+- "Plans/Skills_System.md"
+- "Plans/feature-list.md"
+- "Plans/newtools.md"
+- "Plans/Commands_System.md"
+- "Plans/UI_Command_Catalog.md"
+- "Plans/Permissions_System.md"
+- "Plans/MCP_Integration.md"
+- "Plans/Tools.md"
+- "Plans/Provider_OpenCode.md"
+- "Plans/Widget_System.md"
+- "Plans/Run_Graph_View.md"
+- "Plans/LSPSupport.md"
+- "Plans/rewrite-tie-in-memo.md"
+negative_constraints: []
+compatibility_only_notes:
+- "`Plans/Commands_System.md` row includes deprecated aliases as compatibility context."
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "The referenced owner docs retain canonical ownership for their domains."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 18124-18135 >>>
+### F3-271 - Locked UI Framework Shell Decisions
+
+```yaml
+plan_unit_id: F3-271
+unit_type: decision
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Implementation decisions are final for Slint 1.17.1 on Rust stable 1.96.1, winit+Skia with FemtoVG-wgpu fallback,
+  no React/JS/TS/HTML/CSS shell, IDE shell layout, three theme families, Settings restructure,
+  event-driven updates, redb/seglog/Tantivy persistence/search, model/platform dropdowns, and
+  product name Puppet Master.

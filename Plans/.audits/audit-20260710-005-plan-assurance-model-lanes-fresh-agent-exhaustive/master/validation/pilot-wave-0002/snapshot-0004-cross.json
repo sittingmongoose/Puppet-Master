@@ -1,0 +1,87 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "checker": "wave_schema_crosscheck_v1",
+  "counts": {
+    "assignments": 8,
+    "eligible": 5,
+    "pending": 3,
+    "rejected": 0
+  },
+  "eligible_assignment_ids": [
+    "A005-000666-ADVERSARIAL-WIN-510B3DE676A3-0001",
+    "A005-000887-EXACT-WIN-6690C379876B-0001",
+    "A005-000888-ADVERSARIAL-WIN-6690C379876B-0001",
+    "A005-000997-EXACT-WIN-7414C6C901F8-0001",
+    "A005-001753-EXACT-WIN-AC612DBB4EFE-0005"
+  ],
+  "results": [
+    {
+      "assignment_id": "A005-000665-EXACT-WIN-510B3DE676A3-0001",
+      "errors": [
+        "missing:terminal_seal.json"
+      ],
+      "state": "pending"
+    },
+    {
+      "assignment_id": "A005-000666-ADVERSARIAL-WIN-510B3DE676A3-0001",
+      "attempt_id": "attempt-0002",
+      "errors": [],
+      "result_sha256": "fb4db9b2bed1d5084d140ced82ca47c4c1697bb56e3e41f5fcb5f0cf9818fb76",
+      "state": "eligible",
+      "task_thread_id": "019f4d38-6685-7650-8bc7-dab421f1c5dd",
+      "terminal_seal_sha256": "2bae8b348f86944c8135361cdb4202b19c3f702826dfd20a9e17260bf343a5f1"
+    },
+    {
+      "assignment_id": "A005-000887-EXACT-WIN-6690C379876B-0001",
+      "attempt_id": "attempt-0002",
+      "errors": [],
+      "result_sha256": "019d5b80f08dd0f17d113f8a914960eaff8e46ab87cd8eeddb56e50d16d1349c",
+      "state": "eligible",
+      "task_thread_id": "019f4d38-6858-7861-a6d3-81521124ba33",
+      "terminal_seal_sha256": "770d27026c0fd9d1889be800dc92ff491f0ae91ad99f665bc09edb6199a140c3"
+    },
+    {
+      "assignment_id": "A005-000888-ADVERSARIAL-WIN-6690C379876B-0001",
+      "attempt_id": "attempt-0002",
+      "errors": [],
+      "result_sha256": "174896e3eb896352c81a5cf666831251591926f20bb088bb4abecb6bef7c4599",
+      "state": "eligible",
+      "task_thread_id": "019f4d38-6bcb-7693-84a6-842229d7f39b",
+      "terminal_seal_sha256": "0cae0dc780029cb92997d602e32aa34c2359784d0736aa751602cfbdcd6a9cbc"
+    },
+    {
+      "assignment_id": "A005-000997-EXACT-WIN-7414C6C901F8-0001",
+      "attempt_id": "attempt-0002",
+      "errors": [],
+      "result_sha256": "00900aee17a62256d8cfd31f87c6abbba64f95e1adf2396993dc1ec72ff6bbb2",
+      "state": "eligible",
+      "task_thread_id": "019f4d38-6df7-7bb0-ba33-f241bfbc8806",
+      "terminal_seal_sha256": "651fd312bde8768ea5a170bde25e28b7e74ff5c810c28155925432fe83271c09"
+    },
+    {
+      "assignment_id": "A005-000998-ADVERSARIAL-WIN-7414C6C901F8-0001",
+      "errors": [
+        "missing:terminal_seal.json"
+      ],
+      "state": "pending"
+    },
+    {
+      "assignment_id": "A005-001753-EXACT-WIN-AC612DBB4EFE-0005",
+      "attempt_id": "attempt-0002",
+      "errors": [],
+      "result_sha256": "648e6b64c550417c08518dde1d85de38e33dc06edf507288ad8f537891c99b2b",
+      "state": "eligible",
+      "task_thread_id": "019f4d38-7308-7411-a9db-366915f07789",
+      "terminal_seal_sha256": "8958a675393d6269cabd9585147dd9398d8056f887c4159c408c446ae51ce836"
+    },
+    {
+      "assignment_id": "A005-001754-ADVERSARIAL-WIN-AC612DBB4EFE-0005",
+      "errors": [
+        "missing:terminal_seal.json"
+      ],
+      "state": "pending"
+    }
+  ],
+  "status": "in_progress",
+  "wave_id": "pilot-wave-0002"
+}

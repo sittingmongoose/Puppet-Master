@@ -1,0 +1,197 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-196 >>>
+L00000001	{
+L00000002	  "$schema": "https://json-schema.org/draft/2020-12/schema",
+L00000003	  "$id": "pm.requirements_coverage.schema.v1",
+L00000004	  "title": "Puppet Master Requirements Coverage Report",
+L00000005	  "type": "object",
+L00000006	  "additionalProperties": false,
+L00000007	  "required": [
+L00000008	    "generated_at_utc",
+L00000009	    "requirements",
+L00000010	    "uncovered_requirements",
+L00000011	    "orphaned_node_requirement_refs",
+L00000012	    "uncovered_acceptance",
+L00000013	    "summary"
+L00000014	  ],
+L00000015	  "properties": {
+L00000016	    "$schema": {
+L00000017	      "type": "string",
+L00000018	      "description": "JSON Schema URI for this document."
+L00000019	    },
+L00000020	    "generated_at_utc": {
+L00000021	      "type": "string",
+L00000022	      "format": "date-time",
+L00000023	      "description": "ISO 8601 UTC timestamp indicating when this coverage report was generated."
+L00000024	    },
+L00000025	    "project_graph_id": {
+L00000026	      "type": "string",
+L00000027	      "minLength": 0,
+L00000028	      "description": "Optional stable identifier from plan_graph/index.json that this coverage report was generated against. Omit if not available."
+L00000029	    },
+L00000030	    "requirements": {
+L00000031	      "type": "array",
+L00000032	      "description": "One entry per requirement ID discovered in REQUIREMENTS.md (or referenced by plan nodes).",
+L00000033	      "items": {
+L00000034	        "type": "object",
+L00000035	        "additionalProperties": false,
+L00000036	        "required": [
+L00000037	          "req_id",
+L00000038	          "description",
+L00000039	          "node_ids",
+L00000040	          "acceptance_check_ids",
+L00000041	          "coverage_status"
+L00000042	        ],
+L00000043	        "properties": {
+L00000044	          "req_id": {
+L00000045	            "type": "string",
+L00000046	            "pattern": "^(FR|NFR|REQ)-[0-9]{3,}$",
+L00000047	            "description": "Unique requirement identifier matching FR-###, NFR-###, or REQ-### format."
+L00000048	          },
+L00000049	          "description": {
+L00000050	            "type": "string",
+L00000051	            "minLength": 0,
+L00000052	            "description": "Requirement text extracted from REQUIREMENTS.md. May be empty string if not yet extracted."
+L00000053	          },
+L00000054	          "node_ids": {
+L00000055	            "type": "array",
+L00000056	            "description": "List of plan graph node_ids (from project_plan_node.schema.json) whose requirement_refs include this req_id.",
+L00000057	            "uniqueItems": true,
+L00000058	            "items": {
+L00000059	              "type": "string",
+L00000060	              "minLength": 1,
+L00000061	              "description": "A plan node node_id that references this requirement."
+L00000062	            }
+L00000063	          },
+L00000064	          "acceptance_check_ids": {
+L00000065	            "type": "array",
+L00000066	            "description": "List of check_ids from acceptance_manifest.json that explicitly cover this requirement.",
+L00000067	            "uniqueItems": true,
+L00000068	            "items": {
+L00000069	              "type": "string",
+L00000070	              "minLength": 1,
+L00000071	              "description": "An acceptance_manifest check_id that maps to this requirement."
+L00000072	            }
+L00000073	          },
+L00000074	          "coverage_status": {
+L00000075	            "type": "string",
+L00000076	            "enum": ["covered", "partially_covered", "uncovered"],
+L00000077	            "description": "Coverage classification: 'covered' = ≥1 node_id AND ≥1 acceptance_check_id; 'partially_covered' = ≥1 node_id but 0 acceptance_check_ids; 'uncovered' = 0 node_ids."
+L00000078	          }
+L00000079	        }
+L00000080	      }
+L00000081	    },
+L00000082	    "uncovered_requirements": {
+L00000083	      "type": "array",
+L00000084	      "description": "Flat list of req_ids whose coverage_status is 'uncovered' (no plan nodes reference them).",
+L00000085	      "uniqueItems": true,
+L00000086	      "items": {
+L00000087	        "type": "string",
+L00000088	        "pattern": "^(FR|NFR|REQ)-[0-9]{3,}$",
+L00000089	        "description": "A requirement ID with no associated plan graph nodes."
+L00000090	      }
+L00000091	    },
+L00000092	    "orphaned_node_requirement_refs": {
+L00000093	      "type": "array",
+L00000094	      "description": "Plan node requirement_refs that cite a req_id not present in REQUIREMENTS.md.",
+L00000095	      "items": {
+L00000096	        "type": "object",
+L00000097	        "additionalProperties": false,
+L00000098	        "required": ["node_id", "req_id", "reason"],
+L00000099	        "properties": {
+L00000100	          "node_id": {
+L00000101	            "type": "string",
+L00000102	            "minLength": 1,
+L00000103	            "description": "The plan node that contains the orphaned reference."
+L00000104	          },
+L00000105	          "req_id": {
+L00000106	            "type": "string",
+L00000107	            "minLength": 1,
+L00000108	            "description": "The req_id cited by the plan node that cannot be found in REQUIREMENTS.md."
+L00000109	          },
+L00000110	          "reason": {
+L00000111	            "type": "string",
+L00000112	            "const": "req_id_not_in_requirements_md",
+L00000113	            "description": "Fixed sentinel value indicating the req_id is not defined in REQUIREMENTS.md."
+L00000114	          }
+L00000115	        }
+L00000116	      }
+L00000117	    },
+L00000118	    "uncovered_acceptance": {
+L00000119	      "type": "array",
+L00000120	      "description": "Requirements that have at least one plan node but no acceptance_check_ids mapping to them.",
+L00000121	      "items": {
+L00000122	        "type": "object",
+L00000123	        "additionalProperties": false,
+L00000124	        "required": ["req_id", "node_ids", "reason"],
+L00000125	        "properties": {
+L00000126	          "req_id": {
+L00000127	            "type": "string",
+L00000128	            "pattern": "^(FR|NFR|REQ)-[0-9]{3,}$",
+L00000129	            "description": "The requirement that has plan coverage but no acceptance check coverage."
+L00000130	          },
+L00000131	          "node_ids": {
+L00000132	            "type": "array",
+L00000133	            "description": "Plan node IDs that reference this requirement but no acceptance check covers it.",
+L00000134	            "minItems": 1,
+L00000135	            "uniqueItems": true,
+L00000136	            "items": {
+L00000137	              "type": "string",
+L00000138	              "minLength": 1,
+L00000139	              "description": "A plan node node_id referencing this requirement."
+L00000140	            }
+L00000141	          },
+L00000142	          "reason": {
+L00000143	            "type": "string",
+L00000144	            "const": "no_acceptance_check_maps_to_this_requirement",
+L00000145	            "description": "Fixed sentinel value indicating no acceptance_manifest entry covers this requirement."
+L00000146	          }
+L00000147	        }
+L00000148	      }
+L00000149	    },
+L00000150	    "summary": {
+L00000151	      "type": "object",
+L00000152	      "additionalProperties": false,
+L00000153	      "description": "Aggregate counts across all requirements for quick dashboard display.",
+L00000154	      "required": [
+L00000155	        "total_requirements",
+L00000156	        "covered",
+L00000157	        "partially_covered",
+L00000158	        "uncovered",
+L00000159	        "orphaned_refs",
+L00000160	        "uncovered_acceptance_count"
+L00000161	      ],
+L00000162	      "properties": {
+L00000163	        "total_requirements": {
+L00000164	          "type": "integer",
+L00000165	          "minimum": 0,
+L00000166	          "description": "Total number of unique requirement IDs in REQUIREMENTS.md."
+L00000167	        },
+L00000168	        "covered": {
+L00000169	          "type": "integer",
+L00000170	          "minimum": 0,
+L00000171	          "description": "Count of requirements with coverage_status = 'covered' (≥1 node_id AND ≥1 acceptance_check_id)."
+L00000172	        },
+L00000173	        "partially_covered": {
+L00000174	          "type": "integer",
+L00000175	          "minimum": 0,
+L00000176	          "description": "Count of requirements with coverage_status = 'partially_covered' (≥1 node_id, 0 acceptance_check_ids)."
+L00000177	        },
+L00000178	        "uncovered": {
+L00000179	          "type": "integer",
+L00000180	          "minimum": 0,
+L00000181	          "description": "Count of requirements with coverage_status = 'uncovered' (0 node_ids)."
+L00000182	        },
+L00000183	        "orphaned_refs": {
+L00000184	          "type": "integer",
+L00000185	          "minimum": 0,
+L00000186	          "description": "Total count of orphaned_node_requirement_refs entries (plan nodes referencing unknown req_ids)."
+L00000187	        },
+L00000188	        "uncovered_acceptance_count": {
+L00000189	          "type": "integer",
+L00000190	          "minimum": 0,
+L00000191	          "description": "Count of uncovered_acceptance entries (requirements with nodes but no acceptance checks)."
+L00000192	        }
+L00000193	      }
+L00000194	    }
+L00000195	  }
+L00000196	}

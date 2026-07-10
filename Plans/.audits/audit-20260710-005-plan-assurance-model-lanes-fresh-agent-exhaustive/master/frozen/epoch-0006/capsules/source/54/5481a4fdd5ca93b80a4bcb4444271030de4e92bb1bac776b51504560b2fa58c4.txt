@@ -1,0 +1,407 @@
+<<< CONTEXT_BEFORE canonical_document_lines=12301-12312 >>>
+L00012301	- conflict handling
+L00012302	- file changed on disk
+L00012303	- show a diff
+L00012304	negative_constraints: []
+L00012305	preserved_contractrefs:
+L00012306	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md'
+L00012307	compatibility_only_notes: []
+L00012308	stale_retired_dispositions: []
+L00012309	owner_hints:
+L00012310	- Plans/storage-plan.md
+L00012311	```
+L00012312	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=12313-12690 >>>
+L00012313	### SP-171 - Requested Effective Runtime Visibility Distinctions
+L00012314	
+L00012315	```yaml
+L00012316	plan_unit_id: SP-171
+L00012317	unit_type: requirement
+L00012318	status: accepted
+L00012319	owner_doc: Plans/storage-plan.md
+L00012320	canonical_text: The persistence model stores requested versus effective browser runtime/capabilities, LSP enablement/server set, freshness versus health versus write availability, and restore outcomes for historical Search, LSP, browser, and editor recovery surfaces.
+L00012321	gui_related: true
+L00012322	gui_classification_reason: This unit preserves user-visible requested/effective runtime disclosure and restoration honesty.
+L00012323	split_recommended: false
+L00012324	depends_on:
+L00012325	- PDS-003
+L00012326	- PDS-004
+L00012327	- PDS-005
+L00012328	- PNC-001
+L00012329	unblocks: []
+L00012330	acceptance_criteria:
+L00012331	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00012332	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00012333	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00012334	validation_surfaces:
+L00012335	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012336	- python3 scripts/pm-plan-index.py validate
+L00012337	risk_class: storage_plan_drift
+L00012338	reasoning_tier: standard
+L00012339	context_scope: storage_batch_178_chat_runtime_state
+L00012340	implementation_surfaces:
+L00012341	- Plans/storage-plan.md
+L00012342	node_compile_hint:
+L00012343	  mode: requested_effective_runtime_visibility_distinctions
+L00012344	  create_worknodes: false
+L00012345	source_lineage:
+L00012346	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0098
+L00012347	preserved_exact_tokens:
+L00012348	- requested vs effective browser runtime/capabilities
+L00012349	- requested vs effective LSP enablement
+L00012350	- attached-server set
+L00012351	- freshness vs health vs write availability
+L00012352	- remote-backed projections
+L00012353	- restore outcome
+L00012354	- historical Search
+L00012355	- LSP
+L00012356	- browser
+L00012357	- editor recovery surfaces
+L00012358	negative_constraints: []
+L00012359	preserved_contractrefs:
+L00012360	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md'
+L00012361	compatibility_only_notes: []
+L00012362	stale_retired_dispositions: []
+L00012363	owner_hints:
+L00012364	- Plans/storage-plan.md
+L00012365	```
+L00012366	
+L00012367	### SP-172 - Requested Effective Key Patterns And Freshness Triad Disposition
+L00012368	
+L00012369	```yaml
+L00012370	plan_unit_id: SP-172
+L00012371	unit_type: requirement
+L00012372	status: accepted
+L00012373	owner_doc: Plans/storage-plan.md
+L00012374	canonical_text: Requested and effective resource state persist under resource_type requested/effective key patterns; the local freshness triad current/refreshing/stale remains a source preservation note here and must not expand into full projection-health canon beyond the owning sections.
+L00012375	gui_related: false
+L00012376	gui_classification_reason: This unit preserves backend requested/effective state key patterns and limited freshness-triad disposition.
+L00012377	split_recommended: false
+L00012378	depends_on:
+L00012379	- PDS-003
+L00012380	- PDS-004
+L00012381	- PDS-005
+L00012382	- PNC-001
+L00012383	unblocks: []
+L00012384	acceptance_criteria:
+L00012385	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00012386	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00012387	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00012388	validation_surfaces:
+L00012389	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012390	- python3 scripts/pm-plan-index.py validate
+L00012391	risk_class: storage_plan_drift
+L00012392	reasoning_tier: standard
+L00012393	context_scope: storage_batch_178_chat_runtime_state
+L00012394	implementation_surfaces:
+L00012395	- Plans/storage-plan.md
+L00012396	node_compile_hint:
+L00012397	  mode: requested_effective_key_patterns_and_freshness_triad_disposition
+L00012398	  create_worknodes: false
+L00012399	source_lineage:
+L00012400	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0098
+L00012401	preserved_exact_tokens:
+L00012402	- '{resource_type}_requested.v1:{scope}:{id}'
+L00012403	- '{resource_type}_effective.v1:{scope}:{id}'
+L00012404	- requested state
+L00012405	- effective state
+L00012406	- projection freshness
+L00012407	- current
+L00012408	- refreshing
+L00012409	- stale
+L00012410	negative_constraints: []
+L00012411	preserved_contractrefs:
+L00012412	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md'
+L00012413	compatibility_only_notes: []
+L00012414	stale_retired_dispositions:
+L00012415	- projection freshness is persisted as current, refreshing, or stale in this span; do not expand it as full projection-health canon here.
+L00012416	owner_hints:
+L00012417	- Plans/storage-plan.md
+L00012418	```
+L00012419	
+L00012420	### SP-173 - Search And Source Control Projection Separation
+L00012421	
+L00012422	```yaml
+L00012423	plan_unit_id: SP-173
+L00012424	unit_type: requirement
+L00012425	status: accepted
+L00012426	owner_doc: Plans/storage-plan.md
+L00012427	canonical_text: 'Search state and Source Control state keep separate projection families: search_projection stores query intent/results/filter/scope, sc_projection stores repo projections, compare origins, review context, branch/diff/staging/commit draft, and editor markers consume rather than own those projections.'
+L00012428	gui_related: true
+L00012429	gui_classification_reason: This unit preserves visible Search and Source Control projection separation and editor marker consumption.
+L00012430	split_recommended: false
+L00012431	depends_on:
+L00012432	- PDS-003
+L00012433	- PDS-004
+L00012434	- PDS-005
+L00012435	- PNC-001
+L00012436	unblocks: []
+L00012437	acceptance_criteria:
+L00012438	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00012439	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00012440	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00012441	validation_surfaces:
+L00012442	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012443	- python3 scripts/pm-plan-index.py validate
+L00012444	risk_class: storage_plan_drift
+L00012445	reasoning_tier: standard
+L00012446	context_scope: storage_batch_178_chat_runtime_state
+L00012447	implementation_surfaces:
+L00012448	- Plans/storage-plan.md
+L00012449	node_compile_hint:
+L00012450	  mode: search_and_source_control_projection_separation
+L00012451	  create_worknodes: false
+L00012452	source_lineage:
+L00012453	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0099
+L00012454	preserved_exact_tokens:
+L00012455	- Search state
+L00012456	- text query intent
+L00012457	- query snapshots
+L00012458	- Source Control state
+L00012459	- repo projections
+L00012460	- compare origins
+L00012461	- review context
+L00012462	- diff-local search
+L00012463	- project Search state
+L00012464	- editor markers
+L00012465	- Source Control/LSP projections
+L00012466	- search_projection.v1:{project_id}
+L00012467	- sc_projection.v1:{project_id}
+L00012468	- last query
+L00012469	- results
+L00012470	- filter state
+L00012471	- scope
+L00012472	- branch
+L00012473	- diff state
+L00012474	- staged files
+L00012475	- commit message draft
+L00012476	negative_constraints:
+L00012477	- Diff-local search does not get persisted as project Search state.
+L00012478	- Editor markers consume Source Control/LSP projections but do not become a substitute owner.
+L00012479	preserved_contractrefs:
+L00012480	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md'
+L00012481	compatibility_only_notes: []
+L00012482	stale_retired_dispositions: []
+L00012483	owner_hints:
+L00012484	- Plans/storage-plan.md
+L00012485	```
+L00012486	
+L00012487	### SP-174 - Source Control Review And Conflict Projection State
+L00012488	
+L00012489	```yaml
+L00012490	plan_unit_id: SP-174
+L00012491	unit_type: requirement
+L00012492	status: accepted
+L00012493	owner_doc: Plans/storage-plan.md
+L00012494	canonical_text: Source Control review and conflict persistence stores compare targets, review filters, generated-file visibility, review comments/notes, stale target downgrade refs, conflict presentation settings, and command resolution events without persisting conflict content.
+L00012495	gui_related: true
+L00012496	gui_classification_reason: This unit preserves visible Source Control review/conflict filters, compare state, and command outcomes.
+L00012497	split_recommended: false
+L00012498	depends_on:
+L00012499	- PDS-003
+L00012500	- PDS-004
+L00012501	- PDS-005
+L00012502	- PNC-001
+L00012503	unblocks: []
+L00012504	acceptance_criteria:
+L00012505	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00012506	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00012507	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00012508	validation_surfaces:
+L00012509	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012510	- python3 scripts/pm-plan-index.py validate
+L00012511	risk_class: storage_plan_drift
+L00012512	reasoning_tier: standard
+L00012513	context_scope: storage_batch_178_chat_runtime_state
+L00012514	implementation_surfaces:
+L00012515	- Plans/storage-plan.md
+L00012516	node_compile_hint:
+L00012517	  mode: source_control_review_and_conflict_projection_state
+L00012518	  create_worknodes: false
+L00012519	source_lineage:
+L00012520	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0099
+L00012521	preserved_exact_tokens:
+L00012522	- sc_projection.v1:{project_id}
+L00012523	- last compare target
+L00012524	- left/right compare targets
+L00012525	- review filters
+L00012526	- ignore-whitespace
+L00012527	- file filter
+L00012528	- collapse-unchanged
+L00012529	- generated-file visibility
+L00012530	- review context
+L00012531	- local review-comments/notes state
+L00012532	- cmd.source_control.open_review
+L00012533	- cmd.source_control.review.open/swap/filter
+L00012534	- cmd.source_control.set_compare_target
+L00012535	- cmd.source_control.toggle_generated_filter
+L00012536	- stale compare targets
+L00012537	- stale-target references
+L00012538	- replacement baselines
+L00012539	- Conflict assistant persistence
+L00012540	- conflict presentation mode
+L00012541	- open external merge tool preference
+L00012542	- auto-open first conflicted file toggle
+L00012543	- cmd.source_control.open_conflict
+L00012544	- cmd.source_control.open_merge_editor
+L00012545	- cmd.source_control.resolve_conflict_side
+L00012546	- cmd.source_control.mark_conflict_resolved
+L00012547	negative_constraints:
+L00012548	- Source Control conflict commands record resolution events and blocked-state handoff outcomes, not conflict content.
+L00012549	preserved_contractrefs:
+L00012550	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md'
+L00012551	compatibility_only_notes: []
+L00012552	stale_retired_dispositions:
+L00012553	- Stale compare targets are retained only long enough to explain the downgrade and offer alternate pivots.
+L00012554	owner_hints:
+L00012555	- Plans/storage-plan.md
+L00012556	```
+L00012557	
+L00012558	### SP-175 - GitHub Actions Receipt To Code Correlation Projection
+L00012559	
+L00012560	```yaml
+L00012561	plan_unit_id: SP-175
+L00012562	unit_type: requirement
+L00012563	status: accepted
+L00012564	owner_doc: Plans/storage-plan.md
+L00012565	canonical_text: GitHub Actions to-code correlation persistence stores project state and receipt projections for run/job/step focus, log focus, diff targets, failing-file hints, heuristic toggles, confidence thresholds, related diffs/worktrees, and evidence-labeled log-to-file candidates.
+L00012566	gui_related: true
+L00012567	gui_classification_reason: This unit preserves visible GitHub Actions to-code focus, related-diff/worktree pivots, and uncertainty labels.
+L00012568	split_recommended: false
+L00012569	depends_on:
+L00012570	- PDS-003
+L00012571	- PDS-004
+L00012572	- PDS-005
+L00012573	- PNC-001
+L00012574	unblocks: []
+L00012575	acceptance_criteria:
+L00012576	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00012577	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00012578	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00012579	validation_surfaces:
+L00012580	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012581	- python3 scripts/pm-plan-index.py validate
+L00012582	risk_class: storage_plan_drift
+L00012583	reasoning_tier: standard
+L00012584	context_scope: storage_batch_178_chat_runtime_state
+L00012585	implementation_surfaces:
+L00012586	- Plans/storage-plan.md
+L00012587	node_compile_hint:
+L00012588	  mode: github_actions_receipt_to_code_correlation_projection
+L00012589	  create_worknodes: false
+L00012590	source_lineage:
+L00012591	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0099
+L00012592	preserved_exact_tokens:
+L00012593	- github_actions.project_state.{project_id}
+L00012594	- receipt projections
+L00012595	- last-opened run/job/step focus
+L00012596	- /job/step log focus
+L00012597	- preferred diff target
+L00012598	- auto-open failing file hints
+L00012599	- show heuristic matches toggle
+L00012600	- correlation confidence threshold
+L00012601	- branch-diff preference
+L00012602	- auto-open related worktree preference
+L00012603	- workflow run/job/step receipts
+L00012604	- commit range
+L00012605	- changed files
+L00012606	- branch refs
+L00012607	- worktree refs
+L00012608	- failing-step metadata
+L00012609	- candidate related diffs
+L00012610	- candidate related worktrees
+L00012611	- cmd.github.actions.open_run
+L00012612	- cmd.github.actions.open_job
+L00012613	- cmd.github.actions.open_step_logs
+L00012614	- cmd.github.actions.open_related_diff
+L00012615	- cmd.github.actions.open_related_worktree
+L00012616	- confidence and uncertainty labels
+L00012617	negative_constraints:
+L00012618	- Log-to-file correlation candidates remain evidence with confidence and uncertainty labels; they do not become canonical source truth unless a stronger owner record confirms the mapping.
+L00012619	preserved_contractrefs:
+L00012620	- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/UI_Command_Catalog.md'
+L00012621	compatibility_only_notes: []
+L00012622	stale_retired_dispositions: []
+L00012623	owner_hints:
+L00012624	- Plans/storage-plan.md
+L00012625	```
+L00012626	
+L00012627	### SP-176 - Host-Aware LSP Lifecycle Restart Budget And No Local Fallback
+L00012628	
+L00012629	```yaml
+L00012630	plan_unit_id: SP-176
+L00012631	unit_type: requirement
+L00012632	status: accepted
+L00012633	owner_doc: Plans/storage-plan.md
+L00012634	canonical_text: Host-aware LSP persistence stores lifecycle and restart budgets by host-aware session key, discloses current/refreshing/stale/degraded/unavailable state, forbids silent local fallback for remote-mode projects, and deterministically replays attached documents after transport or sync loss.
+L00012635	gui_related: false
+L00012636	gui_classification_reason: This unit preserves backend host-aware LSP lifecycle, restart, and recovery semantics.
+L00012637	split_recommended: false
+L00012638	depends_on:
+L00012639	- PDS-003
+L00012640	- PDS-004
+L00012641	- PDS-005
+L00012642	- PNC-001
+L00012643	unblocks: []
+L00012644	acceptance_criteria:
+L00012645	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 178.
+L00012646	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00012647	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00012648	validation_surfaces:
+L00012649	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00012650	- python3 scripts/pm-plan-index.py validate
+L00012651	risk_class: storage_plan_drift
+L00012652	reasoning_tier: standard
+L00012653	context_scope: storage_batch_178_chat_runtime_state
+L00012654	implementation_surfaces:
+L00012655	- Plans/storage-plan.md
+L00012656	node_compile_hint:
+L00012657	  mode: host_aware_lsp_lifecycle_restart_budget_and_no_local_fallback
+L00012658	  create_worknodes: false
+L00012659	source_lineage:
+L00012660	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0100
+L00012661	preserved_exact_tokens:
+L00012662	- LSP lifecycle
+L00012663	- restart budgets
+L00012664	- host-aware session key
+L00012665	- current
+L00012666	- refreshing
+L00012667	- stale
+L00012668	- degraded
+L00012669	- unavailable
+L00012670	- remote-mode projects
+L00012671	- silent local fallback path
+L00012672	- /transport
+L00012673	- /sync-loss
+L00012674	- host-aware LSP session
+L00012675	- deterministic URI order
+L00012676	- persisted restart budget
+L00012677	- backoff state
+L00012678	- Degraded
+L00012679	- user retry
+L00012680	negative_constraints:
+L00012681	- Remote-mode projects never restore into a silent local fallback path.
+L00012682	preserved_contractrefs:
+L00012683	- 'ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Wiring_Matrix.md'
+L00012684	compatibility_only_notes: []
+L00012685	stale_retired_dispositions:
+L00012686	- restart/reconnect preserves enough state to disclose whether a projection is current, refreshing, stale, degraded, or unavailable.
+L00012687	owner_hints:
+L00012688	- Plans/storage-plan.md
+L00012689	```
+L00012690	
+
+<<< CONTEXT_AFTER canonical_document_lines=12691-12702 >>>
+L00012691	### SP-177 - LSP Protocol Trace Inspection Buffer Boundary
+L00012692	
+L00012693	```yaml
+L00012694	plan_unit_id: SP-177
+L00012695	unit_type: requirement
+L00012696	status: accepted
+L00012697	owner_doc: Plans/storage-plan.md
+L00012698	canonical_text: Each host-aware LSP session keeps a bounded protocol/state trace buffer for operational/debug inspection only, exposing session key, root, current state, last error, restart/backoff, and protocol trace reveal action without becoming canonical app history.
+L00012699	gui_related: true
+L00012700	gui_classification_reason: This unit preserves user-visible LSP trace reveal action and debug inspection state.
+L00012701	split_recommended: false
+L00012702	depends_on:

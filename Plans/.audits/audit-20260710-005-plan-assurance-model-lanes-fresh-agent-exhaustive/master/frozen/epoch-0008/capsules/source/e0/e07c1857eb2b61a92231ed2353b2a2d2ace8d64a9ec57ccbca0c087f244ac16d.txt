@@ -1,0 +1,317 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1406-1417 >>>
+L00001406	  - "blocker_class"
+L00001407	  - "affected scope"
+L00001408	  - "last attempted recovery"
+L00001409	  - "next safe action"
+L00001410	negative_constraints:
+L00001411	  - Do not ask the user for ordinary invisible-goal ambiguity.
+L00001412	  - Do not hide an unresolved blocker behind a successful completion receipt.
+L00001413	owner_hints:
+L00001414	  - Plans/Goal_Runtime_System.md
+L00001415	  - Plans/assistant-chat-design.md
+L00001416	```
+L00001417	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1418-1705 >>>
+L00001418	### GRS-020 - Approval Boundaries For High-Risk Goal Actions
+L00001419	
+L00001420	```yaml
+L00001421	plan_unit_id: GRS-020
+L00001422	unit_type: constraint
+L00001423	status: accepted
+L00001424	owner_doc: Plans/Goal_Runtime_System.md
+L00001425	canonical_text: >-
+L00001426	  Goal Runtime requires explicit user approval for destructive actions, governance seal, broad writes outside declared scope, external paid/network side effects, production-affecting actions, data deletion/migration, dependency/license/security-policy changes, and credential/secrets touching. Invisible internal goals use predeclared authority and block when outside it.
+L00001427	gui_related: false
+L00001428	gui_classification_reason: Approval authority boundaries are runtime/permission policy, not GUI layout or presentation.
+L00001429	depends_on:
+L00001430	  - GRS-011
+L00001431	  - GRS-012
+L00001432	unblocks: []
+L00001433	acceptance_criteria:
+L00001434	  - High-risk goal actions request explicit user approval before execution.
+L00001435	  - Invisible/internal goals cannot exceed predeclared authority.
+L00001436	  - Approval boundaries are enforced even when a child goal or worker requests the action.
+L00001437	validation_surfaces:
+L00001438	  - python3 scripts/pm-plan-index.py validate
+L00001439	  - future permission/approval policy tests
+L00001440	risk_class: authority_boundary_violation
+L00001441	reasoning_tier: high
+L00001442	context_scope: goal_runtime_permissions
+L00001443	implementation_surfaces:
+L00001444	  - future Goal Mode service
+L00001445	  - Plans/Permissions_System.md
+L00001446	node_compile_hint:
+L00001447	  mode: goal_approval_boundary_policy
+L00001448	  create_worknodes: false
+L00001449	source_lineage:
+L00001450	  - pldg-20260616-001-goal-runtime-system:atom-0108
+L00001451	  - pldg-20260616-001-goal-runtime-system:dec-0022
+L00001452	preserved_exact_tokens:
+L00001453	  - "explicit user approval"
+L00001454	  - "destructive actions"
+L00001455	  - "governance seal"
+L00001456	  - "broad writes outside declared scope"
+L00001457	  - "external paid/network side effects"
+L00001458	  - "production-affecting actions"
+L00001459	  - "data deletion/migration"
+L00001460	  - "dependency/license/security-policy changes"
+L00001461	  - "credential/secrets touching"
+L00001462	  - "Invisible internal goals"
+L00001463	  - "predeclared authority"
+L00001464	  - "block when outside it"
+L00001465	negative_constraints:
+L00001466	  - Do not proceed with high-risk operations without explicit approval.
+L00001467	  - Do not let invisible internal goals exceed predeclared authority.
+L00001468	owner_hints:
+L00001469	  - Plans/Goal_Runtime_System.md
+L00001470	  - Plans/Permissions_System.md
+L00001471	```
+L00001472	
+L00001473	### GRS-021 - Goal Compile Acceptance And Governance Boundary
+L00001474	
+L00001475	```yaml
+L00001476	plan_unit_id: GRS-021
+L00001477	unit_type: validation_criterion
+L00001478	status: accepted
+L00001479	owner_doc: Plans/Goal_Runtime_System.md
+L00001480	canonical_text: >-
+L00001481	  Goal Runtime compilation from this ledger creates a new Goal Runtime owner doc plus consumer PlanUnits only. During ordinary ledger planning, plan drafting, and ledger compile, agents must not update Plans/.plan_index, Spec Lock, generated shards, evidence bundles, plan_graph, auto_decisions, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, Rust/Slint app scaffolds, legacy Iced app files, production build tasks, or final node queues. A separate explicit PlanUnit index phase may regenerate allowed Plans/.plan_index/** outputs after live Plans docs are stable. If Plans or Plans/.plan_index change, governance_status remains pending_seal until a separate explicit governance seal phase; that seal may refresh governance artifacts without changing product behavior or creating node/build artifacts.
+L00001482	gui_related: false
+L00001483	gui_classification_reason: Compile and governance boundaries are planning/governance behavior, not GUI implementation.
+L00001484	depends_on:
+L00001485	  - GRS-001
+L00001486	unblocks: []
+L00001487	acceptance_criteria:
+L00001488	  - Canonical Goal Runtime behavior is represented in live non-pipeline Plans docs.
+L00001489	  - Ledger planning, plan drafting, and ledger compile do not update Plans/.plan_index, generated indexes, shards, evidence, Spec Lock, graph, or decisions.
+L00001490	  - Allowed PlanUnit index outputs may be regenerated only in a separate explicit PlanUnit index phase after live Plans docs are stable; seal-phase governance artifacts are not touched until explicit seal.
+L00001491	  - Compile reports changed files, PlanUnits, atom dispositions, validators, and pre-seal pending seal status.
+L00001492	validation_surfaces:
+L00001493	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260616-001-goal-runtime-system
+L00001494	  - python3 scripts/pm-plan-index.py validate
+L00001495	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001496	  - python3 scripts/pm-plans-verify.py run-gates
+L00001497	  - python3 scripts/pm-shard-plans.py --check
+L00001498	  - python3 scripts/pm-plans-verify.py validate-auto-decisions
+L00001499	  - python3 scripts/pm-plans-verify.py verify-spec-lock
+L00001500	  - python3 scripts/pm-plans-verify.py validate-evidence
+L00001501	  - git diff --check
+L00001502	risk_class: governance_boundary
+L00001503	reasoning_tier: high
+L00001504	context_scope: ledger_to_plans_compile
+L00001505	implementation_surfaces:
+L00001506	  - Plans/Goal_Runtime_System.md
+L00001507	  - Plans/00-plans-index.md
+L00001508	  - Plans/.plan_index
+L00001509	node_compile_hint:
+L00001510	  mode: compile_governance_boundary
+L00001511	  create_worknodes: false
+L00001512	source_lineage:
+L00001513	  - pldg-20260616-001-goal-runtime-system:atom-0080
+L00001514	  - pldg-20260616-001-goal-runtime-system:atom-0082
+L00001515	  - pldg-20260616-001-goal-runtime-system:atom-0083
+L00001516	  - pldg-20260616-001-goal-runtime-system:atom-0084
+L00001517	  - pldg-20260616-001-goal-runtime-system:dec-0012
+L00001518	preserved_exact_tokens:
+L00001519	  - "Create new Goal Runtime System plan doc"
+L00001520	  - "Goal Runtime PlanUnit coverage areas"
+L00001521	  - "Do not create generated governance artifacts during ledger planning"
+L00001522	  - "Goal Mode compile acceptance"
+L00001523	  - "WorkNodes"
+L00001524	  - "NodeSeeds"
+L00001525	  - "Spec_Lock"
+L00001526	  - "shards"
+L00001527	  - "evidence bundles"
+L00001528	  - "plan_graph"
+L00001529	  - "auto_decisions"
+L00001530	negative_constraints:
+L00001531	  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks during this compile.
+L00001532	  - Do not update Spec_Lock, generated shards, evidence, plan_graph, or auto_decisions during the pre-seal compile phase.
+L00001533	owner_hints:
+L00001534	  - Plans/Goal_Runtime_System.md
+L00001535	```
+L00001536	
+L00001537	### GRS-022 - Goal Runtime Risk Register
+L00001538	
+L00001539	```yaml
+L00001540	plan_unit_id: GRS-022
+L00001541	unit_type: risk
+L00001542	status: accepted
+L00001543	owner_doc: Plans/Goal_Runtime_System.md
+L00001544	canonical_text: >-
+L00001545	  The primary Goal Runtime risks are false completion by weak agents, hidden work without user control, and invisible/internal flows interrupting the user for ordinary blockers. Runtime certification, visible control surfaces, exact blocker states, autonomous recovery, and explicit authority boundaries mitigate these risks.
+L00001546	gui_related: true
+L00001547	gui_classification_reason: This risk register includes hidden-work/user-control UX risk and visible control mitigation.
+L00001548	depends_on:
+L00001549	  - GRS-009
+L00001550	  - GRS-012
+L00001551	  - GRS-019
+L00001552	  - GRS-020
+L00001553	unblocks: []
+L00001554	acceptance_criteria:
+L00001555	  - False completion risk is mitigated through runtime-certified receipts and verifier/adjudicator policy.
+L00001556	  - Hidden work risk is mitigated through visible Assistant Chat controls and evidence disclosure.
+L00001557	  - Internal-flow interruption risk is mitigated through autonomous recovery and exact hard-stop boundaries.
+L00001558	validation_surfaces:
+L00001559	  - python3 scripts/pm-plan-index.py validate
+L00001560	  - manual Goal Runtime risk review
+L00001561	risk_class: goal_runtime_product_risk
+L00001562	reasoning_tier: high
+L00001563	context_scope: goal_runtime_system
+L00001564	implementation_surfaces:
+L00001565	  - Plans/Goal_Runtime_System.md
+L00001566	  - Plans/assistant-chat-design.md
+L00001567	node_compile_hint:
+L00001568	  mode: goal_runtime_risk_register
+L00001569	  create_worknodes: false
+L00001570	source_lineage:
+L00001571	  - pldg-20260616-001-goal-runtime-system:atom-0085
+L00001572	  - pldg-20260616-001-goal-runtime-system:atom-0086
+L00001573	  - pldg-20260616-001-goal-runtime-system:atom-0087
+L00001574	preserved_exact_tokens:
+L00001575	  - "Main product risk: false completion by weak agents"
+L00001576	  - "Main UX risk: hidden work without control"
+L00001577	  - "Main internal-flow risk: user interruption for ordinary blockers"
+L00001578	negative_constraints:
+L00001579	  - Do not make invisible work impossible to inspect or stop when it affects the user.
+L00001580	  - Do not route ordinary invisible-goal ambiguity to the user by default.
+L00001581	owner_hints:
+L00001582	  - Plans/Goal_Runtime_System.md
+L00001583	  - Plans/assistant-chat-design.md
+L00001584	```
+L00001585	
+L00001586	### GRS-023 - Reference Patterns Are Lineage, Not Canonical Owners
+L00001587	
+L00001588	```yaml
+L00001589	plan_unit_id: GRS-023
+L00001590	unit_type: compatibility_disposition
+L00001591	status: accepted
+L00001592	owner_doc: Plans/Goal_Runtime_System.md
+L00001593	canonical_text: >-
+L00001594	  Codex implementation patterns, attachment behavior references, and competitor evaluator/judge-loop lessons are source-lineage and implementation research inputs only. Exact lineage tokens retained include /goal now preserves oversized text, large pasted blocks, and image attachments, rust-v0.140.0, #27508, #27509, #27510, runtime.rs, tool.rs, spec.rs, steering.rs, continuation.md, thread_goal.rs, goal_menu.rs, goal_status.rs, thread_goal_processor.rs, Codex, Claude Code, Hermes, OpenClaw, OpenCode, PI, separate evaluator, judge loop, and core-owned session goals. These tokens may guide Goal Runtime implementation, but they remain lineage/research and do not override Puppet Master-owned runtime, evidence, model-role, or completion contracts.
+L00001595	gui_related: false
+L00001596	gui_classification_reason: Research/source-lineage disposition is not GUI implementation.
+L00001597	depends_on:
+L00001598	  - GRS-001
+L00001599	unblocks: []
+L00001600	acceptance_criteria:
+L00001601	  - External or comparative references remain cited as lineage or implementation research.
+L00001602	  - Puppet Master-owned PlanUnits remain the canonical behavior source.
+L00001603	  - External file names, PR numbers, and competitor/runtime names remain source-lineage tokens rather than Puppet Master behavior.
+L00001604	validation_surfaces:
+L00001605	  - python3 scripts/pm-plan-index.py validate
+L00001606	  - manual source-lineage review
+L00001607	risk_class: external_reference_overreach
+L00001608	reasoning_tier: standard
+L00001609	context_scope: goal_runtime_source_lineage
+L00001610	implementation_surfaces:
+L00001611	  - Plans/Goal_Runtime_System.md
+L00001612	node_compile_hint:
+L00001613	  mode: source_lineage_reference_disposition
+L00001614	  create_worknodes: false
+L00001615	source_lineage:
+L00001616	  - pldg-20260616-001-goal-runtime-system:atom-0040
+L00001617	  - pldg-20260616-001-goal-runtime-system:atom-0073
+L00001618	  - pldg-20260616-001-goal-runtime-system:atom-0074
+L00001619	preserved_exact_tokens:
+L00001620	  - "Codex v0.140 attachment behavior reference"
+L00001621	  - "Codex implementation patterns to inspect"
+L00001622	  - "Evaluator and judge-loop lessons"
+L00001623	  - "/goal now preserves oversized text, large pasted blocks, and image attachments"
+L00001624	  - "rust-v0.140.0"
+L00001625	  - "#27508"
+L00001626	  - "#27509"
+L00001627	  - "#27510"
+L00001628	  - "runtime.rs"
+L00001629	  - "tool.rs"
+L00001630	  - "spec.rs"
+L00001631	  - "steering.rs"
+L00001632	  - "continuation.md"
+L00001633	  - "thread_goal.rs"
+L00001634	  - "goal_menu.rs"
+L00001635	  - "goal_status.rs"
+L00001636	  - "thread_goal_processor.rs"
+L00001637	  - "Claude Code"
+L00001638	  - "Hermes"
+L00001639	  - "OpenClaw"
+L00001640	  - "OpenCode"
+L00001641	  - "PI"
+L00001642	  - "separate evaluator"
+L00001643	  - "judge loop"
+L00001644	  - "core-owned session goals"
+L00001645	negative_constraints:
+L00001646	  - Do not make competitor or external implementation references canonical Puppet Master behavior.
+L00001647	  - Do not rely only on marker-based completion or host-specific stop hooks.
+L00001648	owner_hints:
+L00001649	  - Plans/Goal_Runtime_System.md
+L00001650	```
+L00001651	
+L00001652	### GRS-024 - Legacy Chain Wizard Compatibility And Plan Graph Runtime Boundary
+L00001653	
+L00001654	```yaml
+L00001655	plan_unit_id: GRS-024
+L00001656	unit_type: compatibility_disposition
+L00001657	status: accepted
+L00001658	owner_doc: Plans/Goal_Runtime_System.md
+L00001659	canonical_text: >-
+L00001660	  Current Planning Wizard flow semantics are owned by Plans/Planning_Wizard.md, and legacy Chain Wizard compatibility remains source-lineage-only unless a separate compatibility owner explicitly implements an import/display bridge. Goal Runtime may define invisible ledger-to-Plans execution and a plan_graph_build template that consumes the accepted Plan_To_Node_Compilation compiler contract, but Goal Runtime plan/index/governance phases still must not create NodeSeeds, WorkNodes, executable queues, final node manifests, or production build tasks. Runtime PlanCompile may create runtime artifacts only through the Plan_To_Node_Compilation compiler, Executor intake, activation, and completion certification chain.
+L00001661	gui_related: false
+L00001662	gui_classification_reason: Legacy compatibility/source-lineage and runtime compiler boundary design is not a GUI implementation requirement.
+L00001663	depends_on:
+L00001664	  - GRS-003
+L00001665	  - GRS-018
+L00001666	  - PNC-007
+L00001667	unblocks: []
+L00001668	acceptance_criteria:
+L00001669	  - Current Planning Wizard flow semantics route to Plans/Planning_Wizard.md.
+L00001670	  - Legacy Chain Wizard compatibility is source-lineage-only and is not required by accepted runtime flow.
+L00001671	  - Plan graph build consumes the accepted Plan_To_Node_Compilation compiler contract without letting Goal Runtime bypass Executor intake.
+L00001672	  - No node artifacts are produced by Goal Runtime documentation, index, or governance phases.
+L00001673	validation_surfaces:
+L00001674	  - python3 scripts/pm-plan-index.py validate
+L00001675	  - Plans/.plan_index/node_readiness_report.json
+L00001676	risk_class: legacy_compiler_boundary
+L00001677	reasoning_tier: high
+L00001678	context_scope: chain_wizard_and_compiler
+L00001679	implementation_surfaces:
+L00001680	  - Plans/Goal_Runtime_System.md
+L00001681	  - Plans/Plan_To_Node_Compilation.md
+L00001682	  - Plans/chain-wizard-flexibility.md
+L00001683	node_compile_hint:
+L00001684	  mode: legacy_chain_wizard_source_lineage_runtime_boundary
+L00001685	  create_worknodes: false
+L00001686	source_lineage:
+L00001687	  - pldg-20260616-001-goal-runtime-system:atom-0015
+L00001688	  - pldg-20260616-001-goal-runtime-system:atom-0016
+L00001689	  - pldg-20260616-001-goal-runtime-system:atom-0065
+L00001690	  - pldg-20260616-001-goal-runtime-system:q-0001
+L00001691	  - pldg-20260616-001-goal-runtime-system:q-0002
+L00001692	preserved_exact_tokens:
+L00001693	  - "Plan graph goals come after compiler contract"
+L00001694	  - "Plan graph build"
+L00001695	  - "exact redesigned Chain Wizard flow"
+L00001696	  - "PlanUnit-to-NodeSeed-to-WorkNode compiler contract"
+L00001697	negative_constraints:
+L00001698	  - Do not make legacy Chain Wizard compatibility a dependency for accepted runtime flow.
+L00001699	  - Do not let Goal Runtime bypass Plan_To_Node_Compilation, Executor intake, activation, or completion certification.
+L00001700	owner_hints:
+L00001701	  - Plans/Goal_Runtime_System.md
+L00001702	  - Plans/Plan_To_Node_Compilation.md
+L00001703	  - Plans/chain-wizard-flexibility.md
+L00001704	```
+L00001705	
+
+<<< CONTEXT_AFTER canonical_document_lines=1706-1717 >>>
+L00001706	### GRS-025 - Goal UI Styling, Persistence Substrate, And Provider Defaults
+L00001707	
+L00001708	```yaml
+L00001709	plan_unit_id: GRS-025
+L00001710	unit_type: requirement
+L00001711	status: accepted
+L00001712	owner_doc: Plans/Goal_Runtime_System.md
+L00001713	canonical_text: >-
+L00001714	  Goal chip/status/task-drawer styling, persistence substrate, and provider-specific model-role tier mappings are required implementation-bound decisions for the Goal Runtime product surface. The Goal implementation plan must bind each choice to named owner docs, durable state records, provider-policy records, validation surfaces, and acceptance evidence before production readiness can be certified. The accepted runtime contract requires functional Assistant Chat controls, durable goal state, separate worker and verifier/adjudicator policy surfaces, and certification-tier verifier requirements; unresolved styling, persistence, or provider defaults must block certification rather than remain as unbound implementation gaps.
+L00001715	gui_related: true
+L00001716	gui_classification_reason: This requirement includes final visual styling, iconography, and layout for Goal UI surfaces.
+L00001717	depends_on:

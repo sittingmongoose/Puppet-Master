@@ -1,0 +1,403 @@
+<<< CONTEXT_BEFORE 764-775 >>>
+  - "`github_api`"
+  - "`execution_role`"
+  - "`/model/persona/auth/account`"
+  - "`ContractName:Plans/Multi-Account.md`"
+negative_constraints:
+  - "Do not collapse operational identity into provider-account identity."
+owner_hints:
+  - Plans/Decision_Policy.md
+  - Plans/Multi-Account.md
+  - Plans/Prompt_Pipeline.md
+```
+
+
+<<< AUTHORITATIVE_CORE 776-1149 >>>
+### DP-009 - HITL Recovery Defaults And Projection Trust Copy
+
+```yaml
+plan_unit_id: DP-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  HITL recovery defaults normalize allowed_action_ids, keep HITL off by default
+  except configured or critical failure cases, and require explicit projection
+  trust copy before mutating or decision-bearing actions.
+gui_related: true
+gui_classification_reason: This unit defines approval prompts, recovery UI, and user-visible trust copy.
+split_recommended: false
+depends_on: [DP-008]
+unblocks: []
+acceptance_criteria:
+  - allowed_action_ids is canonical over allowed_actions.
+  - Projection trust states use explicit warning, blocked, stale, and degraded copy before action.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: projection_trust_copy_drift
+reasoning_tier: high
+context_scope: hitl_recovery_projection_trust
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: hitl_recovery_projection_trust_copy
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0005
+preserved_exact_tokens:
+  - "`allowed_action_ids`"
+  - "`allowed_actions`"
+  - "`HITL is off by default`"
+  - "`Warning: provider pressure high`"
+  - "`Blocked: waiting on user approval`"
+  - "`View may be stale; refresh before acting`"
+  - "`Projection degraded; showing canonical history only`"
+negative_constraints:
+  - "Do not allow live mutating or decision-bearing actions to rely on unclear projection trust state."
+owner_hints:
+  - Plans/Decision_Policy.md
+  - Plans/human-in-the-loop.md
+```
+
+### DP-010 - Page-Owned Orchestrator Scope And Permission Identity
+
+```yaml
+plan_unit_id: DP-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Orchestrator semantic scope is page-owned: page and router state own project,
+  focused run, historical-run mode, and object focus, while widgets may only add
+  presentation or sub-filter choices.
+gui_related: true
+gui_classification_reason: This unit governs page, router, widget, and settings behavior.
+split_recommended: false
+depends_on: [DP-008]
+unblocks: []
+acceptance_criteria:
+  - Widgets do not secretly select a different run or redefine operational scope.
+  - Permission, model, and account policy keep runtime-overlay and execution context explicit.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: orchestrator_scope_drift
+reasoning_tier: high
+context_scope: orchestrator_page_scope
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/Permissions_System.md
+  - Plans/Models_System.md
+node_compile_hint:
+  mode: page_owned_orchestrator_scope
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0005
+preserved_exact_tokens:
+  - "`project_id`"
+  - "`focused_run_id`"
+  - "`historical-run mode`"
+  - "`account_pressure_episode`"
+  - "`account_switch_event`"
+negative_constraints:
+  - "Widgets must not secretly select a different /run or redefine operational scope."
+owner_hints:
+  - Plans/Decision_Policy.md
+  - Plans/Permissions_System.md
+  - Plans/Models_System.md
+```
+
+### DP-011 - Degraded-Trust Concern Escalation Bridge
+
+```yaml
+plan_unit_id: DP-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Conversational and tooling surfaces share degraded-trust and concern
+  escalation disclosure so blocked overlays, approval prompts, tool health, chat
+  threads, switch events, concerns, and trust-staleness explanations stay
+  consistent.
+gui_related: true
+gui_classification_reason: This unit defines user-visible overlays, prompts, disclosures, and chat explanations.
+split_recommended: false
+depends_on: [DP-009]
+unblocks: []
+acceptance_criteria:
+  - Blocked overlays, approval prompts, and tool-health disclosures expose runtime-trust and concern state consistently.
+  - Chat threads have a place for switch events, concern notices, and trust-staleness explanation.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: degraded_trust_surface_drift
+reasoning_tier: standard
+context_scope: trust_concern_bridge
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+node_compile_hint:
+  mode: degraded_trust_concern_bridge
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0005
+preserved_exact_tokens:
+  - "`/concern`"
+  - "`degraded-trust`"
+  - "`switch events`"
+  - "`trust-staleness explanation`"
+negative_constraints: []
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+### DP-012 - Subagent Runtime Consumer Boundary
+
+```yaml
+plan_unit_id: DP-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Orchestrator subagent integration consumes canonical execution and runtime
+  context and may keep local selection or decomposition helpers, but route,
+  identity, approval, blocked, and recovery semantics come from canonical
+  runtime and policy contracts.
+gui_related: false
+gui_classification_reason: This unit defines runtime ownership boundaries.
+split_recommended: false
+depends_on: [DP-008]
+unblocks: []
+acceptance_criteria:
+  - Subagent integration does not own a mixed runtime object.
+  - Route, identity, approval, blocked, and recovery semantics route to canonical runtime and policy contracts.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: subagent_runtime_ownership_drift
+reasoning_tier: standard
+context_scope: subagent_runtime_boundary
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: subagent_runtime_consumer_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0006
+preserved_exact_tokens:
+  - "`/runtime`"
+  - "`/decomposition`"
+  - "`ContractName:Plans/orchestrator-subagent-integration.md`"
+negative_constraints:
+  - "Do not make orchestrator-subagent-integration the owner of mixed runtime semantics."
+owner_hints:
+  - Plans/Decision_Policy.md
+  - Plans/orchestrator-subagent-integration.md
+```
+
+### DP-013 - Blocked Approval Identity And Compatibility Fields
+
+```yaml
+plan_unit_id: DP-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Approval identity must not be reconstructed from request_id, tier_id,
+  tier_type, ambient labels, one-off resume_url, wizard, or object values;
+  those fields are compatibility, lineage, or derived data under blocked-episode
+  identity.
+gui_related: false
+gui_classification_reason: This unit governs approval identity semantics.
+split_recommended: false
+depends_on: [DP-012]
+unblocks: []
+acceptance_criteria:
+  - request_id, tier_id, tier_type, and resume_url remain non-primary identity fields.
+  - Tier and group surfaces consume canonical contract pointers instead of rebuilding runtime identity.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: approval_identity_reconstruction
+reasoning_tier: high
+context_scope: blocked_approval_identity
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/human-in-the-loop.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: blocked_approval_identity_compatibility_fields
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0006
+preserved_exact_tokens:
+  - "`request_id + tier_id + tier_type`"
+  - "`one-off`"
+  - "`resume_url`"
+  - "`/wizard`"
+  - "`/object`"
+negative_constraints:
+  - "Approval identity must not be reconstructed from request_id + tier_id + tier_type or ambient tier labels."
+owner_hints:
+  - Plans/Decision_Policy.md
+  - Plans/human-in-the-loop.md
+```
+
+### DP-014 - Runtime Blocked Reasons And Concern Lifecycle
+
+```yaml
+plan_unit_id: DP-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Runtime blocked reasons stay runtime truth across Source Control and SCM
+  remediation surfaces, while concern closure requires rationale, resolution
+  kind, and explicit lineage for merge, split, and supersede actions.
+gui_related: true
+gui_classification_reason: This unit affects Source Control/SCM visible blocked states and concern actions.
+split_recommended: false
+depends_on: [DP-013]
+unblocks: []
+acceptance_criteria:
+  - dirty_worktree and worktree_conflict remain exact blocked reasons.
+  - Concern dismissal, resolution, merge, split, and supersede actions preserve lineage and semantics.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: blocked_reason_softening
+reasoning_tier: high
+context_scope: blocked_reasons_concern_lifecycle
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+node_compile_hint:
+  mode: blocked_reason_concern_lifecycle
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0006
+preserved_exact_tokens:
+  - "`dirty_worktree`"
+  - "`worktree_conflict`"
+  - "`dismissed`"
+  - "`resolved`"
+  - "`resolution_kind`"
+  - "`merge`"
+  - "`split`"
+  - "`supersede`"
+negative_constraints:
+  - "Do not soften dirty_worktree or worktree_conflict into generic SCM errors."
+owner_hints:
+  - Plans/Decision_Policy.md
+```
+
+### DP-015 - HITL Interview Approval Scope And Automation Defaults
+
+```yaml
+plan_unit_id: DP-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  HITL carries actor, lane/account, approval provenance, concurrency-safe queue,
+  and scope rules; interview projections preserve runtime identity parity, and
+  approval-heavy UX remains optional HITL policy rather than mandatory runtime
+  progress.
+gui_related: true
+gui_classification_reason: This unit defines approval UX defaults and interview shared orchestration behavior.
+split_recommended: false
+depends_on: [DP-013]
+unblocks: []
+acceptance_criteria:
+  - Tier-level settings may remain only as user-facing approval-trigger configuration.
+  - Automation-first execution remains the default.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: approval_heavy_default_drift
+reasoning_tier: standard
+context_scope: hitl_interview_approval_scope
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/human-in-the-loop.md
+  - Plans/interview-subagent-integration.md
+node_compile_hint:
+  mode: hitl_interview_approval_scope
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0006
+preserved_exact_tokens:
+  - "`/lane/account`"
+  - "`routing-key`"
+  - "`tier-level`"
+  - "`Automation-first execution`"
+  - "`model-neutral`"
+negative_constraints:
+  - "Do not make phase-complete approvals, manual review steps, modal confirmations, or direct-click approvals mandatory runtime checkpoints."
+owner_hints:
+  - Plans/Decision_Policy.md
+  - Plans/human-in-the-loop.md
+  - Plans/interview-subagent-integration.md
+```
+
+### DP-016 - Actor Account Traceability And Degraded Projection Gating
+
+```yaml
+plan_unit_id: DP-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Tool, approval, blocked, command, storage, and recovery records use one
+  node/actor/account-aware key family, and degraded-projection gating is
+  action-class aware with explicit user explanation.
+gui_related: true
+gui_classification_reason: This unit governs disabled/explained action states and trace-visible runtime records.
+split_recommended: false
+depends_on: [DP-014]
+unblocks: []
+acceptance_criteria:
+  - Tool events carry actor/account-aware identity instead of under-attributed analytics exhaust.
+  - Execution-changing, promotion, recovery, approval, and recovery-state actions require fresh-enough projection state.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: actor_account_trace_loss
+reasoning_tier: high
+context_scope: actor_account_projection_gating
+implementation_surfaces:
+  - Plans/Decision_Policy.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: actor_account_traceability_projection_gating
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0006
+preserved_exact_tokens:
+  - "`/actor/account-aware`"
+  - "`/identity`"
+  - "`allowed_action_ids[]`"
+  - "`/promotion/recovery/approval`"
+  - "`/navigation/export`"
+negative_constraints:
+  - "Do not hide degraded projection gating behind generic disabled controls."
+owner_hints:
+  - Plans/Decision_Policy.md
+  - Plans/Contracts_V0.md
+```
+
+
+<<< CONTEXT_AFTER 1150-1161 >>>
+### DP-017 - Worker Runtime Identity And Durable Projection Browsing
+
+```yaml
+plan_unit_id: DP-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Decision_Policy.md
+canonical_text: >-
+  Worker selection follows the provider/model/persona/account policy model, and
+  evidence or artifact browsing may survive stale projections only as durable
+  canonical records with explicit stale or degraded copy.
+gui_related: true

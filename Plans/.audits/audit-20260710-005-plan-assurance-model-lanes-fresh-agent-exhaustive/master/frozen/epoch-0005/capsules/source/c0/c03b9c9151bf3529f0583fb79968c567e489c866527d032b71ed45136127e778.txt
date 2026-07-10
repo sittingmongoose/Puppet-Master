@@ -1,0 +1,359 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4135-4146 >>>
+L00004135	compatibility_only_notes: []
+L00004136	stale_retired_dispositions: []
+L00004137	owner_boundary_notes:
+L00004138	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00004139	owner_hints:
+L00004140	- Plans/Models_System.md
+L00004141	preserved_contractrefs:
+L00004142	- 'ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA'
+L00004143	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00004144	  where safe.
+L00004145	```
+L00004146	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4147-4476 >>>
+L00004147	### MS-051 - Persona Variant Preselection
+L00004148	
+L00004149	```yaml
+L00004150	plan_unit_id: MS-051
+L00004151	unit_type: gui_contract
+L00004152	status: accepted
+L00004153	owner_doc: Plans/Models_System.md
+L00004154	canonical_text: When a Persona default_variant is set, that variant is pre-selected while the Persona is active, and the user
+L00004155	  can still cycle to another variant during the session.
+L00004156	gui_related: true
+L00004157	gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
+L00004158	  behavior.
+L00004159	split_recommended: false
+L00004160	depends_on:
+L00004161	- MS-050
+L00004162	unblocks: []
+L00004163	acceptance_criteria:
+L00004164	- Covered source spans remain losslessly available for exact-text audit.
+L00004165	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00004166	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00004167	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004168	validation_surfaces:
+L00004169	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004170	- python3 scripts/pm-plan-index.py validate
+L00004171	risk_class: persona_variant_preselection
+L00004172	reasoning_tier: standard
+L00004173	context_scope: models_system_standardization
+L00004174	implementation_surfaces:
+L00004175	- Plans/Models_System.md
+L00004176	node_compile_hint:
+L00004177	  mode: persona_variant_preselection
+L00004178	  create_worknodes: false
+L00004179	source_lineage:
+L00004180	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0037
+L00004181	preserved_exact_tokens:
+L00004182	- pre-selected
+L00004183	- Persona is active
+L00004184	- user can still cycle
+L00004185	- during the session
+L00004186	negative_constraints: []
+L00004187	compatibility_only_notes: []
+L00004188	stale_retired_dispositions: []
+L00004189	owner_boundary_notes:
+L00004190	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00004191	owner_hints:
+L00004192	- Plans/Models_System.md
+L00004193	preserved_contractrefs:
+L00004194	- 'ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA'
+L00004195	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00004196	  where safe.
+L00004197	```
+L00004198	
+L00004199	### MS-052 - Model Alias Resolution
+L00004200	
+L00004201	```yaml
+L00004202	plan_unit_id: MS-052
+L00004203	unit_type: runtime_contract
+L00004204	status: accepted
+L00004205	owner_doc: Plans/Models_System.md
+L00004206	canonical_text: Model aliases are optional friendly names that resolve to canonical provider_id/model_id identifiers for model
+L00004207	  override parsing; keys normalize lowercase and spaces/underscores/hyphens, and resolution order is alias, exact model id,
+L00004208	  exact display name.
+L00004209	gui_related: false
+L00004210	gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
+L00004211	  behavior rather than direct GUI presentation.
+L00004212	split_recommended: false
+L00004213	depends_on:
+L00004214	- MS-012
+L00004215	unblocks: []
+L00004216	acceptance_criteria:
+L00004217	- Covered source spans remain losslessly available for exact-text audit.
+L00004218	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00004219	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00004220	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004221	validation_surfaces:
+L00004222	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004223	- python3 scripts/pm-plan-index.py validate
+L00004224	risk_class: model_alias_resolution
+L00004225	reasoning_tier: standard
+L00004226	context_scope: models_system_standardization
+L00004227	implementation_surfaces:
+L00004228	- Plans/Models_System.md
+L00004229	node_compile_hint:
+L00004230	  mode: model_alias_resolution
+L00004231	  create_worknodes: false
+L00004232	source_lineage:
+L00004233	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0038
+L00004234	preserved_exact_tokens:
+L00004235	- provider_id/model_id
+L00004236	- model_override
+L00004237	- lowercasing
+L00004238	- spaces/underscores/hyphens
+L00004239	- alias → exact model id → exact display name
+L00004240	- model-unavailable
+L00004241	- aliases are lookup keys
+L00004242	- variants are named model presets
+L00004243	negative_constraints: []
+L00004244	compatibility_only_notes: []
+L00004245	stale_retired_dispositions: []
+L00004246	owner_boundary_notes:
+L00004247	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00004248	owner_hints:
+L00004249	- Plans/Models_System.md
+L00004250	preserved_contractrefs: []
+L00004251	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00004252	  where safe.
+L00004253	```
+L00004254	
+L00004255	### MS-053 - Canonical Media Alias Registry
+L00004256	
+L00004257	```yaml
+L00004258	plan_unit_id: MS-053
+L00004259	unit_type: alias_registry
+L00004260	status: accepted
+L00004261	owner_doc: Plans/Models_System.md
+L00004262	canonical_text: The default media alias registry includes canonical image, video, and TTS aliases that resolve per the alias
+L00004263	  normalization rules and may be extended or overridden by users.
+L00004264	gui_related: true
+L00004265	gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
+L00004266	  behavior.
+L00004267	split_recommended: false
+L00004268	depends_on:
+L00004269	- MS-052
+L00004270	unblocks: []
+L00004271	acceptance_criteria:
+L00004272	- Covered source spans remain losslessly available for exact-text audit.
+L00004273	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00004274	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00004275	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004276	validation_surfaces:
+L00004277	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004278	- python3 scripts/pm-plan-index.py validate
+L00004279	risk_class: canonical_media_alias_registry
+L00004280	reasoning_tier: standard
+L00004281	context_scope: models_system_standardization
+L00004282	implementation_surfaces:
+L00004283	- Plans/Models_System.md
+L00004284	node_compile_hint:
+L00004285	  mode: canonical_media_alias_registry
+L00004286	  create_worknodes: false
+L00004287	source_lineage:
+L00004288	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0039
+L00004289	- pldg-20260624-001-provider-updates:atom-0141
+L00004290	preserved_exact_tokens:
+L00004291	- MEDIA-ALIASES
+L00004292	- nano banana
+L00004293	- nano banana pro
+L00004294	- veo fast
+L00004295	- tts flash
+L00004296	- tts pro
+L00004297	- gemini-2.5-flash-image
+L00004298	- gemini-3-pro-image-preview
+L00004299	- veo-3.1-fast-generate-preview
+L00004300	- gemini-2.5-flash-preview-tts
+L00004301	- gemini-2.5-pro-preview-tts
+L00004302	- default alias registry
+L00004303	- users MAY add or override aliases
+L00004304	negative_constraints: []
+L00004305	compatibility_only_notes: []
+L00004306	stale_retired_dispositions: []
+L00004307	owner_boundary_notes:
+L00004308	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00004309	owner_hints:
+L00004310	- Plans/Models_System.md
+L00004311	preserved_contractrefs:
+L00004312	- 'ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE, PolicyRule:Decision_Policy.md§2'
+L00004313	- 'ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE, PolicyRule:Decision_Policy.md§2'
+L00004314	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00004315	  where safe.
+L00004316	```
+L00004317	
+L00004318	### MS-054 - GUI Model Label ID Separation
+L00004319	
+L00004320	```yaml
+L00004321	plan_unit_id: MS-054
+L00004322	unit_type: gui_contract
+L00004323	status: accepted
+L00004324	owner_doc: Plans/Models_System.md
+L00004325	canonical_text: Model selection surfaces distinguish human-friendly labels from canonical stored IDs and remain views over
+L00004326	  the model contract.
+L00004327	gui_related: true
+L00004328	gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
+L00004329	  behavior.
+L00004330	split_recommended: false
+L00004331	depends_on:
+L00004332	- MS-012
+L00004333	unblocks: []
+L00004334	acceptance_criteria:
+L00004335	- Covered source spans remain losslessly available for exact-text audit.
+L00004336	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00004337	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00004338	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004339	validation_surfaces:
+L00004340	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004341	- python3 scripts/pm-plan-index.py validate
+L00004342	risk_class: gui_model_label_id_separation
+L00004343	reasoning_tier: standard
+L00004344	context_scope: models_system_standardization
+L00004345	implementation_surfaces:
+L00004346	- Plans/Models_System.md
+L00004347	node_compile_hint:
+L00004348	  mode: gui_model_label_id_separation
+L00004349	  create_worknodes: false
+L00004350	source_lineage:
+L00004351	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0040
+L00004352	preserved_exact_tokens:
+L00004353	- GUI-MODELS
+L00004354	- human-friendly labels
+L00004355	- canonical stored ids
+L00004356	- Model selection surfaces
+L00004357	negative_constraints: []
+L00004358	compatibility_only_notes: []
+L00004359	stale_retired_dispositions: []
+L00004360	owner_boundary_notes:
+L00004361	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00004362	owner_hints:
+L00004363	- Plans/Models_System.md
+L00004364	preserved_contractrefs:
+L00004365	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md, ContractName:Plans/Prompt_Pipeline.md'
+L00004366	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00004367	  where safe.
+L00004368	```
+L00004369	
+L00004370	### MS-055 - Chat Model Picker Display Contract
+L00004371	
+L00004372	```yaml
+L00004373	plan_unit_id: MS-055
+L00004374	unit_type: gui_contract
+L00004375	status: accepted
+L00004376	owner_doc: Plans/Models_System.md
+L00004377	canonical_text: The Chat panel model picker displays cleaned primary labels, runtime-platform secondary labels when needed,
+L00004378	  capability indicators, and the exact raw canonical model ID in the detailed inspector.
+L00004379	gui_related: true
+L00004380	gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
+L00004381	  behavior.
+L00004382	split_recommended: false
+L00004383	depends_on:
+L00004384	- MS-054
+L00004385	unblocks: []
+L00004386	acceptance_criteria:
+L00004387	- Covered source spans remain losslessly available for exact-text audit.
+L00004388	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00004389	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00004390	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004391	validation_surfaces:
+L00004392	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004393	- python3 scripts/pm-plan-index.py validate
+L00004394	risk_class: chat_model_picker_display_contract
+L00004395	reasoning_tier: standard
+L00004396	context_scope: models_system_standardization
+L00004397	implementation_surfaces:
+L00004398	- Plans/Models_System.md
+L00004399	node_compile_hint:
+L00004400	  mode: chat_model_picker_display_contract
+L00004401	  create_worknodes: false
+L00004402	source_lineage:
+L00004403	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0041
+L00004404	preserved_exact_tokens:
+L00004405	- primary label
+L00004406	- cleaned model name
+L00004407	- secondary label
+L00004408	- runtime platform
+L00004409	- capability indicators
+L00004410	- exact raw canonical model id
+L00004411	negative_constraints: []
+L00004412	compatibility_only_notes: []
+L00004413	stale_retired_dispositions: []
+L00004414	owner_boundary_notes:
+L00004415	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00004416	owner_hints:
+L00004417	- Plans/Models_System.md
+L00004418	preserved_contractrefs:
+L00004419	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md'
+L00004420	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00004421	  where safe.
+L00004422	```
+L00004423	
+L00004424	### MS-056 - Picker Selection Requested Override
+L00004425	
+L00004426	```yaml
+L00004427	plan_unit_id: MS-056
+L00004428	unit_type: runtime_contract
+L00004429	status: accepted
+L00004430	owner_doc: Plans/Models_System.md
+L00004431	canonical_text: Selecting a model in the picker creates a priority-1 requested override and duplicate runtime surfaces for
+L00004432	  the same canonical ID are disambiguated with concrete runtime surface state.
+L00004433	gui_related: false
+L00004434	gui_classification_reason: The unit covers model/runtime policy, storage, provider compatibility, schema, or backend contract
+L00004435	  behavior rather than direct GUI presentation.
+L00004436	split_recommended: false
+L00004437	depends_on:
+L00004438	- MS-055
+L00004439	unblocks: []
+L00004440	acceptance_criteria:
+L00004441	- Covered source spans remain losslessly available for exact-text audit.
+L00004442	- The behavior is addressable through fine-grained Models_System PlanUnits instead of broad MS-001 source-preserving coverage.
+L00004443	- Exact tokens, examples, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+L00004444	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00004445	validation_surfaces:
+L00004446	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004447	- python3 scripts/pm-plan-index.py validate
+L00004448	risk_class: picker_selection_requested_override
+L00004449	reasoning_tier: standard
+L00004450	context_scope: models_system_standardization
+L00004451	implementation_surfaces:
+L00004452	- Plans/Models_System.md
+L00004453	node_compile_hint:
+L00004454	  mode: picker_selection_requested_override
+L00004455	  create_worknodes: false
+L00004456	source_lineage:
+L00004457	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0041
+L00004458	preserved_exact_tokens:
+L00004459	- selecting a model
+L00004460	- priority-1 requested override
+L00004461	- two runtime surfaces
+L00004462	- same canonical model id
+L00004463	- concrete runtime surface
+L00004464	negative_constraints: []
+L00004465	compatibility_only_notes: []
+L00004466	stale_retired_dispositions: []
+L00004467	owner_boundary_notes:
+L00004468	- Plans/Models_System.md remains the provider/model owner while referenced docs consume the preserved contract.
+L00004469	owner_hints:
+L00004470	- Plans/Models_System.md
+L00004471	preserved_contractrefs:
+L00004472	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md'
+L00004473	split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+L00004474	  where safe.
+L00004475	```
+L00004476	
+
+<<< CONTEXT_AFTER canonical_document_lines=4477-4488 >>>
+L00004477	### MS-057 - Settings Models Availability Display
+L00004478	
+L00004479	```yaml
+L00004480	plan_unit_id: MS-057
+L00004481	unit_type: gui_contract
+L00004482	status: accepted
+L00004483	owner_doc: Plans/Models_System.md
+L00004484	canonical_text: >-
+L00004485	  Settings > Models shows provider/runtime grouping, concrete runtime surface availability, current defaults and sources, supported image-generation model/route rows, and stale/silent/partial discovery state without inferring unsupported when discovery is silent or stale. Image-generation support in Settings is route-specific rather than Gemini-primary: OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax `image-01`, Antigravity OAuth/internal `gemini-3.1-flash-image`, Gemini Direct where verified, and disabled/capability-gated/unverified provider rows are displayed separately from broader text-only public `agy` capability rows.
+L00004486	gui_related: true
+L00004487	gui_classification_reason: The unit covers user-visible model selection, display, settings, inspector, or usage presentation
+L00004488	  behavior.

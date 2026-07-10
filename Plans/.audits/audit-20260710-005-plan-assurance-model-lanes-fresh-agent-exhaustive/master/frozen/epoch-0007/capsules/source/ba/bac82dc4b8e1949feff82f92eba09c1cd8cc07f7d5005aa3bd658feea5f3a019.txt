@@ -1,0 +1,415 @@
+<<< CONTEXT_BEFORE canonical_document_lines=14890-14901 >>>
+L00014890	source_lineage:
+L00014891	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0112
+L00014892	preserved_exact_tokens:
+L00014893	  - "do not auto-scroll"
+L00014894	  - "No hard limit for persistence"
+L00014895	  - "10k+ messages"
+L00014896	negative_constraints:
+L00014897	  - "When user has scrolled up during stream, do not auto-scroll."
+L00014898	owner_hints:
+L00014899	  - Plans/assistant-chat-design.md
+L00014900	```
+L00014901	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=14902-15287 >>>
+L00014902	### ACD-251 - Context Circle Owner Deferral
+L00014903	
+L00014904	```yaml
+L00014905	plan_unit_id: ACD-251
+L00014906	unit_type: constraint
+L00014907	status: accepted
+L00014908	owner_doc: Plans/assistant-chat-design.md
+L00014909	canonical_text: >-
+L00014910	  Context Circle addendum defers canonical thread-usage behavior to section 12
+L00014911	  and usage-feature, and compact-now remains valid only through canonical
+L00014912	  compaction commands.
+L00014913	gui_related: false
+L00014914	gui_classification_reason: Context Circle owner deferral is compatibility/source ownership behavior.
+L00014915	depends_on: []
+L00014916	unblocks: [ACD-252]
+L00014917	acceptance_criteria:
+L00014918	  - Thread-usage behavior is owned by section 12 and usage-feature.
+L00014919	  - Compact-now behavior remains valid only when backed by canonical compaction commands.
+L00014920	validation_surfaces:
+L00014921	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014922	  - python3 scripts/pm-plan-index.py validate
+L00014923	risk_class: context_usage
+L00014924	reasoning_tier: high
+L00014925	context_scope: compat
+L00014926	implementation_surfaces:
+L00014927	  - Plans/assistant-chat-design.md
+L00014928	  - Plans/usage-feature.md
+L00014929	node_compile_hint:
+L00014930	  mode: context_circle_owner_deferral
+L00014931	  create_worknodes: false
+L00014932	source_lineage:
+L00014933	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0113
+L00014934	preserved_exact_tokens:
+L00014935	  - "## 12. Context usage display"
+L00014936	  - "Plans/usage-feature.md"
+L00014937	  - "compact-now"
+L00014938	negative_constraints: []
+L00014939	owner_hints:
+L00014940	  - Plans/assistant-chat-design.md
+L00014941	  - Plans/usage-feature.md
+L00014942	```
+L00014943	
+L00014944	### ACD-252 - Context Popout Retired
+L00014945	
+L00014946	```yaml
+L00014947	plan_unit_id: ACD-252
+L00014948	unit_type: compatibility_disposition
+L00014949	status: accepted
+L00014950	owner_doc: Plans/assistant-chat-design.md
+L00014951	canonical_text: >-
+L00014952	  Detached usage pop-out model, old command IDs, and persistence keys are
+L00014953	  retired or superseded by the canonical thread-scoped Context Detail
+L00014954	  Pane/editor-tab model and its stable command IDs.
+L00014955	gui_related: true
+L00014956	gui_classification_reason: Detached usage pop-out and Context Detail Pane are user-visible context/usage UI models.
+L00014957	depends_on: [ACD-251]
+L00014958	unblocks: []
+L00014959	acceptance_criteria:
+L00014960	  - Detached usage pop-out is no longer canonical.
+L00014961	  - Old command IDs and persistence keys for the pop-out model are superseded.
+L00014962	  - Thread-scoped Context Detail Pane/editor-tab model remains canonical.
+L00014963	validation_surfaces:
+L00014964	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00014965	  - python3 scripts/pm-plan-index.py validate
+L00014966	risk_class: context_usage
+L00014967	reasoning_tier: high
+L00014968	context_scope: stale_retired
+L00014969	implementation_surfaces:
+L00014970	  - Plans/assistant-chat-design.md
+L00014971	  - Plans/usage-feature.md
+L00014972	  - Plans/UI_Command_Catalog.md
+L00014973	node_compile_hint:
+L00014974	  mode: context_popout_retired
+L00014975	  create_worknodes: false
+L00014976	source_lineage:
+L00014977	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0113
+L00014978	preserved_exact_tokens:
+L00014979	  - "detached usage pop-out is no longer canonical"
+L00014980	  - "superseded"
+L00014981	negative_constraints:
+L00014982	  - "Detached usage pop-out is no longer canonical."
+L00014983	owner_hints:
+L00014984	  - Plans/assistant-chat-design.md
+L00014985	  - Plans/usage-feature.md
+L00014986	```
+L00014987	
+L00014988	### ACD-253 - Validation Settings Context
+L00014989	
+L00014990	```yaml
+L00014991	plan_unit_id: ACD-253
+L00014992	unit_type: requirement
+L00014993	status: accepted
+L00014994	owner_doc: Plans/assistant-chat-design.md
+L00014995	canonical_text: One Auditor validation-loop setting exposes provider/model choices for the Auditor invariant loop after interview/wizard project-plan generation; per-pass settings are retired compatibility lineage.
+L00014996	gui_related: true
+L00014997	gui_classification_reason: Auditor validation provider/model settings are visible Settings UI.
+L00014998	depends_on: []
+L00014999	unblocks: [ACD-254]
+L00015000	acceptance_criteria:
+L00015001	  - Auditor invariant loop is exposed through one provider/model settings row.
+L00015002	  - Settings apply after interview/wizard project-plan generation cycles.
+L00015003	validation_surfaces:
+L00015004	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015005	  - python3 scripts/pm-plan-index.py validate
+L00015006	risk_class: validation_settings
+L00015007	reasoning_tier: high
+L00015008	context_scope: gui
+L00015009	implementation_surfaces:
+L00015010	  - Plans/assistant-chat-design.md
+L00015011	  - Plans/chain-wizard-flexibility.md
+L00015012	node_compile_hint:
+L00015013	  mode: validation_settings_context
+L00015014	  create_worknodes: false
+L00015015	source_lineage:
+L00015016	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0114
+L00015017	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0115
+L00015018	preserved_exact_tokens:
+L00015019	  - "Three-Pass Canonical Validation Workflow"
+L00015020	  - "provider + model selection"
+L00015021	negative_constraints:
+L00015022	  - "Do not expose per-pass provider/model settings."
+L00015023	owner_hints:
+L00015024	  - Plans/assistant-chat-design.md
+L00015025	  - Plans/chain-wizard-flexibility.md
+L00015026	```
+L00015027	
+L00015028	### ACD-254 - Validation Settings Location
+L00015029	
+L00015030	```yaml
+L00015031	plan_unit_id: ACD-254
+L00015032	unit_type: requirement
+L00015033	status: accepted
+L00015034	owner_doc: Plans/assistant-chat-design.md
+L00015035	canonical_text: Auditor validation loop provider/model selection lives in Settings -> Interview / Planning Wizard -> Auditor Validation, not the chat UI.
+L00015036	gui_related: true
+L00015037	gui_classification_reason: Settings navigation and non-chat placement are visible configuration UI.
+L00015038	depends_on: [ACD-253]
+L00015039	unblocks: [ACD-255, ACD-261]
+L00015040	acceptance_criteria:
+L00015041	  - Auditor Validation settings group exists under Interview / Planning Wizard settings.
+L00015042	  - Auditor loop selection is not placed in chat UI.
+L00015043	  - Validation settings remain co-located with interview/wizard settings.
+L00015044	validation_surfaces:
+L00015045	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015046	  - python3 scripts/pm-plan-index.py validate
+L00015047	risk_class: validation_settings
+L00015048	reasoning_tier: standard
+L00015049	context_scope: gui
+L00015050	implementation_surfaces:
+L00015051	  - Plans/assistant-chat-design.md
+L00015052	  - Plans/FinalGUISpec.md
+L00015053	  - Plans/chain-wizard-flexibility.md
+L00015054	node_compile_hint:
+L00015055	  mode: auditor_validation_settings_location
+L00015056	  create_worknodes: false
+L00015057	source_lineage:
+L00015058	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0116
+L00015059	preserved_exact_tokens:
+L00015060	  - "Auditor Validation"
+L00015061	  - "Settings -> Interview / Planning Wizard -> Auditor Validation"
+L00015062	negative_constraints:
+L00015063	  - "Fixed Pass 1 / Pass 2 / Pass 3 provider and model selections are retired."
+L00015064	owner_hints:
+L00015065	  - Plans/assistant-chat-design.md
+L00015066	  - Plans/FinalGUISpec.md
+L00015067	```
+L00015068	
+L00015069	### ACD-255 - Validation Pass Controls
+L00015070	
+L00015071	```yaml
+L00015072	plan_unit_id: ACD-255
+L00015073	unit_type: requirement
+L00015074	status: accepted
+L00015075	owner_doc: Plans/assistant-chat-design.md
+L00015076	canonical_text: >-
+L00015077	  Auditor Validation settings expose one row for the Auditor validation loop
+L00015078	  with label, default provider, default model, and Provider and Model dropdowns
+L00015079	  sourced from the Provider -> models registry and Models_System capability
+L00015080	  resolver.
+L00015081	gui_related: true
+L00015082	gui_classification_reason: Auditor validation loop row and provider/model dropdowns are visible Settings UI.
+L00015083	depends_on: [ACD-254]
+L00015084	unblocks: [ACD-256, ACD-262]
+L00015085	acceptance_criteria:
+L00015086	  - Auditor Validation has one settings row for the whole validation loop.
+L00015087	  - Provider dropdown lists enabled provider entries from the account-bound Provider -> models registry.
+L00015088	  - Model dropdown lists provider models and falls back through the Models_System `fallback_chain[]` contract.
+L00015089	  - Legacy `platform_specs::fallback_model_ids(platform)` is not an active fallback source.
+L00015090	validation_surfaces:
+L00015091	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015092	  - python3 scripts/pm-plan-index.py validate
+L00015093	risk_class: validation_settings
+L00015094	reasoning_tier: high
+L00015095	context_scope: gui
+L00015096	implementation_surfaces:
+L00015097	  - Plans/assistant-chat-design.md
+L00015098	  - Plans/Contracts_V0.md
+L00015099	  - Plans/FinalGUISpec.md
+L00015100	  - Plans/Models_System.md
+L00015101	node_compile_hint:
+L00015102	  mode: auditor_validation_controls
+L00015103	  create_worknodes: false
+L00015104	source_lineage:
+L00015105	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0117
+L00015106	preserved_exact_tokens:
+L00015107	  - "Document Creation"
+L00015108	  - "Docs + Canonical Alignment"
+L00015109	  - "Canonical Systems Only"
+L00015110	  - "Auditor Validation"
+L00015111	  - "Provider"
+L00015112	  - "Model"
+L00015113	  - "fallback_chain[]"
+L00015114	negative_constraints:
+L00015115	  - "Do not expose independent Pass 1 / Pass 2 / Pass 3 provider/model rows."
+L00015116	  - "Do not use legacy `platform_specs` or `platform_specs::fallback_model_ids(platform)` as the active Auditor Validation dropdown source."
+L00015117	compatibility_only_notes:
+L00015118	  - "`platform_specs::fallback_model_ids(platform)` is retired source-lineage only."
+L00015119	owner_hints:
+L00015120	  - Plans/assistant-chat-design.md
+L00015121	  - Plans/Contracts_V0.md
+L00015122	  - Plans/Models_System.md
+L00015123	```
+L00015124	
+L00015125	### ACD-256 - No Effort Control Widget Tag
+L00015126	
+L00015127	```yaml
+L00015128	plan_unit_id: ACD-256
+L00015129	unit_type: constraint
+L00015130	status: accepted
+L00015131	owner_doc: Plans/assistant-chat-design.md
+L00015132	canonical_text: Auditor Validation settings show no reasoning/effort control and tag reusable wrappers with `// DRY:WIDGET:auditor-validation-provider-model-selector`.
+L00015133	gui_related: true
+L00015134	gui_classification_reason: The omitted effort control and reusable widget tag govern visible Auditor Validation settings controls.
+L00015135	depends_on: [ACD-255]
+L00015136	unblocks: [ACD-263]
+L00015137	acceptance_criteria:
+L00015138	  - Reasoning/effort control is not shown in Auditor Validation settings.
+L00015139	  - Auditor validation provider/model selector wrappers use the DRY widget tag.
+L00015140	validation_surfaces:
+L00015141	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015142	  - python3 scripts/pm-plan-index.py validate
+L00015143	risk_class: validation_settings
+L00015144	reasoning_tier: high
+L00015145	context_scope: dry
+L00015146	implementation_surfaces:
+L00015147	  - Plans/assistant-chat-design.md
+L00015148	  - Plans/DRY_Rules.md
+L00015149	  - Plans/FinalGUISpec.md
+L00015150	node_compile_hint:
+L00015151	  mode: auditor_no_effort_control_widget_tag
+L00015152	  create_worknodes: false
+L00015153	source_lineage:
+L00015154	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0117
+L00015155	preserved_exact_tokens:
+L00015156	  - "// DRY:WIDGET:auditor-validation-provider-model-selector"
+L00015157	negative_constraints:
+L00015158	  - "No reasoning/effort control is shown in this settings group."
+L00015159	owner_hints:
+L00015160	  - Plans/assistant-chat-design.md
+L00015161	  - Plans/DRY_Rules.md
+L00015162	```
+L00015163	
+L00015164	### ACD-257 - Validation Default Chain
+L00015165	
+L00015166	```yaml
+L00015167	plan_unit_id: ACD-257
+L00015168	unit_type: requirement
+L00015169	status: accepted
+L00015170	owner_doc: Plans/assistant-chat-design.md
+L00015171	canonical_text: Default provider/model resolution uses the explicit Auditor loop stored value, then Auditor Model role default, then primary chat provider/model, then first available provider entry plus the first eligible Models_System fallback-chain entry.
+L00015172	gui_related: false
+L00015173	gui_classification_reason: Default resolution priority is settings/config behavior.
+L00015174	depends_on: [ACD-253]
+L00015175	unblocks: [ACD-258, ACD-259]
+L00015176	acceptance_criteria:
+L00015177	  - Stored model_roles.auditor provider/model values take priority.
+L00015178	  - Auditor Model role default is second priority.
+L00015179	  - Primary chat platform/model is third priority.
+L00015180	  - First available provider entry plus the first eligible fallback-chain entry is final fallback.
+L00015181	validation_surfaces:
+L00015182	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015183	  - python3 scripts/pm-plan-index.py validate
+L00015184	risk_class: validation_settings
+L00015185	reasoning_tier: high
+L00015186	context_scope: defaults
+L00015187	implementation_surfaces:
+L00015188	  - Plans/assistant-chat-design.md
+L00015189	  - Plans/Contracts_V0.md
+L00015190	node_compile_hint:
+L00015191	  mode: validation_default_chain
+L00015192	  create_worknodes: false
+L00015193	source_lineage:
+L00015194	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0118
+L00015195	preserved_exact_tokens:
+L00015196	  - "model_roles.auditor.provider"
+L00015197	  - "model_roles.auditor.model"
+L00015198	  - "fallback_chain"
+L00015199	negative_constraints:
+L00015200	  - "Do not resolve Auditor defaults through legacy `platform_specs::fallback_model_ids(platform)`."
+L00015201	compatibility_only_notes:
+L00015202	  - "`platform_specs::fallback_model_ids(platform)` is retired source-lineage only."
+L00015203	owner_hints:
+L00015204	  - Plans/assistant-chat-design.md
+L00015205	  - Plans/Contracts_V0.md
+L00015206	  - Plans/Models_System.md
+L00015207	```
+L00015208	
+L00015209	### ACD-258 - Validation Default Invariants
+L00015210	
+L00015211	```yaml
+L00015212	plan_unit_id: ACD-258
+L00015213	unit_type: constraint
+L00015214	status: accepted
+L00015215	owner_doc: Plans/assistant-chat-design.md
+L00015216	canonical_text: Validation defaults are deterministic for the same app settings and resolved defaults are written on first explicit save for reproducible reads.
+L00015217	gui_related: false
+L00015218	gui_classification_reason: Default invariants are deterministic settings behavior.
+L00015219	depends_on: [ACD-257]
+L00015220	unblocks: [ACD-259]
+L00015221	acceptance_criteria:
+L00015222	  - Same app settings state resolves the same provider/model.
+L00015223	  - First explicit save writes resolved default to app settings.
+L00015224	  - Resolution avoids randomness and environment-dependent branching.
+L00015225	validation_surfaces:
+L00015226	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015227	  - python3 scripts/pm-plan-index.py validate
+L00015228	risk_class: validation_settings
+L00015229	reasoning_tier: high
+L00015230	context_scope: defaults
+L00015231	implementation_surfaces:
+L00015232	  - Plans/assistant-chat-design.md
+L00015233	  - Plans/Contracts_V0.md
+L00015234	node_compile_hint:
+L00015235	  mode: validation_default_invariants
+L00015236	  create_worknodes: false
+L00015237	source_lineage:
+L00015238	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0118
+L00015239	preserved_exact_tokens:
+L00015240	  - "no randomness, no environment-dependent branching"
+L00015241	negative_constraints:
+L00015242	  - "Default resolution uses no randomness and no environment-dependent branching."
+L00015243	owner_hints:
+L00015244	  - Plans/assistant-chat-design.md
+L00015245	  - Plans/Contracts_V0.md
+L00015246	```
+L00015247	
+L00015248	### ACD-259 - Validation App Settings Only
+L00015249	
+L00015250	```yaml
+L00015251	plan_unit_id: ACD-259
+L00015252	unit_type: constraint
+L00015253	status: accepted
+L00015254	owner_doc: Plans/assistant-chat-design.md
+L00015255	canonical_text: Auditor validation loop selections are app settings only, not project artifacts, not emitted to seglog as project data, and not included in project exports.
+L00015256	gui_related: false
+L00015257	gui_classification_reason: Auditor validation settings storage scope is persistence/config behavior.
+L00015258	depends_on: [ACD-257]
+L00015259	unblocks: [ACD-260]
+L00015260	acceptance_criteria:
+L00015261	  - Auditor validation loop selections are stored in app settings only.
+L00015262	  - Auditor validation loop selections are not project artifacts.
+L00015263	  - Auditor validation loop selections are not emitted to seglog as project data or included in exports.
+L00015264	validation_surfaces:
+L00015265	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015266	  - python3 scripts/pm-plan-index.py validate
+L00015267	risk_class: validation_storage
+L00015268	reasoning_tier: high
+L00015269	context_scope: settings
+L00015270	implementation_surfaces:
+L00015271	  - Plans/assistant-chat-design.md
+L00015272	  - Plans/Project_Output_Artifacts.md
+L00015273	node_compile_hint:
+L00015274	  mode: app_settings_only
+L00015275	  create_worknodes: false
+L00015276	source_lineage:
+L00015277	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0119
+L00015278	preserved_exact_tokens:
+L00015279	  - "not stored in project artifacts"
+L00015280	  - "not emitted to seglog as project data"
+L00015281	  - "not included in project exports"
+L00015282	negative_constraints:
+L00015283	  - "Auditor validation loop selections are app settings only."
+L00015284	owner_hints:
+L00015285	  - Plans/assistant-chat-design.md
+L00015286	```
+L00015287	
+
+<<< CONTEXT_AFTER canonical_document_lines=15288-15299 >>>
+L00015288	### ACD-260 - Validation Storage Keys
+L00015289	
+L00015290	```yaml
+L00015291	plan_unit_id: ACD-260
+L00015292	unit_type: requirement
+L00015293	status: accepted
+L00015294	owner_doc: Plans/assistant-chat-design.md
+L00015295	canonical_text: >-
+L00015296	  Each Auditor cycle report records the resolved Auditor validation loop
+L00015297	  provider/model in `auditor_cycle_report` payload fields and uses normative
+L00015298	  `model_roles.auditor.{provider,model}` storage keys. Legacy
+L00015299	  `validation_pass_report` mirrors may copy those values only with

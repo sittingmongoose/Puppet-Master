@@ -1,0 +1,408 @@
+<<< CONTEXT_BEFORE canonical_document_lines=10788-10799 >>>
+L00010788	- "jump-to-latest"
+L00010789	- "/auto-follow"
+L00010790	- "stable message identity"
+L00010791	negative_constraints:
+L00010792	- "Streaming updates mutate existing rows rather than replacing the full list."
+L00010793	compatibility_only_notes: []
+L00010794	stale_retired_dispositions: []
+L00010795	owner_boundary_notes: []
+L00010796	owner_hints:
+L00010797	- "Plans/FinalGUISpec.md"
+L00010798	```
+L00010799	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=10800-11178 >>>
+L00010800	### F3-135 - Composer Controls And Plan Panel Affordances
+L00010801	
+L00010802	```yaml
+L00010803	plan_unit_id: F3-135
+L00010804	unit_type: requirement
+L00010805	status: accepted
+L00010806	owner_doc: Plans/FinalGUISpec.md
+L00010807	canonical_text: >-
+L00010808	  Composer and plan-mode affordances include multiline input, Steer/Queue mode selection,
+L00010809	  attachment, send/stop, disabled-state explanation, active-plan panel status, active-step focus,
+L00010810	  and jumps to linked documents or evidence.
+L00010811	gui_related: true
+L00010812	gui_classification_reason: This unit defines visible composer controls and planning panel UI.
+L00010813	split_recommended: true
+L00010814	depends_on: []
+L00010815	unblocks: []
+L00010816	acceptance_criteria:
+L00010817	- "The covered source span remains losslessly available for exact-text audit."
+L00010818	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00010819	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00010820	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00010821	validation_surfaces:
+L00010822	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00010823	- "python3 scripts/pm-plan-index.py validate"
+L00010824	risk_class: finalgui_drift
+L00010825	reasoning_tier: standard
+L00010826	context_scope: finalgui_standardization
+L00010827	implementation_surfaces:
+L00010828	- "Plans/FinalGUISpec.md"
+L00010829	node_compile_hint:
+L00010830	  mode: composer_controls_and_plan_panel_affordances
+L00010831	  create_worknodes: false
+L00010832	source_lineage:
+L00010833	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0086"
+L00010834	preserved_exact_tokens:
+L00010835	- "Steer"
+L00010836	- "Queue"
+L00010837	- "attachment button"
+L00010838	- "send / stop button"
+L00010839	- "disabled-state explanation"
+L00010840	- "active step"
+L00010841	- "linked documents"
+L00010842	- "provider settings layout stays OUT"
+L00010843	negative_constraints:
+L00010844	- "Provider settings layout stays OUT of this GUI widget contract while provider-runtime docs remain provisional."
+L00010845	compatibility_only_notes: []
+L00010846	stale_retired_dispositions: []
+L00010847	owner_boundary_notes: []
+L00010848	owner_hints:
+L00010849	- "Plans/FinalGUISpec.md"
+L00010850	```
+L00010851	
+L00010852	### F3-136 - Composer Queue Rules And State Vocabulary
+L00010853	
+L00010854	```yaml
+L00010855	plan_unit_id: F3-136
+L00010856	unit_type: requirement
+L00010857	status: accepted
+L00010858	owner_doc: Plans/FinalGUISpec.md
+L00010859	canonical_text: >-
+L00010860	  Composer queued messages are transient FIFO entries capped at two, not restart-persisted, and
+L00010861	  use the pending, in_progress, completed, blocked, and skipped state vocabulary while superseded
+L00010862	  remains plan-level only.
+L00010863	gui_related: true
+L00010864	gui_classification_reason: This unit defines visible composer queue behavior and queue state labels.
+L00010865	split_recommended: true
+L00010866	depends_on: []
+L00010867	unblocks: []
+L00010868	acceptance_criteria:
+L00010869	- "The covered source span remains losslessly available for exact-text audit."
+L00010870	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00010871	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00010872	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00010873	validation_surfaces:
+L00010874	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00010875	- "python3 scripts/pm-plan-index.py validate"
+L00010876	risk_class: finalgui_drift
+L00010877	reasoning_tier: standard
+L00010878	context_scope: finalgui_standardization
+L00010879	implementation_surfaces:
+L00010880	- "Plans/FinalGUISpec.md"
+L00010881	node_compile_hint:
+L00010882	  mode: composer_queue_rules_and_state_vocabulary
+L00010883	  create_worknodes: false
+L00010884	source_lineage:
+L00010885	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0086"
+L00010886	preserved_exact_tokens:
+L00010887	- "FIFO"
+L00010888	- "max 2 entries"
+L00010889	- "pending | in_progress | completed | blocked | skipped"
+L00010890	- "superseded"
+L00010891	- "not restart-persisted"
+L00010892	negative_constraints:
+L00010893	- "`superseded` is plan-level only and not a queue item state."
+L00010894	compatibility_only_notes: []
+L00010895	stale_retired_dispositions: []
+L00010896	owner_boundary_notes: []
+L00010897	owner_hints:
+L00010898	- "Plans/FinalGUISpec.md"
+L00010899	```
+L00010900	
+L00010901	### F3-137 - Slash Palette Approvals And Shell Surface Ownership
+L00010902	
+L00010903	```yaml
+L00010904	plan_unit_id: F3-137
+L00010905	unit_type: constraint
+L00010906	status: accepted
+L00010907	owner_doc: Plans/FinalGUISpec.md
+L00010908	canonical_text: >-
+L00010909	  Chat slash commands, mode switches, and tool approvals route through the canonical chat/runtime
+L00010910	  command catalog, preserve thread context and composer focus, mirror the final reserved slash set,
+L00010911	  and must not duplicate shell surface ownership for Problems, Output, Ports, or Debug Console.
+L00010912	gui_related: true
+L00010913	gui_classification_reason: This unit constrains visible slash palette, approval dialog, and chat-local controls.
+L00010914	split_recommended: true
+L00010915	depends_on: []
+L00010916	unblocks: []
+L00010917	acceptance_criteria:
+L00010918	- "The covered source span remains losslessly available for exact-text audit."
+L00010919	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00010920	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00010921	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00010922	validation_surfaces:
+L00010923	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00010924	- "python3 scripts/pm-plan-index.py validate"
+L00010925	risk_class: owner_route_drift
+L00010926	reasoning_tier: standard
+L00010927	context_scope: finalgui_standardization
+L00010928	implementation_surfaces:
+L00010929	- "Plans/FinalGUISpec.md"
+L00010930	node_compile_hint:
+L00010931	  mode: slash_palette_approvals_and_shell_surface_ownership
+L00010932	  create_worknodes: false
+L00010933	source_lineage:
+L00010934	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0086"
+L00010935	preserved_exact_tokens:
+L00010936	- "/web"
+L00010937	- "/web search"
+L00010938	- "/web fetch"
+L00010939	- "/web extract"
+L00010940	- "/web research"
+L00010941	- "/web crawl"
+L00010942	- "/web map"
+L00010943	- "/skill"
+L00010944	- "/cancel"
+L00010945	- "Problems"
+L00010946	- "Output"
+L00010947	- "Ports"
+L00010948	- "Debug Console"
+L00010949	negative_constraints:
+L00010950	- "Chat-local controls must not duplicate ownership of Problems, Output, Ports, or Debug Console."
+L00010951	compatibility_only_notes:
+L00010952	- "The `/cancel` alias is deprecated."
+L00010953	stale_retired_dispositions:
+L00010954	- "Deprecated `/cancel` remains an alias only."
+L00010955	owner_boundary_notes:
+L00010956	- "Slash commands, mode switches, and tool approvals remain routed through the canonical chat/runtime command catalog."
+L00010957	owner_hints:
+L00010958	- "Plans/FinalGUISpec.md"
+L00010959	```
+L00010960	
+L00010961	### F3-138 - File Manager Tree Owner Boundary And Reveal Disclosure
+L00010962	
+L00010963	```yaml
+L00010964	plan_unit_id: F3-138
+L00010965	unit_type: requirement
+L00010966	status: accepted
+L00010967	owner_doc: Plans/FinalGUISpec.md
+L00010968	canonical_text: >-
+L00010969	  File Manager is the persistent project-tree side panel for tree navigation and file discovery,
+L00010970	  defers detailed tree behavior to FileManager, and exposes local filtering, reveal disclosure,
+L00010971	  read-only Git row badges, detached-panel alignment, and owner-boundary routing.
+L00010972	gui_related: true
+L00010973	gui_classification_reason: This unit defines visible File Manager side panel, tree, row, and reveal behavior.
+L00010974	split_recommended: true
+L00010975	depends_on: []
+L00010976	unblocks: []
+L00010977	acceptance_criteria:
+L00010978	- "The covered source span remains losslessly available for exact-text audit."
+L00010979	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00010980	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00010981	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00010982	validation_surfaces:
+L00010983	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00010984	- "python3 scripts/pm-plan-index.py validate"
+L00010985	risk_class: finalgui_drift
+L00010986	reasoning_tier: standard
+L00010987	context_scope: finalgui_standardization
+L00010988	implementation_surfaces:
+L00010989	- "Plans/FinalGUISpec.md"
+L00010990	node_compile_hint:
+L00010991	  mode: file_manager_tree_owner_boundary_and_reveal_disclosure
+L00010992	  create_worknodes: false
+L00010993	source_lineage:
+L00010994	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0087"
+L00010995	preserved_exact_tokens:
+L00010996	- "File Manager Panel"
+L00010997	- "Plans/FileManager.md"
+L00010998	- "/hidden"
+L00010999	- "/ignored"
+L00011000	- "active repo/worktree chip"
+L00011001	- "Git status badges"
+L00011002	- "Source Control"
+L00011003	negative_constraints:
+L00011004	- "File Manager owns tree navigation and file discovery, but not semantic search, diff-local search, or runtime artifact browsing."
+L00011005	compatibility_only_notes: []
+L00011006	stale_retired_dispositions: []
+L00011007	owner_boundary_notes:
+L00011008	- "Detailed tree, drag-and-drop, and open-file behavior defers to `Plans/FileManager.md`."
+L00011009	owner_hints:
+L00011010	- "Plans/FinalGUISpec.md"
+L00011011	```
+L00011012	
+L00011013	### F3-139 - File Manager Actions Clipboard Model And Operational Coverage
+L00011014	
+L00011015	```yaml
+L00011016	plan_unit_id: F3-139
+L00011017	unit_type: requirement
+L00011018	status: accepted
+L00011019	owner_doc: Plans/FinalGUISpec.md
+L00011020	canonical_text: >-
+L00011021	  File Manager tree actions, command family, workspace-node clipboard model, terminal reveal
+L00011022	  routing, operational GUI coverage seams, and explicit cross-section ownership references are
+L00011023	  MVP implementation-ready PM-native obligations.
+L00011024	gui_related: true
+L00011025	gui_classification_reason: This unit defines visible File Manager actions, context menus, clipboard, and routing behavior.
+L00011026	split_recommended: true
+L00011027	depends_on: []
+L00011028	unblocks: []
+L00011029	acceptance_criteria:
+L00011030	- "The covered source span remains losslessly available for exact-text audit."
+L00011031	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00011032	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00011033	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00011034	validation_surfaces:
+L00011035	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00011036	- "python3 scripts/pm-plan-index.py validate"
+L00011037	risk_class: finalgui_drift
+L00011038	reasoning_tier: standard
+L00011039	context_scope: finalgui_standardization
+L00011040	implementation_surfaces:
+L00011041	- "Plans/FinalGUISpec.md"
+L00011042	node_compile_hint:
+L00011043	  mode: file_manager_actions_clipboard_model_and_operational_coverage
+L00011044	  create_worknodes: false
+L00011045	source_lineage:
+L00011046	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0087"
+L00011047	preserved_exact_tokens:
+L00011048	- "cmd.file"
+L00011049	- "cmd.file.*"
+L00011050	- "/Cut/Paste"
+L00011051	- "/drop"
+L00011052	- "/file-manager/remote/review/runtime"
+L00011053	- "/open/save/export"
+L00011054	- "cmd.terminal.open"
+L00011055	- "cmd.terminal.show"
+L00011056	- "§7.16"
+L00011057	- "§7.18"
+L00011058	- "§7.20"
+L00011059	negative_constraints:
+L00011060	- "Missing actions must not remain anonymous context-menu-only behavior."
+L00011061	- "These are PM-native obligations, not competitor-derived features to add blindly."
+L00011062	compatibility_only_notes: []
+L00011063	stale_retired_dispositions: []
+L00011064	owner_boundary_notes:
+L00011065	- "Remote-LSP GUI projections consume host-aware owner contracts such as `(server_id, root)` only as display context until the LSP owner provides the stronger root identity."
+L00011066	owner_hints:
+L00011067	- "Plans/FinalGUISpec.md"
+L00011068	```
+L00011069	
+L00011070	### F3-140 - File Editor Core Capabilities And Preview Pipeline
+L00011071	
+L00011072	```yaml
+L00011073	plan_unit_id: F3-140
+L00011074	unit_type: requirement
+L00011075	status: accepted
+L00011076	owner_doc: Plans/FinalGUISpec.md
+L00011077	canonical_text: >-
+L00011078	  File Editor is the canonical in-app editing surface with shared buffers, tabbed editor groups,
+L00011079	  diff view, preview modes, LSP-backed affordances, remote editing disclosure, recoverable buffers,
+L00011080	  and a shared preview pipeline for document and media types.
+L00011081	gui_related: true
+L00011082	gui_classification_reason: This unit defines visible File Editor editing, preview, LSP, and tab behavior.
+L00011083	split_recommended: true
+L00011084	depends_on: []
+L00011085	unblocks: []
+L00011086	acceptance_criteria:
+L00011087	- "The covered source span remains losslessly available for exact-text audit."
+L00011088	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00011089	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00011090	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00011091	validation_surfaces:
+L00011092	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00011093	- "python3 scripts/pm-plan-index.py validate"
+L00011094	risk_class: finalgui_drift
+L00011095	reasoning_tier: standard
+L00011096	context_scope: finalgui_standardization
+L00011097	implementation_surfaces:
+L00011098	- "Plans/FinalGUISpec.md"
+L00011099	node_compile_hint:
+L00011100	  mode: file_editor_core_capabilities_and_preview_pipeline
+L00011101	  create_worknodes: false
+L00011102	source_lineage:
+L00011103	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0088"
+L00011104	preserved_exact_tokens:
+L00011105	- "shared buffers"
+L00011106	- "diff view"
+L00011107	- "markdown"
+L00011108	- "mermaid"
+L00011109	- "HTML"
+L00011110	- "SVG"
+L00011111	- "image"
+L00011112	- "runtime_unavailable"
+L00011113	- "/indexing-state"
+L00011114	- "/offline/stale-state"
+L00011115	negative_constraints: []
+L00011116	compatibility_only_notes: []
+L00011117	stale_retired_dispositions: []
+L00011118	owner_boundary_notes: []
+L00011119	owner_hints:
+L00011120	- "Plans/FinalGUISpec.md"
+L00011121	```
+L00011122	
+L00011123	### F3-141 - Embedded Editor And External Reference Negative Constraints
+L00011124	
+L00011125	```yaml
+L00011126	plan_unit_id: F3-141
+L00011127	unit_type: constraint
+L00011128	status: accepted
+L00011129	owner_doc: Plans/FinalGUISpec.md
+L00011130	canonical_text: >-
+L00011131	  Embedded editor, browser-coupled, local-operational, native-style, implementation-reference, and
+L00011132	  external product lessons are constrained inputs only and must not replace PM-owned workspace
+L00011133	  identity, Slint/Rust architecture, durability, accessibility, or explicit service boundaries.
+L00011134	gui_related: true
+L00011135	gui_classification_reason: This unit constrains visible workbench/editor GUI architecture and compatibility references.
+L00011136	split_recommended: true
+L00011137	depends_on: []
+L00011138	unblocks: []
+L00011139	acceptance_criteria:
+L00011140	- "The covered source span remains losslessly available for exact-text audit."
+L00011141	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00011142	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00011143	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00011144	validation_surfaces:
+L00011145	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00011146	- "python3 scripts/pm-plan-index.py validate"
+L00011147	risk_class: compatibility_drift
+L00011148	reasoning_tier: standard
+L00011149	context_scope: finalgui_standardization
+L00011150	implementation_surfaces:
+L00011151	- "Plans/FinalGUISpec.md"
+L00011152	node_compile_hint:
+L00011153	  mode: embedded_editor_and_external_reference_negative_constraints
+L00011154	  create_worknodes: false
+L00011155	source_lineage:
+L00011156	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0088"
+L00011157	preserved_exact_tokens:
+L00011158	- "/browser-coupled"
+L00011159	- "/shared-doc"
+L00011160	- "/render-root"
+L00011161	- "bench-05"
+L00011162	- "bench-28"
+L00011163	- "no feature cargo cult"
+L00011164	- "no hanging agents"
+L00011165	- "no hidden indexing/startup cost"
+L00011166	- "no clutter and split/focus complexity"
+L00011167	negative_constraints:
+L00011168	- "DOM/browser-coupled assumptions must not shape the canonical Slint/Rust architecture."
+L00011169	- "External workspace/editor product lessons are constraints, not feature cargo cult."
+L00011170	compatibility_only_notes:
+L00011171	- "local-operational and `/native-style` references are implementation inputs for explicit PM workbench seams."
+L00011172	stale_retired_dispositions:
+L00011173	- "Collaborative `/online` editors are references only, not authorities for PM state or durability."
+L00011174	owner_boundary_notes: []
+L00011175	owner_hints:
+L00011176	- "Plans/FinalGUISpec.md"
+L00011177	```
+L00011178	
+
+<<< CONTEXT_AFTER canonical_document_lines=11179-11190 >>>
+L00011179	### F3-142 - Native Workbench Service Boundary And Rust Slint Ownership
+L00011180	
+L00011181	```yaml
+L00011182	plan_unit_id: F3-142
+L00011183	unit_type: requirement
+L00011184	status: accepted
+L00011185	owner_doc: Plans/FinalGUISpec.md
+L00011186	canonical_text: >-
+L00011187	  PM remains a native workbench with explicit file-tree, diff, LSP, terminal, workspace-service,
+L00011188	  buffer, indexing, remote/session, persistence, AI orchestration, and durable task/artifact
+L00011189	  boundaries, with Slint owning pane/layout/status chrome rather than text render logic.
+L00011190	gui_related: true

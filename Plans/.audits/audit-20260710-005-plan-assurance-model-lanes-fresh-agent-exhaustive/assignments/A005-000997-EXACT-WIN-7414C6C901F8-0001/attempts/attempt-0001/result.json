@@ -1,0 +1,43 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000997-EXACT-WIN-7414C6C901F8-0001",
+  "attempt_id": "attempt-0001",
+  "task_thread_id": "019f4d32-d44d-7692-b2ce-1977c50c8cc5",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "blocked",
+  "source_binding": {
+    "document_path": "unavailable: dispatch receipt omitted the required capsule path",
+    "source_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "core_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "core_range": [
+      1,
+      1
+    ]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "dispatch_integrity"
+    ]
+  },
+  "items": [],
+  "dimension_assessments": [
+    {
+      "dimension": "dispatch_integrity",
+      "status": "unknown",
+      "summary": "The dispatch receipt contains the assignment, attempt, task thread, model, effort, capsule hash, and output directory, but it does not name an authorized capsule path. The capsule, source excerpt, role instructions, core range, and required review dimensions therefore could not be read without violating the read boundary.",
+      "evidence_item_ids": []
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

@@ -1,0 +1,407 @@
+<<< CONTEXT_BEFORE 2280-2291 >>>
+  - "billing/entity bucket"
+  - "Gemini CLI"
+  - "ChatGPT"
+  - "API key"
+  - "GitHub Copilot"
+  - "OpenCode"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 2292-2669 >>>
+### PP-034 - Requested Effective Account Identity Fields
+
+```yaml
+plan_unit_id: PP-034
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  The shared requested/effective account identity contract adds requested_account_id beside requested_account_policy, models requested_account_binding independently, carries effective account identity through runtime envelopes, and treats provider_account_id only as subordinate provider-native echo metadata.
+gui_related: false
+gui_classification_reason: This unit defines account identity schema fields rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-033"
+unblocks: []
+acceptance_criteria:
+  - "Requested Effective Account Identity Fields remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0028"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0029"
+preserved_exact_tokens:
+  - "requested_account_id"
+  - "requested_account_policy"
+  - "requested_account_binding"
+  - "provider_account_id"
+  - "none | preferred | required"
+  - "effective_account_id"
+  - "effective_provider_identity"
+  - "execution_role"
+  - "operational_identity"
+  - "account_switch_reason"
+negative_constraints:
+  - "Account choice and policy posture never collapse into one field."
+preserved_contractrefs: []
+stale_retired_dispositions:
+  - "provider_account_id is retired from canonical account-identity naming and remains provider-native echo metadata only."
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-035 - Account Identity Display Grammar
+
+```yaml
+plan_unit_id: PP-035
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Requested/effective account identity must be visible with Requested account, Requested binding, Effective account, Switch reason, named display grammar, and worker-policy display under the same requested/effective grammar.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible runtime identity display grammar and switch reason labels.
+split_recommended: false
+depends_on:
+  - "PP-034"
+unblocks: []
+acceptance_criteria:
+  - "Account Identity Display Grammar remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0029"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0030"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
+preserved_exact_tokens:
+  - "Requested account"
+  - "Requested binding"
+  - "Effective account"
+  - "Switch reason"
+  - "Inherited from"
+  - "Overridden by"
+  - "Requested"
+  - "Effective"
+  - "Reason"
+  - "Support"
+  - "worker-policy display"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/FinalGUISpec.md"
+  - "Plans/Orchestrator_Page.md"
+```
+
+### PP-036 - Three Axis Resolver Emit Shape
+
+```yaml
+plan_unit_id: PP-036
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  The resolver uses the source/request/execution settings model, preserves requested versus effective display values, accepts Persona, override, default, policy, capability, account/profile, worktree, and execution-role inputs, follows the deterministic resolver matrix, and emits requested/effective platform, model, variant, auth mode, account, role, reason, matrix entry, and worker policy fields.
+gui_related: false
+gui_classification_reason: This unit defines resolver mechanics and emitted fields rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-034"
+unblocks: []
+acceptance_criteria:
+  - "Three Axis Resolver Emit Shape remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0028"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0030"
+preserved_exact_tokens:
+  - "source"
+  - "request"
+  - "execution"
+  - "working_directory"
+  - "FileSafe"
+  - "tool cwd"
+  - "explicit override -> scoped owner policy -> Persona preference -> surface/stage default -> project/global default -> last-used state when permitted -> provider default"
+  - "requested_platform"
+  - "effective_platform"
+  - "requested_model"
+  - "effective_model"
+  - "requested_variant"
+  - "effective_variant"
+  - "requested_auth_mode"
+  - "effective_auth_mode"
+  - "resolver_matrix_entry"
+  - "worker_policy_display"
+negative_constraints:
+  - "Prompt assembly may reference execution_unit_context but does not inject a separate worktree prompt block merely to make tools operate in the worktree."
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/FileSafe.md"
+```
+
+### PP-037 - P5 Export Resolver Gap Packet
+
+```yaml
+plan_unit_id: PP-037
+unit_type: source_lineage_reconciliation
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  The P5 recovery packet is source-lineage-only reconciliation evidence for export taxonomy, export-family distinctions, source-layer enumeration, resolver actor inputs, deterministic resolver matrix, ranked candidates, winner, and fallback reason. It is not implementation canon for the current runtime/compiler packet and does not block accepted runtime flow.
+gui_related: true
+gui_classification_reason: The preserved recovery packet includes GUI/export/Orchestrator display grammar and cross-surface inspection gaps.
+split_recommended: false
+depends_on:
+  - "PP-035"
+  - "PP-036"
+unblocks: []
+acceptance_criteria:
+  - "P5 Export Resolver Gap Packet remains addressable as source-lineage-only reconciliation evidence."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: source_lineage_reconciliation_not_current_blocker
+reasoning_tier: standard
+context_scope: prompt_pipeline_reconciliation_gap
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: source_lineage_only_not_required_for_current_runtime
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
+preserved_exact_tokens:
+  - "record"
+  - "bundle"
+  - "view"
+  - "Evidence / Artifact / Ledger / Run / Record"
+  - "source-layer enumeration"
+  - "actor-type"
+  - "operation-type"
+  - "ranked candidates"
+  - "winner"
+  - "fallback reason"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/Orchestrator_Page.md"
+  - "Plans/storage-plan.md"
+  - "Plans/FinalGUISpec.md"
+  - "Plans/Models_System.md"
+  - "Plans/Multi-Account.md"
+  - "Plans/Contracts_V0.md"
+```
+
+### PP-038 - Provider Attempt Snapshot Requirements
+
+```yaml
+plan_unit_id: PP-038
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Every provider-executed attempt requires requested/effective persona, model, and permission snapshot refs plus requested/effective auth/account policy and account-switch fields so runtime evidence can show requested and effective truth.
+gui_related: false
+gui_classification_reason: This unit defines provider attempt evidence fields rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-034"
+  - "PP-036"
+unblocks: []
+acceptance_criteria:
+  - "Provider Attempt Snapshot Requirements remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
+preserved_exact_tokens:
+  - "requested/effective persona snapshot ref"
+  - "requested/effective model snapshot ref"
+  - "requested/effective permission snapshot ref"
+  - "requested_auth_mode?"
+  - "effective_auth_mode?"
+  - "requested_account_policy?"
+  - "effective_account_id?"
+  - "account_switch_reason?"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-039 - Tier Compatibility And Runtime Identity Owner Boundary
+
+```yaml
+plan_unit_id: PP-039
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Prompt Pipeline owns prompt-assembly handoff shape, storage owns durable records, and tier context survives only as compatibility or derived grouping; stale tier-era scope vocabulary must not become a third runtime identity authority.
+gui_related: false
+gui_classification_reason: This unit constrains runtime identity ownership and compatibility vocabulary rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-007"
+  - "PP-034"
+unblocks: []
+acceptance_criteria:
+  - "Tier Compatibility And Runtime Identity Owner Boundary remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
+preserved_exact_tokens:
+  - "tier context"
+  - "compatibility/derived grouping"
+  - "requested/effective runtime identity duplication"
+  - "tier"
+  - "tier/mode/platform/model"
+  - "stage/tier/task context"
+  - "persona_override_owner_id"
+  - "tier_id"
+  - "node-identity"
+  - "package-identity"
+  - "lane-identity"
+negative_constraints:
+  - "Tier context must not become a third runtime identity authority."
+preserved_contractrefs: []
+compatibility_only_notes:
+  - "Surviving tier labels are compatibility or derived grouping metadata only."
+stale_retired_dispositions:
+  - "Run envelope, active mode/tier, plan_or_tier_default, Orchestrator tier override, stage/tier/task/repo context, and persona_override_owner_id tier_id are stale scope vocabulary."
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/storage-plan.md"
+  - "Plans/Widget_System.md"
+```
+
+### PP-040 - Prompt Widget UI Non Ownership Constraint
+
+```yaml
+plan_unit_id: PP-040
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Prompt Pipeline must not teach tier-tree or active-tier widget semantics as reusable widget SSOT; prompt examples and context bundles may reference derived tier labels only as compatibility display metadata while Widget_System owns widget taxonomy.
+gui_related: true
+gui_classification_reason: This unit constrains GUI/widget ownership and display metadata.
+split_recommended: false
+depends_on:
+  - "PP-039"
+unblocks: []
+acceptance_criteria:
+  - "Prompt Widget UI Non Ownership Constraint remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: widget_owner_boundary_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: blocked_cross_owner_reconciliation
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0031"
+preserved_exact_tokens:
+  - "tier-tree"
+  - "active-tier"
+  - "widget SSOT"
+  - "compatibility display metadata"
+  - "Widget_System"
+  - "Orchestrator_Page.md"
+  - "FinalGUISpec.md"
+negative_constraints:
+  - "Prompt Pipeline MUST NOT teach tier-tree or active-tier widget semantics as reusable widget SSOT."
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/Widget_System.md"
+  - "Plans/FinalGUISpec.md"
+  - "Plans/Orchestrator_Page.md"
+```
+
+
+<<< CONTEXT_AFTER 2670-2681 >>>
+### PP-041 - Cross Doc Operational Gap Register
+
+```yaml
+plan_unit_id: PP-041
+unit_type: source_lineage_reconciliation
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Prompt Pipeline preserves operational gap evidence for newtools, Contracts, Permissions, Personas, storage/usage, tool/runtime surfaces, Source Control, and rewrite-era operational nouns as source-lineage-only reconciliation input. Ownership for current runtime/compiler implementation readiness is resolved by the active owner docs named by each current PlanUnit, not by this historical register.
+gui_related: false
+gui_classification_reason: This unit preserves cross-document owner gaps rather than visual presentation.
+split_recommended: false

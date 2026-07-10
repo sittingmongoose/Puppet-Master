@@ -1,0 +1,394 @@
+<<< CONTEXT_BEFORE 3976-3987 >>>
+- "run_all(hint: Option<&Path>)"
+- "config.branching.granularity"
+- "BranchStrategy"
+negative_constraints:
+- "Do not treat Dashboard project hint or Doctor hint wiring as optional once config wiring is implemented."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 3988-4352 >>>
+### W-059 - DRY Platform Git Subagent SSOT
+
+```yaml
+plan_unit_id: W-059
+unit_type: constraint
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "Backend DRY compliance keeps platform_specs, subagent_registry, and git binary resolution as single sources of truth, with DRY tags for functions and data rather than duplicated backend logic."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-002
+- W-023
+- W-026
+unblocks: []
+acceptance_criteria:
+- "W-059 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_203
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: dry_backend_ssot
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0086
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0087
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0088
+preserved_exact_tokens:
+- "DRY Method Compliance"
+- "platform_specs"
+- "subagent_registry"
+- "DRY:DATA:subagent_registry"
+- "DRY:FN:resolve_git_binary"
+- "DRY:FN"
+- "DRY:DATA"
+negative_constraints:
+- "Never duplicate git binary detection."
+- "Do not duplicate platform or subagent registry data."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+- "Plans/DRY_Rules.md"
+```
+
+### W-060 - Widget Reuse GUI DRY Compliance
+
+```yaml
+plan_unit_id: W-060
+unit_type: constraint
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "GUI DRY compliance reuses cataloged widgets, shared helpers, and documented exceptions for Source Control and worktree interfaces instead of creating duplicate visual components."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible Source Control, Git/worktree GUI, configuration, checklist, or runtime disclosure behavior."
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-002
+- W-027
+- W-031
+- W-032
+- W-033
+- W-034
+- W-035
+- W-036
+unblocks: []
+acceptance_criteria:
+- "W-060 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_203
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: dry_widget_reuse
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0087
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0088
+preserved_exact_tokens:
+- "DRY Requirements"
+- "DRY and AGENTS.md conventions"
+- "docs/gui-widget-catalog.md"
+- "src/widgets/"
+- "styled_button"
+- "page_header"
+- "DRY:WIDGET"
+- "UI-DRY-EXCEPTION"
+negative_constraints:
+- "Do not create duplicate GUI widgets when a cataloged widget or helper exists."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+- "Plans/Widget_System.md"
+- "Plans/DRY_Rules.md"
+```
+
+### W-061 - Crew Coordination State
+
+```yaml
+plan_unit_id: W-061
+unit_type: constraint
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "Git/worktree coordination uses the reconciled PM crew model: optional overlays, child runs, explicit shared crew state, crew-board messages, and canonical seglog/redb lineage rather than ad hoc memory side files."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-002
+- W-013
+- W-015
+- W-016
+- W-019
+unblocks: []
+acceptance_criteria:
+- "W-061 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_203
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: crew_coordination_state
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0089
+preserved_exact_tokens:
+- "Crews and Subagent Communication Enhancements"
+- "optional overlays"
+- "child runs"
+- "shared crew state"
+- "crew-board messages"
+- ".puppet-master/memory/*"
+- "active-agents.json"
+- "seglog/redb projections"
+negative_constraints:
+- ".puppet-master/memory/* is not canonical crew coordination state."
+- "active-agents.json is not canonical git/worktree coordination state."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md"
+- "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FileSafe.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+- "Plans/orchestrator-subagent-integration.md"
+- "Plans/storage-plan.md"
+- "Plans/assistant-memory-subsystem.md"
+- "Plans/Contracts_V0.md"
+- "Plans/Prompt_Pipeline.md"
+- "Plans/FileSafe.md"
+```
+
+### W-062 - Lifecycle Quality Canon
+
+```yaml
+plan_unit_id: W-062
+unit_type: constraint
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "Git/worktree lifecycle and quality features align to child-run, crew, and blocked-state canon, preserving blocked_reason_code, ordered allowed_action_ids[], child lineage, worktree ownership, canonical event/storage structures, state reconstruction, and handoff reconstruction."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-002
+- W-061
+- W-019
+- W-033
+unblocks: []
+acceptance_criteria:
+- "W-062 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_203
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: lifecycle_quality_canon
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0090
+preserved_exact_tokens:
+- "Lifecycle and Quality Enhancements"
+- "child-run"
+- "crew"
+- "blocked-state canon"
+- "blocked_reason_code"
+- "allowed_action_ids[]"
+- "cleanup"
+- "reroute"
+- "retry"
+- "handoff reconstruction"
+negative_constraints:
+- "Do not invent separate active-agent lifecycle files."
+- "Quality and handoff metadata do not belong in memory-manager files."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md"
+- "ContractRef: ContractName:Plans/assistant-memory-subsystem.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Prompt_Pipeline.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+- "Plans/Contracts_V0.md"
+- "Plans/storage-plan.md"
+- "Plans/Permissions_System.md"
+- "Plans/assistant-memory-subsystem.md"
+- "Plans/orchestrator-subagent-integration.md"
+- "Plans/Prompt_Pipeline.md"
+```
+
+### W-063 - Worktree Safe Points And Retry Visibility
+
+```yaml
+plan_unit_id: W-063
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "Worktree-native safe points and retry visibility record scoped filesystem/Git state, avoid destructive reset behavior, expose retry posture, and provide acceptance criteria for safe-point creation/restoration and conflict-aware retry disclosure."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-002
+- W-013
+- W-033
+- W-062
+unblocks: []
+acceptance_criteria:
+- "W-063 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_203
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: worktree_safe_point_retry
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0092
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0093
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0094
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0095
+preserved_exact_tokens:
+- "Safe-Point and Retry Integration Addendum (2026-03-08)"
+- "Worktree-native safe points"
+- "Retry posture visibility"
+- "no git reset --hard"
+- "safe-point recovery"
+- "retry posture"
+negative_constraints:
+- "Do not use git reset --hard as the recovery primitive for worktree safe points."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+```
+
+### W-064 - Worktree Recovery Required Rules
+
+```yaml
+plan_unit_id: W-064
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "Safe point and worktree recovery alignment requires worktree-specific baselines, explicit recovery targets, and dirty/conflict blocking before mutation or recovery action proceeds."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-002
+- W-063
+- W-012
+- W-021
+unblocks: []
+acceptance_criteria:
+- "W-064 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_203
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: worktree_recovery_alignment
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0096
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0097
+preserved_exact_tokens:
+- "Safe Point / Worktree Recovery Alignment Addendum (2026-03-09)"
+- "Required rules"
+- "worktree-specific baseline"
+- "explicit target"
+- "dirty/conflict blocking"
+negative_constraints:
+- "Recovery actions must not run without an explicit target worktree or safe-point context."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+```
+
+
+<<< CONTEXT_AFTER 4353-4364 >>>
+### W-065 - Dirty Conflict Runtime Alignment
+
+```yaml
+plan_unit_id: W-065
+unit_type: constraint
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "Runtime worktree conflict alignment treats the addendum as historical context, preserves worktree_conflict and dirty_worktree as canonical blocked reasons, uses ordered allowed actions and dirty/conflict state fields, and keeps cleanup distinct from conflict resolution."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, storage, governance, command, or implementation policy rather than visual presentation."
+split_recommended: false
+depends_on:

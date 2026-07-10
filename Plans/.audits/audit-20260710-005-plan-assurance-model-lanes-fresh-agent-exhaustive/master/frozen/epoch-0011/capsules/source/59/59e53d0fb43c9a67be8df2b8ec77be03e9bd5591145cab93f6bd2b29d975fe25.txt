@@ -1,0 +1,384 @@
+<<< CONTEXT_BEFORE canonical_document_lines=6023-6034 >>>
+L00006023	- PM must not apply invasive temporary instrumentation without rollback coverage.
+L00006024	compatibility_only_notes:
+L00006025	- Cursor-like Debug Mode remains an investigation workflow reference, not automatic MVP scope.
+L00006026	stale_retired_dispositions: []
+L00006027	owner_boundary_notes:
+L00006028	- Runtime artifact storage owns restore-point persistence; MiscPlan records cleanup and rollback obligations.
+L00006029	owner_hints:
+L00006030	- Plans/MiscPlan.md
+L00006031	preserved_contractrefs: []
+L00006032	split_recommendation_reason: Restore-point and scope tracking are a discrete debug cleanup precondition.
+L00006033	```
+L00006034	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=6035-6403 >>>
+L00006035	### M-079 - Temporary Instrumentation Pipeline Lifecycle
+L00006036	
+L00006037	```yaml
+L00006038	plan_unit_id: M-079
+L00006039	unit_type: requirement
+L00006040	status: accepted
+L00006041	owner_doc: Plans/MiscPlan.md
+L00006042	canonical_text: Instrumentation-first debug behavior is not grounded MVP behavior until the temporary-instrumentation patch pipeline declares lifecycle, collector state, evidence sink, cleanup, rollback, and failed-cleanup semantics.
+L00006043	gui_related: false
+L00006044	gui_classification_reason: The unit covers backend debug pipeline lifecycle, evidence, cleanup, and rollback contracts rather than direct GUI presentation.
+L00006045	split_recommended: true
+L00006046	depends_on:
+L00006047	- M-078
+L00006048	unblocks: []
+L00006049	acceptance_criteria:
+L00006050	- Temporary-instrumentation patch pipeline declares an instrumentation_id, collector_state, install/collect/remove sequence, debug-specific mutation rules, evidence sink contract, and explicit write cleanup/rollback semantics.
+L00006051	- Resolved, cancelled, and superseded investigations attempt cleanup automatically.
+L00006052	- Failed residue uses lifecycle failed_cleanup with stop_reason_code = investigation.cleanup_failed.
+L00006053	- Instrumentation-first behavior is not treated as grounded MVP behavior until this contract exists.
+L00006054	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006055	validation_surfaces:
+L00006056	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006057	- python3 scripts/pm-plan-index.py validate
+L00006058	risk_class: temporary_instrumentation_lifecycle_drift
+L00006059	reasoning_tier: standard
+L00006060	context_scope: miscplan_cleanup_standardization
+L00006061	implementation_surfaces:
+L00006062	- Plans/MiscPlan.md
+L00006063	node_compile_hint:
+L00006064	  mode: temporary_instrumentation_pipeline_lifecycle
+L00006065	  create_worknodes: false
+L00006066	source_lineage:
+L00006067	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0101
+L00006068	preserved_exact_tokens:
+L00006069	- Investigation instrumentation lifecycle contract
+L00006070	- Instrumentation-first behavior is not grounded MVP behavior
+L00006071	- temporary-instrumentation patch pipeline
+L00006072	- instrumentation_id
+L00006073	- collector_state
+L00006074	- collector-state
+L00006075	- install/collect/remove
+L00006076	- evidence sink contract
+L00006077	- "/cleanup/rollback"
+L00006078	- failed_cleanup
+L00006079	- stop_reason_code = investigation.cleanup_failed
+L00006080	negative_constraints:
+L00006081	- Instrumentation-first behavior must not be treated as grounded MVP behavior until this contract is implemented.
+L00006082	compatibility_only_notes:
+L00006083	- blog-sourced Cursor-like behavior is hypothesis-first reference behavior only.
+L00006084	stale_retired_dispositions: []
+L00006085	owner_boundary_notes:
+L00006086	- Runtime, evidence, storage, assistant-chat, and GitHub integration owner docs retain authority for concrete storage, evidence, and export mechanics.
+L00006087	owner_hints:
+L00006088	- Plans/MiscPlan.md
+L00006089	preserved_contractrefs:
+L00006090	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md'
+L00006091	split_recommendation_reason: Temporary instrumentation lifecycle spans collector state, mutation rules, evidence, cleanup, rollback, and failed residue semantics.
+L00006092	```
+L00006093	
+L00006094	### M-080 - Debug Cleanup Residue Visibility And Bundle Records
+L00006095	
+L00006096	```yaml
+L00006097	plan_unit_id: M-080
+L00006098	unit_type: requirement
+L00006099	status: accepted
+L00006100	owner_doc: Plans/MiscPlan.md
+L00006101	canonical_text: Debug cleanup is per scope and instrumentation lane; bundle records carry cleanup summary, residual items, stop reason, surviving residue, and user-visible unresolved remnants.
+L00006102	gui_related: true
+L00006103	gui_classification_reason: The unit requires unresolved instrumentation remnants and residue to remain user-visible while preserving backend cleanup bundle state.
+L00006104	split_recommended: false
+L00006105	depends_on:
+L00006106	- M-078
+L00006107	- M-079
+L00006108	unblocks: []
+L00006109	acceptance_criteria:
+L00006110	- Cleanup is per scope and per instrumentation lane, not just per investigation.
+L00006111	- Bundle records carry cleanup_summary, cleanup_summary.residual_items[] or residual_items, stop_reason_code, and surviving residue.
+L00006112	- Cleanup state transitions use superseded when one owner supersedes another.
+L00006113	- PM does not allow two active investigations to add overlapping temporary instrumentation to the same target.
+L00006114	- Unresolved instrumentation remnants remain user-visible until cleaned up or explicitly accepted as follow-up work.
+L00006115	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006116	validation_surfaces:
+L00006117	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006118	- python3 scripts/pm-plan-index.py validate
+L00006119	risk_class: debug_cleanup_residue_visibility_drift
+L00006120	reasoning_tier: standard
+L00006121	context_scope: miscplan_cleanup_standardization
+L00006122	implementation_surfaces:
+L00006123	- Plans/MiscPlan.md
+L00006124	node_compile_hint:
+L00006125	  mode: debug_cleanup_residue_visibility_bundle_records
+L00006126	  create_worknodes: false
+L00006127	source_lineage:
+L00006128	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0100
+L00006129	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0101
+L00006130	preserved_exact_tokens:
+L00006131	- unresolved instrumentation remnants
+L00006132	- cleanup_summary
+L00006133	- "cleanup_summary.residual_items[] / residual_items"
+L00006134	- stop_reason_code
+L00006135	- surviving residue
+L00006136	- superseded
+L00006137	- two active investigations
+L00006138	- overlapping temporary instrumentation
+L00006139	- follow-up work
+L00006140	negative_constraints:
+L00006141	- PM must not let two active investigations add overlapping temporary instrumentation to the same target.
+L00006142	- PM must not hide unresolved instrumentation remnants before cleanup or explicit follow-up acceptance.
+L00006143	compatibility_only_notes: []
+L00006144	stale_retired_dispositions: []
+L00006145	owner_boundary_notes:
+L00006146	- Bundle export, storage, assistant-chat, and GitHub integration consumers must not redefine debug cleanup state.
+L00006147	owner_hints:
+L00006148	- Plans/MiscPlan.md
+L00006149	preserved_contractrefs:
+L00006150	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md'
+L00006151	split_recommendation_reason: Residue visibility and bundle records form a single user-visible cleanup obligation.
+L00006152	```
+L00006153	
+L00006154	### M-081 - Debug Env Secret Tooling And Profiler Cleanup Boundary
+L00006155	
+L00006156	```yaml
+L00006157	plan_unit_id: M-081
+L00006158	unit_type: requirement
+L00006159	status: accepted
+L00006160	owner_doc: Plans/MiscPlan.md
+L00006161	canonical_text: Debug cleanup must revert exact env and config changes, redact or hash obvious secrets before storage, export, or handoff, defer reusable tool registry ownership to Tools/newtools, and detach profiler sessions without overstating cleanup success.
+L00006162	gui_related: false
+L00006163	gui_classification_reason: The unit covers security, tooling ownership, environment/config rollback, and profiler cleanup rather than direct GUI presentation.
+L00006164	split_recommended: true
+L00006165	depends_on:
+L00006166	- M-078
+L00006167	- M-079
+L00006168	unblocks: []
+L00006169	acceptance_criteria:
+L00006170	- Env/config activation cleanup reverts the exact temporary flag, toggle, or value PM introduced.
+L00006171	- Process-env cleanup occurs by stopping or restarting without the temporary env when the change lived only in process env.
+L00006172	- Config edits use the same rollback rules as temporary source patch instrumentation.
+L00006173	- Obvious secrets are redacted or hashed before storage, export, or bundle handoff.
+L00006174	- Debugger or profiler attach instrumentation detaches temporary attach/profiler sessions, and detach failure without durable mutation stays localized instead of claiming cleanup success.
+L00006175	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006176	validation_surfaces:
+L00006177	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006178	- python3 scripts/pm-plan-index.py validate
+L00006179	risk_class: debug_secret_tooling_profiler_cleanup_drift
+L00006180	reasoning_tier: standard
+L00006181	context_scope: miscplan_cleanup_standardization
+L00006182	implementation_surfaces:
+L00006183	- Plans/MiscPlan.md
+L00006184	node_compile_hint:
+L00006185	  mode: debug_env_secret_tooling_profiler_cleanup_boundary
+L00006186	  create_worknodes: false
+L00006187	source_lineage:
+L00006188	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0101
+L00006189	preserved_exact_tokens:
+L00006190	- "/toggle/value"
+L00006191	- "/config"
+L00006192	- Authorization
+L00006193	- cookies
+L00006194	- session IDs
+L00006195	- API keys
+L00006196	- passwords
+L00006197	- private tokens
+L00006198	- Plans/Tools.md
+L00006199	- Plans/newtools.md
+L00006200	- "/tags"
+L00006201	- "/profiler"
+L00006202	- "/session"
+L00006203	- do not claim cleanup success
+L00006204	negative_constraints:
+L00006205	- Obvious secrets must not be stored, exported, or handed off without redaction or hashing.
+L00006206	- PM must not claim cleanup success when profiler detach fails and cleanup is not complete.
+L00006207	compatibility_only_notes: []
+L00006208	stale_retired_dispositions: []
+L00006209	owner_boundary_notes:
+L00006210	- Plans/Tools.md and Plans/newtools.md own reusable tool registry details and tags; MiscPlan records debug cleanup roles and boundaries.
+L00006211	owner_hints:
+L00006212	- Plans/MiscPlan.md
+L00006213	preserved_contractrefs:
+L00006214	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/GitHub_Integration.md'
+L00006215	split_recommendation_reason: Env/config rollback, secret handling, tool ownership, and profiler cleanup cross several implementation owners and should remain split_recommended.
+L00006216	```
+L00006217	
+L00006218	### M-001 - Misc Plan Retired Source-Preserving Bridge
+L00006219	
+L00006220	```yaml
+L00006221	plan_unit_id: M-001
+L00006222	unit_type: compatibility_disposition
+L00006223	status: accepted
+L00006224	owner_doc: Plans/MiscPlan.md
+L00006225	canonical_text: M-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 095 because MiscPlan-S0001 through MiscPlan-S0105 are covered by M-002 through M-081 or explicit structural, retired, and migration-coverage dispositions. M-001 no longer carries source_preserving_planunit compile mode and must not own product coverage.
+L00006226	gui_related: false
+L00006227	gui_classification_reason: The live unit is retired migration-lineage compatibility only; GUI-related source coverage is carried by fine-grained MiscPlan PlanUnits and coverage_map proof.
+L00006228	split_recommended: false
+L00006229	depends_on:
+L00006230	- M-073
+L00006231	- M-074
+L00006232	- M-075
+L00006233	- M-076
+L00006234	- M-077
+L00006235	- M-078
+L00006236	- M-079
+L00006237	- M-080
+L00006238	- M-081
+L00006239	unblocks: []
+L00006240	acceptance_criteria:
+L00006241	- M-001 no longer uses node_compile_hint.mode source_preserving_planunit after Phase 2B batch 095.
+L00006242	- MiscPlan-S0001 through MiscPlan-S0105 product coverage is owned by M-002 through M-081 or explicit structural, retired, and migration-coverage dispositions.
+L00006243	- M-001 remains only to preserve migration lineage for the former source-preserving bridge.
+L00006244	- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00006245	validation_surfaces:
+L00006246	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006247	- python3 scripts/pm-plan-index.py validate
+L00006248	risk_class: migration_lineage
+L00006249	reasoning_tier: standard
+L00006250	context_scope: residual_plan_standardization
+L00006251	implementation_surfaces:
+L00006252	- Plans/MiscPlan.md
+L00006253	node_compile_hint:
+L00006254	  mode: source_preserving_bridge_retired
+L00006255	  create_worknodes: false
+L00006256	source_lineage:
+L00006257	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0104
+L00006258	preserved_exact_tokens:
+L00006259	- M-001
+L00006260	- Misc Plan Residual Source-Preserving Bridge
+L00006261	- source_preserving_planunit
+L00006262	- source_preserving_bridge_retired
+L00006263	- Owner / Consumer Map
+L00006264	- PlanUnits
+L00006265	- Migration Coverage
+L00006266	negative_constraints:
+L00006267	- M-001 must not re-own MiscPlan-S0001 through MiscPlan-S0105 after Phase 2B batch 095.
+L00006268	- M-001 must not use node_compile_hint.mode=source_preserving_planunit.
+L00006269	- Retired bridge lineage must not be treated as implementation-ready product coverage.
+L00006270	- The retired bridge must not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00006271	compatibility_only_notes:
+L00006272	- M-001 remains only as a retired source-preserving bridge audit record for migration lineage.
+L00006273	- The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode.
+L00006274	stale_retired_dispositions:
+L00006275	- The former M-001 residual source-preserving bridge is retired by Phase 2B batch 095.
+L00006276	owner_boundary_notes:
+L00006277	- M-002 through M-081 and explicit coverage dispositions own MiscPlan product coverage after bridge retirement.
+L00006278	- MiscPlan-S0104 is migration-lineage coverage only after bridge retirement.
+L00006279	owner_hints:
+L00006280	- Plans/MiscPlan.md
+L00006281	preserved_contractrefs:
+L00006282	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/WorktreeGitImprovement.md'
+L00006283	- 'ContractRef: Invariant:INV-002, PolicyRule:no_secrets_in_storage, ContractName:Plans/Architecture_Invariants.md#INV-002'
+L00006284	split_recommendation_reason: No split remains for the retired bridge; product coverage has been atomized or structurally dispositioned.
+L00006285	```
+L00006286	
+L00006287	## Migration Coverage
+L00006288	
+L00006289	Original hash: `37d2cb724014b4aa42d8ad8efe2c6269e508f7ca0e5fbf45209a1f97fb8373c4`.
+L00006290	
+L00006291	Run-scoped proof artifacts:
+L00006292	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+L00006293	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+L00006294	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+L00006295	- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+L00006296	
+L00006297	Phase 2B batch 092 atomized `MiscPlan-S0003`, `S0008`, `S0011` through `S0012`, `S0014` through `S0017`, `S0019` through `S0026`, and `S0028` through `S0035` into `M-002` through `M-017`, with `MiscPlan-S0001`, `S0004`, `S0005`, `S0010`, `S0013`, `S0018`, and `S0027` structurally dispositioned and summary spans mapped to the relevant fine-grained units. `M-001` remains a narrowed residual source-preserving bridge only for `MiscPlan-S0036` onward. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00006298	
+L00006299	Phase 2B batch 093 atomized `MiscPlan-S0036` through `S0049` and `MiscPlan-S0050` source lines 791-800 into `M-018` through `M-036`. `M-001` remains a narrowed residual source-preserving bridge only for `MiscPlan-S0050` source line 801 onward, including `MiscPlan-S0102` through `S0105`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00006300	
+L00006301	Phase 2B batch 094 atomized `MiscPlan-S0050` source lines 801-866 and `MiscPlan-S0051` through `S0088` into `M-037` through `M-072`, with `MiscPlan-S0063` structurally dispositioned through the adjacent risk/gap units. `M-001` remains a narrowed residual source-preserving bridge only for `MiscPlan-S0089` source line 1199 through `MiscPlan-S0105`. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00006302	
+L00006303	Phase 2B batch 095 atomized `MiscPlan-S0089`, `S0091`, `S0092`, and `S0097` through `S0101` into `M-073` through `M-081`; structurally dispositioned `MiscPlan-S0090`, `S0093` through `S0096`, `S0102`, `S0103`, and `S0105`; and retired `M-001` as migration-lineage compatibility for `MiscPlan-S0104`. `Plans/MiscPlan.md` now has no residual source-preserving product coverage. This batch did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00006304	
+L00006305	## Ledger Compile Addendum - pldg-20260614-001
+L00006306	
+L00006307	### M-082 - References Status And Section 9.1.20 Recovery
+L00006308	
+L00006309	```yaml
+L00006310	plan_unit_id: M-082
+L00006311	unit_type: constraint
+L00006312	status: accepted
+L00006313	owner_doc: Plans/MiscPlan.md
+L00006314	canonical_text: >-
+L00006315	  MiscPlan duplicate References and Implementation status sections plus missing Section 9.1.20 are structural cleanup issues. Recovery should
+L00006316	  deduplicate repeated section bodies, preserve source-lineage for moved text, and restore or explicitly disposition the missing 9.1.20 anchor
+L00006317	  without changing product behavior.
+L00006318	gui_related: false
+L00006319	gui_classification_reason: MiscPlan section cleanup is documentation structure, not GUI presentation.
+L00006320	depends_on: [M-001]
+L00006321	unblocks: []
+L00006322	acceptance_criteria:
+L00006323	  - Duplicate References and Implementation status sections have one canonical live location each.
+L00006324	  - Section 9.1.20 resolves or is explicitly marked non-applicable/source-lineage.
+L00006325	validation_surfaces:
+L00006326	  - python3 scripts/pm-plan-index.py validate
+L00006327	  - manual heading/anchor review
+L00006328	risk_class: misc_doc_structure_drift
+L00006329	reasoning_tier: low
+L00006330	context_scope: misc_plan_doc_structure
+L00006331	implementation_surfaces: [Plans/MiscPlan.md]
+L00006332	node_compile_hint: {mode: structural_heading_recovery, create_worknodes: false}
+L00006333	source_lineage:
+L00006334	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0020
+L00006335	  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0041
+L00006336	preserved_exact_tokens: ["References", "Implementation status", "§9.1.20"]
+L00006337	negative_constraints:
+L00006338	  - Do not change product behavior while deduplicating structural sections.
+L00006339	owner_hints: [Plans/MiscPlan.md]
+L00006340	```
+L00006341	
+L00006342	## Ledger Compile Addendum - pldg-20260614-002
+L00006343	
+L00006344	### M-083 - Runner Platform Specs Skill Injection Contract
+L00006345	
+L00006346	```yaml
+L00006347	plan_unit_id: M-083
+L00006348	unit_type: requirement
+L00006349	status: accepted
+L00006350	owner_doc: Plans/MiscPlan.md
+L00006351	canonical_text: >-
+L00006352	  Skills integration with runners is governed by a versioned `platform_specs` injection contract rather
+L00006353	  than a stub. For each provider runner, the contract records platform_id, runner_id/runtime_identity,
+L00006354	  skill/package identity, injection timing, capability/permission boundary, environment/secret boundary,
+L00006355	  compatibility matrix, failure/fallback behavior, audit/evidence refs, override policy, and owner
+L00006356	  approval path. `list_skills_for_agent` may inject skills only after those fields validate for the
+L00006357	  target runner.
+L00006358	gui_related: false
+L00006359	gui_classification_reason: Runner skill injection, capability, environment, and audit boundaries are backend/runtime contracts, not visual presentation.
+L00006360	depends_on: [M-082, MGAC-092, PS-113]
+L00006361	unblocks: []
+L00006362	acceptance_criteria:
+L00006363	  - Runner skill injection has a per-platform contract before skills are delivered to Cursor, Claude Code, OpenCode, Codex, GitHub Copilot, or Gemini runners.
+L00006364	  - Injection validates runtime identity, capability/permission, environment/secret, compatibility, fallback, audit/evidence, override, and owner approval fields.
+L00006365	  - Skills runner integration is not described as stubbed in live canonical prose.
+L00006366	validation_surfaces:
+L00006367	  - python3 scripts/pm-plan-index.py validate
+L00006368	  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+L00006369	risk_class: runner_skill_injection_gap
+L00006370	reasoning_tier: high
+L00006371	context_scope: runner_platform_specs_skill_injection
+L00006372	implementation_surfaces: [Plans/MiscPlan.md, Plans/orchestrator-subagent-integration.md, Plans/Skills_System.md]
+L00006373	node_compile_hint: {mode: runner_platform_specs_skill_injection, create_worknodes: false}
+L00006374	source_lineage:
+L00006375	  - pldg-20260614-002-part-3-fable-cleanup:atom-0118
+L00006376	  - pldg-20260614-002-part-3-fable-cleanup:atom-0119
+L00006377	preserved_exact_tokens: ["per-platform skill injection for runners", "is stubbed", "platform_specs", "list_skills_for_agent", "Cursor", "Claude Code", "OpenCode", "Codex", "GitHub Copilot", "Gemini"]
+L00006378	negative_constraints:
+L00006379	  - Do not inject skills into a runner without validating the `platform_specs` injection contract.
+L00006380	  - Do not let skill injection bypass capability/permission, environment/secret, compatibility, fallback, audit/evidence, override, or owner approval boundaries.
+L00006381	owner_hints: [Plans/MiscPlan.md, Plans/orchestrator-subagent-integration.md, Plans/Skills_System.md]
+L00006382	```
+L00006383	
+L00006384	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00006385	
+L00006386	This addendum repairs non-runtime MiscPlan rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+L00006387	
+L00006388	- Repairs `sfk-d75fd32061dc8e608952bd68`: Skills GUI/backend ownership is `Plans/Skills_System.md` for backend discovery and permission semantics, while this document owns only the visible Skills tab placement summary. Compatibility text that points backend authority back to this file is source-lineage only.
+L00006389	- Repairs `sfk-83bf8b6fcb84de178c4cc3a6`: Skills tab placement is `Settings > Agent Config > Skills` for configuration and `Agents > Skills` for operational status. Skills_System owns backend model; FinalGUISpec owns visible placement.
+L00006390	- Repairs `sfk-805564b3d8497a79fe1a5fd6`: skill permission `ask` flow uses `cmd.skills.permission.request`, result states `approved_once`, `approved_for_session`, `denied`, and `expired`, and visible path `Settings > Agent Config > Skills > Permissions`.
+L00006391	- Repairs `sfk-d83a6f558caf190c0a68b9c6`: shortcut import/export version mismatch handling is `reject_unsupported_version`. Greater major versions, missing version, or incompatible schema versions are rejected with `shortcut_version_unsupported`; equal major/minor with additive optional fields may import after validation.
+L00006392	- Repairs `sfk-cd3164782a4ef1c0059005e0`: debug instrumentation lifecycle fields are `instrumentation_id`, `scope_kind`, `collector_state`, `mutation_policy`, `evidence_sink_ref`, `cleanup_policy`, `cleanup_result`, and `created_at_utc`.
+L00006393	- Repairs `sfk-3a059c95c88e113587672e6b`: duplicate References and Implementation Status sections are source-lineage residues; canonical MiscPlan implementation status is the latest named PlanUnit status plus this addendum. Missing `§9.1.20` is retired and must not be cited as live.
+L00006394	- Repairs `sfk-f2adc94f674eb81b2fc0686f`: `platform_specs` injection is retired compatibility lineage. Active skill listing uses `skill_catalog_entry` fields `skill_id`, `display_name`, `source`, `permission_class`, `enabled`, `owner_doc_ref`, and `schema_version`; `list_skills_for_agent` is a future command alias until `Plans/Skills_System.md` owns its schema.
+L00006395	
+L00006396	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+L00006397	## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+L00006398	
+L00006399	These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00006400	
+L00006401	- `registry_line 237` (explicitly_deferred; source line 837; `sfk-f2adc94f674eb81b2fc0686f`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] L6356-6365,6379 (M-083): platform_specs injection contract lists field names only, zero schema; `list_skills_for_agent` flagged stub with no resolving owner doc.
+L00006402	
+L00006403	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE 4156-4167 >>>
+negative_constraints:
+- Manual Clean workspace must use prepare-style logic, not cleanup_after_execution.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- UI surface details remain reconciled with FinalGUISpec and UI widget catalog ownership.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: UX checklist spans cleanup, shortcuts, and skills surfaces.
+```
+
+
+<<< AUTHORITATIVE_CORE 4168-4533 >>>
+### M-047 - Desktop Shortcuts Backend Checklist
+
+```yaml
+plan_unit_id: M-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Desktop Shortcuts backend checklist implementation must define ShortcutAction, KeyBinding, defaults, GuiConfig overrides, key-map rebuild, validation, no hardcoded bindings, config-failure fallback, and unit tests.
+gui_related: true
+gui_classification_reason: The unit governs backend behavior directly reflected in user-visible shortcut handling and Config UI.
+split_recommended: true
+depends_on:
+- M-025
+- M-026
+- M-027
+- M-028
+unblocks: []
+acceptance_criteria:
+- ShortcutAction, KeyBinding, default_shortcuts, GuiConfig.shortcuts, build_key_map, and validate_shortcut_binding are implemented in order.
+- Composer and prompt fields use the key map and do not hardcode bindings.
+- Missing shortcuts config uses empty overrides.
+- Invalid shortcuts config falls back to defaults, logs a warning, shows Shortcuts reset to defaults due to config error, and does not crash.
+- Tests cover merge, validation, and round-trip behavior.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: shortcuts_backend_checklist_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: desktop_shortcuts_backend_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0058
+preserved_exact_tokens:
+- ShortcutAction
+- KeyBinding
+- DRY:DATA:shortcut_actions
+- DRY:DATA:default_shortcuts
+- build_key_map(defaults, overrides) -> KeyMap
+- DRY:FN:build_key_map
+- validate_shortcut_binding
+- Shortcuts reset to defaults due to config error
+- Do not crash
+negative_constraints:
+- All key handling in composer and prompt fields uses the key map, with no hardcoded bindings.
+- The app must not crash on invalid shortcuts config.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- M-026 and M-027 preserve the authoritative registry and error UX details.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: Checklist remains split_recommended because it combines implementation order and validation requirements.
+```
+
+### M-048 - Agent Skills Backend Checklist
+
+```yaml
+plan_unit_id: M-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Agent Skills backend checklist implementation must create the skills modules, canonical ordered discovery, frontmatter loading, wildcard permission resolution, safe CRUD, runner skill listing, and tests.
+gui_related: false
+gui_classification_reason: The unit covers backend skill discovery, loading, permissions, CRUD, runner integration, and tests.
+split_recommended: true
+depends_on:
+- M-030
+- M-031
+- M-032
+- M-033
+- M-035
+unblocks: []
+acceptance_criteria:
+- src/skills or equivalent modules define discovery, frontmatter, and permissions.
+- DRY:DATA:skill_search_paths records canonical project-first then global discovery order.
+- discover_skills, load_skill, resolve_skill_permission, and list_skills_for_agent are DRY helpers.
+- Create does not overwrite a directory containing SKILL.md.
+- Runtime delivery follows canonical registry plus permission filter plus context bundling plus skill tool path.
+- Tests cover discovery, frontmatter validation, name matching, wildcard/default permissions, and explicit-over-pattern precedence.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_backend_checklist_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: agent_skills_backend_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0059
+preserved_exact_tokens:
+- src/skills/
+- discovery.rs
+- frontmatter.rs
+- permissions.rs
+- DRY:DATA:skill_search_paths
+- .puppet-master/skills
+- .claude/skills
+- .agents/skills
+- DRY:FN:discover_skills
+- DRY:FN:load_skill
+- DRY:FN:resolve_skill_permission
+- DRY:FN:list_skills_for_agent
+- explicit per-skill entry wins over pattern
+negative_constraints:
+- Creating a skill must not overwrite an existing SKILL.md.
+- Provider-native formats remain interoperability inputs only.
+compatibility_only_notes:
+- Provider-native formats remain compatibility inputs, not MVP runtime-delivery owners.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Skills_System.md and Prompt_Pipeline.md retain runtime delivery authority.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: Backend checklist spans modules, CRUD, runtime integration, and tests.
+```
+
+### M-049 - Shortcuts Enhancement Checklist
+
+```yaml
+plan_unit_id: M-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Shortcuts enhancement checklist implementation must add config-load failure handling, export/import, search/filter, and shortcut discoverability helpers after the core shortcut backend is complete.
+gui_related: true
+gui_classification_reason: The unit defines user-visible Shortcuts export/import, filtering, labels, tooltips, and toasts.
+split_recommended: true
+depends_on:
+- M-025
+- M-026
+- M-027
+- M-028
+- M-047
+unblocks: []
+acceptance_criteria:
+- Config load failure handling is wired at app startup and when opening Config -> Shortcuts.
+- Export and Import buttons use shared JSON helpers and validate imports before Replace or Merge.
+- Search/filter matches action labels and shortcut strings with correct empty and no-match states.
+- Shortcut labels or tooltips use a shared helper and stay synced with key-map changes.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: shortcuts_enhancement_checklist_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: shortcuts_enhancement_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0060
+preserved_exact_tokens:
+- Config load failure (Shortcuts)
+- Export...
+- Import...
+- export_shortcuts_to_json
+- import_shortcuts_from_json
+- Replace/Merge
+- filter_shortcut_list
+- No shortcuts match
+- (Loading...)
+negative_constraints:
+- Invalid JSON or unsupported shortcut versions must be rejected before applying changes.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Enhancements depend on the core Shortcuts registry and Config surface.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: The checklist covers multiple user-facing shortcut enhancements.
+```
+
+### M-050 - Skills Enhancement Checklist
+
+```yaml
+plan_unit_id: M-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Skills enhancement checklist implementation must add sort/filter, last-modified display, preview, bulk permission, validate-all, create-no-overwrite, and concurrent-edit handling after the core Skills backend is complete.
+gui_related: true
+gui_classification_reason: The unit defines user-visible Skills enhancements, prompts, metadata, validation results, and editor conflict handling.
+split_recommended: true
+depends_on:
+- M-030
+- M-031
+- M-032
+- M-037
+- M-038
+- M-039
+- M-040
+- M-041
+- M-048
+unblocks: []
+acceptance_criteria:
+- Sort/filter, last-modified display, preview, bulk permission, validate-all, create-no-overwrite, and concurrent-edit behavior are implemented in the documented order.
+- Bulk permission persists GuiConfig.skill_permissions and documents explicit-over-pattern precedence.
+- Validate all shows a full table with N OK, M errors and copyable errors.
+- Existing SKILL.md directories are not overwritten.
+- Concurrent edit handling preserves the File changed on disk. Reload / Overwrite / Cancel recommendation.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_enhancement_checklist_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: skills_enhancement_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0060
+preserved_exact_tokens:
+- skills_list_sort
+- "modified: Option<DateTime<Utc>>"
+- Bulk permission
+- Validate all
+- N OK, M errors
+- Create skill -- dir exists
+- SKILL.md
+- File changed on disk. Reload / Overwrite / Cancel
+negative_constraints:
+- Create new must not overwrite an existing skill containing SKILL.md.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Skills_System.md owns canonical skill semantics; this checklist preserves MiscPlan implementation sequencing.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: Skills enhancements touch list, preview, persistence, validation, and editor state.
+```
+
+### M-051 - Pre-Completion Verification Checklist
+
+```yaml
+plan_unit_id: M-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Cleanup/Shortcuts/Skills implementation completion must run the AGENTS.md pre-completion checklist and update the Task Status Log when done.
+gui_related: false
+gui_classification_reason: The unit covers implementation verification workflow rather than direct GUI presentation.
+split_recommended: false
+depends_on:
+- M-043
+- M-044
+- M-045
+- M-046
+- M-047
+- M-048
+- M-049
+- M-050
+unblocks: []
+acceptance_criteria:
+- AGENTS.md pre-completion verification checklist is run for compile, DRY tagging, module organization, tests, and scope.
+- Task Status Log is updated when done.
+- The covered source span remains losslessly available for exact-text audit.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: precompletion_verification_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: precompletion_verification_checklist
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0061
+preserved_exact_tokens:
+- AGENTS.md Pre-Completion Verification Checklist
+- compile
+- DRY tagging
+- module organization
+- tests
+- scope
+- Task Status Log
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- AGENTS.md owns the actual pre-completion checklist.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: This verification step is narrow enough for a single unit.
+```
+
+### M-052 - Cleanup Risk Register
+
+```yaml
+plan_unit_id: M-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Cleanup implementation must account for over-aggressive clean, worktree path correctness, config wiring, evidence pruning timing, and no-secrets GitHub behavior as a risk register.
+gui_related: true
+gui_classification_reason: The unit includes cleanup UX/config risks and user-facing evidence or worktree consequences.
+split_recommended: true
+depends_on:
+- M-006
+- M-008
+- M-011
+- M-013
+- M-017
+- M-019
+unblocks: []
+acceptance_criteria:
+- Conservative defaults and explicit allowlists mitigate git clean -fdx risk.
+- work_dir is the actual worktree path when worktrees are used.
+- Cleanup config is read from the same runtime config used by orchestrator.
+- Evidence pruning avoids files for runs still writing evidence.
+- Secrets are not force-added, logged, included in evidence, or included in PR bodies.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: cleanup_risk_register_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: cleanup_risk_register
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0062
+preserved_exact_tokens:
+- Over-aggressive clean
+- git clean -fdx
+- Worktree path
+- Config wiring
+- Evidence pruning
+- Secrets to GitHub
+negative_constraints:
+- Never force-add ignored files.
+- Never log or put tokens/keys in evidence or PR body.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Security constraints remain aligned with Architecture_Invariants and GitHub auth flows.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: The risk register spans cleanup, storage, security, and GUI-visible config concerns.
+```
+
+
+<<< CONTEXT_AFTER 4534-4545 >>>
+### M-053 - Cleanup Signature Alignment Gap
+
+```yaml
+plan_unit_id: M-053
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Cleanup implementation must preserve the signature-alignment gap between REQUIREMENTS.md and the extended work_dir-aware cleanup_after_execution contract until the owner contract is reconciled.
+gui_related: false
+gui_classification_reason: The unit covers backend contract signatures and type alignment.
+split_recommended: false
+depends_on:

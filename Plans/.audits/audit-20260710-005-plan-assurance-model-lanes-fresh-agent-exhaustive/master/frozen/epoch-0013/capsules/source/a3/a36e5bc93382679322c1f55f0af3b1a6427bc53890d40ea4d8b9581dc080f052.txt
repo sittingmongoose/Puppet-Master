@@ -1,0 +1,407 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-392 >>>
+L00000001	# Overseer Protocol (Canonical)
+L00000002	
+L00000003	
+L00000004	## Canonical owner-section requirements
+L00000005	
+L00000006	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000007	
+L00000008	### Retire tier-era canon and shadow fields
+L00000009	
+L00000010	
+L00000011	- Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
+L00000012	### Identity and blocked-policy transfer cluster
+L00000013	### Coverage blocker provider/model precedence owner section
+L00000014	### Approval scope key and approver identity
+L00000015	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000016	
+L00000017	
+L00000018	## 0. Purpose and scope
+L00000019	This document defines deterministic execution ordering for `plan_graph` nodes and completion semantics for Builder, Verifier, and Overseer roles.
+L00000020	
+L00000021	It applies to:
+L00000022	- Self-build plan graph artifacts in `Plans/plan_graph.json`
+L00000023	- User-project sharded plan graph artifacts under `.puppet-master/project/plan_graph/`
+L00000024	
+L00000025	For user projects, canonical entrypoint and derived-export policy are defined in `Plans/Project_Output_Artifacts.md` (`.puppet-master/project/plan_graph/index.json` canonical; monolithic export is optional/non-canonical).
+L00000026	
+L00000027	ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Progression_Gates.md
+L00000028	
+L00000029	---
+L00000030	
+L00000031	## 1. Role definitions
+L00000032	
+L00000033	### 1.1 Builder / node worker
+L00000034	
+L00000035	
+L00000036	The execution worker that performs the node attempt.
+L00000037	
+L00000038	### 1.2 Verifier / reviewer / corroborator
+L00000039	
+L00000040	
+L00000041	The execution-support actors that review, verify, or corroborate work products without becoming the scheduler.
+L00000042	
+L00000043	### 1.3 Package Overseer
+L00000044	
+L00000045	
+L00000046	Local governance for one `Work Package`.
+L00000047	
+L00000048	### 1.4 Seam Overseer
+L00000049	
+L00000050	
+L00000051	Cross-package integration governance for one `Feature Seam`.
+L00000052	
+L00000053	### 1.5 Runtime scheduler
+L00000054	The canonical owner of readiness, blocked state, transitions, retry budgets, wakeups, and dispatch.
+L00000055	
+L00000056	Rules:
+L00000057	- overseers are governance actors, not hidden second schedulers
+L00000058	- most node execution may be performed through overseer-spawned node workers, but runtime still owns canonical execution state
+L00000059	- Direct-runtime-dispatched execution is a `/special-case` or edge-case `/fallback/special` path; `/default` node-worker execution is overseer-spawned, with requested-vs-effective account/model/persona resolution recorded before dispatch.
+L00000060	- conversational actors that share runtime identity semantics do not become orchestration nodes, packages, or seams
+L00000061	- Executor is the runtime SSOT for attempt state across `/seam/lane/work-package` identity: no HTE-by-default mode is assumed, and HITL is represented as explicit blocked/approval boundaries rather than hidden scheduler behavior.
+L00000062	- Terminology ownership for work package, feature seam, package overseer, seam overseer, Weak Integration, Promotion, Corroboration, Graph Patch, Reopened, Revoked, promotion classes, lane pools, contamination, safe points, and effective execution identity remains in Glossary, Crosswalk, Decision Policy, and the plans index; Executor consumes those graph-owned terms for runtime behavior and does not revive tier vocabulary as primary canon.
+L00000063	- Any surviving `tier` language is compatibility or derived-view vocabulary only. `Plans/human-in-the-loop.md` (`human-in-the-loop.md`) may remain a strong tier-era owner doc for approval UX, but `Plans/Executor_Protocol.md` (`Executor_Protocol.md`) owns this runtime seam and is already ahead of it; `Plans/Orchestrator_Page.md` (`Orchestrator_Page.md`) is the larger tier-era drift multiplier for page structure, not a reason to weaken Executor canon.
+L00000064	- Governance layering is graph-based rather than tier-based: older `Overseer` execution-role language is retained only as compatibility framing, while a `work package overseer` owns package-local delivery/readiness truth and a `same-feature-seam overseer` owns same-feature-seam integration truth across packages. They are not redundant or conflicting co-governors; the governance-boundary is the feature-seam/package split, with firm contract language required wherever future seam writeups or recommendations describe authority.
+L00000065	- Worktree mode is resolved at dispatch from explicit policy inputs: `Plans/chain-wizard-flexibility.md` (`chain-wizard-flexibility.md`) may describe `no-worktrees` user intent, while `Plans/WorktreeGitImprovement.md` (`WorktreeGitImprovement.md`) may require `per-subtask` worktree isolation. Executor records which mode won for the attempt instead of treating worktree-on and worktree-off language as interchangeable.
+L00000066	- The graph-canonical `/control` loop is not a single giant agent walking the whole graph; runtime-core pressure-testing preserves a dual-overseer model: package and seam overseers govern spawned workers through `/model`, `/review`, scheduler evidence, and explicit runtime control records.
+L00000067	- The node-native execution-core contract carries reviewer, `/corroboration/concern`, and wake `/block` lifecycle hooks so downstream runtime-core consumers do not treat concern, corroboration, or graph-patch behavior as missing local inventions.
+L00000068	- Runtime scheduling consumes package/seam/lane and sharded-node state from durable runtime records such as seglog/redb-backed projections; `active-agents`, `TierType`, `TierContext`, and `/seams` compatibility labels cannot define executor lane ownership or hardcoded subagent registries.
+L00000069	- Background agent queues integrate with the Lane scheduler through package lane pools; snapshot consumers must resolve snapshot/safe-point ambiguity to `/safe-point/runtime` records, while `tier` / `subtask` queue labels remain compatibility lineage rather than package-lane ownership.
+L00000070	- Event and widget projections translate `run.tier_`, `run.tier_*`, `tier_tree`, and `Tiers` into seam/worktree/package-native, `/worktree/package-native`, and `/package/lane-aware` runtime events; live-status consumers read canonical runtime records and projections, while `PuppetMasterEvent` and `PuppetMasterEvent::*` streams are tier-era compatibility inputs.
+L00000071	- Concern `/resolution` records are first-class runtime objects created by runtime, package overseer, seam overseer, corroboration outcome, graph patch, or graph `/state-transition` logic; workers may nominate findings, but `/escalate/downgrade` actions update concern state through the concern owner contract.
+L00000072	- Executor opens runtime objects through `route_target` and `OpenSubject` consumers instead of request-centric local links; projection-backed actions must show `projection_health` and `projection_freshness` before mutating a blocked-episode, Feature Seam, Work Package, Seam Overseer, or Package Overseer target.
+L00000073	- Seam review loops trigger at package-completion boundaries, integration-edge and cross-package crossings, pre-seam completion, and high-impact package-overseer challenges; the result is review/corroboration evidence, not an implicit tier-era completion shortcut.
+L00000074	- A seam is not reconciliation-ready while it lacks a canonical event/`/record` family or owner doc; when direction is already-set, `/reconciliation` work updates stale consumers to the owner contract instead of inventing replacement canon.
+L00000075	- Cleanup `/reconciliation` moves stale `/tier` consumers to `/worktree/package/seam-aware` routing, `/effective/account/runtime` identity displays, canonical runtime actions, route payloads, and `/layout/help/glossary` terminology surfaces.
+L00000076	
+L00000077	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/orchestrator-subagent-integration.md
+L00000078	## 2. Deterministic readiness
+L00000079	
+L00000080	Overseer MUST read node execution state from the canonical node document:
+L00000081	- Self-build graph: `Plans/plan_graph.json.nodes[]`
+L00000082	- User-project sharded graph: `.puppet-master/project/plan_graph/nodes/<node_id>.json`
+L00000083	
+L00000084	Overseer MUST NOT infer execution state from index metadata alone.
+L00000085	ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/project_plan_graph_index.schema.json
+L00000086	
+L00000087	A node is ready if and only if all conditions are true:
+L00000088	1. `status == "queued"`
+L00000089	2. every node ID in `blockers[]` currently has `status == "done"`
+L00000090	3. `spec_lock_requirements.schema_versions` exactly matches `Plans/Spec_Lock.json.schema_versions` for every referenced key
+L00000091	
+L00000092	If multiple nodes are ready simultaneously, Overseer MUST choose the lexicographically smallest `node_id`.
+L00000093	ContractRef: PolicyRule:Decision_Policy.md§3, ContractName:Plans/Spec_Lock.json
+L00000094	
+L00000095	If any referenced Spec Lock version key is missing or mismatched, Overseer MUST treat that node as not ready.
+L00000096	ContractRef: ContractName:Plans/Spec_Lock.json, ContractName:Plans/Executor_Protocol.md
+L00000097	
+L00000098	**Spec Lock requirement key contract for user-project nodes:**
+L00000099	- For user-project node shards under `.puppet-master/project/plan_graph/nodes/*.json`, `spec_lock_requirements.schema_versions` MUST use key names published in `Plans/Spec_Lock.json.schema_versions`.
+L00000100	- User-project nodes MUST NOT invent ad-hoc schema-version key names.
+L00000101	- If a referenced key is absent from `Plans/Spec_Lock.json.schema_versions`, Overseer MUST treat the node as not ready.
+L00000102	
+L00000103	**Blocker integrity rule:**
+L00000104	- Every `blockers[]` entry MUST resolve to an existing canonical node document.
+L00000105	- An unresolved blocker ID is invalid graph input and the node MUST be treated as not ready.
+L00000106	
+L00000107	ContractRef: ContractName:Plans/Spec_Lock.json, ContractName:Plans/Project_Output_Artifacts.md
+L00000108	
+L00000109	---
+L00000110	
+L00000111	## 3. Canonical status lifecycle
+L00000112	
+L00000113	Success lifecycle:
+L00000114	`queued -> in_progress -> verify_pending -> verified -> done`
+L00000115	
+L00000116	Failure lifecycle:
+L00000117	`verify_pending -> failed`
+L00000118	
+L00000119	`done` and `failed` are terminal states for this protocol revision.
+L00000120	
+L00000121	UI/orchestrator labels such as `waiting_approval`, `needs_review`, `cancelled`, or `complete_with_warnings` are **run-local overlays / CTA states**, not canonical node `status` values in this protocol. Such overlays MUST be persisted as separate events or projections and MUST NOT replace the status lifecycle above.
+L00000122	
+L00000123	Overseer MUST enforce lifecycle ordering and reject out-of-order transitions.
+L00000124	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Executor_Protocol.md
+L00000125	
+L00000126	---
+L00000127	
+L00000128	## 4. Auto-marking rule
+L00000129	
+L00000130	Verifier writes evidence to `evidence_pointer` and returns `verifier_result`.
+L00000131	
+L00000132	When `verifier_result.outcome == "pass"` and the evidence bundle exists and validates, Overseer MUST first set node `status = "verified"`, then immediately transition to `status = "done"`.
+L00000133	ContractRef: ContractName:Plans/Progression_Gates.md#GATE-005, ContractName:Plans/evidence.schema.json
+L00000134	
+L00000135	The `verified` state is a schema-enforced transitional state (requiring `outcome == "pass"` and `timestamp_utc` per both `plan_graph.schema.json` and `project_plan_node.schema.json`); Overseer SHALL NOT skip it.
+L00000136	ContractRef: ContractName:Plans/plan_graph.schema.json, ContractName:Plans/project_plan_node.schema.json
+L00000137	
+L00000138	Manual mark-complete action MUST NOT be required for verified nodes.
+L00000139	ContractRef: PolicyRule:Decision_Policy.md§4, ContractName:Plans/Executor_Protocol.md
+L00000140	
+L00000141	When `verifier_result.outcome == "fail"`, Overseer sets node `status = "failed"`.
+L00000142	ContractRef: ContractName:Plans/Progression_Gates.md, ContractName:Plans/Executor_Protocol.md
+L00000143	
+L00000144	---
+L00000145	
+L00000146	### 5.0 `execution_unit_context` canonical contract
+L00000147	
+L00000148	`Plans/Executor_Protocol.md` is the sole canonical owner of `execution_unit_context`. The normative machine-readable contract is `Plans/execution_unit_context.schema.json` with `schema_id = "pm.execution_unit_context"` and `schema_version = "1.0.0"`. Consumer docs may reference fields from that schema, but they must not copy or redefine the required or optional field set.
+L00000149	
+L00000150	Required fields are closed and must appear exactly as the schema lists them:
+L00000151	
+L00000152	| Field | Type and nullability | Requirement |
+L00000153	| --- | --- | --- |
+L00000154	| `schema_id` | string const, non-null | Contract identity; always `pm.execution_unit_context`. |
+L00000155	| `schema_version` | string const, non-null | Contract version; always `1.0.0` until a governed successor schema exists. |
+L00000156	| `execution_unit_type` | closed enum, non-null | Runtime unit class: `run`, `seam`, `package`, `node`, `overseer`, `delegated_subagent`, `recovery`, `verification`, or `host_operation`. |
+L00000157	| `execution_unit_id` | string, non-null | Canonical identity for the runtime unit being executed or recovered. |
+L00000158	| `run_id` | string, non-null | Canonical run identity for execution lineage. |
+L00000159	| `node_id` | string, non-null | Canonical node identity for dispatch and receipts. |
+L00000160	| `attempt_id` | string, non-null | Immutable local execution-attempt identity. |
+L00000161	| `execution_role` | closed enum, non-null | Runtime actor role: `assistant`, `interviewer`, `requirements_builder`, `prd_builder`, `package_overseer`, `seam_overseer`, `node_worker`, `reviewer`, `verifier`, `corroborator`, `recovery_actor`, or `host_operator`. |
+L00000162	| `operational_identity` | object, non-null | Stable audit identity with closed `identity_kind` and non-empty `identity_id`. |
+L00000163	| `requested_account_binding` | closed enum, non-null | Binding mode: `none`, `preferred`, `required`, or `system_default`. |
+L00000164	| `approval_scope_key` | string, non-null | Approval and blocked-action scope key for recovery/HITL joins. |
+L00000165	| `created_at_utc` | date-time string, non-null | UTC creation timestamp for persistence and replay ordering. |
+L00000166	
+L00000167	Optional fields are closed by the same schema. When present, nullable optional string fields may be `null` only when unknown or not applicable; arrays and closed enums are non-null when present:
+L00000168	
+L00000169	| Optional field family | Fields |
+L00000170	| --- | --- |
+L00000171	| Parent/project/planning linkage | `parent_execution_unit_id`, `project_id`, `thread_id`, `wizard_id`, `resolution_id` |
+L00000172	| Graph/lane/worktree linkage | `lane_id`, `package_id`, `seam_id`, `worktree_id`, `working_directory`, `scheduler_pass_id` |
+L00000173	| Account/policy resolution | `requested_account_id`, `requested_account_policy`, `effective_account_id` |
+L00000174	| Blocked/recovery/action linkage | `blocked_sequence`, `allowed_action_ids[]`, `permission_snapshot_id`, `safe_point_id` |
+L00000175	| Artifact/runtime/source-control refs | `usage_event_ref`, `runtime_policy_snapshot_ref`, `source_control_context_ref`, `host_assignment_id` |
+L00000176	| Persistence/replay controls | `redaction_profile`, `replay_policy`, `updated_at_utc` |
+L00000177	
+L00000178	Lifecycle ownership is Executor-owned: the scheduler, Executor intake, worker spawn, recovery, remediation, verification, and host-operation boundaries mint, receive, rehydrate, and persist the same `execution_unit_context` packet. Prompt Pipeline produces the immutable handoff inputs, Executor materializes the runtime packet, and storage/events/artifacts/UI/PlanCompile/Planning Wizard consume the packet or a ref to it.
+L00000179	
+L00000180	Persistence and replay rules:
+L00000181	- Persisted `execution_unit_context` payloads MUST include `schema_id` and `schema_version`; refs may point to a separately persisted payload only when the referenced payload carries those fields.
+L00000182	- Replay, retry, remediation, recovery, and safe-point restoration MUST rehydrate the persisted packet or fail closed; they MUST NOT reconstruct required identity from tier-era compatibility objects or loose prose fields.
+L00000183	- `additionalProperties: false` in the schema is normative. Adding, renaming, or widening fields requires a governed successor `schema_version`.
+L00000184	
+L00000185	Redaction and secret rules:
+L00000186	- `execution_unit_context` MUST NOT persist raw secrets, tokens, passwords, credentials, API keys, provider auth values, or local machine secrets.
+L00000187	- Secret-bearing state is represented only through governed refs outside this payload; `redaction_profile` may disclose `no_secrets`, `redacted`, or `secret_refs_only`.
+L00000188	
+L00000189	Negative constraints:
+L00000190	- No consumer may redefine the field set, required list, optional list, enum values, or nullability rules.
+L00000191	- No persisted context payload is valid without `schema_version`.
+L00000192	- No runtime, storage, provider, GUI, PlanCompile, or Planning Wizard consumer may treat this contract as evidence that Puppet Master is buildable.
+L00000193	
+L00000194	Stale local worker identity names such as `requested_persona_id`, `effective_persona_id`, `_persona_id`, and `/values` persona slots are compatibility inputs only; provider and model choices remain precedence inputs that must resolve into `execution_unit_context` identity fields before dispatch.
+L00000195	
+L00000196	`execution_unit_context` is the node-native execution-core handoff that replaces or wraps `TierContext` between scheduler, worker spawn, verification, remediation, recovery, and UI projections.
+L00000197	
+L00000198	ContractRef: ContractName:Plans/execution_unit_context.schema.json, Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md#6.1 Canonical blocked-episode approval anchor, Plans/Crosswalk.md#3.1 Runtime orchestration ownership
+L00000199	
+L00000200	### 5.1 Unified `DispatchContext` projection
+L00000201	The canonical dispatch view is the unified `DispatchContext` projection over one `execution_unit_context` instance. `DispatchContext` reads the required, optional, type, nullability, and enum rules from `Plans/execution_unit_context.schema.json`; it does not own a second required-field list.
+L00000202	
+L00000203	Behavioral rules:
+L00000204	- dispatch, recovery, remediation, and inspection read one execution-unit packet rather than tier-era compatibility objects.
+L00000205	- downstream consumers join losslessly to attempt, worktree, permission, and runtime records.
+L00000206	- blocked-action carrythrough stays anchored to blocked-episode lineage.
+L00000207	- Assistant Chat populates `execution_unit_context.worktree_id` and `working_directory` from `thread_state:{thread_id}:worktree_binding` at turn-start, freezes those values for the turn, and sends the frozen `working_directory` through FileSafe checks, tool invocation cwd, MCP tools, `@file` resolution, auto-retrieval scope, and provider CLI or DAE execution-context payloads.
+L00000208	- Worktree-bound safe points include `worktree_id`, `worktree_path`, `branch_name`, and `HEAD_sha`, with `HEAD_sha` captured from `git rev-parse HEAD` in the worktree before mutation-capable execution continues.
+L00000209	- Runtime safe points are recovery/audit anchors, not user-facing restore points; Assistant Chat blocked-state and `/runtime-identity` consumers must rely on `execution_unit_context`, `usage_event_ref`, and blocked records instead of stale closure verdicts.
+L00000210	- A worktree-bound safe point is valid only while the referenced worktree identity is not contaminated and still matches the recorded fields; contamination or stale baseline must surface as a blocked/degraded recovery event.
+L00000211	- `/safe-point/runtime` policy is one field/event/object family: safe-point, restore-point, rollback, and contamination records share `/event/object` identity, state scope, lineage, and recovery semantics rather than competing local object models.
+L00000212	- Wizard-originated runtime handoffs use the same `execution_unit_context` and execution-context payload rules as Orchestrator and Assistant Chat, preserving launch lineage into DAE or provider execution.
+L00000213	- Worktree lifecycle actions are explicit: `recover` restores or reconciles a suspect `/orphaned/conflicted` workspace into a safe known state; `archive` retires active use while preserving `/metadata/lineage`; `prune` is a cleanup-oriented action for policy-eligible `/orphaned/live-no-longer-needed` worktrees; `remove` destructively removes live backing only after confirmation and eligibility checks.
+L00000214	- Historical lineage must survive live worktree cleanup: run/package/node/lane references preserve `worktree_id`, worktree path, branch and HEAD snapshot, compare target or commit-range snapshot, and owning package/lane identity; when backing worktree is missing, consumers render `historical/retired/removed` or `/retired/removed` rather than dropping the record.
+L00000215	- Worktree-aware projections must not assume one active-worktree or current-worktree scalar. File tree surfaces, artifact roots, `/worktree` displays, and safe-point payloads read active package-lane worktree sets, because rewrite-era surface ownership mixed with tier-era execution/worktree identity is a high-risk backdoor for drift.
+L00000216	- Runtime `/artifact` and tool drills carry attempt identity: `artifact_id`, attempt/`/receipt-based` refs, `tool_name`, invocation summary or `invocation_summary`, options, and `usage_event_ref` remain secondary detail refs under `execution_unit_context`; node-only or re-describing action contracts are compatibility inputs, never replacements for attempt identity or canonical runtime attribution.
+L00000217	- Wizard, Builder, settings/GUI, and CUP pre-run handoffs carry requested/effective account identity, `/account/role` disclosure, actor/role, execution-role/`execution_role`, `/model` plus provider/model/persona policy, `/governance`, explicit `/isolation` and worktree mode, and `/package/seam` launch lineage through the same `execution_unit_context`; stale `/Builder`, `/role`, `/subtask`, `/worktree`, `/model/persona`, `CUP`, `intent-specific`, `orchestration-mode`, `ContributePr`, and `single-branch` shortcuts are compatibility/source-lineage labels unless mapped into explicit runtime policy.
+L00000218	- `/interview` and wizard handoff payloads carry blocked-state and runtime identity through the same packet rather than stopping at local lineage fields.
+L00000219	- Executor and Prompt Pipeline are the canonical execution_unit_context producer/consumer pair; storage and `/event/docs` consume the shared field set by reference instead of cloning partial runtime identity payloads.
+L00000220	- Compatibility adapters may derive `decomposition_context` or `selection_context` for selector translation, but those objects are optional disclosure or planning views only; `execution_unit_context` remains the canonical object for dispatch, recovery, remediation, and runtime inspection.
+L00000221	- `Plans/Prompt_Pipeline.md` captures the immutable handoff bundle, and Executor consumes that bundle with `/runtime`, `/recovery`, and `/blocked` anchors intact when a resumed flow launches. `Plans/Executor_Protocol.md` owns the dispatch-side section for mandatory dispatch fields, conditional recovery/blocked fields, and optional disclosure fields.
+L00000222	- The attempt-native handoff identity includes `run_id`, `node_id`, `attempt_id`, `scheduler_pass_id`, and lineage metadata before worker spawn. Those fields make resumed runtime inspection deterministic instead of reconstructing a partial handoff from tier-era compatibility objects.
+L00000223	- Usage correlation follows `usage_event_ref` plus run/node/attempt/package/lane identity; tier-era usage correlation and `usage-event` shorthand are compatibility only.
+L00000224	- `Progress` remains widget-composed, but default widget contracts must not reintroduce tier-era or `tier_id` ownership. `Plans/usage-feature.md` (`usage-feature.md`) is consumed only through run/node/attempt/package/lane usage identity when Executor receipts or progress projections need cost and usage context.
+L00000225	- Optional UI, `/ledger/history/debuggability`, and inspection fields such as `thread_id`, `scheduler_lane`, `feature_seam_id`, `work_package_id`, `manual_priority`, `allowed_action_ids`, `allowed_action_ids[]`, `operational_identity`, and `effective_project_id` may enrich projections but are not prerequisites for dispatch validity.
+L00000226	- Assistant Chat and operational surfaces may expose `/queue` and thread-routing views for multi-lane concurrency and effective identity display, but those projections read scheduler/runtime records rather than collapsing the run into a single-threaded thread or queue owner.
+L00000227	- Every side-effect-bearing or evidence-bearing runtime object must answer which run, `/attempt`, node, `/thread`, provider attempt, effective account/runtime identity, `/runtime` object, `/artifact`, and `/usage` reference produced or owns it.
+L00000228	- Seams-tab projections group top-level `Feature Seams` and second-level `Work Packages`; node entries render as summaries and `/problem` drill-ins, while detail panels emphasize governance, completion, and `/completion/integration` truth rather than raw node execution churn.
+L00000229	- `/Orchestrator` navigation replaces tier-era Dashboard/Orchestrator widget vocabulary with the rewrite-era Progress and `/Seams` set; `Progress` remains execution-state projection while `/Seams` carries seam/package governance structure.
+L00000230	- Source Control stays worktree-first while routing by canonical worktree object identity: `worktree_id` and `base_branch` are durable routing fields, CTAs preserve worktree lineage and `/state`, active-run ownership is visible before destructive actions, first-class worktree selection is not shell state, thread-scoped state, or tier metadata, and tier metadata cannot replace canonical worktree identity.
+L00000231	- Route payloads restore `focused_run_id` and `/object` context instead of merely switching tabs; route/object vocabulary stays shared so UI_Command_Catalog and Final GUI consumers do not re-fragment route targets.
+L00000232	- Route pivots normalize `object_kind = worktree` plus `/seam/package/concern/promotion` subjects through `object_kind` route targets, not filter-shaped payloads; `resume_url` is transport compatibility, and blocked-thread messages resolve to shared route/runtime actions.
+L00000233	- A `route-target` seam prevents deep-link routing from turning into per-surface spaghetti: exact-record exports depend on record-envelope ownership, `/help`, follow-up, cross-reference, and runtime-identity routes stay shared, and deep-link parameters may add presentation focus only after canonical object identity is known.
+L00000234	- Route payloads must not absorb filter or `/subview` noise and become surface-shaped again. Once Executor has the runtime contract, stale route examples are a consumer-doc sourcing problem, not a missing-runtime-contract problem.
+L00000235	- Storage already carries most route/open identity needed for this seam; the remaining lag belongs to universal-open and `/file-centric` consumer docs, which must consume Executor route/runtime identity instead of inventing a second open model.
+L00000236	- `Overseer` remains user-visible / doc-visible where this protocol title and legacy role framing require it, but `/runtime` worker copy prefers `overseer-spawned node worker`; `delegated worker` is a vague compatibility label, not the canonical execution actor name.
+L00000237	- File mutation logs store absolute paths. If `cmd.chat.revert` targets a removed worktree path such as `/project/.puppet-master/worktrees/thread-abc/src/main.rs` for an edit to `src/main.rs`, the executor reports `Cannot restore file: original path no longer exists. The worktree may have been removed.` and does not recreate missing directories.
+L00000238	
+L00000239	ContractRef: Plans/Prompt_Pipeline.md#6.4 Effective resolution record, Plans/Contracts_V0.md, Plans/Crosswalk.md#3.1 Runtime orchestration ownership
+L00000240	## 6. Overseer dispatch algorithm (deterministic)
+L00000241	
+L00000242	Compatibility/source-lineage disposition: older smallest-lexical-node dispatch wording is no longer the scheduler authority. The canonical executor pass is the scored ready-set algorithm in the Runtime Scheduler Addendum below; lexicographically smaller `node_id` is only the final deterministic tiebreak after scheduler lane, manual priority, transitive unblock count, and ready-since time.
+L00000243	
+L00000244	1. Evaluate readiness, blocked, backoff, graph-integrity, and capacity predicates over all candidate nodes.
+L00000245	2. Build the ready set.
+L00000246	3. Score the ready set with the canonical scheduler tuple.
+L00000247	4. Select up to available capacity.
+L00000248	5. Dispatch selected node workers.
+L00000249	6. On worker completion, route verification, receipt, blocked, retry, remediation, or replan outcomes through the canonical runtime outcome taxonomy.
+L00000250	7. Repeat on scheduler wake reasons until no ready nodes remain.
+L00000251	
+L00000252	Overseer MUST produce deterministic ordering for identical graph state and Spec Lock inputs.
+L00000253	ContractRef: PolicyRule:Decision_Policy.md§2, PolicyRule:Decision_Policy.md§3
+L00000254	
+L00000255	### 6.1 Run-completion Document Packaging gate
+L00000256	
+L00000257	Before a run is finalized, Overseer MUST enforce `Plans/Document_Packaging_Policy.md` for any Markdown/text artifact under `.puppet-master/**` produced by the run that reached packaging triggers.
+L00000258	
+L00000259	A run MUST NOT be marked complete when any required Document Set audit (reconstruction/line accounting/idempotency, index-manifest match, clean-room determinism) fails.
+L00000260	
+L00000261	Scope note:
+L00000262	- This run-completion gate applies to generated `.puppet-master/**` artifacts whether or not the current repo-local `run-gates` command enforces those artifact families directly.
+L00000263	- Repo-local verifier coverage and generated-artifact validator coverage MAY be delivered by different commands, but the packaging contract remains mandatory before final completion.
+L00000264	
+L00000265	ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans/Progression_Gates.md#GATE-014
+L00000266	
+L00000267	## Runtime Scheduler Addendum (2026-03-08)
+L00000268	
+L00000269	Compatibility/source-lineage disposition: this historical scheduler addendum preserves exact runtime tokens and earlier scheduling examples. Where it overlaps later named PlanUnits, Contracts_V0, Run_Modes, Models_System, storage-plan, or Wiring_Matrix ownership, those owner docs govern; do not infer precedence from this addendum's position.
+L00000270	
+L00000271	This addendum supersedes any earlier lexical-dispatch wording wherever they conflict.
+L00000272	
+L00000273	### 1. Canonical scheduler pass
+L00000274	
+L00000275	The executor MUST process scheduling as a deterministic repeated pass:
+L00000276	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+L00000277	1. Rebuild or refresh the candidate node set from canonical run state.
+L00000278	2. Recompute readiness for all candidate nodes.
+L00000279	3. Recompute blocked/backoff/capacity state.
+L00000280	4. Build the ready set.
+L00000281	5. Score ready nodes using the canonical ordered tuple.
+L00000282	6. Select as many nodes as available capacity permits.
+L00000283	7. Emit queue-analysis observability before dispatch.
+L00000284	8. Dispatch selected nodes.
+L00000285	
+L00000286	### 2. Readiness rules
+L00000287	
+L00000288	A node is ready only if all of the following are true:
+L00000289	- canonical node state is schedulable (`queued`, `reopened`, or equivalent ready-eligible state)
+L00000290	- every blocker in `blockers[]` has completed successfully or reached a state explicitly declared as dependency-satisfying
+L00000291	- no unresolved graph-integrity error exists for the node
+L00000292	- node is not in active backoff
+L00000293	- node is not blocked on HITL, clarification, external side-effect confirmation, permission denial, FileSafe, auth refresh, or replan-required state
+L00000294	- the node's plan/spec generation is still valid for the active `replan_generation`
+L00000295	- runtime capacity allows another dispatch in the applicable lane / pool
+L00000296	
+L00000297	Invalid blocker IDs remain invalid graph input and MUST keep the node non-ready.
+L00000298	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Progression_Gates.md, ContractName:Plans/Contracts_V0.md
+L00000299	
+L00000300	### 3. Deterministic score tuple
+L00000301	
+L00000302	The canonical ready-node selection tuple is:
+L00000303	- `scheduler_lane`
+L00000304	- `manual_priority`
+L00000305	- `transitive_unblock_count`
+L00000306	- `ready_since_utc`
+L00000307	- `node_id`
+L00000308	
+L00000309	Normalization rules:
+L00000310	- `scheduler_lane` order is `remediation > unblocker > normal`
+L00000311	- larger `manual_priority` wins
+L00000312	- larger `transitive_unblock_count` wins
+L00000313	- older `ready_since_utc` wins
+L00000314	- lexicographically smaller `node_id` wins only as the final tiebreak
+L00000315	
+L00000316	Required notes:
+L00000317	- no critical-path weighting term is part of MVP selection
+L00000318	- queue analysis MUST expose the tuple breakdown so the user can see why a node was chosen
+L00000319	- `ready_since_utc` is set when the node first enters the ready set after being non-ready; it is retained while the node stays continuously ready
+L00000320	
+L00000321	Selection algorithm:
+L00000322	1. Normalize `scheduler_lane` to `scheduler_lane_rank` where `remediation = 3`, `unblocker = 2`, and `normal = 1`.
+L00000323	2. Sort the ready set by `(scheduler_lane_rank DESC, manual_priority DESC, transitive_unblock_count DESC, ready_since_utc ASC, node_id ASC)`.
+L00000324	3. Persist the complete score tuple on every selected and non-selected node in `scheduler.pass`.
+L00000325	4. Preserve `non_selected_reason` for ready nodes that lose to capacity, lane, or policy bounds.
+L00000326	
+L00000327	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md, ContractName:Plans/Orchestrator_Page.md
+L00000328	
+L00000329	### 4. Capacity-aware parallel dispatch
+L00000330	
+L00000331	The executor MUST select up to `available_slots` nodes per scheduler pass.
+L00000332	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Graph_View.md
+L00000333	
+L00000334	`available_slots` is derived from:
+L00000335	- run-level concurrency limit
+L00000336	- any active package/lane/seam concurrency constraints; legacy phase/task/subtask labels may only normalize into those scopes
+L00000337	- resource / provider saturation limits
+L00000338	- remediation lane reservations when configured
+L00000339	
+L00000340	Selection is global across the ready set, not level-by-level lexical dispatch.
+L00000341	
+L00000342	### 5. Wakeup triggers
+L00000343	
+L00000344	Canonical wake-trigger values and coalescing behavior are defined in `### Wake reasons and coalescing`.
+L00000345	
+L00000346	This section is a forward-reference only so the wake-trigger canon has a single owner section in this file.
+L00000347	
+L00000348	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md
+L00000349	
+L00000350	### Wake reasons and coalescing
+L00000351	
+L00000352	`wake_reason` is closed to:
+L00000353	- `prerequisite_resolved`
+L00000354	- `approval_resolved`
+L00000355	- `clarification_resolved`
+L00000356	- `auth_recovered`
+L00000357	- `startup_recovered`
+L00000358	- `backoff_expired`
+L00000359	- `verification_completed`
+L00000360	- `remediation_resolved`
+L00000361	- `safe_point_restored`
+L00000362	- `capacity_available`
+L00000363	- `replan_applied`
+L00000364	- `watchdog_recheck`
+L00000365	
+L00000366	Coalescing rules:
+L00000367	- Runtime keeps one pending wake set per `{run_id, replan_generation}`.
+L00000368	- The first wake recorded by `(recorded_at_utc, event_id)` becomes the primary `scheduler.pass.wake_reason`.
+L00000369	- Additional wakes in the same pending set are persisted in `scheduler.pass.coalesced_wake_reasons[]` and `scheduler.pass.wake_event_refs[]`.
+L00000370	- One pending wake set produces at most one `scheduler.pass`; no additional pass is created only to replay a coalesced reason.
+L00000371	- `watchdog_recheck` is admitted only when no event-driven wake is pending for the same `{run_id, replan_generation}`.
+L00000372	- `replan_applied` invalidates stale attempts from the prior `replan_generation` before ready-set scoring.
+L00000373	
+L00000374	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md
+L00000375	
+L00000376	### 6. Blocked-to-runnable cascade
+L00000377	
+L00000378	When a dependency completes or a blocking condition clears:
+L00000379	- direct dependents are reevaluated immediately
+L00000380	- if now ready, they enter the ready set in the same scheduler wake cycle
+L00000381	- unrelated blocked or waiting nodes MUST NOT stall runnable work elsewhere in the graph
+L00000382	
+L00000383	Canonical prerequisite-resolution event:
+L00000384	- `node.prerequisite_resolved` — emitted when a prerequisite node completes successfully, is dependency-satisfying via skip policy, or is force-resolved, potentially unblocking dependent nodes
+L00000385	- payload: `{ source_node_id, resolved_prerequisite_id, target_node_ids[], resolution: "completed" | "skipped" | "force_resolved" }`
+L00000386	- wake behavior: receiving this event triggers prerequisite re-evaluation on all `target_node_ids`; if all prerequisites are now resolved, the runtime blocked projection clears and the node transitions from `blocked` to `pending` / ready-eligible queue state in the same scheduler wake
+L00000387	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Graph_View.md
+L00000388	
+L00000389	### 7. Failure classes and retry entry points
+L00000390	
+L00000391	
+L00000392	The executor classifies every failed or non-executed attempt into one canonical failure class or blocked-episode cause before deciding the next action.
+
+<<< CONTEXT_AFTER canonical_document_lines=393-404 >>>
+L00000393	
+L00000394	Rules:
+L00000395	- transient provider faults, auth expiry, quota pressure, verification failure, reviewer findings, storage I/O, and graph-integrity failure remain distinct outcome families.
+L00000396	- permission-denied, user-declined, headless approval denial, FileSafe block, external-side-effect block, and replan-needed outcomes stay blocked until the owning recovery action resolves them.
+L00000397	- retry, backoff, remediation, safe-point restore, and escalation are keyed from the canonical classification owned by `Plans/Contracts_V0.md`.
+L00000398	- no consumer in this document may revive legacy approval arrays, opaque recovery option lists, or tier-era compatibility nouns.
+L00000399	- Search-in-files / Search side panel handoffs consume Search/FileManager route ownership through `cmd.search.find_in_files` and `cmd.search.open_result`; SSH-backed file-operation handoffs consume FileManager/Tools classification so network/trust failures map to `network_blocked_by_policy`, `host_unreachable`, or `host_untrusted`, permission denial maps to `permission_denied`, and not-found paths map to `path_not_found` without inventing executor-only file failure classes.
+L00000400	
+L00000401	ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+L00000402	### 7.1 Classified outcome matrix
+L00000403	| `classifier_family` | `classifier` | Max retries | Backoff | Auto-retry? | Notes |
+L00000404	|---|---|---|---|---|---|

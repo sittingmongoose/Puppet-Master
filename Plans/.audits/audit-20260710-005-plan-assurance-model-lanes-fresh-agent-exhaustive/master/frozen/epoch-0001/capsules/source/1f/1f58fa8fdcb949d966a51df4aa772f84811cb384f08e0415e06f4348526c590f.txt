@@ -1,0 +1,293 @@
+<<< CONTEXT_BEFORE 3038-3049 >>>
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0035"
+preserved_exact_tokens:
+  - "UI inspection"
+  - "execution_unit_context"
+  - "runtime-facing context object"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 3050-3313 >>>
+### PP-048 - Blocked Policy And Usage Transfer
+
+```yaml
+plan_unit_id: PP-048
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Blocked policy and usage transfer reuse blocked_sequence for blocked episode lineage, rebind execution_unit_context, runtime identity, and blocked_sequence during startup recovery, keep DAE jail and approval posture on the same effective-resolution record, and preserve execution role, account identity, and switch history in usage surfaces.
+gui_related: false
+gui_classification_reason: This unit defines blocked-policy, recovery, and usage behavior rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-045"
+  - "PP-046"
+unblocks: []
+acceptance_criteria:
+  - "Blocked Policy And Usage Transfer remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0036"
+preserved_exact_tokens:
+  - "blocked_sequence"
+  - "Startup recovery handshake"
+  - "execution_unit_context"
+  - "runtime identity"
+  - "DAE jail posture"
+  - "approval posture"
+  - "effective-resolution record"
+  - "execution role"
+  - "requested/effective account identity"
+  - "switch history"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Multi-Account.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/Contracts_V0.md"
+  - "Plans/Multi-Account.md"
+  - "Plans/Models_System.md"
+```
+
+### PP-049 - PM Native Skills MCP Assembly Boundary
+
+```yaml
+plan_unit_id: PP-049
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Skill/tool/MCP resolution is part of the prompt pipeline; PM resolves and bundles skills from the PM registry and compatibility roots before provider execution, computes readiness from required and optional tool refs plus permission state, and treats provider-native files, /systems trees, and other external surfaces as optional projections rather than canonical runtime sources.
+gui_related: false
+gui_classification_reason: This unit defines skill/MCP assembly ownership rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-030"
+  - "PP-009"
+unblocks: []
+acceptance_criteria:
+  - "PM Native Skills MCP Assembly Boundary remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: constraint
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0037"
+preserved_exact_tokens:
+  - "Skill/tool/MCP resolution"
+  - "/web/skills/runtime packets"
+  - "SSOT"
+  - "required_tool_refs"
+  - "optional_tool_refs"
+  - "PM-owned MCP availability"
+  - "provider-native skill files"
+  - "/systems"
+  - "/projection"
+  - "PM registry/bundling/skill /tool delivery"
+negative_constraints:
+  - "Provider-native skill or MCP files are optional projections and are never the canonical runtime source of truth."
+preserved_contractrefs: []
+compatibility_only_notes:
+  - "Provider-native skill files, /systems-style compatibility trees, and other external surfaces are optional /projection layers for interoperability."
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/Skills_System.md"
+  - "Plans/Tools.md"
+```
+
+### PP-050 - Runtime Resolution UI Transparency
+
+```yaml
+plan_unit_id: PP-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Agent-Config and other detailed inspectors must predict likely effective runtime from the same resolution pipeline before a run starts, then show the frozen snapshot and observed provider deviations after the run starts without heuristically recomputing the original decision.
+gui_related: true
+gui_classification_reason: This unit defines visible runtime inspector transparency before and after a run.
+split_recommended: false
+depends_on:
+  - "PP-029"
+  - "PP-035"
+  - "PP-045"
+unblocks: []
+acceptance_criteria:
+  - "Runtime Resolution UI Transparency remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0038"
+preserved_exact_tokens:
+  - "UI transparency requirement"
+  - "Agent-Config"
+  - "detailed inspectors"
+  - "likely effective runtime"
+  - "frozen snapshot"
+  - "observed provider deviations"
+  - "heuristically recomputing"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/FinalGUISpec.md"
+```
+
+### PP-051 - Runtime Attempt Snapshot Handoff Bundle
+
+```yaml
+plan_unit_id: PP-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  Every attempt snapshot preserves project, thread, wizard, resolution, execution_unit_context, requested/effective account identity, execution role, operational identity, blocked sequence, approval scope, and launched run request references as the canonical bridge from planning-time wizard state to the executing run.
+gui_related: false
+gui_classification_reason: This unit defines attempt snapshot handoff fields rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-045"
+  - "PP-046"
+unblocks: []
+acceptance_criteria:
+  - "Runtime Attempt Snapshot Handoff Bundle remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0039"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0040"
+preserved_exact_tokens:
+  - "Runtime Attempt Snapshot and Handoff Bundle"
+  - "project_id"
+  - "thread_id"
+  - "wizard_id"
+  - "resolution_id"
+  - "execution_unit_context"
+  - "requested/effective account identity"
+  - "execution_role"
+  - "operational_identity"
+  - "blocked_sequence"
+  - "approval_scope_key"
+  - "launched_run_request_ref"
+negative_constraints: []
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+```
+
+### PP-052 - Wizard Interview Lineage Bridge
+
+```yaml
+plan_unit_id: PP-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  auditor_cycle_report preserves planning/governance lineage and an explicit launched-run bridge so review, preview, resume, and drill-through surfaces follow launched_run_id or launched_run_ref rather than timestamps, filenames, or ad hoc provider metadata. Legacy validation_pass_report mirrors may expose the same bridge only with compatibility_only true and cycle_report_ref.
+gui_related: false
+gui_classification_reason: This unit defines wizard/interview lineage fields rather than visual presentation.
+split_recommended: false
+depends_on:
+  - "PP-051"
+unblocks: []
+acceptance_criteria:
+  - "Wizard Interview Lineage Bridge remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: prompt_pipeline_drift
+reasoning_tier: standard
+context_scope: prompt_pipeline
+implementation_surfaces:
+  - "Plans/Prompt_Pipeline.md"
+node_compile_hint:
+  mode: requirement
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0041"
+preserved_exact_tokens:
+  - "auditor_cycle_report"
+  - "validation_pass_report"
+  - "cycle_report_ref"
+  - "compatibility_only"
+  - "phase_plan_ref"
+  - "requirements_quality_report_ref"
+  - "workflow_run_id"
+  - "pass_verdict"
+  - "wizard_snapshot_ref"
+  - "launched_run_id"
+  - "launched_run_ref"
+negative_constraints: []
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/Contracts_V0.md"
+owner_hints:
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/interview-subagent-integration.md"
+  - "Plans/Contracts_V0.md"
+```
+
+
+<<< CONTEXT_AFTER 3314-3325 >>>
+### PP-053 - Historical Runtime Handoff Addendum Disposition
+
+```yaml
+plan_unit_id: PP-053
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Prompt_Pipeline.md
+canonical_text: >-
+  The Runtime Attempt Snapshot and Handoff Consolidation Addendum is retained as historical reconciliation context only; canonical runtime handoff fields and rules live in section 6 and this historical note may not override the owner section.
+gui_related: false
+gui_classification_reason: This unit preserves historical reconciliation context rather than visual presentation.
+split_recommended: false

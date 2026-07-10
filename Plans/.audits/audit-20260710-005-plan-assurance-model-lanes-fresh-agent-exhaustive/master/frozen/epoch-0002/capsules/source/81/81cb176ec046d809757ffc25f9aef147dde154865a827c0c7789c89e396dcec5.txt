@@ -1,0 +1,402 @@
+<<< CONTEXT_BEFORE 9235-9246 >>>
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: Plans/Permissions_System.md#3.4A Web-operation permission-key derivation'
+- 'ContractRef: ContractName:Plans/FinalGUISpec.md#15.7 Permission approval card widget, ContractName:Plans/Contracts_V0.md#3.4
+  Tool-specific payload extensions, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4A
+  Web error taxonomy and applicability'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 9247-9619 >>>
+### T-131 - Firecrawl Error Taxonomy And Retired Aliases
+
+```yaml
+plan_unit_id: T-131
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: 'Firecrawl HTTP and provider errors map to PM canonical error codes; unmapped `success: false` preserves provider
+  detail in `error_message`; `stealth` and legacy `scrape_id` are retired.'
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-129
+unblocks: []
+acceptance_criteria:
+- '`autonomous_budget_exceeded` remains a soft error with partial results.'
+- Original provider detail is preserved in `error_message` for otherwise unmapped provider errors.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: firecrawl_provider_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_185
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: firecrawl_error_taxonomy_retired_aliases
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0101
+preserved_exact_tokens:
+- HTTP 401/403 → `adapter_unavailable`
+- HTTP 429 → `rate_limited`
+- HTTP 402 → `rate_limited`
+- HTTP 500/502/503 → `adapter_unavailable`
+- Timeout → `timeout`
+- crawl_timeout
+- content_not_found
+- invalid_input
+- crawl_robots_blocked
+- content_blocked
+- content_too_large
+- autonomous_budget_exceeded
+- answer_summary
+- sources_used_count
+- research_steps
+- stealth
+- scrape_id (retired alias)
+- error_message
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Legacy Firecrawl/browser `stealth` configuration is retired for PM web tools.
+- Legacy `scrape_id` is retired as an incorrect canonical field name and may appear only as transfer lineage.
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-132 - Provider Stack And Firecrawl Defaults
+
+```yaml
+plan_unit_id: T-132
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Global provider ordering is Settings-configurable, per-operation priority override is not MVP, and Firecrawl
+  identity/default state carry through without overriding section 10 canon.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+  provider disclosure surfaces.
+split_recommended: false
+depends_on:
+- T-113
+- T-114
+unblocks: []
+acceptance_criteria:
+- Provider stack stays user-changeable in Settings.
+- Firecrawl remains `firecrawl` / `Firecrawl`, below Exa/Tavily and above DDG, disabled until API key or self-hosted URL.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: provider_stack_firecrawl_defaults
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0103
+preserved_exact_tokens:
+- global provider stack
+- per-operation priority reordering is NOT MVP
+- Provider ID
+- firecrawl
+- Display name
+- Firecrawl
+- Default priority
+- disabled (requires API key or self-hosted URL)
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Exact stale residue "stale cited-search framing and older `newtools` wording" remains retired.
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-133 - Capability Tier Preservation
+
+```yaml
+plan_unit_id: T-133
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Provider capability tier is separate from routing posture; real provider fetch, research, and crawl capability
+  is not erased by Site Reader primacy.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Firecrawl/Tavily/Exa `webfetch` do not collapse to `fallback-only`.
+- Anthropic/OpenAI search stays `native (model)` / model-native.
+- DuckDuckGo partial crawl behavior remains preserved.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: provider_capability_tier_preservation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0103
+preserved_exact_tokens:
+- capability-tier
+- fallback-only
+- native (model)
+- pm_composed
+- pm-composed
+- native-ish
+- near-native
+- partial
+- unsupported
+- Site Reader primacy
+- Firecrawl `webfetch` capability is not erased
+- Tavily `webfetch` capability is not erased
+- Exa `webfetch` capability is not erased
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-134 - Exa Same-Operation Fallback Disclosure
+
+```yaml
+plan_unit_id: T-134
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Exa free-plan routing can run without a user key, but rate-limit or outage falls to the next eligible same-operation
+  provider with visible chat and audit disclosure.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+  provider disclosure surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- '`numResults=8` is preserved.'
+- Rate-limit fallback does not hard-stop the operation.
+- '`provider_fallback_summary` appears in chat activity and audit.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: exa_same_operation_fallback_disclosure
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0103
+preserved_exact_tokens:
+- free tier
+- without an API key
+- numResults=8
+- provider_fallback_summary
+- same operation
+- PM does NOT stop
+- Settings > Providers
+- DuckDuckGo
+- rate-limit
+- outage
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-135 - DDG And Google Adapter Boundary
+
+```yaml
+plan_unit_id: T-135
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: DuckDuckGo is best-effort/no-key and Google is an optional pluggable adapter slot, not a strategic hard dependency.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+  provider disclosure surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- DDG remains `native-ish` wrapper/scraping-based.
+- Google display label stays `Google`.
+- Official Google constraints and optional SERP adapter posture remain explicit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: ddg_google_adapter_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0103
+preserved_exact_tokens:
+- DuckDuckGo
+- /no-key
+- Nipurn123/duckduckgo-mcp
+- https://html.duckduckgo.com/html/?q=
+- cheerio
+- /nav/etc
+- /strategic
+- Google
+- '2027-01-01'
+- 100 free queries/day
+- $5 per 1,000
+- 10,000/day
+- /search-provider
+- Google Programmable Search / Custom Search JSON API
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-136 - Provider Settings Capability Disclosure
+
+```yaml
+plan_unit_id: T-136
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Settings, `/web` help, and autocomplete disclose provider availability, support tier, health/error, and last
+  failure at row or badge level.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+  provider disclosure surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Help remains inline tooltip or below-field text, not a separate page.
+- Provider classes remain `account-backed | API-backed | no-key`.
+- Model-native providers do not expose a separate web-search API key field.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: provider_settings_capability_disclosure
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0103
+preserved_exact_tokens:
+- row-level health/error disclosure
+- last-failure messaging
+- contextual help text
+- /web help/autocomplete
+- support-tier badges
+- /configuration/availability
+- account-backed | API-backed | no-key
+- enabled/disabled state
+- provider priority / fallback order
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-137 - Tavily Settings Controls
+
+```yaml
+plan_unit_id: T-137
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tavily is an optional premium/official API-key provider with enable, API key, and provider priority at top
+  level; advanced provider options stay behind an expandable Advanced section.
+gui_related: true
+gui_classification_reason: This PlanUnit includes GUI, UI, user-visible presentation, settings, routing, help, activity, or
+  provider disclosure surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Top-level Settings expose only enable/disable, API key, and provider priority.
+- Advanced section owns search depth, domain, time/news/topic/image/raw/chunk fields.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: web_provider_routing_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_186
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tavily_settings_controls
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0103
+preserved_exact_tokens:
+- Tavily
+- API key
+- Advanced
+- search_depth
+- max_results
+- include_domains
+- exclude_domains
+- time_range
+- /time-range
+- topic
+- include_images
+- include_raw_content
+- chunks_per_source
+- provider priority ordering
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 9620-9631 >>>
+### T-138 - Tavily Search-Then-Extract Economics
+
+```yaml
+plan_unit_id: T-138
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tavily search returns candidate URLs/snippets first and may enrich later, but Tavily extract does not replace
+  native Site Reader in MVP.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false

@@ -1,0 +1,380 @@
+<<< CONTEXT_BEFORE 12152-12163 >>>
+          "requirement": "cmd.file.copy_path has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.file_copy_path.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.file.copy_path records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< AUTHORITATIVE_CORE 12164-12514 >>>
+    "catalog.file_copy_relative_path": {
+      "ui_element_id": "catalog.file_copy_relative_path",
+      "ui_location": "File Manager and editor surfaces",
+      "ui_command_id": "cmd.file.copy_relative_path",
+      "handler_location": "handlers::file::copy_relative_path",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.file.copy_relative_path must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.file.copy_relative_path must expose projected state selector and disabled reason before dispatch",
+        "cmd.file.copy_relative_path dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.file.copy_relative_path must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.file.copy_relative_path must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.file.copy_relative_path; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.file_copy_relative_path.availability",
+      "disabled_reason_projection": "state.commands.file_copy_relative_path.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.file.copy_relative_path has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.file.copy_relative_path.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.file_copy_relative_path exposes a stable role/name/description matching cmd.file.copy_relative_path.",
+        "keyboard_access": "catalog.file_copy_relative_path is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.file_copy_relative_path preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.file_copy_relative_path surfaces state.commands.file_copy_relative_path.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.file_copy_relative_path.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.file.copy_relative_path reaches handlers::file::copy_relative_path with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.file_copy_relative_path.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.file_copy_relative_path.availability and disabled copy reads state.commands.file_copy_relative_path.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.file_copy_relative_path.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.file.copy_relative_path has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.file_copy_relative_path.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.file.copy_relative_path records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.file_cut_nodes": {
+      "ui_element_id": "catalog.file_cut_nodes",
+      "ui_location": "File Manager and editor surfaces",
+      "ui_command_id": "cmd.file.cut_nodes",
+      "handler_location": "handlers::file::cut_nodes",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.file.cut_nodes must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.file.cut_nodes must expose projected state selector and disabled reason before dispatch",
+        "cmd.file.cut_nodes dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.file.cut_nodes must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.file.cut_nodes must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.file.cut_nodes; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.file_cut_nodes.availability",
+      "disabled_reason_projection": "state.commands.file_cut_nodes.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.file.cut_nodes has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.file.cut_nodes.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.file_cut_nodes exposes a stable role/name/description matching cmd.file.cut_nodes.",
+        "keyboard_access": "catalog.file_cut_nodes is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.file_cut_nodes preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.file_cut_nodes surfaces state.commands.file_cut_nodes.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.file_cut_nodes.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.file.cut_nodes reaches handlers::file::cut_nodes with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.file_cut_nodes.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.file_cut_nodes.availability and disabled copy reads state.commands.file_cut_nodes.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.file_cut_nodes.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.file.cut_nodes has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.file_cut_nodes.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.file.cut_nodes records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+    "catalog.file_delete": {
+      "ui_element_id": "catalog.file_delete",
+      "ui_location": "File Manager and editor surfaces",
+      "ui_command_id": "cmd.file.delete",
+      "handler_location": "handlers::file::delete",
+      "expected_event_types": [
+        "file.deleted"
+      ],
+      "acceptance_checks": [
+        "cmd.file.delete must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.file.delete must expose projected state selector and disabled reason before dispatch",
+        "cmd.file.delete dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.file.delete must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.file.delete must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.file.delete; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.file_delete.availability",
+      "disabled_reason_projection": "state.commands.file_delete.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.file.delete must emit the declared event types and record dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "file.deleted"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.file_delete exposes a stable role/name/description matching cmd.file.delete.",
+        "keyboard_access": "catalog.file_delete is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.file_delete preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.file_delete surfaces state.commands.file_delete.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.file_delete.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.file.delete reaches handlers::file::delete with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.file_delete.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.file_delete.availability and disabled copy reads state.commands.file_delete.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.file_delete.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.file.delete must emit the declared event types and record dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.file_delete.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.file_delete.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.file.delete emits expected event type file.deleted with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.file.delete emits expected event type file.deleted with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.file_new_file": {
+      "ui_element_id": "catalog.file_new_file",
+      "ui_location": "File Manager and editor surfaces",
+      "ui_command_id": "cmd.file.new_file",
+      "handler_location": "handlers::file::new_file",
+      "expected_event_types": [
+        "file.created"
+      ],
+      "acceptance_checks": [
+        "cmd.file.new_file must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.file.new_file must expose projected state selector and disabled reason before dispatch",
+        "cmd.file.new_file dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.file.new_file must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.file.new_file must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.file.new_file; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.file_new_file.availability",
+      "disabled_reason_projection": "state.commands.file_new_file.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.file.new_file must emit the declared event types and record dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "file.created"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.file_new_file exposes a stable role/name/description matching cmd.file.new_file.",
+        "keyboard_access": "catalog.file_new_file is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.file_new_file preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.file_new_file surfaces state.commands.file_new_file.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.file_new_file.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.file.new_file reaches handlers::file::new_file with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.file_new_file.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.file_new_file.availability and disabled copy reads state.commands.file_new_file.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.file_new_file.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.file.new_file must emit the declared event types and record dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.file_new_file.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.file_new_file.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.file.new_file emits expected event type file.created with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.file.new_file emits expected event type file.created with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.file_new_folder": {
+      "ui_element_id": "catalog.file_new_folder",
+      "ui_location": "File Manager and editor surfaces",
+      "ui_command_id": "cmd.file.new_folder",
+      "handler_location": "handlers::file::new_folder",
+      "expected_event_types": [
+        "folder.created"
+      ],
+      "acceptance_checks": [
+        "cmd.file.new_folder must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.file.new_folder must expose projected state selector and disabled reason before dispatch",
+        "cmd.file.new_folder dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.file.new_folder must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.file.new_folder must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.file.new_folder; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.file_new_folder.availability",
+      "disabled_reason_projection": "state.commands.file_new_folder.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "event",
+        "description": "cmd.file.new_folder must emit the declared event types and record dispatch correlation evidence.",
+        "receipt_or_event_refs": [
+          "folder.created"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.file_new_folder exposes a stable role/name/description matching cmd.file.new_folder.",
+        "keyboard_access": "catalog.file_new_folder is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.file_new_folder preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.file_new_folder surfaces state.commands.file_new_folder.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.file_new_folder.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.file.new_folder reaches handlers::file::new_folder with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.file_new_folder.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.file_new_folder.availability and disabled copy reads state.commands.file_new_folder.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.file_new_folder.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.file.new_folder must emit the declared event types and record dispatch correlation evidence."
+        },
+        {
+          "test_id": "wiring.catalog.file_new_folder.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        },
+        {
+          "test_id": "wiring.catalog.file_new_folder.events",
+          "evidence_kind": "event_test",
+          "requirement": "Assert cmd.file.new_folder emits expected event type folder.created with command_id, origin, correlation_id, and handler target."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.file.new_folder emits expected event type folder.created with command_id, origin, correlation_id, and handler target."
+      ]
+    },
+    "catalog.file_open_in_system_default": {
+      "ui_element_id": "catalog.file_open_in_system_default",
+      "ui_location": "File Manager and editor surfaces",
+      "ui_command_id": "cmd.file.open_in_system_default",
+      "handler_location": "handlers::file::open_in_system_default",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.file.open_in_system_default must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.file.open_in_system_default must expose projected state selector and disabled reason before dispatch",
+        "cmd.file.open_in_system_default dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.file.open_in_system_default must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.file.open_in_system_default must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+      ],
+      "evidence_required": "Production wiring contract for cmd.file.open_in_system_default; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+      "state_selector": "state.commands.file_open_in_system_default.availability",
+      "disabled_reason_projection": "state.commands.file_open_in_system_default.disabled_reason",
+      "effect_contract": {
+        "effect_kind": "receipt",
+        "description": "cmd.file.open_in_system_default has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+        "receipt_or_event_refs": [
+          "cmd.file.open_in_system_default.dispatch_receipt"
+        ]
+      },
+      "accessibility_contract": {
+        "role_or_semantics": "catalog.file_open_in_system_default exposes a stable role/name/description matching cmd.file.open_in_system_default.",
+        "keyboard_access": "catalog.file_open_in_system_default is reachable and activatable by keyboard where the control is visible.",
+        "focus_management": "catalog.file_open_in_system_default preserves visible focus and returns focus deterministically after dispatch or error.",
+        "disabled_announcement": "catalog.file_open_in_system_default surfaces state.commands.file_open_in_system_default.disabled_reason to assistive technology when unavailable."
+      },
+      "test_evidence": [
+        {
+          "test_id": "wiring.catalog.file_open_in_system_default.dispatcher",
+          "evidence_kind": "dispatcher_fixture",
+          "requirement": "Dispatching cmd.file.open_in_system_default reaches handlers::file::open_in_system_default with typed args/result contract."
+        },
+        {
+          "test_id": "wiring.catalog.file_open_in_system_default.state_projection",
+          "evidence_kind": "state_projection",
+          "requirement": "Availability reads state.commands.file_open_in_system_default.availability and disabled copy reads state.commands.file_open_in_system_default.disabled_reason."
+        },
+        {
+          "test_id": "wiring.catalog.file_open_in_system_default.effect",
+          "evidence_kind": "receipt_or_event_assertion",
+          "requirement": "cmd.file.open_in_system_default has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+        },
+        {
+          "test_id": "wiring.catalog.file_open_in_system_default.accessibility",
+          "evidence_kind": "accessibility_regression",
+          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+        }
+      ],
+      "event_test_requirements": [
+        "Assert cmd.file.open_in_system_default records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+      ]
+    },
+
+<<< CONTEXT_AFTER 12515-12526 >>>
+    "catalog.file_open_with": {
+      "ui_element_id": "catalog.file_open_with",
+      "ui_location": "File Manager and editor surfaces",
+      "ui_command_id": "cmd.file.open_with",
+      "handler_location": "handlers::file::open_with",
+      "expected_event_types": [],
+      "acceptance_checks": [
+        "cmd.file.open_with must be registered in the UICommand dispatcher with typed args and result contract",
+        "cmd.file.open_with must expose projected state selector and disabled reason before dispatch",
+        "cmd.file.open_with dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+        "cmd.file.open_with must have a typed payload/result contract or explicit route/open no-persist disposition",
+        "cmd.file.open_with must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

@@ -1,0 +1,319 @@
+<<< CONTEXT_BEFORE 2934-2945 >>>
+  - "authoritative PM ledger, event log, or recovery source"
+negative_constraints:
+  - "OpenCode visuals must not be copied directly into PM canonical surfaces."
+  - "OpenCode SQLite, snapshot, and NFS-incompatible provider-local state must not become the authoritative PM ledger, event log, or recovery source."
+preserved_contractrefs:
+  - "ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#EventRecord"
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/storage-plan.md"
+  - "Plans/Contracts_V0.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 2946-3235 >>>
+### PO-042 - Testable Acceptance Bundle
+
+```yaml
+plan_unit_id: PO-042
+unit_type: acceptance
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode acceptance requires reachable enabled sessions, provider/model discovery and GUI model picker
+  display, health/auth user-facing errors, normalized provider events, per-iteration session deletion,
+  enabled-only tier visibility, Doctor checks, credential-store secrets, and unified Provider facade behavior
+  without consumer branching.
+gui_related: true
+gui_classification_reason: "This unit includes GUI model picker, tier dropdown, Doctor page, and user-facing auth/error acceptance surfaces."
+split_recommended: false
+depends_on:
+  - "PO-027"
+  - "PO-028"
+  - "PO-029"
+  - "PO-030"
+  - "PO-031"
+  - "PO-032"
+  - "PO-033"
+  - "PO-034"
+  - "PO-035"
+  - "PO-036"
+  - "PO-037"
+  - "PO-038"
+  - "PO-039"
+  - "PO-040"
+  - "PO-041"
+unblocks: []
+acceptance_criteria:
+  - "Testable Acceptance Bundle remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode_acceptance
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_acceptance_matrix
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0048"
+preserved_exact_tokens:
+  - "Acceptance Criteria (Testable)"
+  - "opencode_enabled"
+  - "create a session"
+  - "send a prompt"
+  - "receive a response"
+  - "delete the session"
+  - "Model discovery via `GET /provider`"
+  - "GUI model picker"
+  - "Health check failures"
+  - "auth state changes"
+  - "user-facing error messages"
+  - "normalized events"
+  - "text_delta"
+  - "tool_use"
+  - "tool_result"
+  - "usage"
+  - "done"
+  - "no session reuse"
+  - "tier config platform dropdown"
+  - "Doctor page"
+  - "Secrets (password)"
+  - "OS credential store"
+  - "unified Provider facade"
+  - "consumers do not branch on OpenCode vs CLI providers"
+negative_constraints:
+  - "Consumers must not branch on OpenCode vs CLI providers for accepted Provider facade behavior."
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/FinalGUISpec.md"
+  - "Plans/Contracts_V0.md"
+```
+
+### PO-043 - Runtime Identity Correlation Bundle
+
+```yaml
+plan_unit_id: PO-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  Each OpenCode-backed attempt preserves the shared runtime identity and correlation bundle in local
+  correlation state and attaches it to normalized provider events, storage records, and retry/recovery
+  decisions even when fields are not transmitted to OpenCode HTTP endpoints.
+gui_related: false
+gui_classification_reason: "This unit defines runtime identity and local correlation fields rather than visual presentation."
+split_recommended: false
+depends_on:
+  - "PO-004"
+  - "PO-011"
+  - "PO-034"
+unblocks: []
+acceptance_criteria:
+  - "Runtime Identity Correlation Bundle remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_provider_drift
+reasoning_tier: standard
+context_scope: provider_opencode_runtime_identity
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_runtime_identity_bundle
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0050"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0051"
+preserved_exact_tokens:
+  - "OpenCode Runtime Retry / Blocked-State / Packet Canonical Alignment (2026-03-09)"
+  - "canonical runtime scheduler"
+  - "retry taxonomy"
+  - "safe-point contract"
+  - "remediation lineage"
+  - "runtime packet"
+  - "usage pipeline"
+  - "run_id"
+  - "thread_id"
+  - "node_id"
+  - "attempt_id"
+  - "retry_count"
+  - "requested/effective model identifiers"
+  - "requested/effective permission snapshot identifiers"
+  - "replan_generation"
+  - "mutation_capable"
+  - "safe_point_id?"
+  - "remediation_root_id?"
+  - "remediation_parent_attempt_id?"
+  - "remediation_generation?"
+  - "local correlation state"
+  - "normalized provider events"
+  - "storage records"
+  - "retry/recovery decisions"
+negative_constraints:
+  - "OpenCode HTTP endpoint shape must not be used as an excuse to drop canonical runtime identity fields from local correlation and normalized records."
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/Contracts_V0.md"
+  - "Plans/Prompt_Pipeline.md"
+  - "Plans/storage-plan.md"
+```
+
+### PO-044 - Retry Ownership And Attempt Lineage
+
+```yaml
+plan_unit_id: PO-044
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode reconnect and retry behavior must preserve canonical attempt identity: reconnect only observes an
+  existing attempt, accepted requests retry only through the canonical runtime scheduler and failure taxonomy,
+  recovery creates a new attempt snapshot, safe_point_id persists across mutation-capable attempts, restore
+  reruns use new attempt_id lineage, and stale replan_generation attempts do not resume silently.
+gui_related: false
+gui_classification_reason: "This unit defines scheduler retry ownership and attempt lineage rather than visual presentation."
+split_recommended: true
+depends_on:
+  - "PO-039"
+  - "PO-043"
+unblocks: []
+acceptance_criteria:
+  - "Retry Ownership And Attempt Lineage remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_retry_ownership_drift
+reasoning_tier: standard
+context_scope: provider_opencode_retry_lineage
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_retry_lineage_scheduler
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0052"
+preserved_exact_tokens:
+  - "OpenCode transport reconnect logic"
+  - "reconnect only to observe an existing attempt"
+  - "MUST NOT silently resubmit prompts"
+  - "reset attempt identity"
+  - "invent provider-local fallback loops"
+  - "canonical runtime scheduler"
+  - "failure taxonomy"
+  - "canonical scheduler wake"
+  - "new attempt snapshot"
+  - "safe_point_id"
+  - "mutation-capable OpenCode attempt"
+  - "new `attempt_id`"
+  - "lineage references"
+  - "replan invalidation"
+  - "replan_generation"
+  - "stale attempts"
+  - "OpenCode-local retry wording is superseded by canonical runtime retry ownership"
+negative_constraints:
+  - "OpenCode reconnect logic must not silently resubmit prompts, reset attempt identity, or invent provider-local fallback loops."
+  - "Stale attempts from an older replan_generation must not resume silently."
+  - "Any OpenCode-local retry wording is superseded by canonical runtime retry ownership."
+preserved_contractrefs: []
+stale_retired_dispositions:
+  - "Stale attempts from an older `replan_generation` must not resume silently."
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/Executor_Protocol.md"
+  - "Plans/Contracts_V0.md"
+```
+
+### PO-045 - Canonical Blocked Signal Normalization For UI And Orchestration
+
+```yaml
+plan_unit_id: PO-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode auth, transient, structured-output, and tool-denial signals must normalize into canonical
+  blocked_reason_code or failure_class values before orchestration or UI consumes them, preserving
+  server-vs-provider auth realms and refusing to collapse permission, FileSafe, or external-side-effect blocks
+  into generic provider errors.
+gui_related: true
+gui_classification_reason: "This unit includes blocked-state classifications consumed by orchestration and UI recovery surfaces."
+split_recommended: true
+depends_on:
+  - "PO-017"
+  - "PO-027"
+  - "PO-043"
+  - "PO-044"
+unblocks: []
+acceptance_criteria:
+  - "Canonical Blocked Signal Normalization For UI And Orchestration remains addressable as a fine-grained Provider OpenCode PlanUnit."
+  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+validation_surfaces:
+  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+  - "python3 scripts/pm-plan-index.py validate"
+risk_class: opencode_blocked_signal_drift
+reasoning_tier: standard
+context_scope: provider_opencode_blocked_signal_normalization
+implementation_surfaces:
+  - "Plans/Provider_OpenCode.md"
+node_compile_hint:
+  mode: opencode_blocked_failure_ui_boundary
+  create_worknodes: false
+source_lineage:
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0052"
+  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_OpenCode-S0053"
+preserved_exact_tokens:
+  - "blocked_reason_code"
+  - "failure_class"
+  - "before orchestration or UI consumes them"
+  - "auth_expired"
+  - "server realm"
+  - "provider realm"
+  - "provider_transient"
+  - "structured_output_invalid"
+  - "permission_denied"
+  - "filesafe_blocked"
+  - "external_side_effect_blocked"
+  - "generic `error`"
+  - "provider_failed"
+  - "canonical failure and blocked mapping"
+  - "Surface blocked recovery"
+  - "wait for auth recovery"
+  - "Runtime retry/backoff policy applies"
+  - "structured-output remediation / retry policy"
+negative_constraints:
+  - "The adapter MUST NOT collapse permission_denied, filesafe_blocked, external_side_effect_blocked, or other already-determined canonical runtime classes to generic error or provider_failed."
+preserved_contractrefs: []
+owner_hints:
+  - "Plans/Provider_OpenCode.md"
+  - "Plans/Contracts_V0.md"
+  - "Plans/FinalGUISpec.md"
+  - "Plans/FileSafe.md"
+```
+
+
+<<< CONTEXT_AFTER 3236-3247 >>>
+### PO-046 - Capability And Usage Runtime Alignment
+
+```yaml
+plan_unit_id: PO-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Provider_OpenCode.md
+canonical_text: >-
+  OpenCode capability reporting declares server-bridged HTTP/SSE transport, normalized streaming support,
+  canonical tool-policy snapshot use, split server/upstream auth realms, and no hidden retries; unsupported
+  runtime controls are recorded as unsupported/skipped, and Session.getUsage message usage maps to normalized
+  usage.event persistence and Ledger/Usage consumption.

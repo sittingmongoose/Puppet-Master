@@ -1,0 +1,401 @@
+<<< CONTEXT_BEFORE canonical_document_lines=16817-16828 >>>
+L00016817	preserved_exact_tokens:
+L00016818	  - "sendPrompt(text: string): void"
+L00016819	  - "openLink(url: string, target?: \"_blank\" | \"_self\"): void"
+L00016820	  - "copyToClipboard(text: string): Promise<boolean>"
+L00016821	  - "requestResize(width?: number, height?: number): void"
+L00016822	negative_constraints:
+L00016823	  - "Question-flow embedded visual modules omit `sendPrompt` from the bridge."
+L00016824	owner_hints:
+L00016825	  - Plans/assistant-chat-design.md
+L00016826	  - Plans/FinalGUISpec.md
+L00016827	```
+L00016828	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=16829-17200 >>>
+L00016829	### ACD-296 - Visualizer Theme Token Injection
+L00016830	
+L00016831	```yaml
+L00016832	plan_unit_id: ACD-296
+L00016833	unit_type: constraint
+L00016834	status: accepted
+L00016835	owner_doc: Plans/assistant-chat-design.md
+L00016836	canonical_text: >-
+L00016837	  Visualizer theme-token injection is locked to CSS custom properties injected
+L00016838	  through inline `style`, with MVP tokens `--pm-viz-bg`, `--pm-viz-fg`,
+L00016839	  `--pm-viz-accent`, `--pm-viz-border`, `--pm-viz-font-family`, and
+L00016840	  `--pm-viz-font-size`.
+L00016841	gui_related: true
+L00016842	gui_classification_reason: Theme-token injection controls visible visualizer styling.
+L00016843	depends_on: [ACD-292]
+L00016844	unblocks: [ACD-297]
+L00016845	acceptance_criteria:
+L00016846	  - Visualizer theme tokens are injected as CSS custom properties through inline `style`.
+L00016847	  - Visualizer fragments consume the MVP token set.
+L00016848	validation_surfaces:
+L00016849	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016850	  - python3 scripts/pm-plan-index.py validate
+L00016851	risk_class: visualizer_theme
+L00016852	reasoning_tier: high
+L00016853	context_scope: gui
+L00016854	implementation_surfaces:
+L00016855	  - Plans/assistant-chat-design.md
+L00016856	  - Plans/FinalGUISpec.md
+L00016857	node_compile_hint:
+L00016858	  mode: visualizer_theme_token_injection
+L00016859	  create_worknodes: false
+L00016860	source_lineage:
+L00016861	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00016862	preserved_exact_tokens:
+L00016863	  - "Decision #10"
+L00016864	  - "--pm-viz-bg"
+L00016865	  - "--pm-viz-fg"
+L00016866	  - "--pm-viz-accent"
+L00016867	  - "--pm-viz-border"
+L00016868	  - "--pm-viz-font-family"
+L00016869	  - "--pm-viz-font-size"
+L00016870	negative_constraints:
+L00016871	  - "Visualizer fragments must not hardcode replacement colors."
+L00016872	owner_hints:
+L00016873	  - Plans/assistant-chat-design.md
+L00016874	  - Plans/FinalGUISpec.md
+L00016875	```
+L00016876	
+L00016877	### ACD-297 - Visualizer Bridge Host Semantics
+L00016878	
+L00016879	```yaml
+L00016880	plan_unit_id: ACD-297
+L00016881	unit_type: requirement
+L00016882	status: accepted
+L00016883	owner_doc: Plans/assistant-chat-design.md
+L00016884	canonical_text: >-
+L00016885	  Bridge calls preserve host semantics for `sendPrompt`, dual-context question
+L00016886	  routing, `openLink` routing through `cmd.browser.open_detached_preview` or
+L00016887	  system browser, theme updates on mount/change, and resize telemetry `{ height:
+L00016888	  px }`.
+L00016889	gui_related: false
+L00016890	gui_classification_reason: Bridge host semantics are integration/runtime behavior.
+L00016891	depends_on: [ACD-295, ACD-296]
+L00016892	unblocks: []
+L00016893	acceptance_criteria:
+L00016894	  - "`sendPrompt(text)` routes to active thread composer outside question-flow contexts."
+L00016895	  - Questionnaire-active `sendPrompt` calls route as question answers.
+L00016896	  - "`openLink(url)` routes through detached preview or system browser according to target."
+L00016897	  - Theme and resize bridge behavior follows host semantics.
+L00016898	validation_surfaces:
+L00016899	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016900	  - python3 scripts/pm-plan-index.py validate
+L00016901	risk_class: visualizer_bridge
+L00016902	reasoning_tier: high
+L00016903	context_scope: bridge
+L00016904	implementation_surfaces:
+L00016905	  - Plans/assistant-chat-design.md
+L00016906	  - Plans/FinalGUISpec.md
+L00016907	node_compile_hint:
+L00016908	  mode: visualizer_bridge_host_semantics
+L00016909	  create_worknodes: false
+L00016910	source_lineage:
+L00016911	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00016912	preserved_exact_tokens:
+L00016913	  - "sendPrompt(text)"
+L00016914	  - "cmd.browser.open_detached_preview"
+L00016915	  - "{ height: px }"
+L00016916	negative_constraints:
+L00016917	  - "Question-flow visuals cannot bypass PM draft state by queueing chat messages."
+L00016918	owner_hints:
+L00016919	  - Plans/assistant-chat-design.md
+L00016920	  - Plans/FinalGUISpec.md
+L00016921	```
+L00016922	
+L00016923	### ACD-298 - Open Webui Visualizer Lineage Disposition
+L00016924	
+L00016925	```yaml
+L00016926	plan_unit_id: ACD-298
+L00016927	unit_type: compatibility_disposition
+L00016928	status: accepted
+L00016929	owner_doc: Plans/assistant-chat-design.md
+L00016930	canonical_text: >-
+L00016931	  `Classic298/open-webui-plugins` and `/open-webui-plugins` remain
+L00016932	  reference-only lineage; PM names the live surface inline visual module and
+L00016933	  treats `/catalog`, folder-based `SKILL.md`, `/discovery/runtime`, and
+L00016934	  `/preview/editor` as owner-consumed import/editor concepts, not visualizer
+L00016935	  authority.
+L00016936	gui_related: false
+L00016937	gui_classification_reason: The open-webui references are source-lineage and authority disposition.
+L00016938	depends_on: [ACD-292]
+L00016939	unblocks: []
+L00016940	acceptance_criteria:
+L00016941	  - Open-webui plugin references remain lineage only.
+L00016942	  - PM names the live surface inline visual module.
+L00016943	  - Catalog, skill, discovery, and preview/editor concepts are owner-consumed imports rather than visualizer authority.
+L00016944	validation_surfaces:
+L00016945	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016946	  - python3 scripts/pm-plan-index.py validate
+L00016947	risk_class: stale_lineage
+L00016948	reasoning_tier: high
+L00016949	context_scope: compatibility
+L00016950	implementation_surfaces:
+L00016951	  - Plans/assistant-chat-design.md
+L00016952	  - Plans/FinalGUISpec.md
+L00016953	node_compile_hint:
+L00016954	  mode: open_webui_visualizer_lineage_disposition
+L00016955	  create_worknodes: false
+L00016956	source_lineage:
+L00016957	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00016958	preserved_exact_tokens:
+L00016959	  - "Classic298/open-webui-plugins"
+L00016960	  - "/open-webui-plugins"
+L00016961	  - "/catalog"
+L00016962	  - "SKILL.md"
+L00016963	  - "/discovery/runtime"
+L00016964	  - "/preview/editor"
+L00016965	negative_constraints:
+L00016966	  - "Reference-only lineage must not become visualizer authority."
+L00016967	owner_hints:
+L00016968	  - Plans/assistant-chat-design.md
+L00016969	  - Plans/FinalGUISpec.md
+L00016970	```
+L00016971	
+L00016972	### ACD-299 - Inline Visual Module Controls And Source
+L00016973	
+L00016974	```yaml
+L00016975	plan_unit_id: ACD-299
+L00016976	unit_type: requirement
+L00016977	status: accepted
+L00016978	owner_doc: Plans/assistant-chat-design.md
+L00016979	canonical_text: >-
+L00016980	  Inline visual modules support interactive `/controls`, local visual-state
+L00016981	  `/queues`, `/diagrams/explainers`, host-mediated `/auto-resize`, and
+L00016982	  source/copy/export metadata behind the visual-module contract.
+L00016983	gui_related: true
+L00016984	gui_classification_reason: Inline visual module controls, diagrams, resize, and source actions are user-visible artifact UI.
+L00016985	depends_on: [ACD-292, ACD-295]
+L00016986	unblocks: []
+L00016987	acceptance_criteria:
+L00016988	  - Inline visual modules support interactive controls, local visual queues, diagram explainers, and host-mediated auto-resize.
+L00016989	  - Source, copy, export, and generated-asset metadata stay behind the visual-module contract.
+L00016990	validation_surfaces:
+L00016991	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00016992	  - python3 scripts/pm-plan-index.py validate
+L00016993	risk_class: visualizer_controls
+L00016994	reasoning_tier: standard
+L00016995	context_scope: gui
+L00016996	implementation_surfaces:
+L00016997	  - Plans/assistant-chat-design.md
+L00016998	  - Plans/FinalGUISpec.md
+L00016999	node_compile_hint:
+L00017000	  mode: inline_visual_module_controls_source
+L00017001	  create_worknodes: false
+L00017002	source_lineage:
+L00017003	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00017004	preserved_exact_tokens:
+L00017005	  - "/controls"
+L00017006	  - "/queues"
+L00017007	  - "/diagrams/explainers"
+L00017008	  - "/auto-resize"
+L00017009	  - "Copy source"
+L00017010	  - "Open in editor"
+L00017011	  - "Open detached preview"
+L00017012	  - "Export diagram"
+L00017013	negative_constraints:
+L00017014	  - "Visualizer source handling must not inject raw controls into the main chat DOM."
+L00017015	owner_hints:
+L00017016	  - Plans/assistant-chat-design.md
+L00017017	  - Plans/FinalGUISpec.md
+L00017018	```
+L00017019	
+L00017020	### ACD-300 - Visualizer Library Network Constraint
+L00017021	
+L00017022	```yaml
+L00017023	plan_unit_id: ACD-300
+L00017024	unit_type: constraint
+L00017025	status: accepted
+L00017026	owner_doc: Plans/assistant-chat-design.md
+L00017027	canonical_text: >-
+L00017028	  Visualizer third-party `/library` code is allowed only when policy allows and
+L00017029	  must be bundled, version-pinned, and integrity-recorded; arbitrary external
+L00017030	  network loads are denied; the visualizer is not limited to `/questions` and
+L00017031	  is not accessibility-only fallback.
+L00017032	gui_related: false
+L00017033	gui_classification_reason: Third-party library and network policy are security/runtime constraints.
+L00017034	depends_on: [ACD-293]
+L00017035	unblocks: []
+L00017036	acceptance_criteria:
+L00017037	  - Third-party visualizer library code is allowed only when policy allows it.
+L00017038	  - Allowed third-party code is bundled, version-pinned, and integrity-recorded.
+L00017039	  - Arbitrary external network loads are denied.
+L00017040	validation_surfaces:
+L00017041	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017042	  - python3 scripts/pm-plan-index.py validate
+L00017043	risk_class: visualizer_security
+L00017044	reasoning_tier: high
+L00017045	context_scope: sandbox
+L00017046	implementation_surfaces:
+L00017047	  - Plans/assistant-chat-design.md
+L00017048	  - Plans/FinalGUISpec.md
+L00017049	node_compile_hint:
+L00017050	  mode: visualizer_library_network_constraint
+L00017051	  create_worknodes: false
+L00017052	source_lineage:
+L00017053	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0136
+L00017054	preserved_exact_tokens:
+L00017055	  - "/library"
+L00017056	  - "/questions"
+L00017057	  - "Arbitrary external network loads are denied"
+L00017058	negative_constraints:
+L00017059	  - "Arbitrary external network loads are denied."
+L00017060	  - "The visualizer is not limited to `/questions`, and it is not an accessibility-only fallback path."
+L00017061	owner_hints:
+L00017062	  - Plans/assistant-chat-design.md
+L00017063	  - Plans/FinalGUISpec.md
+L00017064	```
+L00017065	
+L00017066	### ACD-301 - Natural Language Mode And Wizard Escalation Scope
+L00017067	
+L00017068	```yaml
+L00017069	plan_unit_id: ACD-301
+L00017070	unit_type: requirement
+L00017071	status: accepted
+L00017072	owner_doc: Plans/assistant-chat-design.md
+L00017073	canonical_text: Natural-language mode invocation and wizard escalation define how chat resolves workflow identity, runtime posture, and Planning Wizard escalation.
+L00017074	gui_related: false
+L00017075	gui_classification_reason: This scope statement defines behavior and escalation ownership.
+L00017076	depends_on: []
+L00017077	unblocks: [ACD-302, ACD-306, ACD-308]
+L00017078	acceptance_criteria:
+L00017079	  - Natural-language mode invocation resolves workflow identity and runtime posture separately.
+L00017080	  - Wizard escalation behavior is defined for Assistant Chat and Deep Plan.
+L00017081	validation_surfaces:
+L00017082	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017083	  - python3 scripts/pm-plan-index.py validate
+L00017084	risk_class: mode_invocation
+L00017085	reasoning_tier: standard
+L00017086	context_scope: modes
+L00017087	implementation_surfaces:
+L00017088	  - Plans/assistant-chat-design.md
+L00017089	node_compile_hint:
+L00017090	  mode: natural_language_mode_wizard_escalation_scope
+L00017091	  create_worknodes: false
+L00017092	source_lineage:
+L00017093	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0137
+L00017094	preserved_exact_tokens:
+L00017095	  - "Natural-language mode invocation"
+L00017096	  - "Wizard Escalation"
+L00017097	negative_constraints: []
+L00017098	owner_hints:
+L00017099	  - Plans/assistant-chat-design.md
+L00017100	```
+L00017101	
+L00017102	### ACD-302 - Mode Invocation Runtime Fields
+L00017103	
+L00017104	```yaml
+L00017105	plan_unit_id: ACD-302
+L00017106	unit_type: requirement
+L00017107	status: accepted
+L00017108	owner_doc: Plans/assistant-chat-design.md
+L00017109	canonical_text: Natural-language mode invocation records requested/effective overlay, requested/effective runtime mode, requested/effective plan thoroughness, selection source/reason, and override scope.
+L00017110	gui_related: false
+L00017111	gui_classification_reason: Mode invocation field records are runtime data-contract behavior.
+L00017112	depends_on: [ACD-301]
+L00017113	unblocks: [ACD-303, ACD-314]
+L00017114	acceptance_criteria:
+L00017115	  - Mode invocation records requested and effective mode overlay fields.
+L00017116	  - Mode invocation records requested and effective runtime mode and Plan Thoroughness fields.
+L00017117	  - Selection source, selection reason, and override scope are preserved.
+L00017118	validation_surfaces:
+L00017119	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017120	  - python3 scripts/pm-plan-index.py validate
+L00017121	risk_class: mode_invocation
+L00017122	reasoning_tier: high
+L00017123	context_scope: modes
+L00017124	implementation_surfaces:
+L00017125	  - Plans/assistant-chat-design.md
+L00017126	  - Plans/Prompt_Pipeline.md
+L00017127	  - Plans/Contracts_V0.md
+L00017128	  - Plans/Run_Modes.md
+L00017129	node_compile_hint:
+L00017130	  mode: mode_invocation_runtime_fields
+L00017131	  create_worknodes: false
+L00017132	source_lineage:
+L00017133	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0138
+L00017134	preserved_exact_tokens:
+L00017135	  - "requested_mode_overlay"
+L00017136	  - "effective_mode_overlay"
+L00017137	  - "requested_runtime_mode"
+L00017138	  - "effective_runtime_mode"
+L00017139	  - "requested_plan_thoroughness"
+L00017140	  - "effective_plan_thoroughness"
+L00017141	  - "selection_source"
+L00017142	  - "selection_reason"
+L00017143	  - "override_scope"
+L00017144	negative_constraints: []
+L00017145	owner_hints:
+L00017146	  - Plans/assistant-chat-design.md
+L00017147	  - Plans/Prompt_Pipeline.md
+L00017148	```
+L00017149	
+L00017150	### ACD-303 - Mode Overlay Enum Closure
+L00017151	
+L00017152	```yaml
+L00017153	plan_unit_id: ACD-303
+L00017154	unit_type: constraint
+L00017155	status: accepted
+L00017156	owner_doc: Plans/assistant-chat-design.md
+L00017157	canonical_text: >-
+L00017158	  Mode overlays are closed to `none`, `plan`, `deep_plan`, `debug`,
+L00017159	  `interview`, `brainstorm`, and `crew`; runtime mode is closed by
+L00017160	  `Plans/Run_Modes.md`; `deep_plan` survives normalization through overlay
+L00017161	  fields.
+L00017162	gui_related: false
+L00017163	gui_classification_reason: Enum closure and normalization are runtime contract constraints.
+L00017164	depends_on: [ACD-302]
+L00017165	unblocks: [ACD-304]
+L00017166	acceptance_criteria:
+L00017167	  - Mode overlay values are limited to the canonical closed enum.
+L00017168	  - Runtime mode values are limited to `Plans/Run_Modes.md` postures.
+L00017169	  - "`deep_plan` survives normalization through overlay fields."
+L00017170	validation_surfaces:
+L00017171	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00017172	  - python3 scripts/pm-plan-index.py validate
+L00017173	risk_class: mode_invocation
+L00017174	reasoning_tier: high
+L00017175	context_scope: modes
+L00017176	implementation_surfaces:
+L00017177	  - Plans/assistant-chat-design.md
+L00017178	  - Plans/Run_Modes.md
+L00017179	  - Plans/Prompt_Pipeline.md
+L00017180	  - Plans/storage-plan.md
+L00017181	node_compile_hint:
+L00017182	  mode: mode_overlay_enum_closure
+L00017183	  create_worknodes: false
+L00017184	source_lineage:
+L00017185	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0138
+L00017186	preserved_exact_tokens:
+L00017187	  - "none"
+L00017188	  - "plan"
+L00017189	  - "deep_plan"
+L00017190	  - "debug"
+L00017191	  - "interview"
+L00017192	  - "brainstorm"
+L00017193	  - "crew"
+L00017194	negative_constraints:
+L00017195	  - "`deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning."
+L00017196	owner_hints:
+L00017197	  - Plans/assistant-chat-design.md
+L00017198	  - Plans/Run_Modes.md
+L00017199	```
+L00017200	
+
+<<< CONTEXT_AFTER canonical_document_lines=17201-17212 >>>
+L00017201	### ACD-304 - Natural Language Mode Resolution
+L00017202	
+L00017203	```yaml
+L00017204	plan_unit_id: ACD-304
+L00017205	unit_type: requirement
+L00017206	status: accepted
+L00017207	owner_doc: Plans/assistant-chat-design.md
+L00017208	canonical_text: >-
+L00017209	  Natural-language requests resolve deterministically: ask/read-only phrases map
+L00017210	  to overlay `none` plus runtime `ask`; plan phrases map to overlay `plan` plus
+L00017211	  runtime `plan`; deep-plan phrases map to overlay `deep_plan` plus runtime
+L00017212	  `plan`; agent phrases clear planning overlays and preserve explicit permission

@@ -17,6 +17,9 @@
     .pm6-usage-qbars-none{font-size:var(--fs-2xs);color:var(--text-muted);font-style:italic;display:flex;align-items:center;min-height:15px}
     .pm6-usage-qrow-nv .pm6-usage-qname{color:var(--text-secondary)}
     /* theme accents for the new chips (friendly-dark is the default look above) */
+    /* friendly cozy: neutral usage cards w/ soft border ([class] bump outranks
+       part 18's later equal-specificity friendly rule) */
+    [data-theme^="friendly"] .pm6-usage-w[class]{background:var(--surface-elevated);border-color:var(--border);border-radius:var(--radius-lg);box-shadow:var(--elev-2)}
     [data-theme^="retro"] .pm6-usage-vs{border-radius:2px}
     [data-theme^="retro"] .pm6-usage-qbars-none{font-style:normal}
     [data-theme^="glass"] .pm6-usage-vs.vs-disabled{border-color:var(--glass-hairline)}

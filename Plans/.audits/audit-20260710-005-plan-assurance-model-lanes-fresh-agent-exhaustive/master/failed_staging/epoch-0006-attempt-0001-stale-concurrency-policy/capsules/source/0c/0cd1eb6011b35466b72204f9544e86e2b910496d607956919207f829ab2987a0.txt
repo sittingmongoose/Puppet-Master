@@ -1,0 +1,394 @@
+<<< CONTEXT_BEFORE canonical_document_lines=388-399 >>>
+L00000388	
+L00000389	This packet requires an explicit terminology crosswalk:
+L00000390	- `safe point` = runtime-internal retry/remediation anchor
+L00000391	- `restore point` = user-visible history/rewind anchor
+L00000392	- `rollback` = explicit request/confirm restoration flow
+L00000393	- `worktree baseline` = execution-root state used to materialize a safe point or restore point depending on context
+L00000394	
+L00000395	Required rule:
+L00000396	- docs and implementations must not use these terms interchangeably
+L00000397	- UI copy must preserve the distinction
+L00000398	## Runtime Scheduler / Recovery Ownership and Precedence
+L00000399	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=400-764 >>>
+L00000400	
+L00000401	Canonical ownership:
+L00000402	- runtime lifecycle and scheduling: `Plans/Executor_Protocol.md`
+L00000403	- runtime events, enums, and payloads: `Plans/Contracts_V0.md`
+L00000404	- persistence and restart recovery: `Plans/storage-plan.md`
+L00000405	- deterministic recovery defaults: `Plans/Decision_Policy.md`
+L00000406	- runtime command IDs: `Plans/UI_Command_Catalog.md`
+L00000407	- Context Lens control/action wiring rows: `Plans/Wiring_Matrix.md`
+L00000408	- chat, GUI, run graph, orchestrator, and wizard surfaces are consumers of the contracts above
+L00000409	- `Executor_Protocol.md` owns `blocked_sequence` minting and the restart-recovery to first `scheduler.pass` handoff from `startup_recovered`; `Contracts_V0.md` owns `/contracts/UI` payload implications; effective-resolution/runtime snapshots must carry `execution_role`; and `orchestrator-subagent-integration.md` must stop tier-rooted `/hook` coordination from losing attempt/worktree/permission/runtime joins such as `/worktree/permission/runtime`.
+L00000410	
+L00000411	Precedence rules:
+L00000412	- legacy packet-era names such as `analysis_id`, `run.scheduler_analysis`, `allowed_actions[]`, and `recovery_options[]` are compatibility terms only
+L00000413	- when a consumer doc conflicts with the owner docs above, the owner docs win
+L00000414	- stale canonical text must be replaced or retired, not preserved by later additive notes alone
+L00000415	- Scheduler truth must not split among lexicographic, scored, and UI-derived recovery models across `Plans/Executor_Protocol.md`, `Plans/Progression_Gates.md`, `Plans/plan_graph.schema.json`, and `Plans/Run_Graph_View.md`; Crosswalk routes that contradiction to owner docs and requires one scheduler truth.
+L00000416	
+L00000417	## Source Control, GitHub Actions, and Docker Manager Ownership Addendum (2026-03-12)
+L00000418	
+L00000419	### SourceControlSurface
+L00000420	
+L00000421	Owner: `Plans/GitHub_Integration.md` + `Plans/WorktreeGitImprovement.md`.
+L00000422	
+L00000423	Rules:
+L00000424	- Git-local and Git-remote repo operations, history, graph, stash, conflicts, and worktree UX belong to Source Control.
+L00000425	- GitHub-hosted workflow/admin behavior does not belong to Source Control.
+L00000426	- Remote-first project-mode consequences route through the Source Control and SSH owner chain: `GitHub_Integration.md §C` owns remote git execution, reconnect budget, and SSH subprocess behavior, while FileManager, LSP, terminal, and GUI surfaces consume the remote project mode without silently substituting local files, local git, or local shells.
+L00000427	- Worktree lifecycle correctness remains owned by the worktree plan even when surfaced through Source Control.
+L00000428	- `Worktrees` remains the Source Control subview name for worktree-row-first routing; row metadata must include package/lane/run ownership and lifecycle state.
+L00000429	- Source Control and GitHub worktree views stay /worktree-centric while attaching package-lane and /seam/lane-aware visibility; legacy run/tier row ownership is compatibility metadata, not the shared worktree identity model. Archive and /prune/remove cleanup is gated by active-run ownership, unresolved blocked recovery, safe-point restore targeting that exact worktree/baseline, unresolved conflict inspection, and newer lineage operations depending on the lane/worktree.
+L00000430	- `Plans/WorktreeGitImprovement.md` owns `worktree_id`, base-branch, and worktree lifecycle semantics; canonical blocked-emitter behavior routes through Contracts and runtime owner docs instead of being inferred from Source Control rows.
+L00000431	- Source Control reconciles the legacy split across `FinalGUISpec`, `GitHub_Integration`, and `WorktreeGitImprovement`; `Git (GitHub)` is a migration alias only, and live `/surfaces` route through Source Control plus WorktreeGitImprovement rather than preserving a combined Git/GitHub panel.
+L00000432	- Direct git/diff command anchors are owned by `GitHub_Integration.md`: `cmd.git.stage`, `cmd.git.unstage`, `cmd.git.discard`, `cmd.git.diff_open`, and `cmd.git.diff_toggle_mode`. Chat rollback/recovery anchors such as `cmd.chat.rewind` and `cmd.chat.revert` remain owned by `UI_Command_Catalog.md`; Crosswalk only routes the boundary between git-native Source Control actions and chat-owned recovery commands.
+L00000433	- Per-project Source Control panel state, GitHub Actions panel state, richer Docker Manager state, and run receipts spanning SCM/Actions/Docker/Kubernetes are not underdefined local UI extras. They route through this Crosswalk as `/Actions/Docker/Kubernetes` ownership boundaries, then to the feature owners listed in this addendum.
+L00000434	- Orchestrator, Dashboard, history, and graph cards may expose cross-surface actions named exactly `Open in Source Control`, `Open in GitHub Actions`, and `Open in Docker Manager` when canonical context exists. The same actions are used by blocked cards and destination panels so requested action and effective outcome remain explainable.
+L00000435	- The canonical `panel-switch` navigation contract uses a shared `panel-context` envelope instead of panel-local ad hoc arguments. Every cross-surface deep link carries `project_id`; Source Control adds `repo_id`, `worktree_id`, optional `branch`, optional `commit`, optional `compare_target`, and optional `conflict_file`; GitHub Actions adds `repo_remote`, optional `workflow_id`, optional `run_id`, optional `job_id`, optional `step_id`, and optional `branch`; Docker Manager adds `runtime`, optional `context_name`, optional `compose_project`, optional `container_id`, optional `image_ref`, optional `registry_host`, optional `publish_result_id`, and optional Kubernetes context fields.
+L00000436	- `receipt-extension` payloads for SCM, Actions, Docker, Kubernetes, `/registry/Kubernetes/SSH`, and `/index/reference` flows extend the shared runtime `receipt` and blocked-payload packet with domain `capability` and identity refs; they do not create a second receipt, navigation, or index owner.
+L00000437	- Compatibility shorthands such as `/local-git` and `/worktree/push` route through `Primitive:PatchPipeline` and the Source Control owner docs. `conflict-precedence` follows this Crosswalk precedence plus the feature owner docs rather than consumer help text.
+L00000438	
+L00000439	ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/UI_Command_Catalog.md
+L00000440	
+L00000441	### GitHubActionsSurface
+L00000442	
+L00000443	Owner: `Plans/GitHub_Integration.md` with auth/runtime constraints from `Plans/GitHub_API_Auth_and_Flows.md`.
+L00000444	
+L00000445	Rules:
+L00000446	- GitHub Actions uses GitHub API identity and capability, not Git transport state, for hosted workflow/admin behavior.
+L00000447	- Current Branch / Workflows / Settings are separate subviews of one Actions surface.
+L00000448	- `GitHub API` remains hidden plumbing used by GitHub-hosted features; GitHub Actions owns hosted workflow runs, dispatch, run triage, Actions admin/settings, readiness constraints inherited from `newtools.md`, and reusable doctor IDs/result payloads rather than exposing API plumbing as a user panel.
+L00000449	- Final GUI migration labels such as `Git (GitHub)` and separate activity-bar entries for Docker or Source Control are routing aliases, not owner changes; Crosswalk resolves them to Source Control, GitHub Actions, and Docker Manager owners before wiring commands or state.
+L00000450	
+L00000451	ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/newtools.md
+L00000452	
+L00000453	### DockerManagerSurface
+L00000454	
+L00000455	Owner: `Plans/Containers_Registry_and_Unraid.md` with readiness/result minima from `Plans/newtools.md`.
+L00000456	
+L00000457	Rules:
+L00000458	- Docker Manager is the canonical umbrella for Docker, Podman, registries/Docker Hub, compose, build/bake, Publish / Unraid, and project-focused Kubernetes.
+L00000459	- Docker Manager is the umbrella for Docker/Podman/Kubernetes; `/Podman/Kubernetes` wording is a compatibility shorthand for alternate runtime plus project-focused Kubernetes subview ownership, not separate shell ownership.
+L00000460	- Unraid and Kubernetes are not required top-level shell surfaces for MVP.
+L00000461	- Docker Manager owns `/runtime/build/publish`, `/build/compose/registry/publish/Kubernetes`, and runtime/build/compose/registry/publish/Kubernetes project operations while reusing `newtools.md` doctor IDs and Docker publish/auth result payload shapes instead of inventing parallel IDs.
+L00000462	- Crosswalk routes Docker Manager persistence as global settings plus project-scoped state: subview, `/runtime/context`, and Kubernetes `/context/workload` focus are durable owner-handled state, while transient runtime observations remain projections owned by storage/runtime docs.
+L00000463	
+L00000464	ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md
+L00000465	
+L00000466	### External Reference Baselines
+L00000467	
+L00000468	Additional external references beyond the user-supplied repos remain useful reconciliation inputs and should inform owner-doc wording without becoming live product owners. The baseline references are `git-scm.com/docs/git-worktree` (`/docs/git-worktree`) for worktree behavior; official VS Code Source Control / Git / Worktrees docs for graph/history/worktrees/stash/conflict, staging, `/committing`, `/fetch/pull/push`, incoming `/outgoing`, merge-conflict inline actions, 3-way merge editor, Source Control Graph, Timeline/history, and multiple SCM providers; GitHub Actions official REST/docs and extension baselines for rerun/cancel/workflow, `Current Branch`, `Workflows`, `Settings`, environments/variables/secrets, and authoring assistance; Docker Docs, Container Tools, and Docker DX for Bake, Compose profiles, Docker Hub repositories, Docker Desktop images/volumes/Kubernetes, runtime/registry/compose/container management, and authoring/debugging; Kubernetes docs for `logs`, `exec`, `port-forward`, rollout status, `/logs/exec/port-forward/Helm/workload`, and project-focused apply/logs/exec/port-forward/Helm/workload flows; and JetBrains / GitLens / GitKraken-style SCM UX references for dense history/conflict/graph behavior.
+L00000469	
+L00000470	ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/UI_Command_Catalog.md
+L00000471	
+L00000472	### Secondary-doc precedence constraints
+L00000473	
+L00000474	When feature-owner docs disagree, this Crosswalk records the owner precedence and secondary-doc constraints rather than letting consumer wording decide. `newtools.md` owns Docker and Actions doctor IDs plus result payload minima; `doctor.registry.auth` is a deprecated alias only for DockerHub-specific flows and the preferred visible ID is `doctor.dockerhub.auth.capability`. `usage-feature.md` owns `cost_usage` routing and `/deep-link/usage` identity behavior to canonical Usage/Ledger surfaces. Section15 owns stable `/workspace/thread/browser/dev-session` identities, while UI_Wiring_Rules and Wiring_Matrix own command wiring `/gating`; internal built-in command namespaces remain `/internal`. `/blocked` routing is owned by Contracts_V0 and the destination feature owners, so Crosswalk only routes the boundary instead of retyping blocked-state payloads locally. Source Control and Orchestrator wording must keep `safe point` distinct from `restore point`. Legacy `allowed_actions[]` is compatibility-only; canonical blocked and recovery payloads use ordered `allowed_action_ids[]`.
+L00000475	- HITL approval requests may use an explicit action-list vocabulary only where Contracts_V0 owns the request shape; blocked/recovery payloads stay on canonical action-id / `allowed_action_ids[]` naming so implementers do not guess between HITL and recovery fields.
+L00000476	- Secondary broad-pass constraints: chat and file-tree docs remain consumers of the legacy Git/GitHub model and must be reconciled alongside the feature-owner docs; `git*` and `actions*` remain built-in chat command namespaces; Docker/registry/Kubernetes operational identity is not owned by Multi-Account unless a later owner doc explicitly moves it; `/underdefined` UI-state contracts must be resolved in the named surface owner docs rather than by adding consumer-only state; prescriptive `recovery_options` or `recovery_options[]` wording must be retired in favor of `allowed_action_ids` and `allowed_action_ids[]`.
+L00000477	
+L00000478	ContractRef: ContractName:Plans/newtools.md, ContractName:Plans/usage-feature.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/human-in-the-loop.md
+L00000479	
+L00000480	## Owner / Consumer Map
+L00000481	
+L00000482	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Crosswalk.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000483	
+L00000484	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000485	
+L00000486	## PlanUnits
+L00000487	
+L00000488	### C-002 - Crosswalk Owner Section Canonicality
+L00000489	
+L00000490	```yaml
+L00000491	plan_unit_id: C-002
+L00000492	unit_type: requirement
+L00000493	status: accepted
+L00000494	owner_doc: Plans/Crosswalk.md
+L00000495	canonical_text: >-
+L00000496	  Crosswalk is canonical live specification text for owner-section requirements
+L00000497	  and preserves product, runtime, storage, UI, and governance details in
+L00000498	  owner-section form while acting as the owner-boundary map.
+L00000499	gui_related: true
+L00000500	gui_classification_reason: The owner-section requirement explicitly includes UI details and user-visible surface boundaries.
+L00000501	split_recommended: false
+L00000502	depends_on: []
+L00000503	unblocks: [C-003, C-004]
+L00000504	acceptance_criteria:
+L00000505	  - "Crosswalk remains canonical live specification text for this owner document."
+L00000506	  - "Product, runtime, storage, UI, and governance details are preserved in owner-section form."
+L00000507	validation_surfaces:
+L00000508	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000509	  - python3 scripts/pm-plan-index.py validate
+L00000510	risk_class: crosswalk_owner_section_loss
+L00000511	reasoning_tier: standard
+L00000512	context_scope: crosswalk_owner_section_canonicality
+L00000513	implementation_surfaces:
+L00000514	  - Plans/Crosswalk.md
+L00000515	node_compile_hint:
+L00000516	  mode: crosswalk_owner_section_canonicality
+L00000517	  create_worknodes: false
+L00000518	source_lineage:
+L00000519	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0001
+L00000520	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0002
+L00000521	preserved_exact_tokens:
+L00000522	  - "Crosswalk (Canonical)"
+L00000523	  - "Canonical owner-section requirements"
+L00000524	  - "product, runtime, storage, UI, and governance details"
+L00000525	negative_constraints: []
+L00000526	owner_hints:
+L00000527	  - Plans/Crosswalk.md
+L00000528	```
+L00000529	
+L00000530	### C-003 - Compliance Naming And Compatibility Fallback
+L00000531	
+L00000532	```yaml
+L00000533	plan_unit_id: C-003
+L00000534	unit_type: requirement
+L00000535	status: accepted
+L00000536	owner_doc: Plans/Crosswalk.md
+L00000537	canonical_text: >-
+L00000538	  Crosswalk follows DRY_Rules, references SSOT contracts in Contracts_V0,
+L00000539	  uses the platform name Puppet Master only, treats older naming as legacy
+L00000540	  naming, and preserves route/open compatibility-only fallback marking.
+L00000541	gui_related: false
+L00000542	gui_classification_reason: This unit defines naming, compliance, and compatibility constraints rather than UI presentation.
+L00000543	split_recommended: false
+L00000544	depends_on: [C-002]
+L00000545	unblocks: [C-004, C-006]
+L00000546	acceptance_criteria:
+L00000547	  - "Crosswalk references SSOT contracts in Plans/Contracts_V0.md and follows Plans/DRY_Rules.md."
+L00000548	  - "The platform name is Puppet Master only."
+L00000549	  - "Older naming is referred to only as legacy naming."
+L00000550	validation_surfaces:
+L00000551	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000552	  - python3 scripts/pm-plan-index.py validate
+L00000553	risk_class: naming_compatibility_drift
+L00000554	reasoning_tier: standard
+L00000555	context_scope: compliance_naming_compatibility_fallback
+L00000556	implementation_surfaces:
+L00000557	  - Plans/Crosswalk.md
+L00000558	  - Plans/DRY_Rules.md
+L00000559	  - Plans/Contracts_V0.md
+L00000560	node_compile_hint:
+L00000561	  mode: compliance_naming_compatibility_fallback
+L00000562	  create_worknodes: false
+L00000563	source_lineage:
+L00000564	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0003
+L00000565	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0004
+L00000566	preserved_exact_tokens:
+L00000567	  - "Coverage blocker worktree allocation strategy"
+L00000568	  - "Route/open compatibility-only fallback marking"
+L00000569	  - "Puppet Master"
+L00000570	  - "legacy naming"
+L00000571	negative_constraints:
+L00000572	  - "If older naming exists, refer to it only as legacy naming."
+L00000573	owner_hints:
+L00000574	  - Plans/Crosswalk.md
+L00000575	  - Plans/DRY_Rules.md
+L00000576	  - Plans/Contracts_V0.md
+L00000577	```
+L00000578	
+L00000579	### C-004 - Crosswalk Boundary Map Scope
+L00000580	
+L00000581	```yaml
+L00000582	plan_unit_id: C-004
+L00000583	unit_type: requirement
+L00000584	status: accepted
+L00000585	owner_doc: Plans/Crosswalk.md
+L00000586	canonical_text: >-
+L00000587	  Crosswalk is a boundary map, not an implementation plan; it assigns
+L00000588	  authoritative primitive ownership so plan documents remain DRY.
+L00000589	gui_related: false
+L00000590	gui_classification_reason: This unit defines document scope and ownership routing.
+L00000591	split_recommended: false
+L00000592	depends_on: [C-002, C-003]
+L00000593	unblocks: [C-005, C-006]
+L00000594	acceptance_criteria:
+L00000595	  - "Crosswalk is treated as a boundary map rather than an implementation plan."
+L00000596	  - "Primitive ownership assignments keep plan documents DRY."
+L00000597	validation_surfaces:
+L00000598	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000599	  - python3 scripts/pm-plan-index.py validate
+L00000600	risk_class: crosswalk_scope_overreach
+L00000601	reasoning_tier: standard
+L00000602	context_scope: crosswalk_boundary_map_scope
+L00000603	implementation_surfaces:
+L00000604	  - Plans/Crosswalk.md
+L00000605	node_compile_hint:
+L00000606	  mode: crosswalk_boundary_map_scope
+L00000607	  create_worknodes: false
+L00000608	source_lineage:
+L00000609	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0005
+L00000610	preserved_exact_tokens:
+L00000611	  - "`boundary map`"
+L00000612	  - "`Primitive:Crosswalk`"
+L00000613	negative_constraints:
+L00000614	  - "Crosswalk must not become an implementation plan."
+L00000615	owner_hints:
+L00000616	  - Plans/Crosswalk.md
+L00000617	```
+L00000618	
+L00000619	### C-005 - Crosswalk Anti-Drift Precedence
+L00000620	
+L00000621	```yaml
+L00000622	plan_unit_id: C-005
+L00000623	unit_type: requirement
+L00000624	status: accepted
+L00000625	owner_doc: Plans/Crosswalk.md
+L00000626	canonical_text: >-
+L00000627	  Crosswalk conflict resolution follows the anti-drift precedence order:
+L00000628	  Spec_Lock.json, Crosswalk, DRY_Rules, Glossary, and Decision_Policy.
+L00000629	gui_related: false
+L00000630	gui_classification_reason: This unit defines governance precedence rather than user-visible UI.
+L00000631	split_recommended: false
+L00000632	depends_on: [C-004]
+L00000633	unblocks: [C-006]
+L00000634	acceptance_criteria:
+L00000635	  - "Conflicts between plan documents are resolved through the stated precedence order."
+L00000636	  - "Decision_Policy.md§2 and Spec_Lock.json references remain preserved."
+L00000637	validation_surfaces:
+L00000638	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000639	  - python3 scripts/pm-plan-index.py validate
+L00000640	risk_class: anti_drift_precedence_loss
+L00000641	reasoning_tier: high
+L00000642	context_scope: crosswalk_anti_drift_precedence
+L00000643	implementation_surfaces:
+L00000644	  - Plans/Crosswalk.md
+L00000645	  - Plans/Spec_Lock.json
+L00000646	  - Plans/Decision_Policy.md
+L00000647	node_compile_hint:
+L00000648	  mode: crosswalk_anti_drift_precedence
+L00000649	  create_worknodes: false
+L00000650	source_lineage:
+L00000651	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0006
+L00000652	preserved_exact_tokens:
+L00000653	  - "`Plans/Spec_Lock.json`"
+L00000654	  - "`Plans/DRY_Rules.md`"
+L00000655	  - "`Plans/Glossary.md`"
+L00000656	  - "`Plans/Decision_Policy.md`"
+L00000657	  - "ContractRef: PolicyRule:Decision_Policy.md§2, SchemaID:Spec_Lock.json"
+L00000658	negative_constraints:
+L00000659	  - "Consumer wording must not override Crosswalk's stated precedence order."
+L00000660	owner_hints:
+L00000661	  - Plans/Crosswalk.md
+L00000662	  - Plans/Decision_Policy.md
+L00000663	```
+L00000664	
+L00000665	### C-006 - Primitive Routing Labels And SSOT Ownership
+L00000666	
+L00000667	```yaml
+L00000668	plan_unit_id: C-006
+L00000669	unit_type: requirement
+L00000670	status: accepted
+L00000671	owner_doc: Plans/Crosswalk.md
+L00000672	canonical_text: >-
+L00000673	  Crosswalk uses primitive names as routing labels only; detailed schemas belong
+L00000674	  to their SSOT documents, including Provider, Tool, UICommand, SessionStore,
+L00000675	  PatchPipeline, DocumentPane, DocumentReviewSurface, ReviewFindingsSummary,
+L00000676	  ReviewApprovalGate, DocumentCheckpoint, RouteTarget, OpenSubject, and
+L00000677	  AuthState.
+L00000678	gui_related: true
+L00000679	gui_classification_reason: The primitive index includes UICommand, DocumentPane, review surfaces, route targets, and open subjects that affect user-visible navigation and controls.
+L00000680	split_recommended: false
+L00000681	depends_on: [C-004, C-005]
+L00000682	unblocks: [C-007, C-008, C-009]
+L00000683	acceptance_criteria:
+L00000684	  - "Primitive names are routing labels only."
+L00000685	  - "Detailed schemas remain in their SSOT documents."
+L00000686	  - "RouteTarget and OpenSubject ownership stays in Contracts_V0."
+L00000687	validation_surfaces:
+L00000688	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000689	  - python3 scripts/pm-plan-index.py validate
+L00000690	risk_class: primitive_schema_ownership_drift
+L00000691	reasoning_tier: high
+L00000692	context_scope: primitive_routing_labels_ssot_ownership
+L00000693	implementation_surfaces:
+L00000694	  - Plans/Crosswalk.md
+L00000695	  - Plans/Contracts_V0.md
+L00000696	node_compile_hint:
+L00000697	  mode: primitive_routing_labels_ssot_ownership
+L00000698	  create_worknodes: false
+L00000699	source_lineage:
+L00000700	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0007
+L00000701	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0008
+L00000702	preserved_exact_tokens:
+L00000703	  - "`Primitive:RouteTarget`"
+L00000704	  - "`Primitive:OpenSubject`"
+L00000705	  - "`Primitive:UICommand`"
+L00000706	  - "`Primitive:DocumentPane`"
+L00000707	  - "ContractRef: ContractName:Contracts_V0.md, SchemaID:Spec_Lock.json"
+L00000708	negative_constraints:
+L00000709	  - "Crosswalk must not redefine detailed primitive schemas owned by SSOT documents."
+L00000710	owner_hints:
+L00000711	  - Plans/Crosswalk.md
+L00000712	  - Plans/Contracts_V0.md
+L00000713	```
+L00000714	
+L00000715	### C-007 - Route Target Navigation Cascade
+L00000716	
+L00000717	```yaml
+L00000718	plan_unit_id: C-007
+L00000719	unit_type: requirement
+L00000720	status: accepted
+L00000721	owner_doc: Plans/Crosswalk.md
+L00000722	canonical_text: >-
+L00000723	  CLI route arguments and GUI Save buttons resolve route_target strings through
+L00000724	  the canonical cascade for file, GitHub, workspace, SharePoint, and Notion
+L00000725	  routes; ambiguous routes use the active Persona default route, while
+L00000726	  Contracts_V0 and Models_System own the decision that flows through to UI.
+L00000727	gui_related: true
+L00000728	gui_classification_reason: This unit governs GUI Save behavior and cross-surface navigation resolution.
+L00000729	split_recommended: false
+L00000730	depends_on: [C-006]
+L00000731	unblocks: [C-008, C-024]
+L00000732	acceptance_criteria:
+L00000733	  - "CLI -r/--route and GUI Save actions resolve route_target strings through the documented cascade."
+L00000734	  - "Ambiguous routes use the active Persona default route."
+L00000735	  - "Crosswalk documents flow-through and does not own the underlying route decision."
+L00000736	validation_surfaces:
+L00000737	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000738	  - python3 scripts/pm-plan-index.py validate
+L00000739	risk_class: route_target_navigation_drift
+L00000740	reasoning_tier: high
+L00000741	context_scope: route_target_navigation_cascade
+L00000742	implementation_surfaces:
+L00000743	  - Plans/Crosswalk.md
+L00000744	  - Plans/Contracts_V0.md
+L00000745	  - Plans/Models_System.md
+L00000746	node_compile_hint:
+L00000747	  mode: route_target_navigation_cascade
+L00000748	  create_worknodes: false
+L00000749	source_lineage:
+L00000750	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0009
+L00000751	preserved_exact_tokens:
+L00000752	  - "`file://...`"
+L00000753	  - "`github://owner/repo/path`"
+L00000754	  - "`workspace://project/concern`"
+L00000755	  - "`share://sharepoint-url`"
+L00000756	  - "`notion://...`"
+L00000757	negative_constraints:
+L00000758	  - "Route-target decisions must not become Crosswalk-owned implementation behavior."
+L00000759	owner_hints:
+L00000760	  - Plans/Crosswalk.md
+L00000761	  - Plans/Contracts_V0.md
+L00000762	  - Plans/Models_System.md
+L00000763	```
+L00000764	
+
+<<< CONTEXT_AFTER canonical_document_lines=765-776 >>>
+L00000765	### C-008 - OpenSubject Navigation Normalization
+L00000766	
+L00000767	```yaml
+L00000768	plan_unit_id: C-008
+L00000769	unit_type: requirement
+L00000770	status: accepted
+L00000771	owner_doc: Plans/Crosswalk.md
+L00000772	canonical_text: >-
+L00000773	  GUI Open and Inspect buttons normalize open requests to OpenSubject and route
+L00000774	  through orchestrator concern/help/artifact resolution; Crosswalk describes
+L00000775	  openable subject types while Contracts_V0 owns canonical OpenSubject rules.
+L00000776	gui_related: true

@@ -1,0 +1,396 @@
+<<< CONTEXT_BEFORE canonical_document_lines=15038-15049 >>>
+L00015038	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0106
+L00015039	preserved_exact_tokens:
+L00015040	  - "exact compatibility mirror"
+L00015041	  - "stale transitional enum lists"
+L00015042	stale_retired_dispositions:
+L00015043	  - "Stale transitional enum lists are not the canonical value family."
+L00015044	negative_constraints:
+L00015045	  - "Compatibility mirror text must not become a competing runtime taxonomy owner."
+L00015046	owner_hints:
+L00015047	  - Plans/Contracts_V0.md
+L00015048	```
+L00015049	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=15050-15416 >>>
+L00015050	### CV-246 - Event Name Precedence Alias Table
+L00015051	
+L00015052	```yaml
+L00015053	plan_unit_id: CV-246
+L00015054	unit_type: compatibility_disposition
+L00015055	status: accepted
+L00015056	owner_doc: Plans/Contracts_V0.md
+L00015057	canonical_text: >-
+L00015058	  Canonical event-name precedence maps scheduler.pass over
+L00015059	  run.scheduler_analysis, node.blocked over run.node_blocked, node.unblocked
+L00015060	  over run.node_unblocked, remediation.spawned over run.remediation_started, and
+L00015061	  remediation.resolved over run.remediation_completed.
+L00015062	gui_related: false
+L00015063	gui_classification_reason: This unit defines event alias precedence rather than visual presentation.
+L00015064	split_recommended: false
+L00015065	depends_on: [CV-215, CV-218, CV-220, CV-229, CV-230]
+L00015066	unblocks: []
+L00015067	acceptance_criteria:
+L00015068	  - "Canonical event names are preferred over legacy aliases."
+L00015069	  - "Legacy aliases remain compatibility/source-lineage only."
+L00015070	validation_surfaces:
+L00015071	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015072	  - python3 scripts/pm-plan-index.py validate
+L00015073	risk_class: event_alias_precedence_drift
+L00015074	reasoning_tier: high
+L00015075	context_scope: event_name_precedence_aliases
+L00015076	implementation_surfaces:
+L00015077	  - Plans/Contracts_V0.md
+L00015078	node_compile_hint:
+L00015079	  mode: event_name_precedence_alias_table
+L00015080	  create_worknodes: false
+L00015081	source_lineage:
+L00015082	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0107
+L00015083	preserved_exact_tokens:
+L00015084	  - "`scheduler.pass`"
+L00015085	  - "`run.scheduler_analysis`"
+L00015086	  - "`node.blocked`"
+L00015087	  - "`run.node_blocked`"
+L00015088	  - "`node.unblocked`"
+L00015089	  - "`run.node_unblocked`"
+L00015090	  - "`remediation.spawned`"
+L00015091	  - "`run.remediation_started`"
+L00015092	  - "`remediation.resolved`"
+L00015093	  - "`run.remediation_completed`"
+L00015094	compatibility_only_notes:
+L00015095	  - "Legacy event aliases remain compatibility/source-lineage only."
+L00015096	negative_constraints:
+L00015097	  - "Legacy event aliases must not outrank canonical event names."
+L00015098	owner_hints:
+L00015099	  - Plans/Contracts_V0.md
+L00015100	```
+L00015101	
+L00015102	### CV-247 - Failure Class Enum Family
+L00015103	
+L00015104	```yaml
+L00015105	plan_unit_id: CV-247
+L00015106	unit_type: requirement
+L00015107	status: accepted
+L00015108	owner_doc: Plans/Contracts_V0.md
+L00015109	canonical_text: >-
+L00015110	  The canonical failure_class enum family includes provider_transient,
+L00015111	  structured_output_invalid, verification_failed, reviewer_findings,
+L00015112	  auth_expired, storage_io, quota_exceeded, rate_limited, and graph_integrity.
+L00015113	gui_related: false
+L00015114	gui_classification_reason: This unit defines runtime enum values rather than visual presentation.
+L00015115	split_recommended: false
+L00015116	depends_on: []
+L00015117	unblocks: [CV-251]
+L00015118	acceptance_criteria:
+L00015119	  - "failure_class preserves every listed canonical value."
+L00015120	  - "Consumers do not replace the enum with shorter local lists."
+L00015121	validation_surfaces:
+L00015122	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015123	  - python3 scripts/pm-plan-index.py validate
+L00015124	risk_class: failure_class_enum_drift
+L00015125	reasoning_tier: high
+L00015126	context_scope: failure_class_enum_family
+L00015127	implementation_surfaces:
+L00015128	  - Plans/Contracts_V0.md
+L00015129	node_compile_hint:
+L00015130	  mode: failure_class_enum_family
+L00015131	  create_worknodes: false
+L00015132	source_lineage:
+L00015133	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0108
+L00015134	preserved_exact_tokens:
+L00015135	  - "`failure_class`"
+L00015136	  - "`provider_transient`"
+L00015137	  - "`structured_output_invalid`"
+L00015138	  - "`verification_failed`"
+L00015139	  - "`reviewer_findings`"
+L00015140	  - "`auth_expired`"
+L00015141	  - "`storage_io`"
+L00015142	  - "`quota_exceeded`"
+L00015143	  - "`rate_limited`"
+L00015144	  - "`graph_integrity`"
+L00015145	negative_constraints:
+L00015146	  - "No shorter local enum list may replace the canonical failure_class family."
+L00015147	owner_hints:
+L00015148	  - Plans/Contracts_V0.md
+L00015149	```
+L00015150	
+L00015151	### CV-248 - Blocked Reason Code Enum Family
+L00015152	
+L00015153	```yaml
+L00015154	plan_unit_id: CV-248
+L00015155	unit_type: requirement
+L00015156	status: accepted
+L00015157	owner_doc: Plans/Contracts_V0.md
+L00015158	canonical_text: >-
+L00015159	  The canonical blocked_reason_code enum family preserves permission,
+L00015160	  headless, FileSafe, network, host, replan, approval, clarification, worktree,
+L00015161	  plugin, validation, and remediation ceiling values.
+L00015162	gui_related: false
+L00015163	gui_classification_reason: This unit defines runtime blocked-state enum values.
+L00015164	split_recommended: false
+L00015165	depends_on: [CV-241]
+L00015166	unblocks: [CV-249, CV-255]
+L00015167	acceptance_criteria:
+L00015168	  - "blocked_reason_code preserves all listed values, including permission_denied, user_declined, headless_ask_denied, filesafe_blocked, external_side_effect_blocked, network_blocked_by_policy, host_unreachable, host_untrusted, replan_required, waiting_approval, clarification_blocked, worktree_conflict, dirty_worktree, plugin_hook_blocked, validation_blocked, and remediation_ceiling_exceeded."
+L00015169	  - "Consumers do not replace the enum with shorter local lists."
+L00015170	validation_surfaces:
+L00015171	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015172	  - python3 scripts/pm-plan-index.py validate
+L00015173	risk_class: blocked_reason_enum_drift
+L00015174	reasoning_tier: high
+L00015175	context_scope: blocked_reason_code_enum_family
+L00015176	implementation_surfaces:
+L00015177	  - Plans/Contracts_V0.md
+L00015178	node_compile_hint:
+L00015179	  mode: blocked_reason_code_enum_family
+L00015180	  create_worknodes: false
+L00015181	source_lineage:
+L00015182	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0108
+L00015183	preserved_exact_tokens:
+L00015184	  - "`blocked_reason_code`"
+L00015185	  - "`permission_denied`"
+L00015186	  - "`user_declined`"
+L00015187	  - "`headless_ask_denied`"
+L00015188	  - "`filesafe_blocked`"
+L00015189	  - "`external_side_effect_blocked`"
+L00015190	  - "`network_blocked_by_policy`"
+L00015191	  - "`host_unreachable`"
+L00015192	  - "`host_untrusted`"
+L00015193	  - "`replan_required`"
+L00015194	  - "`waiting_approval`"
+L00015195	  - "`clarification_blocked`"
+L00015196	  - "`worktree_conflict`"
+L00015197	  - "`dirty_worktree`"
+L00015198	  - "`plugin_hook_blocked`"
+L00015199	  - "`validation_blocked`"
+L00015200	  - "`remediation_ceiling_exceeded`"
+L00015201	negative_constraints:
+L00015202	  - "No shorter local enum list may replace the canonical blocked_reason_code family."
+L00015203	owner_hints:
+L00015204	  - Plans/Contracts_V0.md
+L00015205	```
+L00015206	
+L00015207	### CV-249 - Offline Cached And Domain Payload Boundary
+L00015208	
+L00015209	```yaml
+L00015210	plan_unit_id: CV-249
+L00015211	unit_type: constraint
+L00015212	status: accepted
+L00015213	owner_doc: Plans/Contracts_V0.md
+L00015214	canonical_text: >-
+L00015215	  offline_cached is a read-only surface/projection state, not a
+L00015216	  blocked_reason_code; mutating runtime, registry, Kubernetes, plugin-added, or
+L00015217	  extensibility actions from offline_cached state still emit canonical blocked
+L00015218	  payloads, and domain payload details do not re-own blocked identity.
+L00015219	gui_related: false
+L00015220	gui_classification_reason: This unit defines runtime blocked-state ownership even though it mentions projection state.
+L00015221	split_recommended: false
+L00015222	depends_on: [CV-248]
+L00015223	unblocks: []
+L00015224	acceptance_criteria:
+L00015225	  - "offline_cached is not a blocked_reason_code."
+L00015226	  - "Mutating actions from offline_cached state emit canonical blocked payloads when policy or host state prevents execution."
+L00015227	  - "SCM, GitHub Actions, and Docker/Kubernetes payload details remain schema-bearing details on top of shared blocked-state primitives."
+L00015228	validation_surfaces:
+L00015229	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015230	  - python3 scripts/pm-plan-index.py validate
+L00015231	risk_class: offline_cached_blocked_identity_drift
+L00015232	reasoning_tier: high
+L00015233	context_scope: offline_cached_domain_payload_boundary
+L00015234	implementation_surfaces:
+L00015235	  - Plans/Contracts_V0.md
+L00015236	node_compile_hint:
+L00015237	  mode: offline_cached_domain_payload_boundary
+L00015238	  create_worknodes: false
+L00015239	source_lineage:
+L00015240	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0108
+L00015241	preserved_exact_tokens:
+L00015242	  - "`offline_cached`"
+L00015243	  - "`blocked_reason_code`"
+L00015244	  - "`/runtime`"
+L00015245	  - "`/registry`"
+L00015246	  - "Kubernetes"
+L00015247	  - "plugin-added"
+L00015248	  - "`/extensibility`"
+L00015249	  - "`network_blocked_by_policy`"
+L00015250	  - "`host_unreachable`"
+L00015251	  - "`host_untrusted`"
+L00015252	  - "SCM"
+L00015253	  - "GitHub Actions"
+L00015254	  - "Docker/Kubernetes"
+L00015255	negative_constraints:
+L00015256	  - "offline_cached must not be treated as a blocked_reason_code."
+L00015257	  - "Domain blocked-payload details must not re-own blocked-state identity."
+L00015258	owner_hints:
+L00015259	  - Plans/Contracts_V0.md
+L00015260	```
+L00015261	
+L00015262	### CV-250 - Allowed Action ID And Abort Shorthand
+L00015263	
+L00015264	```yaml
+L00015265	plan_unit_id: CV-250
+L00015266	unit_type: requirement
+L00015267	status: accepted
+L00015268	owner_doc: Plans/Contracts_V0.md
+L00015269	canonical_text: >-
+L00015270	  allowed_action_id values include approve, decline, retry_now,
+L00015271	  resume_after_prerequisite, restore_safe_point_then_retry, start_fresh_attempt,
+L00015272	  replan, skip_node, abort_run, and open_details; command shorthand /abort
+L00015273	  resolves to abort_run or provider stream cancellation, while persisted payloads
+L00015274	  keep canonical action identity.
+L00015275	gui_related: false
+L00015276	gui_classification_reason: This unit defines runtime action identity values rather than visual presentation.
+L00015277	split_recommended: false
+L00015278	depends_on: [CV-241]
+L00015279	unblocks: [CV-255]
+L00015280	acceptance_criteria:
+L00015281	  - "allowed_action_id preserves the listed canonical values."
+L00015282	  - "/abort resolves to abort_run or provider-specific stream cancellation for in-progress provider calls."
+L00015283	  - "Persisted approval and blocked-state payloads keep canonical allowed_action_id."
+L00015284	validation_surfaces:
+L00015285	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015286	  - python3 scripts/pm-plan-index.py validate
+L00015287	risk_class: allowed_action_identity_drift
+L00015288	reasoning_tier: high
+L00015289	context_scope: allowed_action_id_abort_shorthand
+L00015290	implementation_surfaces:
+L00015291	  - Plans/Contracts_V0.md
+L00015292	node_compile_hint:
+L00015293	  mode: allowed_action_id_abort_shorthand
+L00015294	  create_worknodes: false
+L00015295	source_lineage:
+L00015296	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0108
+L00015297	preserved_exact_tokens:
+L00015298	  - "`allowed_action_id`"
+L00015299	  - "`approve`"
+L00015300	  - "`decline`"
+L00015301	  - "`retry_now`"
+L00015302	  - "`resume_after_prerequisite`"
+L00015303	  - "`restore_safe_point_then_retry`"
+L00015304	  - "`start_fresh_attempt`"
+L00015305	  - "`replan`"
+L00015306	  - "`skip_node`"
+L00015307	  - "`abort_run`"
+L00015308	  - "`open_details`"
+L00015309	  - "`/abort`"
+L00015310	negative_constraints:
+L00015311	  - "Persisted approval and blocked-state payloads must not store slash command shorthand as separate action identity."
+L00015312	owner_hints:
+L00015313	  - Plans/Contracts_V0.md
+L00015314	```
+L00015315	
+L00015316	### CV-251 - Timeout Class Recovery Semantics
+L00015317	
+L00015318	```yaml
+L00015319	plan_unit_id: CV-251
+L00015320	unit_type: requirement
+L00015321	status: accepted
+L00015322	owner_doc: Plans/Contracts_V0.md
+L00015323	canonical_text: >-
+L00015324	  Runtime records carry timeout_class only when a timeout-class event occurred;
+L00015325	  canonical values include hard_execution_timeout, inactivity_timeout,
+L00015326	  polling_timeout, reconnect_timeout, and user_visible_wait_timer_expiry, and
+L00015327	  timeout_class remains distinct from failure_class and blocked_reason_code.
+L00015328	gui_related: false
+L00015329	gui_classification_reason: This unit defines timeout recovery semantics rather than visual presentation.
+L00015330	split_recommended: false
+L00015331	depends_on: [CV-247, CV-248]
+L00015332	unblocks: [CV-252, CV-255]
+L00015333	acceptance_criteria:
+L00015334	  - "timeout_class appears only when a timeout-class event occurred."
+L00015335	  - "Canonical timeout values are preserved."
+L00015336	  - "timeout_class is distinct from failure_class and blocked_reason_code."
+L00015337	validation_surfaces:
+L00015338	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015339	  - python3 scripts/pm-plan-index.py validate
+L00015340	risk_class: timeout_class_semantics_drift
+L00015341	reasoning_tier: high
+L00015342	context_scope: timeout_class_recovery_semantics
+L00015343	implementation_surfaces:
+L00015344	  - Plans/Contracts_V0.md
+L00015345	node_compile_hint:
+L00015346	  mode: timeout_class_recovery_semantics
+L00015347	  create_worknodes: false
+L00015348	source_lineage:
+L00015349	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0109
+L00015350	preserved_exact_tokens:
+L00015351	  - "`timeout_class?`"
+L00015352	  - "`hard_execution_timeout`"
+L00015353	  - "`inactivity_timeout`"
+L00015354	  - "`polling_timeout`"
+L00015355	  - "`reconnect_timeout`"
+L00015356	  - "`user_visible_wait_timer_expiry`"
+L00015357	  - "`failure_class`"
+L00015358	  - "`blocked_reason_code`"
+L00015359	negative_constraints:
+L00015360	  - "timeout_class must not be used as a generic failure substitute."
+L00015361	owner_hints:
+L00015362	  - Plans/Contracts_V0.md
+L00015363	```
+L00015364	
+L00015365	### CV-252 - Wait State And No-Inference Constraints
+L00015366	
+L00015367	```yaml
+L00015368	plan_unit_id: CV-252
+L00015369	unit_type: constraint
+L00015370	status: accepted
+L00015371	owner_doc: Plans/Contracts_V0.md
+L00015372	canonical_text: >-
+L00015373	  Known waits use wait_state_class instead of generic deadlock or stall states;
+L00015374	  scheduled workflows are not skipped or failed by inference alone, future waits
+L00015375	  are not timeouts until their governing timer expires, and such waits must not
+L00015376	  produce stall banners or auto-pause behavior.
+L00015377	gui_related: true
+L00015378	gui_classification_reason: This unit includes user-visible stall banner and auto-pause projection constraints.
+L00015379	split_recommended: false
+L00015380	depends_on: [CV-251]
+L00015381	unblocks: [CV-255]
+L00015382	acceptance_criteria:
+L00015383	  - "wait_state_class preserves environment_wait_timer, approval_wait, queue_wait, long_governance_wait, scheduled_workflow_observation_gap, and future_timestamp_wait."
+L00015384	  - "Scheduled workflows are not skipped or failed by inference alone."
+L00015385	  - "Future timestamp waits do not produce stall banners or auto-pause until the governing timer actually expires."
+L00015386	validation_surfaces:
+L00015387	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00015388	  - python3 scripts/pm-plan-index.py validate
+L00015389	risk_class: wait_state_inference_drift
+L00015390	reasoning_tier: high
+L00015391	context_scope: wait_state_no_inference_constraints
+L00015392	implementation_surfaces:
+L00015393	  - Plans/Contracts_V0.md
+L00015394	  - Plans/FinalGUISpec.md
+L00015395	node_compile_hint:
+L00015396	  mode: wait_state_no_inference_constraint
+L00015397	  create_worknodes: false
+L00015398	source_lineage:
+L00015399	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0109
+L00015400	preserved_exact_tokens:
+L00015401	  - "`wait_state_class?`"
+L00015402	  - "`environment_wait_timer`"
+L00015403	  - "`approval_wait`"
+L00015404	  - "`queue_wait`"
+L00015405	  - "`long_governance_wait`"
+L00015406	  - "`scheduled_workflow_observation_gap`"
+L00015407	  - "`future_timestamp_wait`"
+L00015408	  - "`/stall`"
+L00015409	  - "`auto-pause`"
+L00015410	negative_constraints:
+L00015411	  - "A scheduled workflow with no fresh observation is not skipped or failed by inference alone."
+L00015412	  - "A known future-timestamp wait is not a timeout until its governing timer actually expires."
+L00015413	owner_hints:
+L00015414	  - Plans/Contracts_V0.md
+L00015415	```
+L00015416	
+
+<<< CONTEXT_AFTER canonical_document_lines=15417-15428 >>>
+L00015417	### CV-253 - Timestamp Provenance And Display Rules
+L00015418	
+L00015419	```yaml
+L00015420	plan_unit_id: CV-253
+L00015421	unit_type: requirement
+L00015422	status: accepted
+L00015423	owner_doc: Plans/Contracts_V0.md
+L00015424	canonical_text: >-
+L00015425	  Temporal records distinguish source_occurred_at, observed_at, and recorded_at;
+L00015426	  persisted timestamps are UTC ISO-8601 values with Z, UI surfaces display local
+L00015427	  timezone by default while exposing absolute UTC, and relative labels use one
+L00015428	  chosen base timestamp per surface.

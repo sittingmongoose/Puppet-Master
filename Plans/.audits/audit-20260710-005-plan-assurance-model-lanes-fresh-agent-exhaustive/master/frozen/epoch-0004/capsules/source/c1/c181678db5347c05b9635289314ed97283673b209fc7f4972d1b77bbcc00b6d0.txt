@@ -1,0 +1,425 @@
+<<< CONTEXT_BEFORE 383-394 >>>
+        
+        // 4. Check config file for bash_guard setting (if config available)
+        // This will be wired when config system is integrated
+        let enabled = true; // Default: enabled
+        
+        Ok(Self {
+            patterns,
+            enabled,
+            approved_commands: Vec::new(),  // Populated from FileSafeConfig
+            destructive_override,
+        })
+    }
+
+<<< AUTHORITATIVE_CORE 395-790 >>>
+    
+    // DRY:FN:find_bundled_patterns_file — Locate bundled pattern file
+    /// Find the bundled destructive-commands.txt file
+    ///
+    /// Searches in order:
+    /// 1. `puppet-master-rs/config/destructive-commands.txt` (dev/build)
+    /// 2. `../config/destructive-commands.txt` (relative to binary)
+    /// 3. `config/destructive-commands.txt` (relative to binary)
+    fn find_bundled_patterns_file() -> Result<PathBuf> {
+        // Try multiple locations
+        let candidates = vec![
+            PathBuf::from("puppet-master-rs/config/destructive-commands.txt"),
+            PathBuf::from("../config/destructive-commands.txt"),
+            PathBuf::from("config/destructive-commands.txt"),
+            // For installed binary, try relative to executable
+            std::env::current_exe()
+                .ok()
+                .and_then(|exe| exe.parent().map(|p| p.join("config/destructive-commands.txt"))),
+        ];
+        
+        for candidate in candidates.into_iter().flatten() {
+            if candidate.exists() {
+                return Ok(candidate);
+            }
+        }
+        
+        // Return a path even if not found (caller will handle missing file)
+        Ok(PathBuf::from("config/destructive-commands.txt"))
+    }
+    
+    // DRY:FN:explicit_config_off — Create an explicitly configured-off guard instance
+    /// Create an explicitly configured-off guard instance only from an authenticated operator grant.
+    /// This is never used for initialization failure.
+    pub fn explicit_config_off(grant: DestructiveOverrideGrant) -> Self {
+        Self {
+            patterns: Vec::new(),
+            enabled: false,
+            approved_commands: Vec::new(),
+            destructive_override: Some(grant),
+        }
+    }
+    
+    /// Check if a command should be blocked
+    pub fn check_command(&self, command: &str) -> Result<(), GuardError> {
+        if !self.enabled {
+            // explicit config-off requires a current authenticated grant and emits an override receipt
+            self.require_current_override_receipt(command)?;
+            return Ok(());
+        }
+        if self.destructive_override.is_some() {
+            self.require_current_override_receipt(command)?;
+            return Ok(());
+        }
+        // If command is in approved list (from settings / Assistant chat), allow it
+        if self.approved_commands.iter().any(|c| commands_match(c, command)) {
+            return Ok(());
+        }
+        // Match against blocklist patterns
+        for pattern in &self.patterns {
+            if pattern.is_match(command) {
+                return Err(GuardError::DestructiveCommand {
+                    command: command.to_string(),
+                    pattern: pattern.as_str().to_string(),
+                });
+            }
+        }
+        
+        Ok(())
+    }
+}
+
+// DRY:HELPER:commands_match — Compare approved (allowlist) entry to actual command
+/// Returns true if the approved pattern matches the command (normalized comparison).
+/// Handles exact command-identity match after trim + whitespace collapse.
+/// Prefix, substring, starts_with, shell-fragment, and chained-command expansion matching are forbidden.
+fn commands_match(approved: &str, command: &str) -> bool {
+    let norm = |s: &str| s.trim().split_whitespace().collect::<Vec<_>>().join(" ");
+    let a = norm(approved);
+    let c = norm(command);
+    c == a
+}
+```
+
+### 2.3 Pattern Loading
+
+
+```rust
+// FileSafe pattern-loading helper example
+
+use regex::Regex;
+use std::fs;
+use std::path::Path;
+use anyhow::{Context, Result};
+
+// DRY:FN:load_patterns — Load destructive command patterns from file
+/// Load destructive command patterns from file
+///
+/// # File Format
+///
+/// - One regex pattern per line
+/// - Lines starting with `#` are comments (ignored)
+/// - Empty lines are ignored
+/// - Patterns are case-insensitive (automatically prefixed with `(?i)`)
+/// - Patterns match against the full command string
+///
+/// # Examples
+///
+/// ```
+/// # PHP / Laravel
+/// artisan\s+migrate:(fresh|reset|refresh)
+/// artisan\s+db:(wipe|seed\s+--force)
+/// ```
+///
+/// # Errors
+///
+/// - Returns error if file cannot be read
+/// - Returns error if any pattern is invalid regex
+/// - Invalid patterns stop loading (fail-fast)
+pub fn load_patterns(pattern_file: &Path) -> Result<Vec<Regex>> {
+    let content = fs::read_to_string(pattern_file)
+        .with_context(|| format!("Failed to read pattern file: {}", pattern_file.display()))?;
+    
+    let mut patterns = Vec::new();
+    let mut line_number = 0;
+    
+    for line in content.lines() {
+        line_number += 1;
+        let line = line.trim();
+        
+        // Skip comments and empty lines
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+        
+        // Compile regex (case-insensitive)
+        // Note: Some patterns may already include (?i), but adding it again is safe (no-op)
+        let pattern = if line.starts_with("(?i)") {
+            line.to_string()
+        } else {
+            format!("(?i){}", line)
+        };
+        
+        match Regex::new(&pattern) {
+            Ok(regex) => patterns.push(regex),
+            Err(e) => {
+                return Err(anyhow!(
+                    "Invalid regex pattern at line {} in {}: {}\nPattern: {}",
+                    line_number,
+                    pattern_file.display(),
+                    e,
+                    line
+                ));
+            }
+        }
+    }
+    
+    if patterns.is_empty() {
+        warn!("No patterns loaded from {}", pattern_file.display());
+    } else {
+        info!("Loaded {} patterns from {}", patterns.len(), pattern_file.display());
+    }
+    
+    Ok(patterns)
+}
+
+// DRY:FN:load_patterns_with_merge — Load patterns from multiple files and merge
+/// Load patterns from multiple files and merge them
+///
+/// # Arguments
+///
+/// * `default_file` - Default/bundled pattern file (required)
+/// * `local_file` - Project-specific pattern file (optional)
+///
+/// # Behavior
+///
+/// - Loads default patterns first
+/// - If local file exists, loads and appends local patterns
+/// - Duplicate patterns are kept (no deduplication)
+/// - Returns combined vector
+pub fn load_patterns_with_merge(
+    default_file: &Path,
+    local_file: Option<&Path>,
+) -> Result<Vec<Regex>> {
+    let mut patterns = load_patterns(default_file)?;
+    
+    if let Some(local) = local_file {
+        if local.exists() {
+            let local_patterns = load_patterns(local)
+                .context("Failed to load local patterns")?;
+            patterns.extend(local_patterns);
+            info!("Merged {} local patterns", local_patterns.len());
+        }
+    }
+    
+    Ok(patterns)
+}
+```
+
+### 2.4 Configuration Integration
+
+
+**Add to `puppet-master-rs/src/config/gui_config.rs`:**
+
+Config keys remain `bash_guard` / `file_guard` for backward compatibility; GUI labels: "Command blocklist", "Write scope", "Security filter".
+
+```rust
+// Add to GuiConfig struct:
+pub struct GuiConfig {
+    // ... existing fields ...
+    pub filesafe: FileSafeConfig,
+}
+
+// New FileSafeConfig (internal keys: bash_guard, file_guard; GUI labels: Command blocklist, Write scope)
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
+#[serde(rename_all = "camelCase")]
+pub struct FileSafeConfig {
+    pub bash_guard: BashGuardConfig,
+    pub file_guard: FileGuardConfig,
+    pub security_filter: SecurityFilterConfig,
+    #[serde(default)]
+    pub approved_commands: Vec<String>,  // Whitelist: commands from Assistant chat approved by user
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct BashGuardConfig {
+    #[serde(default = "default_true")]
+    pub enabled: bool,
+    #[serde(default)]
+    pub destructive_override_requested: bool,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub destructive_override_receipt_ref: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub custom_patterns_path: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct FileGuardConfig {
+    #[serde(default = "default_true")]
+    pub enabled: bool,
+    #[serde(default)]
+    pub strict_mode: bool,  // false softens advisory reporting only; missing allowlist still blocks
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SecurityFilterConfig {
+    #[serde(default = "default_true")]
+    pub enabled: bool,
+    #[serde(default)]
+    pub allow_during_interview: bool,
+}
+
+fn default_true() -> bool {
+    true
+}
+
+impl Default for BashGuardConfig {
+    fn default() -> Self {
+        Self {
+            enabled: true,
+            destructive_override_requested: false,
+            destructive_override_receipt_ref: None,
+            custom_patterns_path: None,
+        }
+    }
+}
+
+impl Default for FileGuardConfig {
+    fn default() -> Self {
+        Self {
+            enabled: true,
+            strict_mode: true,  // Default: block, not warn
+        }
+    }
+}
+
+impl Default for SecurityFilterConfig {
+    fn default() -> Self {
+        Self {
+            enabled: true,
+            allow_during_interview: false,  // Default: strict even during interview
+        }
+    }
+}
+```
+
+**Wire to Orchestrator Config (`PuppetMasterConfig`):**
+
+The orchestrator reads from `PuppetMasterConfig` (YAML), not `GuiConfig`. Follow Option B pattern from `Plans/WorktreeGitImprovement.md` §5.2 (Chosen approach: Option B -- Build run config from GUI):
+
+1. Add `FileSafeConfig` to `PuppetMasterConfig` type (in `src/types/config.rs`)
+2. When orchestrator starts, build run config from `GuiConfig::filesafe` → `PuppetMasterConfig::filesafe`
+3. Pass FileSafe config to `BaseRunner::new()` via orchestrator context
+
+ContractRef: CodePath:puppet-master-rs/src/config/gui_config.rs, CodePath:puppet-master-rs/src/types/config.rs
+
+**Config File Format (`puppet-master.yaml`):**  
+Keys: `bashGuard` (Command blocklist), `fileGuard` (Write scope), `securityFilter`, `approvedCommands`.
+
+ContractRef: ConfigKey:filesafe.bashGuard.enabled, ConfigKey:filesafe.bashGuard.allowDestructive, ConfigKey:filesafe.bashGuard.customPatternsPath, ConfigKey:filesafe.fileGuard.enabled, ConfigKey:filesafe.fileGuard.strictMode, ConfigKey:filesafe.securityFilter.enabled, ConfigKey:filesafe.securityFilter.allowDuringInterview, ConfigKey:filesafe.approvedCommands
+
+```yaml
+filesafe:
+  bashGuard:    # Command blocklist
+    enabled: true
+    allowDestructive: false
+    customPatternsPath: ".puppet-master/destructive-commands.local.txt"  # Optional (additive-only; see AutoDecision below)
+  fileGuard:    # Write scope
+    enabled: true
+    strictMode: true
+  securityFilter:
+    enabled: true
+    allowDuringInterview: false
+  approvedCommands: []   # Commands approved from Assistant chat; user can add/remove in settings
+```
+
+AutoDecision: `filesafe.bashGuard.customPatternsPath` is additive-only. If unset or the file is missing/unreadable, ignore it and proceed with bundled patterns (do not disable FileSafe). (ContractRef: PolicyRule:Plans/Decision_Policy.md§2)
+
+---
+
+## 3. Integration with Platform Runner
+
+### 3.1 Modify BaseRunner
+
+Update `puppet-master-rs/src/platforms/runner.rs`:
+
+```rust
+use crate::filesafe::BashGuard;
+
+pub struct BaseRunner {
+    // ... existing fields ...
+    bash_guard: Arc<BashGuard>,
+}
+
+impl BaseRunner {
+    pub fn new(command: String, platform: Platform) -> Result<Self> {
+        // ... existing initialization ...
+        
+        // Initialize FileSafe guards
+        // Pattern file resolution: try project-specific, then bundled
+        let pattern_file = std::env::current_dir()
+            .ok()
+            .and_then(|cwd| {
+                let local = cwd.join(".puppet-master/destructive-commands.local.txt");
+                if local.exists() {
+                    Some(local)
+                } else {
+                    None
+                }
+            });
+        
+        let bash_guard = Arc::new(
+            BashGuard::new(pattern_file)
+                .map_err(|e| StartupDiagnostic::filesafe_guard_init_failed("bash_guard", e))?
+        );
+        
+        // Initialize write scope (needs plan metadata, will be populated per-request)
+        let file_guard = Arc::new(FileGuard::new(HashSet::new(), true));
+        
+        // Initialize security filter
+        let security_filter = Arc::new(
+            SecurityFilter::new()
+                .map_err(|e| StartupDiagnostic::filesafe_guard_init_failed("security_filter", e))?
+        );
+        
+        Ok(Self {
+            // ... existing fields ...
+            bash_guard,
+        })
+    }
+    
+    pub async fn execute_command(
+        &self,
+        request: &ExecutionRequest,
+        args: Vec<String>,
+        stdin_input: Option<String>,
+    ) -> Result<ExecutionResult> {
+        // ... existing checks ...
+        
+        // Build full command string for guard check
+        let full_command = format!("{} {}", self.command, args.join(" "));
+        
+        // Check bash guard BEFORE spawning
+        if let Err(e) = self.bash_guard.check_command(&full_command) {
+            // Log blocked command
+            warn!("Blocked destructive command: {}", e);
+            
+            // Log to event log if available
+            self.log_blocked_command(&full_command, &e).await;
+            
+            return Err(anyhow!(
+                "Destructive command blocked: {}. \
+                A destructive override requires an authenticated, scoped operator grant \
+                with reason, expiry, audit event, and receipt before Puppet Master can proceed.",
+                e
+            ));
+        }
+
+<<< CONTEXT_AFTER 791-802 >>>
+        
+        // ... continue with existing spawn logic ...
+    }
+}
+```
+
+### 3.2 Platform Runner Integration Example
+
+**Complete Integration Flow (Cursor Example):**
+
+```rust
+// In CursorRunner::execute() (src/platforms/cursor.rs)

@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE 771-782 >>>
+```yaml
+default_variant: "powerful"
+```
+
+When set, this variant is pre-selected when the Persona is active. The user can still cycle to another variant during the session.
+
+ContractRef: ContractName:Plans/Personas.md#PERSONA-SCHEMA
+
+### 6.7 Model aliases (friendly names)
+
+
+Model aliases are optional friendly names that resolve to canonical model identifiers (`provider_id/model_id`) during model override parsing (for example, natural-language `model_override` in media generation).
+
+<<< AUTHORITATIVE_CORE 783-1180 >>>
+
+Deterministic alias resolution requirements:
+- Alias keys MUST be normalized by lowercasing and collapsing spaces/underscores/hyphens.
+- Resolution order for user-provided model text is: alias → exact model id → exact display name.
+- If no match is found, the caller receives a model-unavailable result from the requesting subsystem.
+
+Aliases and variants are distinct concepts: aliases are lookup keys for model resolution, while variants are named model presets selected by the user.
+
+### 6.8 Canonical media model alias table
+
+
+<a id="MEDIA-ALIASES"></a>
+
+The following aliases are registered by default for media-generation models. They are resolved by `media.generate` `model_override` (§2.3 of `Plans/Media_Generation_and_Capabilities.md`) and by any other model-override surface that uses alias resolution. Alias registration is not provider availability proof: the resolved provider/model route must still appear in the selected provider catalog and satisfy media artifact E2E proof before the route is green. Current Antigravity CLI proof does not list Nano Banana/Nanobanana media models; arbitrary `--model "Nano Banana"` prompt success falls back and is not support evidence.
+
+| Alias (normalized key) | Canonical model ID | Kind(s) |
+|------------------------|--------------------|---------|
+| `nano banana` | `gemini-2.5-flash-image` | image |
+| `nano banana pro` | `gemini-3-pro-image-preview` | image |
+| `veo fast` | `veo-3.1-fast-generate-preview` | video |
+| `tts flash` | `gemini-2.5-flash-preview-tts` | tts |
+| `tts pro` | `gemini-2.5-pro-preview-tts` | tts |
+
+Alias keys are normalized per §6.7 rules (lowercase, collapse spaces/underscores/hyphens). Implementations MUST ship these aliases in the default alias registry; users MAY add or override aliases in config. Overrides can affect lookup, not capability truth; provider/model support still comes from catalog metadata plus route-specific verification.
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE, PolicyRule:Decision_Policy.md§2
+
+ContractRef: ContractName:Plans/Media_Generation_and_Capabilities.md#MEDIA-GENERATE, PolicyRule:Decision_Policy.md§2
+
+---
+
+## 7. GUI requirements
+<a id="GUI-MODELS"></a>
+
+Model selection surfaces must distinguish human-friendly labels from canonical stored ids.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/DRY_Rules.md, ContractName:Plans/Prompt_Pipeline.md
+
+### 7.1 Model picker (Chat panel)
+
+The chat model picker shows:
+- primary label: cleaned model name for readability
+- secondary label: runtime platform when needed for disambiguation
+- capability indicators where available
+
+Rules:
+- selecting a model creates a priority-1 requested override.
+- if two runtime surfaces expose the same canonical model id, the picker must show the concrete runtime surface on the secondary line.
+- the detailed inspector must always expose the exact raw canonical model id.
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md
+
+### 7.2 Settings > Models
+
+Settings must show:
+- provider/runtime grouping
+- concrete runtime surface availability
+- current defaults and their source
+- supported image-generation model/route rows with support state, verification state, proof or gated reason, and engine-picker eligibility
+- availability or capability gaps without inferring unsupported when discovery is merely silent or stale
+- model discovery `/state`, including whether stale cached models remain visible while refresh runs, whether a single provider refresh failed, and whether progress is partial or complete.
+- explicit actions for `Refresh Models` and `Refresh Providers`; initial connect, reconnect, and app boot/profile activation may refresh automatically, but user-triggered refreshes stay visible and scoped.
+- `Edit Threshold` opens the most-local applicable override and discloses whether that value overrides the provider default or model default.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/storage-plan.md
+
+Settings image-generation rows are route-specific rather than Gemini-primary. The selectable engine list includes OpenAI API-key `gpt-image-2`, Responses `image_generation`, mandatory OpenAI/Codex subscription-backed image generation, MiniMax `image-01`, Antigravity OAuth/internal `gemini-3.1-flash-image`, Gemini Direct generated-image routes where verified, and disabled/capability-gated/unverified rows where proof or entitlement is missing. Public text-only `agy` rows remain visible in capability metadata and model details, but not as selectable image-generation engines unless the exact row later proves generated-media output.
+
+### 7.3 Variant and effort controls
+
+Variant and effort controls remain runtime-qualified capability data.
+
+Rules:
+- effort support is never inferred solely from model-name similarity.
+- unavailable, silent, or stale discovery should display `Unknown` instead of asserting `Unsupported`.
+- the GUI must keep requested and effective reasoning/effort selections distinct when a runtime clamps or ignores them.
+- Provider/model `/features` metadata may expose thinking-related controls as provider-specific option names. Active providers must declare those names per provider/model; retired Gemini CLI `thinkingLevel` and `thinkingBudget` terms remain source-lineage examples only. PM records thinking effort as runtime-qualified capability data rather than hardcoding a universal effort enum.
+- Any legacy consumer wording in `Plans/assistant-chat-design.md` or `/assistant-chat-design.md` that treats Gemini effort or Cursor effort as universally unsupported is superseded by this runtime-qualified capability rule.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+
+
+### 7.4 Detailed inspectors
+
+Detailed inspectors show the exact raw canonical model id, concrete runtime surface, and any effective reroute or clamp the provider performed.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
+## 8. OpenCode baseline and Puppet Master deltas
+
+<a id="BASELINE-DELTAS"></a>
+
+Per `Plans/OpenCode_Deep_Extraction.md` §7H and §9H:
+
+### 8.1 Baseline
+
+OpenCode uses `provider_id/model_id` format with `parseModel()` splitting on the first `/`. Default model selection: config `model` field → last used (`model.json`) → internal priority sort. Model options via `config.provider.<id>.options` and provider-specific loaders. Variants are built-in + custom, cycling via keybind. Per-agent model overrides via `agent.<name>.model`. Provider transform layer handles per-provider normalization. Overflow detection via regex patterns on error messages.
+
+### 8.2 Puppet Master deltas
+
+1. **Model identifier format:** Same as OpenCode (`provider_id/model_id`). No delta needed.
+2. **Configurable priority list:** OpenCode hardcodes the priority list. Puppet Master makes it configurable via `config.model_priority`.
+3. **Per-Persona overrides:** OpenCode uses `agent.<name>.model`. Puppet Master stores model overrides in the Persona file (`default_model` in PERSONA.md frontmatter) for file-based management and GUI editing.
+4. **Variant persistence:** OpenCode persists the active variant per session. Puppet Master adds `config.default_variant` for cross-session persistence.
+5. **Provider transform in Rust:** OpenCode's transform layer is TypeScript. Puppet Master implements equivalent normalization in the Rust provider facade.
+6. **GUI model picker:** OpenCode's TUI has a basic model selector. Puppet Master provides a full model picker dropdown in Chat, a dedicated Models settings tab, and per-Persona override editing.
+7. **Overflow detection:** OpenCode uses regex-based detection across 12+ providers. Puppet Master ports these patterns to Rust and integrates with auto-compaction.
+
+ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md
+
+---
+
+## 9. Acceptance criteria
+
+<a id="ACCEPTANCE"></a>
+
+These criteria are testable assertions that MUST hold for any conforming implementation.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/Progression_Gates.md
+
+<a id="AC-MOD01"></a>
+**AC-MOD01:** Model identifiers MUST use the `provider_id/model_id` format. `parseModel()` MUST split on the first `/` only.
+
+<a id="AC-MOD02"></a>
+**AC-MOD02:** Model selection MUST follow the priority chain in §2 deterministically. Given identical inputs, the same model MUST be selected.
+
+<a id="AC-MOD03"></a>
+**AC-MOD03:** Per-Persona `default_model` (§5) MUST override config defaults, last-used, and internal defaults, but MUST be overridden by explicit run-envelope or tier-config model settings.
+
+<a id="AC-MOD04"></a>
+**AC-MOD04:** If a Persona specifies an unavailable model, the system MUST log a warning and fall through to the next priority level. The run MUST NOT be blocked.
+
+<a id="AC-MOD05"></a>
+**AC-MOD05:** Built-in variants MUST resolve dynamically based on available providers. An unavailable variant MUST fall back to `default`.
+
+<a id="AC-MOD06"></a>
+**AC-MOD06:** Custom variants MUST be validated: unique name, valid model identifier, model available at definition time or warning logged.
+
+<a id="AC-MOD07"></a>
+**AC-MOD07:** The Chat panel model picker MUST display all available models grouped by provider and support variant quick-switch.
+
+<a id="AC-MOD08"></a>
+**AC-MOD08:** The Settings Models tab MUST support per-model option editing and variant management (add/edit/disable/remove).
+
+---
+
+*Document created for planning only; no code changes.*
+## 10. Persona Runtime Controls and Provider Capability Matrix (2026-03-06)
+
+
+This addendum expands the Models system so Persona-driven runtime control is explicit, provider-aware, and visible to the user.
+
+### 10.1 Persona-driven model/runtime control principle
+
+A Persona may request:
+- platform/provider,
+- model,
+- variant,
+- temperature,
+- top_p,
+- reasoning_effort,
+- and provider-specific runtime options.
+
+These Persona preferences participate in effective run assembly but MUST pass through a provider capability matrix before being applied.
+
+### 10.2 Effective selection fields (cross-system runtime contract)
+
+
+Effective model/runtime selection is part of the shared requested/effective identity contract.
+
+Required cross-system fields are:
+- `requested_platform`
+- `effective_platform`
+- `requested_model`
+- `effective_model`
+- `model_id_raw`
+- `requested_variant`
+- `effective_variant`
+- `effort`
+- `requested_auth_mode`
+- `effective_auth_mode`
+- `auth_family`
+- `compact_threshold`
+- `pool_scope`
+- `effective_runtime`
+- `effective_runtime_snapshot`
+- `requested_account_policy`
+- `requested_account_id?`
+- `requested_account_binding?`
+- `effective_account_id?`
+- `effective_provider_identity?`
+- `account_switch_reason?`
+- `execution_role`
+- `selection_reason`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Contracts_V0.md
+
+Rules:
+- model selection does not collapse provider/account identity, execution role, and operational identity into one field
+- support and disclosure must show whether a requested control was honored, skipped, or clamped
+- same-provider accounts are not interchangeable for selection or history purposes
+
+ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/usage-feature.md
+### 10.3 Selection precedence (expanded)
+
+The effective model/runtime selection chain is:
+
+1. **Explicit run-envelope override**
+   Manual surface selection or structured run override for platform/model/variant/runtime controls.
+2. **Persona preference**
+   Persona `default_platform`, `default_model`, `default_variant`, `temperature`, `top_p`, `reasoning_effort`.
+3. **Surface/tier/phase defaults**
+   Chat/Interview/Builder/Orchestrator/Multi-Pass defaults.
+4. **Global/project config defaults**
+5. **Last-used state** where supported
+6. **Internal/provider defaults**
+
+Rule: Given the same inputs and provider availability set, effective selection MUST be deterministic.
+
+### 10.3A Direct coding-plan provider surfaces
+
+`Alibaba Coding Plan`, `MiniMax Coding Plan`, and `Z.AI Coding Plan` are direct-provider architectural surfaces in PM's provider/model selection model.
+
+Rules:
+- direct-provider architectural direction for `Alibaba Coding Plan`, `MiniMax Coding Plan`, and `Z.AI Coding Plan` is strong enough to model now by using OpenCode as the implementation reference while confirmatory post-build verification remains pending
+- these are coding-plan-branded products, so PM must preserve the product label such as `Alibaba Coding Plan` as a selectable/runtime-facing surface instead of collapsing it into an unbranded vendor family
+- if the same provider family offers both coding-plan and pay-as-you-go products, GUI recommendation and picker surfaces must keep both products visible as separate selectable/runtime-facing account or provider entries rather than smoothing them into one vendor label
+- each surface still resolves through requested/effective runtime, model, effort, account, and capability disclosure rather than through a loose vendor-family `platform` label
+- implementation-reference status does not make OpenCode session identity, provider discovery, or provider-specific request shaping the PM canonical runtime identity
+- direct-provider implementation follow-up must collect official primary-source auth and `/usage/quota` docs for Alibaba direct, MiniMax direct, and Z.AI direct; this confirmatory follow-up refines provider detail but does not block the core direct-provider architecture.
+- `Z.AI Coding Plan` readiness validates both API key state and provider reachability/model-discovery readiness (`/model-discovery`) before PM treats the surface as ready.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md
+
+### 10.3.1 Interview GUI/UI/UX Gemini preference (surface default)
+
+The Gemini preference for Interview is a **surface/stage default**, not a Persona-wide default.
+
+Trigger conditions:
+- active surface = `interview`
+- current Interview phase is `product_ux` **or** the Interview state has `has_gui = true`
+- active stage is one of `questioning`, `research`, `drafting`, or `review`
+- no explicit run-envelope or stage override already selected a different platform/model
+
+Behavior:
+- if a Gemini transport is configured, available, and supports the required controls for the current stage, Gemini becomes the default platform/model source at precedence level 3 ("Surface/tier/phase defaults")
+- validation stages do **not** auto-switch to Gemini unless the user or a stage override explicitly requests it
+- if Gemini is unavailable or fails capability checks, selection falls back to the normal precedence chain with no special-case retry loop
+
+Persistence / visibility:
+- the resolved selection reason MUST mention the Interview GUI/UI/UX preference when it wins (for example: `Interview GUI stage default: Gemini`)
+- when the preference is skipped, the reason MUST record why (for example: `Gemini unavailable` or `explicit user override`)
+
+<a id="PERSONA-CAPABILITY-MATRIX"></a>
+### 10.4 Provider Persona Capability Matrix (canonical support states)
+
+
+Capability and effort evaluation must be performed per runtime surface, not by loose provider-family assumptions.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Run_Modes.md
+
+Day-one supported runtime/API-family surfaces for this change set:
+
+| Surface | Class | Key notes |
+|---|---|---|
+| `codex` direct | direct-provider | Explicit API-family selection may be required. |
+| `copilot` direct | direct-provider | Native subagent billing/routing behavior is special and not freely mixed from non-Copilot parents. |
+| `opencode` server | server-bridged | PM child runs map to OpenCode session lineage additively. |
+| `alibaba-coding-plan` direct | direct-provider | Effort and API-family behavior must be treated as provider-specific, not assumed OpenAI-equivalent. |
+| `zai-coding-plan` direct | direct-provider | Same requested/effective runtime and effort rules apply; `zai-coding-plan` is the product label while `zai_coding_plan` is the family mapping token. |
+| `minimax-coding-plan` direct | direct-provider | Same requested/effective runtime and effort rules apply; source docs include `https://platform.minimaxi.com/docs/coding-plan/intro`. |
+| `gemini` direct | direct-provider | Active Gemini Direct API runtime surface. |
+| `antigravity-cli` | CLI-bridged | Active multi-model Google-owned CLI-runtime surface replacing Gemini CLI. |
+| `gemini-cli` | retired/source-lineage | Not an active runtime surface; retained only for migration/currentness audit. |
+| `claude-code-cli` | CLI-bridged | CLI-bridged capability set and runtime controls. |
+| `cursor-cli` | CLI-bridged | CLI-bridged capability set and runtime controls. |
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Commands_System.md, ContractName:Plans/FinalGUISpec.md
+
+Matrix rules:
+- `gemini` direct and `antigravity-cli` are separate active surfaces even when grouped by a higher-level provider family; retired `gemini-cli` must not be selected.
+- effort support is evaluated per surface.
+- tool-schema normalization and loop-control behavior may vary by surface.
+- provider-native agent or session files are not PM runtime canon.
+- Copilot-native subagent routing remains a special policy path, not a general per-member crew mixing behavior.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/orchestrator-subagent-integration.md
+### 10.4.1 Capability evaluation granularity
+
+The matrix in §10.4 defines the **transport-level baseline** only. Effective Persona-control support for a specific run MUST be computed as the intersection of:
+
+1. **transport support** from the Provider Persona Capability Matrix,
+2. **model-level support** from discovered model metadata / provider capability metadata,
+3. **runtime constraint support** from the selected variant or provider runtime path.
+
+This is required because a control may be supported by a provider transport in general but unavailable for a specific model.
+
+Provider-family transforms, provider-specific API-shape mismatch handling, and API routing follow the same granularity:
+- PM must keep adapter policy explicit and must not assume one generic direct-provider loop is sufficient for all model families; OpenAI-like providers therefore use per-surface API-family routing, including explicit `responses` vs `chat` vs `model-language` / plain language model primitive selection, rather than one universal OpenAI-compatible surface.
+- `Gemini/Vertex` surfaces need stricter `tool-schema` normalization and schema sanitization requirements than generic JSON Schema before PM treats tool calls as equivalent across transports; sanitizer evidence must preserve `anyOf`/combiners and numeric enums with issue refs `#14788`, `#12908`, `#12827`, and `#12911`.
+- upstream provider identity remains explicit where relevant; examples include `google`, `anthropic`, and `openai-compatible`, and bridge/runtime adapters freeze that identity in effective disclosure instead of collapsing it into the PM runtime platform label.
+- for Antigravity CLI and other active provider-side routers, PM should prefer explicit model selection, disable or constrain provider-side routing where feasible, tolerate/observe any remaining internal routing, and surface any `/observe` state rather than allowing silent provider-side model changes without requested/effective model disclosure. Gemini CLI router wording is retired/source-lineage only.
+
+Direct coding-plan provider identities:
+- `Alibaba Coding Plan`, `MiniMax Coding Plan`, and `Z.AI Coding Plan` are user-visible provider names in the same direct-provider `/runtime` bucket as `GitHub Copilot`, `Codex`, and `Gemini`; they are not CLI-bridged surfaces merely because they use provider SDK adapters.
+- `MiniMax` direct coding-plan entries `minimax-coding-plan` and `minimax-cn-coding-plan` use env `MINIMAX_API_KEY` and AI SDK (`ai-sdk`) npm/provider transport `@ai-sdk/anthropic` through the `/anthropic` adapter family.
+- `Z.AI`/Zhipu direct coding-plan entry `zhipuai-coding-plan` uses env `ZHIPU_API_KEY` and AI SDK (`ai-sdk`) npm/provider transport `@ai-sdk/openai-compatible` through the `/openai-compatible` adapter family.
+- The Z.AI base API is `https://api.z.ai/api/coding/paas/v4`; historical source spelling `//api.z.ai/api/coding/paas/v4` normalizes to that HTTPS URL. Z.AI Coding Plan also has a coding-plan-specific endpoint and plan-dependent quota/reset behavior, so `/reset` timing and quota displays must be treated as provider-plan facts rather than generic OpenAI-compatible defaults.
+- Provider-family mappings include `zai_coding_plan` / `zai-coding-plan` -> `direct_api` family `zai`, `gemini_direct` -> family `gemini`, `alibaba_coding_plan` -> `direct_api` family `alibaba`, and `minimax_coding_plan` -> `direct_api` family `minimax`; MiniMax Coding Plan source docs include `https://platform.minimaxi.com/docs/coding-plan/intro`.
+
+Examples:
+- `reasoning_effort` may be supported by a provider transport but unavailable for the selected model.
+- `temperature` may be supported for direct API calls but unavailable through a narrowed CLI transport path.
+- a variant may force a model switch that changes effective support.
+
+### 10.4.2 Derived control rule: `talkativeness`
+
+`talkativeness` controls how verbose or concise the model's responses should be at the instruction layer.
+
+Scale:
+- `1` = terse, code-only, minimal explanation,
+- `2` = concise with light explanation,
+- `3` = balanced default,
+- `4` = detailed and explanatory,
+- `5` = verbose, teaching-oriented, high-context explanation.
+
+Default:
+- the system default is `3` (`balanced`).
+
+Derivation rule:
+1. user preference setting,
+2. mode overlay,
+3. explicit per-thread override.
+
+Mode overlay defaults:
+- plan mode → `4`
+- ask mode → `3`
+- agent mode → `2`
+
+Rules:
+- the effective `talkativeness` value is derived after applying the mode overlay and then any explicit per-thread override,
+- `talkativeness` maps to system-prompt instructions that control response length, amount of explanation, and expected detail level,
+- some model families follow terse instructions more reliably than others, so PM MAY adjust the instruction mapping per model family while preserving the same user-visible scale.
+
+`talkativeness` is a Persona instruction-layer control rather than a transport sampling knob.
+
+Canonical implications:
+- `persona_talkativeness` does **not** require its own transport matrix row.
+- it is always expressed through prompt construction and response-style instructions, not through provider-native temperature/top-p semantics.
+
+### 10.4.3 Canonical capability snapshot source
+
+The Provider Persona Capability Matrix is not prose-only. GUI disclosure and runtime filtering MUST resolve support state from one canonical machine-readable snapshot contract.
+
+Canonical snapshot shape:
+```json
+{
+  "provider_id": "cursor",
+  "transport": "CliBridge",
+  "model_id": "anthropic/claude-sonnet-4",
+  "variant": null,
+  "context_window_tokens": 200000,
+  "max_input_tokens": 180000,
+  "max_output_tokens": 64000,
+  "effective_context_window_tokens": 180000,
+  "fallback_chain": [
+    {
+      "rank": 1,
+      "provider_entry_id": "cursor",
+      "model_id": "anthropic/claude-sonnet-4",
+      "candidate_source": "persona_preference",
+      "eligibility_state": "eligible",
+      "capability_delta_refs": [],
+      "selected": true
+    }
+  ],
+  "controls": {
+    "persona_prompt_body": {
+      "state": "supported",
+      "reason": "provider accepts system/rules prompt injection",
+      "source": "documented"
+    },
+    "persona_reasoning_effort": {
+      "state": "unsupported",
+      "reason": "transport does not expose an effort knob",
+      "source": "documented"
+    }
+  }
+}
+```
+
+Rules:
+- The canonical effective support state for a run is the intersection of transport support, model metadata, and variant/runtime-path constraints.
+- Provider/model catalog snapshots carry `boot_refresh_enabled`, `model_catalog_status`, `last_model_refresh_at`, and `selectable_unit_ids[]` / `selectable_unit_ids` so boot-time refresh, stale catalog state, and the selectable units tied to a catalog entry remain inspectable.
+- Capability resolution records may include `resolved_capability_deltas[]`, `pool_scope`, and `provider_entry`; `pool_scope` can be `provider_entry` when capability differences must be pinned to the concrete runtime surface rather than a provider family.
+- Both the runtime filtering stage and the Persona editor MUST call the same resolver to obtain this snapshot.
+- A cached copy MAY be persisted for performance, but the cache is derivative; the canonical source is the shared capability resolver plus its provider/model metadata inputs.
+- Every control disclosure shown to the user MUST be derivable from this snapshot without ad hoc UI-only logic.
+- `source` MUST be one of `documented`, `empirical`, or `inferred` so future verification work can distinguish hard facts from provisional assumptions.
+
+<<< CONTEXT_AFTER 1181-1192 >>>
+
+Account-routing capability fields are part of the same canonical snapshot when a provider participates in multi-account-related selection, account switching, or pressure routing. Provider capability modeling for those paths is explicitly required and MUST expose:
+- `supports_multi_account`
+- `account_identity_kind`
+- `quota_signal_sources[]`
+- `quota_signal_confidence`
+- `supports_threshold_switch`
+- `supports_hard_exhaustion_detection`
+- `supports_rate_limit_detection`
+- `supports_reset_countdown`
+- `supports_manual_set_active`
+- `supports_cooldown`

@@ -1,0 +1,417 @@
+<<< CONTEXT_BEFORE canonical_document_lines=388-399 >>>
+L00000388	### 7E. Formatters
+L00000389	
+L00000390	#### 7E.1 When they run
+L00000391	
+L00000392	**File pointers:**
+L00000393	- Format init (event subscription): `packages/opencode/src/format/index.ts` -> `Format.init()` (line ~104)
+L00000394	- File.Event.Edited bus event: subscribed in `Format.init()`
+L00000395	
+L00000396	**Behavior summary:**
+L00000397	- Formatters run automatically after every `File.Event.Edited` bus event. When a file is edited by any tool, the bus fires the event and `Format.init()` catches it, determines the file extension, finds matching enabled formatters, and runs them sequentially.
+L00000398	
+L00000399	#### 7E.2 Built-in selection
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=400-787 >>>
+L00000400	
+L00000401	**File pointers:**
+L00000402	- Formatter definitions: `packages/opencode/src/format/formatter.ts`
+L00000403	
+L00000404	**Behavior summary:**
+L00000405	Built-in formatters (each with auto-detection logic):
+L00000406	
+L00000407	| Formatter | Extensions | Detection |
+L00000408	|---|---|---|
+L00000409	| `prettier` | .js, .jsx, .ts, .tsx, .html, .css, .json, .yaml, .md, ... | `prettier` in package.json dependencies |
+L00000410	| `biome` | Same as prettier + more | `biome.json` / `biome.jsonc` exists |
+L00000411	| `rustfmt` | .rs | `rustfmt` binary available |
+L00000412	| `gofmt` | .go | `gofmt` binary available |
+L00000413	| `ruff` | .py, .pyi | `ruff` binary + config present |
+L00000414	| `shfmt` | .sh, .bash | `shfmt` binary available |
+L00000415	| `clang-format` | .c, .cpp, .h, ... | `.clang-format` file exists |
+L00000416	| `dart` | .dart | `dart` binary available |
+L00000417	| `mix` | .ex, .exs, .eex, ... | `mix` binary available |
+L00000418	| `zig` | .zig, .zon | `zig` binary available |
+L00000419	| `ktlint` | .kt, .kts | `ktlint` binary available |
+L00000420	| `rubocop` | .rb, .rake, ... | `rubocop` binary available |
+L00000421	| `standardrb` | .rb, .rake, ... | `standardrb` binary available |
+L00000422	| `pint` | .php | `laravel/pint` in composer.json |
+L00000423	| `ocamlformat` | .ml, .mli | `ocamlformat` binary + `.ocamlformat` exists |
+L00000424	| `nixfmt` | .nix | `nixfmt` binary available |
+L00000425	| `ormolu` | .hs | `ormolu` binary available |
+L00000426	| `terraform` | .tf, .tfvars | `terraform` binary available |
+L00000427	| `latexindent` | .tex | `latexindent` binary available |
+L00000428	| `gleam` | .gleam | `gleam` binary available |
+L00000429	| `cljfmt` | .clj, .cljs, ... | `cljfmt` binary available |
+L00000430	| `oxfmt` | .js, .ts, ... | Experimental flag + `oxfmt` in deps |
+L00000431	| `uv` | .py, .pyi | `uv format --help` succeeds and ruff not enabled |
+L00000432	| `air` | .R | `air` binary with R formatter capability |
+L00000433	| `htmlbeautifier` | .erb | `htmlbeautifier` binary available |
+L00000434	| `dfmt` | .d | `dfmt` binary available |
+L00000435	
+L00000436	#### 7E.3 Config schema and $FILE placeholder
+L00000437	
+L00000438	**File pointers:**
+L00000439	- Config processing: `packages/opencode/src/format/index.ts` -> `state()` (lines ~27-65)
+L00000440	- Formatter interface: `packages/opencode/src/format/formatter.ts` -> `Info` interface (lines ~1-14)
+L00000441	
+L00000442	**Behavior summary:**
+L00000443	- Config `formatter: false` disables all formatters globally.
+L00000444	- Per-formatter config: `{ disabled: boolean, command: string[], environment: Record<string, string>, extensions: string[] }`.
+L00000445	- `$FILE` in the command array is replaced with the actual file path at execution time (line ~115 in `index.ts`).
+L00000446	- Custom formatters can be added by defining `command` and `extensions` in config. If `command.length === 0`, the formatter is skipped. The `enabled()` check is replaced with `async () => true` for config-defined formatters.
+L00000447	
+L00000448	---
+L00000449	
+L00000450	### 7F. Skills
+L00000451	
+L00000452	#### 7F.1 Discovery paths
+L00000453	
+L00000454	**File pointers:**
+L00000455	- Skill loading: `packages/opencode/src/skill/skill.ts` -> `state()` (lines ~52-176)
+L00000456	- Remote skill discovery: `packages/opencode/src/skill/discovery.ts`
+L00000457	
+L00000458	**Behavior summary:**
+L00000459	Skills are discovered from multiple sources in this order (later sources overwrite earlier on name collision):
+L00000460	1. **External dirs (global)**: `~/.claude/skills/**/SKILL.md`, `~/.agents/skills/**/SKILL.md` (unless `OPENCODE_DISABLE_EXTERNAL_SKILLS` flag is set)
+L00000461	2. **External dirs (project)**: Walking up from project directory to worktree root, checking `.claude/` and `.agents/` for `skills/**/SKILL.md`
+L00000462	3. **OpenCode dirs**: `.opencode/{skill,skills}/**/SKILL.md` (project + global config directories)
+L00000463	4. **Config paths**: `config.skills.paths[]` -- arbitrary directories scanned for `**/SKILL.md`
+L00000464	5. **Config URLs**: `config.skills.urls[]` -- remote indexes fetched, skills downloaded to cache (`Discovery.pull()`)
+L00000465	
+L00000466	#### 7F.2 Frontmatter fields and validation
+L00000467	
+L00000468	**File pointers:**
+L00000469	- Skill.Info schema: `packages/opencode/src/skill/skill.ts` (lines ~18-24)
+L00000470	- Parsing via ConfigMarkdown: `packages/opencode/src/config/markdown.ts`
+L00000471	
+L00000472	**Behavior summary:**
+L00000473	
+L00000474	| Field | Type | Required | Validation |
+L00000475	|---|---|---|---|
+L00000476	| `name` | `string` | Yes | Regex: `^[a-z0-9]+(-[a-z0-9]+)*$`, 1-64 chars |
+L00000477	| `description` | `string` | Yes | 1-1024 chars |
+L00000478	| `location` | `string` | Auto | Set to file path during loading |
+L00000479	| `content` | `string` | Auto | Body of the markdown file (after frontmatter) |
+L00000480	
+L00000481	Additional fields from the spec (`license`, `compatibility`, `metadata`) may appear in frontmatter but are not used by the core loading logic -- only `name` and `description` are validated via `Info.pick({ name: true, description: true }).safeParse()`.
+L00000482	
+L00000483	- **Name mismatch**: `SkillNameMismatchError` is defined but validation uses directory-based detection (the skill name from frontmatter is used as the key, not the directory name).
+L00000484	- **Duplicate handling**: If two skills share a name, a warning is logged and the later-loaded skill overwrites the earlier one.
+L00000485	
+L00000486	#### 7F.3 How skills appear to the agent
+L00000487	
+L00000488	**File pointers:**
+L00000489	- Skills registered as commands: `packages/opencode/src/command/index.ts` (lines ~126-138)
+L00000490	- Skill tool: referenced in the `skill` permission key
+L00000491	
+L00000492	**Behavior summary:**
+L00000493	- Skills are listed in the `skill` tool description with `<available_skills>` XML blocks containing name and description.
+L00000494	- The agent invokes a skill via `skill({ name })` which loads the skill's content.
+L00000495	- Skills are also registered as invokable commands (so `/skillname` works from the command palette).
+L00000496	
+L00000497	#### 7F.4 Permissions integration
+L00000498	
+L00000499	**Behavior summary:**
+L00000500	- The `skill` permission key supports patterns (e.g., `skill: { "my-skill": "allow", "*": "deny" }`).
+L00000501	- Skill directories are automatically whitelisted for `external_directory` permission (see `agent.ts` line ~55: `skillDirs.map(dir => path.join(dir, "*"))` added to whitelisted dirs).
+L00000502	- Skill tool calls are protected from pruning during compaction (`PRUNE_PROTECTED_TOOLS = ["skill"]`).
+L00000503	
+L00000504	---
+L00000505	
+L00000506	### 7G. Plugins
+L00000507	
+L00000508	#### 7G.1 Discovery sources and load order
+L00000509	
+L00000510	**File pointers:**
+L00000511	- Plugin loader: `packages/opencode/src/plugin/index.ts` -> `state()` (lines ~24-103)
+L00000512	
+L00000513	**Behavior summary:**
+L00000514	Plugin loading order:
+L00000515	1. **Internal plugins** (directly imported, not npm-installed): `CodexAuthPlugin`, `CopilotAuthPlugin`, `GitlabAuthPlugin`
+L00000516	2. **Built-in npm plugins**: `["opencode-anthropic-auth@0.0.13"]` (unless `OPENCODE_DISABLE_DEFAULT_PLUGINS` flag)
+L00000517	3. **Config plugins**: `config.plugin[]` -- either npm package specifiers (`pkg@version`) or `file://` local paths
+L00000518	
+L00000519	For npm plugins, `BunProc.install(pkg, version)` installs the package, then `import(plugin)` loads it. Deduplication prevents the same function from being initialized twice (via `Set<PluginInstance>`).
+L00000520	
+L00000521	#### 7G.2 Plugin context and signature
+L00000522	
+L00000523	**File pointers:**
+L00000524	- Plugin input type: `packages/opencode/src/plugin/index.ts` (lines ~33-40)
+L00000525	- Plugin type definition: `packages/plugin/src/index.ts`
+L00000526	
+L00000527	**Behavior summary:**
+L00000528	A plugin is an async function receiving `PluginInput`:
+L00000529	```
+L00000530	{ client, project, worktree, directory, serverUrl, $ }
+L00000531	```
+L00000532	- `client`: OpenCode SDK client (API access)
+L00000533	- `project`: Project metadata
+L00000534	- `worktree` / `directory`: Filesystem context
+L00000535	- `$`: Bun shell for subprocess execution
+L00000536	
+L00000537	The function returns a `Hooks` object with optional event handlers.
+L00000538	
+L00000539	#### 7G.3 Key hook events
+L00000540	
+L00000541	**File pointers:**
+L00000542	- Hooks interface: `packages/plugin/src/index.ts` -> `interface Hooks` (line ~148)
+L00000543	
+L00000544	**Behavior summary:**
+L00000545	
+L00000546	| Hook | Signature | Purpose |
+L00000547	|---|---|---|
+L00000548	| `event` | `({event}) => void` | Receives ALL bus events (subscribed via `Bus.subscribeAll`) |
+L00000549	| `config` | `(config) => void` | Called once with resolved config |
+L00000550	| `tool` | `Record<string, ToolDefinition>` | Custom tool definitions (object, not function) |
+L00000551	| `auth` | `AuthHook` | Authentication provider |
+L00000552	| `chat.message` | `(input, output) => void` | Called when a new user message is received |
+L00000553	| `chat.params` | `(input, output) => void` | Modify LLM parameters (temperature, topP, topK, options) |
+L00000554	| `chat.headers` | `(input, output) => void` | Modify request headers sent to LLM provider |
+L00000555	| `permission.ask` | `(input, output) => void` | Override permission decisions |
+L00000556	| `command.execute.before` | `(input, output) => void` | Before command execution (can modify parts) |
+L00000557	| `tool.execute.before` | `(input, output) => void` | Before tool execution (can modify args) |
+L00000558	| `tool.execute.after` | `(input, output) => void` | After tool execution (can modify result) |
+L00000559	| `shell.env` | `(input, output) => void` | Modify shell environment variables |
+L00000560	| `experimental.chat.messages.transform` | `(input, output) => void` | Modify message history before sending to LLM |
+L00000561	| `experimental.chat.system.transform` | `(input, output) => void` | Modify system prompt array |
+L00000562	| `experimental.session.compacting` | `(input, output) => void` | Customize compaction (add context or replace prompt) |
+L00000563	| `experimental.text.complete` | `(input, output) => void` | Called when text part is complete |
+L00000564	
+L00000565	#### 7G.4 Custom tools and precedence
+L00000566	
+L00000567	**Behavior summary:**
+L00000568	- Plugins define tools via the `tool` property on the hooks object (a `Record<string, ToolDefinition>`).
+L00000569	- Plugin tools are loaded in `ToolRegistry` alongside built-in tools.
+L00000570	- **On name collision, plugin tools override built-in tools** -- this is by design for extensibility.
+L00000571	
+L00000572	---
+L00000573	
+L00000574	### 7H. Models
+L00000575	
+L00000576	#### 7H.1 Provider/model ID format
+L00000577	
+L00000578	**File pointers:**
+L00000579	- `parseModel()`: `packages/opencode/src/provider/provider.ts` (line ~1315)
+L00000580	- Provider state + model registry: `packages/opencode/src/provider/provider.ts` -> `state()`
+L00000581	
+L00000582	**Behavior summary:**
+L00000583	- Format: `provider_id/model_id` (e.g., `anthropic/claude-sonnet-4`).
+L00000584	- `parseModel()` splits on the first `/`: everything before is `providerID`, everything after (joined by `/`) is `modelID`.
+L00000585	
+L00000586	#### 7H.2 Default model selection and loading priority
+L00000587	
+L00000588	**File pointers:**
+L00000589	- `defaultModel()`: `packages/opencode/src/provider/provider.ts` (line ~1288)
+L00000590	- Model priority sorting: `packages/opencode/src/provider/provider.ts` -> `sort()` (line ~1279)
+L00000591	
+L00000592	**Behavior summary:**
+L00000593	Loading priority (first match wins):
+L00000594	1. **Config `model` field**: `config.model` -> `parseModel()` -> done
+L00000595	2. **Last used**: Reads `model.json` from state directory, checks each `{providerID, modelID}` against available providers
+L00000596	3. **First by internal priority**: Sorts available models by priority list `["gpt-5", "claude-sonnet-4", "big-pickle", "gemini-3-pro"]` (descending priority), then by `"latest"` suffix, then by ID
+L00000597	
+L00000598	Note: CLI flag override happens upstream of `defaultModel()` (at the prompt input level where `model` is passed explicitly).
+L00000599	
+L00000600	#### 7H.3 Model options and variants
+L00000601	
+L00000602	**File pointers:**
+L00000603	- Provider options: `packages/opencode/src/provider/provider.ts` -> custom loaders (lines ~119-260)
+L00000604	- Transform layer: `packages/opencode/src/provider/transform.ts`
+L00000605	
+L00000606	**Behavior summary:**
+L00000607	- Model options are set via `config.provider.<provider>.options` and provider-specific loaders.
+L00000608	- Examples: Anthropic adds `anthropic-beta` headers for claude-code/interleaved-thinking; OpenAI uses `.responses()` API; Bedrock configures region/profile/credentials.
+L00000609	- **Variants**: Built-in + custom variants, cycling via keybind in UI. Per-agent overrides via `agent.<name>.variant`.
+L00000610	- **Per-agent model overrides**: `agent.<name>.model` (parsed via `parseModel()`) allows each agent to use a different model.
+L00000611	
+L00000612	#### 7H.4 Provider transform layer
+L00000613	
+L00000614	**File pointers:**
+L00000615	- Transform namespace: `packages/opencode/src/provider/transform.ts`
+L00000616	
+L00000617	**Behavior summary:**
+L00000618	- `normalizeMessages()`: Provider-specific message normalization (e.g., Anthropic rejects empty content, Claude needs toolCallId normalization for non-string IDs).
+L00000619	- `providerOptions()`: Builds provider-specific options (instructions for OpenAI, caching for Anthropic, etc.).
+L00000620	- `schema()`: Transforms tool JSON schemas for provider compatibility.
+L00000621	- `maxOutputTokens()`: Determines max output tokens per model (default 32,000 or flag override).
+L00000622	- Output token limits are set via `OUTPUT_TOKEN_MAX` (configurable via `OPENCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX`).
+L00000623	
+L00000624	#### 7H.5 Error handling
+L00000625	
+L00000626	**File pointers:**
+L00000627	- Error namespace: `packages/opencode/src/provider/error.ts`
+L00000628	
+L00000629	**Behavior summary:**
+L00000630	- `isOverflow()`: Detects context overflow via regex patterns matching error messages from 12+ providers (Anthropic, Bedrock, OpenAI, Google, xAI, Groq, DeepSeek, etc.).
+L00000631	- `isRetryable()`: Provider-specific retryability (e.g., OpenAI 404s are treated as retryable).
+L00000632	- Error message extraction: Attempts to parse `responseBody` JSON for nested error messages.
+L00000633	
+L00000634	---
+L00000635	
+L00000636	## 8. Contract Mapping to Puppet Master SSOT (DRY)
+L00000637	
+L00000638	This section is the canonical mapping from OpenCode extraction categories to Puppet Master contract sections. Use these targets instead of duplicating definitions.
+L00000639	
+L00000640	| # | Extracted Topic | OpenCode Primary File(s) | Puppet Master SSOT Target | Contract Section(s) |
+L00000641	|---|---|---|---|---|
+L00000642	| A1 | Plan mode / run modes | `session/prompt/plan.txt`, `tool/plan.ts`, `session/prompt.ts` | `Plans/Run_Modes.md` | MODE-ask, MODE-plan, MODE-regular, MODE-yolo |
+L00000643	| A2 | Agent/mode switching | `tool/plan.ts`, `session/prompt.ts` | `Plans/Orchestrator_Page.md` | agent-switching |
+L00000644	| A3 | Ask/approval semantics | `permission/next.ts`, `question/` | `Plans/human-in-the-loop.md` | approval-flow |
+L00000645	| B1 | Agent definitions | `agent/agent.ts` | `Plans/Personas.md` | DEF-AGENT |
+L00000646	| B2 | Subagent invocation | `tool/task.ts`, `session/prompt.ts` | `Plans/orchestrator-subagent-integration.md` | subagent-lifecycle |
+L00000647	| B3 | Explore agent | `agent/prompt/explore.txt`, `agent/agent.ts` | `Plans/orchestrator-subagent-integration.md` | DRY:DATA:subagent_registry |
+L00000648	| B4 | Prompt assembly | `session/system.ts`, `session/prompt.ts` | `Plans/Prompt_Pipeline.md` | assembly-pipeline |
+L00000649	| B5 | Compaction / summaries | `session/compaction.ts` | `Plans/Prompt_Pipeline.md` | compaction |
+L00000650	| C1 | Permission resolution | `permission/next.ts` | `Plans/Permissions_System.md` | resolution-algorithm |
+L00000651	| C2 | Object-syntax matching | `permission/next.ts` | `Plans/Permissions_System.md` | granular-rules |
+L00000652	| C3 | Wildcard matching | `util/wildcard.ts` | `Plans/Permissions_System.md` | wildcard-engine |
+L00000653	| C4 | Special guards | `agent/agent.ts` | `Plans/Permissions_System.md` | special-guards |
+L00000654	| C5 | Ask UI outcomes | `permission/next.ts` | `Plans/Permissions_System.md` | ask-semantics |
+L00000655	| C6 | .env deny rules | `agent/agent.ts` | `Plans/Permissions_System.md` | default-denials |
+L00000656	| D1 | Command discovery | `command/index.ts` | `Plans/Commands_System.md` | discovery |
+L00000657	| D2 | Command frontmatter | `command/index.ts` | `Plans/Commands_System.md` | schema |
+L00000658	| D3 | Template features | `config/markdown.ts`, `session/prompt.ts` | `Plans/Commands_System.md` | template-engine |
+L00000659	| D4 | Subtask / model override | `command/index.ts` | `Plans/Commands_System.md` | overrides |
+L00000660	| E1 | Formatter trigger | `format/index.ts` | `Plans/Formatters_System.md` | trigger-mechanism |
+L00000661	| E2 | Built-in formatters | `format/formatter.ts` | `Plans/Formatters_System.md` | built-ins |
+L00000662	| E3 | Formatter config | `format/index.ts` | `Plans/Formatters_System.md` | config-schema |
+L00000663	| F1 | Skill discovery | `skill/skill.ts`, `skill/discovery.ts` | `Plans/Skills_System.md` | discovery |
+L00000664	| F2 | Skill frontmatter | `skill/skill.ts` | `Plans/Skills_System.md` | schema |
+L00000665	| F3 | Skill-to-agent surface | `command/index.ts` | `Plans/Skills_System.md` | agent-integration |
+L00000666	| F4 | Skill permissions | `agent/agent.ts` | `Plans/Skills_System.md` | permissions |
+L00000667	| G1 | Plugin discovery | `plugin/index.ts` | `Plans/Plugins_System.md` | discovery-load-order |
+L00000668	| G2 | Plugin context | `plugin/index.ts` | `Plans/Plugins_System.md` | plugin-signature |
+L00000669	| G3 | Plugin hooks | `packages/plugin/src/index.ts` | `Plans/Plugins_System.md` | hook-events |
+L00000670	| G4 | Custom tools | `plugin/index.ts`, `tool/registry.ts` | `Plans/Plugins_System.md` | custom-tools |
+L00000671	| H1 | Model ID format | `provider/provider.ts` | `Plans/Models_System.md` | MODEL-ID |
+L00000672	| H2 | Default selection | `provider/provider.ts` | `Plans/Models_System.md` | SELECTION-PRIORITY |
+L00000673	| H3 | Model options/variants | `provider/provider.ts`, `provider/transform.ts` | `Plans/Models_System.md` | MODEL-OPTIONS |
+L00000674	| H4 | Error handling | `provider/error.ts` | `Plans/Models_System.md` | MODEL-ERRORS |
+L00000675	| -- | Tools + ToolContext | `tool/tool.ts`, `tool/registry.ts` | `Plans/Tools.md` | S3, S3.5, S10 |
+L00000676	| -- | Provider stream | `provider/transform.ts` | `Plans/Contracts_V0.md`, `Plans/CLI_Bridged_Providers.md` | S2 (normalized stream) |
+L00000677	| -- | UI commands | `command/index.ts` | `Plans/UI_Command_Catalog.md` | S2 (stable IDs) |
+L00000678	| -- | Storage | `session/message-v2.ts` | `Plans/storage-plan.md` | S2.2 (event types) |
+L00000679	| -- | Message/part taxonomy | `session/message-v2.ts` | `Plans/Contracts_V0.md` | S1 (EventRecord) |
+L00000680	
+L00000681	All file paths above are relative to `packages/opencode/src/` in the upstream OpenCode repository (https://github.com/anomalyco/opencode).
+L00000682	
+L00000683	ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/Contracts_V0.md#7-uicommand, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/Tools.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md
+L00000684	
+L00000685	---
+L00000686	
+L00000687	## 9. Baseline -> Puppet Master Delta Hooks
+L00000688	
+L00000689	Each topic below lists 1-5 specific points where Puppet Master's implementation is expected to **diverge** from the OpenCode baseline. These are the "delta hooks" that implementers must address.
+L00000690	
+L00000691	### 9A. Run Modes and Enforcement
+L00000692	1. **Rust-native plan mode**: Puppet Master implements plan mode in Rust, not TypeScript. The system-reminder injection mechanism must be replicated in the Rust prompt builder.
+L00000693	2. **No Bun dependency**: Plan mode's `PlanExitTool` uses `Question.ask()` which is tied to OpenCode's Node/Bun runtime. Puppet Master implements the approval flow via its Slint GUI (primary) with CLI fallback per `Plans/Permissions_System.md`.
+L00000694	3. **Plan file location**: OpenCode writes plan files to `.opencode/plans/`. Puppet Master stores plan files at `~/.config/puppet-master/plans/` (global) and `.puppet-master/plans/` (project-level), per existing config path conventions.
+L00000695	
+L00000696	### 9B. Subagents and Context Injection
+L00000697	1. **Subagent execution model**: OpenCode runs subagents in-process via the task tool. Puppet Master's Rust backend may use subprocess-based or thread-based agent execution.
+L00000698	2. **Prompt assembly in Rust**: The multi-layered prompt pipeline (system + instructions + reminders + transforms) must be reimplemented. Model-specific prompt variants (anthropic.txt, codex_header.txt, gemini.txt) need a Rust equivalent selection mechanism.
+L00000699	3. **Compaction thresholds**: The 20,000-token reserve and 40,000-token prune-protect values are hardcoded. Puppet Master should make these configurable.
+L00000700	4. **Plugin prompt transforms**: Puppet Master supports both `experimental.chat.system.transform` and `experimental.chat.messages.transform` hooks under its plugin hook system with the `experimental.` prefix accepted as alias (consistent with the compaction hook alias decision in `Plans/Plugins_System.md`).
+L00000701	
+L00000702	### 9C. Permissions and Approval Mechanics
+L00000703	1. **Permission storage**: OpenCode's `always` approvals are session-scoped and not persisted to disk. **Delta:** Puppet Master adopts session-scoped approvals as the default (per `Plans/Permissions_System.md`); persistence across sessions is not supported.
+L00000704	2. **Rust wildcard engine**: The `Wildcard.match()` regex-based engine must be ported to Rust (or use an existing Rust glob/wildcard library).
+L00000705	3. **GUI approval flow**: OpenCode's ask/reply cycle uses bus events + server routes. Puppet Master wires adopted approval behavior through PM-native Slint approval surfaces or CLI fallback; older Tauri GUI phrasing is retired/source-lineage only.
+L00000706	4. **Reject-all cascade**: OpenCode's `reject` reply cascades to ALL pending permissions in the session. Puppet Master preserves this reject-all cascade behavior (matching OpenCode baseline).
+L00000707	
+L00000708	### 9D. Commands
+L00000709	1. **Command discovery paths**: OpenCode uses `.opencode/commands/`. Puppet Master uses project-level `.puppet-master/commands/` and global `~/.config/puppet-master/commands/` (per `Plans/Commands_System.md`).
+L00000710	2. **Template engine**: The `$ARGUMENTS`, `$1`/`$2`, shell injection, `@file` syntax must be reimplemented in Rust.
+L00000711	3. **MCP prompt integration**: OpenCode converts MCP prompts to commands. Puppet Master's MCP integration may differ.
+L00000712	
+L00000713	### 9E. Formatters
+L00000714	1. **Event-driven trigger**: OpenCode uses a bus event (`File.Event.Edited`) to trigger formatting. Puppet Master defines an equivalent `file.edited` event in its Rust event system to trigger formatting.
+L00000715	2. **Formatter auto-detection**: The enabled() checks (e.g., "is prettier in package.json?") must be ported to Rust or delegated to shell scripts.
+L00000716	3. **Bun-specific commands**: Several formatters use `BunProc.which()` for execution. Puppet Master substitutes with `which`-based system-level package detection and direct process invocation.
+L00000717	
+L00000718	### 9F. Skills
+L00000719	1. **Architecture pattern, not ownership transfer:** OpenCode's skills system is a useful reference because it sits above the provider layer. Puppet Master should follow that pattern architecturally while keeping PM-native skills as the canonical runtime path.
+L00000720	2. **Compatibility roots:** PM maintains its own canonical roots and also imports compatible roots such as `.claude/skills` and `.agents/skills` per the PM skill system. Compatibility import does not make those external roots canonical.
+L00000721	3. **Projection posture:** Provider-native or tool-native skill projection is optional compatibility only. PM should not require Codex-specific or GitHub-Copilot-specific skill packaging inside OpenCode because OpenCode itself applies one skill system above its provider list.
+L00000722	4. **Discovery vs runtime:** OpenCode-style discovery compatibility is useful, but PM runtime correctness still depends on PM registry resolution, readiness validation, context bundling, and the PM `skill` tool.
+L00000723	
+L00000724	ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/MiscPlan.md, ContractName:Plans/Provider_OpenCode.md
+L00000725	### 9G. Plugins
+L00000726	1. **Plugin runtime**: OpenCode plugins are JavaScript/TypeScript modules loaded via `import()`. Puppet Master's Rust backend must define its own plugin API (WASM, dynamic libraries, subprocess-based, or scripting language bindings).
+L00000727	2. **Hook interface**: The `Hooks` interface has ~15 named hooks. Puppet Master supports the hook subset defined in `Plans/Plugins_System.md §4`; unsupported hooks are silently ignored at registration.
+L00000728	3. **Built-in plugins**: OpenCode bundles auth plugins (Codex, Copilot, GitLab). Puppet Master implements auth providers natively (not via plugins), per `Plans/rewrite-tie-in-memo.md`.
+L00000729	4. **Tool precedence**: Plugin tools overriding built-ins is by design in OpenCode. Puppet Master disallows plugin tools overriding built-in tools by default; override requires explicit `override_builtin: true` (consistent with `Plans/Commands_System.md` override policy).
+L00000730	
+L00000731	### 9H. Models
+L00000732	1. **AI SDK dependency**: OpenCode uses the Vercel AI SDK for model abstraction. Puppet Master implements its own provider abstraction in Rust, per `Plans/Models_System.md`.
+L00000733	2. **Provider transform layer**: The extensive per-provider normalization (Anthropic empty content filtering, Claude toolCallId normalization, etc.) must be replicated in the Puppet Master provider layer.
+L00000734	3. **Model priority list**: The hardcoded priority list `["gpt-5", "claude-sonnet-4", "big-pickle", "gemini-3-pro"]` should be configurable in Puppet Master.
+L00000735	4. **Overflow detection**: The regex-based overflow detection patterns (12+ provider-specific patterns) must be maintained and extended as new providers are added.
+L00000736	5. **Debug model/memory boundary**: Debug or OpenCode-derived extraction must verify model assumptions against `Plans/Models_System.md` (`/Models_System.md`) and Assistant-only memory assumptions against `Plans/assistant-memory-subsystem.md` (`/assistant-memory-subsystem.md`); this baseline reference does not re-own those budgets, injection rules, or retention boundaries.
+L00000737	
+L00000738	---
+L00000739	
+L00000740	## 10. Upstream Notes Worth Capturing (DRY; file pointers + deltas)
+L00000741	
+L00000742	> Purpose: prevent downstream agents from "assuming Puppet Master == OpenCode" by recording **where** key upstream models live and the **few deltas** that commonly cause mis-mapping.
+L00000743	
+L00000744	### 10.1 Tools + ToolContext (upstream pointers)
+L00000745	- Plugin tool contract (ToolContext + `ask()` shape): `packages/plugin/src/tool.ts`
+L00000746	- Internal tool contract (structured `{title, metadata, output, attachments?}` + truncation wrapper): `packages/opencode/src/tool/tool.ts`
+L00000747	- Tool loading/registry (custom tools from `{tool,tools}/*.{js,ts}` + plugin tools; model-gated tool availability): `packages/opencode/src/tool/registry.ts`
+L00000748	- Tool lifecycle hooks (not Bus events): `Plugin.trigger("tool.execute.before"|"tool.execute.after")` in `packages/opencode/src/session/prompt.ts`
+L00000749	
+L00000750	### 10.2 Permissions model (allow/deny/ask, wildcard patterns, replies, errors)
+L00000751	- Current ruleset-based permissions: `packages/opencode/src/permission/next.ts` + API surface `packages/opencode/src/server/routes/permission.ts`
+L00000752	  - Replies are `once | always | reject`; `reject` can optionally carry a user correction message (`CorrectedError` vs `RejectedError`).
+L00000753	  - Wildcard semantics (incl. special-case patterns ending in `" *"`): `packages/opencode/src/util/wildcard.ts`
+L00000754	- Notable delta vs Puppet Master assumptions: OpenCode has *two* permission implementations (`packages/opencode/src/permission/index.ts` and `.../permission/next.ts`). Prefer `next.ts` when extracting current behavior.
+L00000755	
+L00000756	### 10.3 Provider abstraction + transform/error layers (providerID/modelID split)
+L00000757	- Provider/model registry and loader logic (explicit `providerID` + `modelID` split): `packages/opencode/src/provider/provider.ts`
+L00000758	- Provider message normalization / capability shims (toolCallId normalization, caching flags, modality filtering): `packages/opencode/src/provider/transform.ts`
+L00000759	- Error parsing and retryability/overflow detection (stream + API-call): `packages/opencode/src/provider/error.ts`
+L00000760	- Notable delta vs Puppet Master assumptions: a significant amount of "provider compatibility" lives in the transform layer (not in the core session stream), so don't assume upstream tool/message parts map 1:1 to any single provider's API.
+L00000761	
+L00000762	### 10.4 Session/message/part taxonomy (what "a message" means upstream)
+L00000763	- Message schema (legacy/simple): `packages/opencode/src/session/message.ts` (parts: `text`, `reasoning`, `tool-invocation`, `file`, ...)
+L00000764	- Message schema (current/persistent): `packages/opencode/src/session/message-v2.ts` (parts: `text|reasoning|file|tool|step-start|step-finish|snapshot|patch|subtask|retry|compaction|agent`)
+L00000765	  - Tool part state machine: `pending|running|completed|error` (`ToolState*` in the same file).
+L00000766	- Notable delta vs Puppet Master assumptions: upstream sometimes injects synthetic messages/parts to satisfy provider constraints (e.g., ensure every `tool_use` has a corresponding `tool_result`; see `packages/opencode/src/session/message-v2.ts` + `packages/opencode/src/session/prompt.ts`).
+L00000767	
+L00000768	### 10.5 Server and routes (API surface)
+L00000769	- Server entry: `packages/opencode/src/server/server.ts` -- Hono-based HTTP server with SSE streaming, CORS, basic auth, and WebSocket support.
+L00000770	- Route modules: `routes/session.ts`, `routes/permission.ts`, `routes/provider.ts`, `routes/config.ts`, `routes/file.ts`, `routes/mcp.ts`, `routes/pty.ts`, `routes/tui.ts`, `routes/project.ts`, `routes/question.ts`, `routes/experimental.ts`, `routes/global.ts`
+L00000771	- Notable delta: Puppet Master uses Rust + Slint native surfaces and internal Rust services, not Tauri or a standalone HTTP server. Adopted API surface maps to internal Rust function calls, UICommand dispatch, and permission routes under the current owner docs.
+L00000772	
+L00000773	### 10.6 Notable process docs (UI blocker/orchestrator pattern)
+L00000774	- Session composer "blocker" orchestrator pattern (question/permission blocks prompt input): `specs/session-composer-refactor-plan.md` and `packages/app/src/pages/session/composer/*`
+L00000775	
+L00000776	### 10.7 Usage pipeline and normalization mapping
+L00000777	- Upstream reference pattern: OpenCode's message-level usage flow (`Session.getUsage`, processor finish-step, and related normalization logic) is useful as an extraction target for how response metadata becomes durable usage records.
+L00000778	- Puppet Master mapping rule: all extracted usage terminology, persistence semantics, and UI linkage MUST map into `Plans/usage-feature.md` and `Plans/storage-plan.md` rather than creating a parallel OpenCode-shaped usage vocabulary in this document or downstream packets.
+L00000779	
+L00000780	## Owner / Consumer Map
+L00000781	
+L00000782	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/OpenCode_Deep_Extraction.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000783	
+L00000784	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000785	
+L00000786	## PlanUnits
+L00000787	
+
+<<< CONTEXT_AFTER canonical_document_lines=788-799 >>>
+L00000788	### ODE-001 - OpenCode Deep Extraction Retired Source-Preserving Bridge
+L00000789	
+L00000790	```yaml
+L00000791	plan_unit_id: ODE-001
+L00000792	unit_type: compatibility_disposition
+L00000793	status: accepted
+L00000794	owner_doc: Plans/OpenCode_Deep_Extraction.md
+L00000795	canonical_text: >-
+L00000796	  ODE-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 110 because OpenCode_Deep_Extraction-S0001 through S0070 are covered by ODE-002 through ODE-074 or explicit structural dispositions. ODE-001 no longer carries source_preserving_planunit compile mode and must not own product coverage.
+L00000797	gui_related: false
+L00000798	gui_classification_reason: The live unit is retired migration-lineage compatibility only; GUI-related source coverage is carried by fine-grained OpenCode Deep Extraction PlanUnits and coverage_map proof.
+L00000799	split_recommended: false

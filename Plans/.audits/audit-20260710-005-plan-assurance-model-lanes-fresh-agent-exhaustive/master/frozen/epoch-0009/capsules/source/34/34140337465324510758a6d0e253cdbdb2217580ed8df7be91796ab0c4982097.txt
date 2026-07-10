@@ -1,0 +1,341 @@
+<<< CONTEXT_BEFORE canonical_document_lines=22392-22403 >>>
+L00022392	  - "Agent took control"
+L00022393	  - "user_paused -> resumed"
+L00022394	  - "activity card"
+L00022395	  - "message block"
+L00022396	negative_constraints:
+L00022397	  - Do not store uncapped raw logs inline in chat completion reports.
+L00022398	  - Do not let chat presentation replace Goal Runtime receipt authority.
+L00022399	owner_hints:
+L00022400	  - Plans/assistant-chat-design.md
+L00022401	  - Plans/Goal_Runtime_System.md
+L00022402	```
+L00022403	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=22404-22715 >>>
+L00022404	### ACD-419 - Collapsible Child Goal Display
+L00022405	
+L00022406	```yaml
+L00022407	plan_unit_id: ACD-419
+L00022408	unit_type: requirement
+L00022409	status: accepted
+L00022410	owner_doc: Plans/assistant-chat-design.md
+L00022411	canonical_text: >-
+L00022412	  Assistant Chat shows the parent goal by default and summarizes child goals by default. Child goals are expandable when the user wants details or when a child is blocked or failed. The compact summary may present states like "Goal running", "8/14 tasks", and "3 child goals active", with expanded child-goal status rows that preserve child status, assigned agent/persona/model, current task, blockers, result availability, and result artifacts without weakening parent/child runtime authority.
+L00022413	gui_related: true
+L00022414	gui_classification_reason: This unit defines collapsible user-visible child-goal and subgoal tree displays.
+L00022415	depends_on:
+L00022416	  - GRS-016
+L00022417	unblocks: []
+L00022418	acceptance_criteria:
+L00022419	  - Child goals are visible as summaries without forcing all detail into the default chat view.
+L00022420	  - Blocked or failed child goals can be expanded and inspected.
+L00022421	  - Chat display does not allow a child goal to complete the parent goal.
+L00022422	  - Expanded child-goal rows show child status, assigned agent/persona/model, current task, blockers, result availability, and result artifacts when available.
+L00022423	validation_surfaces:
+L00022424	  - python3 scripts/pm-plan-index.py validate
+L00022425	  - future Assistant Chat child-goal display review
+L00022426	risk_class: child_goal_visibility_drift
+L00022427	reasoning_tier: standard
+L00022428	context_scope: assistant_chat_goal_mode
+L00022429	implementation_surfaces:
+L00022430	  - Plans/assistant-chat-design.md
+L00022431	  - Plans/Goal_Runtime_System.md
+L00022432	node_compile_hint:
+L00022433	  mode: assistant_chat_child_goal_display
+L00022434	  create_worknodes: false
+L00022435	source_lineage:
+L00022436	  - pldg-20260616-001-goal-runtime-system:atom-0058
+L00022437	  - pldg-20260616-001-goal-runtime-system:atom-0079
+L00022438	  - pldg-20260616-001-goal-runtime-system:atom-0097
+L00022439	  - pldg-20260616-001-goal-runtime-system:dec-0015
+L00022440	preserved_exact_tokens:
+L00022441	  - "Subgoal tree display"
+L00022442	  - "Child goals summarized by default"
+L00022443	  - "Child goals expandable"
+L00022444	  - "Goal running"
+L00022445	  - "8/14 tasks"
+L00022446	  - "3 child goals active"
+L00022447	  - "Child Goal"
+L00022448	  - "blocked"
+L00022449	  - "agent/persona/model"
+L00022450	  - "current task"
+L00022451	  - "blockers"
+L00022452	  - "result availability"
+L00022453	  - "result artifacts"
+L00022454	negative_constraints:
+L00022455	  - Do not force all child-goal detail into the default chat view.
+L00022456	  - Do not hide blocked or failed child goals from the user-facing status surface.
+L00022457	  - Do not let chat UI imply a child can complete the parent goal.
+L00022458	owner_hints:
+L00022459	  - Plans/assistant-chat-design.md
+L00022460	  - Plans/Goal_Runtime_System.md
+L00022461	```
+L00022462	
+L00022463	## Ledger Compile Addendum - pldg-20260616-002
+L00022464	
+L00022465	### ACD-420 - Visible Chat Goal Boundary And Doc Builder Exclusion
+L00022466	
+L00022467	```yaml
+L00022468	plan_unit_id: ACD-420
+L00022469	unit_type: requirement
+L00022470	status: accepted
+L00022471	owner_doc: Plans/assistant-chat-design.md
+L00022472	canonical_text: >-
+L00022473	  Assistant Chat owns visible Goal mode controls and completion presentation for user-directed goals, including pause, resume, stop, status, child-goal summaries, and completion reports. Chat may expose Orchestrator Goal handoff status, but PRD Builder conversational intake routes to Planning_Ledger_System, legacy invisible Requirements Doc Builder conversion remains a Goal Runtime compatibility flow only, and work-graph/compiler-boundary readiness routes to Plan_To_Node_Compilation/PNC-009 rather than ordinary chat-owned WorkNodes.
+L00022474	gui_related: true
+L00022475	gui_classification_reason: Assistant Chat goal controls, status, and completion reports are user-visible chat UI.
+L00022476	depends_on:
+L00022477	    - ACD-416
+L00022478	    - ACD-418
+L00022479	    - GRS-002
+L00022480	    - PNC-009
+L00022481	unblocks: []
+L00022482	acceptance_criteria:
+L00022483	  - Assistant Chat continues to expose visible Goal mode control actions and completion report status.
+L00022484	  - Chat can show Orchestrator Goal handoff status without owning GoalRun scheduler or receipt authority.
+L00022485	  - PRD Builder conversational intake is not represented as a default chat-owned WorkNode.
+L00022486	  - Legacy invisible Requirements Doc Builder conversion remains a Goal Runtime compatibility integration with ledger lineage only.
+L00022487	validation_surfaces:
+L00022488	  - python3 scripts/pm-plan-index.py validate
+L00022489	  - future Assistant Chat Goal UI review
+L00022490	risk_class: chat_goal_boundary_drift
+L00022491	reasoning_tier: standard
+L00022492	context_scope: assistant_chat_goal_mode
+L00022493	implementation_surfaces:
+L00022494	  - Plans/assistant-chat-design.md
+L00022495	  - Plans/Goal_Runtime_System.md
+L00022496	  - Plans/chain-wizard-flexibility.md
+L00022497	  - Plans/Planning_Ledger_System.md
+L00022498	  - Plans/Plan_To_Node_Compilation.md
+L00022499	node_compile_hint:
+L00022500	  mode: assistant_chat_goal_boundary
+L00022501	  create_worknodes: false
+L00022502	source_lineage:
+L00022503	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0003
+L00022504	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0005
+L00022505	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0008
+L00022506	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0079
+L00022507	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0103
+L00022508	preserved_exact_tokens:
+L00022509	  - "Goal mode exposed to the user in chat assistant"
+L00022510	  - "pause"
+L00022511	  - "resume"
+L00022512	  - "stop"
+L00022513	  - "completion report"
+L00022514	  - "Requirements Doc Builder"
+L00022515	  - "invisible Goal Mode"
+L00022516	  - "Planning_Ledger_System"
+L00022517	  - "Plan_To_Node_Compilation"
+L00022518	  - "PNC-009"
+L00022519	negative_constraints:
+L00022520	  - Do not let chat presentation replace Goal Runtime receipt authority.
+L00022521	  - Do not treat legacy Doc Builder invisible goals as default Orchestrator WorkNodes.
+L00022522	stale_retired_dispositions:
+L00022523	  - "Requirements Doc Builder is retained here only for legacy invisible Goal Runtime compatibility lineage; current product prose uses PRD Builder."
+L00022524	owner_hints:
+L00022525	  - Plans/assistant-chat-design.md
+L00022526	  - Plans/Goal_Runtime_System.md
+L00022527	  - Plans/chain-wizard-flexibility.md
+L00022528	  - Plans/Planning_Ledger_System.md
+L00022529	  - Plans/Plan_To_Node_Compilation.md
+L00022530	```
+L00022531	
+L00022532	
+L00022533	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00022534	
+L00022535	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00022536	
+L00022537	### ACD-421 - Planning Product Chat Reuse And Structured Handoff
+L00022538	
+L00022539	```yaml
+L00022540	plan_unit_id: ACD-421
+L00022541	unit_type: requirement
+L00022542	status: accepted
+L00022543	owner_doc: Plans/assistant-chat-design.md
+L00022544	canonical_text: 'PRD Builder and Planning Wizard reuse the existing Assistant Chat message, attachment, selection-context, command, persistence, and thread infrastructure rather than creating new chat subsystems. All Planning Wizard child conversations use thread_type planning_wizard and distinguish intake, topic, final_integration, audit_review, and final_review through thread_role and Planning Run membership. Send to Planning Wizard creates a structured seed containing goal, scope, project, requirements, assumptions, open questions, source message references, artifacts, repository context, and suggested mode rather than copying an unbounded transcript. When Assistant Chat already contains sufficient planning-intake intent, the handoff may construct a traceable seed or draft PRD Pack and begin Planning Wizard intake without forcing the user through repeated PRD Builder questions. Final planning review uses the shared live document preview,
+L00022545	  selection context menu, comments, source inspection, challenge, targeted revision, and annotation status system used by PRD Builder. The user remains in one Planning Wizard workspace with topic map, active Assistant Chat panel, live plan preview, source/annotation/readiness panels, and bounded backend child threads loaded as selected. Reuse and formalize existing role styling, collapsible navigation, phase rows, live document panes, thread differentiation, activity indicators, worktree context, and selection-based chat context where compatible with the new architecture.'
+L00022546	gui_related: true
+L00022547	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00022548	depends_on: []
+L00022549	unblocks: []
+L00022550	acceptance_criteria:
+L00022551	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00022552	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00022553	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00022554	validation_surfaces:
+L00022555	- python3 scripts/pm-plan-index.py validate
+L00022556	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00022557	risk_class: owner_drift
+L00022558	reasoning_tier: high
+L00022559	context_scope: ledger_to_plans_compile
+L00022560	implementation_surfaces:
+L00022561	- Plans/assistant-chat-design.md
+L00022562	- Plans/PRD_Builder.md
+L00022563	- Plans/Planning_Wizard.md
+L00022564	- Plans/Contracts_V0.md
+L00022565	- Plans/FinalGUISpec.md
+L00022566	node_compile_hint:
+L00022567	  mode: canonical_planunit_from_bootstrap_ledger
+L00022568	  create_worknodes: false
+L00022569	  create_nodeseeds: false
+L00022570	source_lineage:
+L00022571	- pldg-20260618-001-prd-planning-wizard:atom-0007
+L00022572	- pldg-20260618-001-prd-planning-wizard:atom-0008
+L00022573	- pldg-20260618-001-prd-planning-wizard:atom-0040
+L00022574	- pldg-20260618-001-prd-planning-wizard:atom-0041
+L00022575	- pldg-20260618-001-prd-planning-wizard:atom-0064
+L00022576	- pldg-20260618-001-prd-planning-wizard:atom-0148
+L00022577	- pldg-20260618-001-prd-planning-wizard:atom-0157
+L00022578	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/08-gui-threads-and-navigation.md#SRC-GUI
+L00022579	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/03-planning-wizard.md#SRC-PLANNING
+L00022580	source_atom_ids:
+L00022581	- atom-0007
+L00022582	- atom-0008
+L00022583	- atom-0040
+L00022584	- atom-0041
+L00022585	- atom-0064
+L00022586	- atom-0148
+L00022587	- atom-0157
+L00022588	decision_refs:
+L00022589	- dec-0003
+L00022590	correction_refs:
+L00022591	- corr-0006
+L00022592	preserved_exact_tokens:
+L00022593	- Assistant Chat
+L00022594	- typed thread
+L00022595	- 'thread_type: planning_wizard'
+L00022596	- thread_role
+L00022597	- Planning Run
+L00022598	- Send to Planning Wizard
+L00022599	- structured seed
+L00022600	- fast-path
+L00022601	- live document preview
+L00022602	- selection context menu
+L00022603	- one Planning Wizard page
+L00022604	- active chat panel
+L00022605	- collapsible navigation
+L00022606	- live document pane
+L00022607	- selection context
+L00022608	negative_constraints:
+L00022609	- Do not build duplicate PRD Builder or Planning Wizard chat engines.
+L00022610	- Do not define planning_topic or audit_review as unrelated top-level thread types.
+L00022611	- Do not use the raw Assistant Chat transcript as the sole Planning Wizard handoff.
+L00022612	- Do not sacrifice provenance, quality warnings, or readiness validation to avoid repetition.
+L00022613	- Do not present every backend subagent or audit thread as a separate top-level app surface.
+L00022614	owner_hints:
+L00022615	- Plans/assistant-chat-design.md
+L00022616	- Plans/PRD_Builder.md
+L00022617	- Plans/Planning_Wizard.md
+L00022618	- Plans/Contracts_V0.md
+L00022619	- Plans/FinalGUISpec.md
+L00022620	- Concepts/PMConcept.html
+L00022621	```
+L00022622	
+L00022623	## Ledger Compile Addendum - pldg-20260622-001-fff
+L00022624	
+L00022625	### ACD-422 - Assistant Chat Discovery Activity And Toggle
+L00022626	
+L00022627	```yaml
+L00022628	plan_unit_id: ACD-422
+L00022629	unit_type: requirement
+L00022630	status: accepted
+L00022631	owner_doc: Plans/assistant-chat-design.md
+L00022632	canonical_text: >-
+L00022633	  Assistant Chat threads show native DiscoveryService activity by default when assistants look for candidate files, use stale or fallback indexes, select candidates, or complete exact-verification follow-up. The GUI setting lives at Settings > Assistant Chat > Activity with label Show file discovery activity in chat, default on, and description Show when assistants look for candidate files, use stale or fallback indexes, select files, and verify them. The setting hides only routine inline discovery progress cards when off; permission prompts, approval cards, denied/hidden-by-policy safety messages, trust-affecting fallback/stale disclosures, exact-verification linkage, durable receipts, and final relevant summaries are never suppressible by this setting.
+L00022634	gui_related: true
+L00022635	gui_classification_reason: This defines Assistant Chat thread activity presentation and a GUI setting.
+L00022636	depends_on: [T-161, CV-291, F2-191, PS-118]
+L00022637	unblocks: [ATS-011, RAP-031]
+L00022638	acceptance_criteria:
+L00022639	  - Routine discovery activity is visible in Assistant Chat threads by default.
+L00022640	  - The exact setting path, label, default, and description match the compiled contract.
+L00022641	  - Turning the setting off never hides permission, approval, safety, trust-affecting fallback/stale, exact-verification, receipt, or final-summary information.
+L00022642	validation_surfaces:
+L00022643	  - python3 scripts/pm-plan-index.py validate
+L00022644	  - Future Assistant Chat visibility on/off tests.
+L00022645	  - Future permission prompt not suppressed by chat visibility setting test.
+L00022646	risk_class: user_visible_transparency_drift
+L00022647	reasoning_tier: standard
+L00022648	context_scope: assistant_chat_discovery_activity
+L00022649	implementation_surfaces: [Plans/assistant-chat-design.md, future Assistant Chat thread UI, future Settings UI]
+L00022650	node_compile_hint: {mode: assistant_chat_visibility_contract, create_worknodes: false, create_nodeseeds: false}
+L00022651	source_lineage:
+L00022652	  - pldg-20260622-001-fff:atom-0064
+L00022653	  - pldg-20260622-001-fff:atom-0065
+L00022654	  - pldg-20260622-001-fff:atom-0066
+L00022655	  - pldg-20260622-001-fff:atom-0067
+L00022656	  - pldg-20260622-001-fff:atom-0068
+L00022657	  - pldg-20260622-001-fff:atom-0080
+L00022658	  - pldg-20260622-001-fff:atom-0093
+L00022659	  - pldg-20260622-001-fff:state/precision_contract.json#assistant_chat_setting
+L00022660	source_atom_ids: [atom-0064, atom-0065, atom-0066, atom-0067, atom-0068, atom-0080, atom-0093]
+L00022661	preserved_exact_tokens: ["Settings > Assistant Chat > Activity", "Show file discovery activity in chat", "Show when assistants look for candidate files, use stale or fallback indexes, select files, and verify them.", "default on", "routine discovery progress presentation only", "permission prompts", "approval cards", "denied/hidden-by-policy safety messages", "exact-verification linkage", "durable receipts"]
+L00022662	negative_constraints:
+L00022663	  - Do not hide discovery only in backend logs.
+L00022664	  - Do not make safety, permission, approval, denied, or hidden-by-policy UI suppressible routine progress.
+L00022665	  - Do not let the setting change discovery, ranking, verification, or receipt persistence behavior.
+L00022666	owner_hints: [Plans/assistant-chat-design.md, Plans/Runtime_Artifacts_Panel.md, Plans/Permissions_System.md, Plans/FileSafe.md]
+L00022667	```
+L00022668	
+L00022669	### ACD-423 - Assistant Chat File Mention Discovery Routing
+L00022670	
+L00022671	```yaml
+L00022672	plan_unit_id: ACD-423
+L00022673	unit_type: requirement
+L00022674	status: accepted
+L00022675	owner_doc: Plans/assistant-chat-design.md
+L00022676	canonical_text: >-
+L00022677	  Assistant Chat @file and file mention autocomplete query DiscoveryService for file, directory, and mixed target kinds using the assistant_chat_file_mention surface_type. Results preserve DiscoveryService rank order, show stale/fallback/remote/SSH state compactly when relevant, omit blocked paths, and attach selected candidates as source references that later agent work must exactly verify before edits or root-cause claims.
+L00022678	gui_related: true
+L00022679	gui_classification_reason: This is user-visible mention autocomplete and candidate presentation in Assistant Chat.
+L00022680	depends_on: [T-160, T-161, F2-191, F3-399]
+L00022681	unblocks: [ATS-011]
+L00022682	acceptance_criteria:
+L00022683	  - Assistant Chat file mentions use DiscoveryService order unless a local filter is disclosed.
+L00022684	  - Hidden-by-policy paths are not shown as candidates and do not leak through counts or rank gaps.
+L00022685	  - Mention selection does not become content correctness proof.
+L00022686	validation_surfaces:
+L00022687	  - python3 scripts/pm-plan-index.py validate
+L00022688	  - Future Assistant Chat file mention ranking parity test.
+L00022689	  - Future hidden-by-policy mention autocomplete no-leak test.
+L00022690	risk_class: chat_file_mention_drift
+L00022691	reasoning_tier: standard
+L00022692	context_scope: assistant_chat_file_mentions
+L00022693	implementation_surfaces: [Plans/assistant-chat-design.md, future Assistant Chat @file autocomplete]
+L00022694	node_compile_hint: {mode: assistant_file_mention_consumer, create_worknodes: false, create_nodeseeds: false}
+L00022695	source_lineage:
+L00022696	  - pldg-20260622-001-fff:atom-0021
+L00022697	  - pldg-20260622-001-fff:atom-0056
+L00022698	  - pldg-20260622-001-fff:atom-0059
+L00022699	  - pldg-20260622-001-fff:atom-0078
+L00022700	  - pldg-20260622-001-fff:atom-0087
+L00022701	  - pldg-20260622-001-fff:atom-0090
+L00022702	  - pldg-20260622-001-fff:state/consumer_conformance_matrix.json#assistant_chat_file_mentions
+L00022703	source_atom_ids: [atom-0021, atom-0056, atom-0059, atom-0078, atom-0087, atom-0090]
+L00022704	preserved_exact_tokens: ["@file", "assistant_chat_file_mention", "file mention autocomplete", "preserve service ranking order", "stale/fallback/remote/SSH state", "hidden-by-policy", "exact verification"]
+L00022705	negative_constraints:
+L00022706	  - Do not run a second undisclosed fuzzysort that changes shared ranking.
+L00022707	  - Do not leak blocked paths through mention candidates, counts, or rank gaps.
+L00022708	owner_hints: [Plans/assistant-chat-design.md, Plans/FinalGUISpec.md, Plans/UI_Command_Catalog.md]
+L00022709	```
+L00022710	
+L00022711	
+L00022712	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00022713	
+L00022714	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00022715	
+
+<<< CONTEXT_AFTER canonical_document_lines=22716-22727 >>>
+L00022716	### ACD-425 - Assistant Chat Vision Bridge Controls
+L00022717	
+L00022718	```yaml
+L00022719	plan_unit_id: ACD-425
+L00022720	unit_type: requirement
+L00022721	status: accepted
+L00022722	owner_doc: Plans/assistant-chat-design.md
+L00022723	canonical_text: 'Assistant Chat surfaces vision bridge use with first-party controls and labels: selected image/source
+L00022724	  chip, bridge-derived description artifact, provider/model used, requested/effective model disclosure, freshness/cache
+L00022725	  state, permission/degraded state, inspect, rerun with question, copy description, attach result, and manage remembered
+L00022726	  permission. Screenshot to Chat, composer chips, activity cards, runtime artifact/detail panels, and requested/effective
+L00022727	  model chips are directional PMConcept lineage only, not copied HTML/CSS.'

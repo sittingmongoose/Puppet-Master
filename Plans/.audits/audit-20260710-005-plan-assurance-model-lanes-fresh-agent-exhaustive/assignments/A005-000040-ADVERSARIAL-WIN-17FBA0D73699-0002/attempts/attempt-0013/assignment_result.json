@@ -1,0 +1,716 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000040-ADVERSARIAL-WIN-17FBA0D73699-0002",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0007_b_parallel_dispatcher_epoch_0013/a005_000040_adversarial_e13",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/UI_Wiring_Rules.md",
+    "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa",
+    "core_sha256": "315020f061e0a7aae542ecd1a36615452668721ec50dc7b3ad2ad2dfb5854844",
+    "core_range": [359, 595]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-000040-G001",
+      "item_type": "gap",
+      "title": "Approve-and-build has a report-to-dispatch race",
+      "statement": "The UI is told to derive enablement from the readiness report, but the excerpt never requires the dispatcher or handler to revalidate the same report generation at command acceptance. A report can flip to failed after rendering but before dispatch, allowing a stale enabled control to cross the safety boundary.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 367,
+          "line_end": 367,
+          "exact_quote": "  The Planning Wizard final-review control for `cmd.planning_wizard.approve_and_build` must derive its enabled state",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "concurrency_and_authority",
+      "impact": "A build can begin against a readiness state that was already revoked.",
+      "builder_discretion": "Require a report generation/hash precondition in the command and fail closed on handler-side compare-and-dispatch."
+    },
+    {
+      "item_id": "A005-000040-G002",
+      "item_type": "gap",
+      "title": "Missing and corrupt readiness-report states are unspecified",
+      "statement": "The false case is specified, but no state transition or fail-closed behavior is defined for a missing, unreadable, malformed, schema-incompatible, partially written, or stale report.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 368,
+          "line_end": 368,
+          "exact_quote": "  from `Plans/.implementation_readiness/buildability_gate_report.json`. When `buildability_gate_passed=false`, the UI",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "invalid_state_and_partial_failure",
+      "impact": "Implementations may fail open, show no explanation, or oscillate during report replacement.",
+      "builder_discretion": "Define atomic report publication, freshness metadata, schema validation, and a stable unavailable/corrupt disabled state."
+    },
+    {
+      "item_id": "A005-000040-G003",
+      "item_type": "gap",
+      "title": "Disabled-reason replacement and clearing semantics are absent",
+      "statement": "The projection is populated from currently open blockers, but no deterministic ordering, deduplication, snapshot identity, update trigger, or clearing rule is given when blockers close or buildability becomes true.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 369,
+          "line_end": 369,
+          "exact_quote": "  projection keeps the control disabled and fills `state.planning_wizard.final_review.approve_and_build.disabled_reason`",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "gui_state_transition",
+      "impact": "Users can see stale or nondeterministically reordered blocker explanations.",
+      "builder_discretion": "Specify replacement-not-append semantics, stable ordering, report generation identity, and explicit clearing."
+    },
+    {
+      "item_id": "A005-000040-G004",
+      "item_type": "gap",
+      "title": "Report-derived strings cross into the UI without trust boundaries",
+      "statement": "Blocker IDs, owner paths, and hard reasons are projected as display data without requirements for escaping, control-character handling, length/count bounds, safe link behavior, or sensitivity classification.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 370,
+          "line_end": 370,
+          "exact_quote": "  from the report's currently open blocker families, blocker IDs, exact owner_docs, and hard disabled reasons that are",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "untrusted_input_and_privacy",
+      "impact": "A malformed or attacker-influenced report can spoof UI content, cause resource exhaustion, or expose internal paths.",
+      "builder_discretion": "Render fields as inert text, bound them, validate tokens, and define whether owner paths may be exposed."
+    },
+    {
+      "item_id": "A005-000040-G005",
+      "item_type": "gap",
+      "title": "Disabled reasons lack accessible and localizable presentation contracts",
+      "statement": "The required content is named, but the excerpt does not define an accessible description for a disabled control, keyboard/screen-reader discovery, change announcement, localization keys, or separation of machine IDs from translated prose.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 382,
+          "line_end": 382,
+          "exact_quote": "  - The disabled reason projection lists currently open blocker families, blocker IDs, exact owner_docs, and PNC-019 hard disabled reason only when present.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "accessibility_and_localization",
+      "impact": "Users of assistive technology may be unable to learn why action is unavailable, and translated builds may corrupt identifiers or reasons.",
+      "builder_discretion": "Expose a focusable explanation/status relationship and localize templates while preserving opaque IDs and paths."
+    },
+    {
+      "item_id": "A005-000040-G006",
+      "item_type": "authority",
+      "title": "UICommand carries no explicit authorization context",
+      "statement": "Stable typed command IDs constrain routing, but the envelope contract shown here has no actor, capability, project, tenant, session, or authorization-decision context and no explicit requirement that the handler authorize independently of UI state.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 459,
+          "line_end": 459,
+          "exact_quote": "2. **UICommand envelope** — contains `command_id` (stable ID from catalog), `args` (typed key-value map), and `correlation_id` (unique per invocation).",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "authority_boundary",
+      "impact": "A forged, replayed, or cross-context command can reach a handler without a normative authorization check.",
+      "builder_discretion": "Bind commands to authenticated context and require handler-side capability and resource-scope authorization."
+    },
+    {
+      "item_id": "A005-000040-G007",
+      "item_type": "gap",
+      "title": "Correlation IDs do not define replay or idempotency behavior",
+      "statement": "Uniqueness per invocation is insufficient: scope, generation authority, collision handling, retry reuse, duplicate suppression, idempotency, causal ordering, and retention of deduplication state are all unspecified.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 459,
+          "line_end": 459,
+          "exact_quote": "2. **UICommand envelope** — contains `command_id` (stable ID from catalog), `args` (typed key-value map), and `correlation_id` (unique per invocation).",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "concurrency_and_replay",
+      "impact": "Retries, double clicks, reconnects, or malicious replay can duplicate mutations or reorder effects.",
+      "builder_discretion": "Define correlation scope plus idempotency keys, deduplication lifetime, ordering guarantees, and conflict responses."
+    },
+    {
+      "item_id": "A005-000040-G008",
+      "item_type": "failure_recovery",
+      "title": "Multi-event persistence has no atomicity or crash-recovery contract",
+      "statement": "Handlers may emit multiple persisted events, yet the excerpt does not say whether emission is atomic, what happens after a partial append, how retries avoid duplication, or how projections recover from a crash or poison event.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 462,
+          "line_end": 462,
+          "exact_quote": "5. **EventRecord** — handler emits one or more `EventRecord` events (persisted to seglog).",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "partial_failure_and_recovery",
+      "impact": "A crash can leave a half-applied domain transition with no deterministic rollback or replay behavior.",
+      "builder_discretion": "Specify transaction/batch boundaries, append outcomes, idempotent retry, projection checkpoints, and poison-event handling."
+    },
+    {
+      "item_id": "A005-000040-G009",
+      "item_type": "gui_truth",
+      "title": "Projection lag and failure have no user-visible state",
+      "statement": "The UI observes derived state, but no pending, accepted, failed, timed-out, stale, or reconciling state is tied back to the originating correlation ID. A successful dispatch followed by delayed or failed projection can look like no-op or success incorrectly.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 464,
+          "line_end": 464,
+          "exact_quote": "7. **UI State** — the view layer observes projected state; never mutates state directly.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "misleading_gui_and_observability",
+      "impact": "Users may retry completed actions, abandon pending actions, or trust stale state.",
+      "builder_discretion": "Project command lifecycle states keyed by correlation ID and define stale/timeout/reconciliation UI behavior."
+    },
+    {
+      "item_id": "A005-000040-G010",
+      "item_type": "failure_recovery",
+      "title": "Dispatcher delivery, backpressure, cancellation, and offline semantics are absent",
+      "statement": "Routing is described as a single step with no bounded queue, overload response, timeout, cancellation race, process restart, channel closure, network-loss, or offline retry contract.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 460,
+          "line_end": 460,
+          "exact_quote": "3. **Dispatcher** — routes the envelope to the registered handler by `command_id`.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "offline_scale_and_recovery",
+      "impact": "Under overload or disconnect, commands may be lost, duplicated, indefinitely pending, or executed after the user believes they were cancelled.",
+      "builder_discretion": "Define delivery guarantees, capacity and backpressure, cancellation cutoffs, offline policy, retry ownership, and user-visible outcomes."
+    },
+    {
+      "item_id": "A005-000040-G011",
+      "item_type": "gap",
+      "title": "Destructive commands receive no additional safety contract",
+      "statement": "The universal one-element/one-command rule does not distinguish destructive or irreversible actions and supplies no confirmation, typed intent, second-party approval, undo, preview, or recovery requirements.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 439,
+          "line_end": 439,
+          "exact_quote": "Every interactive UI element (button, menu item, link, toggle, slider, form submit) MUST map to exactly one `UICommandID`.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "destructive_action_safety",
+      "impact": "A single accidental or forged interaction can directly dispatch an irreversible mutation.",
+      "builder_discretion": "Add command risk metadata and require confirmation/authorization/undo contracts proportionate to risk."
+    },
+    {
+      "item_id": "A005-000040-G012",
+      "item_type": "consumer",
+      "title": "Static matrix coverage does not prove runtime interactive-surface coverage",
+      "statement": "The checks prove relationships among catalog and matrix entries, but do not define discovery of conditionally rendered, generated, plugin-provided, agent-triggered, keyboard, gesture, accessibility-action, or multi-window interaction surfaces.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 534,
+          "line_end": 534,
+          "exact_quote": "3. **Coverage check** — Every `UICommandID` in `Plans/UI_Command_Catalog.md` has at least one wiring matrix entry.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "missing_callers_and_consumers",
+      "impact": "Runtime-only orphan controls or commands can evade GATE-010 while static artifacts remain green.",
+      "builder_discretion": "Define authoritative surface discovery and runtime/compiled instrumentation that reconciles rendered elements and dispatches with the matrix."
+    },
+    {
+      "item_id": "A005-000040-G013",
+      "item_type": "contract",
+      "title": "Composite and continuous controls make one-command semantics ambiguous",
+      "statement": "For sliders, toggles, forms, gestures, and keyboard activation, it is unclear whether each input change, commit, validation action, submit, and cancellation is a separate interaction and command. The rule also omits focus, disabled, and reentrancy behavior.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 439,
+          "line_end": 439,
+          "exact_quote": "Every interactive UI element (button, menu item, link, toggle, slider, form submit) MUST map to exactly one `UICommandID`.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "interaction_state_model",
+      "impact": "Implementations can emit excessive, missing, or inconsistent commands and expose inaccessible interaction paths.",
+      "builder_discretion": "Define event-to-command mapping by control class, including commit/cancel, keyboard, assistive action, debounce, and reentrancy."
+    },
+    {
+      "item_id": "A005-000040-G014",
+      "item_type": "contract",
+      "title": "Typed args lack validation, limits, and compatibility versioning",
+      "statement": "A typed key-value map is named without an envelope version, per-command schema identity, unknown-field policy, canonical encoding, size/depth limits, validation-error contract, or forward/backward compatibility behavior.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 459,
+          "line_end": 459,
+          "exact_quote": "2. **UICommand envelope** — contains `command_id` (stable ID from catalog), `args` (typed key-value map), and `correlation_id` (unique per invocation).",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "untrusted_input_and_compatibility",
+      "impact": "Malformed or oversized payloads can cross the dispatcher boundary, and old/new clients can disagree silently about meaning.",
+      "builder_discretion": "Bind each command to a versioned schema, reject invalid/oversized payloads structurally, and define compatibility negotiation."
+    },
+    {
+      "item_id": "A005-000040-G015",
+      "item_type": "gap",
+      "title": "Command and event data have no privacy lifecycle",
+      "statement": "Arguments flow into handlers and persistent events without a contract for secret/PII classification, minimization, encryption, redaction, diagnostic exposure, retention, deletion, export, or segregation across projects and users.",
+      "severity": "critical",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 462,
+          "line_end": 462,
+          "exact_quote": "5. **EventRecord** — handler emits one or more `EventRecord` events (persisted to seglog).",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Sensitive data may be durably logged, replicated, or exposed without deletion or access-control semantics.",
+      "builder_discretion": "Define field-level data classes, event minimization/redaction, storage protection, retention/deletion, and audit access."
+    },
+    {
+      "item_id": "A005-000040-G016",
+      "item_type": "acceptance_oracle",
+      "title": "Event tests assert type presence but not semantic correctness",
+      "statement": "Verification of expected event types does not require payload values, ordering, cardinality, aggregate/version transitions, correlation, authorization decision, non-emission on failure, or resulting projection state.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 536,
+          "line_end": 536,
+          "exact_quote": "5. **Event emission test** — Tests that exercise command dispatch verify the `expected_event_types` listed in the wiring matrix are emitted.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "test_falsifiability",
+      "impact": "A handler can emit the right type with wrong content, duplicates, order, or side effects while the gate passes.",
+      "builder_discretion": "Require exact event/projection oracles, negative paths, cardinality/order, and state pre/postconditions."
+    },
+    {
+      "item_id": "A005-000040-G017",
+      "item_type": "acceptance_oracle",
+      "title": "Static purity and dead-command checks have undefined soundness",
+      "statement": "Import and source-code checks lack a declared treatment of aliases, re-exports, transitive dependencies, generated code, macros, reflection, configuration-specific code, test-only code, string literals, and dynamically registered handlers.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 538,
+          "line_end": 538,
+          "exact_quote": "7. **Handler statelessness lint** — Handler modules may depend on command envelopes, domain services, and event types, but MUST NOT import UI widget/view namespaces or keep UI object references.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "test_soundness",
+      "impact": "Forbidden UI coupling and dead commands can evade checks, while valid generated/configured code may fail nondeterministically.",
+      "builder_discretion": "Specify analysis scope and fixtures for evasions, generated/configured code, allowed exceptions, and false-positive/negative handling."
+    },
+    {
+      "item_id": "A005-000040-G018",
+      "item_type": "failure_recovery",
+      "title": "A faulty gate has no governed recovery path",
+      "statement": "Blocking progression with no manual override is safely fail-closed, but the excerpt supplies no versioned adjudication, tool rollback, emergency remediation, or provenance-preserving re-run path when the gate implementation or evidence machinery is defective.",
+      "severity": "medium",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 546,
+          "line_end": 546,
+          "exact_quote": "- Gate failure blocks progression; no manual override is permitted.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "operational_recovery",
+      "impact": "A verifier defect can deadlock all progression or encourage out-of-band bypasses with no auditable procedure.",
+      "builder_discretion": "Retain no-override semantics for product readiness but define governed verifier repair, rollback, re-run, and evidence invalidation."
+    },
+    {
+      "item_id": "A005-000040-G019",
+      "item_type": "gap",
+      "title": "Handler verification is ambiguous for planned and missing rows",
+      "statement": "The verification strategy says every entry's handler path resolves to real Rust code, while the later addendum allows planned rows with an owner reference and missing rows that block buildability. The excerpt does not define stage-aware GATE-010 outcomes or whether planned is a valid matrix state versus an expected gate failure.",
+      "severity": "high",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 535,
+          "line_end": 535,
+          "exact_quote": "4. **Handler registration check** — Every wiring matrix entry's `handler_location` resolves to a real module and function in the Rust source tree, and failures produce a deterministic report containing `ui_element_id`, `ui_command_id`, unresolved `handler_location`, and candidate source files inspected.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        },
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 595,
+          "line_end": 595,
+          "exact_quote": "- Repairs `sfk-58d6d13ed1139428d3f6a692`: `handler_location` grammar is `{crate_root}::{module_path}::{function_name}`. Pre-implementation rows use `handler_status = planned` with `owner_doc_ref`; implementation-ready rows require `handler_status = resolved` and a real module path. Missing handler fallback is `handler_status = missing` and blocks buildability rather than inventing a source path.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "cross_document_stage_seam",
+      "impact": "Pre-implementation plans may be permanently red, or tooling may silently exempt rows differently across stages.",
+      "builder_discretion": "Define allowed statuses per phase and exact schema/gate/buildability outcomes for planned, resolved, and missing."
+    },
+    {
+      "item_id": "A005-000040-G020",
+      "item_type": "gap",
+      "title": "Migration evidence has no stated executable completeness oracle",
+      "statement": "The window records an original hash, proof-artifact paths, and a disposition table, but does not state an executable check that all original spans occur exactly once, all target anchors exist, hashes bind to the current files, and semantic exclusions remain preserved.",
+      "severity": "medium",
+      "confidence": "medium",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 570,
+          "line_end": 570,
+          "exact_quote": "Original pilot hash: `aae0e662365537fbf58be77eb52a9848401db204e7521288c2e2d75375f268f1`.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "compatibility_migration_oracle",
+      "impact": "Migration artifacts can look complete while spans are duplicated, omitted, stale, or bound to changed content.",
+      "builder_discretion": "Define a deterministic closed-world migration verifier and freshness bindings for every proof artifact."
+    },
+    {
+      "item_id": "A005-000040-G021",
+      "item_type": "gap",
+      "title": "Consumer-to-owner seams are named but not mechanically bound",
+      "statement": "The Instant Grep addendum correctly assigns semantic owners, yet it does not require stable owner anchors, versions/hashes, a schema for lifecycle/storage/runtime references, or a gate proving that each consumer row remains synchronized with owner contracts.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 521,
+          "line_end": 521,
+          "exact_quote": "`Plans/Wiring_Matrix.md` / `/Wiring_Matrix.md` keeps consumer wiring edges for Instant Grep current across `grep`, dirty-layer freshness indicators, build-pipeline status, Search panel controls, and command IDs, but it consumes rather than owns product semantics. Wiring rows and `/reconciliation` checks MUST point back to owner docs for lifecycle, `/publish/storage`, and `/runtime` canon: `Plans/Tools.md` owns grep and index-acceleration behavior, `Plans/storage-plan.md` owns dirty-layer storage and snapshot publication, and `Plans/UI_Command_Catalog.md` owns stable command payloads.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "cross_document_seam",
+      "impact": "Owner semantics can drift while consumer rows still satisfy local schema checks.",
+      "builder_discretion": "Use stable contract anchors and add a reconciliation gate over referenced owner versions and required fields."
+    },
+    {
+      "item_id": "A005-000040-G022",
+      "item_type": "unknown",
+      "title": "Webextract schema_mode token is compatibility-ambiguous",
+      "statement": "The allowed values are written as `strict` or `/lenient`; the leading slash may be intentional routing syntax or a typo, but this window provides no enum schema or compatibility rule that resolves the ambiguity.",
+      "severity": "medium",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 480,
+          "line_end": 480,
+          "exact_quote": "- Webextract wiring rows must preserve the typed extraction controls: `schema` accepts JSON Schema `draft-07`, `schema_mode` is `strict` or `/lenient`, and `actions` plus `prompt` remain explicit command payload fields rather than UI-only hints.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ],
+      "gap_kind": "untrusted_input_compatibility_unknown",
+      "impact": "Producers and consumers may serialize different enum values and reject otherwise valid rows.",
+      "builder_discretion": "Bind the token to a canonical enum schema and migration aliases, then test rejection of unknown variants."
+    },
+    {
+      "item_id": "A005-000040-N001",
+      "item_type": "explicit_non_gap",
+      "title": "False buildability is explicitly fail-closed",
+      "statement": "The window explicitly disables the control when buildability is false and forbids the disabled path from dispatching approval, binding a compile run, or starting build/runtime surfaces.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 372,
+          "line_end": 372,
+          "exact_quote": "  validation, semantic closure, source preservation, or other validators passing. Disabled controls must not dispatch",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000040-N002",
+      "item_type": "explicit_non_gap",
+      "title": "View-to-domain authority boundary is explicit",
+      "statement": "The UI is prohibited from direct backend, storage, domain, or projected-state mutation and is restricted to typed command dispatch plus state observation.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 430,
+          "line_end": 430,
+          "exact_quote": "- No backend mutation may originate from the view layer; the view layer is a pure function of projected state plus outbound `UICommand` emissions.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000040-N003",
+      "item_type": "explicit_non_gap",
+      "title": "Unknown commands fail structurally and without events",
+      "statement": "The dispatcher must reject unknown command IDs with a structured error, and the verification strategy also requires that this path emit no domain events.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 537,
+          "line_end": 537,
+          "exact_quote": "6. **Unknown-command rejection test** — Dispatcher tests verify unrecognized `command_id` values return a structured error object and emit no domain events.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000040-N004",
+      "item_type": "explicit_non_gap",
+      "title": "Gate execution and evidence format are explicitly deterministic",
+      "statement": "The window requires scriptable deterministic GATE-010 checks, blocks progression on failure, and binds produced evidence to a schema.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 547,
+          "line_end": 547,
+          "exact_quote": "- Evidence bundles produced by the checks conform to `Plans/evidence.schema.json`.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000040-N005",
+      "item_type": "explicit_non_gap",
+      "title": "Pilot migration scope excludes runtime and governance side effects",
+      "statement": "The conversion explicitly records that it did not create execution artifacts or refresh governance products.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 589,
+          "line_end": 589,
+          "exact_quote": "No WorkNodes, NodeSeeds, executable build tasks, Spec Lock refresh, shard regeneration, evidence refresh, or plan_graph update was performed during this pilot conversion.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-000040-N006",
+      "item_type": "explicit_non_gap",
+      "title": "Missing handlers are not replaced with invented source paths",
+      "statement": "The addendum explicitly represents missing handlers and makes them block buildability instead of fabricating a resolved location.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {
+          "path": "Plans/UI_Wiring_Rules.md",
+          "line_start": 595,
+          "line_end": 595,
+          "exact_quote": "- Repairs `sfk-58d6d13ed1139428d3f6a692`: `handler_location` grammar is `{crate_root}::{module_path}::{function_name}`. Pre-implementation rows use `handler_status = planned` with `owner_doc_ref`; implementation-ready rows require `handler_status = resolved` and a real module path. Missing handler fallback is `handler_status = missing` and blocks buildability rather than inventing a source path.",
+          "source_sha256": "7b8d47bab4415347366ce11b9a58cbd3a626b8330cf7f0b5c888ab52cd0325aa"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Runtime-generated and non-pointer interaction callers are not reconciled with the static catalog/matrix checks; the readiness-report projector/watcher consumer is also not assigned.",
+      "evidence_item_ids": ["A005-000040-G001", "A005-000040-G012"]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Missing/corrupt/stale report states, disabled-reason replacement, and pending or failed command projection states are unspecified.",
+      "evidence_item_ids": ["A005-000040-G002", "A005-000040-G003", "A005-000040-G009"]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Report-to-dispatch TOCTOU, replay/deduplication, command ordering, and multi-event atomicity are not closed.",
+      "evidence_item_ids": ["A005-000040-G001", "A005-000040-G007", "A005-000040-G008"]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Report replacement, queue delivery, and partial multi-event append failures lack normative outcomes.",
+      "evidence_item_ids": ["A005-000040-G002", "A005-000040-G008", "A005-000040-G010"]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "Retry, deduplication, crash recovery, projection recovery, cancellation, and recovery from a defective gate are not defined.",
+      "evidence_item_ids": ["A005-000040-G007", "A005-000040-G008", "A005-000040-G010", "A005-000040-G018"]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "The view/domain separation is strong, but independent handler authorization and command-context binding are absent.",
+      "evidence_item_ids": ["A005-000040-G001", "A005-000040-G006", "A005-000040-N002"]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Persistent command/event data and exposed blocker metadata have no classification, minimization, protection, retention, or deletion rules.",
+      "evidence_item_ids": ["A005-000040-G004", "A005-000040-G015"]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Report strings and command args lack validation and bounds, and the `/lenient` token is schema-ambiguous.",
+      "evidence_item_ids": ["A005-000040-G004", "A005-000040-G014", "A005-000040-G022"]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "The false gate is explicitly fail-closed, but races, report failures, stale reasons, and projection lag can still make visible state untrue.",
+      "evidence_item_ids": ["A005-000040-G001", "A005-000040-G002", "A005-000040-G003", "A005-000040-G009", "A005-000040-N001"]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "No offline, disconnect, channel-closure, retry, or eventual-delivery behavior is specified for dispatcher traffic or projected feedback.",
+      "evidence_item_ids": ["A005-000040-G010"]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "No queue capacity, input size/depth, blocker count/length, runtime surface count, or backpressure bounds are defined.",
+      "evidence_item_ids": ["A005-000040-G004", "A005-000040-G010", "A005-000040-G012", "A005-000040-G014"]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "Disabled reasons and non-pointer/composite interactions lack assistive-technology discovery, announcements, focus, and activation semantics.",
+      "evidence_item_ids": ["A005-000040-G005", "A005-000040-G012", "A005-000040-G013"]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "Raw reason/path/ID projection has no localized template or rule separating translated prose from stable machine identifiers.",
+      "evidence_item_ids": ["A005-000040-G004", "A005-000040-G005"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Envelope/payload versioning, stage-aware handler status, migration proof execution, and the webextract enum token remain underspecified.",
+      "evidence_item_ids": ["A005-000040-G014", "A005-000040-G019", "A005-000040-G020", "A005-000040-G022"]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Correlation exists, but command lifecycle, report generation, queue status, projection lag, retry, and gate-tool remediation are not required as support-visible telemetry.",
+      "evidence_item_ids": ["A005-000040-G003", "A005-000040-G007", "A005-000040-G009", "A005-000040-G018"]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "No risk-tiered confirmation, authorization, preview, undo, or recovery contract augments the universal dispatch rule.",
+      "evidence_item_ids": ["A005-000040-G011"]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "Handler-stage semantics and owner-document consumer edges lack sufficiently explicit mechanically verified seam contracts.",
+      "evidence_item_ids": ["A005-000040-G019", "A005-000040-G020", "A005-000040-G021"]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Static coverage cannot prove runtime surface coverage, event tests are type-only, and lint soundness boundaries are not specified.",
+      "evidence_item_ids": ["A005-000040-G012", "A005-000040-G016", "A005-000040-G017", "A005-000040-N003", "A005-000040-N004"]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "gap_found",
+      "summary": "Dynamic/plugin/agent surfaces, multi-window causality, continuous-control semantics, verifier failure, and ambiguous extension tokens expose unbounded behavior not closed by this window.",
+      "evidence_item_ids": ["A005-000040-G012", "A005-000040-G013", "A005-000040-G018", "A005-000040-G022"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2134-2145 >>>
+L00002134	- GitRepoCheck
+L00002135	- resolve_git_init_dir()
+L00002136	- git rev-parse --git-dir
+L00002137	- project directory
+L00002138	negative_constraints: []
+L00002139	preserved_contractrefs: []
+L00002140	compatibility_only_notes: []
+L00002141	stale_retired_dispositions: []
+L00002142	owner_hints:
+L00002143	- Plans/WorktreeGitImprovement.md
+L00002144	```
+L00002145	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2146-2511 >>>
+L00002146	### W-026 - Branch Strategy And Naming SSOT
+L00002147	
+L00002148	```yaml
+L00002149	plan_unit_id: W-026
+L00002150	unit_type: requirement
+L00002151	status: accepted
+L00002152	owner_doc: Plans/WorktreeGitImprovement.md
+L00002153	canonical_text: Orchestrator reads branch strategy from config and uses one branch naming implementation rather than duplicating BranchStrategyManager logic.
+L00002154	gui_related: false
+L00002155	gui_classification_reason: This unit defines backend/runtime, storage, governance, or command policy rather than visual presentation.
+L00002156	split_recommended: false
+L00002157	depends_on:
+L00002158	- PDS-003
+L00002159	- PDS-004
+L00002160	- PDS-005
+L00002161	- PNC-001
+L00002162	- W-007
+L00002163	unblocks: []
+L00002164	acceptance_criteria:
+L00002165	- W-026 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+L00002166	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002167	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002168	validation_surfaces:
+L00002169	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002170	- python3 scripts/pm-plan-index.py validate
+L00002171	risk_class: worktree_git_drift
+L00002172	reasoning_tier: standard
+L00002173	context_scope: worktree_git_batch_202
+L00002174	implementation_surfaces:
+L00002175	- Plans/WorktreeGitImprovement.md
+L00002176	node_compile_hint:
+L00002177	  mode: branch_naming_ssot
+L00002178	  create_worknodes: false
+L00002179	source_lineage:
+L00002180	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0048
+L00002181	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0049
+L00002182	preserved_exact_tokens:
+L00002183	- BranchStrategy::Feature
+L00002184	- GitConfig
+L00002185	- branch_strategy
+L00002186	- BranchingConfig
+L00002187	- create_node_branch
+L00002188	- BranchStrategyManager::generate_branch_name
+L00002189	- it-
+L00002190	- tk-
+L00002191	negative_constraints: []
+L00002192	preserved_contractrefs: []
+L00002193	compatibility_only_notes: []
+L00002194	stale_retired_dispositions: []
+L00002195	owner_hints:
+L00002196	- Plans/WorktreeGitImprovement.md
+L00002197	```
+L00002198	
+L00002199	### W-027 - Naming Pattern GUI Policy
+L00002200	
+L00002201	```yaml
+L00002202	plan_unit_id: W-027
+L00002203	unit_type: requirement
+L00002204	status: accepted
+L00002205	owner_doc: Plans/WorktreeGitImprovement.md
+L00002206	canonical_text: The GUI-exposed naming_pattern must either be wired into branch generation with documented placeholders or kept hidden/inert until branch-generation support lands.
+L00002207	gui_related: true
+L00002208	gui_classification_reason: This unit defines user-visible Source Control, Git/worktree GUI, copy, or configuration presentation.
+L00002209	split_recommended: false
+L00002210	depends_on:
+L00002211	- PDS-003
+L00002212	- PDS-004
+L00002213	- PDS-005
+L00002214	- PNC-001
+L00002215	- W-026
+L00002216	unblocks: []
+L00002217	acceptance_criteria:
+L00002218	- W-027 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+L00002219	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002220	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002221	validation_surfaces:
+L00002222	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002223	- python3 scripts/pm-plan-index.py validate
+L00002224	risk_class: worktree_git_drift
+L00002225	reasoning_tier: standard
+L00002226	context_scope: worktree_git_batch_202
+L00002227	implementation_surfaces:
+L00002228	- Plans/WorktreeGitImprovement.md
+L00002229	node_compile_hint:
+L00002230	  mode: config_ui_policy
+L00002231	  create_worknodes: false
+L00002232	source_lineage:
+L00002233	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0050
+L00002234	preserved_exact_tokens:
+L00002235	- naming_pattern
+L00002236	- GUI
+L00002237	- '{node}'
+L00002238	- '{id}'
+L00002239	- ph-
+L00002240	- tk-
+L00002241	- st-
+L00002242	- release
+L00002243	negative_constraints:
+L00002244	- Do not keep an exposed GUI naming_pattern field that runtime branch logic ignores without documented behavior.
+L00002245	preserved_contractrefs: []
+L00002246	compatibility_only_notes: []
+L00002247	stale_retired_dispositions: []
+L00002248	owner_hints:
+L00002249	- Plans/WorktreeGitImprovement.md
+L00002250	- Plans/FinalGUISpec.md
+L00002251	```
+L00002252	
+L00002253	### W-028 - Commit Message Formatting
+L00002254	
+L00002255	```yaml
+L00002256	plan_unit_id: W-028
+L00002257	unit_type: requirement
+L00002258	status: accepted
+L00002259	owner_doc: Plans/WorktreeGitImprovement.md
+L00002260	canonical_text: 'Iteration commits use CommitFormatter or equivalent formatting so they match the documented pm: convention.'
+L00002261	gui_related: false
+L00002262	gui_classification_reason: This unit defines backend/runtime, storage, governance, or command policy rather than visual presentation.
+L00002263	split_recommended: false
+L00002264	depends_on:
+L00002265	- PDS-003
+L00002266	- PDS-004
+L00002267	- PDS-005
+L00002268	- PNC-001
+L00002269	- W-026
+L00002270	unblocks: []
+L00002271	acceptance_criteria:
+L00002272	- W-028 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+L00002273	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002274	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002275	validation_surfaces:
+L00002276	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002277	- python3 scripts/pm-plan-index.py validate
+L00002278	risk_class: worktree_git_drift
+L00002279	reasoning_tier: standard
+L00002280	context_scope: worktree_git_batch_202
+L00002281	implementation_surfaces:
+L00002282	- Plans/WorktreeGitImprovement.md
+L00002283	node_compile_hint:
+L00002284	  mode: commit_format
+L00002285	  create_worknodes: false
+L00002286	source_lineage:
+L00002287	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0051
+L00002288	preserved_exact_tokens:
+L00002289	- commit_node_progress
+L00002290	- 'format!("node: {} iteration {} complete"'
+L00002291	- AGENTS.md
+L00002292	- CommitFormatter
+L00002293	- CommitFormatter::format_iteration_commit
+L00002294	- 'pm: [ITERATION]'
+L00002295	negative_constraints: []
+L00002296	preserved_contractrefs: []
+L00002297	compatibility_only_notes: []
+L00002298	stale_retired_dispositions: []
+L00002299	owner_hints:
+L00002300	- Plans/WorktreeGitImprovement.md
+L00002301	- AGENTS.md
+L00002302	```
+L00002303	
+L00002304	### W-029 - Git Actions Log Path
+L00002305	
+L00002306	```yaml
+L00002307	plan_unit_id: W-029
+L00002308	unit_type: requirement
+L00002309	status: accepted
+L00002310	owner_doc: Plans/WorktreeGitImprovement.md
+L00002311	canonical_text: Git action logging path and ignore/documentation policy must be made consistent between runtime behavior and REQUIREMENTS.md.
+L00002312	gui_related: false
+L00002313	gui_classification_reason: This unit defines backend/runtime, storage, governance, or command policy rather than visual presentation.
+L00002314	split_recommended: false
+L00002315	depends_on:
+L00002316	- PDS-003
+L00002317	- PDS-004
+L00002318	- PDS-005
+L00002319	- PNC-001
+L00002320	- W-023
+L00002321	unblocks: []
+L00002322	acceptance_criteria:
+L00002323	- W-029 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+L00002324	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002325	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002326	validation_surfaces:
+L00002327	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002328	- python3 scripts/pm-plan-index.py validate
+L00002329	risk_class: worktree_git_drift
+L00002330	reasoning_tier: standard
+L00002331	context_scope: worktree_git_batch_202
+L00002332	implementation_surfaces:
+L00002333	- Plans/WorktreeGitImprovement.md
+L00002334	node_compile_hint:
+L00002335	  mode: runtime_log_path
+L00002336	  create_worknodes: false
+L00002337	source_lineage:
+L00002338	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0052
+L00002339	preserved_exact_tokens:
+L00002340	- .puppet-master
+L00002341	- git-actions.log
+L00002342	- .puppet-master/logs/git-actions.log
+L00002343	- REQUIREMENTS.md
+L00002344	- .gitignore
+L00002345	- runtime-only
+L00002346	negative_constraints: []
+L00002347	preserved_contractrefs: []
+L00002348	compatibility_only_notes: []
+L00002349	stale_retired_dispositions: []
+L00002350	owner_hints:
+L00002351	- Plans/WorktreeGitImprovement.md
+L00002352	```
+L00002353	
+L00002354	### W-030 - Empty Commit Handling
+L00002355	
+L00002356	```yaml
+L00002357	plan_unit_id: W-030
+L00002358	unit_type: optional_requirement
+L00002359	status: accepted
+L00002360	owner_doc: Plans/WorktreeGitImprovement.md
+L00002361	canonical_text: The nothing to commit case may be detected and logged as informational without masking real git command failures.
+L00002362	gui_related: false
+L00002363	gui_classification_reason: This unit defines backend/runtime, storage, governance, or command policy rather than visual presentation.
+L00002364	split_recommended: false
+L00002365	depends_on:
+L00002366	- PDS-003
+L00002367	- PDS-004
+L00002368	- PDS-005
+L00002369	- PNC-001
+L00002370	- W-021
+L00002371	unblocks: []
+L00002372	acceptance_criteria:
+L00002373	- W-030 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+L00002374	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002375	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002376	validation_surfaces:
+L00002377	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002378	- python3 scripts/pm-plan-index.py validate
+L00002379	risk_class: worktree_git_drift
+L00002380	reasoning_tier: standard
+L00002381	context_scope: worktree_git_batch_202
+L00002382	implementation_surfaces:
+L00002383	- Plans/WorktreeGitImprovement.md
+L00002384	node_compile_hint:
+L00002385	  mode: optional_git_noise_reduction
+L00002386	  create_worknodes: false
+L00002387	source_lineage:
+L00002388	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0054
+L00002389	preserved_exact_tokens:
+L00002390	- Empty commit handling
+L00002391	- nothing to commit
+L00002392	- debug/info
+L00002393	- real errors
+L00002394	negative_constraints:
+L00002395	- Do not reduce noise by treating genuine git command failure as informational.
+L00002396	preserved_contractrefs: []
+L00002397	compatibility_only_notes: []
+L00002398	stale_retired_dispositions: []
+L00002399	owner_hints:
+L00002400	- Plans/WorktreeGitImprovement.md
+L00002401	```
+L00002402	
+L00002403	### W-031 - Source Control GUI Owner Surface
+L00002404	
+L00002405	```yaml
+L00002406	plan_unit_id: W-031
+L00002407	unit_type: requirement
+L00002408	status: accepted
+L00002409	owner_doc: Plans/WorktreeGitImprovement.md
+L00002410	canonical_text: Source Control remains the Git/worktree owner surface, GUI handoff stays worktree-first, and cross-references use Plans/Orchestrator_Page.md#Source Control boundary rather than stale numbered anchors.
+L00002411	gui_related: true
+L00002412	gui_classification_reason: This unit defines user-visible Source Control, Git/worktree GUI, copy, or configuration presentation.
+L00002413	split_recommended: false
+L00002414	depends_on:
+L00002415	- PDS-003
+L00002416	- PDS-004
+L00002417	- PDS-005
+L00002418	- PNC-001
+L00002419	- W-013
+L00002420	- W-014
+L00002421	unblocks: []
+L00002422	acceptance_criteria:
+L00002423	- W-031 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+L00002424	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002425	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002426	validation_surfaces:
+L00002427	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002428	- python3 scripts/pm-plan-index.py validate
+L00002429	risk_class: worktree_git_drift
+L00002430	reasoning_tier: standard
+L00002431	context_scope: worktree_git_batch_202
+L00002432	implementation_surfaces:
+L00002433	- Plans/WorktreeGitImprovement.md
+L00002434	node_compile_hint:
+L00002435	  mode: source_control_owner_surface
+L00002436	  create_worknodes: false
+L00002437	source_lineage:
+L00002438	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0055
+L00002439	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0056
+L00002440	preserved_exact_tokens:
+L00002441	- Source Control
+L00002442	- Git/worktree owner surface
+L00002443	- worktree-first
+L00002444	- Plans/Orchestrator_Page.md#Source Control boundary
+L00002445	- stale numbered anchor
+L00002446	negative_constraints: []
+L00002447	preserved_contractrefs: []
+L00002448	compatibility_only_notes: []
+L00002449	stale_retired_dispositions:
+L00002450	- Cross-references now point at Plans/Orchestrator_Page.md#Source Control boundary rather than the stale numbered anchor.
+L00002451	owner_hints:
+L00002452	- Plans/WorktreeGitImprovement.md
+L00002453	- Plans/Orchestrator_Page.md
+L00002454	- Plans/FinalGUISpec.md
+L00002455	```
+L00002456	
+L00002457	### W-032 - Worktree Topology View
+L00002458	
+L00002459	```yaml
+L00002460	plan_unit_id: W-032
+L00002461	unit_type: requirement
+L00002462	status: accepted
+L00002463	owner_doc: Plans/WorktreeGitImprovement.md
+L00002464	canonical_text: Source Control > Worktrees presents first-class worktree topology, filters, graph badge, command-backed events, disabled reasons, and stale-group defaults.
+L00002465	gui_related: true
+L00002466	gui_classification_reason: This unit defines user-visible Source Control, Git/worktree GUI, copy, or configuration presentation.
+L00002467	split_recommended: false
+L00002468	depends_on:
+L00002469	- PDS-003
+L00002470	- PDS-004
+L00002471	- PDS-005
+L00002472	- PNC-001
+L00002473	- W-017
+L00002474	- W-031
+L00002475	unblocks: []
+L00002476	acceptance_criteria:
+L00002477	- W-032 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+L00002478	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00002479	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00002480	validation_surfaces:
+L00002481	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002482	- python3 scripts/pm-plan-index.py validate
+L00002483	risk_class: worktree_git_drift
+L00002484	reasoning_tier: standard
+L00002485	context_scope: worktree_git_batch_202
+L00002486	implementation_surfaces:
+L00002487	- Plans/WorktreeGitImprovement.md
+L00002488	node_compile_hint:
+L00002489	  mode: worktree_topology_gui
+L00002490	  create_worknodes: false
+L00002491	source_lineage:
+L00002492	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0057
+L00002493	preserved_exact_tokens:
+L00002494	- Worktree topology view
+L00002495	- Source Control > Worktrees
+L00002496	- Source Control > Graph
+L00002497	- hide-stale
+L00002498	- ownership display mode
+L00002499	- cmd.git.worktree.list/select/open/compare/prune/recover
+L00002500	- disabled reason
+L00002501	negative_constraints: []
+L00002502	preserved_contractrefs: []
+L00002503	compatibility_only_notes: []
+L00002504	stale_retired_dispositions:
+L00002505	- Worktree topology view replaces hidden plumbing with first-class Source Control topology.
+L00002506	owner_hints:
+L00002507	- Plans/WorktreeGitImprovement.md
+L00002508	- Plans/FinalGUISpec.md
+L00002509	- Plans/UI_Command_Catalog.md
+L00002510	```
+L00002511	
+
+<<< CONTEXT_AFTER canonical_document_lines=2512-2523 >>>
+L00002512	### W-033 - Safe Worktree Actions And Recovery Rows
+L00002513	
+L00002514	```yaml
+L00002515	plan_unit_id: W-033
+L00002516	unit_type: requirement
+L00002517	status: accepted
+L00002518	owner_doc: Plans/WorktreeGitImprovement.md
+L00002519	canonical_text: Worktree action menus and blocked cards enforce lineage-safe prune/remove/reuse/recover with disabled explanations and exact recovery targeting.
+L00002520	gui_related: true
+L00002521	gui_classification_reason: This unit defines user-visible Source Control, Git/worktree GUI, copy, or configuration presentation.
+L00002522	split_recommended: false
+L00002523	depends_on:

@@ -1,0 +1,386 @@
+<<< CONTEXT_BEFORE 624-635 >>>
+
+ContractRef: ContractName:Plans/Contracts_V0.md#Setup/Health-lifecycle-contracts, ContractName:Plans/usage-feature.md, ContractName:Plans/CLI_Bridged_Providers.md
+
+### 9.3.1 Account registration flows
+
+Provider settings MUST expose account lifecycle controls in a consistent location while still honoring provider-specific auth requirements.
+
+Required flows:
+- **Add account:** `Settings -> Providers -> [Provider] -> Add Account`.
+- **Edit account:** allow `display_name` changes and credential rotation; rotating a credential MUST trigger the provider's re-auth or revalidation flow before the updated row returns to `Ready`.
+- **Remove account/profile:** present a confirmation dialog with `Remove from PM only` and `Remove and archive PM-managed data` choices. Both choices remove the account/profile record and reassign any threads or defaults pointing at that account/profile; only the archive choice captures PM-managed artifacts first.
+- **Default account:** each provider has exactly one default account. PM uses that default whenever no explicit account selection is made by policy, role, or manual override.
+
+<<< AUTHORITATIVE_CORE 636-992 >>>
+
+Registration rules:
+- account creation mints a stable `account_id` as a ULID.
+- new account rows use the canonical schema `{ account_id: ulid, provider_id, display_name, auth_method, credential_ref, created_at, last_used_at, status }`.
+- `status` closes to `active | expired | revoked | error`.
+- Codex add-account entry choices are `Sign in with ChatGPT` and `Use API Key`; setup copy must not revive the stale browser/device-code/API-key matrix as the primary Codex account model. The ChatGPT path helper text is `Uses Codex through your ChatGPT plan limits`; Codex account identity is auth-family-sensitive for `/quota`, because a `ChatGPT account` bucket and an API-key bucket remain separate entitlement pools even for the same human owner.
+- `Switching to ChatGPT-backed access may require signing out first`: switching a Codex account from API-key-backed use to subscription-backed ChatGPT use may require `codex logout` and rerunning Codex to re-enter the ChatGPT-backed path.
+- The baseline GUI account-add flow exposes the provider-by-provider availability matrix for setup methods that are actually available: `Fresh Login`, `Import Existing Auth`, and `Environment/API-Key Setup`. MVP implementations may hide unavailable methods per provider, but they MUST keep the baseline GUI/state transitions deterministic and provider-specific rather than collapsing every provider into one generic setup path.
+- Provider-specific setup availability must remain explicit for root-backed providers: Cursor, Claude Code, Codex, and Gemini may expose both `Fresh Login` and `Import Existing Auth`; `Import Existing Auth` seeds only narrow `auth-bearing` state into the PM-owned root and is a first-class setup mode when the provider probe proves it works.
+- Direct coding-plan provider entries use provider-specific setup rows: `Alibaba Coding Plan`, `MiniMax Coding Plan`, and `Z.AI Coding Plan` each expose `Use API Key` as their baseline setup mode. `MiniMax` and `Z.AI` product labels remain visible where a coding-plan entry resolves vendor identity, not collapsed into a generic OpenAI-compatible bucket.
+- Common remediation actions are `Retry Sign-In`, `Edit Auth Settings`, `Repair Home`, and `Revalidate`; provider setup surfaces expose only the actions valid for the selected provider entry and account state.
+- Claude Code CLI remediation actions include `Retry Login`, `Switch Login Method`, `Repair Config`, and `Revalidate` after auth validation records the effective account class (`subscriber` versus `api/org-backed`, with `/org-backed` as the display alias for organization-backed API usage).
+- Codex and billing/entitlement recovery surfaces include `Retry Sign-In`, `Edit API Key`, `Repair MCP/Rules`, `Refresh Entitlements`, `Revalidate`, and `Disable` where applicable; providers that do not expose API-key, rules/MCP repair, entitlement refresh, or disable paths must hide the invalid actions rather than generalizing them.
+- Billing-entity refresh cadence is explicit: refresh billing entities after login, after `Refresh Entitlements`, and after a Copilot entitlement/policy failure.
+- Row-level setup actions use an explicit button-state contract: `Sign In` -> `Signing In...`, `Save Key` -> `Saving...`, `Import` -> `Importing...`, `Validate` -> `Validating...`, `Refresh Usage` -> `Refreshing...`, and `Log Out` -> `Logging Out...`; this applies equally to direct-provider actions and CLI/server providers. Successful `Sign In`, `Save Key`, or `Import` must auto-transition to `Validating...` when no further user input is required. Canonical terminal-label examples remain explicit: `Sign In` -> `Signing In...` -> `Logged In`, `Save Key` -> `Saving...` -> `Saved`, `Refresh Usage` -> `Refreshing...`, and `Log Out` -> `Logging Out...` -> `Logged Out`, with `Logged Out` as the `/post-success` state for `Log Out`.
+- removing a non-default account MUST preserve requested/effective history for past runs even though the live row is deleted.
+- removing the current default account MUST atomically promote another eligible account or leave the provider in an explicit no-default state that blocks new runs until resolved.
+- disabling an account/profile MUST NOT delete its root.
+- removal MUST avoid deleting non-PM-managed provider data outside the owned root; backups and archives are for PM-managed artifacts only, not whole provider-home snapshots by default.
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md
+
+### 9.3.2 Authentication flow walkthroughs
+
+Authentication walkthroughs define the expected PM-side orchestration around provider-native auth mechanisms.
+
+Every account setup/auth flow must surface its active auth path explicitly: OAuth browser flows show the redirect, verification URL, or localhost callback state; API-key flows show a secure API key entry step; token refresh is either PM-managed or delegated to the provider runtime with that delegation visible; and credential expiry produces a user-visible notification plus recovery action instead of silently degrading the account row.
+
+#### API key flow
+1. User opens `Settings -> Providers -> [Provider] -> Add Account`.
+2. User selects `API Key` as the auth method.
+3. User enters the API key into a secure input field.
+4. PM validates the key with a lightweight test API call such as `list models` or the provider's nearest equivalent.
+5. On success, PM stores the key in the OS credential store, writes the resulting `credential_ref`, and marks the account active.
+6. On failure, PM shows a concrete reason such as `invalid key`, `expired`, or `quota exceeded`, and leaves the row recoverable for retry rather than pretending setup succeeded.
+
+#### OAuth device-code flow
+1. User clicks `Sign in with [Provider]`.
+2. PM requests a device code from the provider.
+3. The UI shows the device code, verification URL, and a QR code that points to the same authorization page.
+4. User completes browser-based authorization outside PM.
+5. PM polls for the token every 5 seconds with a total timeout of 5 minutes.
+6. On success, PM stores the refresh token in the OS credential store and keeps the short-lived access token cached in memory only.
+7. On failure or timeout, PM shows a clear error and an explicit retry option.
+
+#### Retired CLI token flow (Gemini CLI lineage)
+The old Gemini CLI token/import flow is not an active PM setup path. Exact tokens remain only for compatibility/source-lineage: `Gemini CLI`, `Import Existing Gemini CLI Auth`, native OAuth/browser flow, credential cache, `credential_ref`, and `GEMINI_CLI_HOME`. Active CLI-runtime setup for this lane belongs to Antigravity CLI and must be proven through the `agy` setup/probe contract.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md
+
+### 9.4 Usage and runtime visibility
+
+Usage and status surfaces MUST show:
+- current effective account or server profile
+- current effective auth mode
+- current effective billing/entity context when relevant
+- pressure/cooldown state
+- source-confidence, stale, or estimated labels when data is not authoritative
+- switch/failover reason when PM changed the selected unit
+
+`Plans/usage-feature.md` (`/usage-feature.md`) consumes this account/provider owner contract for its `Cursor`, `Codex`, `Copilot`, `Gemini`, and summary-table sections; those Usage sections must not reintroduce stale provider buckets or flatten direct-provider quota context into one generic `account` label.
+
+Usage rows should prefer plain-language statuses such as `Working` or a concrete failure reason instead of transport-internal terminology.
+
+ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 9.5 Instructions, skills, and MCP in Agent-Config
+
+Agent-Config must expose:
+- shared instruction panes sourced from PM's `AGENTS` / AGENTS-layer intent (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `Cursor Rules`)
+- provider-native advanced panes for GitHub Copilot
+- PM-native skills with readiness/fix text/actions
+- PM-native MCP servers with per-provider/runtime effective status in inspectors
+
+Rules:
+- provider-native files under PM control expose `In Sync`, `PM Outdated`, `Provider Modified`, `Projection Failed`, or `Unknown` drift states with `Repair`, `Detach`, and `View diff` actions.
+- Provider-native rule/settings files, including `/settings` surfaces, are generated artifacts derived from one canonical instruction model; if users edit them directly, PM reports drift instead of treating the edited provider-native file as the new source of truth.
+- Provider-native projection records carry `control_mode = pm_controlled | manual_override`, `drift_state = in_sync | pm_outdated | provider_modified | projection_failed | unknown`, `last_projected_at`, and `projection_targets` / `projection_targets[]`.
+- Instruction projection records use `instruction_projection` with `canonical_revision`, `projection_target_kind = agents_md | claude_md | gemini_md | cursor_rules`, `target_path`, `preview_hash`, `requested_runtime_snapshot`, `last_projected_at`, and `last_drift_check_at` so PM can prove what source revision was projected to which provider-native target.
+- Per-target projection GUI records expose `last_projected_at`, `last_drift_check_at`, visible last sync time, drift state, and effective rendered contents/preview; editing a provider-native pane directly while it is PM-controlled marks that target `Provider Modified` rather than silently overwriting it on the next refresh, then requires manual override or editing the canonical source and regenerating sibling projections.
+- Projection conflict handling is explicit: `conflict_policy = pm_wins | manual_review | provider_wins`, and `drift_detection = hash | mtime | disabled` records how PM decides whether the provider target has diverged.
+- Repair and `/drift` handling may `/overwrite` only the PM-managed portions of profile `/config` surfaces that PM owns; drift repair must preserve manual/provider-owned sections and never clobber an entire provider profile merely because one PM-controlled target diverged.
+- user-edit rule in GUI: editing a `PM Controlled` provider-native target directly requires first flipping that target to `Manual Override`; editing the canonical source is the only path that keeps semantic sync across controlled targets.
+- launch-time drift rule: `Provider Modified` must not auto-overwrite at launch; PM warns and requires explicit repair or manual override before claiming the target is in sync.
+- Each instruction target GUI record carries `last_projected_at` and `last_drift_check_at` so projection freshness and drift checks remain inspectable instead of hidden behind a generic state label.
+- Cursor rule projection is lossy compared with plain markdown instruction files: `.mdc` adds metadata and scope semantics, so PM must use a deliberate translation policy rather than naive file-copy sync.
+- projection-path rule: workspace projections such as `AGENTS.md`, `CLAUDE.md`, `GEMINI.md`, `.cursor/rules/*.mdc`, `cursor/rules/*.mdc`, `.mcp.json`, `.github/copilot-instructions.md`, `/copilot-instructions.md`, `github/copilot-instructions.md`, `.github/instructions/*.instructions.md`, `github/instructions/*.instructions.md`, `.github/agents/*.agent.md`, `github/agents/*.agent.md`, `agent.md`, `instructions.md`, provider-local config files, and `/rules/`, `/instructions/`, and `/agents/` path families are tracked separately from provider account roots.
+- skill rows use plain-language statuses, fix text, and a primary remediation action.
+- MCP rows are server-centric at the top level; per-provider/runtime state appears in the inspector rather than pretending every provider has a literal install state.
+- Separate user-visible provider entries are acceptable where runtime `/auth/control` differences are meaningful, even when PM keeps an internal shared vendor `/family` layer.
+- Provider entries expose `display_name`, `enabled`, `supports_family_pooling`, and `default_model_id_raw` so family pooling and defaults can be inspected without deriving them from labels.
+- OpenCode server profiles use a per-profile PM sidecar layout under the profile root: `pm/state.json`, `pm/logs/`, `pm/projections/`, and `pm/backups/`.
+- `Import Existing Auth` copies or seeds only the minimum auth-bearing material needed into the PM-owned root; it must not wholesale clone unrelated provider history, caches, logs, projections, or backups by default.
+- `/migration`, `/caches`, `/logs/`, and `/backups/` path families from an existing provider home are source-side context by default, not automatic wholesale imports.
+- import metadata preserves the source path for audit/debug, but the imported account or server profile runs from the PM-owned root after import.
+- `Import Existing Codex Auth` is optional/non-MVP and may import only the minimum auth-bearing Codex state into the PM-owned account root. The baseline Codex setup paths remain `Sign in with ChatGPT` and `Use API Key`.
+
+ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md
+## 10. Phase 2 (native auth) -- when available
+
+
+When the new auth system for Codex, Copilot, Gemini (and optionally Claude) lands (in-process tokens, HTTP calls):
+
+- **In-process token store:** OpenCode PR #11832 shape in Rust: `providers[platform_id]` with `active`, `order`, `records` (per-account tokens + health). File lock for writes; best-effort for health updates.
+- **Rotating fetch:** Wrap HTTP calls: get candidates (active first, then order), filter by cooldown; on 429/401/403 apply cooldown, moveToBack, notify, retry with next account.
+- **Current account:** Request-scoped "current account" via explicit context struct or thread-local (no AsyncLocalStorage in Rust).
+
+---
+
+## 11. Open points for implementer
+- No design-open questions remain for the Gemini auth/account model in this document.
+- Remaining implementation confirmations are limited to provider adapter details, migration sequencing, and exact UI copy polish.
+- Such confirmations MUST NOT change the locked defaults, precedence order, requested/effective field names, or the rule that media follows the same Gemini auth/account model as normal provider usage.
+
+ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+## Operational Identity Addendum for GitHub Actions and Docker Manager (2026-03-12)
+
+
+The current multi-account model must explicitly distinguish provider accounts from operational identities needed by this packet.
+
+Required operational identity classes:
+- `github_api` account identity used by GitHub Actions surface
+- registry account identity / namespace identity used by Docker Manager
+- Kubernetes context / cluster identity used by Docker Manager Kubernetes subview
+
+Rules:
+- operational identity state may be displayed alongside provider/account state, but it must not be implied to share the same ownership or token source unless the owning auth contract says so
+- requested vs effective state remains visible when an identity exists but capability is partial
+
+ContractRef: ContractName:Plans/GitHub_API_Auth_and_Flows.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Permissions_System.md
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Multi-Account.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### MA-002 - Owner Requirements And Vocabulary Boundary
+
+```yaml
+plan_unit_id: MA-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Plans/Multi-Account.md is canonical live specification text for product, runtime, storage, UI, and governance
+  account behavior. Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology
+  in this document. The shared conversational/runtime boundary preserves Puppet Master naming, DRY compliance,
+  deterministic defaults, implementation status, and source cross-references.
+gui_related: true
+gui_classification_reason: The unit preserves a source span that explicitly includes UI among the owner-section requirements.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Compatibility-only vocabulary is not treated as live canonical terminology.
+- The shared conversational/runtime boundary remains visible to downstream consumers.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: account_owner_boundary
+reasoning_tier: standard
+context_scope: multi_account_standardization
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: multi_account_owner_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0002
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0003
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0004
+preserved_exact_tokens:
+- Canonical owner-section requirements
+- Requested/effective account identity contract
+- Shared conversational/runtime boundary
+- Compatibility-only source vocabulary
+- Puppet Master
+- Plans/DRY_Rules.md
+- Plans/Contracts_V0.md
+- Plans/Decision_Policy.md
+negative_constraints: []
+compatibility_only_notes:
+- Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Multi-Account.md owns the requested/effective account terminology used by this document.
+- Cross-references remain source references and do not supersede owner documents.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs: []
+split_recommendation_reason: The covered spans are narrow owner/vocabulary scaffolding and do not require further splitting.
+```
+
+## Ledger Compile Addendum - pldg-20260624-001-provider-updates
+
+This addendum compiles accepted provider-update ledger atoms into canonical provider account/profile requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### MA-062 - Provider Route Credential Profiles And Entitlement States
+
+```yaml
+plan_unit_id: MA-062
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Provider accounts are route-specific credential/profile records. PM must represent Gemini Direct, Antigravity CLI public `agy` text/coding rows, the separate Antigravity OAuth/internal `gemini-3.1-flash-image` generated-image route, Claude Code, Cursor session/API-key/SDK routes, Codex/OpenAI API and subscription-backed Codex image generation, GitHub Copilot direct hosted API, OpenCode server, Kimi For Coding, MiniMax global/CN, Z.AI/Zhipu standard/coding/Anthropic routes, Alibaba/Qwen global/CN coding-plan routes, and other coding-plan families as separate account/profile rows where their auth, billing, region, entitlement, quota, transport, support-state, or proof surface differs. Unpurchased or inaccessible plans compile as disabled, capability-gated, unverified, or separate-profile rows, not open purchase blockers.
+gui_related: true
+gui_classification_reason: Account/profile rows, setup states, entitlement badges, and provider picker availability are user-visible settings behavior.
+depends_on: [MS-113, CV-292]
+unblocks: [F3-400, F3-401, UF-075]
+acceptance_criteria:
+  - Account/profile rows preserve route-specific auth, billing, region, entitlement, quota, and transport differences.
+  - OpenAI API-key image routes and OpenAI/Codex subscription-backed image-generation routes are separate account/profile surfaces.
+  - Antigravity public `agy` CLI rows and Antigravity OAuth/internal generated-image rows are separate account/profile surfaces when auth, endpoint, support-state, or proof custody differs.
+  - Cursor API key setup copy points users to the Cursor dashboard API keys section without storing the key in Plans or ledgers.
+  - Lack of additional purchased plans does not leave compile blocked when a disabled/gated/unverified row is accepted.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: account_profile_route_collapse
+reasoning_tier: high
+context_scope: provider_route_credential_profiles
+implementation_surfaces: [Plans/Multi-Account.md, Plans/Models_System.md, Plans/FinalGUISpec.md, Plans/usage-feature.md]
+node_compile_hint: {mode: provider_route_credential_profiles, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0011
+  - pldg-20260624-001-provider-updates:atom-0082
+  - pldg-20260624-001-provider-updates:atom-0103
+  - pldg-20260624-001-provider-updates:atom-0138
+  - pldg-20260624-001-provider-updates:atom-0142
+  - pldg-20260624-001-provider-updates:atom-0143
+  - pldg-20260624-001-provider-updates:atom-0144
+source_atom_ids: [atom-0011, atom-0022, atom-0034, atom-0048, atom-0049, atom-0064, atom-0068, atom-0070, atom-0071, atom-0082, atom-0084, atom-0097, atom-0100, atom-0103, atom-0104, atom-0116, atom-0118, atom-0119, atom-0124, atom-0125, atom-0127, atom-0128, atom-0129, atom-0131, atom-0132, atom-0137, atom-0138, atom-0142, atom-0143, atom-0144]
+preserved_exact_tokens: ["Google OAuth", "Application Default Credentials (ADC)", "system keyring", "CURSOR_API_KEY", "--api-key", "cursor-agent login", "Cursor SDK", "Cloud Agents API", "https://cursor.com/dashboard/", "API keys section", "GitHub OAuth/PAT-style", "Team Plan keys are not interchangeable", "OpenAI/Codex subscription-backed", "Antigravity CLI", "agy", "gemini-3.1-flash-image", "v1internal:generateContent", "disabled", "capability-gated", "unverified", "separate-profile"]
+negative_constraints:
+  - Do not store user-supplied API keys, OAuth URLs, tokens, or account identifiers in Plans, ledgers, logs, or artifacts.
+  - Do not collapse global and CN/regioned provider routes into one account/profile row.
+  - Do not ask Jared to buy additional subscriptions to complete this planning lane.
+  - Do not collapse Antigravity public `agy` CLI text/coding rows with the separate OAuth/internal `gemini-3.1-flash-image` generated-image route.
+owner_hints: [Plans/Multi-Account.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md, Plans/usage-feature.md]
+```
+
+### MA-063 - Direct Provider Subscription And Usage Authority Boundaries
+
+```yaml
+plan_unit_id: MA-063
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Direct-provider subscription and usage authority is provider-specific. GitHub Copilot readiness comes from the direct hosted API and Copilot entitlement token, not `copilot` CLI bridging. Claude Code status-line `rate_limits` is the accepted usage source for Claude Code rather than OAuth usage polling. OpenAI/Codex subscription image generation uses the user's OpenAI/Codex subscription/account route and is separate from API-key billing. Z.AI/Zhipu plan, overload, balance, and resource-package states remain upstream/account states that PM surfaces accurately rather than treating as user-action blockers.
+gui_related: true
+gui_classification_reason: Subscription, usage, account setup, and blocked-state disclosures are visible provider settings behavior.
+depends_on: [MA-062, CV-292]
+unblocks: [UF-074, F3-400]
+acceptance_criteria:
+  - Direct-provider usage and entitlement checks are tied to the correct provider/account route.
+  - GitHub Copilot direct hosted API is not blocked on optional CLI prompt flow.
+  - Claude Code usage can consume status-line `rate_limits` fields.
+  - Z.AI/Zhipu account/upstream failures surface as capability-gated or blocked states with concrete reasons.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260624-001-provider-updates
+risk_class: provider_entitlement_source_drift
+reasoning_tier: high
+context_scope: provider_usage_entitlement_authority
+implementation_surfaces: [Plans/Multi-Account.md, Plans/usage-feature.md, Plans/Contracts_V0.md, Plans/FinalGUISpec.md]
+node_compile_hint: {mode: direct_provider_subscription_usage_boundaries, create_worknodes: false, create_nodeseeds: false}
+source_lineage:
+  - pldg-20260624-001-provider-updates:atom-0106
+  - pldg-20260624-001-provider-updates:atom-0129
+  - pldg-20260624-001-provider-updates:atom-0137
+  - pldg-20260624-001-provider-updates:atom-0138
+source_atom_ids: [atom-0068, atom-0094, atom-0106, atom-0122, atom-0129, atom-0131, atom-0132, atom-0137, atom-0138]
+preserved_exact_tokens: ["rate_limits", "five_hour.used_percentage", "five_hour.resets_at", "seven_day.used_percentage", "seven_day.resets_at", "statusLine", "refreshInterval", "GitHub Copilot", "https://api.githubcopilot.com", "OpenAI/Codex subscription", "glm-5.1", "glm-5.2", "glm-5v-turbo", "plan-not-included", "balance/resource gating"]
+negative_constraints:
+  - Do not poll or store secrets where provider-owned status-line or direct API usage metadata is sufficient.
+  - Do not treat optional CLI auth failures as blockers for direct hosted provider routes.
+  - Do not hide upstream/account gating behind generic provider failure copy.
+owner_hints: [Plans/Multi-Account.md, Plans/usage-feature.md, Plans/FinalGUISpec.md, Plans/Contracts_V0.md]
+```
+
+### MA-003 - Provider Runtime Scope And Entry Count
+
+```yaml
+plan_unit_id: MA-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Multi-account support covers an open-ended Provider -> models catalog across direct, CLI-runtime, and server-bridge
+  routes including Claude Code, Codex/OpenAI, Gemini Direct, Antigravity CLI, GitHub Copilot, Cursor, OpenCode, and
+  coding-plan providers where accepted. Routing is shared provider-runtime behavior for all provider-using roles, and
+  provider-touched /web work maps through the provider capability registry or adapter contract. The old exactly-seven
+  provider inventory and active Gemini CLI split are retired/source-lineage only.
+gui_related: false
+gui_classification_reason: The unit defines runtime/provider scope and account identity rather than GUI presentation.
+split_recommended: true
+depends_on:
+- MA-002
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Multi-account routing remains shared provider-runtime behavior rather than Orchestrator-only behavior.
+- Gemini Direct remains active and Gemini CLI is retired/source-lineage only.
+- Antigravity CLI is a separate active CLI-runtime provider entry.
+- The old exactly-seven provider-entry inventory remains traceable only as retired source-lineage.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: provider_runtime_scope_currentness
+reasoning_tier: standard
+context_scope: multi_account_standardization
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: provider_runtime_scope_currentness
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0005
+preserved_exact_tokens:
+- Purpose
+- Scope
+- Provider/runtime scope
+- Gemini scope
+- Provider-entry count
+- Gemini Direct
+- Gemini CLI
+- Claude Code
+- Codex
+- GitHub Copilot
+- Cursor
+- OpenCode
+negative_constraints:
+- Multi-account routing is not an Orchestrator-only feature.
+- Provider-touched /web work must not depend on a brittle provider-doc layout.
+compatibility_only_notes:
+- The exact phrase "Gemini Direct and Gemini CLI remain separate provider entries" is retained only as retired source-lineage; active entries are Gemini Direct and Antigravity CLI.
+- The exact phrase "exactly seven provider entries" is retained only as retired source-lineage; the current catalog is open-ended Provider -> models.
+stale_retired_dispositions:
+- Active Gemini CLI provider-entry support is retired by pldg-20260624-001-provider-updates.
+- The seven-provider inventory is retired by the open-ended provider catalog.
+owner_boundary_notes:
+- Provider-runtime identity applies across assistant, interviewer, builder, package/seam, and governance/execution actors while preserving separate actor ontologies.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/storage-plan.md, ContractName:Plans/usage-feature.md'
+split_recommendation_reason: Multi-Account-S0005 is intentionally split into provider scope, policy, pool, recovery, and actor identity units.
+```
+
+
+<<< CONTEXT_AFTER 993-1004 >>>
+### MA-004 - Effective Policy Visibility And Storage Alignment
+
+```yaml
+plan_unit_id: MA-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Multi-account auto-switching is on by default for provider-using roles unless policy disables it. Policy is
+  primarily project-owned, runs snapshot the effective policy space at run start, and each attempt or message records
+  the effective account actually used. Requested provider/model/effort/persona/auth mode/account policy and effective
+  provider/model/effort/persona/auth mode/account remain visible and queryable. Account selection and env/config

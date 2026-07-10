@@ -1,0 +1,1133 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001753-EXACT-WIN-AC612DBB4EFE-0005",
+  "attempt_id": "attempt-0002",
+  "task_thread_id": "019f4d38-7308-7411-a9db-366915f07789",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/FinalGUISpec.md",
+    "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5",
+    "core_sha256": "8a5b55421ee333ded7e922720f04a99fba2d31e033ef483cd36cb7686fecc713",
+    "core_range": [1219, 1494]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-E001",
+      "item_type": "contract",
+      "title": "Shell navigation consumes the shared route contract",
+      "statement": "Shell navigation and deep-link handling must consume the shared route contract and may not revive retired Tiers identity or widgetized Orchestrator assumptions.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["shared-routing", "shell-navigation", "tiers-migration"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1220,
+          "line_end": 1220,
+          "exact_quote": "Shell `/navigation` and `deep-link` handling in `Plans/FinalGUISpec.md` / `/FinalGUISpec.md` must consume the shared route contract before reviving any stale `Tiers` or widgetized Orchestrator surface assumption.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E002",
+      "item_type": "gui_truth",
+      "title": "Explain-this-state is evidence-bound",
+      "statement": "The GUI affordance spans status pills, disabled buttons, blocked banners, and receipt rows; it offers ELI5 and expert detail, derives from canonical fields and receipt projections, and explicitly reports unavailable data instead of fabricating generic explanations.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["explain-this-state", "blocked-state", "reason-codes"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1222,
+          "line_end": 1222,
+          "exact_quote": "`Explain this state` is a GUI-level affordance on status pills, disabled buttons, blocked banners, and receipt rows across SCM, GitHub Actions, Docker/Kubernetes, and Orchestrator. It can auto-open on the first block when the user enables that behavior, and it offers ELI5 plus expert detail without inventing panel-local explanations. The explanation derives from canonical reason codes, validation fields, `allowed_action_ids[]`, requested/effective state, `/blocked/diverged/degraded` chains, and the `/event/storage` or `/events/storage` receipt projection; if a field is missing, the GUI says what data is unavailable instead of filling the gap with generic copy. `/tradeoffs`: one-click reasoning is valuable only when it stays tied to the same evidence that disables or permits the action.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E003",
+      "item_type": "behavior",
+      "title": "Mutation context precedes mutation CTAs",
+      "statement": "Destructive, targeted, and remote-mutating surfaces render effective target and context provenance before mutation CTAs, preserve five distinct empty states, and keep hidden-when-unused surfaces rediscoverable.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["mutation-context", "empty-state-taxonomy", "rediscoverability"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1224,
+          "line_end": 1224,
+          "exact_quote": "Destructive, `/targeted`, and remote-mutating surfaces show a compact target/context banner before rendering mutation CTAs. The banner includes the effective target identity, fallback source, and whether the context came from selected worktree, receipt context, workspace branch, Docker context, Kubernetes namespace/environment, or `/runtime/context`. Empty-state taxonomy is canonical: `Not relevant`, `Not configured`, `Unavailable`, `No data yet`, and `No results for current filter` are distinct states, not interchangeable copy. Hide-when-unused surfaces remain rediscoverable through Settings, commands, and receipt or CTA deep links.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E004",
+      "item_type": "gui_truth",
+      "title": "Dense custom surfaces have non-color accessibility requirements",
+      "statement": "Named dense surfaces and table fallbacks must preserve screen-reader labels, keyboard traversal, non-color indicators, and textual equivalents for badges, blocked reasons, and filtered results.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["accessibility", "dense-surfaces", "non-color-state"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1226,
+          "line_end": 1226,
+          "exact_quote": "Accessibility for dense custom surfaces is non-color dependent. Source Control, GitHub Actions, Docker Manager, Kubernetes, Orchestrator, receipt views, and any `/table` fallback must preserve `/screen-reader` labels, keyboard traversal, non-color state indicators, and text equivalents for graph badges, status badges, blocked reasons, and filter results.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E005",
+      "item_type": "failure_recovery",
+      "title": "Blocked recovery is owner-routed",
+      "statement": "Orchestrator remains the blocked-episode hub; destination panels render canonical reason, owner route, recovery CTA, and allowed actions, and must return to the owner route with original context when they cannot host recovery.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["blocked-recovery", "owner-routing", "context-preservation"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1228,
+          "line_end": 1232,
+          "exact_quote": "Blocked-state integration uses one shared contract rather than surface-specific recovery wording. Orchestrator remains the hub for blocked episodes, while destination panels render the same reason code, owner route, recovery CTA, and allowed actions in local context. If a destination panel cannot host the requested recovery action, it links back to the owner route with the original receipt/filter context preserved; it must not create a competing remediation path.\n\nDashboard CtAs, blocked cards, modal `/toast` approvals, graph-local dialogs, and inline chat actions all resolve through the same owner-routed action family; resolution-thread ownership belongs to the canonical attention/blocked route, not the surface that happened to display the prompt.\n\nUI, runtime, and chat-thread resolution share the same blocked/recovery action family, so `/recovery` affordances point to canonical actions instead of surface-specific commands.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E006",
+      "item_type": "state_transition",
+      "title": "Policy denials are blocked outcomes with revalidation",
+      "statement": "Governance and policy denials are typed blocked outcomes; partial multi-object operations expose accepted and denied stages, and resume after governance waiting revalidates before mutation while retaining original and current outcomes.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["policy-block", "partial-receipts", "resume-revalidation"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1234,
+          "line_end": 1234,
+          "exact_quote": "Governance and policy outcomes are blocked outcomes, not generic failures. The GUI distinguishes namespace disallowed by product policy, admission or policy denied by OPA, `/Gatekeeper/Kyverno/Pod` Security or `/image` policy, quota or `/limit` policy denial, and `remote_mismatch`, with separate remediation pivots and CTAs. Multi-object Kubernetes apply, `compose-to-cluster`, and multi-step publish chains show partial `/receipts`: accepted resources, the later denied resource, any downstream deployment blocked by that denial, and the exact policy-blocked object and `/stage`. While a run is waiting on approval, `/review/ruleset`, or external governance change, resume revalidates before mutation; receipts retain original and current `/policy` or `/remote` outcomes, including active, deleted, archived, `renamed_redirected`, and transferred targets.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E007",
+      "item_type": "capability",
+      "title": "Progress catalog has thirteen promoted drills",
+      "statement": "The promoted Progress catalog names exactly thirteen widget identifiers and binds each to a default target such as an execution tree, node inspector, filtered lane, concern inspector, recovery timeline, artifact browser, historical list, or project-attention route-payload list.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["progress-catalog", "default-drills"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1241,
+          "line_end": 1254,
+          "exact_quote": "Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C. The promoted 13-widget Progress catalog and default drill targets are:\n1. `progress.run-overview` → Execution unit tree scoped to `focused_run_id`\n2. `progress.current-task` → Node inspector for the active execution unit\n3. `progress.lane-health` → Lane row filtered to the selected lane/worktree\n4. `progress.node-throughput` → Dense node list filtered to slow or blocked nodes\n5. `progress.blocked-concerns` → Concern lane filtered to `blocked` or `attention_required`\n6. `progress.approval-queue` → Concern inspector showing pending approvals\n7. `progress.recovery-status` → Recovery timeline for the selected concern or blocked episode\n8. `progress.artifact-receipts` → Artifact browser filtered to receipt-linked runtime artifacts\n9. `progress.worktree-state` → Source Control worktree row with lane/package/run refs\n10. `progress.account-pressure` → Historical `account_pressure_episode` list\n11. `progress.account-switches` → Historical `account_switch_event` list\n12. `progress.escalation-stack` → Project attention view focused on the shared escalation ladder\n13. `progress.attention-summary` → `project_attention_item.primary_route_payload` list",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E008",
+      "item_type": "contract",
+      "title": "Progress state, action, alert, and event vocabularies are closed lists",
+      "statement": "The core enumerates the Progress state labels, action labels, alert taxonomy, and event taxonomy, and sets distinct quieting behavior for advisory, attention-required, blocked, and escalated conditions.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["progress-taxonomy", "condition-aging"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1259,
+          "line_end": 1263,
+          "exact_quote": "- State labels: `queued`, `running`, `attention_required`, `blocked`, `recovering`, `degraded`, `complete`\n- Action labels: `Inspect`, `Focus run`, `Open evidence`, `Request approval`, `Acknowledge`, `Dismiss`, `Resolve`, `Retry recovery`\n- Alert taxonomy: `advisory`, `attention_required`, `blocked`, `escalated`, `degraded_projection`\n- Event taxonomy: `run_started`, `node_started`, `node_completed`, `concern_opened`, `approval_requested`, `approval_decided`, `recovery_started`, `recovery_completed`, `artifact_published`, `account_switched`\n- Condition-aging policy: advisory warnings may quiet after one stable refresh window; `attention_required` resurfaces on meaningful change or persistence; `blocked` and `escalated` never auto-quiet",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E009",
+      "item_type": "contract",
+      "title": "Dashboard canon, layout key, migration key, and ownership are bounded",
+      "statement": "Dashboard is a rearrangeable grid with exactly four default MVP widgets; widget_layout:v1:dashboard is live, dashboard_layout:v1 is read-only migration/backup, and deep-linked destination records and commands remain owner-owned.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["dashboard", "widget-layout", "migration"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1267,
+          "line_end": 1269,
+          "exact_quote": "Dashboard is the first-pass operational summary surface. It uses a rearrangeable card grid with grid-based resizing and an Add Widget command, but only source-backed Dashboard widgets are live canon for MVP. The default Dashboard widget set is exactly `widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results`, and `widget-custom-metrics`; broader `widget.*` catalog entries are compatibility, candidate, or widget-library material unless promoted by a specific owner PlanUnit.\n\nDashboard layout state uses `widget_layout:v1:dashboard` as the live layout family. `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, GitHub Actions, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E010",
+      "item_type": "contract",
+      "title": "One object-first route model governs all open behavior",
+      "statement": "Search, palette, widgets, recovery links, chat, navigation commands, and pivots share one object-first route payload; resume_url is serialization only, widget-local actions and path-first chat opening are forbidden, and command wrappers retain wiring and owner gates.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["route-payload", "object-first", "resume-url"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1273,
+          "line_end": 1279,
+          "exact_quote": "All search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload. `resume_url` is the `/serialization` transport form of that payload, not a hidden canonical route contract or second routing model.\n\nWidget actions route through the same command and `/deep-link` payload model as search, inspectors, and palette actions, not through widget-local action ids.\n\n`Plans/assistant-chat-design.md` / `assistant-chat-design.md` message `jump-to-message`, search, and persistence behavior consume the same object-first route model; chat may store `resume_url` for recovery portability, but it must not fall back to path-first opening.\n\n`cmd.nav` and `cmd.nav.*` wrappers route through the same route payload and `/wiring/gate` stack, so catalog commands cannot bypass owner checks or force every consumer surface to restate route semantics.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E011",
+      "item_type": "contract",
+      "title": "Route identity and view context are separated",
+      "statement": "Route targets are limited to subject identity or object kind/id identity; subject families are doc and artifact only, inspector_target is secondary, tab_id is restoration/focus context, and concern routes preserve focused-run, target-tab, and related-object context.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["route-target", "subject-id", "concern-routing"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1316,
+          "line_end": 1321,
+          "exact_quote": "- Concern search results route as object-first results with focused-run and target-tab context by using `object_kind: concern`, `object_id: concern_id`, `focused_run_id`, and `target_tab`.\n- Concern drill-down preserves the selected `concern_id` plus related object context when pivoting into inspectors, recovery links, or historical views.\n- `route_target` stays small: it is either `subject_id`-based identity or `object_kind` / `object_id` identity.\n- `subject_id` families are limited to `doc:` and `artifact:`.\n- `inspector_target` is secondary metadata, not primary identity.\n- Destination/context overrides are allowed only when needed to restore the target surface.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E012",
+      "item_type": "authority",
+      "title": "Evidence, artifacts, files, subjects, and runtime objects have distinct owners",
+      "statement": "Evidence owns verdicts, receipts, findings, and reports; Artifacts owns generated media and documents; FileManager owns workspace-file opens; runtime identity opens through subject or object routes, preventing tier, tab, or subject identifiers from becoming competing object taxonomies.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["evidence-ownership", "artifact-ownership", "open-subject"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1297,
+          "line_end": 1309,
+          "exact_quote": "The Evidence pane owns verdicts `/receipts/findings/reports`; the Artifacts pane owns screenshots `/recordings/diffs/reports/generated` docs `/etc`, and evidence/artifacts remain bidirectionally linked with usage-linked receipts where relevant.\n\nCanonical-record cleanup treats `tier_runtime_record`, tier-keyed `usage_record`, tier-adjacent `evidence_record`, `thread_blocked_notice`, and `wizard_runtime_state` `resume_url` fields as compatibility records; they cannot reassert tier identity over object routes.\n\n`Crosswalk.md` must expose route-target / identity-native open behavior as a primitive alongside command and document-pane primitives; FinalGUISpec consumes that primitive through `route_target`, `OpenSubject`, and `OpenFile` rather than creating a parallel navigation vocabulary.\n\nRoute envelopes, not ad hoc UI glue, hold the minimum openable routing fields for cross-surface pivots before the destination opens file, subject, inspector, or runtime views.\n\n`FileManager` keeps `OpenFile { path... }` for workspace-file opens, while runtime-identity opens use `OpenSubject` or `route_target` over canonical object identity before landing in file, subject, or inspector views.\n\n`tab_id` is allowed for top-level tab restoration and `/focus` refinement only; it does not replace destination class, subject identity, or object identity.\n\n`subject_id` is for openable `/renderable` content subjects only; it must not become a second generic object taxonomy beside `object_kind` / `object_id`.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E013",
+      "item_type": "capability",
+      "title": "Indexing settings exposes a bounded admin surface",
+      "statement": "The Indexing subsection exposes enablement, thresholds, exclusions, symlink behavior, remote-cache controls, disk use, confirmed eviction, and rebuild, with remote-only controls hidden for local projects.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["index-settings", "remote-cache", "rebuild-index"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1327,
+          "line_end": 1327,
+          "exact_quote": "The Indexing settings subsection exposes the project search index as an admin surface: enable/disable index, large file threshold, generated-file and custom exclusion patterns, follow-symlinks toggle default OFF, shallow/partial (`/partial`) remote cache toggles, local and remote disk usage, manual cache eviction with confirmation, and `Rebuild Index`. Local projects hide remote-only cache controls while keeping toggle, threshold, exclusion, symlink, disk-usage, and rebuild controls visible.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E014",
+      "item_type": "contract",
+      "title": "Settings has a canonical nineteen-tab placement registry",
+      "statement": "The table is the canonical nineteen-tab Settings registry, routes detailed behavior to named owners, retains Tiers only as a compatibility/search alias, and keeps hidden or unsupported tabs searchable and command-addressable with explicit unavailable or unsupported state.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["settings-registry", "settings-ownership", "tiers-alias"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1335,
+          "line_end": 1359,
+          "exact_quote": "The unified Settings surface exposes a stable tab registry so run-touched settings content has a visible landing zone without copying detailed owner-doc behavior into this GUI file. The registry is a placement and owner-routing contract: hidden or unsupported tabs remain searchable and command-addressable, but they show unavailable or unsupported state instead of disappearing silently.\n\n| Tab | Final GUI responsibility | Owner detail |\n|---|---|---|\n| General | App-wide theme, appearance, onboarding, and ordinary preference rows | FinalGUISpec plus storage settings keys |\n| Models / Providers | Model, provider, account, runtime, Default Crew, and Goal Mode worker/verifier-adjudicator selector entrypoints | Models_System, Multi-Account, Goal_Runtime_System, provider docs, Agent Config |\n| Tiers (retired alias) | Compatibility/search alias only; visible execution navigation uses Nodes, Packages, Lanes, Seams, or Branching surfaces | Orchestrator, Run Graph, Worktree, and node/package/lane owner docs |\n| Branching | Git/worktree policy, branch defaults, merge/push posture, and recovery entrypoints | WorktreeGitImprovement and GitHub integration docs |\n| Verification | Validation pass settings, report visibility, and gate/run quality preferences | chain-wizard, Project Output Artifacts, and Progression Gates docs |\n| Memory | Assistant memory, retrieval, context, and rehydration preferences | assistant-memory, Prompt Pipeline, and assistant-chat docs |\n| Budgets | Token, spend, quota, pressure, and execution-budget controls | usage, Models, Run Modes, and Contracts docs |\n| Advanced | Rare or hazardous controls, debug/instrumentation toggles, and platform diagnostics | FileSafe, Tools, Runtime Artifacts, and Doctor/Health owners |\n| Terminal | Durable terminal appearance, shell startup, transcript, interaction, and diagnostics preferences | Terminal Settings Ownership in this document plus terminal/runtime owner docs |\n| Permissions | Permission rules, approval scopes, presets, and web-operation keys | Permissions_System |\n| LSP | Language-server enablement, host/root attachment, diagnostics, and restart controls | LSPSupport plus FileManager consumers |\n| Interview | Interview, builder, and requirements workflow preferences | interview, chain-wizard, and Project Output Artifacts docs |\n| Media | Media-generation provider and capability settings | Media_Generation_and_Capabilities |\n| Auth | Provider, server, GitHub, and account authentication entrypoints | Multi-Account and provider/auth owner docs |\n| Health | Doctor checks, readiness, stale/degraded states, and remediation links | owner docs for the failing subsystem plus Runtime Artifacts |\n| Rules | Instruction, rule, and policy-pack visibility without replacing owner storage | agent rules, Prompt Pipeline, Skills, and Plugins docs |\n| Shortcuts | Keyboard shortcut discovery, remapping, conflicts, and command bindings | UI_Command_Catalog |\n| Skills | Skill registry visibility, readiness, source, and persona references | Skills_System and Agent Config |\n| Plugins | Plugin registry visibility, readiness, source, and capability disclosure | Plugins_System and MCP/Tools owners |\n\nThis table is the canonical 19-tab Settings registry. Older `24 tabs across 5 groups` risk rows and the legacy `Nodes, Branching, Verification, Memory, Budgets, Advanced, Interview, YAML` migration list are stale migration/source-lineage notes only.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E015",
+      "item_type": "authority",
+      "title": "Storage and Usage retain record truth",
+      "statement": "FinalGUISpec owns inspector entrypoints but routes storage, usage, projection, key registration, rebuild, historical rules, and receipt row truth to storage-plan and usage-feature owner contracts.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["storage-ownership", "usage-ownership", "receipt-contract"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1367,
+          "line_end": 1377,
+          "exact_quote": "`Plans/storage-plan.md` / `/storage-plan.md` and `Plans/usage-feature.md` / `/usage-feature.md` remain the consumer docs for storage and usage record truth; FinalGUISpec only exposes `/detail/history/ledger/runtime` inspector entrypoints and must route them to those owner contracts.\n\nUsage, `/history/ledger`, and run-snapshot views attribute cost and consumption to `effective_account_id` while preserving requested-side fields as queryable and `/auditable` context wherever the run snapshot is shown.\n\n`storage-plan` / `storage-plan.md` supports disposable projections, slice fetches, redb-backed projection pages, and seglog-derived views; FinalGUISpec consumes those storage-plan capabilities instead of restating projection storage.\n\n`storage-plan` / `storage-plan.md` owns key registration, projector `/rebuild` semantics, and current vs historical projection rules.\n\n`storage-plan` / `storage-plan.md` owns receipt row shape and the minimum cross-surface receipt contract; FinalGUISpec may expose receipt summaries only by routing to that storage-plan owner truth.\n\n`Plans/usage-feature.md` / `/usage-feature.md` may surface usage-local and tier-local legacy identity only as migration vocabulary; GUI routes normalize usage pivots through the shared route/object model before exposing history, ledger, or runtime inspectors.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E016",
+      "item_type": "contract",
+      "title": "Operational identity and override display are normalized",
+      "statement": "Operational identity has a bounded requested/effective shape, Settings shows origin and precedence, runtime/history conditionally shows deltas, and all runtime-related surfaces use source, requested, effective, reason, and recovery order.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["operational-identity", "override-display", "requested-effective"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1379,
+          "line_end": 1383,
+          "exact_quote": "Settings show origin badges and precedence disclosure for resolver inputs, while runtime/history surfaces display requested/effective deltas and `support-state` only when those fields affect interpretation or recovery.\n\nRuntime-related Settings, inspectors, and history surfaces share one override-display grammar: show the source snapshot, requested value, effective value, switch or clamp reason, and recovery path in the same order before applying surface-specific labels.\n\nOperational-identity payloads use the bounded `operational-identity` shape `{ kind, requested_ref?, effective_ref?, selection_reason?, partial_capability? }`; provider-, registry-, Kubernetes-, and future surface-specific identities may extend the `kind` vocabulary without adding hidden credential ownership.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E017",
+      "item_type": "capability",
+      "title": "Agent Config Personas defines category, row, and mutability behavior",
+      "statement": "Personas exposes library/editing, runtime preferences, and skill refs; rows disclose eligibility, scope, prompt, runtime and provider compatibility; protected core entries are immutable while bundled specialties are editable, disableable, and restorable.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["agent-config", "personas", "protected-core"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1387,
+          "line_end": 1389,
+          "exact_quote": "Agent Config owns the visible provider/model/account/instruction management surface and mirrors Skills owner vocabulary for Skills, Personas, bundled, protected_core, catalog_installed, manual_import, project_local, global_local, pm_enhanced, disabled, and ready_with_warnings rows. Agent Config rows expose source/readiness and recovery context, while Settings remains the durable preference surface.\n\nThe Agent Config Personas tab has three visible content categories: persona library and editing (create, edit, delete, disable, restore default, reorder where ordering is meaningful), runtime preferences (per-persona response style, verbosity, default model, tool posture, and output format defaults applied automatically while that persona is active), and skill refs (skills associated with or activated for the persona). Persona rows show scope, chat-selectable eligibility, child/subagent eligibility, protected/core or bundled-specialty status, prompt preview, requested/effective runtime summary, and provider compatibility disclosure. Protected core built-ins are read-only and not deletable, disableable, or shadowable; bundled specialty Personas are editable, disableable, and restorable to default. Persona rows cross-link to provider settings and to the Skills tab for the referenced skill registry entries.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E018",
+      "item_type": "state_transition",
+      "title": "Provider diagnostics expose independent drift and revalidation",
+      "statement": "Provider and account-local diagnostic evidence can drift independently; material trust change moves a profile through Validating or Revalidate before Ready, while internal paths and mechanics remain hidden absent a concrete debug or audit case.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["provider-diagnostics", "trust-revalidation", "drift"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1393,
+          "line_end": 1395,
+          "exact_quote": "Provider/profile diagnostics expose local setup state without making Settings the owner: Linux per-provider storage resolves under `$XDG_DATA_HOME/puppet-master/providers/<provider_entry_id>/` or `~/.local/share/puppet-master/providers/<provider_entry_id>/`, bootstrap checks can name `gemini-credentials.json` and `google_accounts.json`, and Cursor trust/cache rows can name `~/.cache/cursor-compile-cache` as profile `/account-local` evidence. Account-local and provider-profile-local rows may drift independently from shared workspace targets, so the GUI shows independent drift state rather than duplicating shared targets per account.\n\nAgent-Config setup copy separates setup success from operational evidence. Cursor/headless `/workspace` trust rows may expose `--trust` and `/bootstrap` prompt state, and any material trust change sends the account/profile back through `Validating...` or a visible `Revalidate` action before it returns to `Ready`. `provider-home` paths, scheduler mechanics, and overlay configuration internals stay hidden unless a concrete `/debug` or audit use case requires persisted evidence. `provider-specific` remains or `/quota` probes belong in Usage and expanded account/runtime inspectors, not in setup success copy.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E019",
+      "item_type": "behavior",
+      "title": "Default Crew confirmation resolves runtime mapping",
+      "statement": "Default Crew exposes enablement, ordered members, member model/provider selectors, and first-run confirmation; mappings are reconfirmed after material changes, and any Copilot member normalizes the whole crew to Copilot with visible explanation.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["default-crew", "provider-mapping", "copilot-constraint"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1401,
+          "line_end": 1401,
+          "exact_quote": "Default Crew default-config is an Agent-Config feature-surface. The panel exposes enable/disable, ordered crew members, per-member default-model and provider/runtime (`/provider`) selectors, and the first-run crew confirmation UX. Before launch, that confirmation resolves each member's model -> provider/runtime mapping and reconfirms it whenever mappings or `/defaults/restrictions` materially change; if Copilot is selected for any member, the visible confirmation normalizes the whole crew to Copilot and explains the crew-level provider constraint.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E020",
+      "item_type": "authority",
+      "title": "Docker Manager shell ownership is separated from runtime ownership",
+      "statement": "FinalGUISpec owns Docker Manager shell placement, naming, disabled copy, discoverability, Settings entrypoints, and routing; the container owner owns runtime behavior, and legacy Docker/Unraid names are aliases into one panel rather than additional surfaces.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["docker-manager", "container-ownership", "migration-alias"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1405,
+          "line_end": 1409,
+          "exact_quote": "Docker Manager is the `docker_manager` side-panel surface for containers, images, compose, registries, build/bake, Publish / Unraid, and project-focused Kubernetes. FinalGUISpec owns only shell placement, surface label, disabled-state copy, deep-subview discoverability, Settings entrypoints, and cross-surface routing for this panel; `Plans/Containers_Registry_and_Unraid.md` owns Docker runtime, auth, registry, publish, Unraid, Podman, Kubernetes, receipt, and detection behavior.\n\n`Plans/Containers_Registry_and_Unraid.md` / `/Containers_Registry_and_Unraid.md` disagreement between `needs_review` and `/failure` payload semantics must be shown as an automation-first operator-flow mismatch until the container owner resolves it; FinalGUISpec mirrors only disabled-state and routing copy.\n\nLegacy `DOCKER MANAGE`, `Docker Manage`, `docker_manage_surface_state`, and separate Unraid panel references are migration aliases. They open Docker Manager, optionally focused to `Publish / Unraid`, and must not create a second activity-bar slot or remain embedded under Persona Editor.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E021",
+      "item_type": "contract",
+      "title": "Account binding and resolver behavior are deterministic at the binding level",
+      "statement": "Requested account, policy, and binding are separated; identity packets propagate execution_role and requested/effective identity; required binds or blocks, preferred binds or falls back with reason, and none permits policy choice while preserving the request.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["account-binding", "settings-resolver", "identity-propagation"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1412,
+          "line_end": 1421,
+          "exact_quote": "The settings model separates `requested_account_id` from `requested_account_policy`. It adds `requested_account_binding` with `none`, `preferred`, and `required` semantics, and every inspector renders the same identity grammar: Requested account / Requested binding / Effective account / Switch reason.\n\nShared runtime identity carries `execution_role` together with requested and effective operational identity. That packet propagates into effective-resolution records, attempt records, usage surfaces, and inspector payloads so the operator can compare requested vs effective runtime identity without reconstructing it from logs.\n\nThe settings resolver uses three axes:\n- `source`: app defaults, project policy, worker policy, and recovery-policy inputs\n- `request`: requested account, requested binding, requested account policy, requested execution role, and requested operational identity\n- `execution`: effective account, effective binding outcome, effective operational identity, `execution_role`, and `switch_reason`\n\nResolver display grammar is deterministic: show worker-policy display first, then source snapshot, then request snapshot, then execution outcome. Resolver inputs are the three axes above plus current projection trust. The deterministic resolver matrix is: `required` must bind or block; `preferred` binds when available and otherwise falls back with an explicit `switch_reason`; `none` keeps the request visible but lets policy choose execution. The emit shape is `settings_resolution { source_snapshot, request_snapshot, execution_snapshot, switch_reason, resolution_status }`.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E022",
+      "item_type": "authority",
+      "title": "Durable settings and transient panel state have separate owners",
+      "statement": "Settings owns durable app/project persistence and visibility controls grouped by owning surface; active object selection, live actions, and transient focus remain in their panels, and provider/model/account management language names Agent-Config rather than generic provider settings.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["settings-persistence", "panel-state", "agent-config"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1423,
+          "line_end": 1425,
+          "exact_quote": "Panel-specific persistence and visibility controls live in Settings only when they are durable app or project preferences. Settings groups them by owning surface rather than by implementation store: Source Control / Branching, GitHub Actions, Docker Manager / Kubernetes, Terminal, File Manager, Models / Providers, plus General, Shortcuts, Advanced, and Health for cross-cutting controls. Active runtime object selection, live run actions, and transient inspector focus remain in the owning panel.\n\nAgent-Config is the visible provider/model/account/instruction management surface for the now-locked `/provider` model. Settings and `/inspector` language must name Agent-Config, persistent Effective Runtime inspectors, provider entries, account/profile rows, instruction projections, and skill/MCP status rather than generic provider settings.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E023",
+      "item_type": "capability",
+      "title": "Terminal Settings owns durable terminal preferences and discovery",
+      "statement": "Settings > Terminal owns durable defaults, scope labeling, preference grouping, terminal-specific reconciliation, and discoverable remappable shortcuts, while live pane/session actions stay in Terminal runtime UI.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["terminal-settings", "terminal-shortcuts", "preference-scope"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1429,
+          "line_end": 1437,
+          "exact_quote": "Settings > Terminal is the in-product cheat sheet and durable `/preferences` owner for terminal defaults. It groups high-frequency controls for preview and change ahead of dangerous `/rare` controls and daily-use settings, and it keeps `/shortcut` mappings plus conflict `/explanations` visible in-product rather than hiding discoverability in a secondary utility.\n\nTerminal durable preferences include `/theme/font/rendering`, `/selection/copy/paste`, `/profile/cwd`, `/transcript` retention and `/performance`, diagnostics `/logging`, shell-integration `/capability` visibility, and renderer/session diagnostics when exposed. Scope labels distinguish per-project or workspace-local `/workspace` defaults from tab-scoped `/tab` overrides; live-session and pane/session-local actions stay in Terminal runtime UI rather than Settings.\n\nSettings > Terminal is also the terminal-specific `/coverage` and `/reconciliation` landing zone for durable GUI preferences that are not owned by Tools or storage: `/theming`, `/remote/session` disclosure, and any future browser or remote terminal transport controls must reference the terminal SSOT rather than creating a new settings owner.\n\nSettings > Terminal groups Appearance, `/layout` & Workspaces, Shell & Startup, Interaction, and Diagnostics. Interaction covers `/copy/paste`, copy-on-select, `/kill/quit` prompts, sticky-header command-block visibility, `/explanations`, performance-safe search, `/readability` signals, and `/tunable` `/quadrant` layout behavior.\n\nShortcut discovery is in-product and `/remappable`: it prioritizes true terminal operations over layout-management and other app-level actions, distinguishes terminal-owned shortcuts from `/TUI-owned` keys, and keeps search, next/previous match, scrollback paging, top/bottom jump, command-block navigation, font zoom, clear/reset, `/shortcuts/behaviors`, and copy/paste visible.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E024",
+      "item_type": "consumer",
+      "title": "Skills rows consume the Skills owner contract",
+      "statement": "Agent Config exposes Skills source, readiness, and four contextual badges but does not transfer skill-management ownership into Settings.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["skills-tab", "skill-readiness", "owner-contract"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1443,
+          "line_end": 1443,
+          "exact_quote": "Agent Config surfaces a Skills tab that mirrors the Skills owner contract. Skill rows show source/readiness and contextual badges, including `referenced_by_persona`, `auto_invokable`, `requires_missing_capability`, and `catalog_update_available`, without turning Settings into the skill-management owner.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E025",
+      "item_type": "contract",
+      "title": "Project summary is a reusable trusted rollup",
+      "statement": "project_summary separates activity, attention, health, owner, and projection trust; canonical blocked episodes outrank weaker derived warnings, stale projections reduce confidence without manufacturing blocks, and historical projects retain neutral current rows.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["project-summary", "projection-trust", "blocked-precedence"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1447,
+          "line_end": 1457,
+          "exact_quote": "`project_summary` is the reusable summary object for Orchestrator-facing project surfaces. It contains `activity_state`, `attention_state`, `health_state`, `owner`, and projection-trust disclosure so the operator can see whether a summary is record-backed, current, or degraded. Canonical blocked episodes take precedence over weaker derived warnings when summary rollups disagree.\n\n`projects:v1` list metadata such as path, detected languages, last-opened timestamp, health status, and overrides is not enough for the Orchestrator `/concern/projection-trust` model; project summaries add explicit activity, attention, health, owner, and trust rollups.\n\nDashboard remains the `/urgency/entry` surface, Orchestrator owns operational depth, and Projects is the multi-project `/management` surface; project cards stay summary-first while exposing compact orchestrator `/attention/usage` pressure and one primary blocked owner `/reason`.\n\n`project_attention_item` is the reusable attention-row object. Each row carries a primary route payload, projection-trust disclosure, blocked-owner kind, escalation level, and summary text. The same row contract is consumable in Orchestrator, Dashboard, and notification surfaces without re-minting attention identities.\n\nProject-summary cards derived from stale or `/degraded` projections downgrade confidence without manufacturing a blocked state, and historical-only projects still keep a current `project_summary` row with neutral `historical_only` or `idle` activity rather than a warning color/state.\n\n`project_summary` rows carry `project_id`, `activity_state` (`idle | active | background_active | historical_only`), `attention_state` (`none | advisory | attention_required | blocked`), `health_state` (`healthy | degraded | blocked`), optional `primary_owner_kind`, optional `primary_reason_code`, optional `primary_object_ref`, `active_run_count`, `blocked_run_count`, `attention_object_count`, `projection_trust_state`, `last_activity_at_utc`, and `historical_run_count`.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E026",
+      "item_type": "contract",
+      "title": "Project attention rows have shared routing and lifecycle fields",
+      "statement": "project_attention_item has reusable identity, owner, reason, source, route, trust, timestamps, dismissibility, and active fields; quiet_only cannot conceal canonical blocking, and routing restores precise scope across all consumers.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["project-attention-item", "attention-routing", "dismissibility"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1465,
+          "line_end": 1473,
+          "exact_quote": "`project_attention_item` rows carry `attention_item_id`, `project_id`, `severity` (`advisory | attention_required | blocked`), `owner_kind`, `reason_code`, `source_kind`, `source_object_ref`, `primary_route_payload`, optional `secondary_route_payload`, `projection_trust_state`, `created_at_utc`, `updated_at_utc`, `dismissibility_kind` (`none | quiet_only | dismissible`), and `active`; `quiet_only` never hides a canonical blocked condition.\n\nGUI-facing redb projections use the `project_summary` and `project_attention_item` record families as the key pattern for per-project operational summary and per-project active attention items; `attention-item` archival/resolution behavior changes `active`, `dismissibility_kind`, and `/resolution` metadata instead of becoming ad hoc card state.\n\nProject-attention routing is shared by attention-center rows, project cards, command palette actions, and search results, and every entry restores precise scope and target instead of inventing a surface-local \"open the right place\" rule.\n\nProjects `/attention-center` docs and command `/deep-link` docs consume `project_attention_item.primary_route_payload` and keep future surface-specific copy subordinate to the shared project-attention routing contract.\n\nProjection-derived attention items that are not canonical-runtime-backed show reduced trust explicitly and avoid overconfident imperative copy until the row revalidates against canonical runtime records.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E027",
+      "item_type": "contract",
+      "title": "Concern is durable and action semantics stay distinct",
+      "statement": "Concern is distinct from findings, annotations, blocked episodes, and graph patches; its visible record carries identity, lineage, severity, category, status, and governance data, while acknowledge, dismiss, resolve, and lineage edits remain separate authority-bearing audited actions.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["concern", "concern-actions", "governance"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1484,
+          "line_end": 1486,
+          "exact_quote": "Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request. The visible concern contract carries `concern_id`, `project_id`, run refs, scope refs, evidence refs, source refs, lineage refs, severity, category, status, and governance metadata.\n\nConcern actions carry actor authority, confirmation requirements, rationale requirements, reversibility, and audit fields. `acknowledged`, `dismissed`, `resolved`, and structural lineage edits remain distinct actions rather than aliases of a single close operation.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-E028",
+      "item_type": "behavior",
+      "title": "Escalation, degraded trust, help, and notifications share semantics",
+      "statement": "Orchestrator, Dashboard, thread badges, notifications, chat, inspectors, and commands share escalation semantics; degraded-trust is a projection condition, persistent blockers resurface, help preserves canonical terminology, and quiet windows never suppress canonical blocked episodes.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["escalation", "degraded-trust", "notifications", "help"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1479,
+          "line_end": 1494,
+          "exact_quote": "Concern and trust-state escalation share one conversational `/tooling` surface contract so chat, inspectors, and commands present the same status, route, and escalation semantics.\n\nCross-surface escalation uses one cadence model for banners, `/cards/toasts/badges`, and notification copy so severity, quieting, recurrence, and owner-route timing do not diverge by surface.\n\n\nConcern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request. The visible concern contract carries `concern_id`, `project_id`, run refs, scope refs, evidence refs, source refs, lineage refs, severity, category, status, and governance metadata.\n\nConcern actions carry actor authority, confirmation requirements, rationale requirements, reversibility, and audit fields. `acknowledged`, `dismissed`, `resolved`, and structural lineage edits remain distinct actions rather than aliases of a single close operation.\n\nThese surfaces share one escalation ladder across Orchestrator, Dashboard, thread badges, and notifications. `attention_required` remains distinct from `blocked`, and persistent blockers resurface on meaningful change or persistence even when advisory warnings are quieted.\n\n`degraded-trust` is a projection-trust condition, not a separate local warning family. It routes through the shared concern and escalation ladder so provider/runtime/UI surfaces show the same trust degradation, concern escalation, blocked owner, and recovery route instead of inventing per-panel aliases.\n\nThis section consumes Glossary coverage for rewrite-critical objects, states, and trust terms, including Concern, blocked episode, focused run, projection trust, escalation ladder, blocked owner, and `resolution_kind`. Help is layered as inline help, context help, and canonical help-entry pages while keeping canonical term names stable.\n\nNotifications route by severity, execution impact, blocked owner, persistence, and projection trust. Quiet windows are allowed for advisory warnings only; canonical blocked episodes are never suppressed by quiet windows.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G001",
+      "item_type": "gap",
+      "title": "Shared route envelope is not fully specified in this core",
+      "statement": "The core mandates one route envelope and minimum openable fields, but does not enumerate a complete versioned payload schema, required fields per destination class, serialization failure behavior, or forward/backward compatibility rules.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "contract_under_specification",
+      "impact": "Independent consumers can emit mutually incompatible payloads while each claims compliance with the shared-route requirement.",
+      "builder_discretion": "Builders must choose envelope fields, versioning, validation, and invalid-route recovery unless an owner contract outside this blind window supplies them.",
+      "feature_keys": ["shared-routing", "route-envelope"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1273,
+          "line_end": 1273,
+          "exact_quote": "All search results, palette actions, widgets, recovery links, and cross-surface pivots emit one shared route/deep-link payload. `resume_url` is the `/serialization` transport form of that payload, not a hidden canonical route contract or second routing model.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1303,
+          "line_end": 1303,
+          "exact_quote": "Route envelopes, not ad hoc UI glue, hold the minimum openable routing fields for cross-surface pivots before the destination opens file, subject, inspector, or runtime views.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G002",
+      "item_type": "gap",
+      "title": "Explain-this-state auto-open lifecycle is undefined",
+      "statement": "The user-enabled first-block auto-open capability has no specified setting scope/default, definition of first block, repeat suppression, dismissal persistence, or interaction with multiple simultaneous blockers.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "state_transition_under_specification",
+      "impact": "Surfaces can interrupt inconsistently or repeatedly and still satisfy the literal sentence.",
+      "builder_discretion": "Builders choose trigger identity, frequency, persistence, and conflict handling.",
+      "feature_keys": ["explain-this-state", "auto-open"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1222,
+          "line_end": 1222,
+          "exact_quote": "`Explain this state` is a GUI-level affordance on status pills, disabled buttons, blocked banners, and receipt rows across SCM, GitHub Actions, Docker/Kubernetes, and Orchestrator. It can auto-open on the first block when the user enables that behavior, and it offers ELI5 plus expert detail without inventing panel-local explanations. The explanation derives from canonical reason codes, validation fields, `allowed_action_ids[]`, requested/effective state, `/blocked/diverged/degraded` chains, and the `/event/storage` or `/events/storage` receipt projection; if a field is missing, the GUI says what data is unavailable instead of filling the gap with generic copy. `/tradeoffs`: one-click reasoning is valuable only when it stays tied to the same evidence that disables or permits the action.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G003",
+      "item_type": "gap",
+      "title": "Condition aging lacks measurable thresholds",
+      "statement": "The policy does not define stable refresh window, meaningful change, persistence duration, resurfacing cadence, or the clock/source used to evaluate those transitions.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "acceptance_oracle_missing",
+      "impact": "Advisory quieting and attention resurfacing can diverge across Orchestrator, Dashboard, badges, and notifications.",
+      "builder_discretion": "Builders select timing and change-detection thresholds that materially affect alert visibility.",
+      "feature_keys": ["condition-aging", "alert-resurfacing"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1263,
+          "line_end": 1263,
+          "exact_quote": "- Condition-aging policy: advisory warnings may quiet after one stable refresh window; `attention_required` resurfaces on meaningful change or persistence; `blocked` and `escalated` never auto-quiet",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G004",
+      "item_type": "gap",
+      "title": "Progress drills omit operational states and gating",
+      "statement": "The thirteen drill destinations are named, but loading, empty, stale, detached, permission-denied, missing-selection, deleted-target, refresh, retry, and multi-selection behavior is not bound here.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "failure_recovery_under_specification",
+      "impact": "Every promoted widget can implement a different drill failure and recovery contract.",
+      "builder_discretion": "Builders choose drill enablement, target-selection fallback, refresh, and recovery behavior.",
+      "feature_keys": ["progress-catalog", "default-drills"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1241,
+          "line_end": 1246,
+          "exact_quote": "Orchestrator consumes the named Progress catalog from FinalGUISpec Appendix C. The promoted 13-widget Progress catalog and default drill targets are:\n1. `progress.run-overview` → Execution unit tree scoped to `focused_run_id`\n2. `progress.current-task` → Node inspector for the active execution unit\n3. `progress.lane-health` → Lane row filtered to the selected lane/worktree\n4. `progress.node-throughput` → Dense node list filtered to slow or blocked nodes\n5. `progress.blocked-concerns` → Concern lane filtered to `blocked` or `attention_required`",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G005",
+      "item_type": "gap",
+      "title": "Index administration has no parameter or rebuild contract",
+      "statement": "Large-file threshold units/ranges/default, exclusion validation, symlink-cycle handling, cache eviction scope, rebuild progress/cancellation/atomicity, failure recovery, and disk-usage freshness are not specified.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "operations_under_specification",
+      "impact": "Index administration can be destructive or appear successful without a consistent outcome oracle.",
+      "builder_discretion": "Builders choose limits, validation, cancellation, rollback, and progress semantics.",
+      "feature_keys": ["index-settings", "rebuild-index", "cache-eviction"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1327,
+          "line_end": 1327,
+          "exact_quote": "The Indexing settings subsection exposes the project search index as an admin surface: enable/disable index, large file threshold, generated-file and custom exclusion patterns, follow-symlinks toggle default OFF, shallow/partial (`/partial`) remote cache toggles, local and remote disk usage, manual cache eviction with confirmation, and `Rebuild Index`. Local projects hide remote-only cache controls while keeping toggle, threshold, exclusion, symlink, disk-usage, and rebuild controls visible.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G006",
+      "item_type": "gap",
+      "title": "General settings-scope precedence is not enumerated",
+      "statement": "The GUI must show effective package, seam, lane, run, account, actor, project, or global scope before apply or inherit, but this core does not define their precedence, conflict resolution, inheritance reset behavior, or unsupported-scope response.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authority_precedence_under_specification",
+      "impact": "The same stored inputs can display or apply different effective policy across surfaces.",
+      "builder_discretion": "Builders choose precedence and inheritance rules outside the account resolver's narrower three-axis matrix.",
+      "feature_keys": ["settings-scope", "policy-precedence"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1361,
+          "line_end": 1363,
+          "exact_quote": "Settings is the tooltip-heavy `/help` surface for explaining what a setting does and what wins when multiple settings apply; it links to owner docs rather than duplicating runtime policy.\n\nSettings scopes are not limited to global and `/project` toggles; policy-bearing controls may be package, `/seam/lane/run/account-aware`, or account/actor scoped when the owner contract exposes that scope, and the UI must show the effective scope before applying or inheriting a setting.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G007",
+      "item_type": "gap",
+      "title": "Diagnostic and explanation disclosure lacks a privacy rule",
+      "statement": "The GUI can expose exact blocking evidence, account/profile identity, auth-state metadata, credential filenames, local provider paths, and cache paths, but this core does not specify redaction, authorization, screen-sharing safety, telemetry exclusion, or copy/export handling.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "security_privacy_under_specification",
+      "impact": "Sensitive local identity, filesystem, or authentication context may be disclosed to unauthorized viewers or persisted in exported UI artifacts.",
+      "builder_discretion": "Builders decide which diagnostic values are visible and how they are redacted or access-controlled.",
+      "feature_keys": ["provider-diagnostics", "explain-this-state", "privacy"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1391,
+          "line_end": 1393,
+          "exact_quote": "Agent Config `/data` records include a durable `provider_entry` row with `provider_entry_id`, `runtime_platform_id`, `model_provider_id`, provider family, account/profile identity, and `auth_surface` auth-state metadata. Richer provider fields extend the visible `/provider` row without renaming the existing `auth_surface` or account/provider auth-state terms.\n\nProvider/profile diagnostics expose local setup state without making Settings the owner: Linux per-provider storage resolves under `$XDG_DATA_HOME/puppet-master/providers/<provider_entry_id>/` or `~/.local/share/puppet-master/providers/<provider_entry_id>/`, bootstrap checks can name `gemini-credentials.json` and `google_accounts.json`, and Cursor trust/cache rows can name `~/.cache/cursor-compile-cache` as profile `/account-local` evidence. Account-local and provider-profile-local rows may drift independently from shared workspace targets, so the GUI shows independent drift state rather than duplicating shared targets per account.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G008",
+      "item_type": "unknown",
+      "title": "Provider setup sentence contains unresolved wording and readiness criteria",
+      "statement": "The phrase `provider-specific` remains or `/quota` probes is grammatically ambiguous, and material trust change plus the conditions for returning from Validating to Ready have no measurable oracle in this core.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "ambiguity_and_oracle_missing",
+      "impact": "Quota probe placement and readiness behavior can be interpreted differently by builders and tests.",
+      "builder_discretion": "Builders must infer the intended noun after provider-specific and define materiality and successful revalidation.",
+      "feature_keys": ["provider-setup", "revalidation", "quota-probes"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1395,
+          "line_end": 1395,
+          "exact_quote": "Agent-Config setup copy separates setup success from operational evidence. Cursor/headless `/workspace` trust rows may expose `--trust` and `/bootstrap` prompt state, and any material trust change sends the account/profile back through `Validating...` or a visible `Revalidate` action before it returns to `Ready`. `provider-home` paths, scheduler mechanics, and overlay configuration internals stay hidden unless a concrete `/debug` or audit use case requires persisted evidence. `provider-specific` remains or `/quota` probes belong in Usage and expanded account/runtime inspectors, not in setup success copy.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G009",
+      "item_type": "unknown",
+      "title": "Docker needs_review versus failure semantics are explicitly unresolved",
+      "statement": "The source declares a disagreement between needs_review and failure payload semantics and provides only temporary mismatch presentation, leaving automation state, actions, transition, and recovery behavior unresolved.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "known_owner_contract_conflict",
+      "impact": "Automation-first container flows cannot reliably determine whether to retry, review, block, or fail from the GUI-facing payload.",
+      "builder_discretion": "FinalGUISpec builders may only mirror mismatch copy and routing until the container owner resolves semantics.",
+      "feature_keys": ["docker-manager", "needs-review", "failure"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1407,
+          "line_end": 1407,
+          "exact_quote": "`Plans/Containers_Registry_and_Unraid.md` / `/Containers_Registry_and_Unraid.md` disagreement between `needs_review` and `/failure` payload semantics must be shown as an automation-first operator-flow mismatch until the container owner resolves it; FinalGUISpec mirrors only disabled-state and routing copy.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G010",
+      "item_type": "gap",
+      "title": "Resolver emit contract lacks value domains and policy-choice determinism",
+      "statement": "The matrix binds required/preferred/none outcomes at a high level, but it does not enumerate resolution_status values, snapshot field schemas, account availability criteria, tie-breaking when policy chooses execution, or behavior when projection trust is stale or missing.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "inputs_outputs_under_specification",
+      "impact": "Resolver implementations can produce different effective accounts or statuses for the same inputs and cannot share a strict acceptance oracle.",
+      "builder_discretion": "Builders choose status enums, snapshot shapes, eligibility, tie-break order, and trust-failure policy.",
+      "feature_keys": ["settings-resolver", "settings-resolution"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1421,
+          "line_end": 1421,
+          "exact_quote": "Resolver display grammar is deterministic: show worker-policy display first, then source snapshot, then request snapshot, then execution outcome. Resolver inputs are the three axes above plus current projection trust. The deterministic resolver matrix is: `required` must bind or block; `preferred` binds when available and otherwise falls back with an explicit `switch_reason`; `none` keeps the request visible but lets policy choose execution. The emit shape is `settings_resolution { source_snapshot, request_snapshot, execution_snapshot, switch_reason, resolution_status }`.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G011",
+      "item_type": "gap",
+      "title": "Project status precedence is required but not enumerated",
+      "statement": "The core requires explicit shared precedence and rollup rules for activity, blocked items, unsaved shell state, title bars, cards, palette summaries, and attention rows, but supplies only one partial rule: canonical blocked episodes outrank weaker derived warnings.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "state_precedence_under_specification",
+      "impact": "Consumers can display conflicting primary state and badge priority for the same project.",
+      "builder_discretion": "Builders choose the remaining cross-axis precedence and tie-break rules.",
+      "feature_keys": ["project-status", "rollup-precedence"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1459,
+          "line_end": 1463,
+          "exact_quote": "Project cards, `/title-bar` badges, and `/attention` surfaces share one status vocabulary with explicit precedence and rollup rules so background activity, blocked items, and unsaved shell state do not compete as unrelated badges.\n\nProject status appears through the same precedence rules on title-bar badges, project cards, command-palette summaries, and attention-center rows.\n\nProject surfaces preserve the distinction between registry identity, shell restore state, operational summary, and actionable attention objects.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G012",
+      "item_type": "gap",
+      "title": "Project attention narrative and enumerated row shape disagree",
+      "statement": "The narrative says every project_attention_item carries escalation level and summary text, but the later exhaustive-looking field list includes neither field and provides severity instead, leaving the serialized contract ambiguous.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "internal_contract_inconsistency",
+      "impact": "Producers may omit fields that consumers require for escalation and visible summary rendering.",
+      "builder_discretion": "Builders must decide whether escalation level is derived from severity and whether summary text is required, optional, or stored elsewhere.",
+      "feature_keys": ["project-attention-item", "escalation-level", "summary-text"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1453,
+          "line_end": 1453,
+          "exact_quote": "`project_attention_item` is the reusable attention-row object. Each row carries a primary route payload, projection-trust disclosure, blocked-owner kind, escalation level, and summary text. The same row contract is consumable in Orchestrator, Dashboard, and notification surfaces without re-minting attention identities.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1465,
+          "line_end": 1465,
+          "exact_quote": "`project_attention_item` rows carry `attention_item_id`, `project_id`, `severity` (`advisory | attention_required | blocked`), `owner_kind`, `reason_code`, `source_kind`, `source_object_ref`, `primary_route_payload`, optional `secondary_route_payload`, `projection_trust_state`, `created_at_utc`, `updated_at_utc`, `dismissibility_kind` (`none | quiet_only | dismissible`), and `active`; `quiet_only` never hides a canonical blocked condition.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G013",
+      "item_type": "gap",
+      "title": "Projection-trust states and revalidation oracle are incomplete",
+      "statement": "Project and attention records require projection_trust_state and describe record-backed, current, degraded, stale, and non-canonical cases, but the core does not define a closed state enum, derivation precedence, revalidation trigger, successful revalidation oracle, or transition timestamps.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "state_machine_under_specification",
+      "impact": "Trust disclosure and imperative-copy suppression can diverge across the same shared record consumers.",
+      "builder_discretion": "Builders choose trust vocabulary, derivation, transitions, and when confidence can be restored.",
+      "feature_keys": ["projection-trust", "project-summary", "attention-item"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1447,
+          "line_end": 1447,
+          "exact_quote": "`project_summary` is the reusable summary object for Orchestrator-facing project surfaces. It contains `activity_state`, `attention_state`, `health_state`, `owner`, and projection-trust disclosure so the operator can see whether a summary is record-backed, current, or degraded. Canonical blocked episodes take precedence over weaker derived warnings when summary rollups disagree.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1473,
+          "line_end": 1473,
+          "exact_quote": "Projection-derived attention items that are not canonical-runtime-backed show reduced trust explicitly and avoid overconfident imperative copy until the row revalidates against canonical runtime records.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G014",
+      "item_type": "gap",
+      "title": "Concern action transition and authority matrix is absent",
+      "statement": "Concern actions are declared distinct and carry authority, confirmation, rationale, reversibility, and audit fields, but allowed starting statuses, actor-to-action permissions, required rationale conditions, confirmation classes, reversal targets, concurrency behavior, and audit field schema are not defined here.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authority_and_state_transition_under_specification",
+      "impact": "Acknowledgement, dismissal, resolution, and structural edits can be authorized or transitioned inconsistently and produce non-comparable audit history.",
+      "builder_discretion": "Builders choose the action-state matrix and enforcement details unless a referenced owner contract supplies them.",
+      "feature_keys": ["concern-actions", "actor-authority", "audit-fields"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1486,
+          "line_end": 1486,
+          "exact_quote": "Concern actions carry actor authority, confirmation requirements, rationale requirements, reversibility, and audit fields. `acknowledged`, `dismissed`, `resolved`, and structural lineage edits remain distinct actions rather than aliases of a single close operation.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G015",
+      "item_type": "gap",
+      "title": "Escalation cadence and notification routing are not deterministic",
+      "statement": "The core requires one cadence model and routes notifications using five factors, but gives no cadence values, recurrence counters, escalation thresholds, channel priority, deduplication, batching, delivery-failure recovery, or deterministic factor-to-route mapping.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "operations_and_acceptance_under_specification",
+      "impact": "Cross-surface alert timing and notification delivery can diverge while using the same labels.",
+      "builder_discretion": "Builders choose cadence, thresholds, routing matrix, deduplication, and delivery recovery.",
+      "feature_keys": ["escalation-cadence", "notification-routing"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1481,
+          "line_end": 1481,
+          "exact_quote": "Cross-surface escalation uses one cadence model for banners, `/cards/toasts/badges`, and notification copy so severity, quieting, recurrence, and owner-route timing do not diverge by surface.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1494,
+          "line_end": 1494,
+          "exact_quote": "Notifications route by severity, execution impact, blocked owner, persistence, and projection trust. Quiet windows are allowed for advisory warnings only; canonical blocked episodes are never suppressed by quiet windows.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G016",
+      "item_type": "gap",
+      "title": "Dense and historical surfaces lack scale contracts",
+      "statement": "Dense node lists, historical pressure/switch lists, projection pages, attention lists, and cross-project summary cards have no cardinality limits, pagination or virtualization rules, update coalescing, refresh budgets, latency targets, or degraded-performance behavior in this core.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "scale_performance_under_specification",
+      "impact": "Large projects can produce unbounded rendering, inconsistent freshness, or inaccessible interaction latency.",
+      "builder_discretion": "Builders choose pagination, virtualization, refresh cadence, and performance thresholds.",
+      "feature_keys": ["dense-lists", "historical-lists", "projection-pages"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1245,
+          "line_end": 1252,
+          "exact_quote": "4. `progress.node-throughput` → Dense node list filtered to slow or blocked nodes\n5. `progress.blocked-concerns` → Concern lane filtered to `blocked` or `attention_required`\n6. `progress.approval-queue` → Concern inspector showing pending approvals\n7. `progress.recovery-status` → Recovery timeline for the selected concern or blocked episode\n8. `progress.artifact-receipts` → Artifact browser filtered to receipt-linked runtime artifacts\n9. `progress.worktree-state` → Source Control worktree row with lane/package/run refs\n10. `progress.account-pressure` → Historical `account_pressure_episode` list\n11. `progress.account-switches` → Historical `account_switch_event` list",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1371,
+          "line_end": 1371,
+          "exact_quote": "`storage-plan` / `storage-plan.md` supports disposable projections, slice fetches, redb-backed projection pages, and seglog-derived views; FinalGUISpec consumes those storage-plan capabilities instead of restating projection storage.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G017",
+      "item_type": "gap",
+      "title": "Dashboard promotion and layout migration lack acceptance rules",
+      "statement": "The core does not define source-backed, the evidence required for owner PlanUnit promotion, conflict handling between live and migration layout keys, one-time versus repeated migration, or the fallback when either layout is corrupt.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "compatibility_migration_under_specification",
+      "impact": "Widget availability and user layout restoration can vary across implementations and upgrades.",
+      "builder_discretion": "Builders choose promotion evidence and migration precedence, timing, validation, and recovery.",
+      "feature_keys": ["dashboard", "widget-promotion", "layout-migration"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1267,
+          "line_end": 1269,
+          "exact_quote": "Dashboard is the first-pass operational summary surface. It uses a rearrangeable card grid with grid-based resizing and an Add Widget command, but only source-backed Dashboard widgets are live canon for MVP. The default Dashboard widget set is exactly `widget-orchestrator-progress`, `widget-active-lanes`, `widget-recent-results`, and `widget-custom-metrics`; broader `widget.*` catalog entries are compatibility, candidate, or widget-library material unless promoted by a specific owner PlanUnit.\n\nDashboard layout state uses `widget_layout:v1:dashboard` as the live layout family. `dashboard_layout:v1` remains a read-only migration and backup key. Dashboard may deep-link into Orchestrator, Usage, History, Ledger, Evidence, Source Control, GitHub Actions, Docker Manager, and Runtime Artifacts, but it does not re-own those destination records or commands.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G018",
+      "item_type": "gap",
+      "title": "Owner-gate authorization failures have no GUI contract",
+      "statement": "Navigation commands cannot bypass owner checks and recovery actions expose allowed action IDs, but denial reason shape, stale authorization handling, reauthorization, confirmation escalation, and the UI result when the owner gate rejects a route or action are not specified here.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authority_failure_under_specification",
+      "impact": "Consumers can leak action availability, fail silently, or offer inconsistent recovery after authorization changes.",
+      "builder_discretion": "Builders choose denial presentation and authorization-refresh behavior.",
+      "feature_keys": ["owner-gate", "allowed-actions", "authorization"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1279,
+          "line_end": 1279,
+          "exact_quote": "`cmd.nav` and `cmd.nav.*` wrappers route through the same route payload and `/wiring/gate` stack, so catalog commands cannot bypass owner checks or force every consumer surface to restate route semantics.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1228,
+          "line_end": 1228,
+          "exact_quote": "Blocked-state integration uses one shared contract rather than surface-specific recovery wording. Orchestrator remains the hub for blocked episodes, while destination panels render the same reason code, owner route, recovery CTA, and allowed actions in local context. If a destination panel cannot host the requested recovery action, it links back to the owner route with the original receipt/filter context preserved; it must not create a competing remediation path.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G019",
+      "item_type": "gap",
+      "title": "Concern record value domains and references are not closed",
+      "statement": "The visible concern contract names multiple ref families, severity, category, status, and governance metadata without defining required versus optional fields, cardinalities, normalized reference shapes, enums, uniqueness, timestamps, or evolution/version rules.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "record_schema_under_specification",
+      "impact": "Shared concern consumers cannot validate or route records uniformly and may conflate absent, empty, and unknown lineage or governance data.",
+      "builder_discretion": "Builders choose the serialized record schema and value domains.",
+      "feature_keys": ["concern", "concern-record"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1484,
+          "line_end": 1484,
+          "exact_quote": "Concern is a first-class durable record distinct from review finding, annotation, blocked episode, and graph patch request. The visible concern contract carries `concern_id`, `project_id`, run refs, scope refs, evidence refs, source refs, lineage refs, severity, category, status, and governance metadata.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-G020",
+      "item_type": "gap",
+      "title": "Several consequential qualitative terms lack oracles",
+      "statement": "Compact target banners, meaningful mapping changes, concrete debug/audit cases, performance-safe search, and precise scope restoration affect visible behavior but have no testable definition in this core.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "builder_discretion_and_acceptance_oracle_missing",
+      "impact": "Visual density, reconfirmation, diagnostic exposure, performance fallback, and route restoration can vary materially without a failing oracle.",
+      "builder_discretion": "Builders define thresholds and observable acceptance behavior for each qualitative term.",
+      "feature_keys": ["builder-discretion", "acceptance-oracles"],
+      "evidence": [
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1224,
+          "line_end": 1224,
+          "exact_quote": "Destructive, `/targeted`, and remote-mutating surfaces show a compact target/context banner before rendering mutation CTAs. The banner includes the effective target identity, fallback source, and whether the context came from selected worktree, receipt context, workspace branch, Docker context, Kubernetes namespace/environment, or `/runtime/context`. Empty-state taxonomy is canonical: `Not relevant`, `Not configured`, `Unavailable`, `No data yet`, and `No results for current filter` are distinct states, not interchangeable copy. Hide-when-unused surfaces remain rediscoverable through Settings, commands, and receipt or CTA deep links.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        },
+        {
+          "path": "Plans/FinalGUISpec.md",
+          "line_start": 1469,
+          "line_end": 1469,
+          "exact_quote": "Project-attention routing is shared by attention-center rows, project cards, command palette actions, and search results, and every entry restores precise scope and target instead of inventing a surface-local \"open the right place\" rule.",
+          "source_sha256": "2ffdc9eb454f3c3bdda9d76c2c1e073e4bbb4e1cc401fd9eb91106f07301aeb5"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "gap_found",
+      "summary": "Cross-surface behavior is strongly normalized, but auto-open, condition aging, drill failures, and escalation timing remain under-specified.",
+      "evidence_item_ids": ["A005-E002", "A005-E003", "A005-E005", "A005-E028", "A005-G002", "A005-G003", "A005-G004", "A005-G015"]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "addressed",
+      "summary": "The core identifies promoted Progress drills, Dashboard widgets, index administration, Agent Config, Docker Manager, Terminal Settings, Skills, project summaries, concerns, and notifications.",
+      "evidence_item_ids": ["A005-E007", "A005-E009", "A005-E013", "A005-E017", "A005-E019", "A005-E020", "A005-E023", "A005-E024", "A005-E025", "A005-E027"]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "gap_found",
+      "summary": "Numerous inputs and outputs are named, but the shared route envelope, settings_resolution, concern record, and operational fallbacks lack complete schemas and value domains.",
+      "evidence_item_ids": ["A005-E002", "A005-E006", "A005-E011", "A005-E016", "A005-E021", "A005-G001", "A005-G010", "A005-G019"]
+    },
+    {
+      "dimension": "contracts",
+      "status": "gap_found",
+      "summary": "Ownership and shared vocabularies are explicit, while route, attention-item, resolver, concern, and cadence contracts remain incomplete or internally inconsistent.",
+      "evidence_item_ids": ["A005-E001", "A005-E008", "A005-E010", "A005-E014", "A005-E015", "A005-E021", "A005-E026", "A005-G001", "A005-G010", "A005-G012", "A005-G019"]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "gap_found",
+      "summary": "Policy blocking, revalidation, account binding, and attention lifecycle are described, but aging thresholds, trust transitions, project precedence, and concern action legality are not closed.",
+      "evidence_item_ids": ["A005-E006", "A005-E008", "A005-E018", "A005-E021", "A005-E025", "A005-E026", "A005-G003", "A005-G011", "A005-G013", "A005-G014"]
+    },
+    {
+      "dimension": "authority",
+      "status": "gap_found",
+      "summary": "Owner boundaries are strong, but owner-gate rejection behavior, general scope precedence, and concern actor authority enforcement remain unspecified.",
+      "evidence_item_ids": ["A005-E005", "A005-E012", "A005-E015", "A005-E020", "A005-E022", "A005-G006", "A005-G014", "A005-G018"]
+    },
+    {
+      "dimension": "ownership",
+      "status": "addressed",
+      "summary": "Orchestrator, destination panels, Evidence, Artifacts, FileManager, storage-plan, usage-feature, Agent Config, Settings, Docker Manager, Terminal, and Skills have explicit ownership boundaries.",
+      "evidence_item_ids": ["A005-E005", "A005-E009", "A005-E012", "A005-E014", "A005-E015", "A005-E017", "A005-E020", "A005-E022", "A005-E023", "A005-E024"]
+    },
+    {
+      "dimension": "consumers",
+      "status": "addressed",
+      "summary": "The core names consumer surfaces for route payloads, identity packets, project summaries, attention items, concerns, escalation, help, and notifications.",
+      "evidence_item_ids": ["A005-E010", "A005-E011", "A005-E015", "A005-E016", "A005-E021", "A005-E024", "A005-E025", "A005-E026", "A005-E028"]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "addressed",
+      "summary": "The GUI must expose evidence-bound explanations, target context, distinct empty states, accessibility equivalents, explicit ownership, requested/effective identity, and trust disclosure.",
+      "evidence_item_ids": ["A005-E002", "A005-E003", "A005-E004", "A005-E006", "A005-E016", "A005-E017", "A005-E018", "A005-E021", "A005-E025", "A005-E026"]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "Blocked-owner routing, partial receipts, and revalidation are explicit, but drills, indexing, authorization rejection, Docker payload semantics, and notification delivery recovery are incomplete.",
+      "evidence_item_ids": ["A005-E005", "A005-E006", "A005-E018", "A005-G004", "A005-G005", "A005-G009", "A005-G015", "A005-G018"]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "gap_found",
+      "summary": "Credential ownership is explicitly excluded from operational identity, but diagnostic paths, auth-state identity, and exact explanatory evidence have no redaction or access-control contract in this core.",
+      "evidence_item_ids": ["A005-E016", "A005-E018", "A005-G007", "A005-G018"]
+    },
+    {
+      "dimension": "propagation",
+      "status": "addressed",
+      "summary": "Shared route, blocked action family, identity packet, project summary, attention item, escalation, and status rules are explicitly propagated across their named records and surfaces.",
+      "evidence_item_ids": ["A005-E005", "A005-E010", "A005-E021", "A005-E025", "A005-E026", "A005-E028"]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Runtime-facing administrative and alert operations are named, but index rebuild/eviction, refresh windows, cadence, and revalidation thresholds lack operational detail.",
+      "evidence_item_ids": ["A005-E006", "A005-E008", "A005-E013", "A005-E018", "A005-G003", "A005-G005", "A005-G008", "A005-G015"]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "gap_found",
+      "summary": "The core invokes dense and historical lists, projection pages, and performance-safe search but supplies no shared scale limits, virtualization, refresh, or latency contract.",
+      "evidence_item_ids": ["A005-E007", "A005-E015", "A005-E023", "A005-G016"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Tier, Docker/Unraid, dashboard-layout, and legacy-record migration boundaries are explicit, but dashboard layout migration conflict and corruption behavior is not.",
+      "evidence_item_ids": ["A005-E001", "A005-E009", "A005-E012", "A005-E014", "A005-E020", "A005-G017"]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "Closed taxonomies and several exact field lists are testable, but condition timing, provider readiness, route completeness, resolver output, project precedence, trust revalidation, cadence, and qualitative GUI terms lack oracles.",
+      "evidence_item_ids": ["A005-E003", "A005-E008", "A005-E011", "A005-E014", "A005-E021", "A005-E025", "A005-E026", "A005-G001", "A005-G003", "A005-G008", "A005-G010", "A005-G011", "A005-G013", "A005-G015", "A005-G020"]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Consequential discretion remains in route schemas, timing, settings precedence, security disclosure, resolver selection, trust derivation, project rollups, concern actions, cadence, scale, and qualitative GUI thresholds.",
+      "evidence_item_ids": ["A005-G001", "A005-G002", "A005-G003", "A005-G005", "A005-G006", "A005-G007", "A005-G010", "A005-G011", "A005-G013", "A005-G014", "A005-G015", "A005-G016", "A005-G017", "A005-G020"]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "Known ambiguity remains in provider setup wording, Docker needs_review versus failure, project attention field shape, and multiple owner-referenced schemas unavailable within this blind window.",
+      "evidence_item_ids": ["A005-G008", "A005-G009", "A005-G012", "A005-G019"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

@@ -1,0 +1,389 @@
+<<< CONTEXT_BEFORE 9414-9425 >>>
+- terminal_tab_id
+- layout_style
+- review_only
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 9426-9785 >>>
+### SP-124 - Terminal Pane Session And Restore Identity Split
+
+```yaml
+plan_unit_id: SP-124
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Terminal pane, session, and command-block records keep pane/session attachment, shell profile, cwd_snapshot, runtime/restore state, command-block metadata, and the section/tab/pane/session identity split; durable restore reconstructs layout and bindings before runtime liveness validation.
+gui_related: true
+gui_classification_reason: This unit preserves visible terminal panes, session bindings, labels, layout style, and restore flow.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_177_runtime_terminal_storage
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: terminal_pane_session_and_restore_identity_split
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0080
+preserved_exact_tokens:
+- terminal_panes
+- terminal_pane_id
+- terminal_sessions
+- terminal_session_id
+- terminal_command_blocks
+- terminal_session_record
+- cwd_snapshot
+- worktree path
+- section/tab/pane/session
+- sections, tabs, panes, labels, layout style, and session bindings
+- runtime code verify
+- attached terminal_session_id
+negative_constraints:
+- Terminal storage MUST preserve the section/tab/pane/session identity split rather than collapsing it into flat bottom-panel metadata.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-125 - Terminal Transcript Boundary And No-Fake-Liveness Rule
+
+```yaml
+plan_unit_id: SP-125
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Terminal restore records carry an explicit transcript-vs-command-block boundary; restored panes may be historical, review-limited, or history-unavailable, and storage must not mark them live unless terminal runtime liveness is revalidated.
+gui_related: false
+gui_classification_reason: This unit preserves backend terminal transcript retention and liveness truth rules.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_177_runtime_terminal_storage
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: terminal_transcript_boundary_and_no_fake_liveness_rule
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0080
+preserved_exact_tokens:
+- transcript-vs-command-block boundary
+- Transcript chunks
+- append-oriented
+- scrollback anchors
+- command blocks
+- metadata-only
+- transcript retention
+- no-fake-liveness
+- historical
+- review-limited
+- history-unavailable
+- MUST NOT mark it live unless liveness is revalidated
+negative_constraints:
+- Storage MUST NOT mark a restored pane live unless liveness is revalidated by the terminal runtime.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-126 - Terminal Route Open Identity Refs And Dev-Session Lookups
+
+```yaml
+plan_unit_id: SP-126
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage owns durable joins for tab/pane/session and tab/pane/session/dev-session lookups; routing and open selectors persist terminal and optional dev_session_id refs and recover by those refs rather than labels, titles, or legacy cmd.dev.* hidden-gap assumptions.
+gui_related: false
+gui_classification_reason: This unit preserves backend terminal route/open identity and lookup semantics.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_177_runtime_terminal_storage
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: terminal_route_open_identity_refs_and_dev_session_lookups
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0080
+preserved_exact_tokens:
+- /tab/pane/session
+- /tab/pane/session/dev-session
+- /routing
+- /open
+- terminal_section_id
+- terminal_tab_id
+- terminal_pane_id
+- terminal_session_id
+- dev_session_id
+- labels
+- last visible titles
+- legacy cmd.dev.*-only hidden-gap assumptions
+negative_constraints:
+- Route/open recovery must use persisted refs instead of labels, last visible titles, or legacy cmd.dev.*-only hidden-gap assumptions.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
+compatibility_only_notes:
+- legacy cmd.dev.*-only hidden-gap assumptions are compatibility-only context, not canonical recovery authority.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-127 - Terminal GUI Settings Persistence And Terminology Boundary
+
+```yaml
+plan_unit_id: SP-127
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Terminal GUI persistence settings are separate from live PTY state: storage owns durable keys and migration behavior, FinalGUISpec owns Settings > Terminal GUI grouping, theming discoverability, shortcuts, and labels, and terminal terminology cross-refs stay explicit.'
+gui_related: true
+gui_classification_reason: This unit preserves visible Terminal GUI settings grouping, theming discoverability, shortcuts, labels, and storage-backed settings.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_177_runtime_terminal_storage
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: terminal_gui_settings_persistence_and_terminology_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0080
+preserved_exact_tokens:
+- Terminal GUI
+- /persistence/settings
+- live PTY state
+- project/workspace defaults
+- per-tab overrides
+- font and color references
+- transcript-retention settings
+- shell profile refs
+- Settings > Terminal GUI
+- /theming/discoverability
+- shortcuts
+- user-facing labels
+- terminal_section_id
+- terminal_tab_id
+- terminal_pane_id
+- terminal_session_id
+- dev_session_id
+- Plans/Glossary.md
+- /IDEs research
+negative_constraints:
+- Storage must not drift back into ambiguous "terminal tab" wording.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/FinalGUISpec.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-128 - Terminal Storage Key Naming And Forward-Only Migration
+
+```yaml
+plan_unit_id: SP-128
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Terminal/storage key migrations are forward-only and monotonic: new fields are additive first, destructive renames require same-section migration notes, stable semantic names are preserved, and owner docs must define terminology mappings rather than overloading shared fields.'
+gui_related: false
+gui_classification_reason: This unit preserves backend storage key naming and migration rules.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_177_runtime_terminal_storage
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: terminal_storage_key_naming_and_forward_only_migration
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0081
+preserved_exact_tokens:
+- forward-only
+- monotonic
+- additive first
+- destructive renames
+- migration note
+- stable semantic names
+- session_id
+- thread_id
+- run_id
+- message_id
+- step_id
+- tool_call_id
+- approval_id
+- provider_session_id
+- terminal_session_id
+- dev_session_id
+- owner doc
+- mapping explicitly
+- silently overloading
+negative_constraints:
+- If two subsystems need different terminology, the owner doc must define the mapping explicitly rather than silently overloading a shared field name.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md'
+- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+### SP-129 - Owner-Derived Lock Path And Read-Only Fallback
+
+```yaml
+plan_unit_id: SP-129
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: 'Storage owns lock-path derivation: active pm.lock is root-derived from logical-root or safe-local fallback-derived durable-store path, legacy hardcoded lock strings are migration evidence only, and failed lock acquisition opens read-only viewer mode without creating a second project-local lock.'
+gui_related: false
+gui_classification_reason: This unit preserves backend durable-store lock-path derivation and read-only fallback rules.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_batch_177_runtime_terminal_storage
+implementation_surfaces:
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: owner_derived_lock_path_and_read_only_fallback
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0082
+preserved_exact_tokens:
+- lock-path
+- pm.lock
+- root-derived
+- logical-root
+- safe-local
+- fallback-derived
+- durable-store path
+- /.puppet-master/pm.lock
+- <project>/.puppet-master/pm.lock
+- migration evidence only
+- /read-only
+- viewer mode
+- second project-local lock
+negative_constraints:
+- PM MUST NOT create a second project-local lock beside the owner-derived path.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Commands_System.md'
+compatibility_only_notes:
+- Legacy hardcoded /.puppet-master/pm.lock and <project>/.puppet-master/pm.lock strings are migration evidence only.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 9786-9797 >>>
+### SP-130 - Run Completed Usage Snapshot Boundary
+
+```yaml
+plan_unit_id: SP-130
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: Storage owns run.completed.usage as an optional bounded run-completion usage snapshot derived from canonical usage.event records, not as a replacement for the usage event ledger.
+gui_related: false
+gui_classification_reason: This unit preserves backend usage snapshot storage and ledger boundary semantics.
+split_recommended: false
+depends_on:

@@ -1,0 +1,397 @@
+<<< CONTEXT_BEFORE canonical_document_lines=26423-26434 >>>
+L00026423	  - "That is a lot of info to display in a small area."
+L00026424	  - "View details"
+L00026425	negative_constraints:
+L00026426	  - Do not overload compact model rows with dense import/runtime diagnostics.
+L00026427	  - Do not show unsupported upstream additions in normal Free Models catalog, detail, search, top-10, routing, or setup surfaces.
+L00026428	  - Do not include recommended models, coding-strength badges, quality-rank badges, or recommendation confidence labels.
+L00026429	owner_hints:
+L00026430	  - Plans/FinalGUISpec.md
+L00026431	  - Plans/Models_System.md
+L00026432	  - Plans/Runtime_Artifacts_Panel.md
+L00026433	```
+L00026434	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=26435-26802 >>>
+L00026435	### F3-408 - Free Models Priority Refresh And Passive Update UX
+L00026436	
+L00026437	```yaml
+L00026438	plan_unit_id: F3-408
+L00026439	unit_type: requirement
+L00026440	status: accepted
+L00026441	owner_doc: Plans/FinalGUISpec.md
+L00026442	canonical_text: >-
+L00026443	  The model settings GUI exposes a manual all-provider model refresh button near model settings and passive Free Models update timestamps. Successful validated Auto Apply updates create no notification/inbox item and normal settings show only `Last checked` and `Last updated`, with recent-change details behind details or Advanced/Support. Failed or quarantined Free Models updates keep current known-good active and show `Free Models update needs attention` with `Retry check` and `View details`. Routine automatic offline/launch failures remain passive as `Could not check` unless routing availability is affected.
+L00026444	gui_related: true
+L00026445	gui_classification_reason: Owns visible model refresh button, update status, timestamps, and attention-state wording.
+L00026446	depends_on: []
+L00026447	unblocks: []
+L00026448	acceptance_criteria:
+L00026449	  - Manual refresh button is near model settings and covers all providers including direct and CLI-backed providers.
+L00026450	  - Success produces no notification/inbox item and no normal recent-change count beyond passive timestamps.
+L00026451	  - Manual refresh summaries use plain per-provider statuses such as `Updated`, `No changes`, `Needs sign-in`, `Skipped`, `Failed`, and `Offline`.
+L00026452	  - Routing-affecting Free Models failures show narrow affected-row UI such as `Some Free Models are unavailable`, not a broad app-level warning.
+L00026453	validation_surfaces:
+L00026454	  - python3 scripts/pm-plan-index.py validate
+L00026455	  - Free Models manual refresh placement fixtures
+L00026456	  - Free Models update status copy fixtures
+L00026457	risk_class: update_status_gui_noise
+L00026458	reasoning_tier: high
+L00026459	context_scope: free_models_refresh_update_gui
+L00026460	implementation_surfaces:
+L00026461	  - Plans/FinalGUISpec.md
+L00026462	  - Plans/Models_System.md
+L00026463	  - Plans/Runtime_Artifacts_Panel.md
+L00026464	node_compile_hint:
+L00026465	  mode: free_models_refresh_gui_planunit
+L00026466	  create_worknodes: false
+L00026467	  create_nodeseeds: false
+L00026468	source_lineage:
+L00026469	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00026470	source_atom_ids: [atom-0051, atom-0052, atom-0056, atom-0057, atom-0058, atom-0059, atom-0081, atom-0082, atom-0093, atom-0097, atom-0133, atom-0137, atom-0140, atom-0144, atom-0177, atom-0178, atom-0180, atom-0181, atom-0182, atom-0184, atom-0187, atom-0188, atom-0191, atom-0192, atom-0203, atom-0204, atom-0207, atom-0208, atom-0225, atom-0227, atom-0229, atom-0231, atom-0233, atom-0237, atom-0241, atom-0245, atom-0249, atom-0253, atom-0287, atom-0288, atom-0295, atom-0296]
+L00026471	preserved_exact_tokens:
+L00026472	  - "button near the model settings"
+L00026473	  - "Refresh Models"
+L00026474	  - "manual all-provider model refresh"
+L00026475	  - "Last checked"
+L00026476	  - "Last updated"
+L00026477	  - "No notification"
+L00026478	  - "Free Models update needs attention"
+L00026479	  - "Retry check"
+L00026480	  - "Could not check"
+L00026481	  - "Updated"
+L00026482	  - "No changes"
+L00026483	  - "Needs sign-in"
+L00026484	  - "Skipped"
+L00026485	  - "Failed"
+L00026486	  - "Offline"
+L00026487	  - "Some Free Models are unavailable"
+L00026488	negative_constraints:
+L00026489	  - Do not create notification or inbox items for successful validated Free Models Auto Apply updates.
+L00026490	  - Do not show successful Auto Apply recent-change counts/details in normal settings beyond passive timestamps.
+L00026491	  - Do not use a broad app-level warning for Free-Models-only routing-affecting availability problems.
+L00026492	  - Do not expose a user-facing setting for repeated automatic background check failure thresholds; the user cannot fix this.
+L00026493	owner_hints:
+L00026494	  - Plans/FinalGUISpec.md
+L00026495	  - Plans/Models_System.md
+L00026496	  - Plans/Runtime_Artifacts_Panel.md
+L00026497	```
+L00026498	
+L00026499	### F3-409 - Free Models Top-10 Setup Override And Availability UX
+L00026500	
+L00026501	```yaml
+L00026502	plan_unit_id: F3-409
+L00026503	unit_type: requirement
+L00026504	status: accepted
+L00026505	owner_doc: Plans/FinalGUISpec.md
+L00026506	canonical_text: >-
+L00026507	  Free Models setup and top-10 screens default to global configuration to keep the GUI cleaner, while making clear that section/surface/role settings override the global top-10. Onboarding/doctor sequencing should set up paid providers first, then show Free Models and let the user configure the top-10. Free Models rows use plain setup actions and friendly unavailable labels, with expanded details for underlying provider/account, current skip reason, cooldown/Retry now state, source/ref, and return context.
+L00026508	gui_related: true
+L00026509	gui_classification_reason: Owns top-10 setup, onboarding placement, override disclosure, setup labels, and visible availability states.
+L00026510	depends_on: []
+L00026511	unblocks: []
+L00026512	acceptance_criteria:
+L00026513	  - GUI states when a section/surface/role setting overrides global top-10 and shows requested/effective behavior.
+L00026514	  - Top-10 setup is global by default and does not hide that the list spans all providers/models.
+L00026515	  - Future onboarding/doctor flow sets up paid providers before Free Models top-10 configuration.
+L00026516	  - Unavailable rows use the priority `Needs sign-in`, `Rate limited`, `Provider offline`, `No longer free`, `Update issue`, `Unknown`, or `Multiple issues`.
+L00026517	validation_surfaces:
+L00026518	  - python3 scripts/pm-plan-index.py validate
+L00026519	  - Top-10 override disclosure fixtures
+L00026520	  - Free Models setup and unavailable-row copy fixtures
+L00026521	risk_class: priority_setup_gui_drift
+L00026522	reasoning_tier: high
+L00026523	context_scope: free_models_priority_setup_gui
+L00026524	implementation_surfaces:
+L00026525	  - Plans/FinalGUISpec.md
+L00026526	  - Plans/Models_System.md
+L00026527	  - Plans/Multi-Account.md
+L00026528	  - Plans/usage-feature.md
+L00026529	node_compile_hint:
+L00026530	  mode: free_models_priority_setup_gui_planunit
+L00026531	  create_worknodes: false
+L00026532	  create_nodeseeds: false
+L00026533	source_lineage:
+L00026534	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00026535	source_atom_ids: [atom-0022, atom-0035, atom-0037, atom-0038, atom-0040, atom-0084, atom-0085, atom-0086, atom-0088, atom-0089, atom-0090, atom-0094, atom-0098, atom-0099, atom-0100, atom-0102, atom-0103, atom-0104, atom-0113, atom-0117, atom-0118, atom-0122, atom-0123, atom-0124, atom-0126, atom-0127, atom-0128, atom-0130, atom-0132, atom-0134, atom-0136, atom-0154, atom-0158, atom-0164, atom-0168, atom-0171, atom-0175, atom-0236, atom-0240, atom-0244, atom-0248, atom-0251, atom-0255, atom-0257, atom-0259, atom-0261, atom-0263, atom-0265, atom-0266, atom-0267, atom-0269, atom-0270, atom-0271, atom-0281, atom-0282, atom-0285, atom-0286]
+L00026536	preserved_exact_tokens:
+L00026537	  - "Default to globally"
+L00026538	  - "top 10"
+L00026539	  - "paid providers"
+L00026540	  - "show the user the free models and they can configure their top 10 then"
+L00026541	  - "those configurable settings override the top 10 and the gui should state that"
+L00026542	  - "guided editable template"
+L00026543	  - "Set up provider"
+L00026544	  - "Sign in"
+L00026545	  - "Reconnect"
+L00026546	  - "Needs sign-in"
+L00026547	  - "Rate limited"
+L00026548	  - "Provider offline"
+L00026549	  - "No longer free"
+L00026550	  - "Update issue"
+L00026551	  - "Multiple issues"
+L00026552	negative_constraints:
+L00026553	  - Do not make Free Models section settings an opaque pool abstraction; show actual models.
+L00026554	  - Do not silently reorder or mutate saved top-10 order after provider setup refresh.
+L00026555	  - Do not expose import/runtime jargon in the normal Free Models setup path.
+L00026556	  - Do not create separate notifications for setup cancel or failed auth returns.
+L00026557	owner_hints:
+L00026558	  - Plans/FinalGUISpec.md
+L00026559	  - Plans/Models_System.md
+L00026560	  - Plans/Multi-Account.md
+L00026561	  - Plans/usage-feature.md
+L00026562	```
+L00026563	
+L00026564	## Ledger Compile Addendum - pldg-20260701-001-feature-intake
+L00026565	
+L00026566	This addendum compiles the accepted Doctor/onboarding first-run GUI packet from bootstrap ledger `pldg-20260701-001-feature-intake`. It preserves `Concepts/PMConcept.html` as non-final GUI concept lineage only and does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or a governance seal.
+L00026567	
+L00026568	### F3-411 - First-Run Provider Onboarding And Doctor Health GUI
+L00026569	
+L00026570	```yaml
+L00026571	plan_unit_id: F3-411
+L00026572	unit_type: requirement
+L00026573	status: accepted
+L00026574	owner_doc: Plans/FinalGUISpec.md
+L00026575	canonical_text: >-
+L00026576	  First-run onboarding for newbie vibecoders appears as a separate modal/wizard before the user enters the full shell,
+L00026577	  remains skippable guided setup, and keeps the normal path focused on provider setup rather than a full Settings tour,
+L00026578	  dense Home shell, or product training sequence. The accepted four-screen order is `Connect Puppet Master to an AI
+L00026579	  provider`, `Set up a paid provider`, `Optional: Free Models`, and `You are ready to plan`. The first screen uses the
+L00026580	  body copy `Puppet Master needs an AI provider account before it can plan or code with you. Start with a paid provider
+L00026581	  for the most reliable setup. You can skip this and come back later.` with actions `Set up a paid provider` and `Skip
+L00026582	  for now`. The paid-provider screen presents compact rows with one primary action and friendly row labels such as
+L00026583	  `Use this provider`, `Sign in`, `Set up provider`, `Reconnect`, `Connected`, `Needs sign-in`, and `Could not connect`.
+L00026584	  `Optional: Free Models` appears only after the paid-provider prompt and offers `Review Free Models`, `Maybe later`, and
+L00026585	  `Continue to Planning Wizard` without recommendation, quality-rank, coding-strength, online-review, local-learning, or
+L00026586	  benchmark/probe-calibration language. The final setup screen says `Need help later? Ask Assistant Chat for Teacher.
+L00026587	  Try: 'What does this mean?' or 'Show me how to use this page.' Teacher explains the current screen from chat.` and
+L00026588	  routes `Open Planning Wizard` as the first full app page. `Skip for now` routes directly to Planning Wizard in limited
+L00026589	  setup state with the copy `Provider setup is not finished. You can still open Planning Wizard, but assistant features
+L00026590	  may need a provider before they can run.` Doctor remains a compact Health summary after onboarding with labels `Ready`,
+L00026591	  `Needs setup`, `Needs attention`, and `Could not connect`; it shows the simplest next action first, keeps critical
+L00026592	  blockers visible, and puts advanced diagnostics behind details/support.
+L00026593	gui_related: true
+L00026594	gui_classification_reason: This PlanUnit defines first-run wizard screens, copy, actions, visible provider rows, Doctor/Health labels, and GUI presentation rules.
+L00026595	depends_on: [F3-409, MA-040, MA-064, MS-120, MS-121, ACD-426, UCC-102, CS-053, T-088, MI-028, F2-155]
+L00026596	unblocks: [MS-122, MA-066, ACD-431, UCC-106, CV-305, PWIZ-017, WM-041, ATS-020]
+L00026597	acceptance_criteria:
+L00026598	  - First-run setup is a separate modal/wizard before the full shell and is skippable.
+L00026599	  - The four accepted screens appear in order with the accepted titles, body copy, and actions.
+L00026600	  - Free Models and the exact token `Fee models` remain after the paid-provider prompt, not before it.
+L00026601	  - Normal onboarding hides provider/runtime jargon, raw diagnostics, source hashes, upstream refs, route/probe evidence, quota/debug internals, and Settings owner-doc structure.
+L00026602	  - Critical blockers remain visible with one plain next action; hidden internals do not produce a false-green state.
+L00026603	  - Doctor/Health remains a compact summary consumer surface and does not become a generic Doctor registry/result aggregator or setup wizard clone.
+L00026604	  - MCP/server degraded or unavailable states and FileSafe fail-closed readiness are visible as Health/Doctor concerns when relevant, not silently hidden.
+L00026605	  - PMConcept.html visual lineage is treated as concept evidence only and does not become canonical HTML/CSS/demo implementation.
+L00026606	validation_surfaces:
+L00026607	  - python3 scripts/pm-plan-index.py validate
+L00026608	  - future first-run provider wizard screen-order and copy fixtures
+L00026609	  - future Doctor/Health no-false-green status fixtures
+L00026610	  - future responsive and overflow checks for compact provider rows
+L00026611	risk_class: first_run_gui_false_ready
+L00026612	reasoning_tier: high
+L00026613	context_scope: first_run_onboarding_doctor_health_gui
+L00026614	implementation_surfaces:
+L00026615	  - Plans/FinalGUISpec.md
+L00026616	  - future native Rust + Slint first-run onboarding wizard
+L00026617	  - future Settings > Health summary
+L00026618	node_compile_hint:
+L00026619	  mode: first_run_provider_onboarding_gui_planunit
+L00026620	  create_worknodes: false
+L00026621	  create_nodeseeds: false
+L00026622	source_lineage:
+L00026623	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0006
+L00026624	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0007
+L00026625	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0008
+L00026626	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0010
+L00026627	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0015
+L00026628	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0016
+L00026629	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0024
+L00026630	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0025
+L00026631	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0027
+L00026632	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0029
+L00026633	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0031
+L00026634	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0032
+L00026635	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0033
+L00026636	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0034
+L00026637	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0035
+L00026638	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0036
+L00026639	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0037
+L00026640	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0038
+L00026641	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0039
+L00026642	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0040
+L00026643	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0041
+L00026644	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0042
+L00026645	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0043
+L00026646	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0044
+L00026647	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0045
+L00026648	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0046
+L00026649	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/design_atoms.jsonl:atom-0047
+L00026650	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0003
+L00026651	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0004
+L00026652	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0005
+L00026653	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0006
+L00026654	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0007
+L00026655	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/records/decisions.jsonl:dec-0008
+L00026656	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/doctor_onboarding_plan_review_20260701.json
+L00026657	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/pmconcept_gui_reference_20260701.json
+L00026658	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/onboarding_doctor_user_decisions_20260701.json
+L00026659	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/assistant_provider_wizard_proposal_20260701.json
+L00026660	  - Plans/ledgers/v2/pldg-20260701-001-feature-intake/source_shards/user_accepts_provider_wizard_proposal_20260701.json
+L00026661	source_atom_ids: [atom-0006, atom-0007, atom-0008, atom-0010, atom-0015, atom-0016, atom-0024, atom-0025, atom-0027, atom-0029, atom-0031, atom-0032, atom-0033, atom-0034, atom-0035, atom-0036, atom-0037, atom-0038, atom-0039, atom-0040, atom-0041, atom-0042, atom-0043, atom-0044, atom-0045, atom-0046, atom-0047]
+L00026662	decision_refs: [dec-0001, dec-0002, dec-0003, dec-0004, dec-0005, dec-0006, dec-0007, dec-0008]
+L00026663	preserved_exact_tokens:
+L00026664	  - "vibecoders who don’t know how to do any of this stuff"
+L00026665	  - "newbie friendly"
+L00026666	  - "separate modal/wizard before the user enters the full shell"
+L00026667	  - "Skippable guided setup"
+L00026668	  - "Connect Puppet Master to an AI provider"
+L00026669	  - "Puppet Master needs an AI provider account before it can plan or code with you. Start with a paid provider for the most reliable setup. You can skip this and come back later."
+L00026670	  - "Set up a paid provider"
+L00026671	  - "Skip for now"
+L00026672	  - "Use this provider"
+L00026673	  - "Sign in"
+L00026674	  - "Set up provider"
+L00026675	  - "Reconnect"
+L00026676	  - "Connected"
+L00026677	  - "Needs sign-in"
+L00026678	  - "Could not connect"
+L00026679	  - "Fee models"
+L00026680	  - "Free Models"
+L00026681	  - "Optional: Free Models"
+L00026682	  - "Review Free Models"
+L00026683	  - "Maybe later"
+L00026684	  - "Continue to Planning Wizard"
+L00026685	  - "You are ready to plan"
+L00026686	  - "Need help later? Ask Assistant Chat for Teacher. Try: 'What does this mean?' or 'Show me how to use this page.' Teacher explains the current screen from chat."
+L00026687	  - "Open Planning Wizard"
+L00026688	  - "Provider setup is not finished. You can still open Planning Wizard, but assistant features may need a provider before they can run."
+L00026689	  - "Doctor remains as a health summary"
+L00026690	  - "Ready"
+L00026691	  - "Needs setup"
+L00026692	  - "Needs attention"
+L00026693	  - "advanced diagnostics behind details/support"
+L00026694	negative_constraints:
+L00026695	  - Do not make the full shell the initial required onboarding context.
+L00026696	  - Do not turn first-run into a mini Settings app.
+L00026697	  - Do not add a full product tour before the user reaches Planning Wizard.
+L00026698	  - Do not expose model/provider internals, raw provider error payloads, raw diagnostics, source hashes, upstream refs, or route/probe evidence in the default first-run path.
+L00026699	  - Do not introduce Free Models before first prompting the user to set up paid providers.
+L00026700	  - Do not use recommendation, quality-rank, coding-strength, online-review, local-learning, or benchmark/probe-calibration language.
+L00026701	  - Do not silently insert or reorder Free Models in the saved top-10 list.
+L00026702	  - Do not route skip to the dense Home shell by default.
+L00026703	  - Do not mark Doctor/Health as Ready when provider setup was skipped or when owner readiness is degraded, unavailable, or fail-closed.
+L00026704	  - Do not define a new generic Doctor registry/result aggregator in this redesign.
+L00026705	  - Do not frontload a full Teacher walkthrough in the setup wizard.
+L00026706	  - Do not require slash-command knowledge to access Teacher help from Assistant Chat.
+L00026707	  - Do not treat PMConcept.html as final GUI canon or copy its HTML/CSS/demo code.
+L00026708	owner_hints:
+L00026709	  - Plans/FinalGUISpec.md
+L00026710	  - Plans/Models_System.md
+L00026711	  - Plans/Multi-Account.md
+L00026712	  - Plans/assistant-chat-design.md
+L00026713	  - Plans/UI_Command_Catalog.md
+L00026714	  - Plans/Commands_System.md
+L00026715	  - Plans/Wiring_Matrix.md
+L00026716	  - Plans/Contracts_V0.md
+L00026717	  - Plans/Planning_Wizard.md
+L00026718	  - Plans/Automated_Testing_System.md
+L00026719	```
+L00026720	
+L00026721	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00026722	
+L00026723	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00026724	
+L00026725	### F3-412 - P1-TERMINAL-GLOBAL-HOTKEY-ISOLATION
+L00026726	
+L00026727	```yaml
+L00026728	plan_unit_id: F3-412
+L00026729	unit_type: requirement
+L00026730	status: accepted
+L00026731	owner_doc: Plans/FinalGUISpec.md
+L00026732	canonical_text: >-
+L00026733	  P1-TERMINAL-GLOBAL-HOTKEY-ISOLATION (P1) is compiled as canonical Puppet Master intent for Global keyboard hook isolation: Add GlobalShortcutSafety PlanUnit for all app-level hotkeys, not only terminal. Include watchdog, timeout auto-disable, kill switch, and diagnostic banner. The preserved PM gap/delta is: No explicit global-event-tap isolation requirements: hooks must not run on UI/compositor main thread, must auto-disable on stall, and must be observable. The observed external-repo signal remains source-lineage evidence: Ghostty discussion reports system-wide keyboard freezes tied to global quick-terminal keybinding/event tap; Warp changelog includes global hotkey memory leak fixes.
+L00026734	gui_related: true
+L00026735	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00026736	depends_on:
+L00026737	- PDS-003
+L00026738	- PNC-001
+L00026739	unblocks: []
+L00026740	acceptance_criteria:
+L00026741	- Global hotkey handler stall cannot freeze system input.
+L00026742	- User can disable terminal/global hotkey path from safe mode.
+L00026743	- Diagnostic bundle records hook health.
+L00026744	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00026745	validation_surfaces:
+L00026746	- python3 scripts/pm-plan-index.py validate
+L00026747	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00026748	- Global hotkey handler stall cannot freeze system input.
+L00026749	- User can disable terminal/global hotkey path from safe mode.
+L00026750	- Diagnostic bundle records hook health.
+L00026751	risk_class: p1_terminal_runtime_hardening
+L00026752	reasoning_tier: standard
+L00026753	context_scope: terminal_runtime
+L00026754	implementation_surfaces:
+L00026755	- Plans/FinalGUISpec.md
+L00026756	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00026757	- Plans/Permissions_System.md
+L00026758	node_compile_hint:
+L00026759	  mode: p1_terminal_global_hotkey_isolation
+L00026760	  create_worknodes: false
+L00026761	  create_nodeseeds: false
+L00026762	source_lineage:
+L00026763	- pldg-20260703-001-feature-intake:atom-0014
+L00026764	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0014
+L00026765	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0010/P1-TERMINAL-GLOBAL-HOTKEY-ISOLATION@line=10
+L00026766	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0010/P1-TERMINAL-GLOBAL-HOTKEY-ISOLATION
+L00026767	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00026768	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00026769	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:10
+L00026770	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+L00026771	source_atom_ids:
+L00026772	- atom-0014
+L00026773	external_atom_id: extrepo-20260703-0010
+L00026774	source_row_id: P1-TERMINAL-GLOBAL-HOTKEY-ISOLATION
+L00026775	priority: P1
+L00026776	finding_family: Global keyboard hook isolation
+L00026777	source_repos:
+L00026778	- ghostty-org/ghostty
+L00026779	- warpdotdev/warp
+L00026780	target_docs:
+L00026781	- Plans/FinalGUISpec.md
+L00026782	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00026783	- Plans/Permissions_System.md
+L00026784	owner_hints:
+L00026785	- Plans/FinalGUISpec.md
+L00026786	- Plans/Section15_MVP_Promoted_Features_Spec.md
+L00026787	- Plans/Permissions_System.md
+L00026788	preserved_exact_tokens:
+L00026789	- extrepo-20260703-0010
+L00026790	- P1-TERMINAL-GLOBAL-HOTKEY-ISOLATION
+L00026791	- P1
+L00026792	- Global keyboard hook isolation
+L00026793	- ghostty-org/ghostty
+L00026794	- warpdotdev/warp
+L00026795	negative_constraints: []
+L00026796	observed_signal: Ghostty discussion reports system-wide keyboard freezes tied to global quick-terminal keybinding/event tap; Warp changelog includes global hotkey memory leak fixes.
+L00026797	pm_current_coverage: PM has shortcut conflict disclosure and terminal input ownership states.
+L00026798	pm_gap_or_delta: 'No explicit global-event-tap isolation requirements: hooks must not run on UI/compositor main thread, must auto-disable on stall, and must be observable.'
+L00026799	proposal_or_recommendation: Add GlobalShortcutSafety PlanUnit for all app-level hotkeys, not only terminal. Include watchdog, timeout auto-disable, kill switch, and diagnostic banner.
+L00026800	compile_disposition: create_new_planunit
+L00026801	```
+L00026802	
+
+<<< CONTEXT_AFTER canonical_document_lines=26803-26814 >>>
+L00026803	### F3-413 - P2-GUI-NOT-CLI-CONTROL-PLANE
+L00026804	
+L00026805	```yaml
+L00026806	plan_unit_id: F3-413
+L00026807	unit_type: requirement
+L00026808	status: accepted
+L00026809	owner_doc: Plans/FinalGUISpec.md
+L00026810	canonical_text: >-
+L00026811	  P2-GUI-NOT-CLI-CONTROL-PLANE (P2) is compiled as canonical Puppet Master intent for Translate CLI lessons into GUI adapter contracts: Add GUI-first terminal policy note: built-in terminal is a user shell and agent surface; PM command/control remains GUI/Goal/PlanUnit driven. The preserved PM gap/delta is: Need explicit non-goal: do not let a PM CLI become the main product. CLI/terminal lessons feed internal tool/adapter APIs, GUI command catalog, and embedded terminal behavior. The observed external-repo signal remains source-lineage evidence: Warp became an agentic development environment born out of terminal; Codex offers CLI/app/IDE; Cline offers IDE/terminal/CLI/SDK/Kanban; tmux is terminal-native and scriptable.
+L00026812	gui_related: true
+L00026813	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00026814	depends_on:

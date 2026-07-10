@@ -1,0 +1,417 @@
+<<< CONTEXT_BEFORE 3788-3799 >>>
+- "2.2 seglog: format, writer, rotation"
+negative_constraints: []
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/GitHub_Integration.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/Tools.md"
+- "Plans/GitHub_Integration.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 3800-4187 >>>
+### SP-025 - Mandatory Seglog CRC32 Integrity
+
+```yaml
+plan_unit_id: SP-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Seglog records must include CRC32 over the stored payload, validate before processing, skip corrupt records, emit recovery/integrity events, and resume projectors from the last known-good checkpoint."
+gui_related: false
+gui_classification_reason: "This unit preserves backend seglog integrity and recovery behavior."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+- "AI-001"
+- "CV-001"
+unblocks: []
+acceptance_criteria:
+- "SP-025 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: mandatory_seglog_crc32_integrity
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0043"
+preserved_exact_tokens:
+- "CRC32"
+- "checksum"
+- "mandatory correctness requirement"
+- "not an optional enhancement"
+- "record offset"
+- "expected vs observed CRC"
+- "last known-good checkpoint"
+negative_constraints: []
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md"
+- "ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Runtime_Artifacts_Panel.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/Architecture_Invariants.md"
+- "Plans/Executor_Protocol.md"
+- "Plans/Contracts_V0.md"
+- "Plans/Runtime_Artifacts_Panel.md"
+```
+
+### SP-026 - Seglog Wire Format And Payload Authority
+
+```yaml
+plan_unit_id: SP-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Seglog uses a length-prefixed binary MessagePack record stream with canonical header fields, payload-only compression, checksum validation, and JSON diagnostics as non-authoritative mirrors."
+gui_related: false
+gui_classification_reason: "This unit preserves backend on-disk seglog wire-format requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+- "CV-001"
+unblocks: []
+acceptance_criteria:
+- "SP-026 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: seglog_wire_format_payload_authority
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0044"
+preserved_exact_tokens:
+- "length-prefixed binary record stream"
+- "MessagePack"
+- "JSON is not the on-disk authority"
+- "SeglogRecord"
+- "SeglogHeader"
+- "version: u8"
+- "segment_generation: u32"
+- "event_type: string"
+- "sequence_id: u64"
+- "source_timestamp_ns?"
+- "observed_timestamp_ns"
+- "payload_length: u32"
+- "checksum_crc32: u32"
+- "compression: \"none\" | \"lz4\""
+negative_constraints:
+- "JSON is not the on-disk authority."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/Contracts_V0.md"
+```
+
+### SP-027 - Deterministic Seglog Rotation
+
+```yaml
+plan_unit_id: SP-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Seglog rotation is deterministic and generation-aware with one active segment, canonical active and closed segment path formats, immutable closed segments, and lexicographic projector consumption."
+gui_related: false
+gui_classification_reason: "This unit preserves backend seglog segment lifecycle and rotation requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-027 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: deterministic_seglog_rotation
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0045"
+preserved_exact_tokens:
+- "one active writable segment"
+- "storage/seglog/seg-{generation:06}-{start_seq:020}.active"
+- "storage/seglog/seg-{generation:06}-{start_seq:020}-{end_seq:020}.seglog"
+- "schema-generation change"
+- "closed segments are immutable"
+- "no in-place rewrite"
+- "lexicographic order"
+negative_constraints:
+- "Closed segments are immutable; no in-place rewrite is allowed."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+```
+
+### SP-028 - Seglog Replay And Rebuild Rules
+
+```yaml
+plan_unit_id: SP-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Replay and rebuild keep seglog authoritative over redb projections, JSONL mirrors, and Tantivy indices, resume from stable checkpoints, truncate only corrupt tails after the last verified record, and preserve sequence_id ordering."
+gui_related: false
+gui_classification_reason: "This unit preserves backend replay, rebuild, and source-of-truth ordering requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+- "AI-001"
+- "CV-001"
+unblocks: []
+acceptance_criteria:
+- "SP-028 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: seglog_replay_rebuild_rules
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0046"
+preserved_exact_tokens:
+- "redb projections"
+- "JSONL mirror files"
+- "Tantivy indices"
+- "seglog"
+- "last committed checkpoint"
+- "{ segment_generation, segment_name, byte_offset, last_seq }"
+- "partial/corrupt tail"
+- "last verified record"
+- "sequence_id ordering"
+- "semantic event order"
+negative_constraints:
+- "redb projections, JSONL mirror files, and Tantivy indices are rebuildable from seglog plus stable checkpoints; none of them outrank seglog as authority."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+- "Plans/Architecture_Invariants.md"
+- "Plans/Executor_Protocol.md"
+- "Plans/Contracts_V0.md"
+```
+
+### SP-029 - redb Schema Boundary Anchor
+
+```yaml
+plan_unit_id: SP-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "The redb schema, migrations, and key patterns heading remains the canonical section boundary for durable KV schema rules."
+gui_related: false
+gui_classification_reason: "This unit preserves backend section anchoring for redb schema requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-029 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: redb_schema_boundary_anchor
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0047"
+preserved_exact_tokens:
+- "2.3 redb: schema, migrations, key patterns"
+- "redb"
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+```
+
+### SP-030 - Canonical Record Baseline
+
+```yaml
+plan_unit_id: SP-030
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Canonical records are the immutable single source of truth for run, node, lane, and execution state and carry created/updated audit fields."
+gui_related: false
+gui_classification_reason: "This unit preserves backend canonical record baseline requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-030 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: canonical_record_baseline
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0048"
+preserved_exact_tokens:
+- "single source of truth"
+- "run"
+- "node"
+- "lane"
+- "execution state"
+- "immutable once committed"
+- "explicit lineage"
+- "created_at_utc"
+- "updated_at_utc"
+- "created_by"
+negative_constraints:
+- "Canonical records are immutable once committed; corrections require a new record with explicit lineage."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+```
+
+### SP-031 - Concern Record Lifecycle Canon
+
+```yaml
+plan_unit_id: SP-031
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "Concern is a first-class durable record distinct from findings, annotations, blocked episodes, and graph patch requests, with lifecycle, lineage, severity/category/status, governance metadata, resolution_kind, and separate projection/linkage layers."
+gui_related: false
+gui_classification_reason: "This unit preserves backend concern record lifecycle and storage separation requirements."
+split_recommended: false
+depends_on:
+- "PDS-003"
+- "PDS-004"
+- "PDS-005"
+- "PNC-001"
+unblocks: []
+acceptance_criteria:
+- "SP-031 remains addressable as a fine-grained Storage Plan PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: storage_plan_drift
+reasoning_tier: standard
+context_scope: storage_plan
+implementation_surfaces:
+- "Plans/storage-plan.md"
+node_compile_hint:
+  mode: concern_record_lifecycle_canon
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0049"
+preserved_exact_tokens:
+- "Concern"
+- "first-class durable record"
+- "review finding"
+- "annotation"
+- "blocked episode"
+- "graph patch request"
+- "concern_id"
+- "project_id"
+- "evidence/source refs"
+- "lineage refs"
+- "severity/category/status"
+- "resolution_kind"
+- "accepted_risk"
+- "concern_record"
+- "concern_projection"
+- "blocked_episode linkage"
+negative_constraints:
+- "Storage persists concern_record separately from concern_projection and blocked_episode linkage so lifecycle ownership stays durable and queryable."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/storage-plan.md"
+```
+
+
+<<< CONTEXT_AFTER 4188-4199 >>>
+### SP-032 - Required redb Key Baseline
+
+```yaml
+plan_unit_id: SP-032
+unit_type: requirement
+status: accepted
+owner_doc: Plans/storage-plan.md
+canonical_text: "The baseline redb key families include run, node, lane, execution_unit, and receipt records with stable entity key patterns."
+gui_related: false
+gui_classification_reason: "This unit preserves backend redb key-pattern requirements."
+split_recommended: false
+depends_on:

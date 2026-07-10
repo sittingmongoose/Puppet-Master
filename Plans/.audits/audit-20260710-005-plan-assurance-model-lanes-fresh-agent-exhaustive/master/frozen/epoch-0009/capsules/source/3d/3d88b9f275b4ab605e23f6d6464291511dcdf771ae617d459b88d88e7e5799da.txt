@@ -1,0 +1,414 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-399 >>>
+L00000001	# Assistant-Only Memory Subsystem (Canonical SSOT)
+L00000002	
+L00000003	
+L00000004	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000005	
+L00000006	## Change Summary
+L00000007	- 2026-02-26: Revised canonical Assistant-only memory SSOT to use **Evidence-Backed Gists** (MemoryGist + EvidenceRef), deterministic verification, AutoRunBoundary/AutoMilestone triggers, Tantivy/USearch indexing contracts, and GUI Gist Review panel.
+L00000008	
+L00000009	**Date:** 2026-02-26  
+L00000010	**Status:** Canonical plan/spec  
+L00000011	**Cross-references:** `Plans/storage-plan.md`, `Plans/assistant-chat-design.md`, `Plans/agent-rules-context.md`, `Plans/rewrite-tie-in-memo.md`, `Plans/Decision_Policy.md`, `Plans/auto_decisions.jsonl`, `Plans/evidence.schema.json`
+L00000012	
+L00000013	---
+L00000014	
+L00000015	## 0. Scope and boundary
+L00000016	
+L00000017	This document is the canonical SSOT for **Assistant-only** memory continuity in Puppet Master.
+L00000018	It defines the data model, verification gates, triggers, indexing, and GUI interactions for Assistant memory.
+L00000019	It does not replace or redefine system event storage (`seglog` SSOT), system KV/search projections (`redb` + Tantivy), or the shared rules pipeline.
+L00000020	
+L00000021	Rule: Assistant memory MUST be implemented as a continuity/project-state subsystem that is separate from rules assembly and separate from non-Assistant agent execution paths.
+L00000022	ContractRef: ContractName:Plans/agent-rules-context.md, ContractName:Plans/storage-plan.md, ContractName:Plans/DRY_Rules.md#2-dont-duplicate-canonical-contracts
+L00000023	
+L00000024	Rule: Assistant memory MUST run fully in-process and local-only; it MUST NOT require external servers and MUST NOT use SQLite.
+L00000025	ContractRef: SchemaID:Spec_Lock.json#locked_decisions.storage, ContractName:Plans/rewrite-tie-in-memo.md
+L00000026	
+L00000027	---
+L00000028	
+L00000029	<a id="1-capability-boundary"></a>
+L00000030	## 1. Capability boundary (Assistant-only)
+L00000031	
+L00000032	### 1.1 Memory provider contract
+L00000033	
+L00000034	Canonical interface names:
+L00000035	- `MemoryProvider` (trait/interface)
+L00000036	- `RealMemoryProvider` (Assistant-enabled implementation)
+L00000037	- `NullMemoryProvider` (returns empty results; no-op writes)
+L00000038	
+L00000039	Required interface surface (logical contract; naming may vary in code):
+L00000040	- `build_capsule(project_id, now) -> WorkingSetCapsule`
+L00000041	- `search(project_id, query, now, k) -> Vec<MemoryGistHit>`
+L00000042	- `record_access(project_id, gist_id, now) -> Result`
+L00000043	- `upsert_gist(project_id, gist) -> Result`
+L00000044	- `delete_gist(project_id, gist_id) -> Result`
+L00000045	- `set_verification_state(project_id, gist_id, verification_state, now) -> Result`
+L00000046	
+L00000047	Rule: Compile-time wiring MUST route Assistant prompt assembly to `RealMemoryProvider`.
+L00000048	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, ContractName:Plans/assistant-chat-design.md#17-context--truncation
+L00000049	
+L00000050	Rule: Orchestrator, Interviewer, requirements builder, and all subagents MUST be wired to `NullMemoryProvider` and MUST receive no Assistant memory payload.
+L00000051	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md, ContractName:Plans/agent-rules-context.md
+L00000052	
+L00000053	Rule: Assistant memory MUST NOT be forwarded to subagents through prompts, tools, handoffs, or hidden metadata.
+L00000054	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#1-capability-boundary, PolicyRule:Decision_Policy.md§2
+L00000055	
+L00000056	### 1.2 Assistant-only evidence boundary
+L00000057	
+L00000058	Assistant memory uses lightweight **EvidenceRefs** to point at verification evidence stored elsewhere (seglog refs, artifacts, commits). It does not become an evidence store.
+L00000059	
+L00000060	Rule: MemoryGist records MUST NOT persist large diffs, full logs, or large artifacts; they MUST persist only compact claims/details plus EvidenceRefs to canonical sources.
+L00000061	ContractRef: SchemaID:pm.evidence.schema.v1, ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision_Policy.md§2
+L00000062	
+L00000063	---
+L00000064	
+L00000065	<a id="2-physical-storage-layout"></a>
+L00000066	## 2. Physical storage layout (per project)
+L00000067	
+L00000068	Per-project memory stores (deterministic default):
+L00000069	- System DB (project-state reference): `.puppet-master/project/state/system.redb`
+L00000070	- Assistant Memory DB (canonical): `.puppet-master/project/state/assistant_memory.redb`
+L00000071	- Assistant Memory Tantivy index: `.puppet-master/project/state/assistant_memory_index/`
+L00000072	- Assistant Memory USearch index: `.puppet-master/project/state/assistant_memory_vectors.usearch`
+L00000073	
+L00000074	Note: This document does not change the canonical system-storage default in `Plans/storage-plan.md` (app-global redb layout). The `system.redb` path above is the project-state reference path for memory-local packaging/project-scoped state mode.
+L00000075	
+L00000076	Rule: Assistant memory MUST use separate physical stores from system state stores to avoid writer contention and coupling.
+L00000077	ContractRef: ContractName:Plans/storage-plan.md, PolicyRule:Decision_Policy.md§2
+L00000078	
+L00000079	Rule: Shared crates/libraries MAY be reused across subsystems, but file-level physical separation MUST remain in place.
+L00000080	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md#2-physical-storage-layout
+L00000081	
+L00000082	Rule: Memory data MUST be project-scoped and project switching MUST swap active memory stores atomically at the project boundary.
+L00000083	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#8-integration-points, ContractName:Plans/assistant-chat-design.md#11-threads-and-chat-management
+L00000084	
+L00000085	---
+L00000086	
+L00000087	<a id="3-data-model"></a>
+L00000088	## 3. Data model (Evidence-Backed Gists; GUI-first)
+L00000089	
+L00000090	Canonical record: `MemoryGist`.
+L00000091	
+L00000092	### 3.1 `MemoryGist` fields (required)
+L00000093	
+L00000094	Required fields (conceptual contract):
+L00000095	- Identity/scope:
+L00000096	  - `id` (stable ID)
+L00000097	  - `project_id` (optional if DB is physically per-project)
+L00000098	- Classification:
+L00000099	  - `kind` (see §9.2)
+L00000100	  - `status` (e.g., `Active` | `Done` | `Archived`)
+L00000101	  - `pinned` (bool)
+L00000102	- Verification:
+L00000103	  - `verification_state` (see §5.3)
+L00000104	- Time/access:
+L00000105	  - `created_at`, `updated_at`
+L00000106	  - `last_access_at`, `access_count`
+L00000107	- Decay:
+L00000108	  - `half_life_days` (kind-defaulted; user-adjustable)
+L00000109	- Labels:
+L00000110	  - `tags[]`
+L00000111	- Claims-first content:
+L00000112	  - `claims[]` (each claim is a compact, atomic statement; see §3.2)
+L00000113	  - `summary` (derived; cached field allowed)
+L00000114	  - `details` (optional; never auto-injected)
+L00000115	- Evidence:
+L00000116	  - `evidence_refs[]` (see §3.3)
+L00000117	- Provenance:
+L00000118	  - `source` (`AutoRunBoundary` | `AutoMilestone` | `UserManual` | `Import`)
+L00000119	  - `run_id` / `thread_id` (optional, for traceability)
+L00000120	- Embedding/index versioning:
+L00000121	  - `embedding_version`
+L00000122	  - `embed_text_hash`
+L00000123	  - `text_hash`
+L00000124	
+L00000125	Rule: Automatic prompt injection MUST use only Verified gists’ derived `summary` text and MUST NOT auto-inject `details`.
+L00000126	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ContractName:Plans/assistant-chat-design.md#17-context--truncation
+L00000127	
+L00000128	Rule: `summary` MUST be derivable deterministically from `kind + claims[] (+ minimal tags)` so that re-derivation yields stable injection text.
+L00000129	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract
+L00000130	
+L00000131	Rule: When `kind`, `tags[]`, or `claims[]` change, any cached derived fields (`summary`, `embed_text_hash`, `text_hash`) MUST be invalidated and re-derived before the next capsule assembly or retrieval injection.
+L00000132	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#4-retrieval-indexes, ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract
+L00000133	
+L00000134	Rule: GUI memory operations (list/edit/verify/pin/delete/half-life edits) MUST read and write `MemoryGist` records in `assistant_memory.redb` as the canonical source.
+L00000135	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/storage-plan.md
+L00000136	
+L00000137	### 3.2 `claims[]` model (atomic statements)
+L00000138	
+L00000139	A `claim` is a compact statement intended to be independently verifiable and independently deduplicated.
+L00000140	
+L00000141	Recommended minimal shape:
+L00000142	- `claim_id` (stable within gist)
+L00000143	- `text` (single sentence)
+L00000144	- `created_at`
+L00000145	
+L00000146	Rule: Claims MUST be short, single-purpose statements; multi-claim gists MUST keep each claim independently meaningful for verification and dedup.
+L00000147	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000148	
+L00000149	### 3.3 `EvidenceRef` model (structured, pointers only)
+L00000150	
+L00000151	`EvidenceRef` is a structured pointer to verification evidence; it is not the evidence payload itself.
+L00000152	
+L00000153	Supported variants (canonical contract):
+L00000154	- `Commit { hash, repo_id }`
+L00000155	- `Diff { run_id, repo_id, paths[], stats }`
+L00000156	- `TestRun { run_id, command, exit_code, summary_hash }`
+L00000157	- `BuildRun { run_id, command, exit_code, summary_hash }`
+L00000158	- `LintRun { run_id, command, exit_code, summary_hash }`
+L00000159	- `Artifact { path, change_type, content_hash? }`
+L00000160	- `PlanRef { file_path, anchor_id? }`
+L00000161	- Optional workflow refs:
+L00000162	  - `Issue { provider, id }`
+L00000163	  - `PR { provider, id }`
+L00000164	
+L00000165	Rule: EvidenceRefs MUST be small pointers (IDs, hashes, paths) and MUST NOT embed large diffs/logs/artifact bodies.
+L00000166	ContractRef: SchemaID:pm.evidence.schema.v1, PolicyRule:Decision_Policy.md§2
+L00000167	
+L00000168	Rule: `Artifact` EvidenceRefs MUST point to system-captured run artifacts (including evidence bundles) and SHOULD include `content_hash` when available to make verification reproducible.
+L00000169	ContractRef: SchemaID:pm.evidence.schema.v1, ContractName:Plans/Contracts_V0.md#EventRecord, PolicyRule:Decision_Policy.md§2
+L00000170	
+L00000171	---
+L00000172	
+L00000173	<a id="4-retrieval-indexes"></a>
+L00000174	## 4. Retrieval + indexing contracts
+L00000175	
+L00000176	Assistant memory retrieval is implemented as:
+L00000177	- **Tantivy** lexical search over gist text fields
+L00000178	- **USearch** semantic ANN over deterministic embed text
+L00000179	
+L00000180	### 4.1 Tantivy (lexical)
+L00000181	
+L00000182	Canonical indexed fields (minimum):
+L00000183	- `id` (keyword)
+L00000184	- `kind` (keyword)
+L00000185	- `status` (keyword)
+L00000186	- `verification_state` (keyword)
+L00000187	- `pinned` (bool/keyword)
+L00000188	- `tags` (keyword/text)
+L00000189	- `claims_text` (text; concatenated)
+L00000190	- `summary` (text)
+L00000191	- `details` (text; optional)
+L00000192	- `updated_at` (date/numeric)
+L00000193	
+L00000194	Rule: Lexical index updates MUST be delete+add by `id`, and full lexical rebuild MUST be supported from `assistant_memory.redb`.
+L00000195	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance
+L00000196	
+L00000197	### 4.2 USearch (semantic ANN)
+L00000198	
+L00000199	Canonical mapping:
+L00000200	- Vector entry -> `MemoryGist.id`
+L00000201	- Persist ANN state in `assistant_memory_vectors.usearch` via serialize/deserialize
+L00000202	- Persist `gist_id -> vector_slot` mapping (and tombstone state) in `assistant_memory.redb`
+L00000203	
+L00000204	Deterministic embed text:
+L00000205	- `embed_text = kind + "\n" + join(tags) + "\n" + join(claims[].text)` (exclude `details`)
+L00000206	- `embed_text_hash = sha256_utf8(embed_text)` as lowercase hex SHA-256 over the exact UTF-8 bytes
+L00000207	- `text_hash = sha256_utf8(kind + "\n" + join(tags) + "\n" + join(claims[].text) + "\n" + summary + "\n" + details_or_empty)` as lowercase hex SHA-256 over the exact UTF-8 bytes
+L00000208	
+L00000209	Rule: USearch embeddings MUST be computed from deterministic `embed_text` and MUST use `embed_text_hash` to detect no-op updates and deduplicate repeated Auto triggers.
+L00000210	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers
+L00000211	
+L00000212	Rule: Deletes/updates MUST use tombstones and MUST support deterministic periodic full rebuild (re-embed + repack) from canonical `assistant_memory.redb`.
+L00000213	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, PolicyRule:Decision_Policy.md§2
+L00000214	
+L00000215	### 4.3 Canonical write + index update order
+L00000216	
+L00000217	Canonical write order:
+L00000218	1. Write canonical `MemoryGist` change to `assistant_memory.redb`
+L00000219	2. Enqueue Tantivy + USearch index updates
+L00000220	3. Apply index updates asynchronously
+L00000221	4. Expose deterministic rebuild operations for recovery
+L00000222	
+L00000223	Rule: Canonical writes to `assistant_memory.redb` MUST succeed independently of indexing, and index failures MUST be recoverable without data loss.
+L00000224	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#7-gui-and-maintenance, ContractName:Plans/storage-plan.md
+L00000225	
+L00000226	---
+L00000227	
+L00000228	<a id="5-verification-and-triggers"></a>
+L00000229	## 5. Verification + triggers (Evidence-Backed Gists)
+L00000230	
+L00000231	### 5.1 Verification intent
+L00000232	
+L00000233	Verification exists to prevent prompt injection of incorrect or stale continuity.
+L00000234	
+L00000235	Rule: By default, only `verification_state = Verified` gists are eligible for capsule assembly and per-turn retrieval injection.
+L00000236	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, PolicyRule:Decision_Policy.md§2
+L00000237	
+L00000238	### 5.2 Trigger contracts
+L00000239	
+L00000240	#### 5.2.1 AutoRunBoundary (end of each Assistant run)
+L00000241	
+L00000242	AutoRunBoundary is invoked exactly once at the end of each Assistant run (after the Assistant produces its final response).
+L00000243	It builds **one** candidate gist from run artifacts (changed paths, tool results, commits/PR refs when present) so that memory gists can be generated even when no Plans/SSOT files were touched.
+L00000244	
+L00000245	Rule: AutoRunBoundary MUST run at the end of each Assistant run and MUST create/update at most **one** `MemoryGist` per run with `source = AutoRunBoundary`.
+L00000246	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000247	
+L00000248	Rule: AutoRunBoundary MUST deduplicate candidates across runs using `embed_text_hash` and normalized EvidenceRefs (no duplicate persisted gist for identical claim/evidence sets).
+L00000249	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#4-retrieval-indexes, PolicyRule:Decision_Policy.md§2
+L00000250	
+L00000251	Rule: AutoRunBoundary MUST evaluate deterministic verification rules (§5.3) before persisting and MUST set `verification_state` to `Verified` when the rules are satisfied; otherwise it persists as `Unverified`.
+L00000252	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000253	
+L00000254	Rule: AutoRunBoundary MUST respect `assistant.memory.auto_save_unverified`; when disabled, it MUST drop newly-proposed gists that remain `Unverified` at the end of the run.
+L00000255	ContractRef: ConfigKey:assistant.memory.auto_save_unverified, ContractName:Plans/assistant-memory-subsystem.md#9-deterministic-defaults
+L00000256	
+L00000257	#### 5.2.2 AutoMilestone (promotion event; less frequent)
+L00000258	
+L00000259	AutoMilestone is a promotion event that runs when verification-relevant evidence becomes available (commit created, PR opened, tests/build/lint completed, artifact produced, or user confirms “done” via GUI action).
+L00000260	It MAY create/promote an `Outcome` gist and MAY refresh verification_state.
+L00000261	
+L00000262	Rule: AutoMilestone MUST be idempotent, MUST be deduplicated per `(gist_id, evidence_ref)` pair, and MUST be rate-limited to at most **once per run**.
+L00000263	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000264	
+L00000265	Rule: AutoMilestone MUST create/promote at most one `Outcome` gist per run when any milestone occurs: tests transition failing→passing, a commit is created, a PR is opened, or the user confirms “done” via a GUI action.
+L00000266	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000267	
+L00000268	Rule: If AutoMilestone is triggered in a run, it MUST execute before AutoRunBoundary persistence so the run-end candidate reflects any within-run promotions.
+L00000269	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000270	
+L00000271	### 5.3 Deterministic verification rules
+L00000272	
+L00000273	`verification_state` enum:
+L00000274	- `Unverified` (default)
+L00000275	- `Verified`
+L00000276	- `Discarded`
+L00000277	
+L00000278	Rule: Auto-generated gists MUST be saved as `Unverified` unless they satisfy a deterministic verification rule below.
+L00000279	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers
+L00000280	
+L00000281	Rule: A gist MUST transition to `Verified` if and only if ANY holds:
+L00000282	1) It has a `Commit { hash, repo_id }` EvidenceRef.
+L00000283	2) It has a successful `TestRun` or `BuildRun` EvidenceRef (`exit_code == 0`) AND it has a `Diff` or `Artifact` EvidenceRef.
+L00000284	3) It has a `PlanRef` EvidenceRef AND `kind` is `Decision` / `Constraint` / `Preference` / `Landmine`.
+L00000285	ContractRef: SchemaID:pm.evidence.schema.v1, PolicyRule:Decision_Policy.md§2
+L00000286	
+L00000287	Rule: A gist MUST NOT transition to `Verified` if `evidence_refs[]` is empty.
+L00000288	ContractRef: SchemaID:pm.evidence.schema.v1, PolicyRule:Decision_Policy.md§2
+L00000289	
+L00000290	Rule: Manual “Verify” MUST re-run deterministic validation; if validation fails, the gist MUST remain `Unverified` unless `assistant.memory.allow_manual_verify_without_evidence = true` (default `false`).
+L00000291	ContractRef: ConfigKey:assistant.memory.allow_manual_verify_without_evidence, PolicyRule:Decision_Policy.md§2
+L00000292	
+L00000293	Rule: “Discard” MUST set `verification_state = Discarded` and discarded gists MUST be excluded from automatic injection and default search results.
+L00000294	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#6-prompt-injection-contract, PolicyRule:Decision_Policy.md§2
+L00000295	
+L00000296	---
+L00000297	
+L00000298	<a id="6-prompt-injection-contract"></a>
+L00000299	## 6. Prompt injection contract (token protection)
+L00000300	
+L00000301	Memory is continuity and project state. Memory is not rules.
+L00000302	
+L00000303	Rule: Prompt assembly MUST treat memory as a distinct context source that is separate from application/project rules pipeline output.
+L00000304	ContractRef: ContractName:Plans/agent-rules-context.md, ContractName:Plans/assistant-chat-design.md#17-context--truncation
+L00000305	
+L00000306	### 6.1 Always-loaded capsule (Verified-only by default)
+L00000307	
+L00000308	Always inject a tiny **Working Set capsule** for the active project:
+L00000309	- Budget default: `350` tokens
+L00000310	- Sections (fixed order): Project Capsule bullets, Current Thread paragraph, Recent decisions, Recent blockers
+L00000311	- Source: eligible gists selected by pins + activation scoring (eligibility defaults to `verification_state = Verified`)
+L00000312	
+L00000313	Rule: Capsule assembly MUST enforce the configured hard token cap before sending any Assistant prompt.
+L00000314	ContractRef: ConfigKey:assistant.memory.capsule_budget_tokens, ContractName:Plans/assistant-chat-design.md#17-context--truncation
+L00000315	
+L00000316	Rule: Capsule assembly MUST exclude `verification_state != Verified` gists by default. `Unverified` gists MAY be included only by explicit user action; pinned Unverified gists MUST NOT be auto-included unless `assistant.memory.allow_pinned_unverified_injection = true`.
+L00000317	ContractRef: ConfigKey:assistant.memory.allow_pinned_unverified_injection, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000318	
+L00000319	### 6.2 Per-turn retrieval injection (Verified-only)
+L00000320	
+L00000321	Per user turn:
+L00000322	1. Execute lexical search (Tantivy) + semantic search (USearch)
+L00000323	2. Merge/rerank with activation scoring
+L00000324	3. Inject up to `N` gists (`N` default `5`)
+L00000325	4. Inject only derived `summary` text (1–2 sentences each)
+L00000326	
+L00000327	Rule: Retrieval injection MUST NOT exceed max item count and MUST remain summary-only.
+L00000328	ContractRef: ConfigKey:assistant.memory.max_injected_items_per_turn, ContractName:Plans/assistant-memory-subsystem.md#3-data-model
+L00000329	
+L00000330	Rule: Retrieval injection MUST exclude `verification_state != Verified` gists by default. `Unverified` gists MAY be included only by explicit user action; pinned Unverified gists MUST NOT be auto-included unless `assistant.memory.allow_pinned_unverified_injection = true`.
+L00000331	ContractRef: ConfigKey:assistant.memory.allow_pinned_unverified_injection, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, PolicyRule:Decision_Policy.md§2
+L00000332	
+L00000333	### 6.3 Activation scoring (required components)
+L00000334	
+L00000335	Activation scoring must include:
+L00000336	- `pinned` boost
+L00000337	- kind/status weighting
+L00000338	- recency decay (`half_life_days`)
+L00000339	- access signals (`access_count`, `last_access_at`)
+L00000340	- retrieval blend (BM25 + ANN scores)
+L00000341	
+L00000342	Deterministic activation score:
+L00000343	
+L00000344	`score = (0.50 * normalized_bm25 + 0.50 * normalized_ann + pinned_boost + kind_status_weight + access_weight) * recency_multiplier`
+L00000345	
+L00000346	Defaults: `pinned_boost = 0.20` when pinned else `0`; `kind_status_weight = 0.10` for Verified active project gists, `0` for other eligible Verified gists; `access_weight = min(0.15, ln(1 + access_count) * 0.03)`; `recency_multiplier = 0.5 ^ (age_days / effective_half_life_days)`; `effective_half_life_days = half_life_days` unless overridden by the Done rule below. Missing BM25 or ANN scores normalize to `0`; ties sort by newer `updated_at`, then lexical `id`.
+L00000347	
+L00000348	Rule: Done-status gists MUST decay faster using `effective_half_life_days = half_life_days * 0.5`.
+L00000349	ContractRef: ConfigKey:assistant.memory.done_decay_multiplier, ContractName:Plans/assistant-memory-subsystem.md#9-deterministic-defaults
+L00000350	
+L00000351	---
+L00000352	
+L00000353	<a id="7-gui-and-maintenance"></a>
+L00000354	## 7. GUI + maintenance operations
+L00000355	
+L00000356	### 7.1 GUI: Gist Review panel
+L00000357	
+L00000358	The GUI must expose a **Gist Review** panel adjacent to (and visually consistent with) Memory + Rules panels.
+L00000359	
+L00000360	Required UI elements:
+L00000361	- List of gists with filters: kind/status/tags/pinned/verification_state
+L00000362	- Default review filter on panel open: `verification_state = Unverified`
+L00000363	- Toggle: `assistant.memory.auto_save_unverified` (default `true`)
+L00000364	- Actions per gist: `Verify`, `Edit`, `Pin/Unpin`, `Discard`
+L00000365	- Half-life controls: per-gist half-life override and per-kind default editor
+L00000366	- “What’s in capsule now” preview with token estimate and hard-cap indicator
+L00000367	- Maintenance actions: rebuild lexical index, rebuild semantic index, verification sweep, dedup sweep, monthly summarize/compress, prune/archive low-activation gists
+L00000368	
+L00000369	Rule: The Gist Review panel MUST surface verification_state prominently and MUST make “Verify” and “Discard” first-class actions.
+L00000370	ContractRef: ConfigKey:assistant.memory.auto_save_unverified, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, UICommand:cmd.chat.memory.verify, UICommand:cmd.chat.memory.discard
+L00000371	
+L00000372	Rule: On panel open, Gist Review MUST default to `verification_state = Unverified`; any non-default filter state MUST be the result of explicit user action.
+L00000373	ContractRef: ContractName:Plans/assistant-memory-subsystem.md#5-verification-and-triggers, ConfigKey:assistant.memory.auto_save_unverified, ContractName:Plans/UI_Command_Catalog.md, UICommand:cmd.chat.memory.verify, UICommand:cmd.chat.memory.edit, UICommand:cmd.chat.memory.pin, UICommand:cmd.chat.memory.discard, UICommand:cmd.chat.memory.toggle_auto_save_unverified
+L00000374	
+L00000375	Rule: Capsule preview MUST report an estimated token count and MUST indicate when truncation occurred due to the configured cap.
+L00000376	ContractRef: ConfigKey:assistant.memory.capsule_budget_tokens, ContractName:Plans/assistant-chat-design.md#17-context--truncation
+L00000377	
+L00000378	### 7.2 Maintenance operations (deterministic)
+L00000379	
+L00000380	Required operations:
+L00000381	1. Rebuild Tantivy index from `assistant_memory.redb`
+L00000382	2. Rebuild USearch index from `assistant_memory.redb` (re-embed + rebuild)
+L00000383	3. Verification sweep: re-evaluate verification_state for all gists
+L00000384	4. Dedup sweep: merge identical `embed_text_hash` gists (policy-driven; preserve evidence refs)
+L00000385	5. Monthly summarize/compress: consolidate older low-activation `Note` gists into a monthly `Note` gist (policy-driven; preserve EvidenceRefs)
+L00000386	6. Prune/archive: archive or delete very low-activation gists (policy-driven; never delete pinned)
+L00000387	
+L00000388	Rule: All maintenance operations MUST run in-process and MUST NOT depend on external services.
+L00000389	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/rewrite-tie-in-memo.md
+L00000390	
+L00000391	Rule: Maintenance operations MUST be user-invokable in GUI and callable by internal maintenance jobs with explicit success/failure status.
+L00000392	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md
+L00000393	
+L00000394	---
+L00000395	
+L00000396	<a id="8-integration-points"></a>
+L00000397	## 8. Integration points
+L00000398	
+L00000399	Assistant memory is intentionally separate from child-run continuity, crew shared state, and context-shaping systems.
+
+<<< CONTEXT_AFTER canonical_document_lines=400-411 >>>
+L00000400	
+L00000401	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+L00000402	
+L00000403	### 8.1 Assistant prompt builder
+L00000404	
+L00000405	Assistant uses the real memory subsystem. Assistant memory remains Assistant-only.
+L00000406	
+L00000407	ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md
+L00000408	
+L00000409	### 8.2 Child-run continuity
+L00000410	
+L00000411	Subagents, Interview, Orchestrator, requirements builder, and crew members use `NullMemoryProvider` and receive no Assistant memory payload.

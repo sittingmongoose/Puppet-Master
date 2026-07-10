@@ -1,0 +1,179 @@
+<<< CONTEXT_BEFORE canonical_document_lines=5994-6005 >>>
+L00005994	- Plans/usage-feature.md
+L00005995	- Plans/Permissions_System.md
+L00005996	preserved_exact_tokens:
+L00005997	- extrepo-20260703-0054
+L00005998	- P2-CACHE-PRIVACY-POLICY
+L00005999	- P2
+L00006000	- Expose provider cache retention/privacy boundaries
+L00006001	negative_constraints: []
+L00006002	proposal_or_recommendation: Cache retention policy and org/account boundary shown when available; no unsupported manual cache clearing is promised.
+L00006003	compile_disposition: create_new_planunit
+L00006004	```
+L00006005	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=6006-6169 >>>
+L00006006	### UF-083 - P1-USAGE-ANOMALY-QUOTA-GUARD
+L00006007	
+L00006008	```yaml
+L00006009	plan_unit_id: UF-083
+L00006010	unit_type: requirement
+L00006011	status: accepted
+L00006012	owner_doc: Plans/usage-feature.md
+L00006013	canonical_text: >-
+L00006014	  P1-USAGE-ANOMALY-QUOTA-GUARD (P1) is compiled as canonical Puppet Master intent for Token/cost anomalies and quota protection: Add UsageAnomalyGuard: provider_usage_null, cached_tokens_unknown, token_spike, output_spike, tool_result_spike, cache_miss_churn, spend_rate_exceeded, repeated_no_progress_cost, and budget_source attribution. The preserved PM gap/delta is: PM needs anomaly detection separate from ordinary usage collection. The observed external-repo signal remains source-lineage evidence: OpenCode had token accounting loss with multi-step tool calls; Cline reports usage null and huge token spikes; Codex reports quota/budget anomalies; Agent Zero warns of unbounded loops/tool arguments and memory/history bloat.
+L00006015	gui_related: false
+L00006016	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00006017	depends_on:
+L00006018	- PDS-003
+L00006019	- PNC-001
+L00006020	unblocks: []
+L00006021	acceptance_criteria:
+L00006022	- Provider usage null uses estimator and marks confidence.
+L00006023	- Sudden token/cost jump pauses or confirms under policy.
+L00006024	- User sees why cost was blocked/allowed.
+L00006025	- Cache-miss churn on stable tasks is reported as optimization warning.
+L00006026	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00006027	validation_surfaces:
+L00006028	- python3 scripts/pm-plan-index.py validate
+L00006029	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00006030	- Provider usage null uses estimator and marks confidence.
+L00006031	- Sudden token/cost jump pauses or confirms under policy.
+L00006032	- User sees why cost was blocked/allowed.
+L00006033	- Cache-miss churn on stable tasks is reported as optimization warning.
+L00006034	risk_class: p1_provider_capability_and_metadata_hardening
+L00006035	reasoning_tier: standard
+L00006036	context_scope: provider_capability_and_metadata
+L00006037	implementation_surfaces:
+L00006038	- Plans/usage-feature.md
+L00006039	- Plans/Models_System.md
+L00006040	- Plans/Goal_Runtime_System.md
+L00006041	- Plans/Provider_OpenCode.md
+L00006042	node_compile_hint:
+L00006043	  mode: p1_usage_anomaly_quota_guard
+L00006044	  create_worknodes: false
+L00006045	  create_nodeseeds: false
+L00006046	source_lineage:
+L00006047	- pldg-20260703-001-feature-intake:atom-0069
+L00006048	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0069
+L00006049	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0065/P1-USAGE-ANOMALY-QUOTA-GUARD@line=65
+L00006050	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0065/P1-USAGE-ANOMALY-QUOTA-GUARD
+L00006051	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00006052	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00006053	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:11
+L00006054	source_atom_ids:
+L00006055	- atom-0069
+L00006056	external_atom_id: extrepo-20260703-0065
+L00006057	source_row_id: P1-USAGE-ANOMALY-QUOTA-GUARD
+L00006058	priority: P1
+L00006059	finding_family: Token/cost anomalies and quota protection
+L00006060	source_repos:
+L00006061	- OpenCode
+L00006062	- Cline
+L00006063	- Codex
+L00006064	- Agent Zero
+L00006065	target_docs:
+L00006066	- Plans/usage-feature.md
+L00006067	- Plans/Models_System.md
+L00006068	- Plans/Goal_Runtime_System.md
+L00006069	- Plans/Provider_OpenCode.md
+L00006070	owner_hints:
+L00006071	- Plans/usage-feature.md
+L00006072	- Plans/Models_System.md
+L00006073	- Plans/Goal_Runtime_System.md
+L00006074	- Plans/Provider_OpenCode.md
+L00006075	preserved_exact_tokens:
+L00006076	- extrepo-20260703-0065
+L00006077	- P1-USAGE-ANOMALY-QUOTA-GUARD
+L00006078	- P1
+L00006079	- Token/cost anomalies and quota protection
+L00006080	- OpenCode
+L00006081	- Cline
+L00006082	- Codex
+L00006083	- Agent Zero
+L00006084	negative_constraints: []
+L00006085	observed_signal: OpenCode had token accounting loss with multi-step tool calls; Cline reports usage null and huge token spikes; Codex reports quota/budget anomalies; Agent Zero warns of unbounded loops/tool arguments and memory/history bloat.
+L00006086	pm_current_coverage: usage-feature has UsageRecord and context breakdown surfaces; Provider_OpenCode maps usage_update into normalized usage events; Goal Runtime exposes max_tokens and usage_limited.
+L00006087	pm_gap_or_delta: PM needs anomaly detection separate from ordinary usage collection.
+L00006088	proposal_or_recommendation: 'Add UsageAnomalyGuard: provider_usage_null, cached_tokens_unknown, token_spike, output_spike, tool_result_spike, cache_miss_churn, spend_rate_exceeded, repeated_no_progress_cost, and budget_source attribution.'
+L00006089	compile_disposition: create_new_planunit
+L00006090	```
+L00006091	
+L00006092	### UF-084 - P2-OTEL-EXPORT-OPTIONAL-ADAPTER
+L00006093	
+L00006094	```yaml
+L00006095	plan_unit_id: UF-084
+L00006096	unit_type: requirement
+L00006097	status: accepted
+L00006098	owner_doc: Plans/usage-feature.md
+L00006099	canonical_text: >-
+L00006100	  P2-OTEL-EXPORT-OPTIONAL-ADAPTER (P2) is compiled as canonical Puppet Master intent for Observability export interoperability: Add OptionalObservabilityExporter: OTLP/Helicone-style adapters consume redacted seglog projections, not raw canonical logs. Export backpressure, retry, and failure never block PM execution unless policy says so. The preserved PM gap/delta is: External observability should be supported without making OTLP canonical or leaking sensitive content. The observed external-repo signal remains source-lineage evidence: Pi discussion points to OpenTelemetry event streaming; OpenCode docs support external logging/analytics integrations; Codex logs/issues show trace handling problems.
+L00006101	gui_related: false
+L00006102	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00006103	depends_on:
+L00006104	- PDS-003
+L00006105	- PNC-001
+L00006106	unblocks: []
+L00006107	acceptance_criteria:
+L00006108	- Exporter can be disabled globally/project.
+L00006109	- Export failure produces degraded status only.
+L00006110	- Redacted projection schema is documented and validated.
+L00006111	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00006112	validation_surfaces:
+L00006113	- python3 scripts/pm-plan-index.py validate
+L00006114	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00006115	- Exporter can be disabled globally/project.
+L00006116	- Export failure produces degraded status only.
+L00006117	- Redacted projection schema is documented and validated.
+L00006118	risk_class: p2_cross_system_runtime_contracts_coverage
+L00006119	reasoning_tier: standard
+L00006120	context_scope: cross_system_runtime_contracts
+L00006121	implementation_surfaces:
+L00006122	- Plans/usage-feature.md
+L00006123	- Plans/storage-plan.md
+L00006124	- Plans/Provider_OpenCode.md
+L00006125	node_compile_hint:
+L00006126	  mode: p2_otel_export_optional_adapter
+L00006127	  create_worknodes: false
+L00006128	  create_nodeseeds: false
+L00006129	source_lineage:
+L00006130	- pldg-20260703-001-feature-intake:atom-0076
+L00006131	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0076
+L00006132	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0072/P2-OTEL-EXPORT-OPTIONAL-ADAPTER@line=72
+L00006133	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0072/P2-OTEL-EXPORT-OPTIONAL-ADAPTER
+L00006134	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00006135	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00006136	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:18
+L00006137	source_atom_ids:
+L00006138	- atom-0076
+L00006139	external_atom_id: extrepo-20260703-0072
+L00006140	source_row_id: P2-OTEL-EXPORT-OPTIONAL-ADAPTER
+L00006141	priority: P2
+L00006142	finding_family: Observability export interoperability
+L00006143	source_repos:
+L00006144	- Pi
+L00006145	- OpenCode
+L00006146	- Codex
+L00006147	target_docs:
+L00006148	- Plans/storage-plan.md
+L00006149	- Plans/usage-feature.md
+L00006150	- Plans/Provider_OpenCode.md
+L00006151	owner_hints:
+L00006152	- Plans/storage-plan.md
+L00006153	- Plans/usage-feature.md
+L00006154	- Plans/Provider_OpenCode.md
+L00006155	preserved_exact_tokens:
+L00006156	- extrepo-20260703-0072
+L00006157	- P2-OTEL-EXPORT-OPTIONAL-ADAPTER
+L00006158	- P2
+L00006159	- Observability export interoperability
+L00006160	- Pi
+L00006161	- OpenCode
+L00006162	- Codex
+L00006163	negative_constraints: []
+L00006164	observed_signal: Pi discussion points to OpenTelemetry event streaming; OpenCode docs support external logging/analytics integrations; Codex logs/issues show trace handling problems.
+L00006165	pm_current_coverage: "Seglog is PM\u2019s canonical source; usage/analytics rollups exist."
+L00006166	pm_gap_or_delta: External observability should be supported without making OTLP canonical or leaking sensitive content.
+L00006167	proposal_or_recommendation: 'Add OptionalObservabilityExporter: OTLP/Helicone-style adapters consume redacted seglog projections, not raw canonical logs. Export backpressure, retry, and failure never block PM execution unless policy says so.'
+L00006168	compile_disposition: create_new_planunit
+L00006169	```

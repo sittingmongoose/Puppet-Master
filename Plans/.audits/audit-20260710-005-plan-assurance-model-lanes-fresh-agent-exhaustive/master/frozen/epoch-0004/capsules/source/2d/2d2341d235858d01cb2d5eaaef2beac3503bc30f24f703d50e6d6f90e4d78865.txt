@@ -1,0 +1,384 @@
+<<< CONTEXT_BEFORE 7947-7958 >>>
+  - "`effective_provider`"
+  - "`adapter_id`"
+  - "`cache_state`"
+  - "`rate_limit_state`"
+  - "`provider_search_native`"
+  - "`pm_research_composed`"
+negative_constraints:
+  - "Routing and audit consumers must not infer execution from display labels."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< AUTHORITATIVE_CORE 7959-8313 >>>
+### CV-104 - Provider-Backed Web Fields And Firecrawl Alias Retirement
+
+```yaml
+plan_unit_id: CV-104
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Provider-backed web adapters may report subordinate provider fields, while
+  Firecrawl-specific fields remain PM web output payload extensions and legacy
+  scrape_id is retired as an incorrect alias rather than becoming a separate
+  Firecrawl-owned event family.
+gui_related: false
+gui_classification_reason: This unit defines provider-backed payload fields and alias retirement.
+split_recommended: true
+depends_on: [CV-103]
+unblocks: []
+acceptance_criteria:
+  - credits_used, provider request IDs, and provider-cache outcomes remain subordinate to the PM web output contract.
+  - firecrawl_credits_used, firecrawl_cache_state, and firecrawl_scrape_id remain the exact Firecrawl-specific subordinate fields.
+  - legacy scrape_id is retained only as a retired incorrect alias.
+  - Firecrawl-specific fields do not create a separate Firecrawl-owned event family.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: firecrawl_event_family_fork
+reasoning_tier: high
+context_scope: provider_backed_web_firecrawl_fields
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Tools.md
+node_compile_hint:
+  mode: web_provider_field_compatibility_disposition
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0039
+preserved_exact_tokens:
+  - "`credits_used`"
+  - "`firecrawl_credits_used`"
+  - "`firecrawl_cache_state`"
+  - "`firecrawl_scrape_id`"
+  - "`creditsUsed`"
+  - "`metadata.cacheState`"
+  - "`data.metadata.scrapeId`"
+  - "`scrape_id`"
+compatibility_only_notes:
+  - "legacy scrape_id is a retired incorrect alias."
+negative_constraints:
+  - "Firecrawl-specific subordinate fields are payload extensions under this contract, not a separate Firecrawl-owned event family."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-105 - Web Operation Input Quality And Provenance Badge Contract
+
+```yaml
+plan_unit_id: CV-105
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Web output preserves result_quality_hint, structured operation_input, and
+  underscore provenance_badge values for stable joins across contracts, storage,
+  and web activity displays, while provider_scrape remains a proposed extension
+  caveat where narrowed locked sets are required.
+gui_related: true
+gui_classification_reason: This unit affects web activity display provenance and quality labels.
+split_recommended: true
+depends_on: [CV-103]
+unblocks: [CV-112]
+acceptance_criteria:
+  - result_quality_hint preserves search_snippets_only, extracted_pages, site_reader_pages, and research_synthesis.
+  - operation_input remains a structured object for routing, audit, replay, and provenance joins.
+  - provenance_badge uses canonical underscore values for stable joins.
+  - provider_scrape remains marked as a provider-specific proposed extension pending harmonization where narrowed locked sets are required.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: web_provenance_badge_drift
+reasoning_tier: high
+context_scope: web_operation_input_quality_provenance_badge
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Runtime_Artifacts_Panel.md
+node_compile_hint:
+  mode: web_quality_provenance_badge_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0039
+preserved_exact_tokens:
+  - "`result_quality_hint`"
+  - "`search_snippets_only`"
+  - "`extracted_pages`"
+  - "`site_reader_pages`"
+  - "`research_synthesis`"
+  - "`operation_input`"
+  - "`provenance_badge`"
+  - "`site_reader`"
+  - "`provider_scrape`"
+compatibility_only_notes:
+  - "Legacy `web_input` normalizes to `operation_input`."
+  - "provider_scrape is retained as a provider-specific proposed extension pending Part P provenance-badge harmonization."
+negative_constraints:
+  - "operation_input is not a preview string and must not be flattened into display text."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-106 - Prompt-Based Web Action Payload Cost Dimensions
+
+```yaml
+plan_unit_id: CV-106
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Prompt-based web action payloads use prompt: string for natural-language
+  browser or research instructions, keep the action path agent-friendly, and
+  record provider cost dimensions such as credits per /min or /clicks/extracts
+  when providers report them.
+gui_related: false
+gui_classification_reason: This unit defines prompt-based web action payload fields.
+split_recommended: true
+depends_on: [CV-103]
+unblocks: []
+acceptance_criteria:
+  - Prompt-based web action payloads use prompt: string.
+  - Browser and research action paths remain agent-friendly.
+  - Provider cost dimensions are recorded when providers report them.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: prompt_web_action_payload_loss
+reasoning_tier: standard
+context_scope: prompt_based_web_action_payload
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Tools.md
+node_compile_hint:
+  mode: prompt_web_action_payload_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0039
+preserved_exact_tokens:
+  - "`prompt: string`"
+  - "`/min`"
+  - "`/clicks/extracts`"
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-107 - Question Lifecycle Runtime UI State Mapping
+
+```yaml
+plan_unit_id: CV-107
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Question and /questionnaire payloads share one lifecycle contract that maps
+  runtime pending/active outcomes to UI lifecycle states without losing
+  terminal or explicitly restorable question outcomes.
+gui_related: true
+gui_classification_reason: This unit defines user-visible question and questionnaire lifecycle states.
+split_recommended: true
+depends_on: [CV-101]
+unblocks: [CV-108, CV-109, CV-110]
+acceptance_criteria:
+  - Allowed flow states draft, incomplete, ready_to_submit, submitted, and paused are preserved.
+  - Runtime state transitions from pending to active and from active to answered, submitted, dismissed, or expired are preserved.
+  - UI lifecycle mapping from runtime state to draft, incomplete, ready_to_submit, submitted, and paused is preserved.
+  - answered, submitted, dismissed, and expired remain terminal or explicitly restorable according to the owning surface.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: question_lifecycle_state_drift
+reasoning_tier: high
+context_scope: question_lifecycle_runtime_ui_mapping
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: question_lifecycle_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0040
+preserved_exact_tokens:
+  - "`draft`"
+  - "`incomplete`"
+  - "`ready_to_submit`"
+  - "`submitted`"
+  - "`paused`"
+  - "`pending`"
+  - "`active`"
+  - "`answered`"
+  - "`dismissed`"
+  - "`expired`"
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-108 - Structured Question Responses And Option Wire Format
+
+```yaml
+plan_unit_id: CV-108
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Question responses use structured answers arrays, locked option object-array
+  wire format, and distinct draft_value? and default_values? fields owned by
+  Contracts; chat renders and collects these fields without owning the contract
+  semantics.
+gui_related: true
+gui_classification_reason: This unit affects user-visible question rendering and response collection.
+split_recommended: true
+depends_on: [CV-102, CV-107]
+unblocks: []
+acceptance_criteria:
+  - 'Structured multi-answer submission uses answers: Array<{question_id, values: string[], source?: "option" | "other" | "freeform"}>.'
+  - 'Question item/action payload fields preserve question_id, draft_value?, default_values?, response_kind, validation_state, value?: string, description?: string, tool_use_id, adapter_id, and adapter_selection_reason.'
+  - 'options format is locked as Array<{id: string, label: string, description?: string}>.'
+  - string[] remains backwards-compatible only for legacy single_question inputs and is auto-expanded before persistence or rendering.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: question_response_wire_format_drift
+reasoning_tier: high
+context_scope: structured_question_response_options
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+node_compile_hint:
+  mode: question_response_wire_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0040
+preserved_exact_tokens:
+  - "answers: Array<{question_id, values: string[], source?: \"option\" | \"other\" | \"freeform\"}>"
+  - "`draft_value?`"
+  - "`default_values?`"
+  - "options?: Array<{id, label, description?}>"
+  - "Array<{id: string, label: string, description?: string}>"
+  - "`response_kind?: \"selection\" | \"freeform\" | \"mixed\"`"
+  - "`validation_state?: \"valid\" | \"invalid\" | \"pending\"`"
+compatibility_only_notes:
+  - "string[] remains backwards-compatible only for legacy single_question inputs."
+negative_constraints:
+  - "Chat renders and collects these fields, but does not own the contract itself, the canonical field list, or the resolution semantics."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-109 - Question Envelope Alias And Clarification Event Normalization
+
+```yaml
+plan_unit_id: CV-109
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Question envelopes normalize allow_other to allow_freeform, and the persisted
+  requirements.clarification_requested event carries blocked requirements
+  lineage into the questionnaire payload and answers contract before persistence
+  or resolution.
+gui_related: false
+gui_classification_reason: This unit defines question envelope compatibility and persisted clarification events.
+split_recommended: true
+depends_on: [CV-099, CV-108]
+unblocks: []
+acceptance_criteria:
+  - Question input envelopes preserve mode single_question or questionnaire and the allowed output status values.
+  - allow_other is accepted only as a compatibility input and normalized to allow_freeform before persistence, validation, or rendering.
+  - requirements.clarification_requested carries wizard_id, thread_id, and question_ids[] from the blocked requirements report.
+  - Legacy single-question tool shapes normalize into the questionnaire payload and answers[] contract.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: question_alias_persistence_drift
+reasoning_tier: high
+context_scope: question_envelope_clarification_event
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/Project_Output_Artifacts.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: question_alias_clarification_contract
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0040
+preserved_exact_tokens:
+  - "`mode: \"single_question\" | \"questionnaire\"`"
+  - "`allow_other`"
+  - "`allow_freeform`"
+  - "`requirements.clarification_requested`"
+  - "`wizard_id`"
+  - "`thread_id`"
+  - "`question_ids[]`"
+  - "`header?: string`"
+  - "`text: string`"
+  - "`answer: string`"
+compatibility_only_notes:
+  - "allow_other is a deprecated alias for canonical allow_freeform."
+negative_constraints:
+  - "Deprecated allow_other must not persist as canonical."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+### CV-110 - Subagent Question Escalation Prohibition
+
+```yaml
+plan_unit_id: CV-110
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Subagents must not invoke the question tool to address users directly; they
+  escalate to the parent orchestrator, and the parent decides whether to surface
+  the question to the user.
+gui_related: false
+gui_classification_reason: This unit defines orchestration authority for user-facing questions.
+split_recommended: true
+depends_on: [CV-107]
+unblocks: []
+acceptance_criteria:
+  - Subagents do not invoke the question tool to address users directly.
+  - Subagents escalate user questions to the parent orchestrator.
+  - Parent orchestrator owns the decision to surface the question to the user.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: subagent_direct_user_question
+reasoning_tier: high
+context_scope: subagent_question_escalation
+implementation_surfaces:
+  - Plans/Contracts_V0.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: subagent_question_escalation_constraint
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0040
+preserved_exact_tokens:
+  - "Subagents MUST NOT invoke the `question` tool"
+  - "assistant-chat-design.md §15.2"
+negative_constraints:
+  - "Subagents must not address users directly through the question tool."
+owner_hints:
+  - Plans/Contracts_V0.md
+```
+
+
+<<< CONTEXT_AFTER 8314-8325 >>>
+### CV-111 - Web Operation Tool Event Family Boundary
+
+```yaml
+plan_unit_id: CV-111
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Contracts_V0.md
+canonical_text: >-
+  Web operations use the existing tool.invoked and tool.denied event families;
+  web.operation and web.operation.* vocabulary is reserved for payload
+  classification only, with web-specific fields under payload.meta.
+gui_related: false

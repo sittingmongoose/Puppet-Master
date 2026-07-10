@@ -1,0 +1,804 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001015-EXACT-WIN-7414C6C901F8-0010",
+  "attempt_id": "attempt-0009",
+  "task_thread_id": "/root/a005_blind_wave_0003_a_cohort_dispatcher_attempt_0009/a005_001015_exact_0010_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "6938045878742cc707d7a027cb424a92209630be4fd6c774dd981bb6ccb5d037",
+    "core_range": [
+      3282,
+      3679
+    ]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001015-I001",
+      "item_type": "contract",
+      "title": "Remote identity and session-key contract is explicit",
+      "statement": "Remote LSP identity preserves SSH, host, working-folder, path-mapping, and live session-key authority while forbidding hidden mirrors, silent retargeting, and local-only collisions.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "LSPS-041"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3289,
+          "line_end": 3289,
+          "exact_quote": "canonical_text: Remote LSP identity preserves user-visible SSH authority, remote-host and working-folder path authority, host-scoped path mapping, and live host/server/root session keys while forbidding hidden mirrors, silent multi-context retargeting, and local-only session-key collisions.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3327,
+          "line_end": 3327,
+          "exact_quote": "- Puppet Master must not create a hidden local mirror, silently retarget multi-context work to local host, or let host-local URI collisions occur.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I002",
+      "item_type": "gap",
+      "title": "Path-mapping and collision handling are not operationally defined",
+      "statement": "Within the reviewed core, LSPS-041 names host-scoped path mapping and collision prohibitions but does not define mapping inputs and outputs, normalization rules, collision detection, error reporting, or recovery behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "underspecified_remote_path_mapping",
+      "impact": "Builders can produce incompatible URI and root identities or divergent recovery behavior for the same remote project.",
+      "builder_discretion": "Mapping normalization, collision detection timing, user-visible error shape, and recovery policy remain open.",
+      "feature_keys": [
+        "LSPS-041"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3289,
+          "line_end": 3289,
+          "exact_quote": "canonical_text: Remote LSP identity preserves user-visible SSH authority, remote-host and working-folder path authority, host-scoped path mapping, and live host/server/root session keys while forbidding hidden mirrors, silent multi-context retargeting, and local-only session-key collisions.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3324,
+          "line_end": 3324,
+          "exact_quote": "- (host_id, server_id, root_identity)",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I003",
+      "item_type": "gui_truth",
+      "title": "Remote degraded UX vocabulary and consumers are specified",
+      "statement": "Connection loss exposes Connection lost, Reconnect, and cache-gated offline work, and Settings plus remote-editor surfaces consume the SSH owner contract.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "LSPS-042"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3346,
+          "line_end": 3346,
+          "exact_quote": "canonical_text: Remote LSP degraded and connection-loss states follow FileManager and SSH owner patterns by showing Connection lost, Reconnect, Work offline when a validated cache exists, system keychain/agent credential handling, Settings > SSH capability/degraded copy, and shared read-only/offline vocabulary.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3385,
+          "line_end": 3385,
+          "exact_quote": "- Settings > SSH and GUI remote-editor surfaces consume the SSH owner contract instead of redefining it.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I004",
+      "item_type": "gap",
+      "title": "Degraded-state entry, cache validity, and retry behavior remain underspecified",
+      "statement": "The reviewed core names a validated cache and a one-auto-retry token but does not define validation criteria, state-entry signals, retry timing, retry cancellation, exhaustion behavior, or transitions among reconnect and offline choices.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "underspecified_degraded_recovery",
+      "impact": "Different implementations can expose offline editing on different data or diverge during repeated connection loss.",
+      "builder_discretion": "Cache validation, automatic-retry mechanics, and user-action/state precedence remain open.",
+      "feature_keys": [
+        "LSPS-042"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3346,
+          "line_end": 3346,
+          "exact_quote": "canonical_text: Remote LSP degraded and connection-loss states follow FileManager and SSH owner patterns by showing Connection lost, Reconnect, Work offline when a validated cache exists, system keychain/agent credential handling, Settings > SSH capability/degraded copy, and shared read-only/offline vocabulary.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3378,
+          "line_end": 3378,
+          "exact_quote": "- one-auto-retry",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I005",
+      "item_type": "explicit_non_gap",
+      "title": "SSH credential and GUI ownership is deliberately delegated",
+      "statement": "LSPSupport retains LSP protocol/client ownership while SSH credential and GUI remote-editor surfaces consume referenced owner contracts rather than redefining them.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "LSPS-042"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3385,
+          "line_end": 3385,
+          "exact_quote": "- Settings > SSH and GUI remote-editor surfaces consume the SSH owner contract instead of redefining it.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3389,
+          "line_end": 3389,
+          "exact_quote": "- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I006",
+      "item_type": "behavior",
+      "title": "Remote mutation and outage behavior is explicitly visible and gated",
+      "statement": "Rename, broad format, and multi-file code actions require preview confirmation; partial failures report per-file outcomes; remote LSP modes are disclosed; and adjacent surfaces may not silently fall back.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "LSPS-043"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3404,
+          "line_end": 3404,
+          "exact_quote": "canonical_text: 'Remote LSP mutation and outage modes remain visible and FileSafe-gated: rename, broad format, and multi-file code actions require preview confirmation; partial failures report per-file results; remote modes disclose full, diagnostics-only, or no-LSP state; adjacent Search, Source Control, Problems, buffers, and diffs do not silently fall back.'",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3443,
+          "line_end": 3443,
+          "exact_quote": "- Preview-worthy remote mutations require the same safe preview/confirmation path as FileSafe edits.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I007",
+      "item_type": "gap",
+      "title": "Workspace-edit atomicity and remote-mode transitions are undefined",
+      "statement": "Per-file failure reporting and three remote modes are named, but the reviewed core does not specify apply ordering, partial-commit or rollback policy, retry/idempotency behavior, or the triggers and transitions among full, diagnostics-only, and no-LSP modes.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "underspecified_remote_mutation_failure_semantics",
+      "impact": "A failed multi-file edit can leave inconsistent files, while clients can disagree about when editing or diagnostics are enabled.",
+      "builder_discretion": "Atomicity, rollback, idempotency, mode detection, and transition semantics remain open.",
+      "feature_keys": [
+        "LSPS-043"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3431,
+          "line_end": 3431,
+          "exact_quote": "- partial workspace-edit failure reports per-file results",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3433,
+          "line_end": 3433,
+          "exact_quote": "- full_remote_lsp",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3434,
+          "line_end": 3434,
+          "exact_quote": "- degraded_remote_diagnostics_only",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3435,
+          "line_end": 3435,
+          "exact_quote": "- remote_edit_no_lsp",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I008",
+      "item_type": "explicit_non_gap",
+      "title": "Browser-preview and recover-unsaved residue is excluded from LSP authority",
+      "statement": "Browser-panel tokens remain owned outside LSPSupport, and recover-unsaved remains an editor/storage recovery contract outside the LSP session key.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "LSPS-044"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3462,
+          "line_end": 3462,
+          "exact_quote": "canonical_text: 'Browser preview and recovery residue must not re-enter LSP wording: browser-panel tokens stay owned by FileManager, FinalGUISpec, or storage cleanup, while recover-unsaved remains an editor/storage recovery contract outside the LSP session key.'",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3496,
+          "line_end": 3496,
+          "exact_quote": "- Browser-panel and preview_mode tokens are compatibility cleanup residue owned outside LSPSupport.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I009",
+      "item_type": "contract",
+      "title": "Editor-crate LSP module layout is concrete",
+      "statement": "The client and registry live with the editor under src/lsp with named client, registry, session/server-handle, document, and sync modules and lsp-types plus tokio dependencies; tower-lsp is excluded unless a server is implemented.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "LSPS-045"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3514,
+          "line_end": 3514,
+          "exact_quote": "canonical_text: The LSP client and registry live in the same crate as the editor under a dedicated src/lsp module with client, registry, session/server_handle, document/sync files and lsp-types plus tokio dependencies, while tower-lsp is unnecessary unless implementing a server.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3549,
+          "line_end": 3549,
+          "exact_quote": "- No need for tower-lsp unless implementing a server",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I010",
+      "item_type": "contract",
+      "title": "Core LSP projection names and field inventory are preserved",
+      "statement": "LspSessionKey, LspSessionProjection, and DocumentBinding are identified with project, host, server, root, lifecycle, freshness, health, enablement, capability, restart, error, document, version, and attached-server fields.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "LSPS-046"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3568,
+          "line_end": 3568,
+          "exact_quote": "canonical_text: Core LSP conceptual structures preserve LspSessionKey, LspSessionProjection, and DocumentBinding fields for project, host, server, root, lifecycle, freshness, health, enablement, capability, restart, error, path, version, and attached server identity.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3610,
+          "line_end": 3610,
+          "exact_quote": "- attached_servers[]",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I011",
+      "item_type": "gap",
+      "title": "Projection types, invariants, and update semantics are absent",
+      "statement": "LSPS-046 inventories field names but the reviewed core does not define types, nullability, serialization, cardinality, key equality, freshness meaning, version ordering, enablement invariants, or update authority.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "incomplete_data_projection_contract",
+      "impact": "Producers and consumers can serialize, compare, and update the same projection incompatibly.",
+      "builder_discretion": "All data types and cross-field invariants beyond the field names remain open.",
+      "feature_keys": [
+        "LSPS-046"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3568,
+          "line_end": 3568,
+          "exact_quote": "canonical_text: Core LSP conceptual structures preserve LspSessionKey, LspSessionProjection, and DocumentBinding fields for project, host, server, root, lifecycle, freshness, health, enablement, capability, restart, error, path, version, and attached server identity.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3611,
+          "line_end": 3611,
+          "exact_quote": "negative_constraints: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I012",
+      "item_type": "state_transition",
+      "title": "Lifecycle state vocabulary and resource ceilings are present",
+      "statement": "The lifecycle names startup, ready, degraded, shutdown, stopped, crash, and restart concepts, limits restart attempts with backoff values, and gives memory and request-time ceilings; only Ready emits normal feature traffic.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "LSPS-047"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3630,
+          "line_end": 3630,
+          "exact_quote": "canonical_text: The LSP lifecycle uses canonical user/state names and lower-level state transitions from stopped through ready, degraded, stopping, crashed, and restart, with resource limits for server memory and request CPU time.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3668,
+          "line_end": 3668,
+          "exact_quote": "- Only Ready emits normal feature traffic; degraded and restart states expose reduced capability or recovery status.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I013",
+      "item_type": "gap",
+      "title": "Lifecycle vocabulary and transition path are internally incomplete",
+      "statement": "The preserved state vocabulary includes RestartBackoff and ShuttingDown, while the transition path uses stopping and crashed and omits RestartBackoff; the reviewed core also omits transition events, guards, restart re-entry, and terminal behavior after exhaustion.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "inconsistent_incomplete_lifecycle_state_machine",
+      "impact": "Implementations can disagree on canonical state serialization, valid transitions, and what happens after a crash or exhausted restart budget.",
+      "builder_discretion": "State aliasing, transition guards, crash-to-backoff flow, budget reset, and exhaustion behavior remain open.",
+      "feature_keys": [
+        "LSPS-047"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3658,
+          "line_end": 3658,
+          "exact_quote": "- RestartBackoff",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3660,
+          "line_end": 3660,
+          "exact_quote": "- ShuttingDown",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3662,
+          "line_end": 3662,
+          "exact_quote": "- stopped → starting → initializing → ready → degraded → stopping → crashed",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I014",
+      "item_type": "gap",
+      "title": "Resource-limit measurement and enforcement behavior is unspecified",
+      "statement": "The reviewed core provides 512MB and 30s values but does not define the measured memory metric, whether 30s is CPU or wall time, sampling/enforcement authority, warning behavior, cancellation, kill/restart response, or platform variance.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "underspecified_resource_limit_enforcement",
+      "impact": "Servers can exceed intended limits or be terminated inconsistently across platforms, with unpredictable recovery and user-visible state.",
+      "builder_discretion": "Metric definitions, enforcement mechanism, exceedance response, and observability remain open.",
+      "feature_keys": [
+        "LSPS-047"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3665,
+          "line_end": 3665,
+          "exact_quote": "- 512MB",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3666,
+          "line_end": 3666,
+          "exact_quote": "- 30s",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I015",
+      "item_type": "gap",
+      "title": "Acceptance criteria validate plan migration, not runtime behavior",
+      "statement": "Across the reviewed units, acceptance is framed as source preservation, addressability, traceability, and prohibition on task creation, while the validation surfaces are plan-migration and plan-index validators; no executable oracle is supplied for remote mapping, degraded UX, mutation safety, projections, lifecycle, or limits.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_runtime_acceptance_oracles",
+      "impact": "Governance validation can pass without demonstrating that the specified LSP behavior works or fails safely.",
+      "builder_discretion": "Behavioral test inputs, expected outputs, failure injections, and pass/fail thresholds remain open.",
+      "feature_keys": [
+        "LSPS-041",
+        "LSPS-042",
+        "LSPS-043",
+        "LSPS-044",
+        "LSPS-045",
+        "LSPS-046",
+        "LSPS-047"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3296,
+          "line_end": 3296,
+          "exact_quote": "- The covered source span remains losslessly available for exact-text audit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3301,
+          "line_end": 3301,
+          "exact_quote": "- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3302,
+          "line_end": 3302,
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I016",
+      "item_type": "gap",
+      "title": "Declared owner contracts are not represented as dependencies",
+      "statement": "The reviewed PlanUnits carry empty depends_on arrays while several preserve ContractRefs to GitHub Integration, FileManager, storage, or Final GUI specifications; no propagation or compatibility gate is defined for changes in those owners.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "missing_dependency_propagation",
+      "impact": "Owner-contract changes can fail to invalidate or sequence affected LSP PlanUnits.",
+      "builder_discretion": "Dependency edges, change propagation, and compatibility verification remain open.",
+      "feature_keys": [
+        "LSPS-041",
+        "LSPS-042",
+        "LSPS-043",
+        "LSPS-044",
+        "LSPS-046",
+        "LSPS-047"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3293,
+          "line_end": 3293,
+          "exact_quote": "depends_on: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3335,
+          "line_end": 3335,
+          "exact_quote": "- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FileManager.md, ContractName:Plans/storage-plan.md'",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3619,
+          "line_end": 3619,
+          "exact_quote": "- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/FinalGUISpec.md'",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I017",
+      "item_type": "explicit_non_gap",
+      "title": "GUI classification is explicit for each reviewed unit",
+      "statement": "Remote degraded UX, mutation/outage UI, and browser/recovery exclusion are classified as GUI-related, while identity, module layout, projection shapes, and lifecycle constraints are classified as non-GUI runtime or protocol concerns.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": [
+        "LSPS-041",
+        "LSPS-042",
+        "LSPS-043",
+        "LSPS-044",
+        "LSPS-045",
+        "LSPS-046",
+        "LSPS-047"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3347,
+          "line_end": 3347,
+          "exact_quote": "gui_related: true",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3569,
+          "line_end": 3569,
+          "exact_quote": "gui_related: false",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001015-I018",
+      "item_type": "unknown",
+      "title": "Security and privacy details are outside the visible contract",
+      "statement": "The reviewed core requires system keychain/agent credential handling and delegates SSH ownership, but it does not expose the referenced contract's rules for secret persistence, redaction, process environment, host verification, or audit logging; their adequacy is unknown within this blind window.",
+      "severity": "medium",
+      "confidence": "high",
+      "impact": "Security behavior cannot be certified from this excerpt alone.",
+      "builder_discretion": "No security implementation discretion should be inferred; the referenced SSH owner contract must resolve it.",
+      "feature_keys": [
+        "LSPS-042"
+      ],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3346,
+          "line_end": 3346,
+          "exact_quote": "canonical_text: Remote LSP degraded and connection-loss states follow FileManager and SSH owner patterns by showing Connection lost, Reconnect, Work offline when a validated cache exists, system keychain/agent credential handling, Settings > SSH capability/degraded copy, and shared read-only/offline vocabulary.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 3389,
+          "line_end": 3389,
+          "exact_quote": "- Plans/LSPSupport.md owns LSP-specific protocol/client constraints while referenced owner docs retain their SSOT boundaries.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "addressed",
+      "summary": "Remote identity, degraded UX, mutation/outage visibility, stale-token exclusion, module placement, projections, and lifecycle intent are explicitly stated.",
+      "evidence_item_ids": [
+        "A005-001015-I001",
+        "A005-001015-I003",
+        "A005-001015-I006",
+        "A005-001015-I008",
+        "A005-001015-I009",
+        "A005-001015-I010",
+        "A005-001015-I012"
+      ]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "addressed",
+      "summary": "The core identifies offline work, preview-gated remote mutations, diagnostics-only/no-LSP modes, client module capabilities, projection surfaces, and lifecycle supervision limits.",
+      "evidence_item_ids": [
+        "A005-001015-I003",
+        "A005-001015-I006",
+        "A005-001015-I009",
+        "A005-001015-I010",
+        "A005-001015-I012"
+      ]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "gap_found",
+      "summary": "Identity keys and projection fields are named, but normalized mapping inputs/outputs, mutation result semantics, and projection types or invariants are not defined.",
+      "evidence_item_ids": [
+        "A005-001015-I002",
+        "A005-001015-I007",
+        "A005-001015-I011"
+      ]
+    },
+    {
+      "dimension": "contracts",
+      "status": "gap_found",
+      "summary": "Owner, module, and conceptual data contracts exist, but the projection contract and cross-owner dependency representation are incomplete.",
+      "evidence_item_ids": [
+        "A005-001015-I005",
+        "A005-001015-I009",
+        "A005-001015-I010",
+        "A005-001015-I011",
+        "A005-001015-I016"
+      ]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "gap_found",
+      "summary": "Degraded and lifecycle state names are present, but entry signals, mode transitions, state guards, restart flow, and canonical state naming are incomplete or inconsistent.",
+      "evidence_item_ids": [
+        "A005-001015-I004",
+        "A005-001015-I007",
+        "A005-001015-I012",
+        "A005-001015-I013"
+      ]
+    },
+    {
+      "dimension": "authority",
+      "status": "addressed",
+      "summary": "Remote host/root/session authority, LSPSupport protocol ownership, SSH contract consumption, and exclusion of browser/recovery residue are explicit.",
+      "evidence_item_ids": [
+        "A005-001015-I001",
+        "A005-001015-I005",
+        "A005-001015-I008"
+      ]
+    },
+    {
+      "dimension": "ownership",
+      "status": "addressed",
+      "summary": "LSPSupport ownership and the external SSH, FileManager, Final GUI, and storage boundaries are explicitly preserved.",
+      "evidence_item_ids": [
+        "A005-001015-I005",
+        "A005-001015-I008"
+      ]
+    },
+    {
+      "dimension": "consumers",
+      "status": "addressed",
+      "summary": "Settings, GUI remote-editor surfaces, Search, Source Control, Problems, buffers, and diffs are named as consuming or adjacent surfaces.",
+      "evidence_item_ids": [
+        "A005-001015-I003",
+        "A005-001015-I006"
+      ]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "addressed",
+      "summary": "User-visible copy, controls, outage modes, preview behavior, and GUI classification are explicit, with stale browser vocabulary excluded.",
+      "evidence_item_ids": [
+        "A005-001015-I003",
+        "A005-001015-I006",
+        "A005-001015-I008",
+        "A005-001015-I017"
+      ]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "Connection loss, partial mutation failure, degradation, crash, retry, and restart concepts are present, but their recovery transitions, atomicity, exhaustion, and rollback semantics are incomplete.",
+      "evidence_item_ids": [
+        "A005-001015-I004",
+        "A005-001015-I006",
+        "A005-001015-I007",
+        "A005-001015-I013"
+      ]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "unknown",
+      "summary": "Keychain/agent handling is delegated to the SSH owner, but the blind window does not expose the detailed security and privacy contract.",
+      "evidence_item_ids": [
+        "A005-001015-I005",
+        "A005-001015-I018"
+      ]
+    },
+    {
+      "dimension": "propagation",
+      "status": "gap_found",
+      "summary": "Referenced owner contracts are preserved, but dependency arrays and owner-change propagation gates are absent in the reviewed units.",
+      "evidence_item_ids": [
+        "A005-001015-I016"
+      ]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Retry counts, backoff values, and resource ceilings are named, but enforcement, observability, exceedance handling, and terminal recovery are not operationally defined.",
+      "evidence_item_ids": [
+        "A005-001015-I004",
+        "A005-001015-I013",
+        "A005-001015-I014"
+      ]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "gap_found",
+      "summary": "The core states 512MB and 30s limits but does not define metrics, measurement, enforcement, concurrency scope, or platform behavior.",
+      "evidence_item_ids": [
+        "A005-001015-I014"
+      ]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "addressed",
+      "summary": "Browser-panel and preview_mode cleanup residue is explicitly classified as compatibility material outside LSPSupport, and legacy local-only session-key wording is preserved as stale context rather than authority.",
+      "evidence_item_ids": [
+        "A005-001015-I001",
+        "A005-001015-I008"
+      ]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "The supplied gates validate migration and indexing traceability, not executable LSP behavior or failure recovery.",
+      "evidence_item_ids": [
+        "A005-001015-I015"
+      ]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Consequential discretion remains for mapping, retry and offline transitions, workspace-edit failure semantics, projection invariants, lifecycle flow, limit enforcement, dependency propagation, and behavioral tests.",
+      "evidence_item_ids": [
+        "A005-001015-I002",
+        "A005-001015-I004",
+        "A005-001015-I007",
+        "A005-001015-I011",
+        "A005-001015-I013",
+        "A005-001015-I014",
+        "A005-001015-I015",
+        "A005-001015-I016"
+      ]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "The lifecycle vocabulary is internally inconsistent, several operational semantics are absent, and security adequacy is unknown because the referenced SSH contract is outside this blind window.",
+      "evidence_item_ids": [
+        "A005-001015-I013",
+        "A005-001015-I018"
+      ]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

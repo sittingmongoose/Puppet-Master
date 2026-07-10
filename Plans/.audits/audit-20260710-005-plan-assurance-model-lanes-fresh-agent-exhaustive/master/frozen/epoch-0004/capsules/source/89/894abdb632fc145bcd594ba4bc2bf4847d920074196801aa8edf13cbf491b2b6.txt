@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE 1471-1482 >>>
+### `tool.denied` requirements
+When a denial blocks progress, the tool event MUST include or map to:
+- `blocked_reason_code`
+- `failure_class` when applicable
+- effective permission snapshot identifier
+- `allowed_action_ids[]`
+- `headless_denied` flag when the denial was caused by mode limitations
+- side-effect metadata when the denial concerns remote mutation
+
+### No silent fallback rule
+Tools MUST NOT return success-shaped fallbacks for denied work. The denial must remain inspectable as a blocked outcome so the scheduler, chat, and GUI can offer the correct recovery path.
+## Tool Denial and Runtime Action Canonical Alignment (2026-03-09)
+
+<<< AUTHORITATIVE_CORE 1483-1880 >>>
+
+Tool-layer refusals that affect execution MUST collapse into canonical runtime blocked semantics before reaching orchestration or UI layers.
+
+Runtime-facing blocked payloads from tool denials MUST expose:
+- `blocked_reason_code`
+- `failure_class?`
+- `allowed_action_ids[]`
+- guard/rule metadata needed to bind the exact UI command
+- `executed_at_all` boolean
+
+Runtime-facing tool-denial paths MUST NOT publish a parallel `recovery_options[]` schema.
+## Tool Denial Runtime Blocked Payload Consolidation Addendum (2026-03-09)
+
+
+Tool-layer refusals that affect execution MUST normalize into canonical runtime blocked semantics before UI or scheduler layers consume them.
+
+### Canonical runtime-facing payload
+Runtime-facing denial paths MUST expose:
+- `blocked_reason_code`
+- `allowed_action_ids[]`
+- `executed_at_all`
+- prerequisite metadata needed to bind the exact recovery command
+- `failure_class?` only when the denial followed a classified attempt outcome
+
+### Source mapping rules
+- permission-layer denial -> `permission_denied`
+- headless interactive denial -> `headless_ask_denied`
+- user refusal -> `user_declined`
+- FileSafe denial that stops execution -> `filesafe_blocked`
+- plugin/tool hook denial that stops execution -> `plugin_hook_blocked`
+
+### No success-shaped fallback rule
+Tools MUST NOT convert denied work into success-shaped or generic-failure fallbacks. The blocked state must remain inspectable so scheduler, chat, and GUI surfaces can render the correct recovery path.
+
+## Tool Field Name and Taxonomy Alignment
+Tool-originated blocked and denial paths align with the canonical runtime contract.
+
+### Field name correction
+
+
+Tool-originated blocked payloads use `allowed_action_ids[]` only. Deprecated names MUST NOT appear in new tool contracts.
+
+### Canonical blocked reasons
+Tool-denial or post-validation paths use the shared `blocked_reason_code` family, including `validation_blocked` when post-execution validation fails.
+
+### Mutation capability ownership
+Each tool definition MUST include `mutation_capable: bool` (default `false`). This remains the source of truth propagated into planning, safe-point, and recovery decisions.
+
+### Recovery contract
+Tool-originated blocked paths:
+- MUST NOT invent tool-private action arrays outside the canonical runtime action family
+- MUST preserve the blocked state rather than converting it into success-shaped fallback output
+- MUST carry prerequisite metadata needed to bind the exact recovery command
+
+ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/FileSafe.md
+
+## 10. Firecrawl provider integration
+
+Firecrawl is a distinct provider in PM's web stack. This owner section covers configuration, endpoint mapping, async behavior, interact-session flow, credit disclosure, change-tracking behavior, and Firecrawl-specific routing rules. Consumer summaries in other docs defer to this section and to the contract-owned payload fields in `Plans/Contracts_V0.md`.
+
+Packet regeneration treats `## 10` as one coherent owner-section replacement unit: do not preserve a stale parent `## 10` owner body beside newer child `### 10.3` or `### 10.7` replacements for the same Firecrawl subtree.
+
+Drift guard for `Plans/Tools.md#10 Firecrawl provider integration`: this section is the single owner-level Firecrawl subtree; packet repair must collapse two incompatible owner-level truths into the current provider capability/routing canon instead of keeping stale parent and child bodies as peer canon.
+
+ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md
+
+### 10.1 Provider configuration
+
+This section defines the canonical contract for this surface.
+
+Core rules:
+- The Firecrawl configuration field set must preserve proxy_mode with the exact supported enum values and the self-hosted Fire Engine limitation note.
+- The Firecrawl owner section must preserve the base configuration fields and default-disabled state already restored in the live owner doc.
+- Firecrawl provider identity canon includes exact provider ID firecrawl, display name Firecrawl, default priority below Exa and Tavily and above DuckDuckGo, user-adjustable ordering, default-disabled state until API key or self-hosted URL is configured, and retirement of exact stale residue "stale cited-search framing and older `newtools` wording" from owner/provider canon.
+- Firecrawl configuration exposes `timeout_ms?: number` with default 60000 and `proxy_mode?: "basic" | "enhanced" | "auto"` with default `"auto"` for cloud mode; slash lineage `/enhanced/auto` normalizes to the enhanced/auto enum choices rather than adding another mode.
+- Firecrawl `timeout_ms` is provider-level configuration, not a user-facing or per-invocation `webfetch`/web operation parameter; callers express narrower limits through approved run or provider policy rather than a tool input named `timeout`.
+- Provider-reference implementation notes are non-normative PM product vocabulary: confirmed Firecrawl lineage may name Node.js/TypeScript (Express), proprietary Fire Engine with Playwright fallback, Redis, and `playwright-service`, while other provider internals remain outside PM canon unless Firecrawl documents them.
+
+Fields:
+- proxy_mode
+- basic
+- enhanced
+- auto
+- Fire Engine
+- enabled
+- api_key
+- base_url
+- timeout_ms
+- cache_enabled
+- Firecrawl is disabled by default until explicitly enabled in Settings
+
+Labels and values:
+- Firecrawl
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+
+Rules:
+- Provider ID
+- `firecrawl`
+- Display name
+- `Firecrawl`
+- Default priority
+- below Exa, Tavily; above DDG (user-adjustable)
+- Default state
+- disabled (requires API key or self-hosted URL)
+### 10.2 Endpoint inventory
+
+This section defines the canonical contract for this surface.
+
+Core rules:
+- The Firecrawl owner section must preserve the exact endpoint inventory.
+
+Labels and values:
+- Firecrawl
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+
+Rules:
+- /v2/scrape
+- /v2/crawl
+- /v2/map
+- /v2/search
+- /v2/extract
+- /v2/batch/scrape
+- /v2/agent
+- Firecrawl operation endpoints are method-locked for PM routing: `websearch` -> `POST /v2/search`, `webextract` -> `POST /v2/extract`, `webresearch` -> `POST /v2/agent`, `webcrawl` -> `POST /v2/crawl`, `webmap` -> `POST /v2/map`, `webfetch` -> `POST /v2/scrape`, and `batch_webfetch` -> `POST /v2/batch/scrape`.
+- Firecrawl provider-side capability names such as `executeJavascript`, `scrape`, and `pdf` are adapter-lineage only unless a future provider contract maps them; PM must not add them to the `WebAction` enum or expose arbitrary provider code execution as a first-class user tool.
+
+### 10.3 PM-to-Firecrawl mapping
+
+This section defines the canonical contract for this surface.
+
+Core rules:
+- The Firecrawl webextract mapping must preserve structured extraction modes and option surface, not a thin single-URL summary.
+- The Firecrawl webresearch mapping must preserve provider-native no-URL research behavior, navigation/forms/pagination capability, and structured extraction during agent-led research.
+- Firecrawl `webextract` maps PM `url` to provider `urls: [url]` for the strict one-URL PM call shape and maps JSON Schema to provider `schema`; URL wildcards and domain-wide extraction remain provider capabilities but PM still validates scope before dispatch. Provider options `enableWebSearch`, `urlTrace`, and `showSources` remain adapter-boundary options surfaced only through typed provider options or audit metadata. `strictConstrainToURLs` is intentionally not mapped as a PM-exposed parameter because it is unconfirmed; PM's one-URL constraint is enforced by the PM contract before adapter dispatch.
+- Firecrawl `webresearch` accepts `task: string` and returns a `multi-source result + sources/provenance`; it does not imply chaining, autonomous behavior, or a complete behavioral spec beyond the web operation runtime contract.
+- Firecrawl research adapter mapping treats PM `task` as provider `prompt`; `max_sources` is only an approximate adapter hint to `maxCredits` because Firecrawl limiting is credit-based, not source-based.
+- The Firecrawl websearch mapping must preserve provider-specific search behavior and option surface.
+- Firecrawl `websearch` preserves source and category filters where the provider supports them: PM `sources` maps to provider `sources` with supported values `["web", "news", "images"]`, and PM `categories` maps to provider `categories` with supported values `["github", "research", "pdf"]`.
+- Firecrawl `/v2/search` response transformation is exact: provider responses may be source-partitioned as `{ web: [...], images: [...], news: [...] }`, and the adapter flattens them into PM's unified `results` array, tagging each item with `source_type` and preserving per-source rank order. Merge order remains web results first, then news, then images.
+- Firecrawl websearch `scrapeOptions` defaults use `formats: ["markdown"]` and `onlyMainContent: true` unless an explicit supported request narrows or expands that provider-side scrape behavior.
+- Firecrawl interact/browser capabilities are sub-features accessible through `/v2/scrape` `actions` or the interact-session flow; they are not standalone PM core endpoints or separate `/v2` endpoint families.
+- Firecrawl `webmap` sitemap discovery errors are canonical: return `map_timeout` when site map discovery exceeds the provider timeout, and return `map_no_sitemap` when `use_sitemap` is `"only"` but no `sitemap.xml` is found at `root_url`.
+- The Firecrawl owner section must either preserve `changeTracking` with its structured output shape or explicitly retire it as out of scope; it must not disappear silently.
+- The Firecrawl mapping table must preserve all PM operation rows, including the exact batch_webextract mapping POST /v2/extract with urls[].
+- Firecrawl search responses must be transformed into PM's unified search result shape by flattening source-partitioned results into one results array and tagging each item with source_type in a fixed merge order.
+- PM `dedup` maps to Firecrawl `deduplicateSimilarURLs`, preserving Firecrawl default true behavior; PM `filters` map to Firecrawl `includePaths` and `excludePaths`.
+- `webmap` accepts `use_sitemap?: "include" | "only" | "skip"` with default `"include"`; the legacy shorthand `include|only|skip` maps to this enum.
+- Firecrawl `webcrawl` provider options preserve `ignoreRobotsTxt`, `delay`, and webhook callback capability as provider-native adapter controls; PM exposes them only through typed provider options and policy, not as global web or run modes.
+- Firecrawl crawl mapping keeps PM-owned limits ahead of provider defaults: PM `root_url` maps to provider `url`, PM `max_pages` maps to provider `limit`, Firecrawl's provider default `limit` of 10000 does not override PM's default `max_pages = 25`, and callers must raise PM's limit explicitly when larger crawl breadth is intended.
+- Cache-capable Firecrawl operations accept `cache_policy?: { max_age_seconds?: number, store?: boolean }`. The Firecrawl provider default is `{ max_age_seconds: 86400, store: true }`; PM may still apply narrower operation-specific defaults such as the existing webfetch 14400-second read cache where the routing contract says so.
+- Firecrawl provider-cache parameters are adapter-boundary details: PM exposes `cache_policy.max_age_seconds` and maps it to Firecrawl `maxAge`; Firecrawl `minAge` and `storeInCache` are not PM-exposed parameters, and provider default `storeInCache: true` remains subordinate to the PM-owned cache policy.
+- Firecrawl search does not map PM `include_domains` to `scrapeOptions.includeTags`; that source mapping is intentionally retired as unconfirmed. If the effective Firecrawl search route cannot enforce `include_domains` natively, PM applies the domain filter post-search before candidate-source selection.
+- Firecrawl search mapping treats `exclude_domains` as not directly supported by the provider search route; PM filters excluded domains post-search before candidate-source selection. `time_range` maps to provider `tbs`, the Firecrawl time-based search parameter, when that adapter path is selected.
+- Firecrawl change tracking maps PM `change_tracking: true` to a `formats` entry `{type:"changeTracking"}` where the provider route supports it. Legacy `cache_ttl` normalizes to `cache_policy.max_age_seconds`; PM exposes seconds while the Firecrawl adapter converts to provider `maxAge` milliseconds.
+- Webcrawl `change_tracking` is PM-owned for crawl diffs: it requires storing previous crawl state and comparing the new crawl against that state. Firecrawl does not natively diff whole crawls for PM's per-page crawl contract, so any provider `changeTracking` output is subordinate to PM persistence, comparison, and audit semantics.
+- PM `websearch` maps to native provider search when available and reports `execution_path?: string` as `provider_search_native`; the composed fallback path reports `pm_search_plus_site_reader` when search discovery is paired with Site Reader page reads.
+- PM `webextract` accepts `cache_policy?: { max_age_seconds?: number, store?: boolean }` with default `{ max_age_seconds: 14400, store: true }`.
+- PM `webresearch` reports `execution_path?: string` as `provider_firecrawl_agent` when delegated to `/v2/agent`, or `pm_research_composed` when PM composes search plus read/extract cycles itself. For Firecrawl agent delegation, `depth_hint` is an adapter hint for provider model selection: PM `fast` maps to `spark-1-mini`, PM `deep` maps to `spark-1-pro`, and `balanced` or absent depth uses the configured/provider default model rather than inventing a PM-owned model.
+- PM `webcrawl` accepts `cache_policy?: { max_age_seconds?: number, store?: boolean }` with default `{ max_age_seconds: 86400, store: true }`.
+
+Fields:
+- webextract
+- JSON Schema support
+- prompt-driven extraction behavior
+- URL wildcards
+- enableWebSearch
+- webresearch
+- no-URL natural-language research
+- navigation/forms/pagination capability
+- structured extraction behavior during provider-native research
+- Serper-backed Google-result behavior
+- sources
+- categories
+- `query` -> `query`
+- `max_results` -> `limit`
+- configurable `limit` parameter; actual cap varies by plan and source type
+- PM default 8
+- optional result scraping behavior in Firecrawl `websearch`
+- changeTracking.status
+- changeTracking.previous_content_ref
+- changeTracking.diff_summary_ref
+- changeTracking.checked_at_utc
+- Response transformation
+- Adapter MUST flatten into PM's unified `results` array
+ContractRef: ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads
+- tagging each item with `source_type`
+- Merge order: web results first, then news, then images
+- `dedup` -> `deduplicateSimilarURLs`
+- `filters` -> `includePaths` + `excludePaths`
+- `use_sitemap?: "include" | "only" | "skip"`
+- `cache_policy?: { max_age_seconds?: number, store?: boolean }`
+- default `{ max_age_seconds: 86400, store: true }`
+- `provider_search_native`
+- `pm_search_plus_site_reader`
+- `provider_firecrawl_agent`
+- `pm_research_composed`
+- default `{ max_age_seconds: 14400, store: true }`
+
+Labels and values:
+- Firecrawl
+- websearch
+- webfetch
+- webcrawl
+- webmap
+
+Rules:
+- changeTracking { status: changed | unchanged | no_previous_version, previous_checked_at_utc?, previous_content_ref?, diff_summary_ref?, checked_at_utc }
+- change_status: "new" | "same" | "changed" | "removed"
+- pages[].change_status
+- change_summary
+- explicit out-of-scope retirement if `changeTracking` is not MVP
+- no silent disappearance of the capability
+- batch_webfetch
+- batch_webextract
+- POST /v2/extract
+- urls[]
+### 10.4 Async jobs and status contract
+
+This section defines the canonical contract for this surface.
+
+Core rules:
+- The Firecrawl async contract must preserve timeout behavior tied to timeout_ms and partial-result survival on timeout.
+- Long-running web operations must preserve the structured progress_event payload and cancellation-with-partial-results contract. `webcrawl` is always potentially long because it crawls N pages sequentially/in parallel; `webmap` is usually fast for sitemap parsing but can be slow during link traversal on large sites; autonomous `webresearch` can involve multiple search-read cycles; `batch_webfetch` and `batch_webextract` are potentially long because they process multiple URLs and may reach the locked batch timeout envelope. `webfetch`, `websearch`, and `webextract` remain synchronous from PM's perspective as single-request operations.
+- The activity stream Stop button cancels long-running operations and returns partial results collected so far with `cancelled: true`.
+- The Firecrawl async contract must preserve the exact poll ladder and status family already restored in the owner section.
+- Async Firecrawl operations begin with `POST /v2/<operation>` and return `{ success: true, id: "<job_id>" }`; PM polls `GET /v2/<operation>/<job_id>` until the response `status: "scraping" | "processing" | "completed" | "failed" | "cancelled"` reaches a terminal value. The returned `job_id` stays in lineage and audit metadata; polling is MVP, while provider `/webhooks` / webhook `POST` delivery is a non-MVP provider option.
+- If a future webhook-based completion path is enabled, Firecrawl webhook delivery must verify `X-Firecrawl-Signature` as HMAC-SHA256 of the payload before accepting the callback. Signature verification is MANDATORY for that future path and is NOT MVP while PM uses polling.
+- Poll responses may include partial `data` while in-progress. On `completed`, PM returns full results to the tool layer; on `failed`, PM maps the provider error into PM's error-code family; on timeout, PM returns a `timeout` error with any materialized partial results.
+- Chat and activity surfaces must not appear-complete while `Researching Web` is still performing multi-step search, read, or extraction work; they render intermediate `progress_event` updates until the final terminal status is known. Batch URL operations surface count-based progress such as `Fetching sites: 5/20 complete`, and each URL is cached independently under the same cache semantics as a single `webfetch`.
+
+Fields:
+- timeout_ms
+- timeout when polling exceeds `timeout_ms`
+- partial results survive timeout if already materialized
+- webcrawl
+- webmap
+- webresearch
+- batch_webfetch
+- batch_webextract
+- crawling N pages sequentially/in parallel
+- progress_event
+- appear-complete
+- Researching Web
+- tool_use_id
+- operation
+- phase
+- detail
+- pages_completed
+- pages_total
+- elapsed_ms
+- estimated_remaining_ms
+- cancelled: true
+- 2s, 4s, 8s, 15s, 30s
+- scraping
+- processing
+- completed
+- failed
+- cancelled
+
+Labels and values:
+- Firecrawl
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+### 10.5 Credit and cost contract
+
+This section defines the canonical contract for this surface.
+
+Core rules:
+- Routing must remain cost-aware when multiple providers offer similar capability: PM prefers lower `estimated_credit_cost` unless capability, policy, or freshness provides a stronger `adapter_selection_reason`; static priority alone is insufficient, and estimates above 100 credits require cost confirmation before execution while the 500 credits cap remains aligned with routing.
+- The Firecrawl credit and disclosure contract must preserve the warning threshold, hard cap, and self-hosted billing exception already restored in the owner section.
+- Firecrawl Zero Data Retention (ZDR) is NOT MVP; it is an enterprise future consideration. If enabled by global adapter config `firecrawl_zdr?: boolean` and not per-request, Firecrawl uses `zeroDataRetention: true` on scrape (+1 credit/page) and `enterprise: ["zdr"]` on search (10 credits/10 results). When ZDR is enabled, PM cache is the ONLY persistence layer.
+- Firecrawl cost references are advisory routing inputs, not user billing truth. PM records the provider endpoint, estimated credit class, `estimated_credit_cost`, ZDR modifier, and any self-hosted exception in audit metadata before applying warnings or caps.
+
+| PM operation | Firecrawl endpoint | Base credit cost | Modifiers |
+|---|---|---|---|
+| `websearch` | `/v2/search` | 2 per 10 results | `scrapeOptions` add scrape costs; ZDR search uses 10 credits/10 results. |
+| `webfetch` | `/v2/scrape` | 1 credit per page | enhanced proxy +4, JSON mode +4, ZDR +1. |
+| `webfetch` interact session | `/v2/scrape/{id}/interact` | 2/min for code or 7/min for AI | session-time based. |
+| `webextract` | `/v2/extract` | variable extraction credits | JSON mode and page-count modifiers apply when provider-supported. |
+| `webresearch` | `/v2/agent` | dynamic, approximately 20-2500 | `spark-1-mini` is a lower-cost provider model option when selected through adapter policy. |
+| `webcrawl` | `/v2/crawl` | 1 credit per crawled page | enhanced proxy and JSON mode modifiers apply per page. |
+| `webmap` | `/v2/map` | low/undocumented provider cost | PM treats uncertainty as a warning input rather than hiding it. |
+| `batch_webfetch` | `/v2/batch/scrape` | 1 credit per URL | Same modifiers as `webfetch`; legacy `batch_scrape` normalizes to `batch_webfetch`. |
+
+Batch credit awareness is mandatory before dispatch: Firecrawl `batch_webfetch` estimates `per_url_credit_estimate` and computes `url_count × per_url_credit_estimate`; this estimate is recorded as `estimated_credit_cost` where available and feeds the >100 credits warning threshold before large URL batches execute.
+
+Firecrawl-native `/v2/batch/scrape` options preserve `ignoreInvalidURLs` for skipping invalid URLs without failing the whole batch and `maxConcurrency` for provider-side parallelism limits.
+
+Firecrawl `/v2/agent` delegation uses the same `estimated_credit_cost` confirmation rule before delegating autonomous `webresearch`; the 20-2500 credit range is treated as a warning input, not as silent background spend.
+
+Labels and values:
+- Firecrawl
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+
+Rules:
+- cost-aware selection when providers offer similar capability
+- >100 credits
+- 500 credits
+- cost-aware selection
+- static priority alone is insufficient
+- self-hosted Firecrawl does not use credit billing
+### 10.6 Interact-session contract
+
+Firecrawl's `/interact` endpoint provides a STATEFUL multi-turn browser session, distinct from the one-shot `actions` parameter on `/scrape`. Firecrawl supports that session through `/v2/scrape/{scrapeId}/interact`.
+
+Session flow:
+1. `POST /v2/scrape { url }` returns a `scrapeId` in metadata.
+2. `POST /v2/scrape/{scrapeId}/interact { prompt | code }` resumes the same browser session.
+3. Multiple interact calls reuse session state including DOM, cookies, and scroll position.
+4. `DELETE /v2/scrape/{scrapeId}/interact` terminates the session and releases provider resources.
+
+Interaction modes and session properties:
+- prompt-based interaction is natural-language driven and maps well to PM's higher-level action intent.
+- Firecrawl prompt-based mode is an ALTERNATIVE execution strategy to PM's action-by-action approach: PM may send one composite prompt describing all intended actions, and Firecrawl handles navigation autonomously inside the provider session.
+- code-based interaction is an adapter-internal precision path shaped as `code: string, codeOptions: { language: "nodejs" | "python" | "bash" }`; it costs 2 credits/min where the provider reports that rate, and PM does not expose raw provider code execution as a first-class user tool surface.
+- Simple read-only, click, or type sequences may use prompt-based mode; custom `wait_for` timeouts, precise-coordinate interactions, and dynamic DOM-dependent actions route to code-based mode.
+- If Firecrawl interact returns a timeout, PM retries once; if the retry still fails, PM returns partial content with a warning rather than a success-shaped full read.
+- sessions default to a 10-minute TTL with a 5-minute inactivity timeout.
+- responses may include `liveViewUrl` and `interactiveLiveViewUrl`.
+- PM does not surface those URLs as first-class MVP UI because PM owns the browser surface directly.
+- When Firecrawl is the selected provider for `webfetch` or `webextract` with actions, PM uses the Firecrawl interact session model above instead of a one-shot `actions` parameter, so browser state, scroll, cookies, and provider cleanup remain explicit.
+- In that selected-provider action path, PM starts scrape to obtain `scrapeId`, translates each PM `WebAction` into the chosen interact `prompt` or `code` mode, captures final page state into the owning `webfetch` or `webextract` result after all actions, and then performs `DELETE /v2/scrape/{scrapeId}/interact` cleanup.
+- Persistent profiles are not an MVP feature for this interact surface. If a future profile bridge is added, the provider payload shape is `profile: { name: string, saveChanges: boolean }`, `saveChanges` controls whether cookies and localStorage persist after the session, and legacy `/localStorage` slash notation is retained only as lineage for the canonical `localStorage` field name.
+
+ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Tools.md#3.5D-web-operation-family-runtime-contract
+
+### 10.7 Audit, error, and self-hosted rules
+
+This section defines the canonical contract for this surface.
+
+ContractRef: Plans/FinalGUISpec.md#15.7 Permission approval card widget, Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, Plans/storage-plan.md#4.4 Activity transparency payloads, Plans/Permissions_System.md#3.4A Web-operation permission-key derivation, Plans/Contracts_V0.md#3.4A Web error taxonomy and applicability
+
+Core rules:
+- Preserve the Firecrawl-specific audit payload keys as exact contract-owned fields.
+- PM must not silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl, and deployment-mode disclosure must remain visible.
+- The Firecrawl owner section must preserve shared routing/audit disclosure for requested/effective provider selection, fallback visibility, denied-web projection, and canonical web error taxonomy linkage.
+- Web tool permission keys, approval-card summary templates, session-approval semantics, and their exact approval-card cross-reference target remain canonical in Permissions_System and must not be re-invented from thin tool descriptions or stale Ask UI links.
+- The per-contract web error applicability table remains required canon and must stay aligned with provider-to-PM error mapping.
+- Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure.
+- Permission canon must preserve the four-tier approval ladder, question default allow only when HITL is available, keep the six web tools independently visible and ask-gated in plan presets, allow strict read_only/no-network presets to deny them, and carry the blocked/unavailable payload fields through to permission-card consumers.
+- Firecrawl-specific HTTP and provider errors must map to PM canonical error codes exactly as specified.
+- Firecrawl `success: false` with an otherwise unmapped provider error maps to the closest PM canonical error code and preserves the original provider detail in `error_message`.
+- Legacy Firecrawl/browser `stealth` configuration is retired for PM web tools. `stealth` is not exposed as a PM tool input, not stored as provider routing policy, and not accepted as canonical Firecrawl configuration; adapter-internal provider behavior may surface only through capability disclosure or structured warnings.
+- Firecrawl scrape traceability is recorded as `firecrawl_scrape_id?: string` from response `data.metadata.scrapeId`; legacy `scrape_id` is retired as an incorrect canonical field name and may appear only as transfer lineage for the corrected JSON path.
+- Firecrawl usage/cache traceability is recorded with exact provider lineage: `firecrawl_credits_used?: number` comes from response `creditsUsed`, and `firecrawl_cache_state?: "hit" | "miss"` comes from response `metadata.cacheState`.
+
+Fields:
+- firecrawl_credits_used
+- firecrawl_cache_state
+- firecrawl_scrape_id
+- firecrawl_scrape_id?: string
+- data.metadata.scrapeId
+- scrape_id (retired alias)
+- requested_adapter_id
+- effective_adapter_id
+- adapter_selection_reason
+- execution_path
+- provider_search_native
+- pm_search_plus_site_reader
+- pm_site_reader
+- provider_firecrawl_scrape
+- pm_fetch_fallback
+- provider_firecrawl_agent
+- pm_research_composed
+- provider_fallback_summary
+- warnings_count
+- error_code
+- projection_freshness
+- projection_health
+- HTTP 401/403 → `adapter_unavailable`
+- HTTP 429 → `rate_limited`
+- HTTP 402 → `rate_limited`
+- HTTP 500/502/503 → `adapter_unavailable`
+- Timeout → `timeout`
+- Firecrawl crawl timeout or provider crawl timeout → `crawl_timeout`
+- HTTP 404 → `content_not_found`
+- HTTP 400 → `invalid_input`
+- "Blocked by robots.txt" → `crawl_robots_blocked` or `content_blocked`
+- "Content too large" → `content_too_large`
+
+<<< CONTEXT_AFTER 1881-1892 >>>
+
+Labels and values:
+- Firecrawl
+- websearch
+- webfetch
+- webextract
+- webresearch
+- webcrawl
+- webmap
+
+Rules:
+- PM MUST NOT silently switch between self-hosted Firecrawl and hosted/cloud Firecrawl

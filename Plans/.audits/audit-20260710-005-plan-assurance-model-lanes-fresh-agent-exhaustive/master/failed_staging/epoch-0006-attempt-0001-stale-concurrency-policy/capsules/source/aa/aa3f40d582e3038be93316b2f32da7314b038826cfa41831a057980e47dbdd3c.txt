@@ -1,0 +1,364 @@
+<<< CONTEXT_BEFORE canonical_document_lines=7585-7596 >>>
+L00007585	  - pldg-20260614-002-part-3-fable-cleanup:atom-0032
+L00007586	  - pldg-20260614-002-part-3-fable-cleanup:atom-0048
+L00007587	preserved_exact_tokens: ["Approval Scope Key", "approval_scope_key", "runtime identity envelope", "tool/context/mode", "narrow lane/run/actor default carryover", "approval_scope_level", "crossing lane, run, project, or account boundaries", "actor/lane/run/account", "session approval carryover", "reject-cascade", "single-session/single-lane"]
+L00007588	negative_constraints:
+L00007589	  - Do not allow approval reuse from a provider session id alone.
+L00007590	  - Do not allow implicit cross-lane, cross-run, cross-project, or cross-account approval carryover.
+L00007591	  - Do not preserve single-session/single-lane reject-cascade behavior without actor/lane/run/account identity scope.
+L00007592	owner_hints: [Plans/Permissions_System.md, Plans/Prompt_Pipeline.md, Plans/human-in-the-loop.md]
+L00007593	```
+L00007594	
+L00007595	## Ledger Compile Addendum - pldg-20260616-001
+L00007596	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=7597-7931 >>>
+L00007597	### PS-114 - Goal Runtime Approval Scope Consumer
+L00007598	
+L00007599	```yaml
+L00007600	plan_unit_id: PS-114
+L00007601	unit_type: requirement
+L00007602	status: accepted
+L00007603	owner_doc: Plans/Permissions_System.md
+L00007604	canonical_text: >-
+L00007605	  Permissions_System owns existing approval-scope, permission snapshot, approval reuse, and blocked-action payload rules consumed by Goal Runtime high-risk actions. Goal Runtime invokes approval and blocks invisible goals outside predeclared authority, but it does not redefine the permission ladder, approval-scope carryover, or blocked payload schema.
+L00007606	gui_related: false
+L00007607	gui_classification_reason: Approval scope, permission snapshots, and blocked-action payloads are permission/runtime policy, not visual presentation.
+L00007608	depends_on:
+L00007609	  - PS-113
+L00007610	  - CV-286
+L00007611	  - GRS-020
+L00007612	unblocks: []
+L00007613	acceptance_criteria:
+L00007614	  - Goal Runtime approval requests use permission-owned approval scope and permission snapshot semantics.
+L00007615	  - Invisible/internal goals block outside predeclared authority instead of inventing local permission rules.
+L00007616	  - Approval reuse and blocked-action payloads follow Permissions_System carryover and permission-ladder rules.
+L00007617	  - Goal Runtime source atoms support the approval boundary; Permissions_System remains the owner for approval-scope key shapes, snapshots, reuse, and blocked payload schemas.
+L00007618	validation_surfaces:
+L00007619	  - python3 scripts/pm-plan-index.py validate
+L00007620	  - future Goal Runtime permission/approval review
+L00007621	risk_class: goal_runtime_permission_scope_drift
+L00007622	reasoning_tier: high
+L00007623	context_scope: goal_runtime_permissions
+L00007624	implementation_surfaces:
+L00007625	  - Plans/Permissions_System.md
+L00007626	  - Plans/Goal_Runtime_System.md
+L00007627	  - Plans/Contracts_V0.md
+L00007628	node_compile_hint:
+L00007629	  mode: goal_runtime_approval_scope_consumer
+L00007630	  create_worknodes: false
+L00007631	source_lineage:
+L00007632	  - pldg-20260616-001-goal-runtime-system:atom-0008
+L00007633	  - pldg-20260616-001-goal-runtime-system:atom-0108
+L00007634	  - pldg-20260616-001-goal-runtime-system:dec-0022
+L00007635	preserved_exact_tokens:
+L00007636	  - "approval_scope_key"
+L00007637	  - "permission snapshot"
+L00007638	  - "approval reuse"
+L00007639	  - "blocked-action payload"
+L00007640	  - "predeclared authority"
+L00007641	  - "explicit user approval"
+L00007642	negative_constraints:
+L00007643	  - Do not let Goal Runtime redefine the permission ladder.
+L00007644	  - Do not let invisible/internal goals exceed predeclared authority.
+L00007645	  - Do not infer new permission payload schemas solely from Goal Runtime approval-boundary atoms.
+L00007646	owner_hints:
+L00007647	  - Plans/Permissions_System.md
+L00007648	  - Plans/Goal_Runtime_System.md
+L00007649	  - Plans/Contracts_V0.md
+L00007650	```
+L00007651	
+L00007652	## Ledger Compile Addendum - pldg-20260616-002
+L00007653	
+L00007654	### PS-115 - GoalRun Write Authority And Lane Blockers
+L00007655	
+L00007656	```yaml
+L00007657	plan_unit_id: PS-115
+L00007658	unit_type: requirement
+L00007659	status: accepted
+L00007660	owner_doc: Plans/Permissions_System.md
+L00007661	canonical_text: >-
+L00007662	  Permissions_System owns GoalRun write authority checks for read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer modes, plus blocked-action payloads for missing lane bindings, overlapping worktree leases, unsafe/destructive scope, and invisible/internal goals that exceed predeclared authority. Permission decisions consume capability_lane and write_mode from contract/storage runtime records and return recoverable blockers where user, Settings, worktree, or approval action can resolve the issue.
+L00007663	gui_related: false
+L00007664	gui_classification_reason: Write authority and blocker payloads are permission/runtime policy; GUI surfaces consume their visible projections.
+L00007665	depends_on:
+L00007666	  - PS-114
+L00007667	  - MS-109
+L00007668	unblocks: []
+L00007669	acceptance_criteria:
+L00007670	  - Permission checks consume write_mode values read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer.
+L00007671	  - Missing capability lanes and overlapping write surfaces produce typed blockers.
+L00007672	  - Invisible/internal goals cannot exceed predeclared authority.
+L00007673	  - Recoverable blockers name the user, Settings, worktree, or approval action needed to proceed.
+L00007674	validation_surfaces:
+L00007675	  - python3 scripts/pm-plan-index.py validate
+L00007676	  - future GoalRun permission/blocker review
+L00007677	risk_class: goalrun_write_authority_drift
+L00007678	reasoning_tier: high
+L00007679	context_scope: goalrun_permissions
+L00007680	implementation_surfaces:
+L00007681	  - Plans/Permissions_System.md
+L00007682	  - Plans/Models_System.md
+L00007683	  - Plans/Contracts_V0.md
+L00007684	  - Plans/storage-plan.md
+L00007685	  - Plans/WorktreeGitImprovement.md
+L00007686	  - Plans/Goal_Runtime_System.md
+L00007687	node_compile_hint:
+L00007688	  mode: goalrun_write_authority
+L00007689	  create_worknodes: false
+L00007690	source_lineage:
+L00007691	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0036
+L00007692	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0037
+L00007693	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0066
+L00007694	  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0102
+L00007695	preserved_exact_tokens:
+L00007696	  - "read_only"
+L00007697	  - "proposal_only"
+L00007698	  - "patch_only"
+L00007699	  - "isolated_worktree"
+L00007700	  - "leased_writer"
+L00007701	  - "parent_writer"
+L00007702	  - "capability_lane"
+L00007703	  - "write_mode"
+L00007704	  - "unconfigured-lane"
+L00007705	negative_constraints:
+L00007706	  - Do not let invisible/internal goals exceed predeclared authority.
+L00007707	  - Do not allow overlapping live writes without a permission-owned lease decision.
+L00007708	owner_hints:
+L00007709	  - Plans/Permissions_System.md
+L00007710	  - Plans/Models_System.md
+L00007711	  - Plans/Contracts_V0.md
+L00007712	  - Plans/storage-plan.md
+L00007713	  - Plans/WorktreeGitImprovement.md
+L00007714	```
+L00007715	
+L00007716	## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+L00007717	
+L00007718	### PS-116 - Plans-To-Code Critical Escalation And External Effects
+L00007719	
+L00007720	```yaml
+L00007721	plan_unit_id: PS-116
+L00007722	unit_type: requirement
+L00007723	status: accepted
+L00007724	owner_doc: Plans/Permissions_System.md
+L00007725	canonical_text: >-
+L00007726	  Permissions_System owns critical user-escalation and external-effect policy for plans-to-code execution. Default hands-off execution escalates to the user only for missing credentials or secrets, billing/payment/legal/license acceptance, unsafe destructive operation, irreversible external side effect, unrecoverable environment failure, true product decision with no inferable answer, or security-sensitive approval. Execution policy must define network access policy, secret access policy, filesystem write policy, destructive command policy, database/test-data policy, browser profile isolation, real-account versus sandbox-account policy, credential redaction, and artifact privacy/retention policy before risky WorkNode execution proceeds.
+L00007727	  Policy field names include network_access_policy, secret_access_policy, and destructive_command_policy, and critical blockers include configured checkpoints only when explicit HITL or approval policy calls for them.
+L00007728	gui_related: false
+L00007729	gui_classification_reason: Permission, approval, network, secrets, destructive command, and privacy policy are security/runtime behavior.
+L00007730	depends_on: [PS-115]
+L00007731	unblocks: [EP-102, GRS-030, HITL-036]
+L00007732	acceptance_criteria:
+L00007733	  - Default user escalation is critical-only.
+L00007734	  - Network, secrets, filesystem writes, destructive commands, database/test data, browser profile isolation, real/sandbox account, credential redaction, and artifact privacy/retention are explicit policy surfaces.
+L00007735	  - Permission blockers name recoverable user, Settings, worktree, or approval action when one exists.
+L00007736	validation_surfaces:
+L00007737	  - python3 scripts/pm-plans-verify.py run-gates
+L00007738	  - future external-effects policy validation
+L00007739	risk_class: unsafe_external_effect
+L00007740	reasoning_tier: high
+L00007741	context_scope: plans_to_code_permissions
+L00007742	implementation_surfaces: [Plans/Permissions_System.md, Plans/Executor_Protocol.md, Plans/Goal_Runtime_System.md, Plans/FileSafe.md, Plans/Runtime_Artifacts_Panel.md]
+L00007743	node_compile_hint: {mode: critical_escalation_external_effects, create_worknodes: false}
+L00007744	source_lineage:
+L00007745	  - pldg-20260617-001-plans-to-code-handoff:atom-0044
+L00007746	  - pldg-20260617-001-plans-to-code-handoff:atom-0045
+L00007747	  - pldg-20260617-001-plans-to-code-handoff:atom-0049
+L00007748	  - pldg-20260617-001-plans-to-code-handoff:dec-0019
+L00007749	  - pldg-20260617-001-plans-to-code-handoff:dec-0021
+L00007750	  - pldg-20260617-001-plans-to-code-handoff:corr-0009
+L00007751	preserved_exact_tokens:
+L00007752	  - "critical authority blockers"
+L00007753	  - "credentials/secrets"
+L00007754	  - "billing/payment/legal/license"
+L00007755	  - "unsafe destructive operation"
+L00007756	  - "irreversible external side effect"
+L00007757	  - "security-sensitive approval"
+L00007758	  - "network access policy"
+L00007759	  - "secret access policy"
+L00007760	  - "destructive command policy"
+L00007761	  - "browser profile isolation"
+L00007762	  - "credential redaction"
+L00007763	negative_constraints:
+L00007764	  - Do not ask the user for ordinary row-level uncertainty in default mode.
+L00007765	owner_hints:
+L00007766	  - Plans/Permissions_System.md
+L00007767	  - Plans/FileSafe.md
+L00007768	  - Plans/Executor_Protocol.md
+L00007769	  - Plans/Runtime_Artifacts_Panel.md
+L00007770	```
+L00007771	
+L00007772	ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/FileSafe.md
+L00007773	
+L00007774	
+L00007775	## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+L00007776	
+L00007777	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+L00007778	
+L00007779	### PS-117 - Planning Setup Authority, Remote Context, Secrets, And Testing Permissions
+L00007780	
+L00007781	```yaml
+L00007782	plan_unit_id: PS-117
+L00007783	unit_type: requirement
+L00007784	status: accepted
+L00007785	owner_doc: Plans/Permissions_System.md
+L00007786	canonical_text: 'Planning intake can attach an existing local directory, Git repository, optional GitHub repository, or remote SSH host and project root, recording host, path, repository identity, currentness, and permissions. Clone, fork, repository creation, git init, remote changes, branch checkout or creation, worktree creation, commit, push, PR creation, stash, discard, reset, and protected-branch operations require the applicable permission policy and durable receipts. For an SSH project, discovery, FileSafe, Git, worktrees, commands, testing, path authority, safe points, and execution occur on the remote host through the authorized adapter, with no silent local fallback. Planning, PRD, Plan Pack, WorkNodeRequest, receipts, logs, and UI projections may identify required secret classes or permission scopes but must carry references or ephemeral handles rather than secret values. Test Capability Discovery searches current official
+L00007787	  and primary sources for appropriate live testing, hot reload, live preview, browser automation, GUI automation, simulator, emulator, device, cloud, accessibility, performance, security, and project-native testing methods relevant to the technology stack. Global or privileged installation, paid services, license acceptance, account creation, credential use, device enrollment, or material external effects require applicable authority and may become a typed blocker rather than an unsafe silent install. Visible testing, screenshots, video, logs, console, network traces, and artifacts apply secret and sensitive-data redaction before display or persistence.'
+L00007788	gui_related: true
+L00007789	gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+L00007790	depends_on: []
+L00007791	unblocks: []
+L00007792	acceptance_criteria:
+L00007793	- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+L00007794	- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+L00007795	- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+L00007796	validation_surfaces:
+L00007797	- python3 scripts/pm-plan-index.py validate
+L00007798	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+L00007799	risk_class: stale_or_forbidden_behavior
+L00007800	reasoning_tier: high
+L00007801	context_scope: ledger_to_plans_compile
+L00007802	implementation_surfaces:
+L00007803	- Plans/Permissions_System.md
+L00007804	- Plans/Planning_Wizard.md
+L00007805	- Plans/GitHub_Integration.md
+L00007806	- Plans/FileSafe.md
+L00007807	- Plans/WorktreeGitImprovement.md
+L00007808	- Plans/Executor_Protocol.md
+L00007809	- Plans/Plan_To_Node_Compilation.md
+L00007810	- Plans/Automated_Testing_System.md
+L00007811	- Plans/Tools.md
+L00007812	- Plans/human-in-the-loop.md
+L00007813	- Plans/Runtime_Artifacts_Panel.md
+L00007814	node_compile_hint:
+L00007815	  mode: canonical_planunit_from_bootstrap_ledger
+L00007816	  create_worknodes: false
+L00007817	  create_nodeseeds: false
+L00007818	source_lineage:
+L00007819	- pldg-20260618-001-prd-planning-wizard:atom-0068
+L00007820	- pldg-20260618-001-prd-planning-wizard:atom-0070
+L00007821	- pldg-20260618-001-prd-planning-wizard:atom-0075
+L00007822	- pldg-20260618-001-prd-planning-wizard:atom-0079
+L00007823	- pldg-20260618-001-prd-planning-wizard:atom-0084
+L00007824	- pldg-20260618-001-prd-planning-wizard:atom-0087
+L00007825	- pldg-20260618-001-prd-planning-wizard:atom-0097
+L00007826	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md#SRC-PROJECT
+L00007827	- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+L00007828	source_atom_ids:
+L00007829	- atom-0068
+L00007830	- atom-0070
+L00007831	- atom-0075
+L00007832	- atom-0079
+L00007833	- atom-0084
+L00007834	- atom-0087
+L00007835	- atom-0097
+L00007836	decision_refs:
+L00007837	- dec-0014
+L00007838	- dec-0015
+L00007839	- dec-0017
+L00007840	- dec-0019
+L00007841	correction_refs:
+L00007842	- corr-0013
+L00007843	preserved_exact_tokens:
+L00007844	- local path
+L00007845	- Git repository
+L00007846	- GitHub
+L00007847	- SSH
+L00007848	- authority
+L00007849	- receipt
+L00007850	- git init
+L00007851	- push
+L00007852	- PR creation
+L00007853	- remote host
+L00007854	- no silent local fallback
+L00007855	- secret reference
+L00007856	- ephemeral handle
+L00007857	- official sources
+L00007858	- live testing
+L00007859	- hot reload
+L00007860	- live preview
+L00007861	- privileged installation
+L00007862	- paid service
+L00007863	- license acceptance
+L00007864	- redaction
+L00007865	negative_constraints:
+L00007866	- Do not run against an unrelated local copy when remote context is active.
+L00007867	- Do not persist credentials or secret values in ledgers, Plans, compile artifacts, receipts, logs, or Orchestrator projections.
+L00007868	- Do not rely solely on stale internal model knowledge for current tools, versions, setup methods, or platform availability.
+L00007869	- Do not expose credentials, tokens, personal data, or protected project content through visible testing.
+L00007870	owner_hints:
+L00007871	- Plans/Planning_Wizard.md
+L00007872	- Plans/GitHub_Integration.md
+L00007873	- Plans/FileSafe.md
+L00007874	- Plans/Permissions_System.md
+L00007875	- Plans/WorktreeGitImprovement.md
+L00007876	- Plans/Executor_Protocol.md
+L00007877	- Plans/Plan_To_Node_Compilation.md
+L00007878	- Plans/Automated_Testing_System.md
+L00007879	- Plans/Tools.md
+L00007880	- Plans/human-in-the-loop.md
+L00007881	- Plans/Runtime_Artifacts_Panel.md
+L00007882	```
+L00007883	
+L00007884	## Ledger Compile Addendum - pldg-20260622-001-fff
+L00007885	
+L00007886	### PS-118 - Discovery Permission Snapshot, Host-Trust, And Redaction Fields
+L00007887	
+L00007888	```yaml
+L00007889	plan_unit_id: PS-118
+L00007890	unit_type: requirement
+L00007891	status: accepted
+L00007892	owner_doc: Plans/Permissions_System.md
+L00007893	canonical_text: >-
+L00007894	  Permissioned discovery requests, results, and receipts carry permission_snapshot_id, approval_scope_key, requested_remote_identity, effective_remote_identity, host_trust_state or known-host outcome, credential_handle_ref without secret material, remote_command_policy_result, and redaction_profile where applicable. Remote manifest discovery is permission/FileSafe-gated before dispatch, and SSH auth failures, passphrase prompts, known-host changes, remote command denial, host unavailable, manifest missing, and approval-required states emit explicit fallback/error receipts plus user-visible prompts or degraded states where appropriate; they never silently become fresh local success results.
+L00007895	gui_related: false
+L00007896	gui_classification_reason: This is permission, SSH trust, credential-handle, and redaction contract ownership; prompt presentation is consumed by GUI docs.
+L00007897	depends_on: [PS-097, PS-098, PS-105, PS-106, PS-110, PS-117, F2-191]
+L00007898	unblocks: [SP-218, ATS-011, ACD-422]
+L00007899	acceptance_criteria:
+L00007900	  - Discovery never stores or displays secret material in permission fields, cache keys, receipts, diagnostics, or prompts.
+L00007901	  - SSH known-host/auth/passphrase/remote-command failures are explicit policy states, not fresh local successes.
+L00007902	  - Receipts preserve permission snapshots and redaction profiles sufficient for audit without leaking protected paths or credentials.
+L00007903	validation_surfaces:
+L00007904	  - python3 scripts/pm-plan-index.py validate
+L00007905	  - Future permission-gated discovery tests.
+L00007906	  - Future SSH auth, known-host, passphrase, remote command denial, and redaction tests.
+L00007907	risk_class: permission_trust_leak
+L00007908	reasoning_tier: high
+L00007909	context_scope: discovery_permission_envelope
+L00007910	implementation_surfaces: [Plans/Permissions_System.md, future DiscoveryService permission context, future SSH prompt flow]
+L00007911	node_compile_hint: {mode: permission_snapshot_trust_contract, create_worknodes: false, create_nodeseeds: false}
+L00007912	source_lineage:
+L00007913	  - pldg-20260622-001-fff:atom-0057
+L00007914	  - pldg-20260622-001-fff:atom-0069
+L00007915	  - pldg-20260622-001-fff:atom-0085
+L00007916	  - pldg-20260622-001-fff:atom-0090
+L00007917	  - pldg-20260622-001-fff:atom-0091
+L00007918	  - pldg-20260622-001-fff:state/precision_contract.json#ssh_topology
+L00007919	source_atom_ids: [atom-0057, atom-0069, atom-0085, atom-0090, atom-0091]
+L00007920	preserved_exact_tokens: ["permission_snapshot_id", "approval_scope_key", "requested_remote_identity", "effective_remote_identity", "host_trust_state", "known-host outcome", "credential_handle_ref without secret material", "remote_command_policy_result", "redaction_profile", "passphrase prompts", "known-host changes", "remote command denial"]
+L00007921	negative_constraints:
+L00007922	  - Do not store or display secret material in discovery requests, cache keys, receipts, diagnostics, or prompts.
+L00007923	  - Do not allow permission or host-trust failure to become fresh local success results.
+L00007924	owner_hints: [Plans/Permissions_System.md, Plans/FileSafe.md, Plans/WorktreeGitImprovement.md, Plans/assistant-chat-design.md]
+L00007925	```
+L00007926	
+L00007927	
+L00007928	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00007929	
+L00007930	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00007931	
+
+<<< CONTEXT_AFTER canonical_document_lines=7932-7943 >>>
+L00007932	### PS-120 - History Permission Redaction And Authority Gates
+L00007933	
+L00007934	```yaml
+L00007935	plan_unit_id: PS-120
+L00007936	unit_type: requirement
+L00007937	status: accepted
+L00007938	owner_doc: Plans/Permissions_System.md
+L00007939	canonical_text: History action authority gates resume, retry, reopen, send-forward, compare, and export against
+L00007940	  currentness, archive/retention, projection freshness, project scope, and user permission. Raw records and evidence
+L00007941	  export requires an explicit evidence/redaction profile. Stale projection blocks compare/export/reopen/send-forward
+L00007942	  until rebuild succeeds. Authority-sensitive actions create or bind live continuations; they never mutate immutable
+L00007943	  historical records in place.

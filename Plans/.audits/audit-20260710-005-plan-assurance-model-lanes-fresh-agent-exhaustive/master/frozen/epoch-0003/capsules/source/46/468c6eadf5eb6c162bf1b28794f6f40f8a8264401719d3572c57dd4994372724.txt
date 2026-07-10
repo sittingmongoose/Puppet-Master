@@ -1,0 +1,388 @@
+<<< CONTEXT_BEFORE 782-793 >>>
+  - "MemoryProvider"
+  - "RealMemoryProvider"
+  - "NullMemoryProvider"
+  - "build_capsule(project_id, now) -> WorkingSetCapsule"
+  - "search(project_id, query, now, k) -> Vec<MemoryGistHit>"
+  - "set_verification_state(project_id, gist_id, verification_state, now) -> Result"
+negative_constraints:
+  - "Assistant memory MUST NOT be forwarded to subagents through prompts, tools, handoffs, or hidden metadata."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+
+<<< AUTHORITATIVE_CORE 794-1152 >>>
+### AMS-006 - EvidenceRef Pointer Only Model
+
+```yaml
+plan_unit_id: AMS-006
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: EvidenceRef is a structured pointer to verification evidence, not an evidence store, and must not embed large diffs, logs, or artifact bodies.
+gui_related: false
+gui_classification_reason: EvidenceRef shape and payload limits are backend data-model constraints.
+depends_on: [AMS-003]
+unblocks: [AMS-014, AMS-015, AMS-016]
+acceptance_criteria:
+  - EvidenceRefs point to canonical evidence stored elsewhere.
+  - Supported variants include Commit, Diff, TestRun, BuildRun, LintRun, Artifact, PlanRef, Issue, and PR.
+  - EvidenceRefs remain compact pointers and do not embed large payloads.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: evidence_pointer
+reasoning_tier: high
+context_scope: data_model
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: evidenceref_pointer_only_model
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0006
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0011
+preserved_exact_tokens:
+  - "EvidenceRefs"
+  - "Commit { hash, repo_id }"
+  - "Diff { run_id, repo_id, paths[], stats }"
+  - "TestRun { run_id, command, exit_code, summary_hash }"
+  - "BuildRun { run_id, command, exit_code, summary_hash }"
+  - "LintRun { run_id, command, exit_code, summary_hash }"
+  - "Artifact { path, change_type, content_hash? }"
+  - "PlanRef { file_path, anchor_id? }"
+  - "Issue { provider, id }"
+  - "PR { provider, id }"
+negative_constraints:
+  - "EvidenceRefs MUST be small pointers and MUST NOT embed large diffs/logs/artifact bodies."
+  - "MemoryGist records MUST NOT persist large diffs, full logs, or large artifacts."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+### AMS-007 - Assistant Memory Physical Stores
+
+```yaml
+plan_unit_id: AMS-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: >-
+  Assistant memory uses separate per-project physical stores for
+  assistant_memory.redb, assistant_memory_index, and
+  assistant_memory_vectors.usearch, preserving the system.redb project-state
+  note, file-level separation, and atomic project switching.
+gui_related: false
+gui_classification_reason: Physical storage paths and project switching are backend storage behavior.
+depends_on: [AMS-004]
+unblocks: [AMS-008, AMS-012, AMS-013]
+acceptance_criteria:
+  - Assistant memory DB, Tantivy index, and USearch index paths are preserved.
+  - Assistant memory stores remain separate from system state stores.
+  - Project switching swaps active memory stores atomically at the project boundary.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: storage_layout
+reasoning_tier: high
+context_scope: storage
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: assistant_memory_physical_stores
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0007
+preserved_exact_tokens:
+  - ".puppet-master/project/state/assistant_memory.redb"
+  - ".puppet-master/project/state/assistant_memory_index/"
+  - ".puppet-master/project/state/assistant_memory_vectors.usearch"
+  - "system.redb"
+  - "file-level physical separation"
+  - "project switching"
+negative_constraints:
+  - "Assistant memory must not couple its physical store to system state stores."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/storage-plan.md
+```
+
+### AMS-008 - MemoryGist Canonical Record
+
+```yaml
+plan_unit_id: AMS-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: >-
+  MemoryGist is the canonical Assistant memory record, with required identity,
+  classification, verification, time/access, decay, tags, claims,
+  summary/details, evidence, provenance, and embedding/index version fields.
+gui_related: false
+gui_classification_reason: MemoryGist field shape is backend data-model behavior.
+depends_on: [AMS-007]
+unblocks: [AMS-009, AMS-010, AMS-011, AMS-012, AMS-014]
+acceptance_criteria:
+  - MemoryGist remains the canonical record.
+  - Required field groups from the source span are preserved.
+  - Provenance and embedding/index versioning fields remain part of the contract.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_data_model
+reasoning_tier: high
+context_scope: data_model
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: memorygist_canonical_record
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0008
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
+preserved_exact_tokens:
+  - "MemoryGist"
+  - "verification_state"
+  - "half_life_days"
+  - "claims[]"
+  - "summary"
+  - "details"
+  - "evidence_refs[]"
+  - "AutoRunBoundary"
+  - "AutoMilestone"
+  - "embedding_version"
+  - "embed_text_hash"
+  - "text_hash"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+### AMS-009 - Memory Prompt Injection Summary Boundary
+
+```yaml
+plan_unit_id: AMS-009
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: Prompt injection uses only Verified gists' derived summary text; details are never auto-injected, and summary/hash caches are deterministic and invalidated when their source fields change.
+gui_related: false
+gui_classification_reason: Prompt injection and cache invalidation are backend prompt/data behavior.
+depends_on: [AMS-008]
+unblocks: [AMS-018, AMS-019]
+acceptance_criteria:
+  - Automatic prompt injection uses only Verified gists' derived summary text.
+  - Details are never auto-injected.
+  - Summary, embed_text_hash, and text_hash are deterministic and invalidated when kind, tags, or claims change.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: prompt_injection
+reasoning_tier: high
+context_scope: prompt
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: memory_prompt_injection_summary_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
+preserved_exact_tokens:
+  - "Verified"
+  - "summary"
+  - "details"
+  - "MUST NOT auto-inject `details`"
+  - "embed_text_hash"
+  - "text_hash"
+negative_constraints:
+  - "Automatic prompt injection MUST use only Verified gists' derived `summary` text and MUST NOT auto-inject `details`."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+### AMS-010 - MemoryGist GUI Operations Canonical Writes
+
+```yaml
+plan_unit_id: AMS-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: GUI memory operations for listing, editing, verifying, pinning, deleting, and half-life edits must read and write MemoryGist records in assistant_memory.redb as the canonical source.
+gui_related: true
+gui_classification_reason: List, edit, verify, pin, delete, and half-life edits are user-visible GUI operations.
+depends_on: [AMS-008]
+unblocks: [AMS-021]
+acceptance_criteria:
+  - GUI memory operations read MemoryGist records from assistant_memory.redb.
+  - GUI memory operations write MemoryGist records back to assistant_memory.redb.
+  - The listed operations include list, edit, verify, pin, delete, and half-life edits.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_gui
+reasoning_tier: standard
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: memorygist_gui_operations_canonical_writes
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0009
+preserved_exact_tokens:
+  - "list/edit/verify/pin/delete/half-life edits"
+  - "MemoryGist"
+  - "assistant_memory.redb"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+### AMS-011 - Memory Claims Atomic Model
+
+```yaml
+plan_unit_id: AMS-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: Memory claims are short, single-purpose, independently verifiable and deduplicable statements with stable claim_id, text, and created_at fields.
+gui_related: false
+gui_classification_reason: Claims shape is backend data-model behavior.
+depends_on: [AMS-008]
+unblocks: [AMS-012, AMS-014]
+acceptance_criteria:
+  - Each claim remains compact and single-purpose.
+  - Multi-claim gists keep each claim independently meaningful for verification and deduplication.
+  - Minimal claim shape preserves claim_id, text, and created_at.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_data_model
+reasoning_tier: standard
+context_scope: data_model
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+node_compile_hint:
+  mode: memory_claims_atomic_model
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0010
+preserved_exact_tokens:
+  - "claims[]"
+  - "claim_id"
+  - "text"
+  - "created_at"
+negative_constraints:
+  - "Claims must not collapse multi-claim gists into non-atomic statements."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+```
+
+### AMS-012 - Memory Retrieval Indexes
+
+```yaml
+plan_unit_id: AMS-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: Retrieval uses Tantivy lexical fields and USearch semantic ANN mapping, with deterministic embed_text, embed_text_hash, text_hash, tombstones, and deterministic full rebuild support.
+gui_related: false
+gui_classification_reason: Retrieval index schemas and rebuild behavior are backend search/index behavior.
+depends_on: [AMS-007, AMS-008, AMS-011]
+unblocks: [AMS-013, AMS-019, AMS-020]
+acceptance_criteria:
+  - Tantivy lexical indexed fields are preserved.
+  - USearch maps vector entries to MemoryGist IDs and persists mapping/tombstone state.
+  - Deterministic embed_text, embed_text_hash, and text_hash formulas are preserved.
+  - Full lexical and semantic rebuilds are supported from assistant_memory.redb.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_indexing
+reasoning_tier: high
+context_scope: search
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: memory_retrieval_indexes
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0012
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0013
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0014
+preserved_exact_tokens:
+  - "Tantivy"
+  - "USearch"
+  - "embed_text = kind + \"\\n\" + join(tags) + \"\\n\" + join(claims[].text)"
+  - "embed_text_hash"
+  - "text_hash"
+  - "tombstones"
+  - "deterministic periodic full rebuild"
+negative_constraints:
+  - "Index updates must not become canonical writes that can lose memory data."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/storage-plan.md
+```
+
+### AMS-013 - Memory Write Then Index Order
+
+```yaml
+plan_unit_id: AMS-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: Canonical writes must succeed to assistant_memory.redb before Tantivy and USearch index updates are enqueued and applied asynchronously, with recoverable index failures.
+gui_related: false
+gui_classification_reason: Write/index ordering is backend persistence behavior.
+depends_on: [AMS-007, AMS-012]
+unblocks: [AMS-022]
+acceptance_criteria:
+  - Canonical MemoryGist changes write to assistant_memory.redb first.
+  - Tantivy and USearch index updates are enqueued after the canonical write.
+  - Index failures are recoverable without data loss.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: memory_persistence
+reasoning_tier: high
+context_scope: storage
+implementation_surfaces:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: memory_write_then_index_order
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-memory-subsystem-S0015
+preserved_exact_tokens:
+  - "assistant_memory.redb"
+  - "Enqueue Tantivy + USearch index updates"
+  - "asynchronously"
+negative_constraints:
+  - "Index failures must be recoverable without data loss."
+owner_hints:
+  - Plans/assistant-memory-subsystem.md
+  - Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 1153-1164 >>>
+### AMS-014 - Memory Verification Rules
+
+```yaml
+plan_unit_id: AMS-014
+unit_type: validation_rule
+status: accepted
+owner_doc: Plans/assistant-memory-subsystem.md
+canonical_text: Memory injection eligibility is Verified by default; verification_state is Unverified, Verified, or Discarded, and a gist transitions to Verified only when deterministic evidence rules pass.
+gui_related: false
+gui_classification_reason: Verification rules are backend validation and prompt-eligibility behavior.
+depends_on: [AMS-006, AMS-008, AMS-011]
+unblocks: [AMS-015, AMS-016, AMS-018, AMS-019]

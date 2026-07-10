@@ -1,0 +1,368 @@
+<<< CONTEXT_BEFORE canonical_document_lines=947-958 >>>
+L00000947	- redaction
+L00000948	negative_constraints:
+L00000949	- Do not expose credentials, tokens, personal data, or protected project content through visible testing.
+L00000950	owner_hints:
+L00000951	- Plans/Automated_Testing_System.md
+L00000952	- Plans/Orchestrator_Page.md
+L00000953	- Plans/Runtime_Artifacts_Panel.md
+L00000954	- Plans/Permissions_System.md
+L00000955	```
+L00000956	
+L00000957	## Ledger Compile Addendum - pldg-20260622-001-fff
+L00000958	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=959-1297 >>>
+L00000959	### RAP-031 - Discovery Receipt Browsing, Redaction, And Retention Projection
+L00000960	
+L00000961	```yaml
+L00000962	plan_unit_id: RAP-031
+L00000963	unit_type: requirement
+L00000964	status: accepted
+L00000965	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00000966	canonical_text: >-
+L00000967	  Runtime Artifacts may browse persisted discovery receipts, fallback summaries, selected opaque ids, redacted candidate counts, freshness/fallback/policy state, remote/SSH identity, permission snapshot, host trust state, elapsed/budget fields, and exact-verification links when receipt persistence is promoted. Runtime Artifacts consumes the DiscoveryService receipt envelope but does not own DiscoveryService behavior. Assistant Chat visibility settings never delete or hide durable audit receipts; frecency/history reset stops future ranking use for the selected identity without deleting durable redacted discovery receipts by default unless a separate retention/export/delete owner action applies.
+L00000968	gui_related: true
+L00000969	gui_classification_reason: This is user-visible receipt browsing, redaction, and artifact projection.
+L00000970	depends_on: [CV-291, SP-217, F2-191, PS-118, ACD-422]
+L00000971	unblocks: [ATS-011]
+L00000972	acceptance_criteria:
+L00000973	  - Discovery receipts remain browseable in Runtime Artifacts/audit views when persisted even if Assistant Chat routine inline activity is hidden.
+L00000974	  - Receipt browsing respects redaction_profile, policy_context, and permission_snapshot_id.
+L00000975	  - Discovery receipts link to exact verification receipts and final relevant summaries when available.
+L00000976	validation_surfaces:
+L00000977	  - python3 scripts/pm-plan-index.py validate
+L00000978	  - Future Runtime Artifacts receipt browsing tests.
+L00000979	  - Future Assistant Chat inline display off but durable receipt available test.
+L00000980	risk_class: receipt_redaction_retention_drift
+L00000981	reasoning_tier: standard
+L00000982	context_scope: discovery_receipts
+L00000983	implementation_surfaces: [Plans/Runtime_Artifacts_Panel.md, future runtime artifact receipt browser]
+L00000984	node_compile_hint: {mode: receipt_projection_contract, create_worknodes: false, create_nodeseeds: false}
+L00000985	source_lineage:
+L00000986	  - pldg-20260622-001-fff:atom-0043
+L00000987	  - pldg-20260622-001-fff:atom-0045
+L00000988	  - pldg-20260622-001-fff:atom-0058
+L00000989	  - pldg-20260622-001-fff:atom-0063
+L00000990	  - pldg-20260622-001-fff:atom-0067
+L00000991	  - pldg-20260622-001-fff:atom-0086
+L00000992	  - pldg-20260622-001-fff:atom-0090
+L00000993	  - pldg-20260622-001-fff:atom-0093
+L00000994	  - pldg-20260622-001-fff:state/consumer_conformance_matrix.json#runtime_artifacts_and_audit
+L00000995	source_atom_ids: [atom-0043, atom-0045, atom-0058, atom-0063, atom-0067, atom-0086, atom-0090, atom-0093]
+L00000996	preserved_exact_tokens: ["discovery.invoked", "discovery.candidates_returned", "discovery.selected", "discovery.fallback", "discovery.verified", "candidate_count", "selected_result_ids", "redaction_profile", "permission_snapshot_id", "host trust state", "verification_receipt_ref", "Assistant Chat visibility settings never delete or hide durable audit receipts"]
+L00000997	negative_constraints:
+L00000998	  - Do not make Runtime Artifacts Panel the DiscoveryService behavior owner.
+L00000999	  - Do not bypass redaction.
+L00001000	  - Do not make hiding Assistant Chat routine activity delete durable receipts.
+L00001001	owner_hints: [Plans/Runtime_Artifacts_Panel.md, Plans/Contracts_V0.md, Plans/storage-plan.md, Plans/assistant-chat-design.md]
+L00001002	```
+L00001003	
+L00001004	
+L00001005	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00001006	
+L00001007	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00001008	
+L00001009	### RAP-034 - History Runtime Artifact And Evidence Projection
+L00001010	
+L00001011	```yaml
+L00001012	plan_unit_id: RAP-034
+L00001013	unit_type: requirement
+L00001014	status: accepted
+L00001015	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00001016	canonical_text: History rows preserve links to runtime artifacts, evidence, ledger/raw records, usage, package manifests,
+L00001017	  and receipts through stable source refs rather than path-only summaries. The Runtime Artifacts surface consumes
+L00001018	  the unified History projection for preview/inspect affordances while resolving immutable source records for opens,
+L00001019	  evidence profiles, exports, and authority-gated actions. Raw records and evidence are included in exports only
+L00001020	  through an explicit evidence/redaction profile.
+L00001021	gui_related: true
+L00001022	gui_classification_reason: Runtime artifact/evidence links are user-visible panels and inspector content.
+L00001023	depends_on:
+L00001024	- OP-026
+L00001025	- SP-219
+L00001026	- POA-051
+L00001027	unblocks:
+L00001028	- OP-027
+L00001029	acceptance_criteria:
+L00001030	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00001031	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00001032	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00001033	  are created by this compile.
+L00001034	validation_surfaces:
+L00001035	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00001036	- python3 scripts/pm-plan-index.py validate
+L00001037	- git diff --check
+L00001038	risk_class: history_artifact_link_loss
+L00001039	reasoning_tier: standard
+L00001040	context_scope: history_runtime_artifacts
+L00001041	implementation_surfaces:
+L00001042	- Plans/Runtime_Artifacts_Panel.md
+L00001043	- future History artifact/evidence inspector
+L00001044	node_compile_hint:
+L00001045	  mode: history_artifact_projection
+L00001046	  create_worknodes: false
+L00001047	  create_nodeseeds: false
+L00001048	source_lineage:
+L00001049	- pldg-20260626-001-feature-name:atom-0009
+L00001050	- pldg-20260626-001-feature-name:atom-0012
+L00001051	- pldg-20260626-001-feature-name:atom-0017
+L00001052	- pldg-20260626-001-feature-name:atom-0038
+L00001053	- pldg-20260626-001-feature-name:atom-0041
+L00001054	- pldg-20260626-001-feature-name:atom-0042
+L00001055	- pldg-20260626-001-feature-name:atom-0047
+L00001056	- pldg-20260626-001-feature-name:atom-0048
+L00001057	- pldg-20260626-001-feature-name:atom-0049
+L00001058	- pldg-20260626-001-feature-name:atom-0062
+L00001059	- chat:misc-history-scope
+L00001060	- Plans/Orchestrator_Page.md
+L00001061	- Plans/Runtime_Artifacts_Panel.md
+L00001062	- Plans/Project_Output_Artifacts.md
+L00001063	- chat:history-defaults-answers
+L00001064	- chat:history-export-granularity-answer
+L00001065	- chat:history-export-compare-archive-answers
+L00001066	- chat:history-source-index-answer
+L00001067	- chat:history-pressure-test-request
+L00001068	- chat:history-pressure-test-defaults-answer
+L00001069	source_atom_ids:
+L00001070	- atom-0009
+L00001071	- atom-0012
+L00001072	- atom-0017
+L00001073	- atom-0038
+L00001074	- atom-0041
+L00001075	- atom-0042
+L00001076	- atom-0047
+L00001077	- atom-0048
+L00001078	- atom-0049
+L00001079	- atom-0062
+L00001080	decision_refs:
+L00001081	- dec-0002
+L00001082	- dec-0003
+L00001083	- dec-0006
+L00001084	- dec-0007
+L00001085	- dec-0008
+L00001086	- dec-0011
+L00001087	- dec-0012
+L00001088	preserved_exact_tokens:
+L00001089	- historical orchestrator runs in PM
+L00001090	- historical orchestrator runs
+L00001091	- Runtime-artifact route-state answers "where should the user land," not "how should every panel be laid out when
+L00001092	  they get there."
+L00001093	- artifact_id
+L00001094	- run_id
+L00001095	- thread_id
+L00001096	- attempt_id
+L00001097	- identity-based open
+L00001098	- History versus Ledger
+L00001099	- All of that.
+L00001100	- status/date/project search
+L00001101	- opening artifacts/evidence
+L00001102	- resuming/retrying
+L00001103	- cloning as a new run
+L00001104	- exporting
+L00001105	- viewing what happened
+L00001106	- all of thodse
+L00001107	- selected-row export
+L00001108	- multi-select bundle export
+L00001109	- whole filtered-view export
+L00001110	- manifest
+L00001111	- yes, and yes.
+L00001112	- zip+manifest
+L00001113	- JSON
+L00001114	- rendered Markdown/HTML/PDF
+L00001115	- raw records/evidence
+L00001116	- explicit evidence/redaction profile
+L00001117	- 'yes'
+L00001118	- project-scoped unified History index/projection
+L00001119	- source-of-truth shape
+L00001120	- immutable wizard, run, artifact, evidence, and lineage records
+L00001121	- History surface
+L00001122	- filters
+L00001123	- exports
+L00001124	- compare
+L00001125	- artifact
+L00001126	- evidence
+L00001127	- permissions/redaction profile details
+L00001128	negative_constraints:
+L00001129	- Do not show historical runs as ambiguous text summaries without stable run identity.
+L00001130	- Do not lose links to artifacts, evidence, ledger records, usage, or receipts when a run becomes historical.
+L00001131	- Do not use shell-state, current tab, filesystem path, or timestamp heuristics as the primary identity for historical
+L00001132	  documents or runs.
+L00001133	- Do not mint shadow IDs for manifest-backed bundles or receipt-like historical objects.
+L00001134	- Do not reduce historical runs to read-only summaries when the user needs action routes.
+L00001135	- Do not omit evidence/artifact/Ledger pivots from historical run rows.
+L00001136	- Do not limit MVP export to selected-row-only.
+L00001137	- Do not make whole filtered-view export omit the active filter context.
+L00001138	- Do not collapse export into only one opaque archive format.
+L00001139	- Do not omit the manifest from archive/zip exports.
+L00001140	- Do not silently include raw records or evidence in ordinary exports.
+L00001141	- Do not bypass permissions or redaction policy when exporting evidence/raw records.
+L00001142	- Do not implement the History surface as fragile cross-subsystem ad hoc scans at view time.
+L00001143	- Do not make the History read model global or cross-project by default.
+L00001144	- Do not duplicate mutable source-of-truth content into the projection as if it were authoritative.
+L00001145	- Do not lose canonical IDs or lineage refs when projecting History rows.
+L00001146	- Do not mutate historical records through projection updates.
+L00001147	- Do not let UI rows, exports, or compare flows drift into different identity models.
+L00001148	- Do not open or export stale copies without resolving preserved source refs and currentness/authority checks where
+L00001149	  required.
+L00001150	- Do not export secrets, unauthorized provider/account details, or evidence outside the user's permissions.
+L00001151	- Do not omit a manifest of redactions/omissions when evidence export is requested.
+L00001152	owner_hints:
+L00001153	- Plans/Orchestrator_Page.md
+L00001154	- Plans/Runtime_Artifacts_Panel.md
+L00001155	- Plans/storage-plan.md
+L00001156	- Plans/Contracts_V0.md
+L00001157	- Plans/Project_Output_Artifacts.md
+L00001158	- Plans/UI_Command_Catalog.md
+L00001159	- Plans/Permissions_System.md
+L00001160	```
+L00001161	
+L00001162	### RAP-035 - Vision Bridge Derived Description Artifacts
+L00001163	
+L00001164	```yaml
+L00001165	plan_unit_id: RAP-035
+L00001166	unit_type: requirement
+L00001167	status: accepted
+L00001168	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00001169	canonical_text: Each generated vision description is persisted as an inspectable runtime artifact or tool/LLM trace
+L00001170	  entry with source image ref/hash, prompt or question, bridge provider/model/account, timestamp, usage/cost refs
+L00001171	  when available, freshness/staleness, cached/newly generated state, and permission/degraded state. Cache keys include
+L00001172	  source image content hash, source ref, bridge prompt/question, requested language/detail mode, bridge provider/model/version,
+L00001173	  redaction/sensitivity class, and relevant permission scope. Reruns create new versions rather than mutating old
+L00001174	  derived descriptions in place.
+L00001175	gui_related: true
+L00001176	gui_classification_reason: Vision-description artifacts, cache state, source chips, inspect, and rerun controls
+L00001177	  are user-visible.
+L00001178	depends_on:
+L00001179	- T-165
+L00001180	- CV-296
+L00001181	- PS-121
+L00001182	unblocks:
+L00001183	- ACD-425
+L00001184	acceptance_criteria:
+L00001185	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00001186	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00001187	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00001188	  are created by this compile.
+L00001189	validation_surfaces:
+L00001190	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00001191	- python3 scripts/pm-plan-index.py validate
+L00001192	- git diff --check
+L00001193	risk_class: vision_artifact_lineage_loss
+L00001194	reasoning_tier: standard
+L00001195	context_scope: vision_bridge_artifacts
+L00001196	implementation_surfaces:
+L00001197	- Plans/Runtime_Artifacts_Panel.md
+L00001198	- future derived vision-description artifact rows
+L00001199	node_compile_hint:
+L00001200	  mode: vision_description_artifact
+L00001201	  create_worknodes: false
+L00001202	  create_nodeseeds: false
+L00001203	source_lineage:
+L00001204	- pldg-20260626-001-feature-name:atom-0076
+L00001205	- pldg-20260626-001-feature-name:atom-0078
+L00001206	- pldg-20260626-001-feature-name:atom-0084
+L00001207	- pldg-20260626-001-feature-name:atom-0153
+L00001208	- Plans/Runtime_Artifacts_Panel.md
+L00001209	- Plans/Prompt_Pipeline.md
+L00001210	- chat:vision-bridge-defaults-answer
+L00001211	- chat:opencode-see-image-request
+L00001212	- chat:vision-pressure-test-request
+L00001213	- chat:vision-pressure-test-defaults-answer
+L00001214	- chat:pmconcept-gui-reference
+L00001215	- Concepts/PMConcept.html#Screenshot-to-Chat
+L00001216	- Concepts/PMConcept.html#composer-chip
+L00001217	- Concepts/PMConcept.html#activity-card
+L00001218	- Concepts/PMConcept.html#requested-effective-model
+L00001219	source_atom_ids:
+L00001220	- atom-0076
+L00001221	- atom-0078
+L00001222	- atom-0084
+L00001223	- atom-0153
+L00001224	decision_refs:
+L00001225	- dec-0014
+L00001226	- dec-0015
+L00001227	- dec-0016
+L00001228	- dec-0017
+L00001229	- dec-0024
+L00001230	preserved_exact_tokens:
+L00001231	- runtime artifact
+L00001232	- tool/LLM trace
+L00001233	- source image ref/hash
+L00001234	- prompt/question
+L00001235	- provider/model/account
+L00001236	- cost/usage
+L00001237	- cached
+L00001238	- newly generated
+L00001239	- 4. Yes
+L00001240	- GUI
+L00001241	- provider/model used
+L00001242	- derived description
+L00001243	- source image/artifact link
+L00001244	- freshness/cache state
+L00001245	- inspect
+L00001246	- rerun with a question
+L00001247	- copy description
+L00001248	- attach result
+L00001249	- always accept
+L00001250	- stops asking
+L00001251	- source image content hash
+L00001252	- source ref
+L00001253	- bridge prompt/question
+L00001254	- provider/model/version
+L00001255	- redaction/sensitivity class
+L00001256	- rerunnable
+L00001257	- stale
+L00001258	- superseded/deleted
+L00001259	- 'yes'
+L00001260	- Screenshot to Chat
+L00001261	- composer-chip
+L00001262	- activity-card
+L00001263	- Requested Model
+L00001264	- Effective Model
+L00001265	- inspect/rerun
+L00001266	- provider/model disclosure
+L00001267	negative_constraints:
+L00001268	- Do not make the derived description invisible or unauditable.
+L00001269	- Do not lose source lineage between the image and the generated text description.
+L00001270	- Do not reuse a cached description when the source image, question, or bridge model changed without marking freshness.
+L00001271	- Do not hide bridge outputs inside opaque provider logs only.
+L00001272	- Do not show the non-vision model's answer as if it directly saw the image when it consumed a derived description.
+L00001273	- Do not omit failure/denial states from the user-visible surface.
+L00001274	- Do not omit a user-visible way to inspect or reset remembered always-accept behavior.
+L00001275	- Do not reuse a cached description after the source image, prompt/question, bridge model/version, redaction class,
+L00001276	  or permission scope changes without marking freshness.
+L00001277	- Do not hide cache reuse from the user.
+L00001278	- Do not mutate old derived descriptions in place when rerun creates a new version.
+L00001279	- Do not make vision bridge artifacts feel like detached plugin output.
+L00001280	- Do not hide requested/effective model or fallback state when the bridge uses a separate vision-capable route.
+L00001281	- Do not replace accepted PM-owned permission/disclosure behavior with PMConcept demo-only controls.
+L00001282	owner_hints:
+L00001283	- Plans/Runtime_Artifacts_Panel.md
+L00001284	- Plans/Tools.md
+L00001285	- Plans/usage-feature.md
+L00001286	- Plans/Contracts_V0.md
+L00001287	- Plans/storage-plan.md
+L00001288	- Plans/FinalGUISpec.md
+L00001289	- Plans/assistant-chat-design.md
+L00001290	- Plans/UI_Command_Catalog.md
+L00001291	- Plans/Orchestrator_Page.md
+L00001292	- Plans/Permissions_System.md
+L00001293	- Plans/Prompt_Pipeline.md
+L00001294	- Plans/Media_Generation_and_Capabilities.md
+L00001295	- Plans/Models_System.md
+L00001296	```
+L00001297	
+
+<<< CONTEXT_AFTER canonical_document_lines=1298-1309 >>>
+L00001298	### RAP-036 - Teacher Activity Transparency Projection
+L00001299	
+L00001300	```yaml
+L00001301	plan_unit_id: RAP-036
+L00001302	unit_type: requirement
+L00001303	status: accepted
+L00001304	owner_doc: Plans/Runtime_Artifacts_Panel.md
+L00001305	canonical_text: Teacher activity such as route opens, highlights, source lookups, permission waits, model fallback,
+L00001306	  missing coverage, memory save prompts, and handoffs is represented as compact Assistant Chat cards or rows with
+L00001307	  durable detail payloads. Important blocked or degraded activity remains visible in the thread and can be inspected
+L00001308	  later without forcing the user into raw traces.
+L00001309	gui_related: true

@@ -1,0 +1,405 @@
+<<< CONTEXT_BEFORE 5473-5484 >>>
+  - "verification_hint"
+  - "todos: Array<{ id?, content, status? }>"
+  - "todos: Array<{ id, content, status }>"
+  - "TODO"
+negative_constraints: []
+compatibility_only_notes:
+  - "Legacy optional spellings notes? and order_index? normalize to canonical notes and order_index."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+
+<<< AUTHORITATIVE_CORE 5485-5860 >>>
+### ACD-044 - TODO Tool Mutation Boundary
+
+```yaml
+plan_unit_id: ACD-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: todowrite and todoread use the normalized TODO schema; todowrite is not blanket auto-denied in ask or plan mode, and Deep Plan markdown edits resync TODO projection before execution begins.
+gui_related: false
+gui_classification_reason: TODO tool mutation, read behavior, and execution gating are runtime/tool behavior, not GUI implementation.
+depends_on: [ACD-043]
+unblocks: [ACD-045]
+acceptance_criteria:
+  - todowrite can create, reorder, and update TODO statuses or notes through the normalized schema.
+  - todoread returns the current normalized list for the active thread or run.
+  - Editing Deep Plan markdown updates the normalized TODO projection before execution begins.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: tool_mutation_boundary
+reasoning_tier: high
+context_scope: todo
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: todo_tool_mutation_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0040
+preserved_exact_tokens:
+  - "todowrite"
+  - "todoread"
+  - "chat.plan_todo_updated"
+  - "source_surface"
+  - "Remove `todowrite` from blanket `ask/plan` mode auto-deny"
+  - "MUST update the normalized TODO projection BEFORE execution begins"
+negative_constraints:
+  - "`todoread` must not survive as a `source_surface` mutation source."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-045 - TODO Auto-Use Review Surface
+
+```yaml
+plan_unit_id: ACD-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: TODO auto-use may propose or refresh TODOs for multi-step work, emits proposed items through the resolved permission posture, records chat.plan_todo_updated, and keeps plan-panel state reviewable before execution observes revisions.
+gui_related: true
+gui_classification_reason: Proposed TODO approval prompts and reviewable plan-panel state are user-visible Assistant Chat behavior.
+depends_on: [ACD-043, ACD-044]
+unblocks: []
+acceptance_criteria:
+  - Auto-use on-trigger behavior emits proposed TODO items.
+  - Ask-mode displays an approval prompt listing proposed TODO items before creation.
+  - Execution observes revised TODOs only after chat.plan_todo_updated records the mutation.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: approval_visibility
+reasoning_tier: standard
+context_scope: todo_auto_use
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: todo_auto_use_review_surface
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0040
+preserved_exact_tokens:
+  - "on-trigger"
+  - "ask-mode"
+  - "proposed TODO items"
+  - "auto-approved"
+  - "dependency-bearing work"
+  - "multi-file or multi-subsystem work"
+  - "delegated subagent or crew execution"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-046 - Standard Plan Review Loop
+
+```yaml
+plan_unit_id: ACD-046
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Standard Plan review lets the user continue chat, request revisions, or open
+  the plan in the editor; follow-up chat responses may revise the planning
+  artifact.
+gui_related: true
+gui_classification_reason: Review actions and editor opening are visible Assistant Chat interactions.
+depends_on: [ACD-038, ACD-039]
+unblocks: [ACD-053]
+acceptance_criteria:
+  - Standard Plan review supports continuing chat, requesting revisions, and opening the plan in the editor.
+  - Follow-up chat can revise the planning artifact without starting execution.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: plan_review_flow
+reasoning_tier: standard
+context_scope: assistant_chat_window_003
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/Crosswalk.md
+node_compile_hint:
+  mode: standard_plan_review_loop
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0041
+preserved_exact_tokens:
+  - "continue the chat"
+  - "request revisions"
+  - "open the plan in the editor"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-047 - Deep Plan Annotation Palette
+
+```yaml
+plan_unit_id: ACD-047
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Deep Plan review uses an editor or preview-capable planning surface, supports
+  direct markdown edits, and exposes the source-backed annotation palette with
+  the five allowed selection actions.
+gui_related: true
+gui_classification_reason: The editor/preview surface and annotation palette are visible document-review UI.
+depends_on: [ACD-041]
+unblocks: [ACD-048, ACD-049, ACD-053]
+acceptance_criteria:
+  - Deep Plan documents open in a preview-capable planning surface for review.
+  - Source-backed or deterministically mapped selections expose the allowed action palette.
+  - Read-only or no-source-map renders do not expose mutating annotation actions without a stable semantic-anchor contract.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: annotation_surface_drift
+reasoning_tier: standard
+context_scope: deep_plan_review
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/Crosswalk.md
+node_compile_hint:
+  mode: deep_plan_annotation_palette
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0041
+preserved_exact_tokens:
+  - "Comment / Ask"
+  - "Replace with..."
+  - "Insert after..."
+  - "Remove / Strike this"
+  - "Send selection to chat"
+  - "quote-only"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-048 - Annotation Persistence Boundary
+
+```yaml
+plan_unit_id: ACD-048
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Durable Deep Plan actions create note_record.v1 annotations. Send selection
+  to chat creates a visible pending document_selection_context chip and remains
+  an ephemeral handoff action; v1 does not expose direct patch-apply behavior
+  from document annotations.
+gui_related: false
+gui_classification_reason: Annotation persistence and mutation boundaries are storage/workflow behavior, not GUI presentation.
+depends_on: [ACD-047]
+unblocks: [ACD-049, ACD-051]
+acceptance_criteria:
+  - Durable annotation actions use note_record.v1 lineage.
+  - Send selection to chat creates a pending document_selection_context chip rather than a durable annotation.
+  - Mutating annotations are applied only through targeted revision after validation.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: annotation_mutation_boundary
+reasoning_tier: high
+context_scope: deep_plan_review
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: annotation_persistence_boundary
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0041
+preserved_exact_tokens:
+  - "note_record.v1"
+  - "document_selection_context"
+  - "terminal-associated"
+  - "/non-writable"
+  - "patch-apply"
+negative_constraints:
+  - "v1 does not expose direct `patch-apply` behavior from document annotations."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-049 - Targeted Revision Annotation Lifecycle
+
+```yaml
+plan_unit_id: ACD-049
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Resubmit with Annotations runs a targeted revision pass over open durable
+  annotations or selected subsets, may update the plan document or answer
+  comments, and must not auto-run Multi-Pass Review.
+gui_related: false
+gui_classification_reason: Targeted revision lifecycle and review gates are workflow/governance behavior, not GUI implementation.
+depends_on: [ACD-048]
+unblocks: [ACD-050, ACD-053]
+acceptance_criteria:
+  - Targeted revision can operate on all open durable annotations or a user-selected subset.
+  - Conflicting or stale mutating annotations are excluded from automatic revision until resolved.
+  - Final review gates use no open annotations rather than no open notes.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: revision_gate_drift
+reasoning_tier: high
+context_scope: deep_plan_review
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/interview-subagent-integration.md
+node_compile_hint:
+  mode: targeted_revision_lifecycle
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0041
+preserved_exact_tokens:
+  - "Resubmit with Annotations"
+  - "open -> addressed -> resolved"
+  - "no open annotations"
+  - "no open notes"
+negative_constraints:
+  - "targeted revision MUST NOT auto-run Multi-Pass Review"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/chain-wizard-flexibility.md
+```
+
+### ACD-050 - Annotation Reanchor And Recovery
+
+```yaml
+plan_unit_id: ACD-050
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Annotation anchors reattach deterministically by position or quote; missing
+  anchors remain open with an explicit warning, and interrupted targeted
+  revision recovery preserves revision lineage and safe-point metadata.
+gui_related: false
+gui_classification_reason: Reanchor matching, recovery lineage, and safe-point preservation are storage/workflow behavior.
+depends_on: [ACD-049]
+unblocks: []
+acceptance_criteria:
+  - position_match or quote_match keeps an annotation eligible.
+  - anchor_not_found leaves an annotation unresolved and open.
+  - Interrupted revision runs preserve revision_id and resume lineage.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: annotation_recovery
+reasoning_tier: high
+context_scope: deep_plan_review
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+  - Plans/FileSafe.md
+  - Plans/Permissions_System.md
+node_compile_hint:
+  mode: annotation_reanchor_recovery
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0041
+preserved_exact_tokens:
+  - "position_match"
+  - "quote_match"
+  - "anchor_not_found"
+  - "/unresolved"
+  - "revision_run.{bundle_id}.{revision_id}"
+  - "resumed_from_revision_id?"
+negative_constraints:
+  - "if an anchor cannot be reattached, keep the annotation open and show an explicit warning rather than silently dropping it"
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+### ACD-051 - Document Selection Composer Handoff
+
+```yaml
+plan_unit_id: ACD-051
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Document selection handoff always creates chat-visible pending composer chips
+  in the shared Context and Attachments prep tray, never hidden messages,
+  thread mutation before send, document-selection-only trays, or full-document
+  inline chat dumps.
+gui_related: true
+gui_classification_reason: Pending chips, prep tray grouping, snackbars, and chat launcher feedback are visible GUI behavior.
+depends_on: [ACD-025, ACD-048]
+unblocks: [ACD-052]
+acceptance_criteria:
+  - Selection-to-chat and document-selection create visible pending composer chips.
+  - Hidden chat panels can receive pending chips without auto-opening by default.
+  - Chat keeps document-pane/editor pointers plus bounded excerpts instead of full-document inline bodies.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: hidden_context_injection
+reasoning_tier: high
+context_scope: document_selection
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: document_selection_composer_handoff
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0041
+preserved_exact_tokens:
+  - "selection-to-chat"
+  - "document-selection"
+  - "auto-open"
+  - "/snackbar"
+  - "Selection added to Assistant chat"
+  - "Open chat"
+  - "pre-send"
+  - "Context Lens"
+  - "full-document"
+negative_constraints:
+  - "selection-to-chat and document-selection always create chat-visible pending composer chips; they must not silently inject hidden messages or mutate a thread before the user sends."
+  - "Do not create a document-selection-only /tray or a separate document-only strip."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Prompt_Pipeline.md
+```
+
+
+<<< CONTEXT_AFTER 5861-5872 >>>
+### ACD-052 - Selection Target Privacy And GUI Drawer
+
+```yaml
+plan_unit_id: ACD-052
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Selection target resolution stays on the owning thread or surface, honors
+  FileSafe privacy and sensitivity statuses, and exposes reusable annotation
+  drawer, palette, filter, overlay, and ghost-preview GUI affordances.
+gui_related: true

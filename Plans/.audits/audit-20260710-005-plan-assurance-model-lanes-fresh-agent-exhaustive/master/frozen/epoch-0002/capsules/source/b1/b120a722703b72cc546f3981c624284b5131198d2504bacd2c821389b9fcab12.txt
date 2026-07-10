@@ -1,0 +1,408 @@
+<<< CONTEXT_BEFORE 355-366 >>>
+- key-exception
+negative_constraints:
+- Feature summaries must not treat stale-canon mixed-account or bare key-exception shorthand as a complete feature description.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- stale-canon `mixed-account` or bare `key-exception` shorthand is not a complete feature description.
+owner_boundary_notes:
+- Media generation and capability details are owned by Plans/Media_Generation_and_Capabilities.md and related owner docs.
+owner_hints:
+- Plans/feature-list.md
+```
+
+
+<<< AUTHORITATIVE_CORE 367-745 >>>
+### FL-005 - Debug Mode Shared Tooling Summary
+
+```yaml
+plan_unit_id: FL-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/feature-list.md
+canonical_text: >-
+  Debug Mode is the rewrite-era assistant investigation workflow spanning diagnosis, instrumentation, evidence capture, verification, and cleanup with canonical investigation and instrumentation identity, shared debug-capable tooling, automated evidence-first behavior, and constrained remote Debug MVP scope.
+gui_related: false
+gui_classification_reason: This unit summarizes assistant-led debug workflow behavior and shared tooling, not GUI layout.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: feature_summary_drift
+reasoning_tier: standard
+context_scope: feature_list_standardization
+implementation_surfaces:
+- Plans/feature-list.md
+node_compile_hint:
+  mode: debug_mode_shared_tooling_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0004
+preserved_exact_tokens:
+- Debug
+- Debugger
+- DAP Debugger
+- /DAP
+- investigation_id
+- instrumentation_id
+- visible Investigation Context
+- planned
+- active
+- collecting
+- cleanup_pending
+- cleaned
+- cleanup_failed
+- Debug Automation Profile
+- remote Debug MVP
+- ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integration.md
+negative_constraints:
+- Debug Mode must not collapse into classical DAP debugger semantics or opaque agent-only behavior.
+- Remote Debug MVP has no arbitrary ad-hoc remote attach and no silent local fallback.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Detailed Debug behavior is owned by assistant-chat-design, Run_Modes, and GitHub_Integration.
+owner_hints:
+- Plans/feature-list.md
+```
+
+### FL-006 - Rewrite Architecture Backbone Summary
+
+```yaml
+plan_unit_id: FL-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/feature-list.md
+canonical_text: >-
+  The rewrite architecture feature family establishes the node graph, Feature Seam, Work Package, runtime blocked identity, requested/effective runtime identity, and route/open primitives as shared structural contracts so downstream plans do not redefine the foundation.
+gui_related: false
+gui_classification_reason: This unit summarizes runtime architecture primitives, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: feature_summary_drift
+reasoning_tier: standard
+context_scope: feature_list_standardization
+implementation_surfaces:
+- Plans/feature-list.md
+node_compile_hint:
+  mode: rewrite_architecture_backbone_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0005
+preserved_exact_tokens:
+- node graph
+- Feature Seam
+- Work Package
+- runtime blocked identity
+- requested/effective runtime identity
+- route/open primitives
+- Crosswalk
+- Plans/Orchestrator_Page.md
+- Plans/Run_Graph_View.md
+negative_constraints:
+- Individual surfaces must not reinvent runtime identity, routing, or execution semantics.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Crosswalk and related owner docs own the detailed cross-cutting primitive contracts.
+owner_hints:
+- Plans/feature-list.md
+```
+
+### FL-007 - Assistant Chat Shared Contract Consumer Boundary
+
+```yaml
+plan_unit_id: FL-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/feature-list.md
+canonical_text: >-
+  Assistant Chat is a consumer of shared platform contracts for requested/effective runtime identity, route_target, OpenSubject, OpenFile, runtime safety, prompt determinism, provider variance, audit/event clarity, precedence/conflict handling, thread isolation, resume/recovery, and sensitivity/privacy boundaries.
+gui_related: false
+gui_classification_reason: This unit preserves backend/runtime consumer-boundary behavior for Assistant Chat, not visual presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: feature_summary_drift
+reasoning_tier: standard
+context_scope: feature_list_standardization
+implementation_surfaces:
+- Plans/feature-list.md
+node_compile_hint:
+  mode: assistant_chat_shared_contract_consumer_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0006
+preserved_exact_tokens:
+- assistant chat consumes shared requested/effective runtime identity
+- route_target
+- OpenSubject
+- OpenFile
+- runtime `/safety`
+- prompt determinism
+- provider variance handling
+- audit/event clarity
+- precedence/conflict handling
+- thread isolation
+- resume/recovery
+- sensitivity/privacy boundaries
+negative_constraints:
+- Assistant Chat must not define an isolated subsystem with its own parallel schema for shared runtime identity and source-opening behavior.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Assistant Chat summary copy consumes assistant-chat-design, Contracts_V0, and Prompt_Pipeline owner behavior.
+owner_hints:
+- Plans/feature-list.md
+split_recommendation_reason: Source span also includes native document annotation/review UX, which is split into FL-008.
+```
+
+### FL-008 - Native Document Annotation Review UX Summary
+
+```yaml
+plan_unit_id: FL-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/feature-list.md
+canonical_text: >-
+  Document annotation and selection-to-chat review remain native in-app document/chat surfaces with a stronger Puppet Master review grammar, while external open-plan-annotator research is background-only browser-hook/plugin inspiration.
+gui_related: true
+gui_classification_reason: This unit summarizes user-visible document annotation and review surfaces.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: feature_summary_drift
+reasoning_tier: standard
+context_scope: feature_list_standardization
+implementation_surfaces:
+- Plans/feature-list.md
+node_compile_hint:
+  mode: native_document_annotation_review_ux_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0006
+preserved_exact_tokens:
+- document annotation
+- selection-to-chat review
+- open-plan-annotator
+- hook/plugin flow
+- deletion/comment/insertion/replacement actions
+- approve vs deny/request changes
+- structured markdown feedback
+- native in-app document/chat surfaces
+- browser mediation
+negative_constraints:
+- Puppet Master keeps native in-app document/chat review surfaces instead of browser mediation.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- This unit isolates the GUI/review UX portion of the chat-and-assistant feature span.
+owner_hints:
+- Plans/feature-list.md
+split_recommendation_reason: Split from FL-007 so GUI review UX is addressable separately from shared contract consumer boundaries.
+```
+
+### FL-009 - GUI Shell Composition Summary
+
+```yaml
+plan_unit_id: FL-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/feature-list.md
+canonical_text: >-
+    The GUI layout and shell family keeps Orchestrator tab-first, Progress widget-hosting only, Plan Compile as the plans-to-code projection tab, Seams/package-oriented ownership live, Node Graph/Evidence/History/Ledger as peer tabs, and Source Control narrow and worktree-first.
+gui_related: true
+gui_classification_reason: This unit summarizes workspace layout, tabs, and Source Control visible shell behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: feature_summary_drift
+reasoning_tier: standard
+context_scope: feature_list_standardization
+implementation_surfaces:
+- Plans/feature-list.md
+node_compile_hint:
+  mode: gui_shell_composition_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0007
+preserved_exact_tokens:
+- Orchestrator
+- tab-first
+- Progress
+- Seams
+- Node Graph
+- Evidence
+- History
+- Ledger
+- Source Control
+- narrow and worktree-first
+- widget-based Tiers
+- /superseded
+- package-oriented ownership
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Tiers is superseded display vocabulary; Seams plus package-oriented ownership are the live object model.
+owner_boundary_notes:
+- FinalGUISpec, Orchestrator_Page, and Crosswalk own the detailed shell and object-model behavior.
+owner_hints:
+- Plans/feature-list.md
+split_recommendation_reason: Source span also includes non-GUI routing/open primitive summary, split into FL-010.
+```
+
+### FL-010 - Cross-Surface Routing Open Primitive Summary
+
+```yaml
+plan_unit_id: FL-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/feature-list.md
+canonical_text: >-
+  Crosswalk-level feature summaries must name routing/open primitives directly, including route_target, OpenSubject, /open-by-identity, FileManager open-by-identity, runtime-artifact envelopes, and artifact-opening behavior as shared cross-surface contracts.
+gui_related: false
+gui_classification_reason: This unit summarizes shared routing/open primitives, not layout or styling.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: feature_summary_drift
+reasoning_tier: standard
+context_scope: feature_list_standardization
+implementation_surfaces:
+- Plans/feature-list.md
+node_compile_hint:
+  mode: cross_surface_routing_open_primitive_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0007
+preserved_exact_tokens:
+- route_target
+- OpenSubject
+- /open-by-identity
+- FileManager `open-by-identity`
+- runtime-artifact envelopes
+- artifact-opening behavior
+- shared cross-surface contracts
+- local GUI conveniences
+negative_constraints:
+- Routing/open primitives must not be treated as local GUI conveniences.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Crosswalk and FileManager own the detailed routing/open primitive contracts.
+owner_hints:
+- Plans/feature-list.md
+split_recommendation_reason: Split from GUI shell composition so backend/shared routing contracts remain non-GUI.
+```
+
+### FL-011 - Orchestration Delegation And Graph Lineage Summary
+
+```yaml
+plan_unit_id: FL-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/feature-list.md
+canonical_text: >-
+  The orchestration and subagents family keeps Package Overseer and Seam Overseer governance roles explicit, defaults node workers to subagent, defaults retry to fresh worker, and makes graph patching create new graph generations with historical lineage.
+gui_related: false
+gui_classification_reason: This unit summarizes execution delegation, supervision, retry, and graph lineage behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This feature-list PlanUnit preserves summary/reference behavior without replacing the detailed owner docs named by ContractRefs or detailed spec links.
+- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: feature_summary_drift
+reasoning_tier: standard
+context_scope: feature_list_standardization
+implementation_surfaces:
+- Plans/feature-list.md
+node_compile_hint:
+  mode: orchestration_delegation_and_graph_lineage_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:feature-list-S0008
+preserved_exact_tokens:
+- Package Overseer
+- Seam Overseer
+- subagent
+- fresh worker
+- graph generations
+- historical lineage
+- Plans/Executor_Protocol.md
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Orchestrator_Page, Run_Graph_View, and Executor_Protocol own detailed orchestration behavior.
+owner_hints:
+- Plans/feature-list.md
+```
+
+
+<<< CONTEXT_AFTER 746-757 >>>
+### FL-012 - Usage Recovery Runtime Records Summary
+
+```yaml
+plan_unit_id: FL-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/feature-list.md
+canonical_text: >-
+  Usage, recovery, and analytics are runtime-native records using shared runtime identity, blocked-episode lineage, account pressure, and account-switch history so usage and recovery flows can reconstruct what happened through first-class runtime records.
+gui_related: false
+gui_classification_reason: This unit summarizes runtime identity and records, not GUI presentation.
+split_recommended: true

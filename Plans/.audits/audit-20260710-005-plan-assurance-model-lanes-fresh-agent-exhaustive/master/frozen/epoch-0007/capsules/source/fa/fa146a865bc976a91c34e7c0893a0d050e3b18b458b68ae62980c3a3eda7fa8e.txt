@@ -1,0 +1,361 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2428-2439 >>>
+L00002428	        },
+L00002429	        "artifact_refs": {
+L00002430	          "$ref": "#/$defs/ref_list"
+L00002431	        },
+L00002432	        "inspection_status": {
+L00002433	          "type": "string"
+L00002434	        },
+L00002435	        "notes": {
+L00002436	          "type": "string"
+L00002437	        }
+L00002438	      }
+L00002439	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2440-2771 >>>
+L00002440	    "source_control_preflight_receipt": {
+L00002441	      "type": "object",
+L00002442	      "additionalProperties": false,
+L00002443	      "required": [
+L00002444	        "receipt_id",
+L00002445	        "repo_ref",
+L00002446	        "worktree_ref",
+L00002447	        "branch_ref",
+L00002448	        "dirty_state",
+L00002449	        "safe_point_required",
+L00002450	        "status",
+L00002451	        "baseline_commit_oid",
+L00002452	        "safe_point_id",
+L00002453	        "dirty_state_policy",
+L00002454	        "conflict_policy",
+L00002455	        "merge_policy",
+L00002456	        "github_policy",
+L00002457	        "rollback_available",
+L00002458	        "restore_command_or_action",
+L00002459	        "evidence_refs",
+L00002460	        "handoff",
+L00002461	        "source_control_context",
+L00002462	        "branch_head_state",
+L00002463	        "owner_lane",
+L00002464	        "lease_state",
+L00002465	        "head_commit_oid",
+L00002466	        "changed_files",
+L00002467	        "conflict_refs",
+L00002468	        "rollback_ref"
+L00002469	      ],
+L00002470	      "properties": {
+L00002471	        "receipt_id": {
+L00002472	          "type": "string"
+L00002473	        },
+L00002474	        "repo_ref": {
+L00002475	          "$ref": "#/$defs/ref"
+L00002476	        },
+L00002477	        "worktree_ref": {
+L00002478	          "$ref": "#/$defs/ref"
+L00002479	        },
+L00002480	        "branch_ref": {
+L00002481	          "$ref": "#/$defs/ref"
+L00002482	        },
+L00002483	        "dirty_state": {
+L00002484	          "$ref": "#/$defs/source_control_dirty_state"
+L00002485	        },
+L00002486	        "safe_point_required": {
+L00002487	          "type": "boolean"
+L00002488	        },
+L00002489	        "status": {
+L00002490	          "$ref": "#/$defs/source_control_status"
+L00002491	        },
+L00002492	        "baseline_commit_oid": {
+L00002493	          "type": "string"
+L00002494	        },
+L00002495	        "safe_point_id": {
+L00002496	          "type": "string"
+L00002497	        },
+L00002498	        "dirty_state_policy": {
+L00002499	          "$ref": "#/$defs/dirty_state_policy"
+L00002500	        },
+L00002501	        "conflict_policy": {
+L00002502	          "$ref": "#/$defs/conflict_policy"
+L00002503	        },
+L00002504	        "merge_policy": {
+L00002505	          "$ref": "#/$defs/merge_policy"
+L00002506	        },
+L00002507	        "github_policy": {
+L00002508	          "$ref": "#/$defs/github_policy"
+L00002509	        },
+L00002510	        "rollback_available": {
+L00002511	          "type": "boolean"
+L00002512	        },
+L00002513	        "restore_command_or_action": {
+L00002514	          "type": "string"
+L00002515	        },
+L00002516	        "evidence_refs": {
+L00002517	          "$ref": "#/$defs/ref_list"
+L00002518	        },
+L00002519	        "handoff": {
+L00002520	          "$ref": "#/$defs/handoff_row"
+L00002521	        },
+L00002522	        "source_control_context": {
+L00002523	          "$ref": "#/$defs/source_control_context"
+L00002524	        },
+L00002525	        "branch_head_state": {
+L00002526	          "$ref": "#/$defs/branch_head_state"
+L00002527	        },
+L00002528	        "owner_lane": {
+L00002529	          "$ref": "#/$defs/owner_lane"
+L00002530	        },
+L00002531	        "lease_state": {
+L00002532	          "$ref": "#/$defs/lease_state"
+L00002533	        },
+L00002534	        "head_commit_oid": {
+L00002535	          "type": "string"
+L00002536	        },
+L00002537	        "changed_files": {
+L00002538	          "$ref": "#/$defs/ref_list"
+L00002539	        },
+L00002540	        "conflict_refs": {
+L00002541	          "$ref": "#/$defs/ref_list"
+L00002542	        },
+L00002543	        "rollback_ref": {
+L00002544	          "anyOf": [
+L00002545	            {
+L00002546	              "$ref": "#/$defs/ref"
+L00002547	            },
+L00002548	            {
+L00002549	              "type": "null"
+L00002550	            }
+L00002551	          ]
+L00002552	        }
+L00002553	      }
+L00002554	    },
+L00002555	    "safe_point_receipt": {
+L00002556	      "type": "object",
+L00002557	      "additionalProperties": false,
+L00002558	      "required": [
+L00002559	        "receipt_id",
+L00002560	        "safe_point_ref",
+L00002561	        "repo_ref",
+L00002562	        "worktree_ref",
+L00002563	        "created_at_utc",
+L00002564	        "status",
+L00002565	        "evidence_refs",
+L00002566	        "handoff",
+L00002567	        "source_control_context",
+L00002568	        "rollback_available",
+L00002569	        "restore_command_or_action"
+L00002570	      ],
+L00002571	      "properties": {
+L00002572	        "receipt_id": {
+L00002573	          "type": "string"
+L00002574	        },
+L00002575	        "safe_point_ref": {
+L00002576	          "$ref": "#/$defs/ref"
+L00002577	        },
+L00002578	        "repo_ref": {
+L00002579	          "$ref": "#/$defs/ref"
+L00002580	        },
+L00002581	        "worktree_ref": {
+L00002582	          "$ref": "#/$defs/ref"
+L00002583	        },
+L00002584	        "created_at_utc": {
+L00002585	          "type": "string"
+L00002586	        },
+L00002587	        "status": {
+L00002588	          "$ref": "#/$defs/source_control_status"
+L00002589	        },
+L00002590	        "evidence_refs": {
+L00002591	          "$ref": "#/$defs/ref_list"
+L00002592	        },
+L00002593	        "handoff": {
+L00002594	          "$ref": "#/$defs/handoff_row"
+L00002595	        },
+L00002596	        "source_control_context": {
+L00002597	          "$ref": "#/$defs/source_control_context"
+L00002598	        },
+L00002599	        "rollback_available": {
+L00002600	          "type": "boolean"
+L00002601	        },
+L00002602	        "restore_command_or_action": {
+L00002603	          "type": "string"
+L00002604	        }
+L00002605	      }
+L00002606	    },
+L00002607	    "worknode_dispatch_receipt": {
+L00002608	      "type": "object",
+L00002609	      "additionalProperties": false,
+L00002610	      "required": [
+L00002611	        "receipt_id",
+L00002612	        "worknode_request_ref",
+L00002613	        "executor_ref",
+L00002614	        "dispatch_status",
+L00002615	        "source_control_preflight_ref",
+L00002616	        "model_resolution_ref",
+L00002617	        "test_binding_ref",
+L00002618	        "authority_ref",
+L00002619	        "evidence_refs",
+L00002620	        "handoff",
+L00002621	        "source_control_context"
+L00002622	      ],
+L00002623	      "properties": {
+L00002624	        "receipt_id": {
+L00002625	          "type": "string"
+L00002626	        },
+L00002627	        "worknode_request_ref": {
+L00002628	          "$ref": "#/$defs/ref"
+L00002629	        },
+L00002630	        "executor_ref": {
+L00002631	          "$ref": "#/$defs/ref"
+L00002632	        },
+L00002633	        "dispatch_status": {
+L00002634	          "enum": [
+L00002635	            "queued",
+L00002636	            "dispatched",
+L00002637	            "blocked",
+L00002638	            "cancelled"
+L00002639	          ]
+L00002640	        },
+L00002641	        "source_control_preflight_ref": {
+L00002642	          "$ref": "#/$defs/ref"
+L00002643	        },
+L00002644	        "model_resolution_ref": {
+L00002645	          "$ref": "#/$defs/ref"
+L00002646	        },
+L00002647	        "test_binding_ref": {
+L00002648	          "$ref": "#/$defs/ref"
+L00002649	        },
+L00002650	        "authority_ref": {
+L00002651	          "$ref": "#/$defs/ref"
+L00002652	        },
+L00002653	        "evidence_refs": {
+L00002654	          "$ref": "#/$defs/ref_list"
+L00002655	        },
+L00002656	        "handoff": {
+L00002657	          "$ref": "#/$defs/handoff_row"
+L00002658	        },
+L00002659	        "source_control_context": {
+L00002660	          "$ref": "#/$defs/source_control_context"
+L00002661	        }
+L00002662	      }
+L00002663	    },
+L00002664	    "worknode_change_receipt": {
+L00002665	      "type": "object",
+L00002666	      "additionalProperties": false,
+L00002667	      "required": [
+L00002668	        "receipt_id",
+L00002669	        "worknode_ref",
+L00002670	        "changed_paths",
+L00002671	        "diff_refs",
+L00002672	        "test_run_refs",
+L00002673	        "source_control_receipt_ref",
+L00002674	        "status",
+L00002675	        "evidence_refs",
+L00002676	        "handoff",
+L00002677	        "source_control_context"
+L00002678	      ],
+L00002679	      "properties": {
+L00002680	        "receipt_id": {
+L00002681	          "type": "string"
+L00002682	        },
+L00002683	        "worknode_ref": {
+L00002684	          "$ref": "#/$defs/ref"
+L00002685	        },
+L00002686	        "changed_paths": {
+L00002687	          "$ref": "#/$defs/ref_list"
+L00002688	        },
+L00002689	        "diff_refs": {
+L00002690	          "$ref": "#/$defs/ref_list"
+L00002691	        },
+L00002692	        "test_run_refs": {
+L00002693	          "$ref": "#/$defs/ref_list"
+L00002694	        },
+L00002695	        "source_control_receipt_ref": {
+L00002696	          "$ref": "#/$defs/ref"
+L00002697	        },
+L00002698	        "status": {
+L00002699	          "$ref": "#/$defs/change_status"
+L00002700	        },
+L00002701	        "evidence_refs": {
+L00002702	          "$ref": "#/$defs/ref_list"
+L00002703	        },
+L00002704	        "handoff": {
+L00002705	          "$ref": "#/$defs/handoff_row"
+L00002706	        },
+L00002707	        "source_control_context": {
+L00002708	          "$ref": "#/$defs/source_control_context"
+L00002709	        }
+L00002710	      }
+L00002711	    },
+L00002712	    "worknode_completion_receipt": {
+L00002713	      "type": "object",
+L00002714	      "additionalProperties": false,
+L00002715	      "required": [
+L00002716	        "receipt_id",
+L00002717	        "worknode_ref",
+L00002718	        "terminal_status",
+L00002719	        "change_receipt_refs",
+L00002720	        "test_run_refs",
+L00002721	        "auditor_verification_ref",
+L00002722	        "source_control_receipt_refs",
+L00002723	        "unresolved_findings",
+L00002724	        "evidence_refs",
+L00002725	        "handoff",
+L00002726	        "source_control_context"
+L00002727	      ],
+L00002728	      "properties": {
+L00002729	        "receipt_id": {
+L00002730	          "type": "string"
+L00002731	        },
+L00002732	        "worknode_ref": {
+L00002733	          "$ref": "#/$defs/ref"
+L00002734	        },
+L00002735	        "terminal_status": {
+L00002736	          "enum": [
+L00002737	            "complete",
+L00002738	            "blocked",
+L00002739	            "failed",
+L00002740	            "cancelled"
+L00002741	          ]
+L00002742	        },
+L00002743	        "change_receipt_refs": {
+L00002744	          "$ref": "#/$defs/ref_list"
+L00002745	        },
+L00002746	        "test_run_refs": {
+L00002747	          "$ref": "#/$defs/ref_list"
+L00002748	        },
+L00002749	        "auditor_verification_ref": {
+L00002750	          "$ref": "#/$defs/ref"
+L00002751	        },
+L00002752	        "source_control_receipt_refs": {
+L00002753	          "$ref": "#/$defs/ref_list"
+L00002754	        },
+L00002755	        "unresolved_findings": {
+L00002756	          "type": "array",
+L00002757	          "items": {
+L00002758	            "$ref": "#/$defs/auditor_finding"
+L00002759	          }
+L00002760	        },
+L00002761	        "evidence_refs": {
+L00002762	          "$ref": "#/$defs/ref_list"
+L00002763	        },
+L00002764	        "handoff": {
+L00002765	          "$ref": "#/$defs/handoff_row"
+L00002766	        },
+L00002767	        "source_control_context": {
+L00002768	          "$ref": "#/$defs/source_control_context"
+L00002769	        }
+L00002770	      }
+L00002771	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=2772-2783 >>>
+L00002772	    "auditor_cycle_report": {
+L00002773	      "type": "object",
+L00002774	      "additionalProperties": false,
+L00002775	      "required": [
+L00002776	        "cycle_id",
+L00002777	        "cycle_number",
+L00002778	        "auditor_model_profile",
+L00002779	        "input_artifact_refs",
+L00002780	        "findings",
+L00002781	        "repairs_applied",
+L00002782	        "unresolved_findings",
+L00002783	        "terminal_state",

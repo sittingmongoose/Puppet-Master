@@ -1,0 +1,421 @@
+<<< CONTEXT_BEFORE canonical_document_lines=15990-16001 >>>
+L00015990	          "requirement": "cmd.lsp.goto_definition has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00015991	        },
+L00015992	        {
+L00015993	          "test_id": "wiring.catalog.lsp_goto_definition.accessibility",
+L00015994	          "evidence_kind": "accessibility_regression",
+L00015995	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00015996	        }
+L00015997	      ],
+L00015998	      "event_test_requirements": [
+L00015999	        "Assert cmd.lsp.goto_definition records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00016000	      ]
+L00016001	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=16002-16393 >>>
+L00016002	    "catalog.lsp_goto_symbol": {
+L00016003	      "ui_element_id": "catalog.lsp_goto_symbol",
+L00016004	      "ui_location": "Lsp surface > Goto Symbol",
+L00016005	      "ui_command_id": "cmd.lsp.goto_symbol",
+L00016006	      "handler_location": "handlers::lsp::goto_symbol",
+L00016007	      "expected_event_types": [],
+L00016008	      "acceptance_checks": [
+L00016009	        "cmd.lsp.goto_symbol must be registered in the UICommand dispatcher with typed args and result contract",
+L00016010	        "cmd.lsp.goto_symbol must expose projected state selector and disabled reason before dispatch",
+L00016011	        "cmd.lsp.goto_symbol dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00016012	        "cmd.lsp.goto_symbol must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00016013	        "cmd.lsp.goto_symbol must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00016014	      ],
+L00016015	      "evidence_required": "Production wiring contract for cmd.lsp.goto_symbol; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00016016	      "state_selector": "state.commands.lsp_goto_symbol.availability",
+L00016017	      "disabled_reason_projection": "state.commands.lsp_goto_symbol.disabled_reason",
+L00016018	      "effect_contract": {
+L00016019	        "effect_kind": "receipt",
+L00016020	        "description": "cmd.lsp.goto_symbol has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00016021	        "receipt_or_event_refs": [
+L00016022	          "cmd.lsp.goto_symbol.dispatch_receipt"
+L00016023	        ]
+L00016024	      },
+L00016025	      "accessibility_contract": {
+L00016026	        "role_or_semantics": "catalog.lsp_goto_symbol exposes a stable role/name/description matching cmd.lsp.goto_symbol.",
+L00016027	        "keyboard_access": "catalog.lsp_goto_symbol is reachable and activatable by keyboard where the control is visible.",
+L00016028	        "focus_management": "catalog.lsp_goto_symbol preserves visible focus and returns focus deterministically after dispatch or error.",
+L00016029	        "disabled_announcement": "catalog.lsp_goto_symbol surfaces state.commands.lsp_goto_symbol.disabled_reason to assistive technology when unavailable."
+L00016030	      },
+L00016031	      "test_evidence": [
+L00016032	        {
+L00016033	          "test_id": "wiring.catalog.lsp_goto_symbol.dispatcher",
+L00016034	          "evidence_kind": "dispatcher_fixture",
+L00016035	          "requirement": "Dispatching cmd.lsp.goto_symbol reaches handlers::lsp::goto_symbol with typed args/result contract."
+L00016036	        },
+L00016037	        {
+L00016038	          "test_id": "wiring.catalog.lsp_goto_symbol.state_projection",
+L00016039	          "evidence_kind": "state_projection",
+L00016040	          "requirement": "Availability reads state.commands.lsp_goto_symbol.availability and disabled copy reads state.commands.lsp_goto_symbol.disabled_reason."
+L00016041	        },
+L00016042	        {
+L00016043	          "test_id": "wiring.catalog.lsp_goto_symbol.effect",
+L00016044	          "evidence_kind": "receipt_or_event_assertion",
+L00016045	          "requirement": "cmd.lsp.goto_symbol has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00016046	        },
+L00016047	        {
+L00016048	          "test_id": "wiring.catalog.lsp_goto_symbol.accessibility",
+L00016049	          "evidence_kind": "accessibility_regression",
+L00016050	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016051	        }
+L00016052	      ],
+L00016053	      "event_test_requirements": [
+L00016054	        "Assert cmd.lsp.goto_symbol records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00016055	      ]
+L00016056	    },
+L00016057	    "catalog.lsp_open_problems": {
+L00016058	      "ui_element_id": "catalog.lsp_open_problems",
+L00016059	      "ui_location": "Lsp surface > Open Problems",
+L00016060	      "ui_command_id": "cmd.lsp.open_problems",
+L00016061	      "handler_location": "handlers::lsp::open_problems",
+L00016062	      "expected_event_types": [],
+L00016063	      "acceptance_checks": [
+L00016064	        "cmd.lsp.open_problems must be registered in the UICommand dispatcher with typed args and result contract",
+L00016065	        "cmd.lsp.open_problems must expose projected state selector and disabled reason before dispatch",
+L00016066	        "cmd.lsp.open_problems dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00016067	        "cmd.lsp.open_problems must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00016068	        "cmd.lsp.open_problems must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00016069	      ],
+L00016070	      "evidence_required": "Production wiring contract for cmd.lsp.open_problems; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00016071	      "state_selector": "state.commands.lsp_open_problems.availability",
+L00016072	      "disabled_reason_projection": "state.commands.lsp_open_problems.disabled_reason",
+L00016073	      "effect_contract": {
+L00016074	        "effect_kind": "receipt",
+L00016075	        "description": "cmd.lsp.open_problems has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00016076	        "receipt_or_event_refs": [
+L00016077	          "cmd.lsp.open_problems.dispatch_receipt"
+L00016078	        ]
+L00016079	      },
+L00016080	      "accessibility_contract": {
+L00016081	        "role_or_semantics": "catalog.lsp_open_problems exposes a stable role/name/description matching cmd.lsp.open_problems.",
+L00016082	        "keyboard_access": "catalog.lsp_open_problems is reachable and activatable by keyboard where the control is visible.",
+L00016083	        "focus_management": "catalog.lsp_open_problems preserves visible focus and returns focus deterministically after dispatch or error.",
+L00016084	        "disabled_announcement": "catalog.lsp_open_problems surfaces state.commands.lsp_open_problems.disabled_reason to assistive technology when unavailable."
+L00016085	      },
+L00016086	      "test_evidence": [
+L00016087	        {
+L00016088	          "test_id": "wiring.catalog.lsp_open_problems.dispatcher",
+L00016089	          "evidence_kind": "dispatcher_fixture",
+L00016090	          "requirement": "Dispatching cmd.lsp.open_problems reaches handlers::lsp::open_problems with typed args/result contract."
+L00016091	        },
+L00016092	        {
+L00016093	          "test_id": "wiring.catalog.lsp_open_problems.state_projection",
+L00016094	          "evidence_kind": "state_projection",
+L00016095	          "requirement": "Availability reads state.commands.lsp_open_problems.availability and disabled copy reads state.commands.lsp_open_problems.disabled_reason."
+L00016096	        },
+L00016097	        {
+L00016098	          "test_id": "wiring.catalog.lsp_open_problems.effect",
+L00016099	          "evidence_kind": "receipt_or_event_assertion",
+L00016100	          "requirement": "cmd.lsp.open_problems has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00016101	        },
+L00016102	        {
+L00016103	          "test_id": "wiring.catalog.lsp_open_problems.accessibility",
+L00016104	          "evidence_kind": "accessibility_regression",
+L00016105	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016106	        }
+L00016107	      ],
+L00016108	      "event_test_requirements": [
+L00016109	        "Assert cmd.lsp.open_problems records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00016110	      ]
+L00016111	    },
+L00016112	    "catalog.lsp_rename_symbol": {
+L00016113	      "ui_element_id": "catalog.lsp_rename_symbol",
+L00016114	      "ui_location": "Lsp surface > Rename Symbol",
+L00016115	      "ui_command_id": "cmd.lsp.rename_symbol",
+L00016116	      "handler_location": "handlers::lsp::rename_symbol",
+L00016117	      "expected_event_types": [],
+L00016118	      "acceptance_checks": [
+L00016119	        "cmd.lsp.rename_symbol must be registered in the UICommand dispatcher with typed args and result contract",
+L00016120	        "cmd.lsp.rename_symbol must expose projected state selector and disabled reason before dispatch",
+L00016121	        "cmd.lsp.rename_symbol dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00016122	        "cmd.lsp.rename_symbol must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00016123	        "cmd.lsp.rename_symbol must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00016124	      ],
+L00016125	      "evidence_required": "Production wiring contract for cmd.lsp.rename_symbol; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00016126	      "state_selector": "state.commands.lsp_rename_symbol.availability",
+L00016127	      "disabled_reason_projection": "state.commands.lsp_rename_symbol.disabled_reason",
+L00016128	      "effect_contract": {
+L00016129	        "effect_kind": "receipt",
+L00016130	        "description": "cmd.lsp.rename_symbol has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00016131	        "receipt_or_event_refs": [
+L00016132	          "cmd.lsp.rename_symbol.dispatch_receipt"
+L00016133	        ]
+L00016134	      },
+L00016135	      "accessibility_contract": {
+L00016136	        "role_or_semantics": "catalog.lsp_rename_symbol exposes a stable role/name/description matching cmd.lsp.rename_symbol.",
+L00016137	        "keyboard_access": "catalog.lsp_rename_symbol is reachable and activatable by keyboard where the control is visible.",
+L00016138	        "focus_management": "catalog.lsp_rename_symbol preserves visible focus and returns focus deterministically after dispatch or error.",
+L00016139	        "disabled_announcement": "catalog.lsp_rename_symbol surfaces state.commands.lsp_rename_symbol.disabled_reason to assistive technology when unavailable."
+L00016140	      },
+L00016141	      "test_evidence": [
+L00016142	        {
+L00016143	          "test_id": "wiring.catalog.lsp_rename_symbol.dispatcher",
+L00016144	          "evidence_kind": "dispatcher_fixture",
+L00016145	          "requirement": "Dispatching cmd.lsp.rename_symbol reaches handlers::lsp::rename_symbol with typed args/result contract."
+L00016146	        },
+L00016147	        {
+L00016148	          "test_id": "wiring.catalog.lsp_rename_symbol.state_projection",
+L00016149	          "evidence_kind": "state_projection",
+L00016150	          "requirement": "Availability reads state.commands.lsp_rename_symbol.availability and disabled copy reads state.commands.lsp_rename_symbol.disabled_reason."
+L00016151	        },
+L00016152	        {
+L00016153	          "test_id": "wiring.catalog.lsp_rename_symbol.effect",
+L00016154	          "evidence_kind": "receipt_or_event_assertion",
+L00016155	          "requirement": "cmd.lsp.rename_symbol has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00016156	        },
+L00016157	        {
+L00016158	          "test_id": "wiring.catalog.lsp_rename_symbol.accessibility",
+L00016159	          "evidence_kind": "accessibility_regression",
+L00016160	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016161	        }
+L00016162	      ],
+L00016163	      "event_test_requirements": [
+L00016164	        "Assert cmd.lsp.rename_symbol records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00016165	      ]
+L00016166	    },
+L00016167	    "catalog.lsp_restart_server": {
+L00016168	      "ui_element_id": "catalog.lsp_restart_server",
+L00016169	      "ui_location": "Lsp surface > Restart Server",
+L00016170	      "ui_command_id": "cmd.lsp.restart_server",
+L00016171	      "handler_location": "handlers::lsp::restart_server",
+L00016172	      "expected_event_types": [],
+L00016173	      "acceptance_checks": [
+L00016174	        "cmd.lsp.restart_server must be registered in the UICommand dispatcher with typed args and result contract",
+L00016175	        "cmd.lsp.restart_server must expose projected state selector and disabled reason before dispatch",
+L00016176	        "cmd.lsp.restart_server dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00016177	        "cmd.lsp.restart_server must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00016178	        "cmd.lsp.restart_server must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00016179	      ],
+L00016180	      "evidence_required": "Production wiring contract for cmd.lsp.restart_server; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00016181	      "state_selector": "state.commands.lsp_restart_server.availability",
+L00016182	      "disabled_reason_projection": "state.commands.lsp_restart_server.disabled_reason",
+L00016183	      "effect_contract": {
+L00016184	        "effect_kind": "receipt",
+L00016185	        "description": "cmd.lsp.restart_server has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00016186	        "receipt_or_event_refs": [
+L00016187	          "cmd.lsp.restart_server.dispatch_receipt"
+L00016188	        ]
+L00016189	      },
+L00016190	      "accessibility_contract": {
+L00016191	        "role_or_semantics": "catalog.lsp_restart_server exposes a stable role/name/description matching cmd.lsp.restart_server.",
+L00016192	        "keyboard_access": "catalog.lsp_restart_server is reachable and activatable by keyboard where the control is visible.",
+L00016193	        "focus_management": "catalog.lsp_restart_server preserves visible focus and returns focus deterministically after dispatch or error.",
+L00016194	        "disabled_announcement": "catalog.lsp_restart_server surfaces state.commands.lsp_restart_server.disabled_reason to assistive technology when unavailable."
+L00016195	      },
+L00016196	      "test_evidence": [
+L00016197	        {
+L00016198	          "test_id": "wiring.catalog.lsp_restart_server.dispatcher",
+L00016199	          "evidence_kind": "dispatcher_fixture",
+L00016200	          "requirement": "Dispatching cmd.lsp.restart_server reaches handlers::lsp::restart_server with typed args/result contract."
+L00016201	        },
+L00016202	        {
+L00016203	          "test_id": "wiring.catalog.lsp_restart_server.state_projection",
+L00016204	          "evidence_kind": "state_projection",
+L00016205	          "requirement": "Availability reads state.commands.lsp_restart_server.availability and disabled copy reads state.commands.lsp_restart_server.disabled_reason."
+L00016206	        },
+L00016207	        {
+L00016208	          "test_id": "wiring.catalog.lsp_restart_server.effect",
+L00016209	          "evidence_kind": "receipt_or_event_assertion",
+L00016210	          "requirement": "cmd.lsp.restart_server has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00016211	        },
+L00016212	        {
+L00016213	          "test_id": "wiring.catalog.lsp_restart_server.accessibility",
+L00016214	          "evidence_kind": "accessibility_regression",
+L00016215	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016216	        }
+L00016217	      ],
+L00016218	      "event_test_requirements": [
+L00016219	        "Assert cmd.lsp.restart_server records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00016220	      ]
+L00016221	    },
+L00016222	    "catalog.model_list": {
+L00016223	      "ui_element_id": "catalog.model_list",
+L00016224	      "ui_location": "Settings > Models / Providers > List",
+L00016225	      "ui_command_id": "cmd.model.list",
+L00016226	      "handler_location": "handlers::model::list",
+L00016227	      "expected_event_types": [],
+L00016228	      "acceptance_checks": [
+L00016229	        "cmd.model.list is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+L00016230	        "cmd.model.list exposes state selector and disabled reason before dispatch.",
+L00016231	        "cmd.model.list dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+L00016232	        "cmd.model.list uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+L00016233	        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+L00016234	      ],
+L00016235	      "evidence_required": "Production wiring contract for cmd.model.list. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00016236	      "state_selector": "state.commands.model_list.availability",
+L00016237	      "disabled_reason_projection": "state.commands.model_list.disabled_reason",
+L00016238	      "effect_contract": {
+L00016239	        "effect_kind": "receipt",
+L00016240	        "description": "cmd.model.list records an explicit no-persist command receipt or route/open disposition and emits no fabricated domain event.",
+L00016241	        "receipt_or_event_refs": [
+L00016242	          "cmd.model.list.dispatch_receipt"
+L00016243	        ]
+L00016244	      },
+L00016245	      "accessibility_contract": {
+L00016246	        "role_or_semantics": "catalog.model_list exposes a stable role/name/description matching cmd.model.list.",
+L00016247	        "keyboard_access": "catalog.model_list is reachable and activatable by keyboard where the control is visible.",
+L00016248	        "focus_management": "catalog.model_list preserves visible focus and returns focus deterministically after dispatch or error.",
+L00016249	        "disabled_announcement": "catalog.model_list surfaces state.commands.model_list.disabled_reason to assistive technology when unavailable."
+L00016250	      },
+L00016251	      "test_evidence": [
+L00016252	        {
+L00016253	          "test_id": "wiring.catalog.model_list.dispatcher",
+L00016254	          "evidence_kind": "dispatcher_fixture",
+L00016255	          "requirement": "Dispatching cmd.model.list reaches handlers::model::list with typed args/result contract."
+L00016256	        },
+L00016257	        {
+L00016258	          "test_id": "wiring.catalog.model_list.state_projection",
+L00016259	          "evidence_kind": "state_projection",
+L00016260	          "requirement": "Availability reads state.commands.model_list.availability and disabled copy reads state.commands.model_list.disabled_reason."
+L00016261	        },
+L00016262	        {
+L00016263	          "test_id": "wiring.catalog.model_list.effect",
+L00016264	          "evidence_kind": "receipt_or_event_assertion",
+L00016265	          "requirement": "cmd.model.list records an explicit no-persist command receipt or route/open disposition and emits no fabricated domain event."
+L00016266	        },
+L00016267	        {
+L00016268	          "test_id": "wiring.catalog.model_list.accessibility",
+L00016269	          "evidence_kind": "accessibility_regression",
+L00016270	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016271	        }
+L00016272	      ],
+L00016273	      "event_test_requirements": [
+L00016274	        "Assert cmd.model.list records dispatch receipt cmd.model.list.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00016275	      ]
+L00016276	    },
+L00016277	    "catalog.model_refresh": {
+L00016278	      "ui_element_id": "catalog.model_refresh",
+L00016279	      "ui_location": "Settings > Models / Providers > Refresh",
+L00016280	      "ui_command_id": "cmd.model.refresh",
+L00016281	      "handler_location": "handlers::model::refresh",
+L00016282	      "expected_event_types": [
+L00016283	        "model.catalog_refreshed"
+L00016284	      ],
+L00016285	      "acceptance_checks": [
+L00016286	        "cmd.model.refresh is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+L00016287	        "cmd.model.refresh exposes state selector and disabled reason before dispatch.",
+L00016288	        "cmd.model.refresh dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+L00016289	        "cmd.model.refresh uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+L00016290	        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+L00016291	      ],
+L00016292	      "evidence_required": "Production wiring contract for cmd.model.refresh. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00016293	      "state_selector": "state.commands.model_refresh.availability",
+L00016294	      "disabled_reason_projection": "state.commands.model_refresh.disabled_reason",
+L00016295	      "effect_contract": {
+L00016296	        "effect_kind": "event",
+L00016297	        "description": "cmd.model.refresh emits the declared domain event(s) and records dispatch correlation evidence.",
+L00016298	        "receipt_or_event_refs": [
+L00016299	          "model.catalog_refreshed"
+L00016300	        ]
+L00016301	      },
+L00016302	      "accessibility_contract": {
+L00016303	        "role_or_semantics": "catalog.model_refresh exposes a stable role/name/description matching cmd.model.refresh.",
+L00016304	        "keyboard_access": "catalog.model_refresh is reachable and activatable by keyboard where the control is visible.",
+L00016305	        "focus_management": "catalog.model_refresh preserves visible focus and returns focus deterministically after dispatch or error.",
+L00016306	        "disabled_announcement": "catalog.model_refresh surfaces state.commands.model_refresh.disabled_reason to assistive technology when unavailable."
+L00016307	      },
+L00016308	      "test_evidence": [
+L00016309	        {
+L00016310	          "test_id": "wiring.catalog.model_refresh.dispatcher",
+L00016311	          "evidence_kind": "dispatcher_fixture",
+L00016312	          "requirement": "Dispatching cmd.model.refresh reaches handlers::model::refresh with typed args/result contract."
+L00016313	        },
+L00016314	        {
+L00016315	          "test_id": "wiring.catalog.model_refresh.state_projection",
+L00016316	          "evidence_kind": "state_projection",
+L00016317	          "requirement": "Availability reads state.commands.model_refresh.availability and disabled copy reads state.commands.model_refresh.disabled_reason."
+L00016318	        },
+L00016319	        {
+L00016320	          "test_id": "wiring.catalog.model_refresh.effect",
+L00016321	          "evidence_kind": "receipt_or_event_assertion",
+L00016322	          "requirement": "cmd.model.refresh emits the declared domain event(s) and records dispatch correlation evidence."
+L00016323	        },
+L00016324	        {
+L00016325	          "test_id": "wiring.catalog.model_refresh.accessibility",
+L00016326	          "evidence_kind": "accessibility_regression",
+L00016327	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016328	        },
+L00016329	        {
+L00016330	          "test_id": "wiring.catalog.model_refresh.events",
+L00016331	          "evidence_kind": "event_test",
+L00016332	          "requirement": "Assert cmd.model.refresh emits model.catalog_refreshed with command_id, origin, correlation_id, and handler target."
+L00016333	        }
+L00016334	      ],
+L00016335	      "event_test_requirements": [
+L00016336	        "Assert cmd.model.refresh emits model.catalog_refreshed with command_id, origin, correlation_id, and handler target."
+L00016337	      ]
+L00016338	    },
+L00016339	    "catalog.nav_focus_route": {
+L00016340	      "ui_element_id": "catalog.nav_focus_route",
+L00016341	      "ui_location": "Nav surface > Focus Route",
+L00016342	      "ui_command_id": "cmd.nav.focus_route",
+L00016343	      "handler_location": "handlers::nav::focus_route",
+L00016344	      "expected_event_types": [],
+L00016345	      "acceptance_checks": [
+L00016346	        "cmd.nav.focus_route must be registered in the UICommand dispatcher with typed args and result contract",
+L00016347	        "cmd.nav.focus_route must expose projected state selector and disabled reason before dispatch",
+L00016348	        "cmd.nav.focus_route dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00016349	        "cmd.nav.focus_route must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00016350	        "cmd.nav.focus_route must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00016351	      ],
+L00016352	      "evidence_required": "Production wiring contract for cmd.nav.focus_route; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00016353	      "state_selector": "state.commands.nav_focus_route.availability",
+L00016354	      "disabled_reason_projection": "state.commands.nav_focus_route.disabled_reason",
+L00016355	      "effect_contract": {
+L00016356	        "effect_kind": "receipt",
+L00016357	        "description": "cmd.nav.focus_route has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00016358	        "receipt_or_event_refs": [
+L00016359	          "cmd.nav.focus_route.dispatch_receipt"
+L00016360	        ]
+L00016361	      },
+L00016362	      "accessibility_contract": {
+L00016363	        "role_or_semantics": "catalog.nav_focus_route exposes a stable role/name/description matching cmd.nav.focus_route.",
+L00016364	        "keyboard_access": "catalog.nav_focus_route is reachable and activatable by keyboard where the control is visible.",
+L00016365	        "focus_management": "catalog.nav_focus_route preserves visible focus and returns focus deterministically after dispatch or error.",
+L00016366	        "disabled_announcement": "catalog.nav_focus_route surfaces state.commands.nav_focus_route.disabled_reason to assistive technology when unavailable."
+L00016367	      },
+L00016368	      "test_evidence": [
+L00016369	        {
+L00016370	          "test_id": "wiring.catalog.nav_focus_route.dispatcher",
+L00016371	          "evidence_kind": "dispatcher_fixture",
+L00016372	          "requirement": "Dispatching cmd.nav.focus_route reaches handlers::nav::focus_route with typed args/result contract."
+L00016373	        },
+L00016374	        {
+L00016375	          "test_id": "wiring.catalog.nav_focus_route.state_projection",
+L00016376	          "evidence_kind": "state_projection",
+L00016377	          "requirement": "Availability reads state.commands.nav_focus_route.availability and disabled copy reads state.commands.nav_focus_route.disabled_reason."
+L00016378	        },
+L00016379	        {
+L00016380	          "test_id": "wiring.catalog.nav_focus_route.effect",
+L00016381	          "evidence_kind": "receipt_or_event_assertion",
+L00016382	          "requirement": "cmd.nav.focus_route has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00016383	        },
+L00016384	        {
+L00016385	          "test_id": "wiring.catalog.nav_focus_route.accessibility",
+L00016386	          "evidence_kind": "accessibility_regression",
+L00016387	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00016388	        }
+L00016389	      ],
+L00016390	      "event_test_requirements": [
+L00016391	        "Assert cmd.nav.focus_route records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00016392	      ]
+L00016393	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=16394-16405 >>>
+L00016394	    "catalog.nav_open_subject": {
+L00016395	      "ui_element_id": "catalog.nav_open_subject",
+L00016396	      "ui_location": "Nav surface > Open Subject",
+L00016397	      "ui_command_id": "cmd.nav.open_subject",
+L00016398	      "handler_location": "handlers::nav::open_subject",
+L00016399	      "expected_event_types": [],
+L00016400	      "acceptance_checks": [
+L00016401	        "cmd.nav.open_subject must be registered in the UICommand dispatcher with typed args and result contract",
+L00016402	        "cmd.nav.open_subject must expose projected state selector and disabled reason before dispatch",
+L00016403	        "cmd.nav.open_subject dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00016404	        "cmd.nav.open_subject must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00016405	        "cmd.nav.open_subject must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

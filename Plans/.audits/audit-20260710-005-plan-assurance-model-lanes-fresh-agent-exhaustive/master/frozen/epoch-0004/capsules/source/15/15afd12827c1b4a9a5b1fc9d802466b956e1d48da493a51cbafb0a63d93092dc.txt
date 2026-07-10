@@ -1,0 +1,380 @@
+<<< CONTEXT_BEFORE 3685-3696 >>>
+- Deep Plan does not create a sub-task inheritance path or widen child authority.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- assistant-chat-design owns Debug exposure as a chat/workflow overlay; Run_Modes owns runtime posture.
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md,
+  ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/LSPSupport.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 3697-4047 >>>
+### AI-056 - Debug MVP Authority Seams
+
+```yaml
+plan_unit_id: AI-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Debug Mode is MVP only when remote targets keep /no-local-fallback, requested /effective capability /state
+  stays visible, and seams for investigation_id, instrumentation_id, storage, /contracts/prompt, permissions, and browser
+  evidence are explicitly owned rather than inferred from a debug label.
+gui_related: false
+gui_classification_reason: This unit covers authority seams and target/capability state, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: debug_mvp_authority_seams
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: debug_mvp_authority_seams
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0037
+preserved_exact_tokens:
+- /no-local-fallback
+- requested /effective capability /state
+- investigation_id
+- instrumentation_id
+- storage
+- /contracts/prompt
+- permissions
+- browser evidence
+- debug label
+negative_constraints:
+- Debug authority seams must not be inferred from a debug label.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Remote target, capability, storage, prompt, permission, and browser evidence seams require explicit owners.
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md,
+  ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/LSPSupport.md'
+```
+
+### AI-057 - Visible Browser Evidence Attachment
+
+```yaml
+plan_unit_id: AI-057
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Browser evidence auto-feed must be a visible attach /bundle contract and must not contradict the no hidden
+  browser-to-chat injection rule; bounded auto-feed is allowed only through visible Investigation Context state, consented
+  attach/revoke affordances, and owner-routed browser capture events.
+gui_related: true
+gui_classification_reason: This unit governs user-visible browser evidence attach/revoke affordances and Investigation Context
+  state.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: visible_browser_evidence_attachment
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: visible_browser_evidence_attachment
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0037
+preserved_exact_tokens:
+- browser evidence auto-feed
+- visible attach `/bundle` contract
+- no hidden browser-to-chat injection rule
+- visible Investigation Context state
+- consented attach/revoke affordances
+- owner-routed browser capture events
+negative_constraints:
+- Browser evidence auto-feed must not contradict the no hidden browser-to-chat injection rule.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Browser-backed investigation evidence enters through visible owner-routed attach/bundle state, not hidden prompt injection.
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md,
+  ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/LSPSupport.md'
+```
+
+### AI-058 - Investigation Evidence State And Replay Heuristics
+
+```yaml
+plan_unit_id: AI-058
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: In-scope tool-emitted evidence for an active investigation enters Investigation Context as active unless redaction,
+  trust, or /truncation policy narrows it; out-of-scope evidence remains referenced or rejected instead of silently injected.
+  Exported or replayed Debug verification evidence carries heuristic_version = debug_verify.v1, and future debug_verify tuning
+  increments or preserves heuristic_version.
+gui_related: false
+gui_classification_reason: This unit covers evidence state, redaction/trust/truncation policy, and replay metadata, not GUI
+  behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: investigation_evidence_state_and_replay_heuristics
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: investigation_evidence_state_replay_heuristics
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0037
+preserved_exact_tokens:
+- tool-emitted evidence
+- Investigation Context
+- active
+- redaction
+- trust
+- /truncation
+- referenced or rejected
+- silently injected
+- heuristic_version = debug_verify.v1
+- debug_verify
+- exported or replayed
+negative_constraints:
+- Out-of-scope evidence remains referenced or rejected instead of being silently injected.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md,
+  ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/LSPSupport.md'
+```
+
+### AI-059 - Provider Profiles Are Runtime Isolated
+
+```yaml
+plan_unit_id: AI-059
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: CLI/provider profile mechanisms used for account separation MUST be treated as isolated runtime profiles;
+  Cursor --user-data-dir and user-data-dir separation do not authorize sharing auth, cooldown, usage, session history, runtime
+  cache, or telemetry state between accounts.
+gui_related: false
+gui_classification_reason: This unit covers provider/runtime profile isolation, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: provider_profiles_are_runtime_isolated
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: provider_profiles_runtime_isolated
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0038
+preserved_exact_tokens:
+- INV-025 -- Provider profile isolation is not shared mutable state
+- CLI/provider profile mechanisms
+- isolated runtime profiles
+- Cursor
+- --user-data-dir
+- user-data-dir
+- auth
+- cooldown
+- usage
+- session history
+- runtime cache
+- telemetry state
+negative_constraints:
+- user-data-dir profile separation does not authorize sharing auth, cooldown, usage, session history, runtime cache, or telemetry
+  state between accounts.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/BinaryLocator_Spec.md,
+  ContractName:Plans/Permissions_System.md'
+```
+
+### AI-060 - Provider Overlay Sharing Requires Owner Contract
+
+```yaml
+plan_unit_id: AI-060
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: PM-managed overlays such as instructions, projected PM skills, selected MCP/tool definitions, and selected
+  plugins/extensions may be shared only when the provider/runtime contract explicitly allows safe projection and drift handling.
+gui_related: false
+gui_classification_reason: This unit covers provider/runtime overlay sharing contracts, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: provider_overlay_sharing_requires_owner_contract
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: provider_overlay_sharing_owner_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0038
+preserved_exact_tokens:
+- PM-managed overlays
+- instructions
+- projected PM skills
+- selected MCP/tool definitions
+- selected plugins/extensions
+- provider/runtime contract
+- safe projection
+- drift handling
+negative_constraints:
+- PM-managed overlays may be shared only when the provider/runtime contract explicitly allows safe projection and drift handling.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Provider/runtime contracts own safe overlay projection and drift handling.
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/BinaryLocator_Spec.md,
+  ContractName:Plans/Permissions_System.md'
+```
+
+### AI-061 - File Browser Recovery Consumer Routing
+
+```yaml
+plan_unit_id: AI-061
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: FileManager consumes file/browser/rendering repairs and MUST NOT keep stale inline visualizer or terminal-action
+  assumptions; /browser/rendering behavior stays routed through browser/rendering owners, and terminal-action surfaces remain
+  consumers of terminal/runtime contracts.
+gui_related: true
+gui_classification_reason: This unit affects FileManager, browser/rendering, and terminal-action user-visible surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the retired source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: file_browser_recovery_consumer_routing
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: file_browser_recovery_consumer_routing
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0039
+preserved_exact_tokens:
+- Plans/FileManager.md
+- file/browser/rendering repairs
+- stale inline visualizer
+- terminal-action assumptions
+- /browser/rendering
+- browser/rendering owners
+- terminal-action surface
+- terminal/runtime contracts
+negative_constraints:
+- Plans/FileManager.md MUST NOT keep stale inline visualizer or terminal-action assumptions.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- File/browser/rendering and terminal-action assumptions are stale if they bypass owner routing.
+owner_boundary_notes:
+- FileManager consumes browser/rendering and terminal/runtime owners instead of re-owning them.
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Tools.md, ContractName:Plans/human-in-the-loop.md,
+  ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/usage-feature.md, ContractName:Plans/assistant-memory-subsystem.md,
+  ContractName:Plans/Widget_System.md, ContractName:Plans/DRY_Rules.md'
+```
+
+
+<<< CONTEXT_AFTER 4048-4059 >>>
+### AI-062 - Firecrawl Billing And Audit UI Ownership
+
+```yaml
+plan_unit_id: AI-062
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: FinalGUISpec consumes Firecrawl billing and audit disclosure, and credit-warning plus audit-surface UI copy
+  MUST defer to Tools for thresholds, provider billing exceptions, cache/routing disclosure, and web-operation audit payload
+  ownership.
+gui_related: true
+gui_classification_reason: This unit governs Firecrawl credit-warning, audit-surface UI copy, and user-visible disclosure

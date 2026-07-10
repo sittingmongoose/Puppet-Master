@@ -1,0 +1,396 @@
+<<< CONTEXT_BEFORE 2608-2619 >>>
+  contracts.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- The stale part of WorktreeGitImprovement is the identity anchor, not the product boundary.
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 2620-2986 >>>
+### AI-039 - Legacy Tier Event And Usage Evidence Demotion
+
+```yaml
+plan_unit_id: AI-039
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Consumers must not mix canonical blocked, scheduler, remediation lineage, or /scheduler/remediation lineage
+  with legacy tier-event push streams, and usage/evidence families move away from tier-first correlation toward usage-event
+  or node/attempt identity as primary.
+gui_related: true
+gui_classification_reason: This unit affects user-visible status, usage, ledger, runtime, and graph inspection surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: legacy_tier_event_and_usage_evidence_demotion
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: legacy_tier_event_usage_evidence_demotion
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+preserved_exact_tokens:
+- legacy `tier-event`
+- blocked
+- scheduler
+- remediation
+- /scheduler/remediation
+- tier-first
+- Usage/Ledger navigation
+- usage-event identity
+- runtime and graph inspectors
+- node/attempt identity
+negative_constraints:
+- Consumer docs must not mix canonical blocked/scheduler/remediation lineage with legacy tier-event push streams.
+compatibility_only_notes:
+- Usage/evidence families must demote tier-first cross-surface correlation in favor of usage-event or node/attempt identity.
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+```
+
+### AI-040 - Runtime Chat Boundary And Owner First Repair
+
+```yaml
+plan_unit_id: AI-040
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Runtime/chat boundaries avoid over-unify and under-unify behavior, unresolved owner gaps remain owner obligations,
+  and owner docs plus rewrite-root routing are repaired before primary stale consumers or checklist mirrors update.
+gui_related: false
+gui_classification_reason: This unit covers owner-first repair and runtime/chat boundary policy, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: runtime_chat_boundary_and_owner_first_repair
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: runtime_chat_boundary_owner_first_repair
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0032
+preserved_exact_tokens:
+- over-unify
+- under-unify
+- builder/interview/chat
+- /interview/chat
+- /account/runtime
+- /session
+- safe-point cleanup ordering
+- OpenCode server/session limits
+- project/session browser ownership
+- attention-center ownership
+- runtime-recovery
+- plugin `/skill/formatter`
+- rewrite-root
+- /checklist
+negative_constraints:
+- Runtime/chat boundaries must avoid over-unify and under-unify behavior.
+- Cross-cutting owner gaps must not be republished as local consumer behavior.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Owner docs and rewrite-root routing are repaired before primary stale consumers, and mirror /checklist followers update
+  only after owners settle.
+owner_boundary_notes:
+- Owner gaps remain invariant obligations until resolved by their owner docs.
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md,
+  ContractName:Plans/GitHub_API_Auth_and_Flows.md'
+```
+
+### AI-041 - Project Activation Import And Visible Ambiguity
+
+```yaml
+plan_unit_id: AI-041
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: 'Puppet Master remains one extensible platform with project-driven capability activation: project-open detection/import
+  runs before activation, project signals drive language/framework/build/review/remote/LSP/search/source-control capability
+  packs, and ambiguous interpretations are visible, recorded, and overridable.'
+gui_related: true
+gui_classification_reason: This unit affects user-visible project activation, alternatives, defaults, and override behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: project_activation_import_and_visible_ambiguity
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: project_activation_import_visible_ambiguity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0033
+preserved_exact_tokens:
+- INV-020 -- Project-driven capability activation
+- bench-03
+- one extensible platform
+- Project-open detection/import
+- language markers
+- framework files
+- build/run metadata
+- hosted-repository state
+- remote-host state
+- capability packs/modules
+- Ambiguity MUST be visible and overridable
+negative_constraints:
+- Puppet Master MUST remain one extensible platform, not separate hard-forked products or rigid personalities.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md,
+  ContractName:Plans/storage-plan.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/BinaryLocator_Spec.md'
+```
+
+### AI-042 - Index Sync Degraded State And Shared Shell Workflow
+
+```yaml
+plan_unit_id: AI-042
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Indexing and external-model sync are first-class bounded background subsystems that disclose reduced-capability/degraded-mode
+  state while warming, and diff/review/hosted-repository workflows compose inside the shared IDE shell rather than becoming
+  separate ad hoc tools.
+gui_related: true
+gui_classification_reason: This unit affects user-visible readiness, degraded-mode disclosure, and IDE shell workflow composition.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: index_sync_degraded_state_and_shared_shell_workflow
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: index_sync_degraded_state_shared_shell
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0033
+preserved_exact_tokens:
+- Indexing
+- external-model sync
+- reduced-capability/degraded-mode state
+- bounded/reused
+- startup
+- large-workspace responsiveness
+- diff/review/hosted-repository workflows
+- same shell
+- Source Control
+- Problems
+- Search
+negative_constraints:
+- Affected features must not pretend full readiness while indexes or external model/capability reports are still synchronizing.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md,
+  ContractName:Plans/storage-plan.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/BinaryLocator_Spec.md'
+```
+
+### AI-043 - Remote Attachment And Lazy Module Activation
+
+```yaml
+plan_unit_id: AI-043
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Remote projects use a thin local client/launcher with backend attachment and version management, while plugins/modules
+  load lazily and stay scoped to activated capabilities without unbounded startup work, hidden dependency chains, or duplicate
+  project-detection logic.
+gui_related: false
+gui_classification_reason: This unit covers remote/module architecture and startup dependency policy, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: remote_attachment_and_lazy_module_activation
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: remote_attachment_lazy_module_activation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0033
+preserved_exact_tokens:
+- Remote architecture
+- thin local client/launcher
+- backend attachment/version management
+- host identity
+- helper-binary version
+- connection health
+- requested/effective capability state
+- Plugin/module breadth
+- dynamic-loading dependency debt
+- loaded lazily
+- unbounded startup work
+- duplicate project-detection logic
+negative_constraints:
+- Module activation must not create unbounded startup work, hidden dependency chains, or duplicate project-detection logic.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/GitHub_Integration.md,
+  ContractName:Plans/storage-plan.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/BinaryLocator_Spec.md'
+```
+
+### AI-044 - Dependency Driven Seam Reconciliation Order
+
+```yaml
+plan_unit_id: AI-044
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Reconciliation work converts research into implementation-ready decisions seam-by-seam in dependency-driven
+  order, preserving canonical seam labels, owner mapping, shell/identity/routing first, explicit owner docs, consumer docs,
+  unresolved risk, acceptance guidance, and package/seam/node/lane/attempt addressing instead of rigid phase/task/subtask
+  paths.
+gui_related: false
+gui_classification_reason: This unit covers planning/reconciliation order and addressing, not GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- The covered architecture-invariant fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+  bridge.
+- Plans/Architecture_Invariants.md remains the owner for cross-cutting invariants while referenced owner docs retain their
+  own contracts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: dependency_driven_seam_reconciliation_order
+reasoning_tier: standard
+context_scope: architecture_invariants_standardization
+implementation_surfaces:
+- Plans/Architecture_Invariants.md
+node_compile_hint:
+  mode: dependency_driven_seam_reconciliation_order
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Architecture_Invariants-S0034
+preserved_exact_tokens:
+- INV-021 -- Dependency-driven seam reconciliation order
+- seam-shell-identity-routing
+- seam-editor-core
+- seam-diff-review-source-control
+- seam-file-manager
+- seam-search
+- seam-preview-browser
+- seam-lsp-indexing-autodetect
+- seam-ssh-remote
+- seam-terminal-runtime-environment
+- seam-cross-cutting
+- seam-reconciliation-synthesis
+- <phase>/<task>/<subtask>
+- package, seam, node, lane, and attempt identity
+negative_constraints:
+- Addressing cannot assume rigid <phase>/<task>/<subtask> paths when package/seam architecture is active.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Each seam must leave explicit owner docs, consumer docs, unresolved risk if any, and implementation-ready acceptance guidance
+  before moving out of reconciliation.
+owner_hints:
+- Plans/Architecture_Invariants.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileManager.md, ContractName:Plans/FinalGUISpec.md,
+  ContractName:Plans/LSPSupport.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/storage-plan.md'
+```
+
+
+<<< CONTEXT_AFTER 2987-2998 >>>
+### AI-045 - Native Workbench Service Bound Evidence
+
+```yaml
+plan_unit_id: AI-045
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Architecture_Invariants.md
+canonical_text: Puppet Master keeps a PM-native Rust plus Slint service-bound workbench architecture, preserving benchmark/research
+  lineage for service boundaries, collaborative room constraints, degraded/indexing/remote/offline/requested-vs-effective
+  state visibility, and the anti-delegated-core rule from implementation-reference synthesis.
+gui_related: true
+gui_classification_reason: This unit covers native workbench product architecture and Slint shell/workbench UI constraints.

@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE 996-1007 >>>
+negative_constraints:
+- 'consumer docs must not preserve stale tier-era or request-era canon as peer alternatives'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- 'Owner docs are reconciled before consumer docs.'
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Progression_Gates.md'
+```
+
+
+<<< AUTHORITATIVE_CORE 1008-1373 >>>
+### 0PI-005 - Owner Map Guard And Initial Seams
+
+```yaml
+plan_unit_id: 0PI-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  The owner-map guard records routing relationships only and does not re-own contract, storage, UI, chat, run-graph, HITL, executor, or usage behavior; initial seams route primary owners and adjacent consumers for contracts, crosswalk, storage, UI, Final GUI, file surfaces, usage, run graph, HITL, and mixed-era layering.
+gui_related: true
+gui_classification_reason: The unit maps GUI/UI owner seams and runtime consumers.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_map_guard_and_initial_seams
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: owner_map_guard_and_initial_seams
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0004'
+preserved_exact_tokens:
+- 'does not re-own'
+- 'Contracts/Crosswalk to UI/run seam'
+- 'Contracts/Final GUI seam'
+- 'Storage/command/UI/contract seam'
+- 'mixed-era'
+negative_constraints:
+- 'Mixed-era layering must not preserve older framing as peer canon.'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- 'Primary owner entries carry owning canon; adjacent docs consume or align.'
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs: []
+```
+
+### 0PI-006 - Owner Map Routing And Stale Consumer Seams
+
+```yaml
+plan_unit_id: 0PI-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  The owner-map routing section preserves priority/routing docs, source-order equivalence, stale-consumer, owner-gap, shell-adoption strata, /inconsistent, /precedence, and repeated-owner-set notes so reconciliation follows the same owner sets regardless of source ordering.
+gui_related: true
+gui_classification_reason: The unit includes GUI/run/UI routing and stale-consumer owner-map facts.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_map_routing_and_stale_consumer_seams
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: owner_map_routing_and_stale_consumer_seams
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0004'
+preserved_exact_tokens:
+- 'Priority 3'
+- 'source orderings'
+- 'stale-consumer'
+- 'owner-gap'
+- '/inconsistent'
+- '/precedence'
+- 'repeated source orderings'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- 'Stale consumer and owner-gap labels are routing facts, not new product owners.'
+owner_boundary_notes:
+- 'Plans/00-plans-index.md records routing; named docs retain canon.'
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs: []
+```
+
+### 0PI-007 - Owner Map Runtime File Storage Seams
+
+```yaml
+plan_unit_id: 0PI-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  The owner-map runtime/file/storage seams preserve terminology and routing for safe-point, restore-point, rollback, contamination, source-lineage exclusions, runtime/storage/policy/UI terminology, GATE-010 limitation, and owner/consumer boundaries for runtime, file, storage, policy, executor, and contracts.
+gui_related: true
+gui_classification_reason: The unit includes runtime and UI owner-map seams affecting visible recovery and command surfaces.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_map_runtime_file_storage_seams
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: owner_map_runtime_file_storage_seams
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0004'
+preserved_exact_tokens:
+- 'safe-point'
+- 'restore-point'
+- 'rollback'
+- 'contamination'
+- 'source-lineage only'
+- 'GATE-010'
+- 'command-normalization'
+negative_constraints:
+- 'GATE-010 cannot express the routing and command-normalization checks now needed.'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- 'Index routing points to owner docs; it does not replace them.'
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs: []
+```
+
+### 0PI-008 - Owner Map GUI Widget Usage Final Pass Seams
+
+```yaml
+plan_unit_id: 0PI-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  The owner-map GUI/widget/usage/final-pass seams preserve GUI widget and usage routing, usage_event_ref shape, page_tab, cost_usage, runtime-recovery duplicate-canon cleanup, blocked_sequence ownership, and /HITL/chat/storage compatibility-only bucket handling.
+gui_related: true
+gui_classification_reason: The unit directly covers GUI/widget/usage routing and user-visible command destinations.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: owner_map_gui_widget_usage_final_pass_seams
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: owner_map_gui_widget_usage_final_pass_seams
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0004'
+preserved_exact_tokens:
+- 'usage_event_ref'
+- 'page_tab'
+- 'cost_usage'
+- 'runtime-recovery'
+- 'blocked_sequence'
+- '/HITL/chat/storage'
+- 'coordination-canon'
+negative_constraints:
+- 'usage-feature.md consumers must not rely on timestamp heuristics or a shape that lacks authoritative storage/runtime linkage.'
+- 'UI/HITL/chat/storage docs must not re-own the blocked episode.'
+compatibility_only_notes:
+- 'Legacy /HITL/chat/storage bucket shorthand is a compatibility label, not an owner.'
+stale_retired_dispositions: []
+owner_boundary_notes:
+- 'Executor_Protocol and Contracts_V0 own blocked_sequence runtime scheduler/executor semantics.'
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs: []
+```
+
+### 0PI-009 - Rewrite Agent Loop Architecture Baseline
+
+```yaml
+plan_unit_id: 0PI-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  The rewrite tie-in records adaptation of OpenCode-style architecture into a deterministic agent-loop core with unified event model, seglog to redb and Tantivy projections, central tool registry and policy engine, and patch/apply/verify/rollback pipeline.
+gui_related: false
+gui_classification_reason: This split unit records backend architecture and storage/tooling behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: rewrite_agent_loop_architecture_baseline
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: rewrite_agent_loop_architecture_baseline
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0005'
+preserved_exact_tokens:
+- 'OpenCode-style architecture'
+- 'deterministic agent-loop core'
+- 'event model'
+- 'seglog'
+- 'redb'
+- 'Tantivy'
+- 'tool registry + policy engine'
+- 'patch/apply/verify/rollback'
+negative_constraints: []
+compatibility_only_notes:
+- 'OpenCode-style architecture is adaptation baseline, not ownership transfer.'
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs: []
+```
+
+### 0PI-010 - Rewrite UI Auth Account Carry Through
+
+```yaml
+plan_unit_id: 0PI-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  The rewrite tie-in preserves Rust + Slint UI rewrite, subscription-first auth, Gemini Direct as active direct API,
+  Antigravity CLI as the active Google-owned CLI-runtime route, retired Gemini CLI split vocabulary as source-lineage
+  only, key-exception lineage, and requested/effective auth, account identity, account/plan UI, quota, and usage labels
+  carrying across storage, runtime, setup/health, media capabilities, and usage.
+gui_related: true
+gui_classification_reason: The unit covers Rust + Slint UI rewrite, account/plan UI, and visible auth/quota/usage labels.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: rewrite_ui_auth_account_carry_through
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: rewrite_ui_auth_account_carry_through
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0005'
+preserved_exact_tokens:
+- 'Rust + Slint'
+- 'subscription-first'
+- 'Gemini Direct'
+- 'gemini'
+- 'Gemini CLI'
+- 'gemini_cli'
+- 'key-exception'
+- 'requested/effective auth'
+- 'account/plan UI'
+negative_constraints:
+- 'Do not treat Gemini CLI as an active provider entry.'
+compatibility_only_notes:
+- 'Gemini Direct and Gemini CLI split is retained only as source-lineage; current active split is Gemini Direct plus Antigravity CLI.'
+stale_retired_dispositions:
+- 'Gemini is modeled as two provider entries, not one stale-canon mixed-account provider.'
+- 'Active Gemini CLI provider-entry support is retired by provider-update ledger pldg-20260624-001-provider-updates.'
+owner_boundary_notes: []
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD'
+- 'ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md'
+```
+
+### 0PI-011 - Provider Account Owner Split
+
+```yaml
+plan_unit_id: 0PI-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  Provider/account reconciliation keeps Multi-Account and provider docs as requested/effective account, auth, quota, and provider-health owners; Section 15 owns the promoted shell; FinalGUISpec consumes shell placement and recovery UI; orchestrator, run modes, executor, and storage own runtime records; stale pre-promotion, /title-bar/recovery, and similar shell wording are lineage or mirror cleanup input.
+gui_related: true
+gui_classification_reason: The unit covers visible promoted shell, settings, title-bar, attention, recovery, and account UI consumers.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- 'Covered source spans remain losslessly available for exact-text audit.'
+- 'The covered index-map fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving bridge.'
+- 'Plans/00-plans-index.md remains a navigation and canonicalization aid; named owner docs retain product canon.'
+- 'No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.'
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: provider_account_owner_split
+reasoning_tier: standard
+context_scope: plans_index_standardization
+implementation_surfaces:
+- Plans/00-plans-index.md
+node_compile_hint:
+  mode: provider_account_owner_split
+  create_worknodes: false
+source_lineage:
+- 'Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:00-plans-index-S0006'
+preserved_exact_tokens:
+- 'Multi-Account.md'
+- 'Section15_MVP_Promoted_Features_Spec.md'
+- 'FinalGUISpec.md'
+- 'pre-promotion'
+- '/title-bar/recovery'
+- 'lineage or mirror cleanup input'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- 'Stale pre-promotion page, /title-bar/recovery, and feature-list/newfeatures shell wording are not live owner alternatives.'
+owner_boundary_notes:
+- 'Provider/account/promoted-shell routing stays split by owner surface.'
+owner_hints:
+- Plans/00-plans-index.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md'
+```
+
+
+<<< CONTEXT_AFTER 1374-1385 >>>
+### 0PI-012 - PM Planning And Node Readiness Owner Split
+
+```yaml
+plan_unit_id: 0PI-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/00-plans-index.md
+canonical_text: >-
+  The PM Bootstrap Planning map preserves owner split for Planning_Ledger_System, Plan_Document_System, Plan_To_Node_Compilation, and Bootstrap_Planning_Migration; it preserves literal gui_related: true|false and states that ordinary ledger writing, plan drafting, conversion, indexing, and node-readiness reporting do not update governance artifacts or create WorkNodes, executable build tasks, or NodeSeed candidates.
+gui_related: false
+gui_classification_reason: This unit is plan/governance metadata rather than GUI behavior, while preserving the literal gui_related token.
+split_recommended: false

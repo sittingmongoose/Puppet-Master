@@ -1,0 +1,58 @@
+{
+  "assignment_id": "A005-002158-ADVERSARIAL-WIN-C619E4211C17-0005",
+  "attempt_id": "attempt-0008",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      1104,
+      1115
+    ],
+    [
+      1508,
+      1519
+    ]
+  ],
+  "core_range": [
+    1116,
+    1507
+  ],
+  "core_sha256": "d2d7adc328ab2efe723a072d8db9cebc26a4b9326a3f2d12e06266f7c6d1f99e",
+  "document_path": "Plans/Crosswalk.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/b1/b1b46f463e076d98b7b3650285720e7fc032ab156495900b1ab0997e003b53cb.txt",
+  "source_excerpt_sha256": "b1b46f463e076d98b7b3650285720e7fc032ab156495900b1ab0997e003b53cb",
+  "source_sha256": "949f41619e742dc1379056123be88e87fa827dd4f1c39ef9835396d911590c80",
+  "window_id": "WIN-C619E4211C17-0005"
+}

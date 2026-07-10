@@ -1,0 +1,415 @@
+<<< CONTEXT_BEFORE 5875-5886 >>>
+compatibility_only_notes:
+- Appendix A is a compact mirror of the preceding canonical slot extraction units; preceding PlanUnits remain the implementation-oriented ownership split.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2'
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+
+<<< AUTHORITATIVE_CORE 5887-6272 >>>
+### MGAC-088 - Appendix A Duration Format And TTS Voice Mirror
+
+```yaml
+plan_unit_id: MGAC-088
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: Appendix A mirrors duration, format, and TTS voice extraction rules without creating a second behavioral owner beyond MGAC-049, MGAC-050, and MGAC-051.
+gui_related: false
+gui_classification_reason: The unit preserves deterministic Appendix A slot-extraction mirror text rather than GUI presentation.
+split_recommended: true
+depends_on:
+- MGAC-049
+- MGAC-050
+- MGAC-051
+- MGAC-087
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Exact regexes, tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_appendix_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: appendix_a_duration_format_voice_mirror
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- '8) duration (video/music only):'
+- 'keyworded: (?i)\b(?:for|duration|length)\s*(?P<secs>\d{1,3}(?:\.\d+)?)\s*(?:s|sec|secs|second|seconds)\b'
+- 'bare (only in controls block or trailing controls): (?i)\b(?P<secs2>\d{1,3}(?:\.\d+)?)\s*(?:s|sec|secs)\b'
+- '9) format: (?i)\b(?:format|output|export|as)\s*[:=]?\s*(?P<fmt>png|jpg|jpeg|webp|gif|mp4|mov|wav|mp3|flac|pcm16)\b'
+- '10) voice (tts):'
+- 'voice id: (?i)\bvoice\s*[:=]\s*(?P<voice>[a-z0-9][a-z0-9 _\-]{0,32})\b'
+- 'voice style: (?i)\bin\s+a[n]?\s+(?P<voice_style>[^,.;]{1,40})\s+voice\b'
+negative_constraints:
+- Appendix A mirror text must not create a second behavioral owner for slot extraction rules.
+compatibility_only_notes:
+- Appendix A is a compact mirror of the preceding canonical slot extraction units; the referenced MGAC dependencies remain the implementation-oriented ownership split.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media slot extraction and media capability behavior; Appendix A mirror units must not create a second behavioral owner beyond the corresponding implementation-oriented MGAC PlanUnits.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs: []
+split_recommendation_reason: This unit covers one separable Appendix A mirror concern from the final Media_Generation_and_Capabilities-S0024 tail.
+```
+
+### MGAC-089 - Appendix A Quality Seed And BPM Mirror
+
+```yaml
+plan_unit_id: MGAC-089
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: Appendix A mirrors quality, seed, and bpm extraction, including the guard that bare descriptive adjectives in the creative prompt must not set quality, while implementation ownership remains with MGAC-052, MGAC-053, and MGAC-054.
+gui_related: false
+gui_classification_reason: The unit preserves deterministic Appendix A slot-extraction mirror text rather than GUI presentation.
+split_recommended: true
+depends_on:
+- MGAC-052
+- MGAC-053
+- MGAC-054
+- MGAC-087
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Exact regexes, tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_appendix_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: appendix_a_quality_seed_bpm_mirror
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- '11) quality: (?i)\b(?P<qual>draft|standard|high)\b optional phrase mapping. Guard: set only when in controls block or quality-keyword phrase; bare descriptive adjectives in creative prompt MUST NOT set quality.'
+- 'ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2'
+- '12) seed: (?i)\bseed\s*[:=]?\s*(?P<seed>\d{1,10})\b'
+- '13) bpm: (?i)\b(?P<bpm>\d{2,3})\s*bpm\b|\bbpm\s*[:=]\s*(?P<bpm2>\d{2,3})\b'
+- bare descriptive adjectives in creative prompt MUST NOT set quality
+negative_constraints:
+- Appendix A mirror text must not create a second behavioral owner for slot extraction rules.
+- Bare descriptive adjectives in the creative prompt MUST NOT set quality.
+compatibility_only_notes:
+- Appendix A is a compact mirror of the preceding canonical slot extraction units; the referenced MGAC dependencies remain the implementation-oriented ownership split.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media slot extraction and media capability behavior; Appendix A mirror units must not create a second behavioral owner beyond the corresponding implementation-oriented MGAC PlanUnits.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2'
+split_recommendation_reason: This unit covers one separable Appendix A mirror concern from the final Media_Generation_and_Capabilities-S0024 tail.
+```
+
+### MGAC-090 - Appendix A Negative Prompt Mirror
+
+```yaml
+plan_unit_id: MGAC-090
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: Appendix A mirrors negative_prompt extraction, explicit negative prompt parsing, avoid-clause collection, and explicit-plus-avoid dedupe preserving order, while implementation ownership remains with MGAC-055.
+gui_related: false
+gui_classification_reason: The unit preserves deterministic Appendix A slot-extraction mirror text rather than GUI presentation.
+split_recommended: true
+depends_on:
+- MGAC-055
+- MGAC-087
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Exact regexes, tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_appendix_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: appendix_a_negative_prompt_mirror
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- '14) negative_prompt:'
+- 'explicit: (?is)\bnegative\s+prompt\s*[:=]\s*(?P<neg>"[^"]{1,200}"|\''[^\'']{1,200}\''|[^,;\n]{1,200})'
+- 'avoid-clauses (collect all): (?is)\b(?:without|no|avoid)\s+(?P<avoid>[^,.;\n]{1,80})'
+- Combine explicit + avoid list (dedupe preserve order).
+- negative_prompt
+- dedupe preserve order
+negative_constraints:
+- Appendix A mirror text must not create a second behavioral owner for slot extraction rules.
+compatibility_only_notes:
+- Appendix A is a compact mirror of the preceding canonical slot extraction units; the referenced MGAC dependencies remain the implementation-oriented ownership split.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media slot extraction and media capability behavior; Appendix A mirror units must not create a second behavioral owner beyond the corresponding implementation-oriented MGAC PlanUnits.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs: []
+split_recommendation_reason: This unit covers one separable Appendix A mirror concern from the final Media_Generation_and_Capabilities-S0024 tail.
+```
+
+### MGAC-091 - Appendix A Prompt Cleaning Mirror
+
+```yaml
+plan_unit_id: MGAC-091
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: 'Appendix A mirrors prompt cleaning after slot extraction: remove controls blocks and only matched control-keyword spans while preserving the remaining creative prompt, with implementation ownership remaining with MGAC-056.'
+gui_related: false
+gui_classification_reason: The unit preserves deterministic Appendix A slot-extraction mirror text rather than GUI presentation.
+split_recommended: true
+depends_on:
+- MGAC-056
+- MGAC-087
+- MGAC-090
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Exact regexes, tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: duplicate_appendix_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: appendix_a_prompt_cleaning_mirror
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- '15) prompt cleaning:'
+- 'If controls block present: remove it.'
+- Remove only matched spans introduced by control keywords (using/model/size/aspect/etc).
+- Preserve remaining text as the creative prompt.
+- controls block
+- creative prompt
+negative_constraints:
+- Appendix A mirror text must not create a second behavioral owner for slot extraction rules.
+- Prompt cleaning must preserve remaining text as the creative prompt.
+compatibility_only_notes:
+- Appendix A is a compact mirror of the preceding canonical slot extraction units; the referenced MGAC dependencies remain the implementation-oriented ownership split.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media slot extraction and media capability behavior; Appendix A mirror units must not create a second behavioral owner beyond the corresponding implementation-oriented MGAC PlanUnits.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs: []
+split_recommendation_reason: This unit covers one separable Appendix A mirror concern from the final Media_Generation_and_Capabilities-S0024 tail.
+```
+
+### MGAC-001 - Media Generation Retired Source-Preserving Bridge
+
+```yaml
+plan_unit_id: MGAC-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: MGAC-001 is retained only as retired migration-lineage compatibility after Phase 2B batch 091 fully handled Media_Generation_and_Capabilities-S0024 with MGAC-043 through MGAC-091 plus structural/reference dispositions. It must not re-own product behavior or broad source-preserving implementation coverage.
+gui_related: false
+gui_classification_reason: The live unit is retired migration-lineage compatibility, not GUI/product behavior; GUI-related source content is carried by the fine-grained MGAC PlanUnits and coverage_map proof.
+split_recommended: false
+depends_on:
+- MGAC-043
+- MGAC-044
+- MGAC-045
+- MGAC-046
+- MGAC-047
+- MGAC-048
+- MGAC-049
+- MGAC-050
+- MGAC-051
+- MGAC-052
+- MGAC-053
+- MGAC-054
+- MGAC-055
+- MGAC-056
+- MGAC-057
+- MGAC-058
+- MGAC-059
+- MGAC-060
+- MGAC-061
+- MGAC-062
+- MGAC-063
+- MGAC-064
+- MGAC-065
+- MGAC-066
+- MGAC-067
+- MGAC-068
+- MGAC-069
+- MGAC-070
+- MGAC-071
+- MGAC-072
+- MGAC-073
+- MGAC-074
+- MGAC-075
+- MGAC-076
+- MGAC-077
+- MGAC-078
+- MGAC-079
+- MGAC-080
+- MGAC-081
+- MGAC-082
+- MGAC-083
+- MGAC-084
+- MGAC-085
+- MGAC-086
+- MGAC-087
+- MGAC-088
+- MGAC-089
+- MGAC-090
+- MGAC-091
+unblocks: []
+acceptance_criteria:
+- MGAC-001 no longer uses node_compile_hint.mode source_preserving_planunit after Phase 2B batch 091.
+- Media_Generation_and_Capabilities-S0024 product coverage is owned by MGAC-043 through MGAC-091 or explicit structural/reference dispositions.
+- MGAC-001 remains only to preserve migration lineage for the former source-preserving bridge.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this retired bridge.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: migration_lineage
+reasoning_tier: standard
+context_scope: residual_plan_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- MGAC-001
+- Media Generation Residual Source-Preserving Bridge
+- References
+- Owner / Consumer Map
+- PlanUnits
+- Migration Coverage
+- source_preserving_bridge_retired
+negative_constraints:
+- MGAC-001 must not re-own Media_Generation_and_Capabilities-S0001 through S0024 after Phase 2B batch 091.
+- Retired bridge lineage must not be treated as implementation-ready product coverage.
+- The retired bridge must not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+compatibility_only_notes:
+- MGAC-001 is compatibility-only migration lineage for the retired source-preserving bridge.
+- The original source text remains auditably preserved by span_map, coverage_map, and the fine-grained MGAC PlanUnits.
+stale_retired_dispositions:
+- The former broad source-preserving bridge is retired; product behavior is carried by fine-grained MGAC PlanUnits.
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md remains owner for media/capability behavior while referenced owner docs keep their ContractRef boundaries; MGAC-001 no longer owns product behavior.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:media.generate, PolicyRule:Decision_Policy.md§2'
+- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+split_recommendation_reason: No split remains for the retired bridge; product coverage has been atomized or structurally dispositioned.
+```
+## Migration Coverage
+
+Original hash: `14a92c4cc13c1644eeaf07ae7f8bbd5456dc3b74ff01372617552515b55e251f`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+
+Phase 2B batch 088 atomized `Media_Generation_and_Capabilities-S0001`, `Media_Generation_and_Capabilities-S0002`, `Media_Generation_and_Capabilities-S0005` through `Media_Generation_and_Capabilities-S0012`, and `Media_Generation_and_Capabilities-S0014` through `Media_Generation_and_Capabilities-S0020` into `MGAC-002` through `MGAC-032`, with `Media_Generation_and_Capabilities-S0003`, `S0004`, and `S0013` structurally or reference dispositioned. Phase 2B batch 089 atomized `Media_Generation_and_Capabilities-S0021` through `Media_Generation_and_Capabilities-S0023` into `MGAC-033` through `MGAC-042`. Phase 2B batch 090 partially atomized `Media_Generation_and_Capabilities-S0024` source lines 444-842 into `MGAC-043` through `MGAC-087`. Phase 2B batch 091 atomized the remaining S0024 Appendix A tail into `MGAC-088` through `MGAC-091`, structurally/reference dispositioned References, Owner / Consumer Map, PlanUnits, and Migration Coverage, and retired `MGAC-001` as compatibility-only migration lineage. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-002
+
+### MGAC-092 - Capability Usability State Semantics
+
+```yaml
+plan_unit_id: MGAC-092
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: >-
+  Capability responses must expose separate `enabled_on_instance` and `usable_now` fields plus
+  `caller_scope`, `execution_role`, and identity disclosure level. A capability can be
+  `enabled_on_instance` while not `usable_now` for the invoking runtime identity because of actor,
+  account, lane, execution_role, mode, provider health, permission, quota, or degraded-state inputs.
+  When a capability is visible but not currently usable, `capabilities.get` must return
+  `blocked_reason`, `caller_scope`, `execution_role`, identity disclosure level, and evaluated
+  caller/runtime identity rather than flattening availability to a global enabled flag.
+gui_related: false
+gui_classification_reason: Capability state and caller/runtime identity semantics are backend/runtime contracts, not visual presentation.
+depends_on: [CV-281]
+unblocks: []
+acceptance_criteria:
+  - Capability payloads distinguish `enabled_on_instance` from `usable_now`.
+  - When visible but not currently usable, payloads include `blocked_reason`, `caller_scope`, `execution_role`, identity disclosure level, runtime identity, and requested/effective identity.
+  - Provider, agent-rules, and Skills consumers cannot infer `usable_now` from `enabled_on_instance` or a global provider flag alone.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260614-002-part-3-fable-cleanup
+risk_class: capability_availability_drift
+reasoning_tier: high
+context_scope: capability_usability_semantics
+implementation_surfaces: [Plans/Media_Generation_and_Capabilities.md, Plans/agent-rules-context.md, Plans/Skills_System.md, Plans/Provider_OpenCode.md]
+node_compile_hint: {mode: capability_usability_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0036
+  - pldg-20260614-002-part-3-fable-cleanup:atom-0050
+preserved_exact_tokens: ["enabled_on_instance", "usable_now", "blocked_reason", "caller_scope", "execution_role", "identity disclosure level", "visible but not currently usable", "capabilities.get"]
+negative_constraints:
+  - Do not infer `usable_now` from `enabled_on_instance`.
+  - Do not expose a visible but not currently usable capability without `blocked_reason`, `caller_scope`, `execution_role`, and identity disclosure level.
+owner_hints: [Plans/Media_Generation_and_Capabilities.md, Plans/agent-rules-context.md, Plans/Skills_System.md]
+```
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+
+<<< CONTEXT_AFTER 6273-6284 >>>
+### MGAC-093 - Planning Visual Reference Artifact Consumers
+
+```yaml
+plan_unit_id: MGAC-093
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: 'Planning topics may accept uploaded reference images and generate wireframes, architecture diagrams, data-flow diagrams, state diagrams, or visual references through the existing image system, with artifact IDs, provenance, topic links, version, and status.'
+gui_related: true
+gui_classification_reason: Includes user-visible GUI/workspace/command/projection behavior.
+depends_on: []
+unblocks: []

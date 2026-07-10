@@ -1,0 +1,423 @@
+<<< CONTEXT_BEFORE canonical_document_lines=6599-6610 >>>
+L00006599	  - Do not auto-apply runtime behavior for non-Free-Models providers during manual all-provider refresh.
+L00006600	owner_hints:
+L00006601	  - Plans/Executor_Protocol.md
+L00006602	  - Plans/Contracts_V0.md
+L00006603	  - Plans/FileSafe.md
+L00006604	  - Plans/Permissions_System.md
+L00006605	```
+L00006606	
+L00006607	## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+L00006608	
+L00006609	This addendum compiles containerized-host Executor intake and execution-lane boundaries. It does not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, generated governance artifacts, or production build tasks.
+L00006610	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=6611-7004 >>>
+L00006611	### EP-109 - HostCapabilityCommand Executor Intake Boundary
+L00006612	
+L00006613	```yaml
+L00006614	plan_unit_id: EP-109
+L00006615	unit_type: requirement
+L00006616	status: accepted
+L00006617	owner_doc: Plans/Executor_Protocol.md
+L00006618	canonical_text: >-
+L00006619	  Executor consumes HostCapabilityCommand and HostOperationRequest through ExecutorIntakeReport or equivalent intake,
+L00006620	  not through Coasts local API, terminal, file controls, or container-local endpoints. Accepted lanes include
+L00006621	  apps/services under test, PM work, provider tools, agent harnesses, shells, and integration commands only where
+L00006622	  runtime execution is later enabled and authority allows it. Intake records host_capability_ref, host_profile_id,
+L00006623	  host_assignment_id, execution_unit_context, worktree/cwd binding, permission_snapshot_id, FileSafe scope,
+L00006624	  approval_scope_key, network_access_policy, secret_access_policy, destructive_command_policy, transcript policy,
+L00006625	  cleanup policy, expected receipts, host preflight, lane-specific evidence, cleanup/retention disposition, and
+L00006626	  blocked/failure reason. Host-side commands such as lint/typecheck/format/git/package installs/static analysis/browser
+L00006627	  tests stay host/worktree side unless runtime services are required; container-runtime commands are for service context,
+L00006628	  database/API/integration work, runtime-specific tests, logs, exec, and artifact capture.
+L00006629	gui_related: false
+L00006630	gui_classification_reason: Executor intake and authority boundaries are backend execution contracts, not GUI presentation.
+L00006631	depends_on: [CV-304, PS-126, F2-194, RM-048]
+L00006632	unblocks: [T-166, GRS-032, OSI-431, ACD-430, OP-028]
+L00006633	acceptance_criteria:
+L00006634	  - Every host action is accepted or blocked through Executor intake, preflight, authority checks, and expected receipts.
+L00006635	  - Host use cannot bypass Run_Modes, Permissions, FileSafe, tool policy, provider/account identity, or Runtime Artifacts evidence boundaries.
+L00006636	  - Runtime Artifacts projects evidence but never becomes the receipt authority.
+L00006637	  - Blocked outcomes preserve blocked != failed and expose reason codes and allowed actions.
+L00006638	validation_surfaces:
+L00006639	  - python3 scripts/pm-plan-index.py validate
+L00006640	  - future HostCapabilityCommand ExecutorIntakeReport fixtures
+L00006641	  - future blocked != failed host action fixtures
+L00006642	risk_class: host_executor_bypass
+L00006643	reasoning_tier: high
+L00006644	context_scope: containerized_host_executor_intake
+L00006645	implementation_surfaces:
+L00006646	  - Plans/Executor_Protocol.md
+L00006647	  - future Executor intake
+L00006648	node_compile_hint:
+L00006649	  mode: host_capability_executor_intake_boundary
+L00006650	  create_worknodes: false
+L00006651	  create_nodeseeds: false
+L00006652	source_lineage:
+L00006653	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0023
+L00006654	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0029
+L00006655	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0034
+L00006656	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0044
+L00006657	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0053
+L00006658	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0060
+L00006659	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0064
+L00006660	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0069
+L00006661	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
+L00006662	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+L00006663	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#execution_lane_matrix
+L00006664	source_atom_ids: [atom-0023, atom-0029, atom-0034, atom-0044, atom-0053, atom-0060, atom-0064, atom-0069, atom-0073, atom-0081]
+L00006665	decision_refs: [dec-0005, dec-0008, dec-0010, dec-0017, dec-0020]
+L00006666	preserved_exact_tokens:
+L00006667	  - "HostCapabilityCommand"
+L00006668	  - "HostOperationRequest"
+L00006669	  - "ExecutorIntakeReport"
+L00006670	  - "execution_unit_context"
+L00006671	  - "approval_scope_key"
+L00006672	  - "permission_snapshot_id"
+L00006673	  - "FileSafe scope"
+L00006674	  - "network_access_policy"
+L00006675	  - "secret_access_policy"
+L00006676	  - "destructive_command_policy"
+L00006677	  - "transcript policy"
+L00006678	  - "cleanup policy"
+L00006679	  - "required receipt refs"
+L00006680	  - "apps/services under test"
+L00006681	  - "PM work"
+L00006682	  - "provider tools"
+L00006683	  - "agent harnesses"
+L00006684	  - "shells"
+L00006685	  - "integration commands"
+L00006686	  - "where runtime execution is later enabled and authority allows it"
+L00006687	  - "blocked != failed"
+L00006688	negative_constraints:
+L00006689	  - Do not copy Coasts HTTP `/api/v1`, permissive CORS, SSE/WebSocket terminal, file/service controls.
+L00006690	  - Do not route every command through a container just because a host exists.
+L00006691	  - Do not let container exec bypass Executor/Permissions/FileSafe/receipts.
+L00006692	  - Do not imply runtime dispatch, WorkNodes, NodeSeeds, executable queues, or PlanCompile runtime are enabled by this compile.
+L00006693	owner_hints:
+L00006694	  - Plans/Executor_Protocol.md
+L00006695	  - Plans/Run_Modes.md
+L00006696	  - Plans/Permissions_System.md
+L00006697	  - Plans/FileSafe.md
+L00006698	  - Plans/Tools.md
+L00006699	  - Plans/Runtime_Artifacts_Panel.md
+L00006700	```
+L00006701	
+L00006702	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00006703	
+L00006704	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00006705	
+L00006706	### EP-110 - P0-STREAM-HISTORY-COALESCER
+L00006707	
+L00006708	```yaml
+L00006709	plan_unit_id: EP-110
+L00006710	unit_type: requirement
+L00006711	status: accepted
+L00006712	owner_doc: Plans/Executor_Protocol.md
+L00006713	canonical_text: >-
+L00006714	  P0-STREAM-HISTORY-COALESCER (P0) is compiled as canonical Puppet Master intent for Prevent streaming partials from becoming durable duplicate history: Cumulative snapshots are persisted once; missing terminal event is retryable error; zero-usage aborted turn is not model replay content.
+L00006715	gui_related: true
+L00006716	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00006717	depends_on:
+L00006718	- PDS-003
+L00006719	- PNC-001
+L00006720	unblocks: []
+L00006721	acceptance_criteria:
+L00006722	- Cumulative snapshots are persisted once
+L00006723	- missing terminal event is retryable error
+L00006724	- zero-usage aborted turn is not model replay content.
+L00006725	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00006726	validation_surfaces:
+L00006727	- python3 scripts/pm-plan-index.py validate
+L00006728	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00006729	- Cumulative snapshots are persisted once
+L00006730	- missing terminal event is retryable error
+L00006731	- zero-usage aborted turn is not model replay content.
+L00006732	risk_class: p0_transport_websocket_streaming_hardening
+L00006733	reasoning_tier: high
+L00006734	context_scope: transport_websocket_streaming
+L00006735	implementation_surfaces:
+L00006736	- Plans/Executor_Protocol.md
+L00006737	- Plans/Prompt_Pipeline.md
+L00006738	- Plans/storage-plan.md
+L00006739	- Plans/assistant-chat-design.md
+L00006740	node_compile_hint:
+L00006741	  mode: p0_stream_history_coalescer
+L00006742	  create_worknodes: false
+L00006743	  create_nodeseeds: false
+L00006744	source_lineage:
+L00006745	- pldg-20260703-001-feature-intake:atom-0045
+L00006746	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0045
+L00006747	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0041/P0-STREAM-HISTORY-COALESCER@line=41
+L00006748	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0041/P0-STREAM-HISTORY-COALESCER
+L00006749	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00006750	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00006751	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:5
+L00006752	source_atom_ids:
+L00006753	- atom-0045
+L00006754	external_atom_id: extrepo-20260703-0041
+L00006755	source_row_id: P0-STREAM-HISTORY-COALESCER
+L00006756	priority: P0
+L00006757	finding_family: Prevent streaming partials from becoming durable duplicate history
+L00006758	target_docs:
+L00006759	- Plans/Executor_Protocol.md
+L00006760	- Plans/Prompt_Pipeline.md
+L00006761	- Plans/storage-plan.md
+L00006762	- Plans/assistant-chat-design.md
+L00006763	owner_hints:
+L00006764	- Plans/Executor_Protocol.md
+L00006765	- Plans/Prompt_Pipeline.md
+L00006766	- Plans/storage-plan.md
+L00006767	- Plans/assistant-chat-design.md
+L00006768	preserved_exact_tokens:
+L00006769	- extrepo-20260703-0041
+L00006770	- P0-STREAM-HISTORY-COALESCER
+L00006771	- P0
+L00006772	- Prevent streaming partials from becoming durable duplicate history
+L00006773	negative_constraints: []
+L00006774	proposal_or_recommendation: Cumulative snapshots are persisted once; missing terminal event is retryable error; zero-usage aborted turn is not model replay content.
+L00006775	compile_disposition: create_new_planunit
+L00006776	```
+L00006777	
+L00006778	### EP-111 - P0-WEBSOCKET-TRANSPORT-POLICY
+L00006779	
+L00006780	```yaml
+L00006781	plan_unit_id: EP-111
+L00006782	unit_type: requirement
+L00006783	status: accepted
+L00006784	owner_doc: Plans/Executor_Protocol.md
+L00006785	canonical_text: >-
+L00006786	  P0-WEBSOCKET-TRANSPORT-POLICY (P0) is compiled as canonical Puppet Master intent for Define transport policy for WebSocket/SSE/stdout/unix-socket/HTTP: Transport decision receipts include locality, auth, replay, backpressure, fallback, and provider support; OpenCode remains HTTP/SSE unless upstream contract changes.
+L00006787	gui_related: true
+L00006788	gui_classification_reason: Target docs include GUI/UI command or user-visible surfaces; mixed work is conservatively GUI-related.
+L00006789	depends_on:
+L00006790	- PDS-003
+L00006791	- PNC-001
+L00006792	unblocks: []
+L00006793	acceptance_criteria:
+L00006794	- Transport decision receipts include locality, auth, replay, backpressure, fallback, and provider support
+L00006795	- OpenCode remains HTTP/SSE unless upstream contract changes.
+L00006796	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00006797	validation_surfaces:
+L00006798	- python3 scripts/pm-plan-index.py validate
+L00006799	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00006800	- Transport decision receipts include locality, auth, replay, backpressure, fallback, and provider support
+L00006801	- OpenCode remains HTTP/SSE unless upstream contract changes.
+L00006802	risk_class: p0_transport_websocket_streaming_hardening
+L00006803	reasoning_tier: high
+L00006804	context_scope: transport_websocket_streaming
+L00006805	implementation_surfaces:
+L00006806	- Plans/Executor_Protocol.md
+L00006807	- Plans/Runtime_Artifacts_Panel.md
+L00006808	- Plans/FinalGUISpec.md
+L00006809	- Plans/Provider_OpenCode.md
+L00006810	- Plans/CLI_Bridged_Providers.md
+L00006811	node_compile_hint:
+L00006812	  mode: p0_websocket_transport_policy
+L00006813	  create_worknodes: false
+L00006814	  create_nodeseeds: false
+L00006815	source_lineage:
+L00006816	- pldg-20260703-001-feature-intake:atom-0046
+L00006817	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0046
+L00006818	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0042/P0-WEBSOCKET-TRANSPORT-POLICY@line=42
+L00006819	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0042/P0-WEBSOCKET-TRANSPORT-POLICY
+L00006820	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00006821	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00006822	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:6
+L00006823	source_atom_ids:
+L00006824	- atom-0046
+L00006825	external_atom_id: extrepo-20260703-0042
+L00006826	source_row_id: P0-WEBSOCKET-TRANSPORT-POLICY
+L00006827	priority: P0
+L00006828	finding_family: Define transport policy for WebSocket/SSE/stdout/unix-socket/HTTP
+L00006829	target_docs:
+L00006830	- Plans/Executor_Protocol.md
+L00006831	- Plans/Runtime_Artifacts_Panel.md
+L00006832	- Plans/FinalGUISpec.md
+L00006833	- Plans/Provider_OpenCode.md
+L00006834	- Plans/CLI_Bridged_Providers.md
+L00006835	owner_hints:
+L00006836	- Plans/Executor_Protocol.md
+L00006837	- Plans/Runtime_Artifacts_Panel.md
+L00006838	- Plans/FinalGUISpec.md
+L00006839	- Plans/Provider_OpenCode.md
+L00006840	- Plans/CLI_Bridged_Providers.md
+L00006841	preserved_exact_tokens:
+L00006842	- extrepo-20260703-0042
+L00006843	- P0-WEBSOCKET-TRANSPORT-POLICY
+L00006844	- P0
+L00006845	- Define transport policy for WebSocket/SSE/stdout/unix-socket/HTTP
+L00006846	negative_constraints: []
+L00006847	proposal_or_recommendation: Transport decision receipts include locality, auth, replay, backpressure, fallback, and provider support; OpenCode remains HTTP/SSE unless upstream contract changes.
+L00006848	compile_disposition: create_new_planunit
+L00006849	```
+L00006850	
+L00006851	### EP-112 - P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS
+L00006852	
+L00006853	```yaml
+L00006854	plan_unit_id: EP-112
+L00006855	unit_type: requirement
+L00006856	status: accepted
+L00006857	owner_doc: Plans/Executor_Protocol.md
+L00006858	canonical_text: >-
+L00006859	  P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS (P1) is compiled as canonical Puppet Master intent for Add bounded queues, overload, retry, and pressure diagnostics: Frame ingress queues bounded; overflow returns structured overload; UI distinguishes provider stall, WS reconnect, backend stall, and UI render lag.
+L00006860	gui_related: true
+L00006861	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00006862	depends_on:
+L00006863	- PDS-003
+L00006864	- PNC-001
+L00006865	unblocks: []
+L00006866	acceptance_criteria:
+L00006867	- Frame ingress queues bounded
+L00006868	- overflow returns structured overload
+L00006869	- UI distinguishes provider stall, WS reconnect, backend stall, and UI render lag.
+L00006870	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00006871	validation_surfaces:
+L00006872	- python3 scripts/pm-plan-index.py validate
+L00006873	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00006874	- Frame ingress queues bounded
+L00006875	- overflow returns structured overload
+L00006876	- UI distinguishes provider stall, WS reconnect, backend stall, and UI render lag.
+L00006877	risk_class: p1_transport_websocket_streaming_hardening
+L00006878	reasoning_tier: standard
+L00006879	context_scope: transport_websocket_streaming
+L00006880	implementation_surfaces:
+L00006881	- Plans/Executor_Protocol.md
+L00006882	- Plans/Runtime_Artifacts_Panel.md
+L00006883	- Plans/storage-plan.md
+L00006884	node_compile_hint:
+L00006885	  mode: p1_websocket_backpressure_diagnostics
+L00006886	  create_worknodes: false
+L00006887	  create_nodeseeds: false
+L00006888	source_lineage:
+L00006889	- pldg-20260703-001-feature-intake:atom-0053
+L00006890	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0053
+L00006891	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0049/P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS@line=49
+L00006892	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0049/P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS
+L00006893	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00006894	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00006895	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_context_cache_websocket_backlog_2026-07-03.jsonl:13
+L00006896	source_atom_ids:
+L00006897	- atom-0053
+L00006898	external_atom_id: extrepo-20260703-0049
+L00006899	source_row_id: P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS
+L00006900	priority: P1
+L00006901	finding_family: Add bounded queues, overload, retry, and pressure diagnostics
+L00006902	target_docs:
+L00006903	- Plans/Executor_Protocol.md
+L00006904	- Plans/Runtime_Artifacts_Panel.md
+L00006905	- Plans/storage-plan.md
+L00006906	owner_hints:
+L00006907	- Plans/Executor_Protocol.md
+L00006908	- Plans/Runtime_Artifacts_Panel.md
+L00006909	- Plans/storage-plan.md
+L00006910	preserved_exact_tokens:
+L00006911	- extrepo-20260703-0049
+L00006912	- P1-WEBSOCKET-BACKPRESSURE-DIAGNOSTICS
+L00006913	- P1
+L00006914	- Add bounded queues, overload, retry, and pressure diagnostics
+L00006915	negative_constraints: []
+L00006916	proposal_or_recommendation: Frame ingress queues bounded; overflow returns structured overload; UI distinguishes provider stall, WS reconnect, backend stall, and UI render lag.
+L00006917	compile_disposition: create_new_planunit
+L00006918	```
+L00006919	
+L00006920	### EP-113 - P1-STREAM-HISTORY-COALESCER-REPLAY
+L00006921	
+L00006922	```yaml
+L00006923	plan_unit_id: EP-113
+L00006924	unit_type: requirement
+L00006925	status: accepted
+L00006926	owner_doc: Plans/Executor_Protocol.md
+L00006927	canonical_text: >-
+L00006928	  P1-STREAM-HISTORY-COALESCER-REPLAY (P1) is compiled as canonical Puppet Master intent for Streaming/admission/replay boundary: Add StreamHistoryCoalescer with partial_delta, cumulative_snapshot, reasoning_delta, tool_call_fragment, provider_item_id, provider_error, final_assistant_turn, and durable_history_write phases. The preserved PM gap/delta is: Make settled history admission mandatory for all providers, not just context/cache pass. The observed external-repo signal remains source-lineage evidence: OpenCode v2 separates context/source/snapshot/session history and recent releases add event streams and paged durable history. Pi reports WS/SSE first-event stalls; Cline/Codex SDKs centralize session events/history.
+L00006929	gui_related: false
+L00006930	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00006931	depends_on:
+L00006932	- PDS-003
+L00006933	- PNC-001
+L00006934	unblocks: []
+L00006935	acceptance_criteria:
+L00006936	- No partial stream fragment is replayed as a full assistant turn.
+L00006937	- Provider native item IDs are kept only where allowed by replay policy.
+L00006938	- First-event timeout is a transport failure, not empty assistant success.
+L00006939	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00006940	validation_surfaces:
+L00006941	- python3 scripts/pm-plan-index.py validate
+L00006942	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00006943	- No partial stream fragment is replayed as a full assistant turn.
+L00006944	- Provider native item IDs are kept only where allowed by replay policy.
+L00006945	- First-event timeout is a transport failure, not empty assistant success.
+L00006946	risk_class: p1_transport_websocket_streaming_hardening
+L00006947	reasoning_tier: standard
+L00006948	context_scope: transport_websocket_streaming
+L00006949	implementation_surfaces:
+L00006950	- Plans/Executor_Protocol.md
+L00006951	- Plans/storage-plan.md
+L00006952	- Plans/Prompt_Pipeline.md
+L00006953	- Plans/Provider_OpenCode.md
+L00006954	- Plans/Models_System.md
+L00006955	node_compile_hint:
+L00006956	  mode: p1_stream_history_coalescer_replay
+L00006957	  create_worknodes: false
+L00006958	  create_nodeseeds: false
+L00006959	source_lineage:
+L00006960	- pldg-20260703-001-feature-intake:atom-0075
+L00006961	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0075
+L00006962	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0071/P1-STREAM-HISTORY-COALESCER-REPLAY@line=71
+L00006963	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0071/P1-STREAM-HISTORY-COALESCER-REPLAY
+L00006964	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00006965	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00006966	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_missed_domains_backlog_2026-07-03.jsonl:17
+L00006967	source_atom_ids:
+L00006968	- atom-0075
+L00006969	external_atom_id: extrepo-20260703-0071
+L00006970	source_row_id: P1-STREAM-HISTORY-COALESCER-REPLAY
+L00006971	priority: P1
+L00006972	finding_family: Streaming/admission/replay boundary
+L00006973	source_repos:
+L00006974	- OpenCode v2
+L00006975	- Pi
+L00006976	- Codex
+L00006977	- Cline
+L00006978	target_docs:
+L00006979	- Plans/storage-plan.md
+L00006980	- Plans/Prompt_Pipeline.md
+L00006981	- Plans/Provider_OpenCode.md
+L00006982	- Plans/Models_System.md
+L00006983	owner_hints:
+L00006984	- Plans/storage-plan.md
+L00006985	- Plans/Prompt_Pipeline.md
+L00006986	- Plans/Provider_OpenCode.md
+L00006987	- Plans/Models_System.md
+L00006988	preserved_exact_tokens:
+L00006989	- extrepo-20260703-0071
+L00006990	- P1-STREAM-HISTORY-COALESCER-REPLAY
+L00006991	- P1
+L00006992	- Streaming/admission/replay boundary
+L00006993	- OpenCode v2
+L00006994	- Pi
+L00006995	- Codex
+L00006996	- Cline
+L00006997	negative_constraints: []
+L00006998	observed_signal: OpenCode v2 separates context/source/snapshot/session history and recent releases add event streams and paged durable history. Pi reports WS/SSE first-event stalls; Cline/Codex SDKs centralize session events/history.
+L00006999	pm_current_coverage: Prior pass recommended StreamHistoryCoalescer; storage-plan has seglog replay/checkpoints and context ownership.
+L00007000	pm_gap_or_delta: Make settled history admission mandatory for all providers, not just context/cache pass.
+L00007001	proposal_or_recommendation: Add StreamHistoryCoalescer with partial_delta, cumulative_snapshot, reasoning_delta, tool_call_fragment, provider_item_id, provider_error, final_assistant_turn, and durable_history_write phases.
+L00007002	compile_disposition: create_new_planunit
+L00007003	```
+L00007004	
+
+<<< CONTEXT_AFTER canonical_document_lines=7005-7016 >>>
+L00007005	### EP-114 - FABLE Wake Coalescing And Transport Receipt Closure
+L00007006	
+L00007007	```yaml
+L00007008	plan_unit_id: EP-114
+L00007009	unit_type: requirement
+L00007010	status: accepted
+L00007011	owner_doc: Plans/Executor_Protocol.md
+L00007012	canonical_text: >-
+L00007013	  Executor owns deterministic scheduler wake coalescing, ready-node score tuple
+L00007014	  sorting, closed failure/blocked mapping, stream terminal timeout, backpressure
+L00007015	  bounds, and transport decision receipts for the FABLE contract-runtime core
+L00007016	  slice. Each {run_id, replan_generation} has at most one pending wake set; the

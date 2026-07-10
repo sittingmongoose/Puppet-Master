@@ -1,0 +1,380 @@
+<<< CONTEXT_BEFORE canonical_document_lines=4168-4179 >>>
+L00004168	- docker_refs
+L00004169	- kubernetes_refs
+L00004170	- /trust/proxy
+L00004171	negative_constraints: []
+L00004172	preserved_contractrefs: []
+L00004173	compatibility_only_notes: []
+L00004174	stale_retired_dispositions:
+L00004175	- Legacy cmd.container.* references are retired to active cmd.docker.* and cmd.docker.k8s.* namespaces.
+L00004176	owner_hints:
+L00004177	- Plans/UI_Command_Catalog.md
+L00004178	```
+L00004179	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=4180-4530 >>>
+L00004180	### UCC-054 - Project Scope Worktree Command Set And Thread Boundary
+L00004181	
+L00004182	```yaml
+L00004183	plan_unit_id: UCC-054
+L00004184	unit_type: requirement
+L00004185	status: accepted
+L00004186	owner_doc: Plans/UI_Command_Catalog.md
+L00004187	canonical_text: Project-scope git worktree commands own repository-level inventory, selection, open/focus, compare, create/remove/prune/reuse/recover, lineage focus, release, lock/unlock, and switch aliases while complementing but not replacing assistant thread-scoped worktree wrappers.
+L00004188	gui_related: false
+L00004189	gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+L00004190	split_recommended: false
+L00004191	depends_on:
+L00004192	- PDS-003
+L00004193	- PDS-004
+L00004194	- PDS-005
+L00004195	- PNC-001
+L00004196	unblocks: []
+L00004197	acceptance_criteria:
+L00004198	- UCC-054 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00004199	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004200	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004201	validation_surfaces:
+L00004202	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004203	- python3 scripts/pm-plan-index.py validate
+L00004204	risk_class: ui_command_catalog_drift
+L00004205	reasoning_tier: standard
+L00004206	context_scope: ui_command_catalog_batch_189
+L00004207	implementation_surfaces:
+L00004208	- Plans/UI_Command_Catalog.md
+L00004209	node_compile_hint:
+L00004210	  mode: project_scope_worktree_command_set_thread_boundary
+L00004211	  create_worknodes: false
+L00004212	source_lineage:
+L00004213	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0032
+L00004214	preserved_exact_tokens:
+L00004215	- cmd.git.worktree.list
+L00004216	- cmd.git.worktree.select
+L00004217	- cmd.git.worktree.open
+L00004218	- cmd.git.worktree.open_files
+L00004219	- cmd.git.worktree.compare
+L00004220	- cmd.git.worktree.create
+L00004221	- cmd.git.worktree.remove
+L00004222	- cmd.git.worktree.prune
+L00004223	- cmd.git.worktree.request_prune
+L00004224	- cmd.git.worktree.reuse
+L00004225	- cmd.git.worktree.recover
+L00004226	- cmd.git.worktree.focus_lineage
+L00004227	- cmd.git.worktree.release
+L00004228	- cmd.git.worktree.lock
+L00004229	- cmd.git.worktree.unlock
+L00004230	- cmd.git.worktree.switch
+L00004231	- cmd.chat.worktree.*
+L00004232	negative_constraints: []
+L00004233	preserved_contractrefs:
+L00004234	- 'ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md'
+L00004235	compatibility_only_notes:
+L00004236	- cmd.git.worktree.open_files, request_prune, and switch are compatibility aliases.
+L00004237	stale_retired_dispositions: []
+L00004238	owner_hints:
+L00004239	- Plans/UI_Command_Catalog.md
+L00004240	```
+L00004241	
+L00004242	### UCC-055 - Safe Worktree Lifecycle Gates And Expert Visibility Constraints
+L00004243	
+L00004244	```yaml
+L00004245	plan_unit_id: UCC-055
+L00004246	unit_type: requirement
+L00004247	status: accepted
+L00004248	owner_doc: Plans/UI_Command_Catalog.md
+L00004249	canonical_text: Safe worktree lifecycle commands preserve lineage, safe-point, blocked-state, cleanup, reuse, recovery, repo/worktree IDs, lane/run/package refs, blocked reasons, show-unsafe-actions visibility, and destructive confirmation constraints.
+L00004250	gui_related: false
+L00004251	gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+L00004252	split_recommended: false
+L00004253	depends_on:
+L00004254	- PDS-003
+L00004255	- PDS-004
+L00004256	- PDS-005
+L00004257	- PNC-001
+L00004258	unblocks: []
+L00004259	acceptance_criteria:
+L00004260	- UCC-055 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00004261	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004262	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004263	validation_surfaces:
+L00004264	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004265	- python3 scripts/pm-plan-index.py validate
+L00004266	risk_class: ui_command_catalog_drift
+L00004267	reasoning_tier: standard
+L00004268	context_scope: ui_command_catalog_batch_189
+L00004269	implementation_surfaces:
+L00004270	- Plans/UI_Command_Catalog.md
+L00004271	node_compile_hint:
+L00004272	  mode: safe_worktree_lifecycle_gates_expert_visibility
+L00004273	  create_worknodes: false
+L00004274	source_lineage:
+L00004275	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0032
+L00004276	preserved_exact_tokens:
+L00004277	- active
+L00004278	- blocked_preserved
+L00004279	- override policy
+L00004280	- repo_id
+L00004281	- worktree_id
+L00004282	- safe_point_id
+L00004283	- lane/run/package refs
+L00004284	- blocked/recovery lineage
+L00004285	- show-unsafe-actions
+L00004286	- active run
+L00004287	- safe-point
+L00004288	- lineage gates
+L00004289	- remove
+L00004290	- prune
+L00004291	- reuse
+L00004292	negative_constraints:
+L00004293	- Manual prune/remove/reuse is forbidden while the worktree is active or blocked_preserved unless explicit override policy allows it and records the override.
+L00004294	- show-unsafe-actions expert mode must not make unsafe actions executable while active run, blocked, safe-point, or lineage gates fail.
+L00004295	preserved_contractrefs: []
+L00004296	compatibility_only_notes: []
+L00004297	stale_retired_dispositions: []
+L00004298	owner_hints:
+L00004299	- Plans/UI_Command_Catalog.md
+L00004300	```
+L00004301	
+L00004302	### UCC-056 - Chat Thread Lifecycle And Discovery Commands
+L00004303	
+L00004304	```yaml
+L00004305	plan_unit_id: UCC-056
+L00004306	unit_type: requirement
+L00004307	status: accepted
+L00004308	owner_doc: Plans/UI_Command_Catalog.md
+L00004309	canonical_text: Chat thread lifecycle and discovery commands create, archive, delete, rename, pin, export, and search threads while preserving transcript, lineage, citations, attachments, audit metadata, stable thread_id, and message focus behavior.
+L00004310	gui_related: false
+L00004311	gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+L00004312	split_recommended: false
+L00004313	depends_on:
+L00004314	- PDS-003
+L00004315	- PDS-004
+L00004316	- PDS-005
+L00004317	- PNC-001
+L00004318	unblocks: []
+L00004319	acceptance_criteria:
+L00004320	- UCC-056 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00004321	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004322	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004323	validation_surfaces:
+L00004324	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004325	- python3 scripts/pm-plan-index.py validate
+L00004326	risk_class: ui_command_catalog_drift
+L00004327	reasoning_tier: standard
+L00004328	context_scope: ui_command_catalog_batch_189
+L00004329	implementation_surfaces:
+L00004330	- Plans/UI_Command_Catalog.md
+L00004331	node_compile_hint:
+L00004332	  mode: chat_thread_lifecycle_discovery_commands
+L00004333	  create_worknodes: false
+L00004334	source_lineage:
+L00004335	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0034
+L00004336	preserved_exact_tokens:
+L00004337	- cmd.chat.{new,archive,delete,rename,pin,export,search}
+L00004338	- cmd.chat.new
+L00004339	- cmd.chat.archive
+L00004340	- cmd.chat.delete
+L00004341	- cmd.chat.rename
+L00004342	- cmd.chat.pin
+L00004343	- cmd.chat.export
+L00004344	- cmd.chat.search
+L00004345	- thread_id
+L00004346	- transcript
+L00004347	- lineage
+L00004348	- citations
+L00004349	- attachments
+L00004350	- audit metadata
+L00004351	negative_constraints:
+L00004352	- Grouped chat lifecycle token does not denote message-level delete or file-restore behavior.
+L00004353	preserved_contractrefs:
+L00004354	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md'
+L00004355	compatibility_only_notes: []
+L00004356	stale_retired_dispositions: []
+L00004357	owner_hints:
+L00004358	- Plans/UI_Command_Catalog.md
+L00004359	```
+L00004360	
+L00004361	### UCC-057 - Context Lens Placement And Mode Controls
+L00004362	
+L00004363	```yaml
+L00004364	plan_unit_id: UCC-057
+L00004365	unit_type: requirement
+L00004366	status: accepted
+L00004367	owner_doc: Plans/UI_Command_Catalog.md
+L00004368	canonical_text: Context Lens command IDs control dropdown placement, active modes, turn-off behavior, message selection, clear selection, Subcompact apply/revert, confirmation, and canonical source-ref rehydration in lockstep with chat, wiring, prompt, and GUI owner docs.
+L00004369	gui_related: true
+L00004370	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00004371	split_recommended: false
+L00004372	depends_on:
+L00004373	- PDS-003
+L00004374	- PDS-004
+L00004375	- PDS-005
+L00004376	- PNC-001
+L00004377	unblocks: []
+L00004378	acceptance_criteria:
+L00004379	- UCC-057 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00004380	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004381	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004382	validation_surfaces:
+L00004383	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004384	- python3 scripts/pm-plan-index.py validate
+L00004385	risk_class: ui_command_catalog_drift
+L00004386	reasoning_tier: standard
+L00004387	context_scope: ui_command_catalog_batch_189
+L00004388	implementation_surfaces:
+L00004389	- Plans/UI_Command_Catalog.md
+L00004390	node_compile_hint:
+L00004391	  mode: context_lens_placement_mode_controls
+L00004392	  create_worknodes: false
+L00004393	source_lineage:
+L00004394	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0035
+L00004395	preserved_exact_tokens:
+L00004396	- cmd.chat.context_lens.toggle
+L00004397	- cmd.chat.context_lens.set_mode
+L00004398	- mute
+L00004399	- focus
+L00004400	- subcompact
+L00004401	- cmd.chat.context_lens.turn_off
+L00004402	- Turn Off
+L00004403	- cmd.chat.context_lens.toggle_message_selection
+L00004404	- cmd.chat.context_lens.clear_selection
+L00004405	- cmd.chat.context_lens.apply_subcompact
+L00004406	- cmd.chat.context_lens.revert_subcompact
+L00004407	- Subcompact
+L00004408	negative_constraints: []
+L00004409	preserved_contractrefs:
+L00004410	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md'
+L00004411	compatibility_only_notes: []
+L00004412	stale_retired_dispositions: []
+L00004413	owner_hints:
+L00004414	- Plans/UI_Command_Catalog.md
+L00004415	```
+L00004416	
+L00004417	### UCC-058 - Assistant Thread Worktree Rows And Mvp Negative Constraints
+L00004418	
+L00004419	```yaml
+L00004420	plan_unit_id: UCC-058
+L00004421	unit_type: requirement
+L00004422	status: accepted
+L00004423	owner_doc: Plans/UI_Command_Catalog.md
+L00004424	canonical_text: Assistant thread-level worktree commands create, unbind, remove, merge, create PR, and show info for active-thread worktree bindings with slash commands, visibility/enabled clauses, merge guards, and MVP exclusions.
+L00004425	gui_related: true
+L00004426	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00004427	split_recommended: false
+L00004428	depends_on:
+L00004429	- PDS-003
+L00004430	- PDS-004
+L00004431	- PDS-005
+L00004432	- PNC-001
+L00004433	unblocks: []
+L00004434	acceptance_criteria:
+L00004435	- UCC-058 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00004436	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004437	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004438	validation_surfaces:
+L00004439	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004440	- python3 scripts/pm-plan-index.py validate
+L00004441	risk_class: ui_command_catalog_drift
+L00004442	reasoning_tier: standard
+L00004443	context_scope: ui_command_catalog_batch_189
+L00004444	implementation_surfaces:
+L00004445	- Plans/UI_Command_Catalog.md
+L00004446	node_compile_hint:
+L00004447	  mode: assistant_thread_worktree_rows_mvp_constraints
+L00004448	  create_worknodes: false
+L00004449	source_lineage:
+L00004450	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0036
+L00004451	preserved_exact_tokens:
+L00004452	- cmd.chat.worktree.create
+L00004453	- /worktree create
+L00004454	- cmd.chat.worktree.unbind
+L00004455	- /worktree unbind
+L00004456	- cmd.chat.worktree.remove
+L00004457	- /worktree remove
+L00004458	- cmd.chat.worktree.merge
+L00004459	- /worktree merge [--squash|--rebase]
+L00004460	- cmd.chat.worktree.pr
+L00004461	- /worktree pr
+L00004462	- cmd.chat.worktree.info
+L00004463	- /worktree
+L00004464	- Open Files
+L00004465	- cmd.git.worktree.open
+L00004466	- cmd.chat.worktree.bind_existing
+L00004467	negative_constraints:
+L00004468	- Arbitrary Bind Existing remains outside the Assistant thread-worktree MVP and must not be exposed as cmd.chat.worktree.bind_existing.
+L00004469	preserved_contractrefs:
+L00004470	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Commands_System.md'
+L00004471	compatibility_only_notes: []
+L00004472	stale_retired_dispositions: []
+L00004473	owner_hints:
+L00004474	- Plans/UI_Command_Catalog.md
+L00004475	```
+L00004476	
+L00004477	### UCC-059 - Assistant Worktree Context Guard Variables
+L00004478	
+L00004479	```yaml
+L00004480	plan_unit_id: UCC-059
+L00004481	unit_type: requirement
+L00004482	status: accepted
+L00004483	owner_doc: Plans/UI_Command_Catalog.md
+L00004484	canonical_text: Assistant worktree commands use projection-backed guard variables for active thread, worktree binding, active run, git repo, remote non-SSH mode, GitHub remote, dirty/conflict/detached-head status, and merge lock state.
+L00004485	gui_related: false
+L00004486	gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+L00004487	split_recommended: false
+L00004488	depends_on:
+L00004489	- PDS-003
+L00004490	- PDS-004
+L00004491	- PDS-005
+L00004492	- PNC-001
+L00004493	unblocks: []
+L00004494	acceptance_criteria:
+L00004495	- UCC-059 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+L00004496	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+L00004497	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00004498	validation_surfaces:
+L00004499	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00004500	- python3 scripts/pm-plan-index.py validate
+L00004501	risk_class: ui_command_catalog_drift
+L00004502	reasoning_tier: standard
+L00004503	context_scope: ui_command_catalog_batch_189
+L00004504	implementation_surfaces:
+L00004505	- Plans/UI_Command_Catalog.md
+L00004506	node_compile_hint:
+L00004507	  mode: assistant_worktree_context_guard_variables
+L00004508	  create_worknodes: false
+L00004509	source_lineage:
+L00004510	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0036
+L00004511	preserved_exact_tokens:
+L00004512	- activeThreadExists
+L00004513	- activeThreadHasWorktree
+L00004514	- activeThreadHasActiveRun
+L00004515	- projectIsGitRepo
+L00004516	- projectIsRemoteNonSSH
+L00004517	- projectHasGitHubRemote
+L00004518	- worktreeDirty
+L00004519	- worktreeHasConflicts
+L00004520	- worktreeDetachedHead
+L00004521	- mergeLockHeld
+L00004522	negative_constraints: []
+L00004523	preserved_contractrefs:
+L00004524	- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/GitHub_Integration.md'
+L00004525	compatibility_only_notes: []
+L00004526	stale_retired_dispositions: []
+L00004527	owner_hints:
+L00004528	- Plans/UI_Command_Catalog.md
+L00004529	```
+L00004530	
+
+<<< CONTEXT_AFTER canonical_document_lines=4531-4542 >>>
+L00004531	### UCC-060 - Chat Context Detail Routing And Superseded Usage Ids
+L00004532	
+L00004533	```yaml
+L00004534	plan_unit_id: UCC-060
+L00004535	unit_type: requirement
+L00004536	status: accepted
+L00004537	owner_doc: Plans/UI_Command_Catalog.md
+L00004538	canonical_text: Chat context commands compact, open/focus/close thread context details, preserve hover summary as passive UI, dispatch Compact Now only after explicit choice, emit context.compaction.started, context.compaction.completed, and context.compaction.failed or an equivalent visible failure/degraded state, return started, already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, or failed command results, and supersede thread Usage command IDs through route/open Usage normalization.
+L00004539	gui_related: true
+L00004540	gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+L00004541	split_recommended: false
+L00004542	depends_on:

@@ -1,0 +1,397 @@
+<<< AUTHORITATIVE_CORE 1-396 >>>
+# Bootstrap Planning Migration
+
+> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: "Puppet Master" only. This document owns how the bootstrap ledger and PlanUnit standard are used now, migrated safely, and later sealed through governance.
+
+## 0. Scope
+
+This document owns the operational migration path from current bootstrap planning files to standardized canonical Plan docs and, later, native Puppet Master planning services. It covers AGENTS trigger rules, Codex phase usage, compact goal prompts, lossless Plan conversion sequencing, governance seal timing, and retired-experiment exclusions.
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+
+## 1. Migration Principles
+
+- Use the bootstrap ledger now for planning/source memory.
+- Compile only when Jared explicitly asks to compile a ledger.
+- Convert existing Plans losslessly in controlled batches, with a representative pilot first.
+- Generate PlanUnit indexes and node-readiness reports only after the source Plan docs are stable enough to index.
+- Refresh Spec Lock and generated governance artifacts only in an explicit governance seal phase.
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Plan_Document_System.md
+
+## 2. PlanUnits
+
+### BPM-001 - AGENTS Trigger Surface
+
+```yaml
+plan_unit_id: BPM-001
+unit_type: decision
+status: accepted
+owner_doc: Plans/Bootstrap_Planning_Migration.md
+canonical_text: Root AGENTS.md defines trigger phrases and read/write rules so Codex knows when to start, continue, compile, standardize, index, report readiness, or seal through the PM Bootstrap Planning Ledger workflow.
+gui_related: false
+gui_classification_reason: Agent trigger and repository instruction rules are not GUI implementation work.
+depends_on: [PLS-004, PLS-006]
+unblocks: [BPM-002, BPM-003]
+acceptance_criteria:
+  - Trigger phrases include Start a PM ledger, Continue ledger <ledger_id>, Compile ledger <ledger_id> to Plans, Convert Plans to the standard format, Generate PlanUnit index, Generate node-readiness report, and Seal governance.
+  - Root AGENTS.md keeps ledger source memory separate from canonical Plans prose.
+validation_surfaces:
+  - Manual AGENTS.md review.
+  - 'Ledger workflow smoke test: python3 scripts/pm-plans-verify.py validate-bootstrap-ledgers includes active, compiled, sealed, and historical pldg-* ledgers by default.'
+risk_class: agent_instruction_drift
+reasoning_tier: standard
+context_scope: repo_agents
+implementation_surfaces: [AGENTS.md, Plans/bootstrap]
+node_compile_hint: {mode: workflow_instruction, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0011
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["AGENTS.md", "Start a PM ledger", "Continue ledger <ledger_id>", "Compile ledger <ledger_id> to Plans"]
+negative_constraints: []
+owner_hints: [Plans/Bootstrap_Planning_Migration.md]
+```
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Planning_Ledger_System.md
+
+### BPM-002 - Codex Phase And Goal Prompt Model
+
+```yaml
+plan_unit_id: BPM-002
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Bootstrap_Planning_Migration.md
+canonical_text: Bootstrap use in the Mac Codex app may use separate threads per phase. Conversational ledger creation usually runs in normal chat; compile, audit, migration, indexing, node-readiness, and governance seal phases use Goal Mode. Goal prompts stay compact, with reusable repo files, skills, and context carrying the detail.
+gui_related: false
+gui_classification_reason: Codex phase/thread usage and prompt budgeting are not GUI implementation work.
+depends_on: [BPM-001]
+unblocks: [BPM-003, BPM-004, BPM-005]
+acceptance_criteria:
+  - Conversational design/spec turns update the ledger without requiring Goal Mode.
+  - Artifact transformation phases use Goal Mode.
+  - Goal prompts stay less than 4,000 characters when possible by reading repo instructions and compact state.
+validation_surfaces:
+  - Goal prompt templates in Plans/bootstrap/Codex_Prompts.md.
+  - Per-turn ledger state projections.
+risk_class: workflow_continuity
+reasoning_tier: standard
+context_scope: codex_bootstrap
+implementation_surfaces: [Plans/bootstrap/Codex_Prompts.md, Plans/ledgers/v2/*/state]
+node_compile_hint: {mode: phase_guidance, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0013
+  - pldg-20260610-001-ledger-plan-system:atom-0014
+  - pldg-20260610-001-ledger-plan-system:dec-0006
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["Mac Codex app", "Goal Mode", "separate threads", "conversational design/spec thread", "less than 4,000 characters", "/goal"]
+negative_constraints: []
+owner_hints: [Plans/Bootstrap_Planning_Migration.md]
+```
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/bootstrap/Codex_Prompts.md
+
+### BPM-003 - Initial Canonical Doc Compilation
+
+```yaml
+plan_unit_id: BPM-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Bootstrap_Planning_Migration.md
+canonical_text: The bootstrap design compiles first into Planning_Ledger_System.md, Plan_Document_System.md, Plan_To_Node_Compilation.md, Bootstrap_Planning_Migration.md, and the Plans index registration. This creates owner docs before broader Plan conversion.
+gui_related: false
+gui_classification_reason: Canonical doc creation and index registration are not GUI implementation work.
+depends_on: [BPM-001, BPM-002, PLS-001, PDS-001, PNC-001]
+unblocks: [BPM-004, BPM-005]
+acceptance_criteria:
+  - The four owner docs exist under Plans/.
+  - Plans/00-plans-index.md can route readers to the new owner docs.
+  - The ledger remains source lineage, not canonical prose.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-shard-plans.py --check
+risk_class: initial_compile
+reasoning_tier: standard
+context_scope: repo
+implementation_surfaces: [Plans/Planning_Ledger_System.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md, Plans/Bootstrap_Planning_Migration.md, Plans/00-plans-index.md]
+node_compile_hint: {mode: canonical_docs_only, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0018
+  - source_ref:chat:design-discussion
+preserved_exact_tokens: ["Plans/Bootstrap_Planning_Migration.md"]
+negative_constraints: []
+owner_hints: [Plans/Bootstrap_Planning_Migration.md]
+```
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/00-plans-index.md
+
+### BPM-004 - Controlled Lossless Plan Conversion
+
+```yaml
+plan_unit_id: BPM-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Bootstrap_Planning_Migration.md
+canonical_text: Existing Plans convert losslessly through inventory, original hashes, heading/body span maps, coverage maps, ContractRef preservation, anchor or alias preservation, explicit dispositions, a representative pilot conversion, validators, and controlled batches.
+gui_related: false
+gui_classification_reason: Migration mechanics are not GUI implementation work.
+depends_on: [PDS-002, PDS-004, PDS-005]
+unblocks: [BPM-005]
+acceptance_criteria:
+  - The first representative pilot Plan doc is chosen after inventory; likely a substantial owner/consumer doc rather than a tiny addendum.
+  - Broad rewrites do not begin before inventory and pilot validation.
+  - Content deletion or semantic change without source coverage stops the migration.
+validation_surfaces:
+  - Original hash inventory.
+  - Heading/body span inventory.
+  - Coverage map.
+  - Validators after pilot and each batch.
+risk_class: content_loss
+reasoning_tier: high
+context_scope: all_plans
+implementation_surfaces: [Plans/*.md, future migration inventory]
+node_compile_hint: {mode: migration_batch_planning, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0020
+  - pldg-20260610-001-ledger-plan-system:q-0002
+  - source_ref:chat:design-discussion
+  - source_ref:chat:lossless-conversion
+preserved_exact_tokens: ["hash originals", "heading/body spans", "coverage map", "ContractRef", "anchors", "Which representative pilot Plan doc should be converted first?", "Codex should choose after inventory", "substantial owner/consumer doc", "tiny addendum"]
+negative_constraints:
+  - Do not start broad rewrites until inventory and pilot validation exist.
+owner_hints: [Plans/Plan_Document_System.md, Plans/Bootstrap_Planning_Migration.md]
+owner_adjudication:
+  candidate_owners: [Plans/Plan_Document_System.md, Plans/Bootstrap_Planning_Migration.md]
+  evidence: "Plan_Document_System owns the conversion proof; Bootstrap_Planning_Migration owns sequencing and pilot choice."
+```
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Plan_Document_System.md
+
+### BPM-005 - Governance Seal Timing
+
+```yaml
+plan_unit_id: BPM-005
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Bootstrap_Planning_Migration.md
+canonical_text: Spec Lock, generated shards, evidence bundles, plan graph, and governance locks are refreshed only during an explicit governance seal phase after canonical docs and generated indexes stop changing.
+gui_related: false
+gui_classification_reason: Governance seal timing is not GUI implementation work.
+depends_on: [BPM-003, BPM-004, PDS-006, PNC-004]
+unblocks: []
+acceptance_criteria:
+  - Ordinary ledger writing, plan drafting, plan conversion batches, and PlanUnit indexing do not update Spec Lock or generated governance artifacts.
+  - The seal phase runs only after doc/index churn stops.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-shard-plans.py --check
+  - Explicit governance seal report.
+risk_class: governance_artifact_staleness
+reasoning_tier: standard
+context_scope: repo_governance
+implementation_surfaces: [Plans/Spec_Lock.json, Plans/_shards, Plans/.evidence, Plans/plan_graph.json, Plans/auto_decisions.jsonl]
+node_compile_hint: {mode: seal_phase_only, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0027
+  - pldg-20260610-001-ledger-plan-system:atom-0031
+  - pldg-20260610-001-ledger-plan-system:dec-0007
+  - pldg-20260610-001-ledger-plan-system:dec-0010
+  - source_ref:chat:design-discussion
+  - source_ref:chat:user-node-readiness-correction
+preserved_exact_tokens: ["Plans/Spec_Lock.json", "Plans/_shards/**", "Plans/.evidence/**", "Plans/plan_graph.json", "PlanUnit index", "node-readiness report", "Do not create WorkNodes"]
+negative_constraints:
+  - Do not update Spec Lock during ordinary ledger writing, plan drafting, or plan conversion batches.
+  - Do not create WorkNodes or executable build tasks during PlanUnit indexing.
+owner_hints: [Plans/Bootstrap_Planning_Migration.md, Plans/Plan_Document_System.md, Plans/Plan_To_Node_Compilation.md]
+```
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Plan_To_Node_Compilation.md
+
+### BPM-006 - Retired Legacy Experiments Excluded
+
+```yaml
+plan_unit_id: BPM-006
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Bootstrap_Planning_Migration.md
+canonical_text: Retired legacy transfer experiments are stale/retired source-lineage only. The replacement architecture is Goal + new ledger + validators + compact operating views. Exact retired labels remain in ledger/source evidence when needed, not in active architecture prose.
+gui_related: false
+gui_classification_reason: Retired process vocabulary and migration guardrails are not GUI implementation work.
+depends_on: [BPM-001, PLS-001]
+unblocks: []
+acceptance_criteria:
+  - Retired legacy experiment mechanics are not cited as the basis for the new architecture.
+  - Historical terms may appear only as stale/retired lineage or negative constraints.
+validation_surfaces:
+  - Manual plan review.
+  - Source-lineage coverage.
+risk_class: stale_architecture_revival
+reasoning_tier: standard
+context_scope: repo
+implementation_surfaces: [Plans/*.md, Plans/ledgers/v2]
+node_compile_hint: {mode: stale_lineage_only, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0028
+  - pldg-20260610-001-ledger-plan-system:corr-0001
+  - source_ref:chat:user-retired-experiments-correction
+preserved_exact_tokens: ["Goal + Ledger + Validators + Compact Operating Views", "Do not reference", "failed experiments", "completely replaced by goal and this new ledger"]
+negative_constraints:
+  - Do not reference retired legacy experiment mechanics as the basis of the new architecture.
+stale_retired_terms:
+  - retired legacy transfer experiments
+owner_hints: [Plans/Planning_Ledger_System.md, Plans/Bootstrap_Planning_Migration.md]
+```
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/Planning_Ledger_System.md
+
+
+### BPM-007 - Phase Handoff And Thread Boundary Contract
+
+```yaml
+plan_unit_id: BPM-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Bootstrap_Planning_Migration.md
+canonical_text: Bootstrap work may run across separate Codex threads. Each phase starts from the relevant ledger_id, compact state, and canonical owner docs; each phase ends by updating handoff/projection state, reporting validators, and leaving an exact next safe action. Conversational ledger creation is not required to use Goal Mode; transformation phases should use compact Goal prompts under the Codex objective limit.
+gui_related: false
+gui_classification_reason: Bootstrap phase orchestration is not GUI implementation work.
+depends_on: [BPM-001, BPM-002, PLS-004, PLS-006]
+unblocks: [BPM-003, BPM-004, BPM-005]
+acceptance_criteria:
+  - Start/continue/compile/conversion/index/seal prompts can be used independently in new threads.
+  - Every phase produces a clear handoff and validator list before stopping.
+  - Ordinary conversation is allowed to create and update ledgers without Goal Mode.
+validation_surfaces:
+  - Plans/bootstrap/Codex_Prompts.md
+  - Plans/ledgers/v2/<ledger_id>/state/handoff.json
+  - Phase validator reports.
+risk_class: thread_restart_continuity
+reasoning_tier: standard
+context_scope: codex_bootstrap
+implementation_surfaces: [Plans/bootstrap/Codex_Prompts.md, Plans/bootstrap/Bootstrap_Planning_Workflow.md, Plans/ledgers/v2/*/state]
+node_compile_hint: {mode: phase_handoff_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260610-001-ledger-plan-system:atom-0040
+  - source_ref:chat:implementation-readiness-review
+preserved_exact_tokens: ["separate Codex threads", "ledger_id", "compact state", "Goal prompts", "less than 4,000 characters", "conversational ledger creation"]
+negative_constraints:
+  - Do not require Goal Mode for the feature-spec conversation phase unless Jared chooses it.
+owner_hints: [Plans/Bootstrap_Planning_Migration.md, Plans/bootstrap/Codex_Prompts.md]
+```
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md, ContractName:Plans/bootstrap/Codex_Prompts.md
+
+## 3. Compilation Coverage
+
+| Ledger atom | Disposition |
+| --- | --- |
+| atom-0011 | BPM-001 |
+| atom-0013 | BPM-002 |
+| atom-0014 | BPM-002 |
+| atom-0018 | BPM-003 |
+| atom-0020 | BPM-004; PDS-004 owns conversion proof. |
+| atom-0027 | BPM-005 |
+| atom-0028 | BPM-006 |
+| atom-0031 | BPM-005; PDS-006 and PNC-001/PNC-004 own index/readiness boundary. |
+| q-0002 | BPM-004 records the pilot-choice disposition and leaves the actual choice for the later inventory phase. |
+| atom-0040 | BPM-007 |
+| atom-0041 | BPM-006 |
+
+ContractRef: ContractName:Plans/Bootstrap_Planning_Migration.md
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### BPM-008 - Mandatory Parallel Evidence And Prompt Hardening
+
+```yaml
+plan_unit_id: BPM-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Bootstrap_Planning_Migration.md
+canonical_text: 'Resume Ledger continues to read compact state first, avoid full event and record scans unless referenced, use Collaborator behavior, update ledger after each substantive turn, and infer gui_related. The ledger-to-Plans Goal prompt must require many bounded read-only subagents in parallel when atom, owner, or document thresholds are exceeded, require assignment/result evidence, and block rather than silently use one broad agent; main agent remains sole writer. The ledger-local governance seal prompt validates this ledger ID when present, seals only after Plans and indexes stabilize, and preserves runtime-disabled readiness unless runtime contracts were explicitly completed. The deep-audit Goal uses many bounded read-only subagents in parallel for atom fidelity, reciprocal lineage, owner routing, changed-doc fidelity, ledger consistency, index/governance, forbidden artifacts, and validator mutability, with the main agent writing
+  audit artifacts. The repair Goal builds a closure matrix only for repair_required=true findings, repairs or adjudicates those actionable rows, updates the semantic closure registry only for actionable closures, uses bounded read-only specialist subagents, and no-ops when no actionable rows exist. Passing validators alone are insufficient when repair_required=true rows remain unclosed. Ledger-to-Plans compilation writes or updates canonical Plans and allowed PlanUnit indexes only in their proper phases; it does not start Plan Compile, create WorkNodes, launch GoalRuns, modify implementation code, or start an Orchestrator build.'
+gui_related: false
+gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: owner_drift
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/Bootstrap_Planning_Migration.md
+- Plans/bootstrap/Codex_Prompts.md
+- Plans/bootstrap/Bootstrap_Planning_Workflow.md
+- Plans/Planning_Ledger_System.md
+- Plans/Plan_To_Node_Compilation.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0162
+- pldg-20260618-001-prd-planning-wizard:atom-0163
+- pldg-20260618-001-prd-planning-wizard:atom-0165
+- pldg-20260618-001-prd-planning-wizard:atom-0166
+- pldg-20260618-001-prd-planning-wizard:atom-0167
+- pldg-20260618-001-prd-planning-wizard:atom-0168
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/09-bootstrap-prompts-and-transfer.md#SRC-PROMPTS
+source_atom_ids:
+- atom-0162
+- atom-0163
+- atom-0165
+- atom-0166
+- atom-0167
+- atom-0168
+decision_refs:
+- dec-0030
+correction_refs: []
+preserved_exact_tokens:
+- Resume Ledger
+- compact state first
+- gui_related
+- HARD PARALLEL GATE
+- main agent is the only writer
+- pldg-20260618-001-prd-planning-wizard
+- governance seal
+- Deep Audit
+- many bounded read-only subagents in parallel
+- repair_closure_matrix.jsonl
+- semantic closure registry
+- repair_required
+- finding_level
+- ledger-to-Plans
+- not runtime
+negative_constraints:
+- Do not reference or invoke superseded experimental planning-pipeline machinery.
+- Do not confuse the bootstrap compile Goal with the finished-product Approve And Build runtime.
+- Do not treat repair_required=false warnings, previously_closed rows, or audit-artifact wording as repair work.
+owner_hints:
+- Plans/bootstrap/Codex_Prompts.md
+- Plans/bootstrap/Bootstrap_Planning_Workflow.md
+- Plans/Planning_Ledger_System.md
+- Plans/Plan_To_Node_Compilation.md
+```
+
+## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+
+This addendum repairs non-runtime bootstrap-migration rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+
+- Repairs `sfk-dfcc395f84654bcabdfbe6aa`: this document is migration/source-lineage for the early AGENTS.md/Codex-thread workflow. Current live behavior is owned by `Plans/Planning_Wizard.md`, `Plans/Planning_Ledger_System.md`, and the PM Bootstrap Planning Ledger v2 state files. Any contradiction resolves in favor of those current owner docs.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+## FABLE Remaining Action Plan Repair Notes (2026-07-08)
+
+This owner note closes or dispositions non-runtime rows from `Plans/.audits/fable-20260706/fable_remaining_action_plan.jsonl` that route to this file. It is product prose/spec hygiene only: it creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+
+- `registry_line 343` (explicitly_deferred; source line 1158; `sfk-dfcc395f84654bcabdfbe6aa`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] whole doc vs Planning_Wizard.md's later ledger addenda: describes an AGENTS.md/Codex-thread workflow that appears superseded by more detailed, differently-worded later addenda not marked stale/retired.
+
+<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

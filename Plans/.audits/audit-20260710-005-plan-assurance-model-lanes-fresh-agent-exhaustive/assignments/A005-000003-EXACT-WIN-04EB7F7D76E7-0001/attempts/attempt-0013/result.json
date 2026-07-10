@@ -1,0 +1,437 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-000003-EXACT-WIN-04EB7F7D76E7-0001",
+  "attempt_id": "attempt-0013",
+  "task_thread_id": "/root/a005_blind_wave_0006_a_capacity_dispatcher_epoch_0013/a005_000003_exact_win_04eb7f7d76e7_0001",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/web_capability_source_packet_receipt.schema.json",
+    "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17",
+    "core_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17",
+    "core_range": [1, 67]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-000003-I001",
+      "item_type": "contract",
+      "title": "Receipt is a closed object with six required members",
+      "statement": "A valid receipt is an object, rejects undeclared top-level properties, and requires schema_id, packet_id, received_packet, files, finding_matrix, and negative_constraints.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 6, "line_end": 6, "exact_quote": "  \"additionalProperties\": false,", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 7, "line_end": 7, "exact_quote": "  \"required\": [", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 13, "line_end": 13, "exact_quote": "    \"negative_constraints\"", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-I002",
+      "item_type": "acceptance_oracle",
+      "title": "Receipt schema discriminator is exact",
+      "statement": "schema_id must equal pm.web_capability_source_packet_receipt.v1.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 16, "line_end": 16, "exact_quote": "    \"schema_id\": {\"type\": \"string\", \"const\": \"pm.web_capability_source_packet_receipt.v1\"},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-I003",
+      "item_type": "contract",
+      "title": "Packet identifiers are nonempty strings",
+      "statement": "packet_id and received_packet are required to be strings of at least one character.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 17, "line_end": 17, "exact_quote": "    \"packet_id\": {\"type\": \"string\", \"minLength\": 1},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 18, "line_end": 18, "exact_quote": "    \"received_packet\": {\"type\": \"string\", \"minLength\": 1},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-I004",
+      "item_type": "capability",
+      "title": "Receipt inventories at least four packet files",
+      "statement": "files is an array with at least four entries, and each entry is validated through the PacketFile definition.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 20, "line_end": 20, "exact_quote": "      \"type\": \"array\",", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 21, "line_end": 21, "exact_quote": "      \"minItems\": 4,", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 22, "line_end": 22, "exact_quote": "      \"items\": {\"$ref\": \"#/$defs/PacketFile\"}", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-I005",
+      "item_type": "contract",
+      "title": "Finding matrix is closed and has six required fields",
+      "statement": "finding_matrix rejects undeclared properties and requires schema_id, generated_at_utc, source_repo, supersedes, finding_ids, and finding_priorities.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 26, "line_end": 26, "exact_quote": "      \"additionalProperties\": false,", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 27, "line_end": 27, "exact_quote": "      \"required\": [\"schema_id\", \"generated_at_utc\", \"source_repo\", \"supersedes\", \"finding_ids\", \"finding_priorities\"],", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-I006",
+      "item_type": "acceptance_oracle",
+      "title": "Finding matrix schema discriminator is exact",
+      "statement": "The embedded finding matrix must identify itself as pm.web_capability_findings_matrix.v3.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 29, "line_end": 29, "exact_quote": "        \"schema_id\": {\"type\": \"string\", \"const\": \"pm.web_capability_findings_matrix.v3\"},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-I007",
+      "item_type": "acceptance_oracle",
+      "title": "Finding identifiers have a minimum cardinality and uniqueness oracle",
+      "statement": "finding_ids must contain at least nineteen unique, nonempty strings.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 35, "line_end": 35, "exact_quote": "          \"minItems\": 19,", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 36, "line_end": 36, "exact_quote": "          \"items\": {\"type\": \"string\", \"minLength\": 1},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 37, "line_end": 37, "exact_quote": "          \"uniqueItems\": true", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-I008",
+      "item_type": "acceptance_oracle",
+      "title": "Priority values are constrained",
+      "statement": "Every property value present in finding_priorities must be one of P0, P1, P2, or P3.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 41, "line_end": 41, "exact_quote": "          \"additionalProperties\": {\"type\": \"string\", \"enum\": [\"P0\", \"P1\", \"P2\", \"P3\"]}", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-I009",
+      "item_type": "contract",
+      "title": "At least one negative constraint is mandatory",
+      "statement": "negative_constraints must be an array containing at least one nonempty string.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 46, "line_end": 46, "exact_quote": "      \"type\": \"array\",", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 47, "line_end": 47, "exact_quote": "      \"minItems\": 1,", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 48, "line_end": 48, "exact_quote": "      \"items\": {\"type\": \"string\", \"minLength\": 1}", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-I010",
+      "item_type": "contract",
+      "title": "Packet-file records are closed and structurally complete",
+      "statement": "Each PacketFile rejects undeclared properties and requires artifact_name, artifact_role, sha256, and byte_size.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 54, "line_end": 54, "exact_quote": "      \"additionalProperties\": false,", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 55, "line_end": 55, "exact_quote": "      \"required\": [\"artifact_name\", \"artifact_role\", \"sha256\", \"byte_size\"],", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-I011",
+      "item_type": "contract",
+      "title": "Artifact roles use a four-value vocabulary",
+      "statement": "artifact_role is restricted to review_addendum, findings_matrix, goal_prompt, or source_packet_archive.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 60, "line_end": 60, "exact_quote": "          \"enum\": [\"review_addendum\", \"findings_matrix\", \"goal_prompt\", \"source_packet_archive\"]", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-I012",
+      "item_type": "acceptance_oracle",
+      "title": "Artifact digest and size have syntactic oracles",
+      "statement": "sha256 must be exactly sixty-four lowercase hexadecimal characters and byte_size must be an integer of at least one.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 62, "line_end": 62, "exact_quote": "        \"sha256\": {\"type\": \"string\", \"pattern\": \"^[0-9a-f]{64}$\"},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 63, "line_end": 63, "exact_quote": "        \"byte_size\": {\"type\": \"integer\", \"minimum\": 1}", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G001",
+      "item_type": "gap",
+      "title": "Four artifact roles are not guaranteed to be represented",
+      "statement": "The schema requires only four PacketFile entries and validates each role independently; it does not require exactly one file for each of the four role values. Four duplicate-role entries can satisfy the receipt while a required semantic artifact role is absent.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "cross_item_cardinality",
+      "impact": "A structurally valid receipt can describe an incomplete or role-duplicated source packet.",
+      "builder_discretion": "A consumer must decide whether to require exact role coverage, reject duplicate roles, and permit extra files.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 21, "line_end": 21, "exact_quote": "      \"minItems\": 4,", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 60, "line_end": 60, "exact_quote": "          \"enum\": [\"review_addendum\", \"findings_matrix\", \"goal_prompt\", \"source_packet_archive\"]", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G002",
+      "item_type": "gap",
+      "title": "Artifact identity is not unique or related to role",
+      "statement": "artifact_name is only a nonempty string, and the files array has no uniqueness or cross-field rule. Duplicate names, duplicate records, or conflicting name-to-role mappings remain schema-valid.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "identity_uniqueness",
+      "impact": "Consumers may select different artifacts or silently overwrite entries.",
+      "builder_discretion": "Consumers must invent artifact naming, duplicate handling, and name-to-role identity rules.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 20, "line_end": 20, "exact_quote": "      \"type\": \"array\",", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 57, "line_end": 57, "exact_quote": "        \"artifact_name\": {\"type\": \"string\", \"minLength\": 1},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G003",
+      "item_type": "gap",
+      "title": "Packet identity fields have no defined syntax or relationship",
+      "statement": "packet_id and received_packet are independently constrained only as nonempty strings. The schema does not say whether received_packet is a path, URI, filename, digest, or logical ID, nor bind either value to the file inventory.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "identity_binding",
+      "impact": "A valid receipt can identify a different packet than the listed artifacts, and consumers cannot interpret the locator consistently.",
+      "builder_discretion": "Implementers must choose identifier formats, normalization, and cross-field binding rules.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 17, "line_end": 17, "exact_quote": "    \"packet_id\": {\"type\": \"string\", \"minLength\": 1},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 18, "line_end": 18, "exact_quote": "    \"received_packet\": {\"type\": \"string\", \"minLength\": 1},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G004",
+      "item_type": "gap",
+      "title": "Finding priorities are not total or keyed to finding identifiers",
+      "statement": "finding_priorities may be an empty object or contain arbitrary keys because only property values are constrained. No contract requires one priority for each finding_id or forbids priorities for unknown IDs.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "referential_integrity",
+      "impact": "A matrix can carry nineteen findings while omitting every priority, or can prioritize unrelated identifiers.",
+      "builder_discretion": "A consumer must decide whether priority coverage is total, partial, or defaulted and how extraneous keys are treated.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 33, "line_end": 33, "exact_quote": "        \"finding_ids\": {", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 39, "line_end": 39, "exact_quote": "        \"finding_priorities\": {", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 41, "line_end": 41, "exact_quote": "          \"additionalProperties\": {\"type\": \"string\", \"enum\": [\"P0\", \"P1\", \"P2\", \"P3\"]}", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G005",
+      "item_type": "gap",
+      "title": "Timestamp and repository provenance are weakly typed",
+      "statement": "generated_at_utc and source_repo accept any nonempty strings. UTC/date-time syntax, repository URI or canonical identity, and revision binding are not validated.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "provenance_format",
+      "impact": "Ordering, freshness, repository attribution, and reproducible source selection cannot be trusted from schema validity.",
+      "builder_discretion": "Producers and consumers must choose timestamp, repository locator, and revision conventions.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 30, "line_end": 30, "exact_quote": "        \"generated_at_utc\": {\"type\": \"string\", \"minLength\": 1},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 31, "line_end": 31, "exact_quote": "        \"source_repo\": {\"type\": \"string\", \"minLength\": 1},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G006",
+      "item_type": "gap",
+      "title": "Supersession lineage permits empty, duplicate, and untyped references",
+      "statement": "supersedes is only an array of nonempty strings; it has no minimum cardinality, uniqueness rule, identifier format, or existence check.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "lineage_integrity",
+      "impact": "Lineage may be ambiguous, duplicated, dangling, or absent while the matrix remains valid.",
+      "builder_discretion": "Implementers must define reference identity, resolution, cycle handling, and whether empty lineage is allowed.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 32, "line_end": 32, "exact_quote": "        \"supersedes\": {\"type\": \"array\", \"items\": {\"type\": \"string\", \"minLength\": 1}},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G007",
+      "item_type": "gap",
+      "title": "Negative constraints are opaque and non-unique",
+      "statement": "The contract requires at least one nonempty negative-constraint string but defines no identifiers, scope, structured semantics, uniqueness, or enforcement oracle.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "semantic_enforcement",
+      "impact": "Producers can satisfy the schema with duplicate or semantically empty prose, and consumers may interpret constraints differently.",
+      "builder_discretion": "Builders must decide parsing, deduplication, scope, conflict handling, and enforcement behavior.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 45, "line_end": 45, "exact_quote": "    \"negative_constraints\": {", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 48, "line_end": 48, "exact_quote": "      \"items\": {\"type\": \"string\", \"minLength\": 1}", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G008",
+      "item_type": "gap",
+      "title": "Artifact integrity fields are not bound to artifact bytes",
+      "statement": "The schema validates only digest syntax and positive size. It cannot establish that the named artifact exists, that its bytes hash to sha256, or that byte_size matches those bytes.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "integrity_verification",
+      "impact": "A schema-valid receipt can make false integrity and size claims, so ingestion without executable verification is unsafe.",
+      "builder_discretion": "A consumer must define byte acquisition, hashing, size checking, mismatch handling, and retry or quarantine behavior.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 62, "line_end": 62, "exact_quote": "        \"sha256\": {\"type\": \"string\", \"pattern\": \"^[0-9a-f]{64}$\"},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 63, "line_end": 63, "exact_quote": "        \"byte_size\": {\"type\": \"integer\", \"minimum\": 1}", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G009",
+      "item_type": "gap",
+      "title": "Receipt collections and strings are unbounded",
+      "statement": "The contract supplies lower bounds but no maximum lengths or cardinalities for identifiers, files, supersedes, finding_ids, finding_priorities, negative constraints, or artifact names.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "resource_bounds",
+      "impact": "An otherwise valid receipt can require excessive memory, CPU, storage, or downstream work.",
+      "builder_discretion": "Implementers must choose payload, collection, and string limits and define limit-exceeded behavior.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 17, "line_end": 17, "exact_quote": "    \"packet_id\": {\"type\": \"string\", \"minLength\": 1},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 21, "line_end": 21, "exact_quote": "      \"minItems\": 4,", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 35, "line_end": 35, "exact_quote": "          \"minItems\": 19,", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 47, "line_end": 47, "exact_quote": "      \"minItems\": 1,", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G010",
+      "item_type": "gap",
+      "title": "Receipt authenticity and authority are absent",
+      "statement": "The exhaustive top-level required-member list contains no producer identity, signer, signature, trust domain, authority grant, or verification metadata.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authenticity_authority",
+      "impact": "Consumers cannot distinguish an authorized receipt from a forged or substituted one using this contract.",
+      "builder_discretion": "The trust model, authorized producer set, signing mechanism, and rejection policy are entirely external.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 7, "line_end": 7, "exact_quote": "  \"required\": [", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 13, "line_end": 13, "exact_quote": "    \"negative_constraints\"", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G011",
+      "item_type": "gap",
+      "title": "Receipt and finding-matrix version compatibility is undeclared",
+      "statement": "The receipt schema is version v1 while the embedded matrix discriminator is v3, but no compatibility, downgrade, upgrade, or migration behavior is expressed.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "version_migration",
+      "impact": "Implementers cannot determine which future or prior matrix versions a receipt version may accept or how stored receipts evolve.",
+      "builder_discretion": "Version negotiation and migration policy must be invented outside this schema.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 3, "line_end": 3, "exact_quote": "  \"$id\": \"pm.web_capability_source_packet_receipt.schema.v1\",", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 29, "line_end": 29, "exact_quote": "        \"schema_id\": {\"type\": \"string\", \"const\": \"pm.web_capability_findings_matrix.v3\"},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G012",
+      "item_type": "unknown",
+      "title": "Ownership, consumers, and propagation authority are unspecified",
+      "statement": "The closed receipt shape names packet content but no owner, intended consumer, custodian, approver, retention owner, or authority governing how findings and constraints propagate.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "operational_ownership",
+      "impact": "Multiple conforming implementations can route, retain, approve, and propagate the same receipt differently.",
+      "builder_discretion": "Ownership assignments, consumer eligibility, lifecycle custody, and propagation rules remain external decisions.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 7, "line_end": 7, "exact_quote": "  \"required\": [", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 13, "line_end": 13, "exact_quote": "    \"negative_constraints\"", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G013",
+      "item_type": "gap",
+      "title": "Artifact names lack path and locator safety constraints",
+      "statement": "artifact_name accepts any nonempty string, without basename-only, normalization, relative-path, traversal, URI-scheme, or character restrictions.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "path_safety",
+      "impact": "A consumer that treats artifact_name as a filesystem or network locator could traverse directories or access unintended resources.",
+      "builder_discretion": "Consumers must define whether names are opaque labels or locators and apply canonicalization and containment checks.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 57, "line_end": 57, "exact_quote": "        \"artifact_name\": {\"type\": \"string\", \"minLength\": 1},", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-G014",
+      "item_type": "gap",
+      "title": "Failure states and recovery transitions are unspecified",
+      "statement": "The receipt is a static object with no status, validation outcome, partial-ingestion state, quarantine state, retry counter, error detail, or transition contract for missing, corrupt, or rejected artifacts.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "failure_lifecycle",
+      "impact": "Consumers can diverge on whether invalid or partially available packets are rejected, retried, quarantined, or accepted with warnings.",
+      "builder_discretion": "Implementers must define the state machine, atomicity boundary, recovery actions, idempotency, and observability signals.",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 7, "line_end": 7, "exact_quote": "  \"required\": [", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 13, "line_end": 13, "exact_quote": "    \"negative_constraints\"", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    },
+    {
+      "item_id": "A005-000003-I013",
+      "item_type": "explicit_non_gap",
+      "title": "GUI behavior is not part of this receipt schema",
+      "statement": "The source defines a JSON object contract for a source-packet receipt and contains no user-interface model or presentation behavior; gui_truth is therefore not applicable within this document window.",
+      "severity": "none",
+      "confidence": "high",
+      "evidence": [
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 4, "line_end": 4, "exact_quote": "  \"title\": \"Puppet Master Web Capability Source Packet Receipt\",", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"},
+        {"path": "Plans/web_capability_source_packet_receipt.schema.json", "line_start": 5, "line_end": 5, "exact_quote": "  \"type\": \"object\",", "source_sha256": "dafe07cc7f20fb90ff5dbde178db24b13694f1fb71eccef3d2cb57b3f2a05b17"}
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension": "behavior", "status": "addressed", "summary": "The schema's validation behavior is explicit for object closure, required members, lower bounds, enumerations, uniqueness of finding IDs, and primitive constraints.", "evidence_item_ids": ["A005-000003-I001", "A005-000003-I002", "A005-000003-I004", "A005-000003-I007", "A005-000003-I009", "A005-000003-I010", "A005-000003-I011", "A005-000003-I012"]},
+    {"dimension": "capabilities", "status": "addressed", "summary": "The receipt can identify a packet, inventory artifacts, embed a finding summary and priorities, and carry negative constraints, subject to semantic integrity gaps.", "evidence_item_ids": ["A005-000003-I003", "A005-000003-I004", "A005-000003-I005", "A005-000003-I009", "A005-000003-G001", "A005-000003-G004"]},
+    {"dimension": "inputs_outputs", "status": "gap_found", "summary": "The JSON input shape is defined, but packet locators, artifact-byte binding, and output or processing outcomes are not.", "evidence_item_ids": ["A005-000003-I001", "A005-000003-I010", "A005-000003-G003", "A005-000003-G008", "A005-000003-G014"]},
+    {"dimension": "contracts", "status": "gap_found", "summary": "Structural contracts are strong at each object boundary, while cross-field role coverage, identity, referential integrity, and semantic enforcement remain under-specified.", "evidence_item_ids": ["A005-000003-I001", "A005-000003-I005", "A005-000003-I010", "A005-000003-G001", "A005-000003-G002", "A005-000003-G004", "A005-000003-G007"]},
+    {"dimension": "states_transitions", "status": "gap_found", "summary": "No lifecycle state or transition model exists for receipt creation, validation, acceptance, rejection, partial ingestion, quarantine, or recovery.", "evidence_item_ids": ["A005-000003-G014"]},
+    {"dimension": "authority", "status": "gap_found", "summary": "The contract has no producer authorization, signer, approver, or trust-domain binding.", "evidence_item_ids": ["A005-000003-G010", "A005-000003-G012"]},
+    {"dimension": "ownership", "status": "unknown", "summary": "No operational, data, retention, or recovery owner is identified in the closed receipt shape.", "evidence_item_ids": ["A005-000003-G012", "A005-000003-G014"]},
+    {"dimension": "consumers", "status": "unknown", "summary": "Intended consumers, their eligibility, and their obligations after validation are not specified.", "evidence_item_ids": ["A005-000003-G012"]},
+    {"dimension": "gui_truth", "status": "not_applicable", "summary": "This window is a JSON receipt schema and exposes no GUI state, layout, interaction, or presentation contract.", "evidence_item_ids": ["A005-000003-I013"]},
+    {"dimension": "failures_recovery", "status": "gap_found", "summary": "Digest and size syntax exist, but mismatch detection, atomic rejection, error reporting, retries, quarantine, rollback, and partial-packet recovery are unspecified.", "evidence_item_ids": ["A005-000003-I012", "A005-000003-G008", "A005-000003-G014"]},
+    {"dimension": "security_privacy", "status": "gap_found", "summary": "Authenticity is absent and freeform artifact names can become unsafe locators; no confidentiality, redaction, or sensitive-field policy appears.", "evidence_item_ids": ["A005-000003-G010", "A005-000003-G013"]},
+    {"dimension": "propagation", "status": "gap_found", "summary": "Finding priority keys are not bound to finding IDs, supersession references are weak, and no rule governs downstream propagation of findings or negative constraints.", "evidence_item_ids": ["A005-000003-G004", "A005-000003-G006", "A005-000003-G007", "A005-000003-G012"]},
+    {"dimension": "operations", "status": "gap_found", "summary": "Timestamp and source fields are weakly typed, while ingestion state, observability, verification execution, retention, retry, and quarantine behavior are absent.", "evidence_item_ids": ["A005-000003-G005", "A005-000003-G008", "A005-000003-G012", "A005-000003-G014"]},
+    {"dimension": "scale_performance", "status": "gap_found", "summary": "Collections and strings have lower bounds but no upper resource bounds or processing limits.", "evidence_item_ids": ["A005-000003-G009"]},
+    {"dimension": "compatibility_migration", "status": "gap_found", "summary": "Receipt v1 hard-codes finding-matrix v3 without declaring version negotiation or migration behavior.", "evidence_item_ids": ["A005-000003-I002", "A005-000003-I006", "A005-000003-G011"]},
+    {"dimension": "acceptance_oracles", "status": "gap_found", "summary": "JSON Schema supplies deterministic structural oracles, but semantic artifact integrity, exact role coverage, priority referential integrity, and enforceable negative constraints lack oracles.", "evidence_item_ids": ["A005-000003-I002", "A005-000003-I007", "A005-000003-I008", "A005-000003-I012", "A005-000003-G001", "A005-000003-G004", "A005-000003-G007", "A005-000003-G008"]},
+    {"dimension": "builder_discretion", "status": "gap_found", "summary": "Builders must choose identity formats, role cardinality, referential integrity, trust, state transitions, recovery, operational limits, propagation, and migration behavior.", "evidence_item_ids": ["A005-000003-G001", "A005-000003-G003", "A005-000003-G004", "A005-000003-G007", "A005-000003-G009", "A005-000003-G010", "A005-000003-G011", "A005-000003-G014"]},
+    {"dimension": "ambiguity_unknowns", "status": "gap_found", "summary": "Material unknowns remain around locator meaning, exact artifact-set completeness, finding-priority coverage, lineage semantics, ownership, consumers, trust, failure lifecycle, and GUI is explicitly outside this schema.", "evidence_item_ids": ["A005-000003-G001", "A005-000003-G003", "A005-000003-G004", "A005-000003-G006", "A005-000003-G010", "A005-000003-G012", "A005-000003-G014", "A005-000003-I013"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

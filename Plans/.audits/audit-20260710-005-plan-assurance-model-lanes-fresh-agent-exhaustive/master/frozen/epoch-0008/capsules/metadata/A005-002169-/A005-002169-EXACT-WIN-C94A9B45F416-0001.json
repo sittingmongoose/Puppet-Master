@@ -1,0 +1,53 @@
+{
+  "assignment_id": "A005-002169-EXACT-WIN-C94A9B45F416-0001",
+  "attempt_id": "attempt-0008",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      345,
+      356
+    ]
+  ],
+  "core_range": [
+    1,
+    344
+  ],
+  "core_sha256": "820feb190c192295777884064b6a71cc9932005791e0acea8456381026b7ca4a",
+  "document_path": "Plans/runtime_artifact_cost_usage.schema.json",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/d6/d6af2d66295ee8172e49a10e147529d6f6a5baa48b4bd21bc55eabe12068b226.txt",
+  "source_excerpt_sha256": "d6af2d66295ee8172e49a10e147529d6f6a5baa48b4bd21bc55eabe12068b226",
+  "source_sha256": "76c1fdd601af0be88eb951d06985e1165ef2cdea3d331f2e3ca8ea63288d4f94",
+  "window_id": "WIN-C94A9B45F416-0001"
+}

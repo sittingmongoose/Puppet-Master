@@ -1,0 +1,388 @@
+<<< CONTEXT_BEFORE 4867-4878 >>>
+- cmd.browser.keep_closed
+- browser.session.takeover_state_changed
+- browser.session.promoted
+- browser.session.closed
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+
+<<< AUTHORITATIVE_CORE 4879-5237 >>>
+### UCC-066 - Terminal Promotion Handoff And Pty Boundary
+
+```yaml
+plan_unit_id: UCC-066
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Terminal promotion and handoff bind interactive or long-running work to stable terminal sessions while chat retains bounded preview and audit ownership; shell-like automation defaults to PTY terminal execution when user-inspectable or intervention-prone.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-066 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_190
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: terminal_promotion_handoff_pty_boundary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0039
+preserved_exact_tokens:
+- Terminal session and layout commands
+- Terminal promotion and handoff
+- stable terminal session
+- chat retains only bounded preview and audit ownership
+- Terminal-handoff routing
+- chat/tool cards
+- chat-callable one-shot tools
+- bash
+- grep
+- codesearch
+- chatsearch
+- logsearch
+- logread
+- PTY-backed terminal execution
+- live-terminal
+negative_constraints:
+- Terminal handoff must not re-own the terminal session under an individual tool.
+- Agent-originated Output and inline summaries must not impersonate a pseudo-console.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-067 - Terminal Command Rows And Labels
+
+```yaml
+plan_unit_id: UCC-067
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Terminal command rows preserve open, show, rerun, detach, focus, split/move/close pane, restart/replace, stable terminal session/pane/tab identities, labels, payloads, events, and UI surfaces.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-067 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_190
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: terminal_command_rows_labels
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0039
+preserved_exact_tokens:
+- cmd.terminal.open
+- Open in Terminal
+- cmd.terminal.show
+- Show Terminal
+- cmd.terminal.rerun
+- Rerun in Terminal
+- cmd.terminal.detach
+- Detach/Pop-Out
+- cmd.terminal.focus
+- cmd.terminal.split_pane
+- cmd.terminal.move_pane
+- cmd.terminal.close_pane
+- cmd.terminal.restart_replace
+- terminal_session_id
+- terminal_pane_id
+- terminal_tab_id
+- Domain event(s)
+- UI surface(s)
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-068 - Terminal Focus Reuse Layout Identity
+
+```yaml
+plan_unit_id: UCC-068
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Terminal focus, reuse, moving, detaching, reattaching, follow-up actions, exited-session reveal, and same-session continuity preserve exact terminal_session_id or pane/session precedence and must not silently fall back to a fresh shell.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-068 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_190
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: terminal_focus_reuse_layout_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0039
+preserved_exact_tokens:
+- terminal_session_id
+- /pane/session
+- /thread/tool
+- dev-session binding
+- workspace-bound most-recent terminal context
+- Show Terminal
+- /moving/detaching/reattaching
+- /tab/pane/session
+- same bound session
+- /exited
+- /restart/replace
+negative_constraints:
+- Commands that imply same-session continuity must not fall back to a fresh shell silently.
+- Moving/detaching/reattaching terminal UI must preserve tab/pane/session identity unless explicitly asking for a new terminal.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-069 - Terminal Cards Output Audit Persistence Rules
+
+```yaml
+plan_unit_id: UCC-069
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Terminal command cards preserve output/copy affordances, large output refs/blobs, one-shot inline defaults, historical permission/runtime snapshots, concise transparency, persistent inline cards, promotion behavior, and distinct terminal actions.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-069 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_190
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: terminal_cards_output_audit_persistence
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0039
+preserved_exact_tokens:
+- 'Ran: <command>'
+- 'Running: <command>'
+- '<operation>: <query/url> — N sources'
+- /output
+- refs/blobs
+- /Problems/Ports
+- /Ports/Output
+- /port/output
+- /linkback
+- /filter/drill-down
+- /changes
+- /summaries
+- /transparency
+- /logging/subagents
+- /copy/paste
+- TUI capture guidance
+- /collapse
+- /background
+negative_constraints:
+- Current Settings state must not replace historical policy/mode/project evidence.
+- Open in Terminal and Show Terminal must focus the same live session.
+- Distinct terminal actions must keep owned command-table rows and must not collapse into one normalized target.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-070 - Dev Session Lifecycle Reveal Commands
+
+```yaml
+plan_unit_id: UCC-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Dev-session commands start, stop, restart, and reveal output, problems, and ports for a dev_session_id across Toolbar, Chat, Ports, Terminal, Problems, and Output surfaces.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-070 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_190
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: dev_session_lifecycle_reveal_commands
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0040
+preserved_exact_tokens:
+- cmd.dev.start_session
+- cmd.dev.stop_session
+- cmd.dev.restart_session
+- cmd.dev.show_output
+- cmd.dev.show_problems
+- cmd.dev.show_ports
+- dev.session.started
+- dev.session.stopping
+- dev.session.stopped
+- dev.session.restarting
+- dev_session_id
+- Toolbar
+- Chat
+- Ports
+- Terminal
+- Output
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-071 - Catalog Lifecycle Rows And Missing Command Rule
+
+```yaml
+plan_unit_id: UCC-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Catalog lifecycle commands install, update, and remove catalog items with item type, id, and version payloads, while missing referenced commands must become concrete catalog rows or explicit compatibility/retirement notes.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-071 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_190
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: catalog_lifecycle_rows_missing_command_rule
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0041
+preserved_exact_tokens:
+- Catalog lifecycle commands
+- cmd.catalog.install_item
+- cmd.catalog.update_item
+- cmd.catalog.remove_item
+- item_type
+- item_id
+- version?
+- catalog.install.started
+- catalog.install.completed
+- catalog.update.started
+- catalog.update.completed
+- catalog.remove.started
+- catalog.remove.completed
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/storage-plan.md'
+compatibility_only_notes:
+- Missing referenced commands must become concrete catalog rows or explicit compatibility/retirement notes.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+
+<<< CONTEXT_AFTER 5238-5249 >>>
+### UCC-072 - Terminal Dev Recovery And Wiring Completeness Gate
+
+```yaml
+plan_unit_id: UCC-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Terminal clear, close, and dev reveal commands preserve runtime identity and dev_session_id ownership; debug recovery/rerun degrades to attention_required when no canonical rerun exists or local/device/manual/flaky conditions prevent classification, and catalog updates require Wiring Matrix rows.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:

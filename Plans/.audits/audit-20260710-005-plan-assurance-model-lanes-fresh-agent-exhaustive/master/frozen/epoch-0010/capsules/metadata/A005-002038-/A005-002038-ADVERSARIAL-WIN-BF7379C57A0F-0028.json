@@ -1,0 +1,58 @@
+{
+  "assignment_id": "A005-002038-ADVERSARIAL-WIN-BF7379C57A0F-0028",
+  "attempt_id": "attempt-0010",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      10014,
+      10025
+    ],
+    [
+      10416,
+      10427
+    ]
+  ],
+  "core_range": [
+    10026,
+    10415
+  ],
+  "core_sha256": "30f9a3b3c2f68be9df73e677e5f51ef25c4c7c3af0e9e61aa3acdee785644a0e",
+  "document_path": "Plans/assistant-chat-design.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/51/512043d478b7217e62a4888a7ab797156c353cf1464357c2a9a6fa9a7b929df3.txt",
+  "source_excerpt_sha256": "512043d478b7217e62a4888a7ab797156c353cf1464357c2a9a6fa9a7b929df3",
+  "source_sha256": "dbe013e75b0359ac3f4763abd6cc3756a3366b628c1ddb066c68e4ecc91e0f67",
+  "window_id": "WIN-BF7379C57A0F-0028"
+}

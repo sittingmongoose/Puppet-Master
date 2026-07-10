@@ -1,0 +1,416 @@
+<<< CONTEXT_BEFORE 2656-2667 >>>
+- Do not collapse all cleanup state into one global pool.
+- Do not treat Source Control lineage and lane binding as cosmetic polish.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Referenced owner docs retain final authority for their surfaces; this unit records MiscPlan cleanup integration constraints.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: This unit spans multiple owner surfaces and should be routed with owner-doc evidence during implementation planning.
+```
+
+
+<<< AUTHORITATIVE_CORE 2668-3054 >>>
+### M-023 - Platform CLI Capability Non-Dependency
+
+```yaml
+plan_unit_id: M-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Platform hooks, skills, plugins, extensions, and MCP integrations can complement cleanup and agent context, but Puppet Master prepare/cleanup remains an internal run_with_cleanup responsibility and is not dependent on provider-native extension mechanisms.
+gui_related: false
+gui_classification_reason: The unit defines provider/runtime architecture and optional integration stance rather than direct GUI presentation.
+split_recommended: true
+depends_on:
+- M-013
+- M-014
+- M-015
+unblocks: []
+acceptance_criteria:
+- prepare_working_directory and cleanup_after_execution are implemented internally and invoked via run_with_cleanup around runner.execute().
+- Provider-specific hooks, plugins, extensions, skills, and MCP servers are optional compatibility helpers only.
+- Cleanup and evidence are not exposed as MCP tools in the current plan.
+- Optional future clean_workspace MCP exposure remains out of scope until explicitly planned.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: provider_hook_dependency_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: platform_cli_capability_non_dependency
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0043
+preserved_exact_tokens:
+- prepare_working_directory
+- cleanup_after_execution
+- run_with_cleanup
+- runner.execute()
+- hooks
+- skills
+- plugins
+- extensions
+- MCP servers
+- clean_workspace
+- out of scope
+- platform_specs
+- AGENTS.md
+negative_constraints:
+- Puppet Master must not rely on platform-specific hooks or scripts for core workspace cleanup.
+- Cleanup and evidence are not MCP tools in the current plan.
+compatibility_only_notes:
+- A Puppet Master-authored skill or optional user hook can document cleanup expectations for users running CLIs outside Puppet Master.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Provider capability details remain aligned with orchestrator-subagent-integration and platform_specs.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: The source span includes bootstrap copy, which is isolated in M-024; this unit covers the provider non-dependency stance.
+```
+
+### M-024 - Provider Bootstrap Trust Copy
+
+```yaml
+plan_unit_id: M-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Cursor provider bootstrap/trust status copy must preserve the exact title and subtext specified by the source span.
+gui_related: true
+gui_classification_reason: The unit preserves user-visible bootstrap/trust copy.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The Cursor trust title is exactly Workspace trust required.
+- The Cursor trust subtext is exactly Cursor CLI is signed in, but this workspace must be trusted before all tools and MCP servers are available.
+- The covered source span remains losslessly available for exact-text audit.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: bootstrap_trust_copy_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: provider_bootstrap_trust_copy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0043
+preserved_exact_tokens:
+- Workspace trust required
+- Cursor CLI is signed in, but this workspace must be trusted before all tools and MCP servers are available
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Provider bootstrap ownership remains with provider/runtime owner docs; MiscPlan preserves exact copy lineage.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: The copy requirement is narrow enough for one unit.
+```
+
+### M-025 - Shortcuts GUI Surface Defaults And Edit Flow
+
+```yaml
+plan_unit_id: M-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: A Shortcuts GUI surface must show the complete default shortcut table, current bindings, change/double-click edit flow, reset controls, persistence, widget reuse, and immediate reflection of the active key map.
+gui_related: true
+gui_classification_reason: The unit defines a user-visible Shortcuts screen, list/table behavior, edit flow, reset controls, and copyable labels.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- Users can open the Shortcuts surface from Config, Advanced, Shortcuts, Settings, or Preferences according to the single canonical UI location selected by implementation.
+- The surface lists all actions and current bindings from the default/override key map.
+- Users can change bindings via Change or double-click and can reset per action or reset all.
+- Shortcut keys are selectable/copyable and use existing widget-catalog widgets.
+- Changes persist through the same Config/GuiConfig surface and take effect immediately after save.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: shortcut_surface_registry_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: shortcuts_gui_surface_defaults_edit_flow
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0044
+preserved_exact_tokens:
+- Desktop Shortcuts (GUI screen)
+- Config -> Advanced -> Shortcuts
+- Config -> Shortcuts
+- Settings / Preferences
+- GuiConfig
+- selectable_label
+- selectable_label_mono
+- Ctrl+A
+- Ctrl+E
+- Ctrl+B
+- Ctrl+F
+- Alt+B
+- Alt+F
+- Ctrl+D
+- Ctrl+K
+- Ctrl+U
+- Ctrl+W
+- Alt+D
+- Ctrl+T
+- Ctrl+G
+- Move to start of current line
+- Move to end of current line
+- Move cursor back one character
+- Move cursor forward one character
+- Move cursor back one word
+- Move cursor forward one word
+- Delete character under cursor
+- Kill to end of line
+- Kill to start of line
+- Kill previous word
+- Kill next word
+- Transpose characters
+- Cancel popovers / abort running response
+negative_constraints:
+- The implementation must choose one canonical UI location for Shortcuts.
+- The GUI must not show a shortcut list disconnected from the active key map.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- FinalGUISpec and UI_Command_Catalog own final surface composition and widget conventions.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: The source span also defines backend data flow and error handling, which are split into M-026 and M-027.
+```
+
+### M-026 - Shortcut Registry Backend And Key Map Rebuild
+
+```yaml
+plan_unit_id: M-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Shortcut handling must use a single registry of actions/defaults, serializable KeyBinding overrides in GuiConfig, a DRY build_key_map merge function, platform-aware display/mapping, and deterministic rebuild/install timing for all focusable text areas.
+gui_related: true
+gui_classification_reason: The unit defines backend shortcut data used by GUI key handling and user-visible text-input behavior.
+split_recommended: true
+depends_on:
+- M-025
+unblocks: []
+acceptance_criteria:
+- ShortcutAction and KeyBinding types exist for every default shortcut action.
+- default_shortcuts() is the single source of truth and is tagged DRY:DATA:default_shortcuts.
+- GuiConfig.shortcuts or keyboard_shortcuts stores overrides only.
+- build_key_map(default_shortcuts(), gui_config.shortcuts) rebuilds app key handling at startup, after edit/reset, and after successful import.
+- Slint key events in composer, chat input, interview text fields, config text inputs, wizard prompts, and other focusable text areas consult the active key map.
+- Unit tests cover default/override merge, validation, and round-trip behavior.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: shortcut_keymap_serialization_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: shortcut_registry_backend_key_map_rebuild
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0044
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0046
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0048
+preserved_exact_tokens:
+- ShortcutAction
+- KeyBinding
+- default_shortcuts()
+- GuiConfig.shortcuts
+- keyboard_shortcuts
+- build_key_map(defaults, overrides) -> KeyMap
+- build_key_map(default_shortcuts(), gui_config.shortcuts)
+- DRY:DATA:shortcut_actions
+- DRY:DATA:default_shortcuts
+- DRY:FN:build_key_map
+- DRY:FN:validate_shortcut_binding
+- FocusScope
+- key-pressed
+- App::key_map
+- MoveToLineStart
+- '"Ctrl+A"'
+- '{ "modifiers": ["ctrl"], "key": "A" }'
+negative_constraints:
+- Key handling must not use hardcoded shortcut bindings outside the shared registry/key map.
+- A separate shortcuts file is not used unless design explicitly mandates it.
+compatibility_only_notes:
+- KeyBinding serialization must remain backward-compatible if the format changes later.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Slint wiring details belong to the GUI implementation surface, but the shortcut registry remains a shared backend/UI contract.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2'
+split_recommendation_reason: The unit bridges backend registry and GUI event routing; conflict/error UX is split into M-027.
+```
+
+### M-027 - Shortcut Conflict And Config Failure UX
+
+```yaml
+plan_unit_id: M-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: Shortcut editing/import must reject or explicitly resolve duplicate bindings, recover from invalid shortcut config with defaults and a toast, distinguish empty filters from no matches, and avoid blank or undefined labels while the key map is loading.
+gui_related: true
+gui_classification_reason: The unit defines user-visible validation errors, toasts, inline empty states, loading labels, and conflict behavior.
+split_recommended: true
+depends_on:
+- M-026
+unblocks: []
+acceptance_criteria:
+- Duplicate bindings are rejected or intentionally resolved by the implementation choice, with the recommendation to reject and show Already used by &lt;ActionName&gt;.
+- Corrupt or invalid shortcuts config falls back to defaults, logs a warning, and shows Shortcuts reset to defaults due to config error.
+- Unsupported import versions are rejected or explicitly handled by documented version behavior.
+- Empty filter shows all rows; a non-empty no-match filter shows No shortcuts match 'xyz'.
+- UI shows a label-only state or (Loading...) before the key map is loaded and never shows blank or (undefined).
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: shortcut_conflict_config_failure_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: shortcut_conflict_config_failure_ux
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0044
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0046
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0048
+preserved_exact_tokens:
+- 'Already used by &lt;ActionName&gt;'
+- 'Shortcuts reset to defaults due to config error'
+- 'Unsupported shortcut file version'
+- "No shortcuts match 'xyz'"
+- '(Loading...)'
+- '(undefined)'
+- validate_shortcut_binding
+- Ctrl+C
+- Ctrl+V
+negative_constraints:
+- The UI must not show No shortcuts when the filter is the cause of an empty result.
+- The UI must not show blank or (undefined) shortcut labels.
+- The app must not crash on missing, corrupt, or invalid shortcut config.
+compatibility_only_notes:
+- Reject-vs-steal and unknown-version handling are implementation choices; the recommended stance is reject with clear copy.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Shortcut conflict details remain coupled to M-026 registry behavior.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md#7, PolicyRule:Decision_Policy.md§2'
+split_recommendation_reason: The source carries several implementation choices; this unit preserves the choices and recommendations as node-readiness considerations, not product blockers.
+```
+
+### M-028 - Shortcut Export Import Filter And Label Helpers
+
+```yaml
+plan_unit_id: M-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: The Shortcuts surface must support export/import of overrides, Replace/Merge confirmation, list filtering by action or key, menu/tooltip shortcut labels, and shared DRY helper functions that reuse GuiConfig shortcut serialization.
+gui_related: true
+gui_classification_reason: The unit defines visible export/import, filtering, confirmation, success/error toasts, and menu/tooltip labels.
+split_recommended: true
+depends_on:
+- M-025
+- M-026
+- M-027
+unblocks: []
+acceptance_criteria:
+- Export writes current overrides or full key map to JSON with a version field and success toast.
+- Import parses and validates JSON, confirms Replace or Merge, rebuilds the key map, persists config, and reports success/failure without partial invalid application.
+- Filtering is case-insensitive over action labels and shortcut strings, with the empty-filter/no-match behavior from M-027.
+- Menus and buttons for shortcut actions display the current binding in labels or tooltips through a shared helper.
+- Export/import helpers reuse the same serialization as GuiConfig.shortcuts.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: shortcut_import_format_drift
+reasoning_tier: standard
+context_scope: miscplan_cleanup_standardization
+implementation_surfaces:
+- Plans/MiscPlan.md
+node_compile_hint:
+  mode: shortcut_export_import_filter_label_helpers
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:MiscPlan-S0049
+preserved_exact_tokens:
+- Export...
+- Import...
+- Replace
+- Merge
+- '{ "version": 1, "overrides": { "MoveToLineStart": "Ctrl+A", ... } }'
+- 'Exported N shortcuts.'
+- 'Imported N shortcuts.'
+- export_shortcuts_to_json
+- import_shortcuts_from_json
+- ShortcutOverrides
+- Invalid shortcut file
+- Unknown action: X
+- 'Filter by action or shortcut'
+- shortcut_label
+- 'Shortcut: Ctrl+K'
+- No shortcut
+negative_constraints:
+- Invalid JSON or unparseable files must not apply partial shortcut changes.
+- Imported files with unsupported future versions must not be silently accepted.
+compatibility_only_notes:
+- Unknown-action handling is an implementation choice; the recommendation is to document skip-vs-reject behavior.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- This unit extends M-025/M-026 without introducing a separate shortcut ownership surface.
+owner_hints:
+- Plans/MiscPlan.md
+preserved_contractrefs: []
+split_recommendation_reason: Export/import, filter, and label helpers are related user-facing enhancements but should remain separately addressable from the core key map.
+```
+
+
+<<< CONTEXT_AFTER 3055-3066 >>>
+### M-029 - Skills Management Surface Owner Boundary
+
+```yaml
+plan_unit_id: M-029
+unit_type: requirement
+status: accepted
+owner_doc: Plans/MiscPlan.md
+canonical_text: A Skills management GUI surface must exist for discover/list/add/edit/remove/permissions behavior, while final placement follows the current Skills/GUI owner docs and older Config/Settings placement wording is retained as source lineage compatibility.
+gui_related: true
+gui_classification_reason: The unit defines a user-visible Skills management screen and placement boundary.
+split_recommended: true
+depends_on: []

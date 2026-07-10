@@ -1,0 +1,406 @@
+<<< CONTEXT_BEFORE canonical_document_lines=28694-28705 >>>
+L00028694	negative_constraints:
+L00028695	- Task inspector feedback snippet is not executable remediation work.
+L00028696	compatibility_only_notes:
+L00028697	- Rust snippet is source-lineage evidence only.
+L00028698	stale_retired_dispositions: []
+L00028699	owner_boundary_notes:
+L00028700	- Orchestrator remediation/inspection owners adjudicate concrete feedback routing.
+L00028701	owner_hints:
+L00028702	- Plans/orchestrator-subagent-integration.md
+L00028703	preserved_contractrefs: []
+L00028704	```
+L00028705	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=28706-29082 >>>
+L00028706	### OSI-386 - Phase Inspector Completion Gate
+L00028707	
+L00028708	```yaml
+L00028709	plan_unit_id: OSI-386
+L00028710	unit_type: requirement
+L00028711	status: accepted
+L00028712	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028713	canonical_text: >-
+L00028714	  Phase inspector evidence preserves phase completion checking, phase-level inspection, phase task lookup, and phase
+L00028715	  advancement after all tasks complete.
+L00028716	gui_related: false
+L00028717	gui_classification_reason: This unit covers backend phase inspection flow, not GUI presentation.
+L00028718	split_recommended: false
+L00028719	depends_on:
+L00028720	- OSI-107
+L00028721	- OSI-221
+L00028722	- OSI-384
+L00028723	unblocks: []
+L00028724	acceptance_criteria:
+L00028725	- Covered phase inspector snippet remains losslessly available for exact-text audit.
+L00028726	- Phase inspector snippet is plan evidence and not an executable scheduler manifest.
+L00028727	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028728	validation_surfaces:
+L00028729	- >-
+L00028730	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028731	- python3 scripts/pm-plan-index.py validate
+L00028732	reasoning_tier: standard
+L00028733	context_scope: orchestrator_subagent_standardization
+L00028734	implementation_surfaces:
+L00028735	- Plans/orchestrator-subagent-integration.md
+L00028736	risk_class: phase_inspector_completion_gate
+L00028737	node_compile_hint:
+L00028738	  mode: phase_inspector_completion_gate
+L00028739	  create_worknodes: false
+L00028740	source_lineage:
+L00028741	- >-
+L00028742	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0184
+L00028743	preserved_exact_tokens:
+L00028744	- check_phase_completion
+L00028745	- phase_tasks_complete
+L00028746	- inspect_phase
+L00028747	- get_phase_tasks
+L00028748	- advance_phase
+L00028749	negative_constraints:
+L00028750	- Phase inspector snippet is not an executable scheduler manifest.
+L00028751	compatibility_only_notes:
+L00028752	- Rust snippet is source-lineage evidence only.
+L00028753	stale_retired_dispositions: []
+L00028754	owner_boundary_notes:
+L00028755	- Orchestrator/verification owners adjudicate concrete phase inspection behavior.
+L00028756	owner_hints:
+L00028757	- Plans/orchestrator-subagent-integration.md
+L00028758	preserved_contractrefs: []
+L00028759	```
+L00028760	
+L00028761	### OSI-387 - Pause Gate File Check
+L00028762	
+L00028763	```yaml
+L00028764	plan_unit_id: OSI-387
+L00028765	unit_type: requirement
+L00028766	status: accepted
+L00028767	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028768	canonical_text: >-
+L00028769	  Pause gate evidence preserves checking .puppet-master/PAUSE.md before each loop iteration, logging the active pause gate,
+L00028770	  returning a halted result, and waiting for resume.
+L00028771	gui_related: false
+L00028772	gui_classification_reason: This unit covers backend pause detection, not GUI presentation.
+L00028773	split_recommended: false
+L00028774	depends_on:
+L00028775	- OSI-107
+L00028776	- OSI-137
+L00028777	unblocks: []
+L00028778	acceptance_criteria:
+L00028779	- Covered pause gate file-check snippet remains losslessly available for exact-text audit.
+L00028780	- Pause detection example remains plan evidence and does not create executable runtime work.
+L00028781	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028782	validation_surfaces:
+L00028783	- >-
+L00028784	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028785	- python3 scripts/pm-plan-index.py validate
+L00028786	reasoning_tier: standard
+L00028787	context_scope: orchestrator_subagent_standardization
+L00028788	implementation_surfaces:
+L00028789	- Plans/orchestrator-subagent-integration.md
+L00028790	risk_class: pause_gate_file_check
+L00028791	node_compile_hint:
+L00028792	  mode: pause_gate_file_check
+L00028793	  create_worknodes: false
+L00028794	source_lineage:
+L00028795	- >-
+L00028796	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0185
+L00028797	preserved_exact_tokens:
+L00028798	- check_pause_gate
+L00028799	- .puppet-master
+L00028800	- PAUSE.md
+L00028801	- Pause gate active - orchestrator halted
+L00028802	- return Ok(true)
+L00028803	- Exit loop, wait for resume
+L00028804	negative_constraints:
+L00028805	- Pause gate example is not executable runtime work.
+L00028806	compatibility_only_notes:
+L00028807	- Rust snippet is source-lineage evidence only.
+L00028808	stale_retired_dispositions: []
+L00028809	owner_boundary_notes:
+L00028810	- Runtime/orchestrator owners adjudicate concrete pause semantics.
+L00028811	owner_hints:
+L00028812	- Plans/orchestrator-subagent-integration.md
+L00028813	preserved_contractrefs: []
+L00028814	```
+L00028815	
+L00028816	### OSI-388 - Pause Gate GUI Event Projection
+L00028817	
+L00028818	```yaml
+L00028819	plan_unit_id: OSI-388
+L00028820	unit_type: requirement
+L00028821	status: accepted
+L00028822	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028823	canonical_text: Pause gate evidence preserves a GUI event projection for pause-gate activation as a consumer-facing runtime signal.
+L00028824	gui_related: true
+L00028825	gui_classification_reason: This unit covers a user-visible GUI event projection for pause state.
+L00028826	split_recommended: false
+L00028827	depends_on:
+L00028828	- OSI-387
+L00028829	unblocks: []
+L00028830	acceptance_criteria:
+L00028831	- Covered GUI event comment remains losslessly available for exact-text audit.
+L00028832	- GUI/runtime views consume the pause event; OSI owns pause detection semantics only.
+L00028833	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028834	validation_surfaces:
+L00028835	- >-
+L00028836	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028837	- python3 scripts/pm-plan-index.py validate
+L00028838	reasoning_tier: standard
+L00028839	context_scope: orchestrator_subagent_standardization
+L00028840	implementation_surfaces:
+L00028841	- Plans/orchestrator-subagent-integration.md
+L00028842	risk_class: pause_gate_gui_event_projection
+L00028843	node_compile_hint:
+L00028844	  mode: pause_gate_gui_event_projection
+L00028845	  create_worknodes: false
+L00028846	source_lineage:
+L00028847	- >-
+L00028848	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0185
+L00028849	preserved_exact_tokens:
+L00028850	- Emit event for GUI
+L00028851	negative_constraints:
+L00028852	- GUI event projection does not own pause detection semantics.
+L00028853	compatibility_only_notes:
+L00028854	- GUI event comment is source-lineage evidence only.
+L00028855	stale_retired_dispositions: []
+L00028856	owner_boundary_notes:
+L00028857	- Final GUI/runtime views consume the event; orchestrator owns pause detection.
+L00028858	owner_hints:
+L00028859	- Plans/orchestrator-subagent-integration.md
+L00028860	preserved_contractrefs: []
+L00028861	```
+L00028862	
+L00028863	### OSI-389 - Rework Commit Strategy Example
+L00028864	
+L00028865	```yaml
+L00028866	plan_unit_id: OSI-389
+L00028867	unit_type: requirement
+L00028868	status: accepted
+L00028869	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028870	canonical_text: >-
+L00028871	  Rework commit strategy evidence preserves the example distinction between amended commits for rework and new commits for
+L00028872	  non-rework progress without authorizing history mutation during migration.
+L00028873	gui_related: false
+L00028874	gui_classification_reason: This unit covers backend SCM/commit strategy evidence, not GUI presentation.
+L00028875	split_recommended: false
+L00028876	depends_on:
+L00028877	- OSI-137
+L00028878	- OSI-168
+L00028879	- OSI-172
+L00028880	unblocks: []
+L00028881	acceptance_criteria:
+L00028882	- Covered commit strategy snippet remains losslessly available for exact-text audit.
+L00028883	- Commit amend example is not an instruction to amend repository history during this migration.
+L00028884	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028885	validation_surfaces:
+L00028886	- >-
+L00028887	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028888	- python3 scripts/pm-plan-index.py validate
+L00028889	reasoning_tier: standard
+L00028890	context_scope: orchestrator_subagent_standardization
+L00028891	implementation_surfaces:
+L00028892	- Plans/orchestrator-subagent-integration.md
+L00028893	risk_class: rework_commit_strategy_example
+L00028894	node_compile_hint:
+L00028895	  mode: rework_commit_strategy_example
+L00028896	  create_worknodes: false
+L00028897	source_lineage:
+L00028898	- >-
+L00028899	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0186
+L00028900	preserved_exact_tokens:
+L00028901	- commit_tier_progress
+L00028902	- is_rework
+L00028903	- 'node: {} iteration {} (after review)'
+L00028904	- 'node: {} iteration {} complete'
+L00028905	- commit_amend
+L00028906	- commit
+L00028907	negative_constraints:
+L00028908	- Commit amend example is not an instruction to amend repository history during migration.
+L00028909	compatibility_only_notes:
+L00028910	- Rust snippet is source-lineage evidence only.
+L00028911	stale_retired_dispositions: []
+L00028912	owner_boundary_notes:
+L00028913	- SCM and runtime owners adjudicate concrete commit policy.
+L00028914	owner_hints:
+L00028915	- Plans/orchestrator-subagent-integration.md
+L00028916	preserved_contractrefs: []
+L00028917	```
+L00028918	
+L00028919	### OSI-390 - Enhanced Loop Pause And Progress Selection
+L00028920	
+L00028921	```yaml
+L00028922	plan_unit_id: OSI-390
+L00028923	unit_type: requirement
+L00028924	status: accepted
+L00028925	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028926	canonical_text: >-
+L00028927	  Enhanced loop evidence preserves pause-gate checking, progress reads, next-task selection that prioritizes incomplete
+L00028928	  work, and all-tasks-complete termination.
+L00028929	gui_related: false
+L00028930	gui_classification_reason: This unit covers backend loop control, not GUI presentation.
+L00028931	split_recommended: false
+L00028932	depends_on:
+L00028933	- OSI-383
+L00028934	- OSI-387
+L00028935	unblocks: []
+L00028936	acceptance_criteria:
+L00028937	- Covered enhanced loop pause/progress selection lines remain losslessly available for exact-text audit.
+L00028938	- Loop example is not an executable work queue.
+L00028939	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028940	validation_surfaces:
+L00028941	- >-
+L00028942	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028943	- python3 scripts/pm-plan-index.py validate
+L00028944	reasoning_tier: standard
+L00028945	context_scope: orchestrator_subagent_standardization
+L00028946	implementation_surfaces:
+L00028947	- Plans/orchestrator-subagent-integration.md
+L00028948	risk_class: enhanced_loop_pause_progress_selection
+L00028949	node_compile_hint:
+L00028950	  mode: enhanced_loop_pause_progress_selection
+L00028951	  create_worknodes: false
+L00028952	source_lineage:
+L00028953	- >-
+L00028954	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0187
+L00028955	preserved_exact_tokens:
+L00028956	- run_enhanced_loop
+L00028957	- 'Step 0: Check pause gate'
+L00028958	- 'Step 1: Read progress'
+L00028959	- 'Step 2: Get next task'
+L00028960	- All tasks complete
+L00028961	negative_constraints:
+L00028962	- Loop example is not an executable work queue.
+L00028963	compatibility_only_notes:
+L00028964	- Rust snippet is source-lineage evidence only.
+L00028965	stale_retired_dispositions: []
+L00028966	owner_boundary_notes:
+L00028967	- Orchestrator/runtime owners adjudicate concrete loop behavior.
+L00028968	owner_hints:
+L00028969	- Plans/orchestrator-subagent-integration.md
+L00028970	preserved_contractrefs: []
+L00028971	```
+L00028972	
+L00028973	### OSI-391 - Enhanced Loop DRY Selection And Invocation
+L00028974	
+L00028975	```yaml
+L00028976	plan_unit_id: OSI-391
+L00028977	unit_type: requirement
+L00028978	status: accepted
+L00028979	owner_doc: Plans/orchestrator-subagent-integration.md
+L00028980	canonical_text: >-
+L00028981	  Enhanced loop selection and invocation evidence preserves DRY requirements that subagent selection uses subagent_selector,
+L00028982	  subagent_registry validation, platform_specs invocation, and execute_with_subagents under DRY and Executor Protocol contracts.
+L00028983	gui_related: false
+L00028984	gui_classification_reason: This unit covers backend selector/invocation requirements, not GUI presentation.
+L00028985	split_recommended: false
+L00028986	depends_on:
+L00028987	- OSI-239
+L00028988	- OSI-240
+L00028989	- OSI-375
+L00028990	unblocks: []
+L00028991	acceptance_criteria:
+L00028992	- Covered DRY selection and invocation lines plus inline ContractRef remain losslessly available for exact-text audit.
+L00028993	- Subagent and platform invocation must not be hardcoded outside selector/registry/platform_specs contracts.
+L00028994	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00028995	validation_surfaces:
+L00028996	- >-
+L00028997	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00028998	- python3 scripts/pm-plan-index.py validate
+L00028999	reasoning_tier: standard
+L00029000	context_scope: orchestrator_subagent_standardization
+L00029001	implementation_surfaces:
+L00029002	- Plans/orchestrator-subagent-integration.md
+L00029003	risk_class: enhanced_loop_dry_selection_invocation
+L00029004	node_compile_hint:
+L00029005	  mode: enhanced_loop_dry_selection_invocation
+L00029006	  create_worknodes: false
+L00029007	source_lineage:
+L00029008	- >-
+L00029009	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0187
+L00029010	preserved_exact_tokens:
+L00029011	- subagent_selector
+L00029012	- subagent_registry
+L00029013	- 'subagent_registry::is_valid_subagent_name()'
+L00029014	- platform_specs
+L00029015	- execute_with_subagents
+L00029016	negative_constraints:
+L00029017	- No hardcoded subagent or platform invocation outside selector/registry/platform_specs contracts.
+L00029018	compatibility_only_notes:
+L00029019	- Inline ContractRef appears inside the Rust fence and remains source-lineage evidence.
+L00029020	stale_retired_dispositions: []
+L00029021	owner_boundary_notes:
+L00029022	- DRY and Executor Protocol contracts own selector/invocation reuse requirements.
+L00029023	owner_hints:
+L00029024	- Plans/orchestrator-subagent-integration.md
+L00029025	preserved_contractrefs:
+L00029026	- 'ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md'
+L00029027	```
+L00029028	
+L00029029	### OSI-392 - Enhanced Loop Preflight Failure Handling
+L00029030	
+L00029031	```yaml
+L00029032	plan_unit_id: OSI-392
+L00029033	unit_type: requirement
+L00029034	status: accepted
+L00029035	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029036	canonical_text: >-
+L00029037	  Enhanced loop preflight evidence preserves Tier 1 QA execution, failed-preflight incomplete marking, error formatting,
+L00029038	  and loop continuation for remediation.
+L00029039	gui_related: false
+L00029040	gui_classification_reason: This unit covers backend preflight failure handling, not GUI presentation.
+L00029041	split_recommended: false
+L00029042	depends_on:
+L00029043	- OSI-108
+L00029044	- OSI-384
+L00029045	unblocks: []
+L00029046	acceptance_criteria:
+L00029047	- Covered preflight failure handling lines remain losslessly available for exact-text audit.
+L00029048	- Preflight snippet is plan evidence and not executable remediation work.
+L00029049	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00029050	validation_surfaces:
+L00029051	- >-
+L00029052	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00029053	- python3 scripts/pm-plan-index.py validate
+L00029054	reasoning_tier: standard
+L00029055	context_scope: orchestrator_subagent_standardization
+L00029056	implementation_surfaces:
+L00029057	- Plans/orchestrator-subagent-integration.md
+L00029058	risk_class: enhanced_loop_preflight_failure_handling
+L00029059	node_compile_hint:
+L00029060	  mode: enhanced_loop_preflight_failure_handling
+L00029061	  create_worknodes: false
+L00029062	source_lineage:
+L00029063	- >-
+L00029064	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0187
+L00029065	preserved_exact_tokens:
+L00029066	- run_preflight
+L00029067	- preflight_result.passed
+L00029068	- mark_incomplete
+L00029069	- Preflight failed
+L00029070	- continue
+L00029071	negative_constraints:
+L00029072	- Preflight snippet is not executable remediation work.
+L00029073	compatibility_only_notes:
+L00029074	- Rust snippet is source-lineage evidence only.
+L00029075	stale_retired_dispositions: []
+L00029076	owner_boundary_notes:
+L00029077	- Verification/remediation owners adjudicate concrete preflight failure behavior.
+L00029078	owner_hints:
+L00029079	- Plans/orchestrator-subagent-integration.md
+L00029080	preserved_contractrefs: []
+L00029081	```
+L00029082	
+
+<<< CONTEXT_AFTER canonical_document_lines=29083-29094 >>>
+L00029083	### OSI-393 - Enhanced Loop Task Inspection Feedback
+L00029084	
+L00029085	```yaml
+L00029086	plan_unit_id: OSI-393
+L00029087	unit_type: requirement
+L00029088	status: accepted
+L00029089	owner_doc: Plans/orchestrator-subagent-integration.md
+L00029090	canonical_text: >-
+L00029091	  Enhanced loop task inspection evidence preserves task inspection against commit results, completed/incomplete marking,
+L00029092	  feedback cloning, feedback prepending, and re-looping to fix incomplete tasks.
+L00029093	gui_related: false
+L00029094	gui_classification_reason: This unit covers backend inspection feedback behavior, not GUI presentation.

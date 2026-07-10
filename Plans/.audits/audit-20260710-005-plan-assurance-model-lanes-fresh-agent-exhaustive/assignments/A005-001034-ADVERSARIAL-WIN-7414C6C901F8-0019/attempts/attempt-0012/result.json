@@ -1,0 +1,344 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001034-ADVERSARIAL-WIN-7414C6C901F8-0019",
+  "attempt_id": "attempt-0012",
+  "task_thread_id": "/root/a005_blind_wave_0005_a_dispatcher_epoch_0012/leaf_1034",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "5d71bd81a04f8af7a68a79f9d924b13d456159680da32cec15b135bc4f7f1ae4",
+    "core_range": [6651, 7048]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001034-I001",
+      "item_type": "gap",
+      "title": "Snapshot publication is not transactionally ordered with evidence and promotion",
+      "statement": "The contract orders capture after an iteration and before promotion, then separately describes writing JSON and attaching evidence, but does not define an atomic commit point, promotion interlock, or cleanup when snapshot write, evidence attachment, EvidenceStore persistence, or promotion fails between those steps.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "partial_failure",
+      "impact": "A gate can report or promote against missing, truncated, or unreferenced evidence, and retries can leave ambiguous artifacts.",
+      "builder_discretion": "Specify a transactional publication protocol, failure matrix, and promotion precondition.",
+      "feature_keys": ["LSPS-104", "LSPS-105"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6657, "line_end": 6657, "exact_quote": "canonical_text: MVP snapshot capture occurs after an iteration when the gate runs and before promotion, with one after-only snapshot per gate run and no required before-run capture.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 6705, "line_end": 6705, "exact_quote": "canonical_text: The gate runner invokes LspGateVerifier, which gets diagnostics, writes the snapshot JSON, attaches evidence to VerifierResult, and returns pass/fail while EvidenceStore may persist the path and GateReport criteria carry the evidence.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I002",
+      "item_type": "gap",
+      "title": "One-snapshot rule lacks retry and concurrent-run identity semantics",
+      "statement": "One snapshot per gate run is required, but gate-run identity, deterministic naming, overwrite rules, duplicate invocation, concurrent runs, and retry idempotency are unspecified.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_races",
+      "impact": "Parallel or retried gates can collide, overwrite evidence, or create multiple snapshots that each appear canonical.",
+      "builder_discretion": "Define immutable gate-run IDs, exclusive publication, and idempotent retry behavior.",
+      "feature_keys": ["LSPS-104", "LSPS-105"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6685, "line_end": 6686, "exact_quote": "- after iteration, before promotion\n- one snapshot per gate run", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 6734, "line_end": 6735, "exact_quote": "- writes snapshot JSON\n- .puppet-master/evidence/lsp-snapshots/", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I003",
+      "item_type": "gap",
+      "title": "Snapshot privacy, integrity, and lifecycle are undefined",
+      "statement": "Diagnostics are written under a predictable evidence path, yet the core specifies no redaction, permissions, integrity digest, schema/version marker, retention period, deletion policy, or treatment of source snippets and absolute paths embedded in diagnostics.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle",
+      "impact": "Sensitive code, paths, and diagnostic payloads may persist or be exposed indefinitely, while tampered evidence may be accepted.",
+      "builder_discretion": "Define snapshot schema, provenance/integrity, least-privilege access, redaction, retention, and secure deletion.",
+      "feature_keys": ["LSPS-105"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6733, "line_end": 6738, "exact_quote": "- gets diagnostics from LSP client\n- writes snapshot JSON\n- .puppet-master/evidence/lsp-snapshots/\n- attaches evidence to VerifierResult\n- EvidenceStore\n- GateReport criteria already carry per-criterion evidence", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I004",
+      "item_type": "gap",
+      "title": "Snapshot consumers and persistence failure authority are incomplete",
+      "statement": "The gate runner produces VerifierResult and GateReport evidence and EvidenceStore only may persist a path; the core does not name which consumer verifies the attachment, whether persistence is mandatory, or which component has final authority to block promotion.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_callers_consumers",
+      "impact": "Evidence can be produced without an accountable verifier or durable consumer, allowing promotion decisions to diverge.",
+      "builder_discretion": "Name the required consumer, durable-write requirement, and final promotion authority.",
+      "feature_keys": ["LSPS-105"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6705, "line_end": 6705, "exact_quote": "canonical_text: The gate runner invokes LspGateVerifier, which gets diagnostics, writes the snapshot JSON, attaches evidence to VerifierResult, and returns pass/fail while EvidenceStore may persist the path and GateReport criteria carry the evidence.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I005",
+      "item_type": "gap",
+      "title": "Bias scope inputs lack trust and path-containment rules",
+      "statement": "Bias derives from node file lists, changed files, or editor-open files, but the contract does not validate canonical project containment, symlinks, deleted/renamed paths, generated or ignored paths, spoofed extensions, or untrusted node metadata.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "untrusted_inputs",
+      "impact": "A crafted or stale path set can inspect out-of-scope files or steer selection toward an unintended subagent.",
+      "builder_discretion": "Normalize and validate paths against project/policy boundaries and define language-detection trust precedence.",
+      "feature_keys": ["LSPS-106", "LSPS-108"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6756, "line_end": 6756, "exact_quote": "canonical_text: Subagent selection from LSP is off by default behind orchestrator.lsp_subagent_bias and, when enabled, uses explicit node file list, changed files, or open files to derive language bias such as rust-analyzer to rust-engineer.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 6891, "line_end": 6894, "exact_quote": "- Preferred scope order\n- explicit node file list\n- changed files in current node\n- open files", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I006",
+      "item_type": "gap",
+      "title": "Bias computation has no stable observation boundary",
+      "statement": "The preferred inputs include changed and open files, but there is no definition of the iteration snapshot, editor-session authority, debounce, or behavior when files change while diagnostics and ranking are computed.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "Identical nodes may select different subagents based on timing, and metadata may explain inputs that were not actually ranked together.",
+      "builder_discretion": "Bind selection to an immutable iteration/input snapshot and define stale-input handling.",
+      "feature_keys": ["LSPS-106", "LSPS-108"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6784, "line_end": 6788, "exact_quote": "- files in scope\n- Changed in last iteration\n- Open in editor\n- Node's file list\n- 'Default: changed in last iteration'", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I007",
+      "item_type": "gap",
+      "title": "Cross-owner runtime handoff is not versioned or dependency-bound",
+      "statement": "The core assigns selection wiring to orchestrator-subagent-integration and requires runtime structs to carry execution identity and concern model, but depends_on and unblocks remain empty and no field schema, version, producer/consumer validation, or mismatch behavior is defined.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "cross_document_seams",
+      "impact": "The LSP side and orchestrator side can compile against incompatible identity or concern representations and silently bias the wrong node.",
+      "builder_discretion": "Define a versioned handoff contract and explicit dependency/compatibility checks.",
+      "feature_keys": ["LSPS-107"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6811, "line_end": 6811, "exact_quote": "canonical_text: orchestrator-subagent-integration remains owner for subagent-selection wiring and runtime structs must carry rewrite execution identity and concern model when LSP diagnostics bias a node.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 6815, "line_end": 6816, "exact_quote": "depends_on: []\nunblocks: []", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I008",
+      "item_type": "explicit_non_gap",
+      "title": "Explicit requirements outrank diagnostic bias",
+      "statement": "The negative constraint clearly prevents LSP bias from overriding explicit plan requirements, node override lists, or required_subagents, establishing an important authority boundary.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-108"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6901, "line_end": 6901, "exact_quote": "- LSP bias must not override explicit plan requirements, node override lists, or required_subagents.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I009",
+      "item_type": "gap",
+      "title": "Ranking remains nondeterministic for ties and multi-language scopes",
+      "statement": "Scope precedence and Error/Warning threshold are defined, but aggregation across languages, diagnostic counts and severities, equal scores, missing servers, and deterministic final tie-break order are not.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "invalid_states_transitions",
+      "impact": "Equivalent inputs can yield different subagent rankings, undermining reproducibility and explainability.",
+      "builder_discretion": "Define scoring, normalization, stable ties, and no-signal behavior.",
+      "feature_keys": ["LSPS-108"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6862, "line_end": 6862, "exact_quote": "canonical_text: LSP bias is a ranking hint rather than an absolute selector, yields to explicit plan requirements or required_subagents, uses explicit node file list before changed or open files, defaults to Error threshold, and persists chosen bias inputs and outcomes for explainability.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I010",
+      "item_type": "gap",
+      "title": "Explainability metadata lacks a supportable schema and lifecycle",
+      "statement": "Chosen bias inputs and outcomes are persisted, but the contract does not specify required fields, rejected candidates, configuration/version provenance, correlation IDs, retention, redaction, or how operators retrieve and interpret the record.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "observability_support",
+      "impact": "Support cannot reproduce selection decisions, and persisted open-file or diagnostic information can leak sensitive context.",
+      "builder_discretion": "Define a privacy-bounded explainability event schema, retention, and retrieval contract.",
+      "feature_keys": ["LSPS-108"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6898, "line_end": 6899, "exact_quote": "- persisted in run metadata or verification evidence\n- explainable", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I011",
+      "item_type": "gap",
+      "title": "Unavailable, empty, and healthy-zero-diagnostic states collapse",
+      "statement": "Unavailable defaults to skip, files without servers return empty diagnostics, and empty scopes pass; without distinct typed statuses and aggregation rules these materially different states can produce an apparently successful or non-blocking gate.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "gui_misleading_states",
+      "impact": "Users and downstream automation can mistake absence of analysis for a clean analysis and promote unverified work.",
+      "builder_discretion": "Represent analyzed-clean, unsupported, unavailable, skipped, and empty-scope states separately in GateReport and any UI.",
+      "feature_keys": ["LSPS-109"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6920, "line_end": 6920, "exact_quote": "canonical_text: LSP gate and diagnostics failure modes skip when client is unavailable by default, fail on diagnostics query timeout with partial snapshot if available, treat files without servers as empty diagnostics, follow unavailable config for crashes, pass empty scopes, and implement this in LspGateVerifier and get_diagnostics_for_paths.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I012",
+      "item_type": "gap",
+      "title": "Timeout and late-response transition semantics are missing",
+      "statement": "Timeout fails and may retain a partial snapshot, but there is no deadline source, cancellation contract, per-server versus whole-query scope, late-response handling, or definition of which partial results are trustworthy.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "partial_failure",
+      "impact": "A timed-out request can mutate evidence after failure, hang resources, or combine diagnostics from inconsistent moments.",
+      "builder_discretion": "Define deadline ownership, cancellation, immutable cutoff, partial provenance, and late-result discard rules.",
+      "feature_keys": ["LSPS-109"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6951, "line_end": 6953, "exact_quote": "- Timeout when querying diagnostics\n- fail\n- partial snapshot", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I013",
+      "item_type": "gap",
+      "title": "Crash and disconnection have no recovery contract",
+      "statement": "A server crash or disconnection follows unavailable configuration, but retry, reconnect, backoff, restart budget, circuit breaking, state reinitialization, and whether a recovered server can re-enter the same gate run are unspecified.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "recovery_rollback",
+      "impact": "Transient local IPC or network loss can create retry storms, permanent false skips, or diagnostics from an incompletely initialized server.",
+      "builder_discretion": "Define bounded recovery and a terminal per-run state machine.",
+      "feature_keys": ["LSPS-109"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6956, "line_end": 6956, "exact_quote": "- Server crash or disconnected", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 6962, "line_end": 6963, "exact_quote": "- The gate does not block on LSP startup by default.\n- Timeout querying diagnostics fails the criterion rather than silently passing.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I014",
+      "item_type": "gap",
+      "title": "Diagnostics and snapshot resource bounds are absent",
+      "statement": "Project or file scopes can yield arbitrarily many files and diagnostics, yet the core defines no maximum files, parallel requests, response bytes, diagnostics per file, snapshot size, truncation marker, streaming, or backpressure behavior.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "scale_limits",
+      "impact": "Large or malicious workspaces and servers can exhaust memory, disk, CPU, or gate time, and silent truncation can invalidate decisions.",
+      "builder_discretion": "Specify bounded collection, explicit truncation/failure semantics, concurrency limits, and backpressure.",
+      "feature_keys": ["LSPS-105", "LSPS-109"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6937, "line_end": 6940, "exact_quote": "implementation_surfaces:\n- Plans/LSPSupport.md\nnode_compile_hint:\n  mode: gate_failure_modes_implementation_contract", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 6959, "line_end": 6960, "exact_quote": "- LspGateVerifier\n- get_diagnostics_for_paths", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I015",
+      "item_type": "gap",
+      "title": "Configuration authority and invalid-value handling are unspecified",
+      "statement": "The core exposes orchestrator.lsp_subagent_bias and lsp_gate.when_unavailable with skip, pass, or fail values, but does not define user/project/policy precedence, authorization to weaken fail to pass, invalid-value behavior, or configuration capture for audit.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "authority_boundaries",
+      "impact": "A lower-trust project setting or malformed value can bypass an intended gate without a traceable authority decision.",
+      "builder_discretion": "Define typed config, precedence, policy floors, invalid-value fail behavior, and effective-config provenance.",
+      "feature_keys": ["LSPS-106", "LSPS-109"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6781, "line_end": 6783, "exact_quote": "- Subagent selection from LSP\n- orchestrator.lsp_subagent_bias\n- default false", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 6948, "line_end": 6950, "exact_quote": "- lsp_gate.when_unavailable\n- skip | pass | fail\n- default skip", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I016",
+      "item_type": "gap",
+      "title": "Behavioral acceptance oracles are absent",
+      "statement": "All relevant units validate only plan migration and indexing, while acceptance criteria focus on lossless source traceability and prohibition of build-task creation; there are no executable oracles for timing, failure modes, retries, ranking precedence, or evidence integrity.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "Implementations can satisfy governance checks while violating the runtime contracts without detection.",
+      "builder_discretion": "Add deterministic contract tests and failure-injection acceptance oracles before implementation readiness.",
+      "feature_keys": ["LSPS-104", "LSPS-105", "LSPS-106", "LSPS-107", "LSPS-108", "LSPS-109"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6926, "line_end": 6933, "exact_quote": "acceptance_criteria:\n- The covered source span remains losslessly available for exact-text audit.\n- This behavior is addressable through LSPS-109 instead of broad L-001 source-preserving coverage.\n- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.\n- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.\nvalidation_surfaces:\n- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits\n- python3 scripts/pm-plan-index.py validate", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I017",
+      "item_type": "explicit_non_gap",
+      "title": "Retired bridge is explicitly barred from reclaiming product authority",
+      "statement": "The migration bridge is clearly compatibility-only, cannot use the old compile mode, and cannot generate executable build artifacts; ownership is explicitly transferred to LSPS-002 through LSPS-109.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["L-001"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 7013, "line_end": 7017, "exact_quote": "negative_constraints:\n- L-001 must not re-own LSPSupport product coverage.\n- L-001 must not use node_compile_hint.mode=source_preserving_planunit.\n- Do not treat the retired bridge as implementation-ready product coverage.\n- Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this retired bridge.", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    },
+    {
+      "item_id": "A005-001034-I018",
+      "item_type": "gap",
+      "title": "Untrusted diagnostic payload handling is not specified",
+      "statement": "The LSP client supplies diagnostics that are used for gates, persisted as JSON, and used for bias, but the core does not address malformed ranges, invalid encodings, control characters, hostile markup, forged file URIs, duplicate diagnostics, or server identity/provenance.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "unknown_unknowns",
+      "impact": "A buggy or compromised server can corrupt evidence, escape scope, mislead rendered output, or steer agent selection.",
+      "builder_discretion": "Treat server output as untrusted: validate schema, normalize URIs/ranges, sanitize presentation, bound duplication, and bind provenance.",
+      "feature_keys": ["LSPS-105", "LSPS-108", "LSPS-109"],
+      "evidence": [
+        {"path": "Plans/LSPSupport.md", "line_start": 6732, "line_end": 6736, "exact_quote": "- LspGateVerifier\n- gets diagnostics from LSP client\n- writes snapshot JSON\n- .puppet-master/evidence/lsp-snapshots/\n- attaches evidence to VerifierResult", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"},
+        {"path": "Plans/LSPSupport.md", "line_start": 6840, "line_end": 6842, "exact_quote": "- rewrite execution identity\n- concern model\n- LSP diagnostics bias a node", "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"}
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {"dimension": "missing_callers_consumers", "status": "gap_found", "summary": "Required evidence consumers, persistence obligations, and promotion authority are not fully named.", "evidence_item_ids": ["A005-001034-I004"]},
+    {"dimension": "invalid_states_transitions", "status": "gap_found", "summary": "Bias observations, tie states, and unavailable versus clean gate states lack deterministic typed transitions.", "evidence_item_ids": ["A005-001034-I006", "A005-001034-I009", "A005-001034-I011"]},
+    {"dimension": "concurrency_races", "status": "gap_found", "summary": "Concurrent and retried gate runs lack artifact identity and collision rules.", "evidence_item_ids": ["A005-001034-I002", "A005-001034-I006"]},
+    {"dimension": "partial_failure", "status": "gap_found", "summary": "Publication sequencing and timeout partial-result semantics are incomplete.", "evidence_item_ids": ["A005-001034-I001", "A005-001034-I012"]},
+    {"dimension": "recovery_rollback", "status": "gap_found", "summary": "Crash, disconnect, retry, rollback, and cleanup behavior are undefined.", "evidence_item_ids": ["A005-001034-I001", "A005-001034-I013"]},
+    {"dimension": "authority_boundaries", "status": "gap_found", "summary": "Explicit requirements properly outrank bias, but configuration precedence and permission to weaken gates are unspecified.", "evidence_item_ids": ["A005-001034-I008", "A005-001034-I015"]},
+    {"dimension": "privacy_data_lifecycle", "status": "gap_found", "summary": "Snapshot and explainability records lack redaction, access, retention, and deletion contracts.", "evidence_item_ids": ["A005-001034-I003", "A005-001034-I010"]},
+    {"dimension": "untrusted_inputs", "status": "gap_found", "summary": "File-scope metadata and diagnostic payloads are not constrained as untrusted inputs.", "evidence_item_ids": ["A005-001034-I005", "A005-001034-I018"]},
+    {"dimension": "gui_misleading_states", "status": "gap_found", "summary": "Although units are classified non-GUI, GateReport or downstream UI can collapse skipped, unsupported, empty, and clean states.", "evidence_item_ids": ["A005-001034-I011"]},
+    {"dimension": "offline_network_loss", "status": "gap_found", "summary": "Disconnection is named but bounded reconnect and recovered-run behavior are not.", "evidence_item_ids": ["A005-001034-I013"]},
+    {"dimension": "scale_limits", "status": "gap_found", "summary": "No file, request, payload, diagnostic, snapshot, or concurrency bounds are specified.", "evidence_item_ids": ["A005-001034-I014", "A005-001034-I018"]},
+    {"dimension": "accessibility", "status": "not_applicable", "summary": "The assigned core explicitly classifies these runtime, protocol, migration, and evidence units as non-GUI and defines no user interaction surface to assess for accessibility.", "evidence_item_ids": []},
+    {"dimension": "localization", "status": "not_applicable", "summary": "The assigned core defines no localized GUI or user-copy contract; preserved tokens are protocol and lineage material.", "evidence_item_ids": []},
+    {"dimension": "compatibility_migration", "status": "addressed", "summary": "The retired bridge has explicit compatibility-only status, transferred ownership, prohibited legacy compile mode, and non-build constraints.", "evidence_item_ids": ["A005-001034-I017"]},
+    {"dimension": "observability_support", "status": "gap_found", "summary": "Bias persistence is required but lacks a support-oriented event schema, provenance, retention, and retrieval contract.", "evidence_item_ids": ["A005-001034-I010", "A005-001034-I011"]},
+    {"dimension": "destructive_actions", "status": "gap_found", "summary": "Evidence overwrite, cleanup, retention expiry, and secure deletion behavior are unspecified.", "evidence_item_ids": ["A005-001034-I002", "A005-001034-I003"]},
+    {"dimension": "cross_document_seams", "status": "gap_found", "summary": "The orchestrator handoff names an owner but lacks dependencies and a versioned runtime-struct contract.", "evidence_item_ids": ["A005-001034-I007"]},
+    {"dimension": "test_falsifiability", "status": "gap_found", "summary": "Only migration and index validators are named; runtime and failure contracts have no executable acceptance oracles.", "evidence_item_ids": ["A005-001034-I016"]},
+    {"dimension": "unknown_unknowns", "status": "gap_found", "summary": "Hostile or malformed LSP diagnostics are a material unbounded input across evidence, gating, and bias.", "evidence_item_ids": ["A005-001034-I018"]}
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

@@ -1,0 +1,404 @@
+<<< CONTEXT_BEFORE 2228-2239 >>>
+24. **Plan panel scope** -- §11: plan panel **per thread**. **Accessibility** is **not MVP**.
+25. **Error and failure UX** -- §4: clear error state, Resend or Cancel, queue unchanged unless user resends; suggest switch platform or model when appropriate.
+26. **Orchestrator to Assistant handoff** -- §21: Dashboard offers `Continue in Assistant` with run summary and context when orchestrator completes or pauses.
+
+ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/interview-subagent-integration.md
+### 23.5 Previously open gaps (now closed)
+
+
+This traceability table now records what moved into the main body without claiming blanket closure.
+
+The competitive-comparison traceability stays intact.
+### 23.6 Git & GitHub parity
+
+<<< AUTHORITATIVE_CORE 2240-2614 >>>
+
+**Git & GitHub parity:** Full specification in Plans/GitHub_Integration.md. The Git panel (§A), GitHub API integration (§B), SSH remote dev servers (§C), and no-wizard project flows (§D) bring Puppet Master to IDE-level git integration. Chat git commands (§5.1 above) allow driving git operations from the assistant without switching to the Git panel. ContractRef: Plans/GitHub_Integration.md.
+
+---
+
+## 24. Chat thread performance, virtualization, and flicker avoidance
+
+
+This section addresses **long chat threads**: keeping them performant, using **virtualized rendering**, and **avoiding flicker**. The UI stack is **Rust + Slint** with an advanced renderer (e.g. winit + Skia per rewrite-tie-in-memo and Composergui5); the following requirements apply to the chat message list and related thread content.
+
+### 24.1 Virtualized rendering
+
+- **Requirement:** For long chat threads (e.g. hundreds or thousands of messages/blocks), the **message list must be virtualized**. Only the **visible viewport** plus an **overscan of 10 items** above and below should be rendered at any time. Config: `ui.chat.virtualization_overscan`, default `10`. Tune based on Slint rendering performance. The scrollable area uses a **virtual spacer height** derived from item count and an **estimated item height** (or from measured heights when available) so the scrollbar is correct and the user can scroll to any position. This keeps the number of live widgets/nodes bounded and avoids lag, high memory use, and layout thrash.
+- **Why it helps:** Long threads (full history, many diffs, thought streams, subagent blocks) would otherwise create thousands of widgets. Virtualization ensures that only a small window of items is built and measured; scrolling recomputes the visible slice and reuses or recreates only that slice. Reference: **Plans/newfeatures.md** §15.11 (virtualization for long lists); **Composergui5** and **feature-list** (Slint, virtualized file tree, terminal).
+- **Slint:** With Slint, use a **ListView** (or equivalent) that is backed by a **model providing only the visible slice** (e.g. Rust supplies a window of items based on scroll position and container height), or use a scroll area with a virtualized content component that receives (start_index, count) and renders only those items. Avoid building a single huge widget tree for the entire thread.
+- **Stable identity:** Each message or block (user message, assistant message, diff block, thought stream, subagent block, etc.) must have a **stable ID** (e.g. message_id or event_id). The virtualized list uses these IDs so that when the visible window changes (user scrolls), the same logical item is not recreated with different identity--this reduces flicker and allows Slint/renderer to reuse or efficiently update.
+
+### 24.2 Flicker avoidance
+
+- **Incremental updates, no full replace:** When the assistant **streams** a response, the UI must **append** or **update in place** the current message node--**not** replace the entire message list or rebuild all visible items. Appending to the streaming message (e.g. appending text to the last assistant bubble) should not cause other items to re-render or the list to jump. Use **minimal-diff** or **append-only** updates for the active streaming node so only that node's content changes.
+- **Avoid full list rebuild on stream chunk:** On each stream chunk (e.g. new token or thinking segment), do **not** trigger a full re-layout or re-build of the virtualized list. Update only the **content** of the currently streaming item (and optionally the scroll position to follow tail). Batch or throttle UI updates if the stream is very fast (e.g. coalesce into 1-2 frames per second for layout).
+- **Collapse/expand and scroll position:** When the user expands or collapses a section (thought stream, diff block, web search links), the **scroll position** should be preserved or adjusted minimally so the list does not jump. If expanding changes item heights, the virtual list should recompute the visible window and, if needed, adjust scroll offset so the expanded content stays in view or the user's scroll position is stable. Avoid recalculating every item's height on every expand/collapse; cache or estimate heights where possible.
+- **Layout thrash:** Avoid **read-write-read** patterns that force multiple layout passes (e.g. measure all items then position). Prefer: compute visible range from scroll position and container height; render only that range; update scrollbar from total estimated height. Slint's layout model should be used so that only the visible slice participates in layout.
+- **Double-buffer or single update path for streaming:** For the **actively streaming** message, consider a single update path: stream events append to a buffer or model that the UI binds to; the renderer draws the current state once per frame (or on coalesced updates) rather than replacing the whole node on every chunk.
+
+### 24.3 Additional performance measures
+
+- **Lazy content for collapsed sections:** When a section is **collapsed** (thought stream, bash output, diff, web links), the full content need not be **rendered** until the user expands it. Store full content in the thread model for persistence and search; for the virtual list, collapsed items can render only the summary line (e.g. "Thought stream (expand)", "Ran: `cargo test`") so layout and paint are cheap.
+- **Pagination or "load older" (optional):** For very long threads, consider **loading older messages on demand** (e.g. "Load 50 older" or load when user scrolls near the top). The virtual list then has a bounded "window" of loaded items that grows as the user scrolls up. Full history remains in storage (§11); the UI layer fetches a slice. This is an enhancement if virtualization alone is insufficient for extreme thread lengths.
+- **Bounded in-memory size for "current thread":** Even with virtualization, avoid holding the entire thread's message blobs in hot memory if the thread is huge. Stream or page message content from storage (seglog/redb/projection per rewrite-tie-in-memo) into the visible window. In-memory cap: last **200 messages** or **8 MB** (whichever limit is reached first). Older messages are paged from storage on demand. Config: `ui.chat.in_memory_cap_messages` (default `200`), `ui.chat.in_memory_cap_bytes` (default `8388608`).
+
+### 24.4 Enhancements (MVP -- fleshed out)
+
+These enhancements are **MVP** requirements. They must integrate with virtualization (§24.1) and flicker avoidance (§24.2). Short summary below; full specifications follow.
+
+- **24.4.1 Skeleton placeholders:** While loading a thread or when scrolling quickly, show **skeleton placeholders** (e.g. grey bars or simple shapes) for not-yet-loaded items so the list doesn't "pop" when content arrives. Improves perceived performance.
+- **24.4.2 Jump to message:** Allow the user to **jump to a specific message** (e.g. by ID or by search result). Virtual list scrolls to that index and loads the slice containing it; stable ID ensures the right item is highlighted or focused.
+- **24.4.3 Search-in-thread highlights:** When the user searches within the thread (§10), highlight matches in the visible messages. Virtualization still applies; only visible items need highlight computation. Avoid re-scanning the entire thread on every scroll; cache match ranges per message.
+
+**Skeleton placeholders (24.4.1) -- full spec (MVP):** (1) **Purpose:** During thread load or fast scroll, show skeleton placeholders for not-yet-loaded items so the list does not pop or show blanks. (2) **When:** Thread load = **8 skeleton rows** until first slice is loaded (Config: `ui.chat.skeleton_row_count`, default `8`); scroll = skeletons for new visible window until slice content is ready, then replace in place. (3) **UI:** Simple grey rounded bars (one or two lines; optional different heights for user/assistant/diff); theme-aware; replace in place when content arrives to avoid jump/flicker. (4) **Data:** UI-only; for any visible index without content, render skeleton; when slice loader returns data, re-render. (5) **Slint:** Reusable skeleton component; list model signals loading per index. (6) **Edge cases:** On load failure, show error placeholder + Retry; do not leave skeletons indefinitely.
+
+**Jump to message (24.4.2) -- full spec (MVP):** (1) **Purpose:** Jump to a message from search results (§10), shared link, or command palette; virtual list scrolls to target and optionally highlights it. (2) **When:** Search result "Go to message"; URL/deep link to message; optional "Go to message..." command. (3) **UI:** Scroll so target (by stable ID or index) is in viewport (centered or upper third); ensure slice containing target is loaded (target_index ± overscan); optional brief highlight or focus, fading after a few seconds. (4) **Data:** Resolve message ID → index (or scroll offset); if paged, resolve via storage; use search result IDs as jump targets. (5) **Edge cases:** Deleted/rewound target → "Message not found"; target in unloaded older region → trigger load older, then scroll.
+
+**Search-in-thread highlights (24.4.3) -- full spec (MVP):** (1) **Purpose:** When user searches in thread (§10), highlight matching text in visible messages; only visible items need highlight computation. (2) **When:** Thread view focused after search; optional "Highlight all in thread" mode while scrolling until search cleared. (3) **UI:** Distinct highlight style (e.g. background or underline), consistent across types/themes; only visible window scanned; cache match ranges per message ID so re-entering visible window restores highlights; highlight all occurrences; optional Next/Previous match (keyboard). (4) **Data:** Store match ranges (start, end offset) per message; compute on search or when message enters view; cache by (message_id, query); thread search query available to chat view; clear on search clear or thread change. (5) **Performance:** Do not re-scan full thread on scroll--cache ranges for all matching messages at search time, or compute only for visible slice and cache by message ID. (6) **Edge cases:** Cap matches per message (e.g. 50); escape regex/special chars; empty query = no highlights.
+
+### 24.5 Gaps and potential problems
+
+| Gap / problem | Description | Mitigation |
+|---------------|-------------|------------|
+| **Overscan size** | How many items above/below viewport to render? Too few = blank areas when scrolling fast; too many = extra work. | Overscan: **10 items** above and below the visible viewport. Config: `ui.chat.virtualization_overscan`, default `10`. Tune based on Slint rendering performance. |
+| **Item height estimation** | Virtual list needs total height for scrollbar; items have variable height (short message vs long diff). | Use **estimated height** per item type (e.g. message ~80px, diff ~200px) or store measured heights in a cache keyed by stable ID; update scrollbar as user scrolls and more heights are known. |
+| **Expand/collapse and virtual list** | Expanding a block changes its height; the list must reflow and possibly adjust scroll. | Recompute visible slice and scroll offset after expand/collapse; preserve "anchor" (e.g. first visible item id) so the list doesn't jump arbitrarily. Consider keeping expanded height in a cache so re-expand is instant. |
+| **Scroll position restore** | When user switches threads and back, or reopens app, restore scroll position. | Persist scroll position (e.g. last visible message id or offset) with the thread or session; on load, scroll virtual list to that position after first paint. |
+| **Streaming at bottom** | While streaming, user expects to see the tail. If virtual list only has a fixed window, the "tail" might be off-screen. | Keep the **currently streaming** message in the visible window (e.g. scroll to bottom when streaming starts, or ensure the last item is always in the overscan). When user has scrolled up during stream, do not auto-scroll; only auto-scroll when already at bottom. |
+| **Max thread length (display)** | Is there an upper bound on thread length for display? Persistence stores full thread (§11). | No hard limit for persistence. For display, virtualization and optional "load older" keep the UI bounded. Document that threads with 10k+ messages may need pagination or load-older in addition to virtualization. |
+
+---
+
+<a id="25-context-enhancements"></a>
+## 25. Context Circle Enhancements (Addendum -- 2026-02-23)
+The canonical thread-usage behavior now lives in `## 12. Context usage display` and `Plans/usage-feature.md`.
+
+Historical note:
+- compact-now behavior remains valid when backed by canonical compaction commands
+- the detached usage pop-out is no longer canonical
+- any old command IDs or persistence keys that exist only for the pop-out model are superseded by the canonical thread-scoped Context Detail Pane/editor-tab model and its stable command IDs
+## 26. Auditor Audit-To-Repair Loop Model/Provider Settings (Invariant Sweep)
+
+> **Addendum — 2026-02-25**
+> **Repair — 2026-06-18:** fixed Pass 1 / Pass 2 / Pass 3 provider-model selectors and active process stages are retired. Pass names remain compatibility aliases only; model selection is one Auditor audit-to-repair loop.
+
+### 26.1 Context
+
+The mandatory Auditor invariant loop (see `Plans/chain-wizard-flexibility.md §12`) runs after every interview/wizard project-plan generation cycle. It repeats audit, bounded repair, and re-audit until certification or a critical block/authority boundary, using one resolved Auditor validation loop provider and model. This section specifies the **settings UX** that exposes that single Auditor loop selection to the user.
+
+### 26.2 Settings Location
+
+The Auditor validation loop provider and model selection lives in a dedicated **Auditor Validation** settings group within the existing app Settings surface, not in the chat UI itself.
+
+**Navigation path:** Settings -> Interview / Planning Wizard -> Auditor Validation
+
+This placement keeps validation configuration co-located with other interview/wizard settings and away from the chat session controls, which govern the interactive conversation only.
+
+### 26.3 Auditor Loop Controls
+
+The **Auditor Validation** settings group exposes one row for the Auditor validation loop.
+
+| Loop | Label | Default Provider | Default Model |
+|------|-------|-----------------|---------------|
+| Auditor Validation | Audit / Repair / Audit | Auditor Model role default | Auditor Model role default |
+
+**Controls:**
+
+- **Provider dropdown** — lists enabled provider entries from the same account-bound Provider -> models registry as the chat provider dropdown. Label: "Provider".
+- **Model dropdown** — lists models for the selected provider (dynamically discovered, cached; same data source as the chat model dropdown). Label: "Model". Fallback: shared provider/model registry and capability resolver.
+
+> **Note:** No reasoning/effort control is shown in this settings group. Effort settings apply to the interactive chat session and do not govern these background validation passes.
+
+// DRY:WIDGET:auditor-validation-provider-model-selector
+
+### 26.4 Default Resolution (Deterministic)
+
+Default provider and model values are resolved using the following deterministic priority chain:
+
+1. **Explicit stored Auditor loop value** — if `model_roles.auditor.provider` / `model_roles.auditor.model` is present in app settings, use it.
+2. **Auditor Model role default** — if no explicit Auditor loop value is stored, use the configured Auditor Model role default from `Plans/Models_System.md`.
+3. **Primary chat platform + model** — if the Auditor Model role is also unset, use the provider and model selected in the main chat settings.
+4. **First eligible provider entry + model** — if the primary chat provider/model is also unset, select the first eligible account-bound provider entry and model from the Provider -> models registry after readiness, capability, and policy filtering.
+
+**Invariants:**
+- Given the same app settings state, the same provider and model are always selected (no randomness, no environment-dependent branching).
+- On first explicit save of the Auditor loop setting, the resolved default is written to app settings so that subsequent reads are reproducible.
+- Pass 1, Pass 2, and Pass 3 are not independently configurable model selections or active process stages.
+
+### 26.5 Storage
+
+Auditor loop selections are stored in **app settings** only. They are not stored in project artifacts, not emitted to seglog as project data, and not included in project exports.
+
+For auditability, each Auditor cycle report's payload fields (`provider`, `model`) mirror the Auditor loop provider/model that was active when the sweep started (see `Plans/Project_Output_Artifacts.md §10.2`). Legacy `validation_pass_report` exports may mirror the same values for compatibility. This does not store the settings keys themselves as project artifacts.
+
+**Normative storage keys:**
+
+| Key | Purpose |
+|-----|---------|
+| `model_roles.auditor.provider` | Provider for the Auditor validation loop |
+| `model_roles.auditor.model` | Model for the Auditor validation loop |
+
+These keys are written to the same app settings store as all other GUI configuration values. See `Plans/chain-wizard-flexibility.md §3.1.1` for the OpenCode provider settings surface reference.
+
+### 26.6 UX Copy
+
+| Element | Copy |
+|---------|------|
+| Section header | "Auditor Validation" |
+| Section description | "Puppet Master runs the canonical validation sweep with the Auditor Model. Choose the provider and model for the whole audit loop." |
+| Loop description | "Audit / Repair / Re-audit - repeats bounded repair and review until certified or critically blocked with one Auditor loop model." |
+| Default indicator | Show "(Default)" next to the automatically resolved provider/model when no explicit Auditor loop selection has been saved. |
+
+### 26.7 DRY Rules
+
+- Provider and model lists **MUST** be sourced from the account-bound Provider -> models registry and shared capability resolver (same SSOT as §1.1 chat controls). No hardcoded provider names or model lists anywhere in this feature. Legacy `platform_specs` is source-lineage only.
+- Reuse the same provider + model dropdown widgets as the §1.1 chat controls. Tag new reusable settings wrappers with: `// DRY:WIDGET:auditor-validation-provider-model-selector`.
+
+ContractRef: PolicyRule:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Models_System.md
+
+### 26.8 Acceptance Criteria
+
+| # | Criterion |
+|---|-----------|
+| 1 | Settings changes take effect on the **next** validation sweep run — not mid-sweep. A sweep in progress uses the provider/model that was active when it started. |
+| 2 | When a saved provider is no longer available (platform uninstalled or disabled), Puppet Master falls back to the deterministic default (§26.4) and displays a warning: *"Auditor validation provider [name] is unavailable; using Auditor Model default."* |
+| 3 | Auditor validation provider/model settings are preserved across app restarts. |
+| 4 | Pass 1, Pass 2, and Pass 3 are not independently configurable model settings or active process stages; any legacy pass reports mirror the same Auditor loop provider/model. |
+| 5 | The "(Default)" indicator (§26.6) is visible whenever no explicit Auditor loop selection has been saved, and disappears once the user saves an explicit choice. |
+| 6 | Provider and model dropdowns draw from the same Provider -> models registry and Models_System capability resolver as the §1.1 chat controls -- no divergence. |
+| 7 | For each emitted Auditor cycle report, `.provider` and `.model` values match the resolved Auditor loop provider/model from sweep start; legacy `validation_pass_report` mirrors follow the same rule (see `Plans/Project_Output_Artifacts.md §10.2`). |
+
+### 26.9 References (Section 26)
+
+- `Plans/chain-wizard-flexibility.md §12` — Auditor invariant loop (primary specification)
+- `Plans/chain-wizard-flexibility.md §3.1.1` — OpenCode provider settings surface reference
+- `Plans/Project_Output_Artifacts.md §10.2` — Auditor cycle report payload fields (`provider`, `model`), with legacy validation pass mirrors only for compatibility
+- `Plans/Models_System.md` — Auditor Model role ownership for audit/repair/audit verification loops
+- `Plans/Decision_Policy.md §2` — deterministic default policy
+- `Plans/DRY_Rules.md` — DRY/SSOT rules
+- `Plans/Contracts_V0.md` -- requested/effective provider/model snapshot refs and cross-surface capability-ref envelopes
+- Section 1.1 of this document — chat platform + model controls (shared widget source)
+
+ContractRef: ContractName:Plans/chain-wizard-flexibility.md§12, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Models_System.md, PolicyRule:Decision_Policy.md§2
+## 27. Persona Control in Assistant Chat (2026-03-06)
+
+This addendum defines Persona behavior for the Assistant chat surface.
+
+### 27.1 Chat Persona modes
+
+Assistant chat supports Persona modes:
+- `manual`
+- `auto`
+- `hybrid`
+
+Definitions:
+- **manual:** user selects the Persona directly.
+- **auto:** chat resolver selects Persona based on repo/task/message context.
+- **hybrid:** auto selects by default, but the user may temporarily or persistently override it.
+
+Chat selection consumes the eligibility rules in `Plans/Personas.md`: `assistant` is the default direct-chat Persona; `explorer` and `bash` are subagent-only and cannot be selected as the direct chat Persona; `teacher` is direct-chat eligible but not a subagent Persona.
+
+### 27.2 Current Persona display (required)
+
+This section consumes the linked owner contract and stays aligned with it.
+
+Core rules:
+- Runtime identity canon must preserve requested and effective naming and the account/provider identity fields, and must retire local _id substitutes.
+- Chat MUST NOT invent assistant-local substitutes: `requested_persona_id` and `effective_persona_id` normalize to `requested_persona` and `effective_persona`; `active_model` and `actual_model` normalize to `effective_model`; `resolved_account`, `current_account`, and `chat_role_identity` normalize to canonical account fields and `execution_role`; `assistant_runtime_state` uses the canonical runtime snapshot; `projection_trust` normalizes to `projection_freshness` and `projection_health`; and local `selection_reason` uses `adapter_selection_reason` or `account_switch_reason` when those owners apply.
+
+Rules:
+- requested_persona
+- effective_persona
+- effective_account_label
+- requested_persona_id
+- effective_persona_id
+- active_model
+- actual_model
+- resolved_account
+- current_account
+- chat_role_identity
+- assistant_runtime_state
+- projection_trust
+- effective_model
+- execution_role
+- projection_freshness
+- projection_health
+- adapter_selection_reason
+- account_switch_reason
+### 27.3 Natural-language Persona invocation in chat
+
+The Assistant must support user requests such as:
+- `Use Collaborator`
+- `Be a Rust engineer`
+- `Answer as a technical writer`
+- `Switch to security auditor`
+- `Ask Explorer to inspect the repo`
+- `Run that with Bash`
+
+#### Scope semantics
+
+Default scope handling:
+- `for this`, `for this answer`, `right now` -> turn scope,
+- `from now on`, `in this chat`, `for this session` -> session scope.
+
+UI must show when a natural-language override is active, for example:
+- `Persona: Collaborator (User requested)`
+- `Persona: Researcher (User requested, session lock)`
+
+When the override expires, the UI should return to auto display, for example:
+- `Persona: Rust Engineer (Auto: Rust repo + code task)`
+
+Subagent-only requests such as `Ask Explorer` or `Run that with Bash` create or route a child run when the surrounding task permits delegation; they do not switch the direct chat Persona. If the user asks to make a subagent-only Persona the direct chat Persona, chat must explain the eligibility constraint and offer the closest valid route.
+
+### 27.4 Persona aliases and fuzzy matching
+
+Chat Persona invocation should resolve through:
+- canonical Persona IDs,
+- display names,
+- aliases,
+- normalized natural-language forms.
+
+Examples:
+- `rust engineer` -> `rust-engineer`
+- `tech writer` -> `technical-writer`
+- `collaborator` -> `collaborator`
+
+If multiple Personas match, chat may request clarification. If exactly one reliable match exists, it should resolve without extra friction.
+If no Persona matches:
+- **Manual picker:** the selector must reject submission with an inline `Persona not found` validation state.
+- **Natural-language request:** chat must ask for clarification (for example, nearest matches or a prompt to pick a Persona) before starting a run; it must not silently pretend a request resolved when it did not.
+- **Persisted unresolved reference:** if a stored/manual/auto Persona reference reaches runtime and remains unresolved, the fallback contract in `Plans/Personas.md` §2.3 applies, and chat must surface that the run is proceeding without Persona context.
+
+### 27.5 Chat-level controls
+
+The chat panel should include:
+- Persona mode selector (`Auto` / `Manual` / `Hybrid`),
+- effective Persona pill/badge,
+- optional manual Persona picker,
+- selection-reason tooltip or inline sublabel,
+- effective talkativeness in Persona details when the active Persona overrides model-default verbosity,
+- and a way to lock/unlock the current Persona.
+
+### 27.6 Subagent and child-run display
+
+When chat spawns subagents/child runs, the inline subagent blocks must show:
+- effective Persona name,
+- task label,
+- the selection reason or why the subagent/persona was used, when that reason is meaningful,
+- effective platform,
+- effective model,
+- elapsed time,
+- and if relevant, skipped unsupported Persona controls.
+
+### 27.7 Provider compatibility disclosure in chat
+
+Chat surfaces must disclose requested versus effective runtime choice when the distinction matters to user trust or behavior.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Provider_OpenCode.md
+
+Required disclosure behavior:
+- provider/model for a child run is visible on hover in the collapsed card.
+- the expanded child panel may show requested versus effective runtime surface, effective effort, and fallback reason when a remap occurred.
+- explicit user-chosen runtime surfaces must not silently fallback without disclosure.
+- Copilot-native routing restrictions must surface as incompatibility or denial rather than silently degrading into a different execution path.
+
+Crew-mode disclosure:
+- the default crew confirmation surface shows each member as `model -> provider/runtime surface`.
+- the default crew editor may expose per-member model selectors and per-member provider/runtime surface selectors for non-Copilot surfaces.
+- `Copilot` is not a per-member freely mixed provider in the default crew editor; when Copilot is selected for any member, the UI immediately normalizes the entire crew to Copilot and explains that Copilot is being treated as a crew-level provider selection constraint.
+
+ContractRef: ContractName:Plans/Models_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/CLI_Bridged_Providers.md
+### 27.8 Chat acceptance criteria addendum
+
+- Assistant chat must support explicit natural-language Persona invocation.
+- Auto Persona mode must always disclose the resolved Persona and why it was chosen.
+- Current effective Persona/model/platform must be visible in the chat surface.
+- If the active Persona sets `talkativeness` away from `model_default`, chat details must expose the effective setting.
+- Subagent inline blocks must display effective Persona/model/platform rather than only generic role text.
+- Manual Persona selection must block submission when the selected Persona cannot be resolved.
+- Natural-language Persona requests that do not resolve to a single reliable match must produce clarification or fallback disclosure, not a silent wrong-Persona resolution.
+
+## 28. Markdown and Mermaid Rendering in Chat and Planning Surfaces (2026-03-07)
+
+
+Chat and planning surfaces support both Mermaid and the broader inline visualizer, but they are distinct contracts.
+
+ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+
+### 28.1 Canonical split
+
+- Mermaid remains the fenced-diagram rendering path
+- the inline visualizer is a separate sandboxed HTML/SVG module
+- neither path owns hidden mutable state outside durable source or metadata refs
+- Message widget taxonomy keeps `plain code blocks`, `diff/operation cards`, `Mermaid/native diagram cards`, `question cards`, and the `inline visual module` distinct. The inline visual module has its own rendering pipeline, sandbox settings, theme-token injection, and bridge API; it is not a Mermaid/native diagram card, not a plain code block, and not a diff/operation card.
+
+### 28.2 Inline visualizer bridge
+
+This section consumes the linked owner contract and stays aligned with it.
+
+Core rules:
+- Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target.
+- The Inline HTML/JS Visual Module is the sandboxed iframe rendering path for agent-generated HTML/JS/CSS fragments. It is used for data visualizations, interactive diagrams, and custom UI that exceeds Mermaid/code-block capabilities while staying inside the visual-module host contract.
+- Inline visualizer iframes MUST use an explicit `sandbox` attribute token set. The sandbox policy is closed by default: MVP uses `sandbox="allow-scripts"` so the module can execute its bundled code, and the exact minimum attribute is `sandbox='allow-scripts'`. `allow-same-origin`, `allow-forms`, `allow-popups`, and `allow-top-navigation` are explicitly DENIED; the iframe stays isolated from the PM origin, and all cross-boundary communication uses the `postMessage` bridge as the only allowed bridge.
+- Non-iframe Markdown, Mermaid, HTML, and SVG rendering uses the rendering contract here until a dedicated `Plans/security-sanitization.md` owner exists; `/security-sanitization.md` is lineage for that proposed split, not the current owner. The baseline sanitizer is the standard HTML5 safe subset per DOMPurify `DEFAULT_ALLOWED_TAGS` plus approved URL-bearing attributes only; raw `<script>`, `<iframe>`, `<object>`, `<embed>`, and `<style>` with external URL references are denied in message-flow rendering.
+- The inline visualizer host bridge exposes only async-safe calls: `sendPrompt(text: string): void`, `openLink(url: string, target?: "_blank" | "_self"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`. `openLink` treats `_blank` as a new tab and blocks `_self` navigation inside the sandbox; `requestResize` is advisory and the host may constrain it. For question-flow embedded visual modules, the host omits `sendPrompt` from the bridge and exposes only the narrowed PM-managed question-draft bridge, so visuals cannot bypass PM draft state by queueing chat messages.
+- Decision #10 is resolved for visualizer theme-token injection: the MVP mechanism is locked as CSS custom properties injected through the inline `style` attribute on the visualizer container. MVP tokens are `--pm-viz-bg`, `--pm-viz-fg`, `--pm-viz-accent`, `--pm-viz-border`, `--pm-viz-font-family`, and `--pm-viz-font-size`; visualizer fragments MUST use those tokens and must not hardcode replacement colors.
+- Bridge calls preserve exact host semantics: `sendPrompt(text)` queues into the active thread composer outside question-flow contexts; dual-context enforcement means that if a questionnaire is active when `sendPrompt` is called from within a visualizer, the text is routed as a question answer rather than a new chat message, and if no questionnaire is active it is routed as a new chat input. Question-flow embedded visuals do not receive `sendPrompt` and write draft answers only through the narrowed question bridge, so the visualizer cannot bypass the question flow; `openLink(url)` routes through `cmd.browser.open_detached_preview` or the system browser when external; theme injection pushes the CSS custom property bundle on mount and theme change; auto-height/resize reporting sends `{ height: px }` to the host, which adjusts the visual card height within host constraints.
+- `Classic298/open-webui-plugins` and `/open-webui-plugins` remain reference-only lineage for host-wrapped, auto-height, by-reference visual modules; PM names the live surface inline visual module, keeps provider-specific agent-skills runtime assumptions out of canon, and treats `/catalog`, folder-based `SKILL.md`, `/discovery/runtime`, and `/preview/editor` as owner-consumed import/editor concepts rather than visualizer authority.
+- Inline visual modules support interactive `/controls`, local visual-state `/queues`, `/diagrams/explainers`, and host-mediated `/auto-resize`; auto-sizing is driven by `requestResize` telemetry and constrained by the host rather than by direct DOM access.
+- The visualizer is a general-purpose surface for user-requested or clearly helpful quizzes, interactive visualizations, and other artifacts; it may use third-party script `/library` code inside the sandbox only when policy allows, with bundled, version-pinned, and integrity-recorded code. Arbitrary external network loads are denied; the visualizer is not limited to `/questions`, and it is not an accessibility-only fallback path.
+- Visualizer `/source/etc` handling keeps fragment source, copy/export metadata, and generated assets behind the visual-module contract so the sandbox can show the artifact without injecting raw controls into the main chat DOM.
+
+ContractRef: Plans/FinalGUISpec.md#15.6 Mermaid and inline visualizer widgets
+
+Rules:
+- Copy source
+- Open in editor
+- Open detached preview
+- Export diagram
+- must NOT execute arbitrary HTML
+- allowlisted tags/attributes only
+- sendPrompt(text)
+- openLink(url)
+- copyToClipboard(text)
+- requestResize(width?, height?)
+## 29. Natural-language Mode Invocation and Wizard Escalation (2026-03-08)
+
+### 29.1 Natural-language mode invocation
+Natural-language mode invocation resolves workflow identity and runtime posture separately.
+
+Required requested/effective fields are:
+- `requested_mode_overlay`
+- `effective_mode_overlay`
+- `requested_runtime_mode`
+- `effective_runtime_mode`
+- `requested_plan_thoroughness`
+- `effective_plan_thoroughness`
+- `selection_source`
+- `selection_reason`
+- `override_scope`
+
+ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Run_Modes.md
+
+Canonical enum closure:
+- `requested_mode_overlay` and `effective_mode_overlay` are closed to `none`, `plan`, `deep_plan`, `debug`, `interview`, `brainstorm`, and `crew`
+- `requested_runtime_mode` and `effective_runtime_mode` are closed to the canonical runtime postures from `Plans/Run_Modes.md`
+- `deep_plan` MUST survive normalization through the overlay fields and MUST NOT be discarded from historical/runtime records simply because the runtime posture is planning
+
+ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/storage-plan.md
+
+<<< CONTEXT_AFTER 2615-2626 >>>
+
+Resolution rules:
+- `use ask mode`, `don't edit`, and `just inspect` resolve to `effective_mode_overlay = none` and canonical runtime `ask`
+- `use plan mode` resolves to `effective_mode_overlay = plan` and canonical runtime `plan`
+- `use deep plan` resolves to `effective_mode_overlay = deep_plan` and canonical runtime `plan`
+- `use agent mode` clears planning overlays and resolves to the normal execution posture for the thread, preserving explicit permission posture such as `regular` or `yolo`
+- compact display labels are derived from the effective overlay plus runtime posture so the visible label can still be `Ask`, `Agent`, `Plan`, or `Deep Plan`
+
+ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/FinalGUISpec.md
+### 29.2 Assistant recommendation of Planning Wizard
+
+Assistant chat should proactively recommend the Planning Wizard when the user appears to be asking for:

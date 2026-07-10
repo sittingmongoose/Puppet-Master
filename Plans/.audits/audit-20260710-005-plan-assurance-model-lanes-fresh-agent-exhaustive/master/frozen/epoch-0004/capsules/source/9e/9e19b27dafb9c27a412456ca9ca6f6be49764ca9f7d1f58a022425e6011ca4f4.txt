@@ -1,0 +1,369 @@
+<<< CONTEXT_BEFORE 13437-13448 >>>
+negative_constraints:
+  - Do not leak blocked filenames through GUI rows, summaries, receipts, rank gaps, or diagnostics.
+  - Do not expose raw selected paths to unauthorized consumers through selected_result_ids.
+  - Do not run remote manifest discovery outside authorized remote project roots.
+owner_hints: [Plans/FileSafe.md, Plans/Permissions_System.md, Plans/Runtime_Artifacts_Panel.md, Plans/FinalGUISpec.md]
+```
+
+
+## Ledger Compile Addendum - pldg-20260626-001-feature-name
+
+This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+
+
+<<< AUTHORITATIVE_CORE 13449-13788 >>>
+### F2-192 - Vision Bridge Image Source Safety
+
+```yaml
+plan_unit_id: F2-192
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: Vision bridge image source resolution may use chat/thread attachments, selected runtime artifacts/screenshots,
+  FileSafe-allowed project files, clipboard images, and recent OS screenshots. Clipboard and recent OS screenshot
+  support are MVP, not deferred, but PM must use explicit permissioned ingestion, visible source labeling, deterministic
+  source precedence, user choice for ambiguous recent screenshots, redaction/sensitivity policy, and no hidden Desktop/Downloads
+  scraping or FileSafe bypass.
+gui_related: true
+gui_classification_reason: Image source selection, clipboard, screenshots, and project-file access are user-visible
+  safety surfaces.
+depends_on:
+- PS-121
+unblocks:
+- ACD-425
+acceptance_criteria:
+- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+  are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+- python3 scripts/pm-plan-index.py validate
+- git diff --check
+risk_class: image_source_policy_bypass
+reasoning_tier: high
+context_scope: vision_image_sources_filesafe
+implementation_surfaces:
+- Plans/FileSafe.md
+- future image source resolver
+node_compile_hint:
+  mode: vision_image_source_safety
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260626-001-feature-name:atom-0075
+- pldg-20260626-001-feature-name:atom-0082
+- pldg-20260626-001-feature-name:atom-0085
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Prompt_Pipeline.md
+- chat:vision-bridge-defaults-answer
+- external:github.com/alfaoz/opencode-see-image@cde1615f6dfc9039c58da6813112ee53391b5b49
+- chat:vision-pressure-test-request
+- chat:vision-pressure-test-defaults-answer
+- Plans/FileSafe.md
+source_atom_ids:
+- atom-0075
+- atom-0082
+- atom-0085
+decision_refs:
+- dec-0014
+- dec-0015
+- dec-0016
+- dec-0017
+preserved_exact_tokens:
+- chat attachments
+- runtime artifacts
+- screenshots
+- project files
+- clipboard
+- recent OS screenshots
+- FileSafe
+- 3. not deferred
+- current-turn attachment
+- selected artifact
+- project file allowed by FileSafe
+- clipboard image
+- recent OS screenshot picker
+- ambiguous
+- hidden Desktop/Downloads scraping
+- 'yes'
+- sensitivity/redaction policy
+- disclosure destination
+- explicit user override
+- redaction/omission details
+- derived artifact manifest
+- secrets
+negative_constraints:
+- Do not defer clipboard or recent OS screenshot support out of MVP.
+- Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default without PM-owned permission
+  and ingestion rules.
+- Do not bypass FileSafe or artifact access policy when resolving project images.
+- Do not inline raw screenshots into prompts when artifact refs plus bounded summaries are required.
+- Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default.
+- Do not choose among ambiguous recent screenshots without user-visible selection or clear recency evidence.
+- Do not bypass FileSafe or artifact permissions for project-file image sources.
+- Do not silently send sensitive screenshots or images to another provider without policy evaluation.
+- Do not claim redaction happened without recording redaction/omission metadata.
+- Do not expose secret material in manifests, receipts, GUI previews, or exports.
+owner_hints:
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/Project_Output_Artifacts.md
+- Plans/FileSafe.md
+- Plans/Prompt_Pipeline.md
+- Plans/assistant-chat-design.md
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+- Plans/Permissions_System.md
+```
+
+## Ledger Compile Addendum - pldg-20260629-001-feature-name
+
+This addendum compiles Free Models upstream side-effect safety into FileSafe ownership. It does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+
+### F2-193 - Free Models Upstream Side Effect And Adapter Guard Boundary
+
+```yaml
+plan_unit_id: F2-193
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe gates any Free Models imported or generated adapter behavior that could execute commands, write files/configs, install endpoints, run local daemons/proxies, self-update, write credentials, mutate third-party tool config, or otherwise produce host side effects. Pre-activation validation must prove the adapter is PM-owned declarative material or emit blocked/quarantined evidence before activation.
+gui_related: false
+gui_classification_reason: Defines host/file/config side-effect guards, not GUI presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Upstream executable commands, local proxies, endpoint installers, telemetry hooks, credential writers, self-update logic, and arbitrary config writers are blocked unless a future explicit plan reopens them.
+  - Generated adapters cannot activate until FileSafe-relevant side effects are classified and validated.
+  - Blocked/quarantined outcomes preserve source/ref/hash and redacted evidence for Advanced/Support diagnostics.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - Free Models adapter side-effect blocking fixtures
+  - FileSafe generated-adapter quarantine fixtures
+risk_class: unsafe_host_side_effect
+reasoning_tier: high
+context_scope: free_models_filesafe_adapter_boundary
+implementation_surfaces:
+  - Plans/FileSafe.md
+  - Plans/Permissions_System.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Models_System.md
+node_compile_hint:
+  mode: free_models_filesafe_guard_planunit
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+  - Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_temp_checkout_inspection_20260629.json
+source_atom_ids: [atom-0019, atom-0033, atom-0060, atom-0063, atom-0064, atom-0196, atom-0200, atom-0277, atom-0278]
+preserved_exact_tokens:
+  - "no Docker"
+  - "native"
+  - "local daemon"
+  - "local proxies"
+  - "telemetry hooks"
+  - "credential writers"
+  - "endpoint installers"
+  - "self-update logic"
+  - "arbitrary config writers"
+negative_constraints:
+  - Do not run Free Models through Docker as the PM feature implementation.
+  - Do not inherit the upstream local daemon as PM's execution model without PM-native adaptation.
+  - Do not execute arbitrary upstream commands/scripts, local proxies, telemetry hooks, credential writers, endpoint installers, self-update logic, or arbitrary config writers.
+owner_hints:
+  - Plans/FileSafe.md
+  - Plans/Permissions_System.md
+  - Plans/Contracts_V0.md
+```
+
+## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+
+This addendum compiles containerized-host FileSafe mount, exec, filesystem, secret, and side-effect boundaries. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+
+### F2-194 - Containerized Host FileSafe Mount Exec And Side-Effect Guards
+
+```yaml
+plan_unit_id: F2-194
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  FileSafe gates containerized-host mounts, env files, secret refs, docker.sock exposure, bind mounts, runtime file
+  access, command/custom secret extractors, terminal-like actions, bounded exec, remote sync, SSH tunnel behavior, and
+  external side effects. Host profiles carry FileSafe-visible mount_policy, filesafe_scope_ref, secret_ref_policy,
+  redaction_profile, and cleanup policy before use. Container exec, Kubernetes exec, remote shell, file controls,
+  service controls, local API endpoints, and Coasts-style terminal/file/service controls cannot bypass PM's command,
+  permission, FileSafe, Executor/Tools, transcript, receipt, and cleanup contracts.
+gui_related: false
+gui_classification_reason: File, mount, secret, exec, and side-effect guards are backend safety behavior, not GUI presentation.
+depends_on: [CV-303, CV-304]
+unblocks: [CRAU-091, EP-109, T-166, ATS-019]
+acceptance_criteria:
+  - Host profiles and host operations expose FileSafe scope before mounts, env refs, secrets, docker.sock, bind mounts, remote sync, or exec are allowed.
+  - Container-local endpoints, terminal sessions, file controls, and service controls cannot bypass PM permission/FileSafe/receipt paths.
+  - Secret-bearing stdin, stdout, env files, registry credentials, command extractor output, and diagnostics are redacted or blocked according to policy.
+  - Remote or uncertain cleanup outcomes retain evidence and blocked/indeterminate state instead of assuming success.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future containerized host FileSafe scope fixtures
+  - future docker.sock and bind-mount denial fixtures
+risk_class: containerized_host_filesafe_bypass
+reasoning_tier: high
+context_scope: containerized_host_filesafe_guards
+implementation_surfaces:
+  - Plans/FileSafe.md
+  - future host FileSafe policy
+node_compile_hint:
+  mode: containerized_host_filesafe_mount_exec_guards
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0018
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0019
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0023
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0024
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0034
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0038
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0044
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0050
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0053
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0064
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0067
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0069
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0074
+  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+source_atom_ids: [atom-0018, atom-0019, atom-0023, atom-0024, atom-0034, atom-0038, atom-0044, atom-0050, atom-0053, atom-0064, atom-0067, atom-0069, atom-0073, atom-0074, atom-0081]
+decision_refs: [dec-0008, dec-0017, dec-0020]
+preserved_exact_tokens:
+  - "FileSafe scope"
+  - "filesafe_scope_ref"
+  - "scoped worktree/file mounts"
+  - "docker.sock"
+  - "bind mounts"
+  - "command/custom secret extractors"
+  - "Keychain"
+  - "ssh -L"
+  - "ssh -R"
+  - "rsync"
+  - "mutagen"
+  - "terminal sessions"
+  - "file controls"
+  - "service controls"
+  - "container exec"
+negative_constraints:
+  - Do not let container exec bypass Executor/Permissions/FileSafe when PM execution is in scope.
+  - Do not expose terminal/file/service controls outside PM's command, permission, receipt, and FileSafe model.
+  - Do not copy Coasts local API, terminal, or file controls blindly.
+  - Do not expose raw Docker/Kubernetes secrets in records, prompts, GUI, receipts, exports, or diagnostics.
+  - Do not allow unscoped mounts, docker.sock access, secret extractors, or remote side effects through hidden defaults.
+owner_hints:
+  - Plans/FileSafe.md
+  - Plans/Permissions_System.md
+  - Plans/Contracts_V0.md
+  - Plans/Executor_Protocol.md
+  - Plans/Tools.md
+```
+
+## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+
+### F2-195 - P1-SECURITY-CREDENTIAL-LOGGING
+
+```yaml
+plan_unit_id: F2-195
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  P1-SECURITY-CREDENTIAL-LOGGING (P1) is compiled as canonical Puppet Master intent for Credential and sensitive output redaction timing: Add RedactionSettlement stage before UI/render/persistence for tool/terminal/model outputs; keep secure raw vault only when required for replay with explicit policy. The preserved PM gap/delta is: Need a redaction-time ordering contract: raw tool output must not hit UI/transcript before redaction policy has a chance to apply, unless explicitly marked sensitive/raw local-only. The observed external-repo signal remains source-lineage evidence: Agent Zero security issue raises credential leakage concerns; Codex issue list has PostToolUse redaction-before-transcript-rendering problem; Cline PRs add credential lifecycle debug logging.
+gui_related: true
+gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- Secret fixture in tool output is redacted before GUI transcript render.
+- Privilege metadata logs actor/target/realm/transport without command secrets.
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- Secret fixture in tool output is redacted before GUI transcript render.
+- Privilege metadata logs actor/target/realm/transport without command secrets.
+risk_class: p1_provider_capability_and_metadata_hardening
+reasoning_tier: standard
+context_scope: provider_capability_and_metadata
+implementation_surfaces:
+- Plans/FileSafe.md
+- Plans/Permissions_System.md
+- Plans/Tools.md
+- Plans/storage-plan.md
+node_compile_hint:
+  mode: p1_security_credential_logging
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0019
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0019
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0015/P1-SECURITY-CREDENTIAL-LOGGING@line=15
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0015/P1-SECURITY-CREDENTIAL-LOGGING
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:15
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+source_atom_ids:
+- atom-0019
+external_atom_id: extrepo-20260703-0015
+source_row_id: P1-SECURITY-CREDENTIAL-LOGGING
+priority: P1
+finding_family: Credential and sensitive output redaction timing
+source_repos:
+- agent0ai/agent-zero
+- cline/cline
+- openai/codex
+target_docs:
+- Plans/FileSafe.md
+- Plans/Permissions_System.md
+- Plans/Tools.md
+- Plans/storage-plan.md
+owner_hints:
+- Plans/FileSafe.md
+- Plans/Permissions_System.md
+- Plans/Tools.md
+- Plans/storage-plan.md
+preserved_exact_tokens:
+- extrepo-20260703-0015
+- P1-SECURITY-CREDENTIAL-LOGGING
+- P1
+- Credential and sensitive output redaction timing
+- agent0ai/agent-zero
+- cline/cline
+- openai/codex
+negative_constraints: []
+observed_signal: Agent Zero security issue raises credential leakage concerns; Codex issue list has PostToolUse redaction-before-transcript-rendering problem; Cline PRs add credential lifecycle debug logging.
+pm_current_coverage: PM has FileSafe and privileged session metadata minimization.
+pm_gap_or_delta: 'Need a redaction-time ordering contract: raw tool output must not hit UI/transcript before redaction policy has a chance to apply, unless explicitly marked sensitive/raw local-only.'
+proposal_or_recommendation: Add RedactionSettlement stage before UI/render/persistence for tool/terminal/model outputs; keep secure raw vault only when required for replay with explicit policy.
+compile_disposition: create_new_planunit
+```
+
+
+<<< CONTEXT_AFTER 13789-13800 >>>
+### F2-196 - P1-TRACE-REDACTION-BEFORE-WRITE
+
+```yaml
+plan_unit_id: F2-196
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FileSafe.md
+canonical_text: >-
+  P1-TRACE-REDACTION-BEFORE-WRITE (P1) is compiled as canonical Puppet Master intent for Trace/debug log redaction before persistence: Imported external-repo finding extrepo-20260703-0033 / P1-TRACE-REDACTION-BEFORE-WRITE (P1). The preserved PM gap/delta is: Add invariant that full prompts, requests, provider payloads, WebSocket frames, and tool raw outputs cannot hit trace/debug logs before redaction/bounding unless explicit encrypted local debug capture is enabled. The observed external-repo signal remains source-lineage evidence: Codex 0.142.5 fixed full Responses WebSocket request payloads being written to trace logs.
+gui_related: false
+gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+depends_on:

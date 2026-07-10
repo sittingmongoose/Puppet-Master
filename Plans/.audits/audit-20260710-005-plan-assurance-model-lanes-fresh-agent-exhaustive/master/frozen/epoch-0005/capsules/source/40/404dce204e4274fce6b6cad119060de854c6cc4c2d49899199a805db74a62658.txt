@@ -1,0 +1,419 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2541-2552 >>>
+L00002541	// Add to OutputParser trait:
+L00002542	pub trait OutputParser: Send + Sync {
+L00002543	    // ... existing methods ...
+L00002544	
+L00002545	    /// Parse structured subagent output (platform-specific)
+L00002546	    fn parse_subagent_output(&self, stdout: &str, stderr: &str) -> Result<SubagentOutput, ValidationError>;
+L00002547	
+L00002548	    /// Extract structured output from text (fallback)
+L00002549	    fn extract_subagent_output_from_text(&self, stdout: &str, stderr: &str) -> Result<SubagentOutput, ValidationError>;
+L00002550	}
+L00002551	
+L00002552	// Implementation for each platform parser:
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2553-2942 >>>
+L00002553	
+L00002554	impl OutputParser for CursorOutputParser {
+L00002555	    // DRY REQUIREMENT: Tag with // DRY:FN:parse_subagent_output_cursor
+L00002556	    fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
+L00002557	        // DRY requirement: output format detection must use platform_specs — do not hardcode "--output-format json"
+L00002558	        // Cursor outputs JSON with --output-format json (from platform_specs)
+L00002559	        // Implementation note: Use platform_specs to determine expected output format for this platform
+L00002560	        let json: serde_json::Value = serde_json::from_str(stdout)
+L00002561	            .map_err(|e| ValidationError::JsonParse(e))?;
+L00002562	
+L00002563	        // Extract structured fields
+L00002564	        let task_report = json.get("task_report")
+L00002565	            .and_then(|v| v.as_str())
+L00002566	            .ok_or_else(|| ValidationError::MissingField("task_report".to_string()))?
+L00002567	            .to_string();
+L00002568	
+L00002569	        let downstream_context = json.get("downstream_context")
+L00002570	            .and_then(|v| v.as_str())
+L00002571	            .map(String::from);
+L00002572	
+L00002573	        let findings = json.get("findings")
+L00002574	            .and_then(|v| v.as_array())
+L00002575	            .map(|arr| {
+L00002576	                arr.iter()
+L00002577	                    .filter_map(|item| {
+L00002578	                        serde_json::from_value::<Finding>(item.clone()).ok()
+L00002579	                    })
+L00002580	                    .collect()
+L00002581	            })
+L00002582	            .unwrap_or_default();
+L00002583	
+L00002584	        Ok(SubagentOutput {
+L00002585	            task_report,
+L00002586	            downstream_context,
+L00002587	            findings,
+L00002588	        })
+L00002589	    }
+L00002590	
+L00002591	    fn extract_subagent_output_from_text(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
+L00002592	        // Fallback: extract from text output
+L00002593	        // Look for structured markers (e.g., "Task Report:", "Findings:", etc.)
+L00002594	        // Or use LLM to extract structured data from text
+L00002595	        // Implementation depends on platform output format
+L00002596	
+L00002597	        // Simple text extraction (can be enhanced with LLM)
+L00002598	        let task_report = if let Some(start) = stdout.find("Task Report:") {
+L00002599	            let end = stdout[start..].find("\n\n").unwrap_or(stdout.len() - start);
+L00002600	            stdout[start + 12..start + end].trim().to_string()
+L00002601	        } else {
+L00002602	            stdout.to_string() // Fallback: use entire output as task report
+L00002603	        };
+L00002604	
+L00002605	        Ok(SubagentOutput {
+L00002606	            task_report,
+L00002607	            downstream_context: None,
+L00002608	            findings: Vec::new(), // Cannot extract findings from text reliably
+L00002609	        })
+L00002610	    }
+L00002611	}
+L00002612	
+L00002613	// Similar implementations for other platform parsers...
+L00002614	```
+L00002615	
+L00002616	**Validation workflow:**
+L00002617	
+L00002618	```rust
+L00002619	// src/core/handoff_validation.rs
+L00002620	
+L00002621	use crate::types::subagent_output::{SubagentOutput, ValidationError};
+L00002622	use crate::platforms::{PlatformRunner, OutputParser};
+L00002623	
+L00002624	// DRY:DATA:HandoffValidator — Structured handoff validation system
+L00002625	pub struct HandoffValidator {
+L00002626	    parser: Box<dyn OutputParser>,
+L00002627	    max_retries: u32,
+L00002628	}
+L00002629	
+L00002630	impl HandoffValidator {
+L00002631	    // DRY:FN:validate_subagent_output — Validate subagent output format
+L00002632	    // DRY requirement: must use platform_specs to determine parser type — never hardcode parser selection by platform
+L00002633	    pub async fn validate_subagent_output(
+L00002634	        &self,
+L00002635	        stdout: &str,
+L00002636	        stderr: &str,
+L00002637	        platform: Platform,
+L00002638	        retry_count: u32,
+L00002639	    ) -> Result<SubagentOutput, ValidationError> {
+L00002640	        // DRY: parser selection must use platform_specs to determine output format — do not use match platform statements
+L00002641	        // Try structured parsing first
+L00002642	        match self.parser.parse_subagent_output(stdout, stderr) {
+L00002643	            Ok(output) => {
+L00002644	                // Validate required fields
+L00002645	                self.validate_required_fields(&output)?;
+L00002646	                Ok(output)
+L00002647	            }
+L00002648	            Err(ValidationError::JsonParse(_)) => {
+L00002649	                // JSON parse failed, try text extraction
+L00002650	                if retry_count < self.max_retries {
+L00002651	                    // Request retry with format instruction
+L00002652	                    return Err(ValidationError::ValidationFailedAfterRetry(
+L00002653	                        "Output is not valid JSON. Please output structured JSON format.".to_string()
+L00002654	                    ));
+L00002655	                }
+L00002656	
+L00002657	                // Max retries reached, try text extraction as fallback
+L00002658	                self.parser.extract_subagent_output_from_text(stdout, stderr)
+L00002659	                    .map_err(|e| ValidationError::TextExtraction(format!("Failed to extract from text: {}", e)))
+L00002660	            }
+L00002661	            Err(e) => {
+L00002662	                // Other validation error
+L00002663	                if retry_count < self.max_retries {
+L00002664	                    return Err(ValidationError::ValidationFailedAfterRetry(
+L00002665	                        format!("Validation failed: {}", e)
+L00002666	                    ));
+L00002667	                }
+L00002668	                Err(e)
+L00002669	            }
+L00002670	        }
+L00002671	    }
+L00002672	
+L00002673	    fn validate_required_fields(&self, output: &SubagentOutput) -> Result<(), ValidationError> {
+L00002674	        // Validate task_report is not empty
+L00002675	        if output.task_report.trim().is_empty() {
+L00002676	            return Err(ValidationError::MissingField("task_report".to_string()));
+L00002677	        }
+L00002678	
+L00002679	        // Validate findings have required fields
+L00002680	        for finding in &output.findings {
+L00002681	            if finding.description.trim().is_empty() {
+L00002682	                return Err(ValidationError::MissingField("finding.description".to_string()));
+L00002683	            }
+L00002684	
+L00002685	            // Validate severity is valid
+L00002686	            match finding.severity {
+L00002687	                Severity::Critical | Severity::Major | Severity::Minor | Severity::Info => {}
+L00002688	            }
+L00002689	        }
+L00002690	
+L00002691	        Ok(())
+L00002692	    }
+L00002693	}
+L00002694	```
+L00002695	
+L00002696	**Integration with orchestrator:**
+L00002697	
+L00002698	In `src/core/orchestrator.rs`, extend subagent execution:
+L00002699	
+L00002700	```rust
+L00002701	use crate::core::handoff_validation::HandoffValidator;
+L00002702	
+L00002703	impl Orchestrator {
+L00002704	    async fn execute_with_subagent(
+L00002705	        &self,
+L00002706	        platform: Platform,
+L00002707	        model: &str,
+L00002708	        subagent_name: &str,
+L00002709	        prompt: &str,
+L00002710	        context: &ExecutionUnitContext,
+L00002711	    ) -> Result<SubagentOutput> {
+L00002712	        let runner = self.get_platform_runner(platform)?;
+L00002713	        let mut retry_count = 0;
+L00002714	
+L00002715	        loop {
+L00002716	            // Execute subagent
+L00002717	            let output = runner.execute_with_subagent(
+L00002718	                subagent_name,
+L00002719	                prompt,
+L00002720	                &context.workspace,
+L00002721	            ).await?;
+L00002722	
+L00002723	            // Validate handoff output
+L00002724	            let validator = HandoffValidator::new(platform)?;
+L00002725	            match validator.validate_subagent_output(
+L00002726	                &output.stdout,
+L00002727	                &output.stderr,
+L00002728	                platform,
+L00002729	                retry_count,
+L00002730	            ).await {
+L00002731	                Ok(validated_output) => {
+L00002732	                    // Validation passed
+L00002733	                    return Ok(validated_output);
+L00002734	                }
+L00002735	                Err(ValidationError::ValidationFailedAfterRetry(msg)) => {
+L00002736	                    // Request retry with format instruction
+L00002737	                    retry_count += 1;
+L00002738	                    if retry_count >= validator.max_retries() {
+L00002739	                        // Max retries reached, proceed with partial output
+L00002740	                        tracing::warn!("Handoff validation failed after {} retries: {}", retry_count, msg);
+L00002741	                        return Ok(validator.extract_partial_output(&output.stdout, &output.stderr)?);
+L00002742	                    }
+L00002743	
+L00002744	                    // Update prompt with format instruction
+L00002745	                    let updated_prompt = format!(
+L00002746	                        "{}\n\n**IMPORTANT:** Output must be valid JSON matching this format:\n{}\n\nCurrent output was not valid JSON. Please retry with structured JSON output.",
+L00002747	                        prompt,
+L00002748	                        serde_json::to_string_pretty(&SubagentOutput::example())?
+L00002749	                    );
+L00002750	
+L00002751	                    // Continue loop with updated prompt
+L00002752	                    continue;
+L00002753	                }
+L00002754	                Err(e) => {
+L00002755	                    return Err(anyhow!("Handoff validation error: {}", e));
+L00002756	                }
+L00002757	            }
+L00002758	        }
+L00002759	    }
+L00002760	}
+L00002761	```
+L00002762	
+L00002763	**Error handling:**
+L00002764	
+L00002765	- **JSON parse failure:** If JSON parsing fails, attempt text extraction; if that fails and retry not attempted, request retry with format instruction
+L00002766	- **Missing field failure:** If required field is missing, request retry with field requirement instruction
+L00002767	- **Invalid severity failure:** If severity is invalid, request retry with valid severity values
+L00002768	- **Max retries reached:** If max retries reached, proceed with partial output but mark tier as "complete with warnings"
+L00002769	
+L00002770	```rust
+L00002771	                    .filter_map(|v| serde_json::from_value(v.clone()).ok())
+L00002772	                    .collect()
+L00002773	            })
+L00002774	            .unwrap_or_default();
+L00002775	
+L00002776	        Ok(SubagentOutput {
+L00002777	            task_report,
+L00002778	            downstream_context,
+L00002779	            findings,
+L00002780	        })
+L00002781	    }
+L00002782	}
+L00002783	
+L00002784	impl OutputParser for CodexOutputParser {
+L00002785	    // DRY:FN:parse_subagent_output_codex -- Parse Codex subagent output
+L00002786	    // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "JSONL" or output format
+L00002787	    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
+L00002788	    fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
+L00002789	        // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Codex outputs JSONL"
+L00002790	        // Codex outputs JSONL (one JSON object per line) -- format from platform_specs
+L00002791	        let mut task_report = String::new();
+L00002792	        let mut downstream_context = None;
+L00002793	        let mut findings = Vec::new();
+L00002794	
+L00002795	        for line in stdout.lines() {
+L00002796	            if let Ok(json) = serde_json::from_str::<serde_json::Value>(line) {
+L00002797	                // Look for Turn event with structured output
+L00002798	                if let Some(event_type) = json.get("type").and_then(|v| v.as_str()) {
+L00002799	                    if event_type == "Turn" || event_type == "turn" {
+L00002800	                        if let Some(content) = json.get("content") {
+L00002801	                            // Try to parse content as SubagentOutput
+L00002802	                            if let Ok(output) = serde_json::from_value::<SubagentOutput>(content.clone()) {
+L00002803	                                return Ok(output);
+L00002804	                            }
+L00002805	                            // Fallback: extract text content
+L00002806	                            if let Some(text) = content.as_str() {
+L00002807	                                task_report.push_str(text);
+L00002808	                            }
+L00002809	                        }
+L00002810	                    }
+L00002811	                }
+L00002812	
+L00002813	                // Aggregate findings from multiple events
+L00002814	                if let Some(f) = json.get("findings").and_then(|v| v.as_array()) {
+L00002815	                    for finding_val in f {
+L00002816	                        if let Ok(finding) = serde_json::from_value::<Finding>(finding_val.clone()) {
+L00002817	                            findings.push(finding);
+L00002818	                        }
+L00002819	                    }
+L00002820	                }
+L00002821	            }
+L00002822	        }
+L00002823	
+L00002824	        // If no structured output found, try to extract from text
+L00002825	        if task_report.is_empty() {
+L00002826	            return Err(ValidationError::TextExtraction("No structured output found in JSONL".to_string()));
+L00002827	        }
+L00002828	
+L00002829	        Ok(SubagentOutput {
+L00002830	            task_report,
+L00002831	            downstream_context,
+L00002832	            findings,
+L00002833	        })
+L00002834	    }
+L00002835	}
+L00002836	
+L00002837	impl OutputParser for ClaudeOutputParser {
+L00002838	    // DRY:FN:parse_subagent_output_claude -- Parse Claude Code subagent output
+L00002839	    // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "--output-format json"
+L00002840	    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
+L00002841	    fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
+L00002842	        // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Claude outputs JSON"
+L00002843	        // Claude outputs JSON with --output-format json -- format from platform_specs
+L00002844	        let json: serde_json::Value = serde_json::from_str(stdout)?;
+L00002845	
+L00002846	        // Claude wraps output in "result" -> "content" or direct fields
+L00002847	        let content = json.get("result")
+L00002848	            .and_then(|r| r.get("content"))
+L00002849	            .or_else(|| Some(&json))
+L00002850	            .ok_or_else(|| ValidationError::MissingField("result.content".to_string()))?;
+L00002851	
+L00002852	        // Try direct parse
+L00002853	        if let Ok(output) = serde_json::from_value::<SubagentOutput>(content.clone()) {
+L00002854	            return Ok(output);
+L00002855	        }
+L00002856	
+L00002857	        // Fallback: extract fields manually
+L00002858	        let task_report = content.get("task_report")
+L00002859	            .and_then(|v| v.as_str())
+L00002860	            .or_else(|| content.as_str())
+L00002861	            .ok_or_else(|| ValidationError::MissingField("task_report".to_string()))?
+L00002862	            .to_string();
+L00002863	
+L00002864	        let downstream_context = content.get("downstream_context")
+L00002865	            .and_then(|v| v.as_str())
+L00002866	            .map(String::from);
+L00002867	
+L00002868	        let findings = content.get("findings")
+L00002869	            .and_then(|v| v.as_array())
+L00002870	            .map(|arr| {
+L00002871	                arr.iter()
+L00002872	                    .filter_map(|v| serde_json::from_value(v.clone()).ok())
+L00002873	                    .collect()
+L00002874	            })
+L00002875	            .unwrap_or_default();
+L00002876	
+L00002877	        Ok(SubagentOutput {
+L00002878	            task_report,
+L00002879	            downstream_context,
+L00002880	            findings,
+L00002881	        })
+L00002882	    }
+L00002883	}
+L00002884	
+L00002885	impl OutputParser for GeminiOutputParser {
+L00002886	    // DRY:FN:parse_subagent_output_gemini -- Parse Gemini subagent output
+L00002887	    // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "--output-format json"
+L00002888	    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
+L00002889	    fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
+L00002890	        // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Gemini outputs JSON"
+L00002891	        // Gemini outputs JSON with --output-format json -- format from platform_specs
+L00002892	        let json: serde_json::Value = serde_json::from_str(stdout)?;
+L00002893	
+L00002894	        // Gemini wraps in "candidates" -> [0] -> "content" -> "parts" -> [0] -> "text"
+L00002895	        let text = json.get("candidates")
+L00002896	            .and_then(|c| c.as_array())
+L00002897	            .and_then(|arr| arr.get(0))
+L00002898	            .and_then(|c| c.get("content"))
+L00002899	            .and_then(|c| c.get("parts"))
+L00002900	            .and_then(|p| p.as_array())
+L00002901	            .and_then(|arr| arr.get(0))
+L00002902	            .and_then(|p| p.get("text"))
+L00002903	            .and_then(|t| t.as_str())
+L00002904	            .ok_or_else(|| ValidationError::MissingField("candidates[0].content.parts[0].text".to_string()))?;
+L00002905	
+L00002906	        // Try to parse text as JSON (Gemini may output JSON as text)
+L00002907	        if let Ok(output) = serde_json::from_str::<SubagentOutput>(text) {
+L00002908	            return Ok(output);
+L00002909	        }
+L00002910	
+L00002911	        // Fallback: extract from text patterns
+L00002912	        Err(ValidationError::TextExtraction("Gemini text output requires pattern extraction".to_string()))
+L00002913	    }
+L00002914	}
+L00002915	
+L00002916	impl OutputParser for CopilotOutputParser {
+L00002917	    // DRY:FN:parse_subagent_output_copilot -- Parse Copilot subagent output
+L00002918	    // DRY REQUIREMENT: Output format detection MUST use platform_specs -- DO NOT hardcode "Copilot outputs text"
+L00002919	    ContractRef: ContractName:Plans/DRY_Rules.md#7, ContractName:Plans/Executor_Protocol.md
+L00002920	    fn parse_subagent_output(&self, stdout: &str, _stderr: &str) -> Result<SubagentOutput, ValidationError> {
+L00002921	        // DRY: Use platform_specs to determine expected output format -- DO NOT hardcode "Copilot outputs text"
+L00002922	        // Copilot outputs text (no JSON) -- format from platform_specs
+L00002923	        // Extract structured sections via regex/pattern matching
+L00002924	
+L00002925	        let combined = format!("{stdout}\n{stderr}");
+L00002926	
+L00002927	        // Pattern: ## Task Report\n\n...content...
+L00002928	        let task_report_re = Regex::new(r"(?s)##\s*Task\s*Report\s*\n\n(.*?)(?=\n##|\z)").unwrap();
+L00002929	        let task_report = task_report_re.captures(&combined)
+L00002930	            .and_then(|cap| cap.get(1))
+L00002931	            .map(|m| m.as_str().trim().to_string())
+L00002932	            .ok_or_else(|| ValidationError::MissingField("Task Report section".to_string()))?;
+L00002933	
+L00002934	        // Pattern: ## Downstream Context\n\n...content... (optional)
+L00002935	        let downstream_re = Regex::new(r"(?s)##\s*Downstream\s*Context\s*\n\n(.*?)(?=\n##|\z)").unwrap();
+L00002936	        let downstream_context = downstream_re.captures(&combined)
+L00002937	            .and_then(|cap| cap.get(1))
+L00002938	            .map(|m| m.as_str().trim().to_string());
+L00002939	
+L00002940	        // Pattern: ## Findings\n\n- [Severity] Category: Description (file:line) Suggestion
+L00002941	        let findings_re = Regex::new(r"(?m)^-\s*\[(Critical|Major|Minor|Info)\]\s*(\w+):\s*(.*?)(?:\s*\(([^:]+):(\d+)\))?(?:\s*Suggestion:\s*(.*))?$").unwrap();
+L00002942	        let mut findings = Vec::new();
+
+<<< CONTEXT_AFTER canonical_document_lines=2943-2954 >>>
+L00002943	
+L00002944	        if let Some(findings_section) = Regex::new(r"(?s)##\s*Findings\s*\n\n(.*?)(?=\n##|\z)").unwrap().captures(&combined) {
+L00002945	            for cap in findings_re.captures_iter(findings_section.get(1).unwrap().as_str()) {
+L00002946	                let severity = match cap.get(1).unwrap().as_str() {
+L00002947	                    "Critical" => Severity::Critical,
+L00002948	                    "Major" => Severity::Major,
+L00002949	                    "Minor" => Severity::Minor,
+L00002950	                    "Info" => Severity::Info,
+L00002951	                    _ => continue,
+L00002952	                };
+L00002953	
+L00002954	                findings.push(Finding {

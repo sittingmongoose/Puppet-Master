@@ -1,0 +1,393 @@
+<<< CONTEXT_BEFORE 6284-6295 >>>
+- '"allow" | "deny" | "ask"'
+- project-scoped overrides
+- immutable snapshot
+- next run
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< AUTHORITATIVE_CORE 6296-6659 >>>
+### T-074 - Tool Dispatch Policy Order And Child Inheritance
+
+```yaml
+plan_unit_id: T-074
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: No tool implementation dispatches outside the canonical flow; child/helper work inherits parent policy, deadline,
+  MCP effective availability, and registry-filtered tool set unless narrowed.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-007
+- T-058
+unblocks: []
+acceptance_criteria:
+- Child tool dispatch inherits parent policy, deadline, and MCP effective-availability snapshot unless explicitly narrowed.
+- Helper/background work cannot bypass policy, schema validation, or timeout propagation.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_dispatch_policy_order
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0051
+preserved_exact_tokens:
+- policy.may_execute_tool()
+- central tool registry
+- effective MCP-discovered tools
+- /helper/background
+- schema validation
+- timeout propagation
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/Architecture_Invariants.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-075 - MCP Schema OAuth Isolation And Stable Auth State
+
+```yaml
+plan_unit_id: T-075
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Tool dispatch consumes MCP-owned schema/OAuth facts, fails fast for auth or timeout evidence, uses owner-provided
+  loopback binding, isolates schema cycles and mismatches, and serializes client/token state.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-068
+- T-074
+unblocks: []
+acceptance_criteria:
+- Tool layer does not mint hidden OAuth flows or extend run timeout.
+- Callback listeners do not silently widen to wildcard or public-interface binds.
+- Schema violations isolate per server/tool and do not poison other servers.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: mcp_schema_oauth_isolation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0052
+preserved_exact_tokens:
+- /OAuth/timeout
+- fail fast
+- callback/listener failure
+- bind-address
+- bind-host
+- WSL/container
+- schema-cycle
+- '{}'
+- mcp_schema_mismatch
+- finishReason=length
+- no-dispatch
+- client-id
+- callback-listener
+- token-write
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Contracts_V0.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-076 - Dispatch Required Order And Revalidation Hooks
+
+```yaml
+plan_unit_id: T-076
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Dispatch order normalizes context, checks policy, applies FileSafe, applies allowed provider normalizers,
+  validates schema, runs arg-touching hooks, revalidates changed args, and dispatches only after all checks pass.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-074
+- T-075
+unblocks: []
+acceptance_criteria:
+- Provider-specific normalizers run before schema validation only where the tool surface explicitly allows them.
+- Hook-mutated arguments trigger permission and schema revalidation before dispatch.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_dispatch_required_order
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0052
+preserved_exact_tokens:
+- Normalize the invocation context
+- policy.may_execute_tool()
+- FileSafe/write-scope checks
+- GLM quoted-JSON unquoting
+- Qwen XML-wrapper stripping
+- schema.validate_tool_args()
+- arg-touching hooks
+- Re-run permission and schema validation
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Plugins_System.md, ContractName:Plans/Contracts_V0.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-077 - Tool Failure Error Result And Structured Retry Decisions
+
+```yaml
+plan_unit_id: T-077
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Invalid args and non-permission tool errors return structured `is_error=true` results without execution, best-effort
+  repair, substring retry matching, or zero-value success-shaped results.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-076
+unblocks: []
+acceptance_criteria:
+- Invalid payloads are rejected before dispatch.
+- Provider-specific retry decisions use structured error classes or status codes.
+- Non-permission tool errors surface as `is_error=true`.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_failure_result_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0052
+preserved_exact_tokens:
+- is_error=true
+- best effort
+- empty `tool_result`
+- PER error type
+- structured error classes
+- status codes
+- substring matching
+- OC-EXEC-106
+- zero-value success-shaped result
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/CLI_Bridged_Providers.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-078 - Incomplete Tool Invocation Truncation Gate
+
+```yaml
+plan_unit_id: T-078
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Incomplete tool invocations truncated by provider output close with structured truncation errors and never
+  synthesize missing, empty, minimal, or incomplete arguments.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-076
+unblocks: []
+acceptance_criteria:
+- Truncated incomplete tool calls are closed before permission, schema, or execution paths.
+- Missing or incomplete arguments are rejected rather than synthesized.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_truncation_no_dispatch_gate
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0052
+preserved_exact_tokens:
+- finishReason=length
+- stop_reason = length
+- no-dispatch
+- tool_result(ok=false, error=truncated_by_length)
+- MUST NOT synthesize missing arguments
+- empty
+- /minimal
+- structurally incomplete tool arguments
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-079 - Retry Classification And Bounded Recovery
+
+```yaml
+plan_unit_id: T-079
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Automatic retries are per-invocation, classed, capped at 3, use `1000ms`, `2000ms`, and `4000ms` backoff with
+  `+/-25%` jitter, and only recreate helpers for recoverable classes.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-077
+unblocks: []
+acceptance_criteria:
+- Retry caps are per invocation.
+- Auth, permission, schema, validation, content-filter, and safety-stop classes are terminal.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_retry_bounded_recovery
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0053
+preserved_exact_tokens:
+- transient transport
+- server-warming
+- recoverable bootstrap failures
+- 3 per invocation
+- 1000ms
+- 2000ms
+- 4000ms
+- +/-25%
+- Retry-After
+- helper/client recreation
+- auth-required
+- permission-denied
+- schema-mismatch
+- validation-failed
+- content-filter
+- safety-stop
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+### T-080 - Deadline Propagation And Loop Suppression
+
+```yaml
+plan_unit_id: T-080
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Nested tool/helper work inherits the parent absolute deadline or remaining budget; retries clamp to remaining
+  budget and loop suppression compares normalized fingerprint, target, error class/status, and near-match signatures.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false
+depends_on:
+- T-079
+unblocks: []
+acceptance_criteria:
+- Parent deadline is never extended by retries or helper restarts.
+- Exhausted remaining budget emits timeout/budget result without dispatch.
+- Equivalent repeated failures stop further retries with a diagnostic.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: tool_contract_drift
+reasoning_tier: standard
+context_scope: tools_phase2b_batch_183
+implementation_surfaces:
+- Plans/Tools.md
+node_compile_hint:
+  mode: tool_deadline_loop_suppression
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Tools-S0054
+preserved_exact_tokens:
+- parent deadline
+- remaining-budget snapshot
+- MUST NOT extend
+- timeout or budget result
+- normalized tool fingerprint
+- canonical target
+- error class/status
+- near-match argument
+- stderr signatures
+- diagnostic
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/storage-plan.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Tools.md
+```
+
+
+<<< CONTEXT_AFTER 6660-6671 >>>
+### T-081 - Shell Command Validation Escaping And One-Layer Dispatch
+
+```yaml
+plan_unit_id: T-081
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Tools.md
+canonical_text: Shell dispatch validates the full rendered command string, prefers structured parsing where practical, uses
+  exactly one shell interpretation layer, prohibits `eval`, and requires platform-correct path escaping.
+gui_related: false
+gui_classification_reason: This PlanUnit does not primarily concern GUI, UI, layout, styling, or visual presentation.
+split_recommended: false

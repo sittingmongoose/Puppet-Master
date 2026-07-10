@@ -1,0 +1,399 @@
+<<< CONTEXT_BEFORE 15600-15611 >>>
+- "human and agent messages"
+- "Chat panel search"
+- "Evidence search"
+- "Ledger search"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 15612-15981 >>>
+### F3-225 - Startup Shell State Restore
+
+```yaml
+plan_unit_id: F3-225
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  On startup, the GUI restores layout, theme, dashboard widget layout, activity bar order,
+  editor tabs, active project-facing shell state, hot-reload state, onboarding/tour state, and
+  safe detached-window coordinates from canonical persistence keys.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines startup restoration of visible shell state.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: startup_shell_state_restore
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0148"
+preserved_exact_tokens:
+- "layout:v1"
+- "theme:v1"
+- "widget_layout:v1:dashboard"
+- "activity_bar_order:v1"
+- "editor_state:v1:{project}"
+- "project_state:v1:{project_id}"
+- "hotreload_state:v1:{project_id}"
+- "onboarding:v1"
+- "disconnected monitor"
+- "safe detached coordinate"
+- "ContractName:Plans/storage-plan.md"
+- "ContractName:Plans/FileManager.md"
+- "ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "`dashboard_layout:v1` may be read only on first launch after migration when canonical `widget_layout:v1:dashboard` is absent."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-226 - Startup Terminal Restore Boundary
+
+```yaml
+plan_unit_id: F3-226
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Startup terminal restore reads `terminal_layout.v1:{project_id}` plus linked terminal
+  session and canonical terminal record families, preserves section/tab/pane identity before
+  liveness verification, prefers prior selected terminal containers, keeps structural restore
+  copy separate from live PTY proof, and treats deprecated `terminal_state:v1` as
+  compatibility input only.
+gui_related: true
+gui_classification_reason: >-
+  This unit constrains terminal startup restore and live-state claims.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: startup_terminal_restore_boundary
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0148"
+preserved_exact_tokens:
+- "terminal_layout.v1:{project_id}"
+- "terminal_session.v1:{terminal_session_id}"
+- "terminal_state:v1"
+- "section, tab, and pane identity"
+- "live-state badges"
+- "project `/reopen`"
+- "/restored"
+- "/exited"
+- "/disconnected"
+- "/restart"
+- "/session-aware"
+- "/layout"
+- "ContractName:Plans/UI_Command_Catalog.md"
+negative_constraints:
+- "Startup restore must not fall back to a default single-pane layout when durable terminal layout exists."
+- "Startup restore must not create new empty terminals automatically when saved terminal containers exist."
+- "Structural restore must not be presented as live PTY proof."
+compatibility_only_notes:
+- "Deprecated `terminal_state:v1` may be ingested only by compatibility readers that rewrite into canonical terminal key families."
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-227 - Crash Recovery Nonterminal State
+
+```yaml
+plan_unit_id: F3-227
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Crash recovery restores provable nonterminal state including chat draft/active thread
+  selection, wizard form state, document pane selection and view, document checkpoints, review
+  findings and approval state, and active project, while not restoring transient queue
+  continuity.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible nonterminal state recovery after crash or unexpected shutdown.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: crash_recovery_nonterminal_state
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0149"
+preserved_exact_tokens:
+- "crash"
+- "unexpected shutdown"
+- "chat_state:v1"
+- "queue state is transient"
+- "wizard_state:v1:{project_id}"
+- "document_pane_state:v1:{project_id}:{page_context}"
+- "document"
+- "plan_graph"
+- "document_checkpoints"
+- "review findings"
+- "approval state"
+- "Active project"
+- "ContractName:Plans/storage-plan.md"
+- "ContractName:Plans/assistant-chat-design.md"
+- "ContractName:Plans/FileManager.md"
+negative_constraints:
+- "Crash recovery must not invent continuity that PM cannot prove."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-228 - Terminal Dev And Privileged Session Recovery
+
+```yaml
+plan_unit_id: F3-228
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Terminal and dev-session recovery restores terminal workspace state, verified-live or
+  historical terminal records, canonical recovery outcomes, workflow records, explicit
+  historical banners, and privileged-session interrupted records; `docker exec/attach`,
+  `kubectl exec`, and `kubectl port-forward` never auto-resume live attachment after crash or
+  restart.
+gui_related: true
+gui_classification_reason: >-
+  This unit constrains terminal/dev-session recovery and privileged attach semantics.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: terminal_dev_and_privileged_session_recovery
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0149"
+preserved_exact_tokens:
+- "terminal sections"
+- "verified-live"
+- "historical records"
+- "restored_live"
+- "restored_exited"
+- "restored_disconnected"
+- "restored_without_history"
+- "docker exec/attach"
+- "kubectl exec"
+- "kubectl port-forward"
+- "auto-resume"
+- "interrupted_session"
+- "Reconnect / Start new session"
+- "historical evidence"
+negative_constraints:
+- "Puppet Master MUST NOT fake live PTY continuity after restart."
+- "Privileged interactive sessions never `auto-resume` a live attachment after crash or restart."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-229 - Log Stream GitHub Actions And Historical Restore
+
+```yaml
+plan_unit_id: F3-229
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Recovered log streams store source identity plus resume cursor or `/bookmark`; GitHub
+  Actions recovery distinguishes remote still executing, completed while app was down, and
+  local observation interrupted; historical inspection restores run, tab, node attempt,
+  filters, graph detail, receipt drawer, degraded historical target labels, and requires
+  source revalidation before claiming live follow.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible log stream, GitHub Actions, and historical inspection recovery.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: log_stream_github_actions_and_historical_restore
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0149"
+preserved_exact_tokens:
+- "log_stream_session"
+- "resume cursor"
+- "/bookmark"
+- "remote run still executing"
+- "remote run completed while app was down"
+- "local observation interrupted"
+- "gap marker"
+- "uninterrupted local stream continuity"
+- "run_id"
+- "node `/attempt`"
+- "graph `/detail`"
+- "receipt `/detail` drawer"
+- "historical_view"
+- "paused_snapshot"
+- "follow"
+negative_constraints:
+- "Recovered log streams must not claim uninterrupted local stream continuity without proof."
+- "Restored `follow` intent requires source revalidation before a live stream is claimed."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-230 - Operation Observer Receipt Reconciliation
+
+```yaml
+plan_unit_id: F3-230
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Crash-interrupted operation observers finalize receipts with explicit lifecycle states and
+  Orchestrator restart reconciliation uses external-continuity classifications for hosted
+  runs, containers, or Kubernetes rollouts that continued while the UI observer was down.
+gui_related: false
+gui_classification_reason: >-
+  This unit defines backend receipt lifecycle and external-continuity classification rather
+  than a visual surface.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: operation_observer_receipt_reconciliation
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0149"
+preserved_exact_tokens:
+- "started"
+- "observation_interrupted"
+- "reconciled_completed"
+- "reconciled_failed"
+- "abandoned_unknown"
+- "exec"
+- "/attach"
+- "port-forward"
+- "log streams"
+- "workflow-run"
+- "publish `/deploy`"
+- "external-continuity"
+- "resumable_local"
+- "externally_continued"
+- "externally_completed"
+- "stale_historical"
+- "unknown_after_crash"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- "`stale_historical` is a lifecycle classification, not a deleted concept."
+owner_boundary_notes: []
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 15982-15993 >>>
+### F3-231 - Composer Queue Restore Rules
+
+```yaml
+plan_unit_id: F3-231
+unit_type: constraint
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  After restore, Stop/Edit/Resend attach only to the most recent user-sent message, Edit and
+  Resend discard later history/work as specified, FIFO queueing remains max two messages, Stop
+  does not clear queue, Stop disables only when a run completes and no next message is queued,
+  queue state is not restored across reload/restart, and fenced-code copy remains available.

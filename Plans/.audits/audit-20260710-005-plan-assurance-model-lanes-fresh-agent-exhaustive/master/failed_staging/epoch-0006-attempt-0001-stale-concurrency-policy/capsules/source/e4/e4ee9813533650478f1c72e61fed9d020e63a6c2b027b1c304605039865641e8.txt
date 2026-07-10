@@ -1,0 +1,400 @@
+<<< CONTEXT_BEFORE canonical_document_lines=18662-18673 >>>
+L00018662	- not recomputed every iteration
+L00018663	negative_constraints: []
+L00018664	compatibility_only_notes: []
+L00018665	stale_retired_dispositions: []
+L00018666	owner_boundary_notes:
+L00018667	- >-
+L00018668	  S0123 duplicates S0120, S0124 duplicates S0121, and S0125 duplicates S0122 byte-for-byte in the Phase 2B span map.
+L00018669	owner_hints:
+L00018670	- Plans/orchestrator-subagent-integration.md
+L00018671	preserved_contractrefs: []
+L00018672	```
+L00018673	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=18674-19044 >>>
+L00018674	### OSI-205 - Selector Fallback And Availability Guardrails
+L00018675	
+L00018676	```yaml
+L00018677	plan_unit_id: OSI-205
+L00018678	unit_type: requirement
+L00018679	status: accepted
+L00018680	owner_doc: Plans/orchestrator-subagent-integration.md
+L00018681	canonical_text: >-
+L00018682	  Selector guardrails preserve fallback subagents when detection fails and subagent availability checks before selection,
+L00018683	  while file-existence checks remain selection guardrails rather than hard platform-native agent-file contracts unless later
+L00018684	  owner docs define them.
+L00018685	gui_related: false
+L00018686	gui_classification_reason: >-
+L00018687	  This unit covers backend implementation-placement, compatibility, selector, parser, remediation, continuity, or orchestration
+L00018688	  policy rather than GUI presentation.
+L00018689	split_recommended: false
+L00018690	depends_on:
+L00018691	- OSI-038
+L00018692	- OSI-041
+L00018693	- OSI-060
+L00018694	unblocks: []
+L00018695	acceptance_criteria:
+L00018696	- Covered source spans remain losslessly available for exact-text audit.
+L00018697	- Duplicate source spans are recorded as duplicate coverage and do not create separate implementation scope.
+L00018698	- >-
+L00018699	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00018700	  bridge.
+L00018701	- >-
+L00018702	  Checklists and placement notes are preserved as compatibility/source-lineage plan evidence and do not create WorkNodes,
+L00018703	  NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00018704	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00018705	validation_surfaces:
+L00018706	- >-
+L00018707	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018708	- python3 scripts/pm-plan-index.py validate
+L00018709	reasoning_tier: standard
+L00018710	context_scope: orchestrator_subagent_standardization
+L00018711	implementation_surfaces:
+L00018712	- Plans/orchestrator-subagent-integration.md
+L00018713	risk_class: selector_fallback_availability_guardrails
+L00018714	node_compile_hint:
+L00018715	  mode: selector_fallback_availability_guardrails
+L00018716	  create_worknodes: false
+L00018717	source_lineage:
+L00018718	- >-
+L00018719	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0121
+L00018720	- >-
+L00018721	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0124
+L00018722	preserved_exact_tokens:
+L00018723	- Fallbacks
+L00018724	- fallback subagents
+L00018725	- detection fails
+L00018726	- Subagent Availability
+L00018727	- subagent files exist before selection
+L00018728	negative_constraints: []
+L00018729	compatibility_only_notes:
+L00018730	- >-
+L00018731	  File-existence check is a selection guardrail, not a hard platform-native agent-file contract unless later owner docs define
+L00018732	  it.
+L00018733	stale_retired_dispositions: []
+L00018734	owner_boundary_notes:
+L00018735	- >-
+L00018736	  S0123 duplicates S0120, S0124 duplicates S0121, and S0125 duplicates S0122 byte-for-byte in the Phase 2B span map.
+L00018737	owner_hints:
+L00018738	- Plans/orchestrator-subagent-integration.md
+L00018739	preserved_contractrefs: []
+L00018740	```
+L00018741	
+L00018742	### OSI-206 - Parallel Invocation And Override Guardrails
+L00018743	
+L00018744	```yaml
+L00018745	plan_unit_id: OSI-206
+L00018746	unit_type: requirement
+L00018747	status: accepted
+L00018748	owner_doc: Plans/orchestrator-subagent-integration.md
+L00018749	canonical_text: >-
+L00018750	  Selector considerations preserve support for parallel subagent invocation when appropriate and manual configuration overrides
+L00018751	  for edge cases as orchestration/config policy, not a build queue.
+L00018752	gui_related: false
+L00018753	gui_classification_reason: >-
+L00018754	  This unit covers backend implementation-placement, compatibility, selector, parser, remediation, continuity, or orchestration
+L00018755	  policy rather than GUI presentation.
+L00018756	split_recommended: false
+L00018757	depends_on:
+L00018758	- OSI-041
+L00018759	- OSI-061
+L00018760	- OSI-096
+L00018761	unblocks: []
+L00018762	acceptance_criteria:
+L00018763	- Covered source spans remain losslessly available for exact-text audit.
+L00018764	- Duplicate source spans are recorded as duplicate coverage and do not create separate implementation scope.
+L00018765	- >-
+L00018766	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00018767	  bridge.
+L00018768	- >-
+L00018769	  Checklists and placement notes are preserved as compatibility/source-lineage plan evidence and do not create WorkNodes,
+L00018770	  NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00018771	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00018772	validation_surfaces:
+L00018773	- >-
+L00018774	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018775	- python3 scripts/pm-plan-index.py validate
+L00018776	reasoning_tier: standard
+L00018777	context_scope: orchestrator_subagent_standardization
+L00018778	implementation_surfaces:
+L00018779	- Plans/orchestrator-subagent-integration.md
+L00018780	risk_class: parallel_invocation_override_guardrails
+L00018781	node_compile_hint:
+L00018782	  mode: parallel_invocation_override_guardrails
+L00018783	  create_worknodes: false
+L00018784	source_lineage:
+L00018785	- >-
+L00018786	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0121
+L00018787	- >-
+L00018788	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0124
+L00018789	preserved_exact_tokens:
+L00018790	- Multiple Subagents
+L00018791	- parallel subagent invocation
+L00018792	- Configuration Overrides
+L00018793	- manual overrides
+L00018794	- edge cases
+L00018795	negative_constraints:
+L00018796	- >-
+L00018797	  Do not promote this consideration into a build queue, WorkNode, NodeSeed, executable queue, final node manifest, or production
+L00018798	  task.
+L00018799	compatibility_only_notes: []
+L00018800	stale_retired_dispositions: []
+L00018801	owner_boundary_notes:
+L00018802	- >-
+L00018803	  S0123 duplicates S0120, S0124 duplicates S0121, and S0125 duplicates S0122 byte-for-byte in the Phase 2B span map.
+L00018804	owner_hints:
+L00018805	- Plans/orchestrator-subagent-integration.md
+L00018806	preserved_contractrefs: []
+L00018807	```
+L00018808	
+L00018809	### OSI-207 - Multi-Language Detection Guardrail
+L00018810	
+L00018811	```yaml
+L00018812	plan_unit_id: OSI-207
+L00018813	unit_type: requirement
+L00018814	status: accepted
+L00018815	owner_doc: Plans/orchestrator-subagent-integration.md
+L00018816	canonical_text: >-
+L00018817	  Selector language-detection guardrails preserve multi-language project handling such as Rust + TypeScript for project context
+L00018818	  and subagent selection.
+L00018819	gui_related: false
+L00018820	gui_classification_reason: >-
+L00018821	  This unit covers backend implementation-placement, compatibility, selector, parser, remediation, continuity, or orchestration
+L00018822	  policy rather than GUI presentation.
+L00018823	split_recommended: false
+L00018824	depends_on:
+L00018825	- OSI-038
+L00018826	- OSI-059
+L00018827	- OSI-096
+L00018828	unblocks: []
+L00018829	acceptance_criteria:
+L00018830	- Covered source spans remain losslessly available for exact-text audit.
+L00018831	- Duplicate source spans are recorded as duplicate coverage and do not create separate implementation scope.
+L00018832	- >-
+L00018833	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00018834	  bridge.
+L00018835	- >-
+L00018836	  Checklists and placement notes are preserved as compatibility/source-lineage plan evidence and do not create WorkNodes,
+L00018837	  NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00018838	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00018839	validation_surfaces:
+L00018840	- >-
+L00018841	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018842	- python3 scripts/pm-plan-index.py validate
+L00018843	reasoning_tier: standard
+L00018844	context_scope: orchestrator_subagent_standardization
+L00018845	implementation_surfaces:
+L00018846	- Plans/orchestrator-subagent-integration.md
+L00018847	risk_class: multi_language_detection_guardrail
+L00018848	node_compile_hint:
+L00018849	  mode: multi_language_detection_guardrail
+L00018850	  create_worknodes: false
+L00018851	source_lineage:
+L00018852	- >-
+L00018853	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0121
+L00018854	- >-
+L00018855	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0124
+L00018856	preserved_exact_tokens:
+L00018857	- Language Detection
+L00018858	- multi-language projects
+L00018859	- Rust + TypeScript
+L00018860	negative_constraints: []
+L00018861	compatibility_only_notes: []
+L00018862	stale_retired_dispositions: []
+L00018863	owner_boundary_notes:
+L00018864	- >-
+L00018865	  S0123 duplicates S0120, S0124 duplicates S0121, and S0125 duplicates S0122 byte-for-byte in the Phase 2B span map.
+L00018866	owner_hints:
+L00018867	- Plans/orchestrator-subagent-integration.md
+L00018868	preserved_contractrefs: []
+L00018869	```
+L00018870	
+L00018871	### OSI-208 - Platform Capability Next-Steps Coverage Disposition
+L00018872	
+L00018873	```yaml
+L00018874	plan_unit_id: OSI-208
+L00018875	unit_type: requirement
+L00018876	status: accepted
+L00018877	owner_doc: Plans/orchestrator-subagent-integration.md
+L00018878	canonical_text: >-
+L00018879	  Platform capability next-steps checklist tokens are preserved only as compatibility/source-lineage coverage for prior plan
+L00018880	  sequencing and must not be promoted into executable work.
+L00018881	gui_related: false
+L00018882	gui_classification_reason: >-
+L00018883	  This unit covers backend implementation-placement, compatibility, selector, parser, remediation, continuity, or orchestration
+L00018884	  policy rather than GUI presentation.
+L00018885	split_recommended: false
+L00018886	depends_on:
+L00018887	- OSI-059
+L00018888	- OSI-060
+L00018889	- OSI-061
+L00018890	unblocks: []
+L00018891	acceptance_criteria:
+L00018892	- Covered source spans remain losslessly available for exact-text audit.
+L00018893	- Duplicate source spans are recorded as duplicate coverage and do not create separate implementation scope.
+L00018894	- >-
+L00018895	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00018896	  bridge.
+L00018897	- >-
+L00018898	  Checklists and placement notes are preserved as compatibility/source-lineage plan evidence and do not create WorkNodes,
+L00018899	  NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00018900	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00018901	validation_surfaces:
+L00018902	- >-
+L00018903	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018904	- python3 scripts/pm-plan-index.py validate
+L00018905	reasoning_tier: standard
+L00018906	context_scope: orchestrator_subagent_standardization
+L00018907	implementation_surfaces:
+L00018908	- Plans/orchestrator-subagent-integration.md
+L00018909	risk_class: platform_capability_next_steps_coverage_disposition
+L00018910	node_compile_hint:
+L00018911	  mode: platform_capability_next_steps_coverage_disposition
+L00018912	  create_worknodes: false
+L00018913	source_lineage:
+L00018914	- >-
+L00018915	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0122
+L00018916	- >-
+L00018917	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0125
+L00018918	preserved_exact_tokens:
+L00018919	- Review and approve this plan
+L00018920	- Implement Phase 1 (Project Context Detection)
+L00018921	- Implement Phase 2 (Subagent Selector)
+L00018922	- Integrate with orchestrator
+L00018923	- Test with real projects
+L00018924	negative_constraints:
+L00018925	- >-
+L00018926	  Do not promote this checklist into WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks,
+L00018927	  or implementation-ready build tasks.
+L00018928	compatibility_only_notes:
+L00018929	- Compatibility/source-lineage checklist disposition only; duplicate S0125 repeats S0122.
+L00018930	stale_retired_dispositions: []
+L00018931	owner_boundary_notes:
+L00018932	- >-
+L00018933	  S0123 duplicates S0120, S0124 duplicates S0121, and S0125 duplicates S0122 byte-for-byte in the Phase 2B span map.
+L00018934	owner_hints:
+L00018935	- Plans/orchestrator-subagent-integration.md
+L00018936	preserved_contractrefs: []
+L00018937	```
+L00018938	
+L00018939	### OSI-209 - Implementation Notes Placement Boundary
+L00018940	
+L00018941	```yaml
+L00018942	plan_unit_id: OSI-209
+L00018943	unit_type: requirement
+L00018944	status: accepted
+L00018945	owner_doc: Plans/orchestrator-subagent-integration.md
+L00018946	canonical_text: >-
+L00018947	  The Implementation Notes section is a placement boundary that tells implementers where to put code and what the orchestrator
+L00018948	  already provides; it is coverage-only parent material for the following placement PlanUnits, not an executable work queue.
+L00018949	gui_related: false
+L00018950	gui_classification_reason: >-
+L00018951	  This unit covers implementation-placement source structure and backend orchestration guidance rather than GUI presentation.
+L00018952	split_recommended: false
+L00018953	depends_on:
+L00018954	- OSI-001
+L00018955	- OSI-208
+L00018956	unblocks: []
+L00018957	acceptance_criteria:
+L00018958	- Covered source spans remain losslessly available for exact-text audit.
+L00018959	- >-
+L00018960	  The covered orchestrator/subagent fact is represented by a fine-grained PlanUnit instead of only the residual source-preserving
+L00018961	  bridge.
+L00018962	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00018963	validation_surfaces:
+L00018964	- >-
+L00018965	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00018966	- python3 scripts/pm-plan-index.py validate
+L00018967	reasoning_tier: standard
+L00018968	context_scope: orchestrator_subagent_standardization
+L00018969	implementation_surfaces:
+L00018970	- Plans/orchestrator-subagent-integration.md
+L00018971	risk_class: implementation_notes_placement_boundary
+L00018972	node_compile_hint:
+L00018973	  mode: implementation_notes_placement_boundary
+L00018974	  create_worknodes: false
+L00018975	source_lineage:
+L00018976	- >-
+L00018977	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0126
+L00018978	preserved_exact_tokens:
+L00018979	- Implementation Notes (Where Code Lives and What to Add)
+L00018980	- where to put code
+L00018981	- what the orchestrator already provides
+L00018982	negative_constraints:
+L00018983	- This placement boundary must not be promoted into executable work.
+L00018984	compatibility_only_notes:
+L00018985	- Coverage-only parent material for the following implementation-placement PlanUnits.
+L00018986	stale_retired_dispositions: []
+L00018987	owner_boundary_notes: []
+L00018988	owner_hints:
+L00018989	- Plans/orchestrator-subagent-integration.md
+L00018990	preserved_contractrefs: []
+L00018991	```
+L00018992	
+L00018993	### OSI-210 - Project Context Module Placement
+L00018994	
+L00018995	```yaml
+L00018996	plan_unit_id: OSI-210
+L00018997	unit_type: requirement
+L00018998	status: accepted
+L00018999	owner_doc: Plans/orchestrator-subagent-integration.md
+L00019000	canonical_text: >-
+L00019001	  Project context detection is placed in a new core module such as src/core/subagent_selector.rs,
+L00019002	  src/core/project_context.rs, or a small src/core/detection/ module with language.rs and framework.rs helpers.
+L00019003	gui_related: false
+L00019004	gui_classification_reason: >-
+L00019005	  This unit covers backend module placement and detection ownership rather than GUI presentation.
+L00019006	split_recommended: false
+L00019007	depends_on:
+L00019008	- OSI-038
+L00019009	- OSI-059
+L00019010	unblocks: []
+L00019011	acceptance_criteria:
+L00019012	- Covered source spans remain losslessly available for exact-text audit.
+L00019013	- Project context module placement remains aligned to core orchestration and selector ownership.
+L00019014	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00019015	validation_surfaces:
+L00019016	- >-
+L00019017	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00019018	- python3 scripts/pm-plan-index.py validate
+L00019019	reasoning_tier: standard
+L00019020	context_scope: orchestrator_subagent_standardization
+L00019021	implementation_surfaces:
+L00019022	- Plans/orchestrator-subagent-integration.md
+L00019023	risk_class: project_context_module_placement
+L00019024	node_compile_hint:
+L00019025	  mode: project_context_module_placement
+L00019026	  create_worknodes: false
+L00019027	source_lineage:
+L00019028	- >-
+L00019029	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0127
+L00019030	preserved_exact_tokens:
+L00019031	- src/core/subagent_selector.rs
+L00019032	- src/core/project_context.rs
+L00019033	- src/core/detection/
+L00019034	- language.rs
+L00019035	- framework.rs
+L00019036	negative_constraints: []
+L00019037	compatibility_only_notes: []
+L00019038	stale_retired_dispositions: []
+L00019039	owner_boundary_notes: []
+L00019040	owner_hints:
+L00019041	- Plans/orchestrator-subagent-integration.md
+L00019042	preserved_contractrefs: []
+L00019043	```
+L00019044	
+
+<<< CONTEXT_AFTER canonical_document_lines=19045-19056 >>>
+L00019045	### OSI-211 - Project Context Detection And Cache API
+L00019046	
+L00019047	```yaml
+L00019048	plan_unit_id: OSI-211
+L00019049	unit_type: requirement
+L00019050	status: accepted
+L00019051	owner_doc: Plans/orchestrator-subagent-integration.md
+L00019052	canonical_text: >-
+L00019053	  Project context detection implements ProjectContext, DetectedLanguage, workspace-path scanning for Cargo.toml,
+L00019054	  package.json, and similar markers, caches results per workspace path or in memory for the run, and exposes a
+L00019055	  detect_project_context(workspace: &Path) -> Result<ProjectContext> style API.
+L00019056	gui_related: false

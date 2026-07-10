@@ -1,0 +1,404 @@
+<<< CONTEXT_BEFORE canonical_document_lines=778-789 >>>
+L00000778	  - "Compatibility-only source vocabulary is noncanonical"
+L00000779	  - "Puppet Master"
+L00000780	  - "Plans/DRY_Rules.md"
+L00000781	  - "Plans/Contracts_V0.md"
+L00000782	negative_constraints: []
+L00000783	preserved_contractrefs: []
+L00000784	compatibility_only_notes:
+L00000785	  - "Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below."
+L00000786	owner_hints:
+L00000787	  - "Plans/Prompt_Pipeline.md"
+L00000788	```
+L00000789	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=790-1164 >>>
+L00000790	### PP-005 - Prompt Pipeline Scope And SSOT Boundary
+L00000791	
+L00000792	```yaml
+L00000793	plan_unit_id: PP-005
+L00000794	unit_type: requirement
+L00000795	status: accepted
+L00000796	owner_doc: Plans/Prompt_Pipeline.md
+L00000797	canonical_text: >-
+L00000798	  Prompt Pipeline owns prompt assembly stages, context compiler output incorporation, context compilation algorithms, compaction/pruning, rotation boundaries, and plugin prompt hook points, while other plans may consume outputs without redefining these algorithms.
+L00000799	gui_related: false
+L00000800	gui_classification_reason: This unit defines ownership and prompt/context compilation policy rather than visual presentation.
+L00000801	split_recommended: false
+L00000802	depends_on:
+L00000803	  - "PP-002"
+L00000804	unblocks: []
+L00000805	acceptance_criteria:
+L00000806	  - "Prompt Pipeline Scope And SSOT Boundary remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00000807	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00000808	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00000809	validation_surfaces:
+L00000810	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00000811	  - "python3 scripts/pm-plan-index.py validate"
+L00000812	risk_class: prompt_pipeline_drift
+L00000813	reasoning_tier: standard
+L00000814	context_scope: prompt_pipeline
+L00000815	implementation_surfaces:
+L00000816	  - Plans/Prompt_Pipeline.md
+L00000817	node_compile_hint:
+L00000818	  mode: requirement
+L00000819	  create_worknodes: false
+L00000820	source_lineage:
+L00000821	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0004
+L00000822	preserved_exact_tokens:
+L00000823	  - "prompt assembly stages"
+L00000824	  - "context compiler output"
+L00000825	  - "context-selection"
+L00000826	  - "delta-context"
+L00000827	  - "cache heuristics"
+L00000828	  - "marker files"
+L00000829	  - "skill bundling"
+L00000830	  - "compaction/pruning"
+L00000831	  - "rotation boundaries"
+L00000832	  - "plugin hook points"
+L00000833	negative_constraints:
+L00000834	  - "Other plans MAY describe how they consume compiled output, but they MUST NOT redefine context-selection, delta-context, cache, marker-file, skill-bundling, or compaction algorithms as separate SSOTs."
+L00000835	  - "Plans/FileSafe.md owns safety checks over compiled output; it does not own prompt/context compilation policy, and rewrite-era fallback wording must not turn FileSafe into a second context-compilation SSOT."
+L00000836	preserved_contractrefs:
+L00000837	  - "ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md, ContractName:Plans/Contracts_V0.md"
+L00000838	  - "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Architecture_Invariants.md"
+L00000839	owner_hints:
+L00000840	  - "Plans/Prompt_Pipeline.md"
+L00000841	  - "Plans/FileSafe.md"
+L00000842	  - "Plans/Run_Modes.md"
+L00000843	  - "Plans/Architecture_Invariants.md"
+L00000844	```
+L00000845	
+L00000846	### PP-006 - Prompt Pipeline DRY Reference Map
+L00000847	
+L00000848	```yaml
+L00000849	plan_unit_id: PP-006
+L00000850	unit_type: requirement
+L00000851	status: accepted
+L00000852	owner_doc: Plans/Prompt_Pipeline.md
+L00000853	canonical_text: >-
+L00000854	  Prompt Pipeline preserves its DRY reference map to locked decisions, canonical contracts, terms, deterministic decisions, FileSafe checks, run-mode context, Personas, Tools, Plugins, GUI/context consumers, and OpenCode baseline extraction.
+L00000855	gui_related: true
+L00000856	gui_classification_reason: This unit includes GUI/context consumer references.
+L00000857	split_recommended: false
+L00000858	depends_on:
+L00000859	  - "PP-005"
+L00000860	unblocks: []
+L00000861	acceptance_criteria:
+L00000862	  - "Prompt Pipeline DRY Reference Map remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00000863	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00000864	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00000865	validation_surfaces:
+L00000866	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00000867	  - "python3 scripts/pm-plan-index.py validate"
+L00000868	risk_class: prompt_pipeline_drift
+L00000869	reasoning_tier: standard
+L00000870	context_scope: prompt_pipeline
+L00000871	implementation_surfaces:
+L00000872	  - Plans/Prompt_Pipeline.md
+L00000873	node_compile_hint:
+L00000874	  mode: requirement
+L00000875	  create_worknodes: false
+L00000876	source_lineage:
+L00000877	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0005
+L00000878	preserved_exact_tokens:
+L00000879	  - "Plans/Spec_Lock.json"
+L00000880	  - "Plans/Contracts_V0.md"
+L00000881	  - "Plans/DRY_Rules.md"
+L00000882	  - "Plans/Glossary.md"
+L00000883	  - "Plans/Decision_Policy.md"
+L00000884	  - "Plans/auto_decisions.jsonl"
+L00000885	  - "Plans/FileSafe.md"
+L00000886	  - "Plans/Run_Modes.md"
+L00000887	  - "Plans/Personas.md#PERSONA-INJECTION"
+L00000888	  - "Plans/Tools.md"
+L00000889	  - "Plans/Plugins_System.md"
+L00000890	  - "Plans/FinalGUISpec.md"
+L00000891	  - "Plans/assistant-chat-design.md"
+L00000892	  - "Plans/OpenCode_Deep_Extraction.md §7B"
+L00000893	negative_constraints: []
+L00000894	preserved_contractrefs: []
+L00000895	owner_hints:
+L00000896	  - "Plans/Prompt_Pipeline.md"
+L00000897	```
+L00000898	
+L00000899	### PP-007 - Assembly Inputs And Run Envelope
+L00000900	
+L00000901	```yaml
+L00000902	plan_unit_id: PP-007
+L00000903	unit_type: requirement
+L00000904	status: accepted
+L00000905	owner_doc: Plans/Prompt_Pipeline.md
+L00000906	canonical_text: >-
+L00000907	  The assembly pipeline consumes deterministic inputs and canonical run envelope fields, with node/package/lane/seam identity as canonical execution context and tier labels only derived grouping metadata.
+L00000908	gui_related: false
+L00000909	gui_classification_reason: This unit defines runtime input identity rather than visual presentation.
+L00000910	split_recommended: false
+L00000911	depends_on:
+L00000912	  - "PP-005"
+L00000913	unblocks: []
+L00000914	acceptance_criteria:
+L00000915	  - "Assembly Inputs And Run Envelope remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00000916	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00000917	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00000918	validation_surfaces:
+L00000919	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00000920	  - "python3 scripts/pm-plan-index.py validate"
+L00000921	risk_class: prompt_pipeline_drift
+L00000922	reasoning_tier: standard
+L00000923	context_scope: prompt_pipeline
+L00000924	implementation_surfaces:
+L00000925	  - Plans/Prompt_Pipeline.md
+L00000926	node_compile_hint:
+L00000927	  mode: requirement
+L00000928	  create_worknodes: false
+L00000929	source_lineage:
+L00000930	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0006
+L00000931	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0007
+L00000932	preserved_exact_tokens:
+L00000933	  - "ASSEMBLY"
+L00000934	  - "Run envelope"
+L00000935	  - "session_id"
+L00000936	  - "timestamp"
+L00000937	  - "thread_id"
+L00000938	  - "run_id"
+L00000939	  - "node_id: string"
+L00000940	  - "package_id: string"
+L00000941	  - "lane_id: string?"
+L00000942	  - "seam_id: string?"
+L00000943	  - "requested/effective model and variant refs"
+L00000944	  - "active surface"
+L00000945	  - "Node/package/lane/seam identity"
+L00000946	negative_constraints: []
+L00000947	preserved_contractrefs:
+L00000948	  - "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Contracts_V0.md"
+L00000949	owner_hints:
+L00000950	  - "Plans/Prompt_Pipeline.md"
+L00000951	```
+L00000952	
+L00000953	### PP-008 - Canonical Prompt Assembly Stage Ordering
+L00000954	
+L00000955	```yaml
+L00000956	plan_unit_id: PP-008
+L00000957	unit_type: requirement
+L00000958	status: accepted
+L00000959	owner_doc: Plans/Prompt_Pipeline.md
+L00000960	canonical_text: >-
+L00000961	  Prompt assembly follows deterministic stages 1 through 9, applies mode-specific overlays during context compilation, applies plugin transforms and tool schemas, and carries the canonical orchestration flow contract for Orchestrator or delegated child runs.
+L00000962	gui_related: false
+L00000963	gui_classification_reason: This unit defines prompt assembly ordering and orchestration metadata rather than visual presentation.
+L00000964	split_recommended: false
+L00000965	depends_on:
+L00000966	  - "PP-007"
+L00000967	unblocks: []
+L00000968	acceptance_criteria:
+L00000969	  - "Canonical Prompt Assembly Stage Ordering remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00000970	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00000971	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00000972	validation_surfaces:
+L00000973	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00000974	  - "python3 scripts/pm-plan-index.py validate"
+L00000975	risk_class: prompt_pipeline_drift
+L00000976	reasoning_tier: standard
+L00000977	context_scope: prompt_pipeline
+L00000978	implementation_surfaces:
+L00000979	  - Plans/Prompt_Pipeline.md
+L00000980	node_compile_hint:
+L00000981	  mode: requirement
+L00000982	  create_worknodes: false
+L00000983	source_lineage:
+L00000984	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0008
+L00000985	preserved_exact_tokens:
+L00000986	  - "ASSEMBLY-PIPELINE"
+L00000987	  - "Resolve run config and surface context"
+L00000988	  - "Resolve Persona selection inputs"
+L00000989	  - "Resolve effective Persona and runtime state"
+L00000990	  - "Resolve skills"
+L00000991	  - "Compile context"
+L00000992	  - "Normalize structured attachments"
+L00000993	  - "Assemble Instruction Bundle"
+L00000994	  - "Apply plugin transforms and attach tool schemas"
+L00000995	  - "Finalize"
+L00000996	  - "read_only"
+L00000997	  - "plan_output_scaffold_v1"
+L00000998	  - "full_execution"
+L00000999	  - "assess -> understand -> decompose -> act -> verify"
+L00001000	negative_constraints:
+L00001001	  - "Child/subagent/rotated runs may narrow an inherited overlay, but they MUST NOT widen a read-only overlay into full_execution."
+L00001002	preserved_contractrefs:
+L00001003	  - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/Plugins_System.md"
+L00001004	  - "ContractRef: ContractName:Plans/Plugins_System.md, ContractName:Plans/Tools.md, PolicyRule:Decision_Policy.md§3"
+L00001005	  - "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/assistant-chat-design.md"
+L00001006	owner_hints:
+L00001007	  - "Plans/Prompt_Pipeline.md"
+L00001008	```
+L00001009	
+L00001010	### PP-009 - Skill Resolution Runtime Delivery
+L00001011	
+L00001012	```yaml
+L00001013	plan_unit_id: PP-009
+L00001014	unit_type: requirement
+L00001015	status: accepted
+L00001016	owner_doc: Plans/Prompt_Pipeline.md
+L00001017	canonical_text: >-
+L00001018	  Skill runtime delivery resolves requested skill refs from the PM registry, filters by permissions, de-duplicates by canonical skill id, bundles selected skill content when needed, and preserves on-demand access through the skill tool; provider-native skill directories are discovery/import/export/interoperability inputs only.
+L00001019	gui_related: false
+L00001020	gui_classification_reason: This unit defines skill delivery and registry behavior rather than visual presentation.
+L00001021	split_recommended: false
+L00001022	depends_on:
+L00001023	  - "PP-008"
+L00001024	unblocks: []
+L00001025	acceptance_criteria:
+L00001026	  - "Skill Resolution Runtime Delivery remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00001027	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00001028	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00001029	validation_surfaces:
+L00001030	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00001031	  - "python3 scripts/pm-plan-index.py validate"
+L00001032	risk_class: prompt_pipeline_drift
+L00001033	reasoning_tier: standard
+L00001034	context_scope: prompt_pipeline
+L00001035	implementation_surfaces:
+L00001036	  - Plans/Prompt_Pipeline.md
+L00001037	node_compile_hint:
+L00001038	  mode: requirement
+L00001039	  create_worknodes: false
+L00001040	source_lineage:
+L00001041	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0009
+L00001042	preserved_exact_tokens:
+L00001043	  - "default_skill_refs"
+L00001044	  - "skill"
+L00001045	  - "canonical skill id"
+L00001046	  - "provider-native skill directories"
+L00001047	  - "discovery/import/export/interoperability inputs only"
+L00001048	negative_constraints: []
+L00001049	preserved_contractrefs:
+L00001050	  - "ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md"
+L00001051	owner_hints:
+L00001052	  - "Plans/Prompt_Pipeline.md"
+L00001053	  - "Plans/Skills_System.md"
+L00001054	  - "Plans/Tools.md"
+L00001055	  - "Plans/FileSafe.md"
+L00001056	```
+L00001057	
+L00001058	### PP-010 - Browser Element Attachment Normalization
+L00001059	
+L00001060	```yaml
+L00001061	plan_unit_id: PP-010
+L00001062	unit_type: requirement
+L00001063	status: accepted
+L00001064	owner_doc: Plans/Prompt_Pipeline.md
+L00001065	canonical_text: >-
+L00001066	  Browser element attachments serialize after context compilation and before final conversation payload emission, preserving chip-based element context distinctions, bounded fields, truncation metadata, and DOM/page-body exclusion.
+L00001067	gui_related: true
+L00001068	gui_classification_reason: This unit concerns browser/composer UI attachment behavior.
+L00001069	split_recommended: false
+L00001070	depends_on:
+L00001071	  - "PP-008"
+L00001072	unblocks: []
+L00001073	acceptance_criteria:
+L00001074	  - "Browser Element Attachment Normalization remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00001075	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00001076	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00001077	validation_surfaces:
+L00001078	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00001079	  - "python3 scripts/pm-plan-index.py validate"
+L00001080	risk_class: prompt_pipeline_drift
+L00001081	reasoning_tier: standard
+L00001082	context_scope: prompt_pipeline
+L00001083	implementation_surfaces:
+L00001084	  - Plans/Prompt_Pipeline.md
+L00001085	node_compile_hint:
+L00001086	  mode: requirement
+L00001087	  create_worknodes: false
+L00001088	source_lineage:
+L00001089	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0010
+L00001090	preserved_exact_tokens:
+L00001091	  - "browser_element_context"
+L00001092	  - "Text-selection chips"
+L00001093	  - "element-pick chips"
+L00001094	  - "tag_name"
+L00001095	  - "element_ref?"
+L00001096	  - "text_content?"
+L00001097	  - "role?"
+L00001098	  - "rect"
+L00001099	  - "parent_path?"
+L00001100	  - "truncation occurred"
+L00001101	negative_constraints:
+L00001102	  - "Raw unbounded DOM dumps or page bodies MUST NOT be injected into the prompt through this attachment path."
+L00001103	  - "Blocked or expired chips MUST NOT be serialized as successful user attachments."
+L00001104	preserved_contractrefs:
+L00001105	  - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FileSafe.md"
+L00001106	owner_hints:
+L00001107	  - "Plans/Prompt_Pipeline.md"
+L00001108	  - "Plans/assistant-chat-design.md"
+L00001109	  - "Plans/storage-plan.md"
+L00001110	  - "Plans/FileSafe.md"
+L00001111	```
+L00001112	
+L00001113	### PP-011 - Browser Selection Attachment Normalization
+L00001114	
+L00001115	```yaml
+L00001116	plan_unit_id: PP-011
+L00001117	unit_type: requirement
+L00001118	status: accepted
+L00001119	owner_doc: Plans/Prompt_Pipeline.md
+L00001120	canonical_text: >-
+L00001121	  Browser selection attachments serialize after context compilation in stable thread-prep order before the user freeform message, preserving bounded browser selection fields and rejecting raw page bodies or blocked/expired chips.
+L00001122	gui_related: true
+L00001123	gui_classification_reason: This unit concerns browser selection UI attachment behavior.
+L00001124	split_recommended: false
+L00001125	depends_on:
+L00001126	  - "PP-010"
+L00001127	unblocks: []
+L00001128	acceptance_criteria:
+L00001129	  - "Browser Selection Attachment Normalization remains addressable as a fine-grained Prompt Pipeline PlanUnit."
+L00001130	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00001131	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00001132	validation_surfaces:
+L00001133	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00001134	  - "python3 scripts/pm-plan-index.py validate"
+L00001135	risk_class: prompt_pipeline_drift
+L00001136	reasoning_tier: standard
+L00001137	context_scope: prompt_pipeline
+L00001138	implementation_surfaces:
+L00001139	  - Plans/Prompt_Pipeline.md
+L00001140	node_compile_hint:
+L00001141	  mode: requirement
+L00001142	  create_worknodes: false
+L00001143	source_lineage:
+L00001144	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Prompt_Pipeline-S0010
+L00001145	preserved_exact_tokens:
+L00001146	  - "browser_selection_context"
+L00001147	  - "stable thread-prep order"
+L00001148	  - "browser_session_id"
+L00001149	  - "session_class"
+L00001150	  - "page_url"
+L00001151	  - "selected_text"
+L00001152	  - "selection_anchor?"
+L00001153	  - "requested_target"
+L00001154	  - "effective_target?"
+L00001155	  - "truncation_state"
+L00001156	negative_constraints:
+L00001157	  - "Raw unbounded DOM dumps or page bodies MUST NOT be injected into the prompt through this attachment path."
+L00001158	  - "Blocked or expired chips MUST NOT be serialized as successful user attachments."
+L00001159	preserved_contractrefs:
+L00001160	  - "ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md"
+L00001161	owner_hints:
+L00001162	  - "Plans/Prompt_Pipeline.md"
+L00001163	```
+L00001164	
+
+<<< CONTEXT_AFTER canonical_document_lines=1165-1176 >>>
+L00001165	### PP-012 - Document Selection Structured Revision Payloads
+L00001166	
+L00001167	```yaml
+L00001168	plan_unit_id: PP-012
+L00001169	unit_type: requirement
+L00001170	status: accepted
+L00001171	owner_doc: Plans/Prompt_Pipeline.md
+L00001172	canonical_text: >-
+L00001173	  Document selection attachments serialize in stable order with bounded selection, routing, sensitivity, truncation, and revision payload metadata; structured revision providers use schema-enforced or locally validated revision shapes.
+L00001174	gui_related: true
+L00001175	gui_classification_reason: This unit concerns document review UI selection and revision prompt behavior.
+L00001176	split_recommended: false

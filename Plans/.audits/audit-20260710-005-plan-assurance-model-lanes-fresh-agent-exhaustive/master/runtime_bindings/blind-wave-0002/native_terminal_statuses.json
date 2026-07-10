@@ -1,0 +1,71 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "wave_id": "blind-wave-0002",
+  "capture_basis": "codex_app_read_thread_after_all_children_terminal",
+  "statuses": [
+    {
+      "native_child_thread_id": "019f4de9-41e7-7262-9cd6-c4641abf00e7",
+      "native_child_turn_id": "019f4de9-4252-73a1-860e-2487a6aa0d98",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4de9-ba1b-7a63-906d-77419c2a2c92",
+      "native_child_turn_id": "019f4de9-ba76-7770-b005-af35e7d6aa17",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4dea-3f8e-7522-bfff-b78c666ab1a8",
+      "native_child_turn_id": "019f4dea-3fe9-71d1-ab2e-7b3b6fc791ff",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4dea-b81b-79b2-a1b5-8f31fc005cd3",
+      "native_child_turn_id": "019f4dea-b876-7fe1-b760-bb4acd0913ef",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4deb-364b-71b3-8395-c26ef1c2b442",
+      "native_child_turn_id": "019f4deb-36ab-7dc2-978a-214c70d7de09",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4deb-b58c-77d2-995e-a40ef9c52b03",
+      "native_child_turn_id": "019f4deb-b5eb-70a2-95d5-3c454cc36ee7",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4dec-2f09-7b70-a0cc-9659ab6dcd1f",
+      "native_child_turn_id": "019f4dec-2f7a-7060-b490-e4645c7e7715",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    },
+    {
+      "native_child_thread_id": "019f4dec-a85c-72f2-a8e7-0d102a2b6217",
+      "native_child_turn_id": "019f4dec-a8bd-7891-ab06-bdc85c3b47be",
+      "native_child_thread_state": "idle",
+      "native_child_turn_status": "completed",
+      "native_child_turn_error": null,
+      "terminal_response_prefix": "PMR1"
+    }
+  ]
+}

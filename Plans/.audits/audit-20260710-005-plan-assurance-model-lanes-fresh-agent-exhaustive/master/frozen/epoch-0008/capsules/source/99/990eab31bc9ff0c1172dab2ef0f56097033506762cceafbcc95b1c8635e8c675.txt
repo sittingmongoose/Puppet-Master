@@ -1,0 +1,409 @@
+<<< CONTEXT_BEFORE canonical_document_lines=9247-9258 >>>
+L00009247	  create_worknodes: false
+L00009248	source_lineage:
+L00009249	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0064
+L00009250	preserved_exact_tokens:
+L00009251	  - "For Session"
+L00009252	  - "all unique domains"
+L00009253	negative_constraints: []
+L00009254	owner_hints:
+L00009255	  - Plans/assistant-chat-design.md
+L00009256	  - Plans/Permissions_System.md
+L00009257	```
+L00009258	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=9259-9638 >>>
+L00009259	### ACD-124 - Stale Cited-Search Ownership Disposition
+L00009260	
+L00009261	```yaml
+L00009262	plan_unit_id: ACD-124
+L00009263	unit_type: constraint
+L00009264	status: accepted
+L00009265	owner_doc: Plans/assistant-chat-design.md
+L00009266	canonical_text: >-
+L00009267	  Stale cited-search ownership residue is retired from reference sections;
+L00009268	  provider-capability and web-routing canon is owned by `Plans/Tools.md`
+L00009269	  sections 11-12, while `Plans/newtools.md#8.2.1` is non-normative consumer
+L00009270	  guidance only.
+L00009271	gui_related: false
+L00009272	gui_classification_reason: Stale ownership disposition is document-governance and owner routing, not GUI behavior.
+L00009273	depends_on: [ACD-109]
+L00009274	unblocks: []
+L00009275	acceptance_criteria:
+L00009276	  - Stale cited-search ownership residue remains retired from reference sections.
+L00009277	  - Plans/Tools.md sections 11-12 own provider capability and web routing canon.
+L00009278	  - Plans/newtools.md#8.2.1 remains non-normative consumer guidance.
+L00009279	validation_surfaces:
+L00009280	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009281	  - python3 scripts/pm-plan-index.py validate
+L00009282	risk_class: stale_owner_residue
+L00009283	reasoning_tier: standard
+L00009284	context_scope: web_activity
+L00009285	implementation_surfaces:
+L00009286	  - Plans/assistant-chat-design.md
+L00009287	  - Plans/Tools.md
+L00009288	  - Plans/newtools.md
+L00009289	node_compile_hint:
+L00009290	  mode: stale_cited_search_ownership_disposition
+L00009291	  create_worknodes: false
+L00009292	source_lineage:
+L00009293	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0064
+L00009294	preserved_exact_tokens:
+L00009295	  - "Plans/Tools.md"
+L00009296	  - "Plans/newtools.md#8.2.1"
+L00009297	  - "non-normative consumer guidance"
+L00009298	negative_constraints: []
+L00009299	owner_hints:
+L00009300	  - Plans/assistant-chat-design.md
+L00009301	  - Plans/Tools.md
+L00009302	```
+L00009303	
+L00009304	### ACD-125 - Provider-Native Research And Upload Carry-Through
+L00009305	
+L00009306	```yaml
+L00009307	plan_unit_id: ACD-125
+L00009308	unit_type: requirement
+L00009309	status: accepted
+L00009310	owner_doc: Plans/assistant-chat-design.md
+L00009311	canonical_text: >-
+L00009312	  Provider-native web research preserves source-lineage fields such as
+L00009313	  `enableWebSearch`; Firecrawl consumer copy may surface Fire Engine limits,
+L00009314	  and file-upload/webfetch summaries preserve the `5 MB default` when that cap
+L00009315	  applies.
+L00009316	gui_related: true
+L00009317	gui_classification_reason: Provider-native research disclosure and upload/webfetch summaries are visible consumer copy.
+L00009318	depends_on: [ACD-109, ACD-116]
+L00009319	unblocks: []
+L00009320	acceptance_criteria:
+L00009321	  - Provider-native research preserves enableWebSearch source-lineage fields.
+L00009322	  - Firecrawl consumer copy may surface Fire Engine limits.
+L00009323	  - File-upload/webfetch summaries preserve the 5 MB default when applicable.
+L00009324	validation_surfaces:
+L00009325	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009326	  - python3 scripts/pm-plan-index.py validate
+L00009327	risk_class: provider_native_lineage
+L00009328	reasoning_tier: standard
+L00009329	context_scope: web_activity
+L00009330	implementation_surfaces:
+L00009331	  - Plans/assistant-chat-design.md
+L00009332	  - Plans/Tools.md
+L00009333	node_compile_hint:
+L00009334	  mode: provider_native_research_upload_carrythrough
+L00009335	  create_worknodes: false
+L00009336	source_lineage:
+L00009337	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0064
+L00009338	preserved_exact_tokens:
+L00009339	  - "enableWebSearch"
+L00009340	  - "Fire Engine"
+L00009341	  - "5 MB default"
+L00009342	negative_constraints: []
+L00009343	owner_hints:
+L00009344	  - Plans/assistant-chat-design.md
+L00009345	  - Plans/Tools.md
+L00009346	```
+L00009347	
+L00009348	### ACD-126 - Bash Terminal Card Preview Anatomy
+L00009349	
+L00009350	```yaml
+L00009351	plan_unit_id: ACD-126
+L00009352	unit_type: requirement
+L00009353	status: accepted
+L00009354	owner_doc: Plans/assistant-chat-design.md
+L00009355	canonical_text: >-
+L00009356	  Bash/terminal command cards keep bounded inline previews, persistent
+L00009357	  per-command cards, narrative-order placement, 5-line collapsed and 15-line
+L00009358	  expanded previews, status/cwd/command summary/elapsed/exit/truncation
+L00009359	  metadata, read-only non-interactive content, one card per command
+L00009360	  `/instance`, refs/blobs for large payloads, and reloadable persisted
+L00009361	  metadata.
+L00009362	gui_related: true
+L00009363	gui_classification_reason: Bash/terminal card previews and metadata are visible operation-card UI.
+L00009364	depends_on: [ACD-102, ACD-108]
+L00009365	unblocks: [ACD-127, ACD-128, ACD-130]
+L00009366	acceptance_criteria:
+L00009367	  - Bash/terminal cards keep bounded inline previews and persistent per-command cards.
+L00009368	  - Preview budgets remain 5 collapsed and 15 expanded lines.
+L00009369	  - Status, cwd, command summary, elapsed, exit, and truncation metadata are visible.
+L00009370	  - Large output remains behind refs/blobs.
+L00009371	validation_surfaces:
+L00009372	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009373	  - python3 scripts/pm-plan-index.py validate
+L00009374	risk_class: terminal_card_anatomy
+L00009375	reasoning_tier: standard
+L00009376	context_scope: bash_terminal
+L00009377	implementation_surfaces:
+L00009378	  - Plans/assistant-chat-design.md
+L00009379	  - Plans/FinalGUISpec.md
+L00009380	node_compile_hint:
+L00009381	  mode: bash_terminal_card_preview_anatomy
+L00009382	  create_worknodes: false
+L00009383	source_lineage:
+L00009384	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0065
+L00009385	preserved_exact_tokens:
+L00009386	  - "5-line collapsed"
+L00009387	  - "15-line expanded"
+L00009388	  - "status/cwd/command summary/elapsed/exit/truncation metadata"
+L00009389	  - "/instance"
+L00009390	  - "refs/blobs"
+L00009391	negative_constraints: []
+L00009392	owner_hints:
+L00009393	  - Plans/assistant-chat-design.md
+L00009394	  - Plans/FinalGUISpec.md
+L00009395	```
+L00009396	
+L00009397	### ACD-127 - Terminal Promotion Session Ownership
+L00009398	
+L00009399	```yaml
+L00009400	plan_unit_id: ACD-127
+L00009401	unit_type: constraint
+L00009402	status: accepted
+L00009403	owner_doc: Plans/assistant-chat-design.md
+L00009404	canonical_text: >-
+L00009405	  Commands requiring stdin/TTY start Terminal immediately,
+L00009406	  background/watch/server actions create terminal-owned sessions, one-shot
+L00009407	  commands remain chat-inline by default, non-interactive work may promote if
+L00009408	  long-running, and every promoted command card binds to stable
+L00009409	  `terminal_session_id` while chat stops owning the full transcript.
+L00009410	gui_related: true
+L00009411	gui_classification_reason: Terminal promotion and session identity are visible handoff behavior.
+L00009412	depends_on: [ACD-108, ACD-126]
+L00009413	unblocks: [ACD-128, ACD-129]
+L00009414	acceptance_criteria:
+L00009415	  - stdin/TTY commands start Terminal immediately.
+L00009416	  - Background/watch/server actions create terminal-owned sessions.
+L00009417	  - One-shot commands remain chat-inline by default.
+L00009418	  - Promoted command cards bind to a stable terminal_session_id.
+L00009419	  - Chat stops owning the full transcript after promotion.
+L00009420	validation_surfaces:
+L00009421	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009422	  - python3 scripts/pm-plan-index.py validate
+L00009423	risk_class: terminal_session_ownership
+L00009424	reasoning_tier: high
+L00009425	context_scope: bash_terminal
+L00009426	implementation_surfaces:
+L00009427	  - Plans/assistant-chat-design.md
+L00009428	  - Plans/FinalGUISpec.md
+L00009429	  - Plans/storage-plan.md
+L00009430	node_compile_hint:
+L00009431	  mode: terminal_promotion_session_ownership
+L00009432	  create_worknodes: false
+L00009433	source_lineage:
+L00009434	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0065
+L00009435	preserved_exact_tokens:
+L00009436	  - "stdin/TTY"
+L00009437	  - "background/watch/server"
+L00009438	  - "terminal_session_id"
+L00009439	  - "chat stops owning the full transcript"
+L00009440	negative_constraints: []
+L00009441	owner_hints:
+L00009442	  - Plans/assistant-chat-design.md
+L00009443	  - Plans/FinalGUISpec.md
+L00009444	```
+L00009445	
+L00009446	### ACD-128 - Terminal Action Canon And Detach Alias
+L00009447	
+L00009448	```yaml
+L00009449	plan_unit_id: ACD-128
+L00009450	unit_type: constraint
+L00009451	status: accepted
+L00009452	owner_doc: Plans/assistant-chat-design.md
+L00009453	canonical_text: >-
+L00009454	  Terminal action canon preserves distinct `Open in Terminal`, `Show
+L00009455	  Terminal`, `Rerun in Terminal`, and `Detach/Pop-Out`; `Open in Terminal` and
+L00009456	  `Show Terminal` focus the same live session, `Rerun in Terminal` keeps
+L00009457	  command-table treatment, and legacy `Pop Out Terminal` is only a deprecated
+L00009458	  alias for `Detach/Pop-Out`.
+L00009459	gui_related: true
+L00009460	gui_classification_reason: Terminal action labels and aliases are visible command-card/menu behavior.
+L00009461	depends_on: [ACD-127]
+L00009462	unblocks: [ACD-129]
+L00009463	acceptance_criteria:
+L00009464	  - Open in Terminal, Show Terminal, Rerun in Terminal, and Detach/Pop-Out remain distinct.
+L00009465	  - Open in Terminal and Show Terminal focus the same live session.
+L00009466	  - Rerun in Terminal keeps command-table treatment.
+L00009467	  - Pop Out Terminal remains a deprecated alias only.
+L00009468	validation_surfaces:
+L00009469	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009470	  - python3 scripts/pm-plan-index.py validate
+L00009471	risk_class: terminal_action_alias
+L00009472	reasoning_tier: high
+L00009473	context_scope: bash_terminal
+L00009474	implementation_surfaces:
+L00009475	  - Plans/assistant-chat-design.md
+L00009476	  - Plans/UI_Command_Catalog.md
+L00009477	  - Plans/FinalGUISpec.md
+L00009478	node_compile_hint:
+L00009479	  mode: terminal_action_canon_detach_alias
+L00009480	  create_worknodes: false
+L00009481	source_lineage:
+L00009482	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0065
+L00009483	preserved_exact_tokens:
+L00009484	  - "Open in Terminal"
+L00009485	  - "Show Terminal"
+L00009486	  - "Rerun in Terminal"
+L00009487	  - "Detach/Pop-Out"
+L00009488	  - "Pop Out Terminal"
+L00009489	negative_constraints:
+L00009490	  - "Pop Out Terminal is only a deprecated alias for Detach/Pop-Out."
+L00009491	owner_hints:
+L00009492	  - Plans/assistant-chat-design.md
+L00009493	  - Plans/UI_Command_Catalog.md
+L00009494	```
+L00009495	
+L00009496	### ACD-129 - Terminal Attach Recovery And Inline-Only Actions
+L00009497	
+L00009498	```yaml
+L00009499	plan_unit_id: ACD-129
+L00009500	unit_type: requirement
+L00009501	status: accepted
+L00009502	owner_doc: Plans/assistant-chat-design.md
+L00009503	canonical_text: >-
+L00009504	  Attach failure recovery differs for live process, ended process, and
+L00009505	  inline-only completed command; command-card `/edit/manage` menus expose
+L00009506	  terminal-focus, `View output`, `View output log`, `Retry attach`, and `Stop
+L00009507	  process` only when supported, and completed inline commands without a real
+L00009508	  `terminal_session_id` must not fabricate `Open in Terminal`.
+L00009509	gui_related: true
+L00009510	gui_classification_reason: Attach recovery and inline-only command-card actions are visible UI behavior.
+L00009511	depends_on: [ACD-127, ACD-128]
+L00009512	unblocks: []
+L00009513	acceptance_criteria:
+L00009514	  - Attach recovery branches differ for live, ended, and inline-only command cases.
+L00009515	  - Command-card edit/manage menus expose actions only when supported.
+L00009516	  - Completed inline commands without terminal_session_id do not fabricate Open in Terminal.
+L00009517	validation_surfaces:
+L00009518	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009519	  - python3 scripts/pm-plan-index.py validate
+L00009520	risk_class: terminal_action_fabrication
+L00009521	reasoning_tier: high
+L00009522	context_scope: bash_terminal
+L00009523	implementation_surfaces:
+L00009524	  - Plans/assistant-chat-design.md
+L00009525	  - Plans/UI_Command_Catalog.md
+L00009526	  - Plans/FinalGUISpec.md
+L00009527	node_compile_hint:
+L00009528	  mode: terminal_attach_recovery_inline_only_actions
+L00009529	  create_worknodes: false
+L00009530	source_lineage:
+L00009531	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0065
+L00009532	preserved_exact_tokens:
+L00009533	  - "/edit/manage"
+L00009534	  - "View output"
+L00009535	  - "View output log"
+L00009536	  - "Retry attach"
+L00009537	  - "Stop process"
+L00009538	  - "terminal_session_id"
+L00009539	  - "Open in Terminal"
+L00009540	negative_constraints:
+L00009541	  - "Completed inline commands without a real terminal_session_id must not fabricate Open in Terminal."
+L00009542	owner_hints:
+L00009543	  - Plans/assistant-chat-design.md
+L00009544	  - Plans/UI_Command_Catalog.md
+L00009545	```
+L00009546	
+L00009547	### ACD-130 - Shared Collapsible Result Behavior
+L00009548	
+L00009549	```yaml
+L00009550	plan_unit_id: ACD-130
+L00009551	unit_type: requirement
+L00009552	status: accepted
+L00009553	owner_doc: Plans/assistant-chat-design.md
+L00009554	canonical_text: >-
+L00009555	  `/collapsible` behavior is shared across command, search, and diff activity
+L00009556	  cards: collapsed cards retain material status, subject summary, failure line
+L00009557	  when present, and primary reveal action; expansion exposes bounded detail
+L00009558	  only, full payloads stay behind refs/blobs or owning surfaces, and
+L00009559	  search/diff do not stream progressively.
+L00009560	gui_related: true
+L00009561	gui_classification_reason: Collapsible card behavior is visible command/search/diff UI behavior.
+L00009562	depends_on: [ACD-103, ACD-126]
+L00009563	unblocks: []
+L00009564	acceptance_criteria:
+L00009565	  - Collapsed cards retain material status, subject summary, failure line, and primary reveal action.
+L00009566	  - Expanded cards expose bounded detail only.
+L00009567	  - Full payloads remain behind refs/blobs or owning surfaces.
+L00009568	  - Search and diff activity do not stream progressively.
+L00009569	validation_surfaces:
+L00009570	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009571	  - python3 scripts/pm-plan-index.py validate
+L00009572	risk_class: collapsible_payload_boundary
+L00009573	reasoning_tier: standard
+L00009574	context_scope: activity_transparency
+L00009575	implementation_surfaces:
+L00009576	  - Plans/assistant-chat-design.md
+L00009577	  - Plans/FinalGUISpec.md
+L00009578	node_compile_hint:
+L00009579	  mode: shared_collapsible_result_behavior
+L00009580	  create_worknodes: false
+L00009581	source_lineage:
+L00009582	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0065
+L00009583	preserved_exact_tokens:
+L00009584	  - "/collapsible"
+L00009585	  - "refs/blobs"
+L00009586	  - "search/diff do not stream progressively"
+L00009587	negative_constraints:
+L00009588	  - "Search/diff do not stream progressively."
+L00009589	owner_hints:
+L00009590	  - Plans/assistant-chat-design.md
+L00009591	  - Plans/FinalGUISpec.md
+L00009592	```
+L00009593	
+L00009594	### ACD-131 - Terminal Consumer Owner Boundary
+L00009595	
+L00009596	```yaml
+L00009597	plan_unit_id: ACD-131
+L00009598	unit_type: constraint
+L00009599	status: accepted
+L00009600	owner_doc: Plans/assistant-chat-design.md
+L00009601	canonical_text: >-
+L00009602	  Chat consumes the terminal model without owning the terminal engine/emulator,
+L00009603	  PTY/process host, or UI shell/chrome; chat cards expose bounded preview,
+L00009604	  audit, and reveal controls only.
+L00009605	gui_related: true
+L00009606	gui_classification_reason: Terminal preview, audit, and reveal controls are visible chat UI.
+L00009607	depends_on: [ACD-108, ACD-127]
+L00009608	unblocks: [ACD-132, ACD-133, ACD-134, ACD-135, ACD-137, ACD-143, ACD-145]
+L00009609	acceptance_criteria:
+L00009610	  - Chat consumes terminal state without owning terminal execution or shell chrome.
+L00009611	  - Chat cards expose only bounded preview, audit, and reveal controls.
+L00009612	validation_surfaces:
+L00009613	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009614	  - python3 scripts/pm-plan-index.py validate
+L00009615	risk_class: terminal_owner_boundary
+L00009616	reasoning_tier: high
+L00009617	context_scope: terminal_consumer
+L00009618	implementation_surfaces:
+L00009619	  - Plans/assistant-chat-design.md
+L00009620	  - Plans/FinalGUISpec.md
+L00009621	node_compile_hint:
+L00009622	  mode: terminal_consumer_owner_boundary
+L00009623	  create_worknodes: false
+L00009624	source_lineage:
+L00009625	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0066
+L00009626	preserved_exact_tokens:
+L00009627	  - "terminal engine/emulator"
+L00009628	  - "PTY/process host"
+L00009629	  - "UI shell/chrome"
+L00009630	  - "bounded preview"
+L00009631	  - "audit"
+L00009632	  - "reveal controls"
+L00009633	negative_constraints: []
+L00009634	owner_hints:
+L00009635	  - Plans/assistant-chat-design.md
+L00009636	  - Plans/FinalGUISpec.md
+L00009637	```
+L00009638	
+
+<<< CONTEXT_AFTER canonical_document_lines=9639-9650 >>>
+L00009639	### ACD-132 - Terminal Product Fidelity
+L00009640	
+L00009641	```yaml
+L00009642	plan_unit_id: ACD-132
+L00009643	unit_type: requirement
+L00009644	status: accepted
+L00009645	owner_doc: Plans/assistant-chat-design.md
+L00009646	canonical_text: >-
+L00009647	  Terminal fidelity carries GPU fallback with context-loss disclosure, IME
+L00009648	  correctness, `/accessibility/Unicode-width` handling, `/log/CI-safe` and
+L00009649	  machine-readable output modes, diff-based redraw, `/command/exit markers`,
+L00009650	  recent-command navigation, `/detach/revive/reconnect` flows, and narrow

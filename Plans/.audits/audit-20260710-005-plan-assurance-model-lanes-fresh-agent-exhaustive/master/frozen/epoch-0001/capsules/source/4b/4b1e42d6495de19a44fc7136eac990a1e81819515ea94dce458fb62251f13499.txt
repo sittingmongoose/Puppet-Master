@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE 4650-4661 >>>
+negative_constraints:
+- "Cross-lane reuse is not a best-effort cleanup path."
+- "Bulk archive/remove operations must not become one-button destructive worktree actions."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/WorktreeGitImprovement.md"
+- "Plans/Orchestrator_Page.md"
+- "Plans/Crosswalk.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 4662-5060 >>>
+### W-001 - Worktree Git Source-Preserving Bridge Retired
+
+```yaml
+plan_unit_id: W-001
+unit_type: generated_artifact_residual
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: "W-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 204 because WorktreeGitImprovement-S0100 through S0103 are generated standardization tail material: Owner / Consumer Map, PlanUnits heading, former generated W-001 bridge, and Migration Coverage. WorktreeGitImprovement-S0001 through S0099 are covered by W-002 through W-069 or explicit structural/reference dispositions. W-001 no longer carries source_preserving_planunit compile mode and must not own product coverage."
+gui_related: false
+gui_classification_reason: "The retired bridge is generated migration lineage rather than implementation-facing GUI behavior, even though its retired source lineage preserved earlier GUI-related Worktree/Git product tokens."
+split_recommended: false
+depends_on:
+- W-002
+- W-003
+- W-004
+- W-005
+- W-006
+- W-007
+- W-008
+- W-009
+- W-010
+- W-011
+- W-012
+- W-013
+- W-014
+- W-015
+- W-016
+- W-017
+- W-018
+- W-019
+- W-020
+- W-021
+- W-022
+- W-023
+- W-024
+- W-025
+- W-026
+- W-027
+- W-028
+- W-029
+- W-030
+- W-031
+- W-032
+- W-033
+- W-034
+- W-035
+- W-036
+- W-037
+- W-038
+- W-039
+- W-040
+- W-041
+- W-042
+- W-043
+- W-044
+- W-045
+- W-046
+- W-047
+- W-048
+- W-049
+- W-050
+- W-051
+- W-052
+- W-053
+- W-054
+- W-055
+- W-056
+- W-057
+- W-058
+- W-059
+- W-060
+- W-061
+- W-062
+- W-063
+- W-064
+- W-065
+- W-066
+- W-067
+- W-068
+- W-069
+unblocks: []
+acceptance_criteria:
+- WorktreeGitImprovement-S0001 through S0099 remain mapped to fine-grained Worktree/Git PlanUnits or structural/reference dispositions rather than W-001.
+- WorktreeGitImprovement-S0100 through S0103 are generated standardization tail material or retired bridge lineage, not product implementation coverage.
+- W-001 no longer uses source_preserving_planunit mode and creates no WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: residual_bridge_overreach
+reasoning_tier: standard
+context_scope: worktree_git_generated_tail_batch_204
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0100
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0101
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0102
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0103
+preserved_exact_tokens:
+- "source_preserving_planunit"
+- "Worktree & Git Improvement -- Implementation Plan"
+- "WorktreeGitImprovement-S0100"
+- "WorktreeGitImprovement-S0103"
+- "Migration Coverage"
+- "PlanUnits"
+- "Owner / Consumer Map"
+negative_constraints:
+- "W-001 must not provide product implementation coverage for WorktreeGitImprovement-S0001 through S0103 after Phase 2B batch 204."
+- "W-001 must not override W-002 through W-069 or later fine-grained Worktree/Git PlanUnits."
+- "W-001 must not use source_preserving_planunit mode after Phase 2B batch 204."
+- "Do not rely on one coarse source_preserving_planunit as the final implementation standard for WorktreeGitImprovement.md."
+preserved_contractrefs:
+- "ContractRef lineage remains preserved in span_map and coverage_map; malformed trailing apostrophes from the generated W-001 bridge are lineage only and are not promoted as active ContractRefs."
+compatibility_only_notes:
+- The retired bridge is compatibility lineage for generated Owner / Consumer Map, generated PlanUnits, former W-001 bridge, and Migration Coverage tail spans only.
+stale_retired_dispositions:
+- Former generated source-preserving bridge material is retired as migration lineage only.
+owner_hints:
+- Plans/WorktreeGitImprovement.md
+```
+## Migration Coverage
+
+Original hash: `331b85403ae824bae9bb418141c74b3c4859d018a7f2cb4a84415a5cd2077400`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-001-standardize-plans/anchor_aliases.json`
+
+The initial source-preserving standardization preserved `WorktreeGitImprovement-S0001` through `WorktreeGitImprovement-S0099` in place under `W-001`. Phase 2B batch 202 superseded that coarse mapping for `WorktreeGitImprovement-S0001` through `WorktreeGitImprovement-S0058` with fine-grained PlanUnits `W-002` through `W-036`.
+
+Phase 2B batch 203 atomized `WorktreeGitImprovement-S0059` through `WorktreeGitImprovement-S0099` into fine-grained PlanUnits `W-037` through `W-069`, structurally dispositioned the retained reference span `WorktreeGitImprovement-S0091`, and split mixed GUI/backend spans where safe. `W-001` is narrowed to residual generated-tail source-preserving coverage for `WorktreeGitImprovement-S0100` through `WorktreeGitImprovement-S0103` only and must not override the fine-grained units. Batch 203 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+Phase 2B batch 204 structurally dispositioned generated tail spans `WorktreeGitImprovement-S0100` through `WorktreeGitImprovement-S0103`: Owner / Consumer Map, PlanUnits heading, the former generated `W-001` bridge, and Migration Coverage. `W-001` is retired to migration-lineage-only compatibility disposition with `node_compile_hint.mode: source_preserving_bridge_retired`; `Plans/WorktreeGitImprovement.md` no longer has active `source_preserving_planunit` coverage. Batch 204 did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and it did not create WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code.
+
+## Ledger Compile Addendum - pldg-20260614-001
+
+### W-070 - Worktree Allocation And Lane Cleanup Header Recovery
+
+```yaml
+plan_unit_id: W-070
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: >-
+  WorktreeGitImprovement owns worktree allocation, lane/worktree binding, contamination quarantine, safe-point recovery, restore-before-reuse,
+  and lane cleanup semantics. Empty worktree allocation and lane-cleanup stubs hydrate from WorktreeGit, Executor, storage, Crosswalk, and
+  orchestrator-subagent owner split; they do not revive branch-per-tier or tier-keyed worktree allocation as live canon.
+gui_related: true
+gui_classification_reason: Source Control and worktree state are user-visible surfaces, and this unit governs their visible allocation/recovery semantics.
+depends_on: [W-001]
+unblocks: []
+acceptance_criteria:
+  - Worktree allocation defaults to package/lane ownership with seam exceptions documented by policy.
+  - Contaminated worktrees quarantine until recovery clears the blocker.
+  - branch-per-tier wording remains compatibility-only.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual worktree owner-section review
+risk_class: worktree_allocation_drift
+reasoning_tier: standard
+context_scope: worktree_allocation_cleanup
+implementation_surfaces: [Plans/WorktreeGitImprovement.md, Plans/storage-plan.md, Plans/Executor_Protocol.md, Plans/orchestrator-subagent-integration.md]
+node_compile_hint: {mode: worktree_owner_section_recovery, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0069
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0073
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0074
+preserved_exact_tokens: ["worktree allocation strategy", "lane-cleanup lineage", "package-based lane pools", "branch-per-tier", "contamination quarantine", "restore-before-reuse"]
+negative_constraints:
+  - Do not revive branch-per-tier as live worktree allocation canon.
+owner_hints: [Plans/WorktreeGitImprovement.md, Plans/Executor_Protocol.md, Plans/orchestrator-subagent-integration.md, Plans/storage-plan.md]
+```
+
+## Ledger Compile Addendum - pldg-20260616-002
+
+### W-071 - GoalRun Worktree Lease And Write Surface UX
+
+```yaml
+plan_unit_id: W-071
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: >-
+  Source Control and Worktrees must surface GoalRun and WorkNode write-surface policy through worktree leases, isolated writes, parent merge, blocked write reasons, and write-mode labels. Supported labels include read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer. Subagents must not mutate overlapping live surfaces concurrently, and every GoalRun write-capable action must preserve worktree_id, owner lane, and lease or blocker evidence.
+gui_related: true
+gui_classification_reason: Source Control, Worktrees, blocked write reasons, and lease labels are user-visible worktree/source-control UI.
+depends_on:
+  - W-070
+  - PS-115
+  - SP-215
+unblocks: []
+acceptance_criteria:
+  - Source Control displays GoalRun and WorkNode write-surface policy and lease state.
+  - Worktree leases preserve worktree_id, owner lane, and blocker evidence.
+  - read_only, proposal_only, patch_only, isolated_worktree, leased_writer, and parent_writer labels are available to visible source-control surfaces.
+  - Overlapping live writes by subagents are blocked or serialized through explicit parent merge policy.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Source Control GoalRun lease review
+risk_class: overlapping_write_surface_drift
+reasoning_tier: high
+context_scope: goalrun_worktree_leases
+implementation_surfaces:
+  - Plans/WorktreeGitImprovement.md
+  - Plans/Permissions_System.md
+  - Plans/storage-plan.md
+  - Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: goalrun_worktree_lease_ui
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0025
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0036
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0037
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0066
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0072
+preserved_exact_tokens:
+  - "Source Control"
+  - "Worktrees"
+  - "worktree leases"
+  - "isolated writes"
+  - "parent merge"
+  - "write-surface"
+  - "blocked write reasons"
+  - "read_only"
+  - "proposal_only"
+  - "patch_only"
+  - "isolated_worktree"
+  - "leased_writer"
+  - "parent_writer"
+negative_constraints:
+  - Do not mutate repositories outside write-surface and worktree policy.
+  - Do not allow overlapping live writes without explicit lease or parent merge authority.
+owner_hints:
+  - Plans/WorktreeGitImprovement.md
+  - Plans/Permissions_System.md
+  - Plans/storage-plan.md
+```
+
+## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+
+### W-072 - Plans-To-Code Worktree Allocation And Source-Control Truth
+
+```yaml
+plan_unit_id: W-072
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: >-
+  Mutation-capable WorkNode attempts must run in a known repo/worktree context. Parallel WorkNodes require isolated worktrees or explicit clean allocation, and dirty, conflicted, contaminated, blocked-preserved, or lineage-mismatched worktrees cannot be reused silently. Worktree allocation records preserve repo_id, worktree_id, worktree_path, baseline_commit_oid, branch/head state, head_commit_oid, changed_files, conflict_refs, owner lane, lease state, dirty_state_policy, conflict_policy, merge_policy, github_policy, rollback_available, rollback_ref, and restore_command_or_action. Local source-control/worktree state remains execution truth; GitHub is an optional promotion/output layer when configured.
+  This is the source-control execution contract for worktree allocation; a dirty worktree or merge conflict blocks silent reuse, and GitHub optional promotion cannot replace local source-control truth.
+gui_related: true
+gui_classification_reason: Worktree allocation, Source Control status, lease state, conflicts, and blocked-preserved states are user-visible source-control UI surfaces.
+depends_on: [W-071]
+unblocks: [OP-024, EP-100, RAP-029]
+acceptance_criteria:
+  - Mutation-capable WorkNodes preserve repo and worktree identity before execution.
+  - Parallel writes use isolated worktrees or explicit clean allocation.
+  - Dirty, conflicted, contaminated, blocked-preserved, and lineage-mismatched worktrees block silent reuse.
+  - Local worktree state remains source-control truth even when GitHub promotion is configured.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - future source-control preflight validation
+risk_class: unsafe_worktree_reuse
+reasoning_tier: high
+context_scope: plans_to_code_worktrees
+implementation_surfaces: [Plans/WorktreeGitImprovement.md, Plans/Executor_Protocol.md, Plans/FileSafe.md, Plans/GitHub_Integration.md]
+node_compile_hint: {mode: worktree_allocation_source_control_truth, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0035
+  - pldg-20260617-001-plans-to-code-handoff:atom-0036
+  - pldg-20260617-001-plans-to-code-handoff:atom-0038
+  - pldg-20260617-001-plans-to-code-handoff:dec-0015
+preserved_exact_tokens:
+  - "worktree_id"
+  - "isolated worktree"
+  - "dirty worktree"
+  - "merge conflict"
+  - "changed_files"
+  - "conflict_refs"
+  - "rollback_ref"
+  - "blocked-preserved"
+  - "local source-control truth"
+negative_constraints:
+  - Do not reuse unsafe worktrees silently.
+  - Do not require GitHub for local-only project completion.
+owner_hints:
+  - Plans/WorktreeGitImprovement.md
+  - Plans/Executor_Protocol.md
+  - Plans/FileSafe.md
+```
+
+ContractRef: ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md
+
+
+## Ledger Compile Addendum - pldg-20260618-001-prd-planning-wizard
+
+This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260618-001-prd-planning-wizard` into this existing owner or consumer doc. It does not create WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks.
+
+### W-073 - Planning Greenfield, Worktree Boundary, And Source-Control Receipts
+
+```yaml
+plan_unit_id: W-073
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: 'After the user selects or provides a project, Planning Wizard may automatically inspect local or remote paths, repository presence, current branch, remotes, status, file tree, package managers, frameworks, configuration, architecture signals, and test commands without mutation. Clone, fork, repository creation, git init, remote changes, branch checkout or creation, worktree creation, commit, push, PR creation, stash, discard, reset, and protected-branch operations require the applicable permission policy and durable receipts. Planning Wizard records repository context and may perform explicitly authorized project setup, but implementation worktree allocation, mutation preparation, and execution safe points belong to Executor provisioning after Plan Compile. For greenfield work, Planning Wizard can create a directory, initialize Git, select an initial branch, create an empty or baseline initialization commit, and optionally connect
+  or create a GitHub repository when explicitly authorized. Existing uncommitted user changes are preserved and inventoried; Puppet Master must not silently commit, stash, discard, reset, overwrite, or mingle with them and must create evidence-backed isolation or block unsafe mutation. Contribution PR mode records upstream and fork identities, base and head branches, contribution policy, compatibility expectations, required checks, commit policy, and optional PR delivery without conflating those with implementation truth. Testing-tool installation and configuration writes use FileSafe/source-control safe points, bounded write surfaces, receipts, revalidation, and rollback so discovery cannot damage the user''s project or environment.'
+gui_related: false
+gui_classification_reason: Backend, planning, contract, governance, or workflow behavior rather than visual presentation.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The live owner doc preserves every source atom listed in source_atom_ids without treating the ledger as canonical product prose.
+- Exact tokens, negative constraints, owner hints, and accepted corrections remain available to future audits through this PlanUnit.
+- No WorkNodes, NodeSeeds, executable queues, GoalRuns, implementation files, generated governance artifacts, or production build tasks are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard
+risk_class: stale_or_forbidden_behavior
+reasoning_tier: high
+context_scope: ledger_to_plans_compile
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+- Plans/Planning_Wizard.md
+- Plans/FileSafe.md
+- Plans/Permissions_System.md
+- Plans/GitHub_Integration.md
+- Plans/Executor_Protocol.md
+- Plans/Automated_Testing_System.md
+node_compile_hint:
+  mode: canonical_planunit_from_bootstrap_ledger
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260618-001-prd-planning-wizard:atom-0067
+- pldg-20260618-001-prd-planning-wizard:atom-0070
+- pldg-20260618-001-prd-planning-wizard:atom-0071
+- pldg-20260618-001-prd-planning-wizard:atom-0072
+- pldg-20260618-001-prd-planning-wizard:atom-0074
+- pldg-20260618-001-prd-planning-wizard:atom-0076
+- pldg-20260618-001-prd-planning-wizard:atom-0088
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/04-project-context-and-source-control.md#SRC-PROJECT
+- Plans/ledgers/v2/pldg-20260618-001-prd-planning-wizard/source_shards/05-testing-and-visible-verification.md#SRC-TESTING
+source_atom_ids:
+- atom-0067
+- atom-0070
+- atom-0071
+- atom-0072
+- atom-0074
+- atom-0076
+- atom-0088
+decision_refs:
+- dec-0014
+- dec-0015
+- dec-0017
+correction_refs: []
+preserved_exact_tokens:
+- read-only project discovery
+- git status
+- current branch
+- authority
+- receipt
+- git init
+- push
+- PR creation
+- Executor provisioning
+- implementation worktree
+- greenfield
+- baseline initialization commit
+- dirty repository
+- uncommitted user changes
+- upstream
+- fork
+- base branch
+- head branch
+- PR
+- safe point
+- rollback
+negative_constraints:
+- Do not create implementation worktrees or execution safe points as an implicit Planning Wizard side effect.
+- Never silently commit, stash, discard, reset, or overwrite user changes.
+owner_hints:
+- Plans/Planning_Wizard.md
+- Plans/FileSafe.md
+- Plans/WorktreeGitImprovement.md
+- Plans/Permissions_System.md
+- Plans/GitHub_Integration.md
+- Plans/Executor_Protocol.md
+- Plans/Automated_Testing_System.md
+```
+
+## Ledger Compile Addendum - pldg-20260622-001-fff
+
+
+<<< CONTEXT_AFTER 5061-5072 >>>
+### W-074 - Discovery Remote Worktree Authority And No Local Substitution
+
+```yaml
+plan_unit_id: W-074
+unit_type: constraint
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: >-
+  WorktreeGitImprovement owns the repo, branch, worktree, SSH root, and remote project authority boundary consumed by DiscoveryService. Discovery keeps local worktrees, branches, SSH roots, requested_remote_identity, effective_remote_identity, host/root/repo/branch/worktree refs, and cache provenance separate. SSH discovery must pass for a project with no local checkout and must never substitute download-edit-upload authority or an unrelated local path for authorized remote identity/path verification.
+  Storage, FileSafe, and permission consumers use this authority boundary; cache, policy, and redaction references here are cross-owner interface references, not prerequisites for defining remote worktree authority.
+gui_related: false
+gui_classification_reason: This is repository/worktree/remote authority, not visual presentation.

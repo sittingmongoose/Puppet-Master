@@ -1,0 +1,369 @@
+<<< CONTEXT_BEFORE canonical_document_lines=13437-13448 >>>
+L00013437	negative_constraints:
+L00013438	  - Do not leak blocked filenames through GUI rows, summaries, receipts, rank gaps, or diagnostics.
+L00013439	  - Do not expose raw selected paths to unauthorized consumers through selected_result_ids.
+L00013440	  - Do not run remote manifest discovery outside authorized remote project roots.
+L00013441	owner_hints: [Plans/FileSafe.md, Plans/Permissions_System.md, Plans/Runtime_Artifacts_Panel.md, Plans/FinalGUISpec.md]
+L00013442	```
+L00013443	
+L00013444	
+L00013445	## Ledger Compile Addendum - pldg-20260626-001-feature-name
+L00013446	
+L00013447	This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+L00013448	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=13449-13788 >>>
+L00013449	### F2-192 - Vision Bridge Image Source Safety
+L00013450	
+L00013451	```yaml
+L00013452	plan_unit_id: F2-192
+L00013453	unit_type: requirement
+L00013454	status: accepted
+L00013455	owner_doc: Plans/FileSafe.md
+L00013456	canonical_text: Vision bridge image source resolution may use chat/thread attachments, selected runtime artifacts/screenshots,
+L00013457	  FileSafe-allowed project files, clipboard images, and recent OS screenshots. Clipboard and recent OS screenshot
+L00013458	  support are MVP, not deferred, but PM must use explicit permissioned ingestion, visible source labeling, deterministic
+L00013459	  source precedence, user choice for ambiguous recent screenshots, redaction/sensitivity policy, and no hidden Desktop/Downloads
+L00013460	  scraping or FileSafe bypass.
+L00013461	gui_related: true
+L00013462	gui_classification_reason: Image source selection, clipboard, screenshots, and project-file access are user-visible
+L00013463	  safety surfaces.
+L00013464	depends_on:
+L00013465	- PS-121
+L00013466	unblocks:
+L00013467	- ACD-425
+L00013468	acceptance_criteria:
+L00013469	- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+L00013470	- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+L00013471	- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+L00013472	  are created by this compile.
+L00013473	validation_surfaces:
+L00013474	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+L00013475	- python3 scripts/pm-plan-index.py validate
+L00013476	- git diff --check
+L00013477	risk_class: image_source_policy_bypass
+L00013478	reasoning_tier: high
+L00013479	context_scope: vision_image_sources_filesafe
+L00013480	implementation_surfaces:
+L00013481	- Plans/FileSafe.md
+L00013482	- future image source resolver
+L00013483	node_compile_hint:
+L00013484	  mode: vision_image_source_safety
+L00013485	  create_worknodes: false
+L00013486	  create_nodeseeds: false
+L00013487	source_lineage:
+L00013488	- pldg-20260626-001-feature-name:atom-0075
+L00013489	- pldg-20260626-001-feature-name:atom-0082
+L00013490	- pldg-20260626-001-feature-name:atom-0085
+L00013491	- Plans/Runtime_Artifacts_Panel.md
+L00013492	- Plans/Prompt_Pipeline.md
+L00013493	- chat:vision-bridge-defaults-answer
+L00013494	- external:github.com/alfaoz/opencode-see-image@cde1615f6dfc9039c58da6813112ee53391b5b49
+L00013495	- chat:vision-pressure-test-request
+L00013496	- chat:vision-pressure-test-defaults-answer
+L00013497	- Plans/FileSafe.md
+L00013498	source_atom_ids:
+L00013499	- atom-0075
+L00013500	- atom-0082
+L00013501	- atom-0085
+L00013502	decision_refs:
+L00013503	- dec-0014
+L00013504	- dec-0015
+L00013505	- dec-0016
+L00013506	- dec-0017
+L00013507	preserved_exact_tokens:
+L00013508	- chat attachments
+L00013509	- runtime artifacts
+L00013510	- screenshots
+L00013511	- project files
+L00013512	- clipboard
+L00013513	- recent OS screenshots
+L00013514	- FileSafe
+L00013515	- 3. not deferred
+L00013516	- current-turn attachment
+L00013517	- selected artifact
+L00013518	- project file allowed by FileSafe
+L00013519	- clipboard image
+L00013520	- recent OS screenshot picker
+L00013521	- ambiguous
+L00013522	- hidden Desktop/Downloads scraping
+L00013523	- 'yes'
+L00013524	- sensitivity/redaction policy
+L00013525	- disclosure destination
+L00013526	- explicit user override
+L00013527	- redaction/omission details
+L00013528	- derived artifact manifest
+L00013529	- secrets
+L00013530	negative_constraints:
+L00013531	- Do not defer clipboard or recent OS screenshot support out of MVP.
+L00013532	- Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default without PM-owned permission
+L00013533	  and ingestion rules.
+L00013534	- Do not bypass FileSafe or artifact access policy when resolving project images.
+L00013535	- Do not inline raw screenshots into prompts when artifact refs plus bounded summaries are required.
+L00013536	- Do not scrape arbitrary Desktop/Downloads/recent screenshot locations as a hidden default.
+L00013537	- Do not choose among ambiguous recent screenshots without user-visible selection or clear recency evidence.
+L00013538	- Do not bypass FileSafe or artifact permissions for project-file image sources.
+L00013539	- Do not silently send sensitive screenshots or images to another provider without policy evaluation.
+L00013540	- Do not claim redaction happened without recording redaction/omission metadata.
+L00013541	- Do not expose secret material in manifests, receipts, GUI previews, or exports.
+L00013542	owner_hints:
+L00013543	- Plans/Runtime_Artifacts_Panel.md
+L00013544	- Plans/Project_Output_Artifacts.md
+L00013545	- Plans/FileSafe.md
+L00013546	- Plans/Prompt_Pipeline.md
+L00013547	- Plans/assistant-chat-design.md
+L00013548	- Plans/FinalGUISpec.md
+L00013549	- Plans/UI_Command_Catalog.md
+L00013550	- Plans/Permissions_System.md
+L00013551	```
+L00013552	
+L00013553	## Ledger Compile Addendum - pldg-20260629-001-feature-name
+L00013554	
+L00013555	This addendum compiles Free Models upstream side-effect safety into FileSafe ownership. It does not create WorkNodes, NodeSeeds, executable queues, generated governance artifacts, or implementation files.
+L00013556	
+L00013557	### F2-193 - Free Models Upstream Side Effect And Adapter Guard Boundary
+L00013558	
+L00013559	```yaml
+L00013560	plan_unit_id: F2-193
+L00013561	unit_type: requirement
+L00013562	status: accepted
+L00013563	owner_doc: Plans/FileSafe.md
+L00013564	canonical_text: >-
+L00013565	  FileSafe gates any Free Models imported or generated adapter behavior that could execute commands, write files/configs, install endpoints, run local daemons/proxies, self-update, write credentials, mutate third-party tool config, or otherwise produce host side effects. Pre-activation validation must prove the adapter is PM-owned declarative material or emit blocked/quarantined evidence before activation.
+L00013566	gui_related: false
+L00013567	gui_classification_reason: Defines host/file/config side-effect guards, not GUI presentation.
+L00013568	depends_on: []
+L00013569	unblocks: []
+L00013570	acceptance_criteria:
+L00013571	  - Upstream executable commands, local proxies, endpoint installers, telemetry hooks, credential writers, self-update logic, and arbitrary config writers are blocked unless a future explicit plan reopens them.
+L00013572	  - Generated adapters cannot activate until FileSafe-relevant side effects are classified and validated.
+L00013573	  - Blocked/quarantined outcomes preserve source/ref/hash and redacted evidence for Advanced/Support diagnostics.
+L00013574	validation_surfaces:
+L00013575	  - python3 scripts/pm-plan-index.py validate
+L00013576	  - Free Models adapter side-effect blocking fixtures
+L00013577	  - FileSafe generated-adapter quarantine fixtures
+L00013578	risk_class: unsafe_host_side_effect
+L00013579	reasoning_tier: high
+L00013580	context_scope: free_models_filesafe_adapter_boundary
+L00013581	implementation_surfaces:
+L00013582	  - Plans/FileSafe.md
+L00013583	  - Plans/Permissions_System.md
+L00013584	  - Plans/Contracts_V0.md
+L00013585	  - Plans/storage-plan.md
+L00013586	  - Plans/Models_System.md
+L00013587	node_compile_hint:
+L00013588	  mode: free_models_filesafe_guard_planunit
+L00013589	  create_worknodes: false
+L00013590	  create_nodeseeds: false
+L00013591	source_lineage:
+L00013592	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/records/design_atoms.jsonl
+L00013593	  - Plans/ledgers/v2/pldg-20260629-001-feature-name/source_shards/free_coding_models_temp_checkout_inspection_20260629.json
+L00013594	source_atom_ids: [atom-0019, atom-0033, atom-0060, atom-0063, atom-0064, atom-0196, atom-0200, atom-0277, atom-0278]
+L00013595	preserved_exact_tokens:
+L00013596	  - "no Docker"
+L00013597	  - "native"
+L00013598	  - "local daemon"
+L00013599	  - "local proxies"
+L00013600	  - "telemetry hooks"
+L00013601	  - "credential writers"
+L00013602	  - "endpoint installers"
+L00013603	  - "self-update logic"
+L00013604	  - "arbitrary config writers"
+L00013605	negative_constraints:
+L00013606	  - Do not run Free Models through Docker as the PM feature implementation.
+L00013607	  - Do not inherit the upstream local daemon as PM's execution model without PM-native adaptation.
+L00013608	  - Do not execute arbitrary upstream commands/scripts, local proxies, telemetry hooks, credential writers, endpoint installers, self-update logic, or arbitrary config writers.
+L00013609	owner_hints:
+L00013610	  - Plans/FileSafe.md
+L00013611	  - Plans/Permissions_System.md
+L00013612	  - Plans/Contracts_V0.md
+L00013613	```
+L00013614	
+L00013615	## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+L00013616	
+L00013617	This addendum compiles containerized-host FileSafe mount, exec, filesystem, secret, and side-effect boundaries. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, generated governance artifacts, or production build tasks.
+L00013618	
+L00013619	### F2-194 - Containerized Host FileSafe Mount Exec And Side-Effect Guards
+L00013620	
+L00013621	```yaml
+L00013622	plan_unit_id: F2-194
+L00013623	unit_type: requirement
+L00013624	status: accepted
+L00013625	owner_doc: Plans/FileSafe.md
+L00013626	canonical_text: >-
+L00013627	  FileSafe gates containerized-host mounts, env files, secret refs, docker.sock exposure, bind mounts, runtime file
+L00013628	  access, command/custom secret extractors, terminal-like actions, bounded exec, remote sync, SSH tunnel behavior, and
+L00013629	  external side effects. Host profiles carry FileSafe-visible mount_policy, filesafe_scope_ref, secret_ref_policy,
+L00013630	  redaction_profile, and cleanup policy before use. Container exec, Kubernetes exec, remote shell, file controls,
+L00013631	  service controls, local API endpoints, and Coasts-style terminal/file/service controls cannot bypass PM's command,
+L00013632	  permission, FileSafe, Executor/Tools, transcript, receipt, and cleanup contracts.
+L00013633	gui_related: false
+L00013634	gui_classification_reason: File, mount, secret, exec, and side-effect guards are backend safety behavior, not GUI presentation.
+L00013635	depends_on: [CV-303, CV-304]
+L00013636	unblocks: [CRAU-091, EP-109, T-166, ATS-019]
+L00013637	acceptance_criteria:
+L00013638	  - Host profiles and host operations expose FileSafe scope before mounts, env refs, secrets, docker.sock, bind mounts, remote sync, or exec are allowed.
+L00013639	  - Container-local endpoints, terminal sessions, file controls, and service controls cannot bypass PM permission/FileSafe/receipt paths.
+L00013640	  - Secret-bearing stdin, stdout, env files, registry credentials, command extractor output, and diagnostics are redacted or blocked according to policy.
+L00013641	  - Remote or uncertain cleanup outcomes retain evidence and blocked/indeterminate state instead of assuming success.
+L00013642	validation_surfaces:
+L00013643	  - python3 scripts/pm-plan-index.py validate
+L00013644	  - future containerized host FileSafe scope fixtures
+L00013645	  - future docker.sock and bind-mount denial fixtures
+L00013646	risk_class: containerized_host_filesafe_bypass
+L00013647	reasoning_tier: high
+L00013648	context_scope: containerized_host_filesafe_guards
+L00013649	implementation_surfaces:
+L00013650	  - Plans/FileSafe.md
+L00013651	  - future host FileSafe policy
+L00013652	node_compile_hint:
+L00013653	  mode: containerized_host_filesafe_mount_exec_guards
+L00013654	  create_worknodes: false
+L00013655	  create_nodeseeds: false
+L00013656	source_lineage:
+L00013657	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0018
+L00013658	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0019
+L00013659	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0023
+L00013660	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0024
+L00013661	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0034
+L00013662	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0038
+L00013663	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0044
+L00013664	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0050
+L00013665	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0053
+L00013666	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0064
+L00013667	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0067
+L00013668	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0069
+L00013669	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0073
+L00013670	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0074
+L00013671	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+L00013672	source_atom_ids: [atom-0018, atom-0019, atom-0023, atom-0024, atom-0034, atom-0038, atom-0044, atom-0050, atom-0053, atom-0064, atom-0067, atom-0069, atom-0073, atom-0074, atom-0081]
+L00013673	decision_refs: [dec-0008, dec-0017, dec-0020]
+L00013674	preserved_exact_tokens:
+L00013675	  - "FileSafe scope"
+L00013676	  - "filesafe_scope_ref"
+L00013677	  - "scoped worktree/file mounts"
+L00013678	  - "docker.sock"
+L00013679	  - "bind mounts"
+L00013680	  - "command/custom secret extractors"
+L00013681	  - "Keychain"
+L00013682	  - "ssh -L"
+L00013683	  - "ssh -R"
+L00013684	  - "rsync"
+L00013685	  - "mutagen"
+L00013686	  - "terminal sessions"
+L00013687	  - "file controls"
+L00013688	  - "service controls"
+L00013689	  - "container exec"
+L00013690	negative_constraints:
+L00013691	  - Do not let container exec bypass Executor/Permissions/FileSafe when PM execution is in scope.
+L00013692	  - Do not expose terminal/file/service controls outside PM's command, permission, receipt, and FileSafe model.
+L00013693	  - Do not copy Coasts local API, terminal, or file controls blindly.
+L00013694	  - Do not expose raw Docker/Kubernetes secrets in records, prompts, GUI, receipts, exports, or diagnostics.
+L00013695	  - Do not allow unscoped mounts, docker.sock access, secret extractors, or remote side effects through hidden defaults.
+L00013696	owner_hints:
+L00013697	  - Plans/FileSafe.md
+L00013698	  - Plans/Permissions_System.md
+L00013699	  - Plans/Contracts_V0.md
+L00013700	  - Plans/Executor_Protocol.md
+L00013701	  - Plans/Tools.md
+L00013702	```
+L00013703	
+L00013704	## Ledger Compile Addendum - pldg-20260703-001-feature-intake
+L00013705	
+L00013706	This addendum compiles source-lineage obligations from bootstrap ledger `pldg-20260703-001-feature-intake` into this owner doc. The ledger remains source/planning memory; these PlanUnits are the live canonical evidence. This compile does not create WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or a governance seal.
+L00013707	
+L00013708	### F2-195 - P1-SECURITY-CREDENTIAL-LOGGING
+L00013709	
+L00013710	```yaml
+L00013711	plan_unit_id: F2-195
+L00013712	unit_type: requirement
+L00013713	status: accepted
+L00013714	owner_doc: Plans/FileSafe.md
+L00013715	canonical_text: >-
+L00013716	  P1-SECURITY-CREDENTIAL-LOGGING (P1) is compiled as canonical Puppet Master intent for Credential and sensitive output redaction timing: Add RedactionSettlement stage before UI/render/persistence for tool/terminal/model outputs; keep secure raw vault only when required for replay with explicit policy. The preserved PM gap/delta is: Need a redaction-time ordering contract: raw tool output must not hit UI/transcript before redaction policy has a chance to apply, unless explicitly marked sensitive/raw local-only. The observed external-repo signal remains source-lineage evidence: Agent Zero security issue raises credential leakage concerns; Codex issue list has PostToolUse redaction-before-transcript-rendering problem; Cline PRs add credential lifecycle debug logging.
+L00013717	gui_related: true
+L00013718	gui_classification_reason: User-visible GUI, built-in terminal, accessibility, visual, multimodal, or desktop surface is directly implicated.
+L00013719	depends_on:
+L00013720	- PDS-003
+L00013721	- PNC-001
+L00013722	unblocks: []
+L00013723	acceptance_criteria:
+L00013724	- Secret fixture in tool output is redacted before GUI transcript render.
+L00013725	- Privilege metadata logs actor/target/realm/transport without command secrets.
+L00013726	- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+L00013727	validation_surfaces:
+L00013728	- python3 scripts/pm-plan-index.py validate
+L00013729	- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+L00013730	- Secret fixture in tool output is redacted before GUI transcript render.
+L00013731	- Privilege metadata logs actor/target/realm/transport without command secrets.
+L00013732	risk_class: p1_provider_capability_and_metadata_hardening
+L00013733	reasoning_tier: standard
+L00013734	context_scope: provider_capability_and_metadata
+L00013735	implementation_surfaces:
+L00013736	- Plans/FileSafe.md
+L00013737	- Plans/Permissions_System.md
+L00013738	- Plans/Tools.md
+L00013739	- Plans/storage-plan.md
+L00013740	node_compile_hint:
+L00013741	  mode: p1_security_credential_logging
+L00013742	  create_worknodes: false
+L00013743	  create_nodeseeds: false
+L00013744	source_lineage:
+L00013745	- pldg-20260703-001-feature-intake:atom-0019
+L00013746	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0019
+L00013747	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0015/P1-SECURITY-CREDENTIAL-LOGGING@line=15
+L00013748	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0015/P1-SECURITY-CREDENTIAL-LOGGING
+L00013749	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+L00013750	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+L00013751	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/pm_external_repo_action_backlog_2026-07-03.jsonl:15
+L00013752	- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:833-1329
+L00013753	source_atom_ids:
+L00013754	- atom-0019
+L00013755	external_atom_id: extrepo-20260703-0015
+L00013756	source_row_id: P1-SECURITY-CREDENTIAL-LOGGING
+L00013757	priority: P1
+L00013758	finding_family: Credential and sensitive output redaction timing
+L00013759	source_repos:
+L00013760	- agent0ai/agent-zero
+L00013761	- cline/cline
+L00013762	- openai/codex
+L00013763	target_docs:
+L00013764	- Plans/FileSafe.md
+L00013765	- Plans/Permissions_System.md
+L00013766	- Plans/Tools.md
+L00013767	- Plans/storage-plan.md
+L00013768	owner_hints:
+L00013769	- Plans/FileSafe.md
+L00013770	- Plans/Permissions_System.md
+L00013771	- Plans/Tools.md
+L00013772	- Plans/storage-plan.md
+L00013773	preserved_exact_tokens:
+L00013774	- extrepo-20260703-0015
+L00013775	- P1-SECURITY-CREDENTIAL-LOGGING
+L00013776	- P1
+L00013777	- Credential and sensitive output redaction timing
+L00013778	- agent0ai/agent-zero
+L00013779	- cline/cline
+L00013780	- openai/codex
+L00013781	negative_constraints: []
+L00013782	observed_signal: Agent Zero security issue raises credential leakage concerns; Codex issue list has PostToolUse redaction-before-transcript-rendering problem; Cline PRs add credential lifecycle debug logging.
+L00013783	pm_current_coverage: PM has FileSafe and privileged session metadata minimization.
+L00013784	pm_gap_or_delta: 'Need a redaction-time ordering contract: raw tool output must not hit UI/transcript before redaction policy has a chance to apply, unless explicitly marked sensitive/raw local-only.'
+L00013785	proposal_or_recommendation: Add RedactionSettlement stage before UI/render/persistence for tool/terminal/model outputs; keep secure raw vault only when required for replay with explicit policy.
+L00013786	compile_disposition: create_new_planunit
+L00013787	```
+L00013788	
+
+<<< CONTEXT_AFTER canonical_document_lines=13789-13800 >>>
+L00013789	### F2-196 - P1-TRACE-REDACTION-BEFORE-WRITE
+L00013790	
+L00013791	```yaml
+L00013792	plan_unit_id: F2-196
+L00013793	unit_type: requirement
+L00013794	status: accepted
+L00013795	owner_doc: Plans/FileSafe.md
+L00013796	canonical_text: >-
+L00013797	  P1-TRACE-REDACTION-BEFORE-WRITE (P1) is compiled as canonical Puppet Master intent for Trace/debug log redaction before persistence: Imported external-repo finding extrepo-20260703-0033 / P1-TRACE-REDACTION-BEFORE-WRITE (P1). The preserved PM gap/delta is: Add invariant that full prompts, requests, provider payloads, WebSocket frames, and tool raw outputs cannot hit trace/debug logs before redaction/bounding unless explicit encrypted local debug capture is enabled. The observed external-repo signal remains source-lineage evidence: Codex 0.142.5 fixed full Responses WebSocket request payloads being written to trace logs.
+L00013798	gui_related: false
+L00013799	gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+L00013800	depends_on:

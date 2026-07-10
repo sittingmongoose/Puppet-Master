@@ -1,0 +1,412 @@
+<<< CONTEXT_BEFORE 21490-21501 >>>
+- "failed"
+- "completed local work"
+negative_constraints:
+- "Remote side-effect or guard blocks must not be mislabeled as failed outcomes."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 21502-21884 >>>
+### F3-333 - Event-Driven Blocked Scheduler UI Correctness
+
+```yaml
+plan_unit_id: F3-333
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Scheduler, blocked, remediation, and all-nodes-blocked UI updates follow runtime events or
+  projections through the event-driven rule and must not rely on timer polling for
+  correctness; when all runnable nodes are blocked, runtime blocked/recovery events drive the
+  corresponding persistent GUI banner or card immediately.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible FinalGUISpec GUI behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: event_driven_blocked_scheduler_ui_correctness
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0203"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0207"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0228"
+preserved_exact_tokens:
+- "invoke_from_event_loop"
+- "event-driven rule"
+- "MUST update from runtime events/projections"
+- "No timer polling for correctness"
+- "all runnable nodes are blocked"
+- "persistent blocked-state banner or card"
+negative_constraints:
+- "Timer polling must not become the correctness model for scheduler, blocked, remediation, or all-nodes-blocked GUI updates."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-334 - Runtime State Visible Elements
+
+```yaml
+plan_unit_id: F3-334
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Runtime-state GUI surfaces expose queue-analysis summary with last wake reason,
+  blocked-state badges and grouped blocked lists, safe-point state and restore status,
+  remediation lineage navigation, disabled-action explanations tied to canonical reason codes,
+  and clear distinction between attention_required, blocked, retrying, and terminal failure.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines required visible runtime-state elements; the source span inference is
+  corrected from false to GUI-related true.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: runtime_state_visible_elements
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0206"
+preserved_exact_tokens:
+- "queue-analysis summary"
+- "last wake reason"
+- "blocked-state badges"
+- "grouped blocked lists"
+- "safe-point state"
+- "restore status"
+- "remediation lineage navigation"
+- "disabled-action explanations tied to canonical reason codes"
+- "attention_required"
+- "retrying"
+- "terminal failure"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-335 - UX Safety And Disabled Action Explanations
+
+```yaml
+plan_unit_id: F3-335
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  If the GUI cannot perform a required action in the current mode, it states why, points to
+  the canonical recovery path, and does not present controls that imply hidden fallback,
+  hidden retry, or hidden re-auth behavior.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible FinalGUISpec GUI behavior.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: ux_safety_and_disabled_action_explanations
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0208"
+preserved_exact_tokens:
+- "current mode"
+- "canonical recovery path"
+- "hidden fallback"
+- "hidden retry"
+- "hidden re-auth behavior"
+negative_constraints:
+- "The GUI must not present controls that imply hidden fallback, hidden retry, or hidden re-auth behavior."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-336 - Thread Run Status And Scheduler State Taxonomy
+
+```yaml
+plan_unit_id: F3-336
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Thread and run status surfaces include distinct presentations for attention_required,
+  blocked, retrying/backoff, and remediation; waiting_approval and other blocked reasons
+  remain runtime overlays rather than replacement lifecycle states; graph-progress lifecycle
+  remains canonical; blocked/backoff/retry/remediation/approval-pending render from runtime
+  projections; and requested versus effective persona/platform/model remains visible where
+  substitution occurred.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible status taxonomy and scheduler state presentation; false-inferred
+  source spans are GUI-related here.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: thread_run_status_and_scheduler_state_taxonomy
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0211"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0218"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0221"
+preserved_exact_tokens:
+- "attention_required"
+- "blocked"
+- "retrying/backoff"
+- "remediation"
+- "waiting_approval"
+- "graph-progress contract"
+- "requested vs effective persona/platform/model"
+- "terminal failure"
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-337 - FileSafe Persistent Blocked Episode Rendering
+
+```yaml
+plan_unit_id: F3-337
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  A FileSafe block renders as a persistent blocked episode until the underlying runtime block
+  resolves and must not auto-dismiss while still active.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible FileSafe blocked-episode rendering; the source span inference is
+  corrected from false to GUI-related true.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: filesafe_persistent_blocked_episode_rendering
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0213"
+preserved_exact_tokens:
+- "FileSafe block"
+- "persistent blocked episode"
+- "MUST NOT auto-dismiss while still active"
+negative_constraints:
+- "A FileSafe block must not auto-dismiss while still active."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-338 - Degraded Draft Warning Guardrail
+
+```yaml
+plan_unit_id: F3-338
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Decomposition degradation is a pre-lock planning state only; GUI copy must not imply silent
+  degraded canonical execution after graph lock; when draft decomposition degrades from graph
+  to flat sequencing before canonical graph lock, the UI shows the amber warning text Plan
+  simplified to sequential steps due to structural issues in the decomposition. Performance
+  may be reduced., includes a View details link for graph_integrity issues, and requires no
+  user action while flat sequencing continues automatically.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible FinalGUISpec GUI behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: degraded_draft_warning_guardrail
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0214"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0227"
+preserved_exact_tokens:
+- "Decomposition degradation"
+- "pre-lock planning state only"
+- "MUST NOT imply silent degraded canonical execution after graph lock"
+- "Plan simplified to sequential steps due to structural issues in the decomposition. Performance may be reduced."
+- "View details"
+- "graph_integrity"
+- "flat sequencing"
+negative_constraints:
+- "GUI copy must not imply silent degraded canonical execution after graph lock."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+### F3-339 - All-Nodes-Blocked Boundary And Banner
+
+```yaml
+plan_unit_id: F3-339
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  Before owner runtime contracts define dedicated all-blocked events, GUI surfaces may derive
+  all-blocked banners from current projections but must not treat undeclared runtime events as
+  canonical; once all runnable nodes are blocked, runtime blocked/recovery events and
+  projections drive the persistent blocked-state banner or card, and the user can resume after
+  resolving blocks.
+gui_related: true
+gui_classification_reason: >-
+  This unit defines visible FinalGUISpec GUI behavior.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- "The covered source span remains losslessly available for exact-text audit."
+- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+validation_surfaces:
+- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+- "python3 scripts/pm-plan-index.py validate"
+risk_class: finalgui_drift
+reasoning_tier: standard
+context_scope: finalgui_standardization
+implementation_surfaces:
+- "Plans/FinalGUISpec.md"
+node_compile_hint:
+  mode: all_nodes_blocked_boundary_and_banner
+  create_worknodes: false
+source_lineage:
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0215"
+- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0228"
+preserved_exact_tokens:
+- "All-nodes-blocked gating"
+- "MAY derive all-blocked banners from current projections"
+- "MUST NOT treat undeclared runtime events as canonical"
+- "all runnable nodes are blocked"
+- "persistent blocked-state banner or card"
+negative_constraints:
+- "GUI surfaces must not treat undeclared all-blocked runtime events as canonical."
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+owner_hints:
+- "Plans/FinalGUISpec.md"
+```
+
+
+<<< CONTEXT_AFTER 21885-21896 >>>
+### F3-340 - Canonical Blocked Recovery GUI Summary Boundary
+
+```yaml
+plan_unit_id: F3-340
+unit_type: requirement
+status: accepted
+owner_doc: Plans/FinalGUISpec.md
+canonical_text: >-
+  The Canonical Blocked/Recovery Behavior section is the canonical GUI summary for blocked and
+  recovery surfaces, and superseded scheduler or blocked addenda remain subordinate to that
+  summary.
+gui_related: true

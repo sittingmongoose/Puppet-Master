@@ -1,0 +1,372 @@
+<<< CONTEXT_BEFORE 1397-1408 >>>
+- source_branch is empty
+- target_branch
+- git checkout target_branch
+- base branch is missing
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/WorktreeGitImprovement.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1409-1751 >>>
+### W-013 - Lane Worktree Lifecycle Handshake
+
+```yaml
+plan_unit_id: W-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: Lanes own worktrees through explicit Source Control allocation, Orchestrator records the handshake, and canonical lane/worktree records drive reuse, cleanup, retry, and recovery.
+gui_related: false
+gui_classification_reason: This unit defines backend/runtime, storage, governance, or command policy rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-002
+unblocks: []
+acceptance_criteria:
+- W-013 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_202
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: lane_worktree_handshake
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0030
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0031
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0033
+preserved_exact_tokens:
+- lane_id
+- run_id
+- worktree_id
+- lifecycle state
+- blocked/recovery state
+- Source Control MUST confirm allocation
+- Orchestrator records the handshake
+- canonical lane/worktree records
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Stale worktrees allocated but not reclaimed are eligible for cleanup via storage housekeeping.
+owner_hints:
+- Plans/WorktreeGitImprovement.md
+- Plans/Orchestrator_Page.md
+```
+
+### W-014 - Worktree Row Ownership Presentation
+
+```yaml
+plan_unit_id: W-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: Worktree rows show owning package, lane, run, lifecycle, and blocked/recovery state while Source Control actions report results back through canonical lane/worktree records.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Source Control, Git/worktree GUI, copy, or configuration presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-013
+unblocks: []
+acceptance_criteria:
+- W-014 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_202
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: row_projection
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0033
+preserved_exact_tokens:
+- owning package reference
+- lane
+- run
+- lifecycle state
+- blocked/recovery state
+- worktree rows
+- Source Control actions
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/WorktreeGitImprovement.md
+- Plans/FinalGUISpec.md
+- Plans/Orchestrator_Page.md
+```
+
+### W-015 - Allocation Strategy And Cleanup Lineage
+
+```yaml
+plan_unit_id: W-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: Worktree allocation follows lane/effective-scope provider policy; contamination, dirty state, conflict state, blocked recovery, or lineage mismatch disqualifies reuse, and cleanup waits for grace-period and file-lock checks.
+gui_related: false
+gui_classification_reason: This unit defines backend/runtime, storage, governance, or command policy rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-013
+unblocks: []
+acceptance_criteria:
+- W-015 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_202
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: allocation_policy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0032
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0034
+preserved_exact_tokens:
+- delegated subagent
+- overseer
+- node
+- work package
+- seam
+- run
+- contamination
+- dirty-state
+- conflict-state
+- grace_period_ms
+- worktree.deleted
+- worktree.created
+negative_constraints:
+- worktree.deleted may be emitted only after the grace-period and file-lock checks pass.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/WorktreeGitImprovement.md
+```
+
+### W-016 - Runtime Lineage And Legacy State Migration
+
+```yaml
+plan_unit_id: W-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: Worktree transfer, restore, retry, and fresh-attempt payloads carry explicit SCM targeting and never silently inherit prior ownership; legacy git_panel/* state is one-time migration input only.
+gui_related: false
+gui_classification_reason: This unit defines backend/runtime, storage, governance, or command policy rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-013
+- W-015
+unblocks: []
+acceptance_criteria:
+- W-016 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_202
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: runtime_lineage
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0035
+preserved_exact_tokens:
+- runtime lineage event
+- cmd.runtime.restore_safe_point_then_retry
+- repo_id
+- worktree_id
+- baseline_target
+- safe_point
+- historical_commit
+- worktree_head
+- /fresh-attempt
+- git_panel/*
+- source_control.project_state.{project_id}
+negative_constraints:
+- Manual prune/remove stays forbidden while the worktree is active or blocked_preserved unless the explicit override policy permits it and records the override.
+- No new build writes both legacy and canonical keys.
+preserved_contractrefs: []
+compatibility_only_notes:
+- Legacy git_panel/* and git_panel state is one-time migration input into source_control.project_state.{project_id} only.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/WorktreeGitImprovement.md
+- Plans/storage-plan.md
+- Plans/Run_Modes.md
+```
+
+### W-017 - Worktree Identity And Remote Context
+
+```yaml
+plan_unit_id: W-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: Source Control owns live SCM truth with stable project_id/repo_id/worktree_id; remote or SSH and historical worktrees keep correct live, historical, or compare contexts with deterministic labels.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Source Control, Git/worktree GUI, copy, or configuration presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-013
+unblocks: []
+acceptance_criteria:
+- W-017 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_202
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: identity_context
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0036
+preserved_exact_tokens:
+- project_id/repo_id/worktree_id
+- repo_id
+- worktree_id
+- worktree_path
+- /recovered
+- /SSH
+- historical_snapshot
+- live_state
+- compare_historical_to_live
+- compare_target
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Health is a read-only diagnostic and validation mirror unless a repair utility deep-links back into Source Control.
+owner_hints:
+- Plans/WorktreeGitImprovement.md
+- Plans/storage-plan.md
+- Plans/FinalGUISpec.md
+```
+
+### W-018 - Multi Active SCM Status Strip
+
+```yaml
+plan_unit_id: W-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: Orchestrator and Progress surfaces consume a first-class SCM status strip with primary and additional active contexts, lifecycle states, blocked episode CTAs, and exact deep-link payload fields.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Source Control, Git/worktree GUI, copy, or configuration presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- W-017
+unblocks: []
+acceptance_criteria:
+- W-018 remains addressable as a fine-grained Worktree/Git PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: worktree_git_drift
+reasoning_tier: standard
+context_scope: worktree_git_batch_202
+implementation_surfaces:
+- Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: scm_status_projection
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:WorktreeGitImprovement-S0036
+preserved_exact_tokens:
+- primary_active_context
+- additional_active_context_count
+- +N parallel contexts
+- Progress > Current Task
+- Progress > Orchestrator Status
+- worktree_id/path
+- owner_tier_id
+- blocked_preserved
+- safe-point-preserved
+- requires_safe_point_restore
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes:
+- Compatibility worktree_id/path and owner_tier_id may appear only as compatibility fields over canonical IDs.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/WorktreeGitImprovement.md
+- Plans/Orchestrator_Page.md
+- Plans/FinalGUISpec.md
+- Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 1752-1763 >>>
+### W-019 - Copy Reason Families And Receipt Lineage
+
+```yaml
+plan_unit_id: W-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/WorktreeGitImprovement.md
+canonical_text: User-facing action nouns, receipt nouns, worktree glossary terms, blocked reason-family templates, and SCM receipt lineage remain distinct and typed across Source Control, Orchestrator, GitHub Actions, Docker, Kubernetes, and history views.
+gui_related: true
+gui_classification_reason: This unit defines user-visible Source Control, Git/worktree GUI, copy, or configuration presentation.
+split_recommended: false
+depends_on:

@@ -1,0 +1,371 @@
+<<< CONTEXT_BEFORE 1366-1377 >>>
+compatibility_only_notes: []
+stale_retired_dispositions:
+- provider_account_id is retired from canonical account-identity naming and kept only as provider-native metadata.
+owner_boundary_notes:
+- This section owns the canonical requested/effective account identity contract for all provider-using actors.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md'
+split_recommendation_reason: The covered envelope spans are focused on one account identity contract.
+```
+
+
+<<< AUTHORITATIVE_CORE 1378-1719 >>>
+### MA-010 - Provider Capability Inventory And Canon Correction
+
+```yaml
+plan_unit_id: MA-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  The provider inventory preserves known capabilities and remaining Rust/client work for Claude Code, Codex, Gemini,
+  Copilot, and Cursor, plus resolved gaps for Gemini usage, Copilot usage, Cursor config isolation, Codex multi-account,
+  and Rust idioms. Current canon must not revive stale CLI-centric assumptions for Codex or GitHub Copilot; Codex and
+  GitHub Copilot are direct providers, Cursor isolation uses runnable cursor-agent account boundaries under PM-owned
+  HOME/XDG roots, and Gemini quota project-context can affect effective quota identity.
+gui_related: false
+gui_classification_reason: The unit covers provider capability inventory and stale-canon correction rather than GUI presentation.
+split_recommended: false
+depends_on:
+- MA-008
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Provider capability and gap tables remain traceable.
+- Stale CLI-centric assumptions for Codex and GitHub Copilot are not revived.
+- Cursor account isolation remains tied to PM-owned HOME/XDG roots.
+- Gemini quota project-context remains part of effective quota identity.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: provider_inventory_correction
+reasoning_tier: standard
+context_scope: multi_account_standardization
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: provider_inventory_correction
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0012
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0013
+preserved_exact_tokens:
+- Claude Code
+- Codex
+- Gemini
+- Copilot
+- Cursor
+- Cloud Quotas API
+- GOOGLE_CLOUD_PROJECT
+- GOOGLE_APPLICATION_CREDENTIALS
+- No CURSOR_CONFIG_DIR
+- Current-canon correction
+- cursor-agent
+negative_constraints:
+- Current canon must not revive stale CLI-centric assumptions for Codex or GitHub Copilot.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Stale CLI-centric Codex and GitHub Copilot assumptions are correction inputs only.
+owner_boundary_notes:
+- Provider capability inventory remains evidence for Multi-Account routing and does not replace provider-specific owner docs.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs: []
+split_recommendation_reason: Provider inventory and stale-canon correction are cohesive in this bounded window.
+```
+
+### MA-011 - Rewrite Alignment And Current PM Context
+
+```yaml
+plan_unit_id: MA-011
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Account registry, active index, cooldowns, and usage cache live in redb or a temporary app-data JSON until redb,
+  while usage and rate-limit events live in seglog. Account selection and env/config wiring are part of the Provider
+  contract. GUI and usage views are UX requirements only, with no Iced/Slint lock-in from this document. The historical
+  Rust/Iced and platform_specs.rs context is preserved as source context, while future native auth for Codex, Copilot,
+  and Gemini uses OpenCode PR #11832-style stores and per-request context.
+gui_related: true
+gui_classification_reason: The unit explicitly preserves GUI/usage UX requirements and no Iced/Slint lock-in language.
+split_recommended: false
+depends_on:
+- MA-010
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Storage alignment remains redb plus seglog, with temporary JSON only as an interim app-data option.
+- Provider abstraction owns account selection and env/config wiring.
+- Historical Rust/Iced wording is preserved as source context and does not authorize legacy app recreation.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: rewrite_alignment_context
+reasoning_tier: standard
+context_scope: multi_account_standardization
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: rewrite_alignment_context
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0014
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0015
+preserved_exact_tokens:
+- Storage
+- Provider abstraction
+- UI
+- Stack
+- Future
+- Rust/Iced
+- PlatformConfig
+- platform_specs.rs
+- OpenCode PR #11832
+negative_constraints:
+- No Iced/Slint commitment in this document authorizes recreating the removed legacy Iced app.
+compatibility_only_notes:
+- Rust/Iced is preserved as historical source context only.
+stale_retired_dispositions:
+- The removed legacy Iced app remains retired unless explicitly requested elsewhere.
+owner_boundary_notes:
+- Plans/storage-plan.md owns storage mechanics; Plans/Multi-Account.md owns account-selection requirements.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Prompt_Pipeline.md'
+split_recommendation_reason: Rewrite alignment and current PM context are narrow enough for one PlanUnit.
+```
+
+### MA-012 - Provider Entry Identity And Coding Plan Boundaries
+
+```yaml
+plan_unit_id: MA-012
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Each provider entry represents one concrete runtime surface, not a loose vendor family label. provider_family_id is
+  additive grouping metadata and must not replace provider_entry_id. Provider entries declare allowed auth_surface values,
+  preserve provider_entry_id, provider_family_id, and transport_kind, keep provider_identity descriptive and provider-native,
+  and preserve direct coding-plan provider boundaries for MiniMax, Z.AI, Zhipu AI, and Alibaba coding-plan endpoints and keys.
+gui_related: false
+gui_classification_reason: The unit defines provider registry identity and API boundaries rather than GUI presentation.
+split_recommended: false
+depends_on:
+- MA-011
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- Concrete provider_entry_id is not replaced by provider_family_id.
+- Provider entries declare supported auth_surface values.
+- transport_kind remains direct_api, cli_runtime, or server_bridge.
+- Coding-plan provider identities preserve vendor-specific API boundaries.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: provider_entry_identity
+reasoning_tier: standard
+context_scope: multi_account_standardization
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: provider_entry_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0016
+preserved_exact_tokens:
+- provider_entry_id
+- provider_family_id
+- transport_kind = direct_api | cli_runtime | server_bridge
+- gemini
+- gemini_cli
+- cursor_cli
+- claude_code_cli
+- github_copilot
+- opencode
+- MiniMax Coding Plan
+- Z.AI Coding Plan
+- Zhipu AI Coding Plan
+- Alibaba Coding Plan
+- sk-sp-...
+negative_constraints:
+- provider_family_id is additive grouping metadata only and MUST NOT replace the concrete provider entry id.
+- Coding-plan provider identity must not collapse into a generic OpenAI-compatible or pay-as-you-go bucket.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Provider-entry identity fields are part of Agent-Config/provider registry canon.
+- Requested/effective runtime handles owned by Orchestrator or Prompt Pipeline snapshots are not renamed by these provider-entry fields.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Models_System.md, ContractName:Plans/usage-feature.md'
+split_recommendation_reason: Provider-entry identity and coding-plan API boundaries are cohesive in this span.
+```
+
+### MA-013 - Account Profile Schema And Stable Account Identity
+
+```yaml
+plan_unit_id: MA-013
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Account-backed providers store ordered account rows with stable ids. The locked account-profile schema and minimum
+  fields preserve account_id, provider_id, label, auth_surface, enabled, priority, provider_identity, credential_ref,
+  configured_project_id, selected_billing_entity_id, threshold and retry controls, cooldown, availability, configuration,
+  credential state, and user-facing status. account_id is the internal stable key, provider_identity is descriptive
+  provider-native metadata only, secrets remain outside config/state stores, auth families that change quota semantics
+  remain separate account rows, and Codex and Gemini account examples preserve auth-family separation.
+gui_related: false
+gui_classification_reason: The unit defines backend account schema and identity constraints rather than GUI presentation.
+split_recommended: true
+depends_on:
+- MA-012
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- account_id remains the internal stable key.
+- provider_identity remains descriptive provider-native metadata only.
+- Secrets and tokens stay outside config and state stores.
+- Auth families that change quota semantics remain separate account rows.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: account_profile_schema
+reasoning_tier: standard
+context_scope: multi_account_standardization
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: account_profile_schema
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0017
+preserved_exact_tokens:
+- account_id
+- provider_id
+- label
+- auth_surface
+- enabled
+- priority
+- provider_identity
+- credential_ref
+- configured_project_id
+- selected_billing_entity_id
+- availability_state
+- configuration_state
+- credential_state
+- active | expired | revoked | error
+- Codex `ChatGPT`
+- Codex `API key`
+- Gemini direct API-key accounts
+- Gemini CLI auth-backed rows
+negative_constraints:
+- provider_identity is descriptive provider-native metadata only.
+- Actual /tokens/keys remain only in OS credential storage.
+- Separate auth families that change quota semantics remain separate account rows.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- The canonical account-registration shape may be extended by additive runtime/health fields without replacing canonical keys.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs:
+- 'ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/usage-feature.md'
+split_recommendation_reason: Multi-Account-S0017 is split between account schema and credential/auth-surface validation.
+```
+
+### MA-014 - Credential Reference And Auth Surface Validation
+
+```yaml
+plan_unit_id: MA-014
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  credential_ref is a non-secret pointer to credential storage, formatted as credential_store:key_path, with supported
+  stores os_keychain, env, file, and cli. auth_surface describes credential consumption through header_bearer,
+  header_api_key, deprecated query_param, cli_managed, or oauth_token. Each provider definition specifies supported
+  auth_surface values so the HTTP client can attach credentials correctly and account validation rejects incompatible
+  pairings early.
+gui_related: false
+gui_classification_reason: The unit defines credential indirection and validation semantics rather than GUI presentation.
+split_recommended: true
+depends_on:
+- MA-013
+unblocks: []
+acceptance_criteria:
+- Covered source spans remain losslessly available for exact-text audit.
+- credential_ref remains a pointer and never the secret itself.
+- Supported credential_ref stores remain auditable.
+- query_param remains deprecated and warns before use.
+- Provider definitions validate supported auth_surface values early.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: credential_auth_surface
+reasoning_tier: standard
+context_scope: multi_account_standardization
+implementation_surfaces:
+- Plans/Multi-Account.md
+node_compile_hint:
+  mode: credential_auth_surface
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0017
+preserved_exact_tokens:
+- credential_ref
+- credential_store
+- key_path
+- os_keychain
+- env
+- file
+- cli
+- os_keychain:pm/openai/account_abc123
+- env:OPENAI_API_KEY
+- file:~/.config/pm/credentials/gemini_cli.json
+- cli:gemini/default
+- header_bearer
+- header_api_key
+- query_param
+- cli_managed
+- oauth_token
+negative_constraints:
+- credential_ref is a pointer to where the credential lives, never the secret itself.
+- query_param is deprecated and PM should warn before use.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- query_param is deprecated for API keys in query strings.
+owner_boundary_notes:
+- Credential attachment is validated through provider definitions and HTTP/client behavior.
+owner_hints:
+- Plans/Multi-Account.md
+preserved_contractrefs:
+- 'ContractRef: PolicyRule:no_secrets_in_storage, ContractName:Plans/Contracts_V0.md#AuthState, ContractName:Plans/usage-feature.md'
+split_recommendation_reason: Credential references are separated from account profile identity so secret handling remains independently addressable.
+```
+
+
+<<< CONTEXT_AFTER 1720-1731 >>>
+### MA-015 - Runtime Resolution Envelope And Non-Secret Handles
+
+```yaml
+plan_unit_id: MA-015
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Multi-Account.md
+canonical_text: >-
+  Selectable unit and runtime resolution preserve the canonical account-profile row schema with non-secret credential
+  handles and no /tokens/keys in project config, redb state, or logs. Runtime records preserve requested_account_id,
+  requested_account_binding, requested_account_policy, effective_account_id, provider_account_id, login, auth_realm,
+  effective_provider_identity, execution_role, operational_identity, selectable_unit_id, resolution_outcome,

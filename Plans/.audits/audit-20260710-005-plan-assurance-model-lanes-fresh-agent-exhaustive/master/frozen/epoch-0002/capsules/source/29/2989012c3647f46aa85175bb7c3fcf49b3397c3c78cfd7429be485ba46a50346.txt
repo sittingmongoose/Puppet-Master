@@ -1,0 +1,364 @@
+<<< CONTEXT_BEFORE 315-326 >>>
+  - Chain Wizard and Requirements Doc Builder are retained in preserved_exact_tokens and source_lineage as historical aliases for Planning Wizard and PRD Builder.
+stale_retired_dispositions:
+  - Chain Wizard is retired as current product/workflow terminology; current prose uses Planning Wizard.
+  - Requirements Doc Builder is retired as current product terminology; current prose uses PRD Builder.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Planning_Wizard.md
+  - Plans/PRD_Builder.md
+  - Plans/chain-wizard-flexibility.md
+  - Plans/assistant-chat-design.md
+```
+
+
+<<< AUTHORITATIVE_CORE 327-661 >>>
+### GRS-004 - Whole-Goal Coherence With Sharded Inputs
+
+```yaml
+plan_unit_id: GRS-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime must preserve whole-task coherence while operating over sharded ledgers, sharded Plans, document maps, manifests, compact state, and source/target universes. Shard-group focus carries the whole goal summary, current focus, full objective, full source set/source universe, full target set/target universe, inspected scopes, uninspected scopes, hash/version metadata, and owner/consumer coverage; workers may request more context through runtime retrieval for source shards, target docs, code files, logs, images, or tests. Sharding is access, recovery, and verification infrastructure; it is not D2-style workflow slicing and must not become the core execution model.
+gui_related: false
+gui_classification_reason: Sharded source/context handling is runtime and document infrastructure, not GUI behavior.
+depends_on:
+  - GRS-001
+unblocks: []
+acceptance_criteria:
+  - Goal Runtime records the source and target universe for each goal.
+  - Compact state can resume work without losing whole-goal context.
+  - Document maps/manifests expose enough identity to recover exact source shards when needed.
+  - Worker context includes the whole goal summary and current focus rather than only a tiny slice.
+  - Runtime context requests can fetch additional source shards, target docs, code files, logs, images, and tests.
+  - Completion coverage tracks inspected scopes, uninspected scopes, hash/version metadata, and owner/consumer relationships.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future context/resume tests
+risk_class: context_fragmentation
+reasoning_tier: high
+context_scope: repo_and_goal_context
+implementation_surfaces:
+  - future Goal Mode service
+  - Plans/ledgers/v2
+  - Plans/.plan_index
+node_compile_hint:
+  mode: context_and_shard_contract
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0009
+  - pldg-20260616-001-goal-runtime-system:atom-0010
+  - pldg-20260616-001-goal-runtime-system:atom-0011
+  - pldg-20260616-001-goal-runtime-system:atom-0012
+  - pldg-20260616-001-goal-runtime-system:atom-0066
+  - pldg-20260616-001-goal-runtime-system:atom-0067
+  - pldg-20260616-001-goal-runtime-system:atom-0068
+  - pldg-20260616-001-goal-runtime-system:dec-0007
+  - pldg-20260616-001-goal-runtime-system:corr-0003
+preserved_exact_tokens:
+  - "whole-task coherence"
+  - "sharded ledgers"
+  - "sharded Plans"
+  - "document maps"
+  - "manifests"
+  - "compact-state-first resume"
+  - "whole goal summary"
+  - "current focus"
+  - "request more context"
+  - "source shards"
+  - "target docs"
+  - "code files"
+  - "logs"
+  - "images"
+  - "tests"
+  - "source and target universe"
+  - "source universe"
+  - "target universe"
+  - "inspected scopes"
+  - "uninspected scopes"
+  - "hash"
+  - "owner"
+  - "consumer"
+  - "source_ledger_manifest"
+  - "source_ledger_shards"
+  - "target_plan_manifest"
+  - "target_plan_shards"
+  - "project_doc_index"
+  - "goal_work_journal"
+  - "goal_change_plan"
+  - "goal_apply_report"
+  - "goal_completion_report"
+  - "Sharding is not D2-style workflow slicing"
+negative_constraints:
+  - Do not let sharding fragment the agent's understanding of the whole goal.
+  - Do not recreate D2-style staged workflow slicing through shard boundaries.
+  - Do not tell the worker to only process a tiny slice and forget the rest.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+```
+
+### GRS-005 - Durable Goal State And Event Log
+
+```yaml
+plan_unit_id: GRS-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime owns durable execution state for each goal, including objective, lifecycle status, task list, allowed scope, constraints, budgets, attachment manifest, child goals, evidence references, completion receipt, revision, and append-only goal event log. Goal state survives compaction, restarts, and model switches, and optimistic concurrency prevents stale overwrite.
+gui_related: false
+gui_classification_reason: Durable goal state and event logs are runtime/persistence contracts, not GUI implementation.
+depends_on:
+  - GRS-002
+unblocks: []
+acceptance_criteria:
+  - A resumed goal can reconstruct objective, constraints, tasks, status, child goals, evidence, and receipt state.
+  - Concurrent or stale goal updates are rejected or reconciled through revision checks.
+  - Storage substrate remains selectable later without weakening required state fields.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future goal-state persistence tests
+risk_class: durable_state_loss
+reasoning_tier: high
+context_scope: goal_runtime_state
+implementation_surfaces:
+  - future Goal Mode service
+  - future storage layer
+node_compile_hint:
+  mode: durable_goal_state_contract
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0031
+  - pldg-20260616-001-goal-runtime-system:atom-0032
+  - pldg-20260616-001-goal-runtime-system:atom-0033
+  - pldg-20260616-001-goal-runtime-system:atom-0034
+  - pldg-20260616-001-goal-runtime-system:q-0004
+preserved_exact_tokens:
+  - "durable execution data"
+  - "append-only goal event log"
+  - "goal_events.jsonl"
+  - "goal_revision"
+  - "expected_goal_revision"
+  - "compare-and-swap"
+  - "acceptance_criteria"
+  - "non_goals"
+  - "work_queue"
+  - "model_policy"
+  - "evidence_index"
+  - "persisted runtime state"
+  - "Optimistic concurrency"
+  - "compaction, restarts, model switches"
+  - "database tables, project files, or a hybrid"
+negative_constraints:
+  - Do not let exact persistence substrate deferral remove the durable state contract.
+  - Do not allow stale goal state to silently overwrite newer state.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+```
+
+### GRS-006 - Scheduler Continuation And Revisioned Goal Updates
+
+```yaml
+plan_unit_id: GRS-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime, not the worker model alone, drives runtime-driven idle continuation until completion, blocked, stopped, failed, cancelled, or budget-limited. When the thread is idle and eligible, `try_start_turn_if_idle` reloads canonical goal state, checks currentness, budgets, and user preemption, and starts the next bounded turn; this is not model self-recursion. User preemption, constraints, scope changes, and goal updates are revisioned with goal_revision, previous_revision, objective_update, constraint_added, active_subgoals_notified, and stale child goals so the scheduler can pause, re-evaluate impact, cancel or re-scope child goals, and resume from a coherent state.
+gui_related: false
+gui_classification_reason: Scheduler continuation and revisioning are runtime behavior; visible controls are Assistant Chat consumer behavior.
+depends_on:
+  - GRS-005
+unblocks: []
+acceptance_criteria:
+  - A running goal can be paused by user instruction before new scheduling work begins.
+  - Runtime state records revisions for material goal updates.
+  - Scheduler continuation stops only at explicit lifecycle/budget/authority states.
+  - "`try_start_turn_if_idle` starts continuation only after canonical-state reload, currentness checks, budget checks, and user preemption checks."
+  - Material goal updates preserve goal_revision, previous_revision, objective_update, constraint_added, active_subgoals_notified, and stale child goals.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future scheduler state-machine tests
+risk_class: scheduler_drift
+reasoning_tier: high
+context_scope: goal_runtime_scheduler
+implementation_surfaces:
+  - future Goal Mode scheduler
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: scheduler_revision_contract
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0035
+  - pldg-20260616-001-goal-runtime-system:atom-0036
+  - pldg-20260616-001-goal-runtime-system:atom-0037
+preserved_exact_tokens:
+  - "Runtime-driven continuation"
+  - "runtime-driven idle continuation"
+  - "thread is idle"
+  - "scheduler"
+  - "not model self-recursion"
+  - "try_start_turn_if_idle"
+  - "User preemption"
+  - "constraint updates"
+  - "user message pending"
+  - "re-steer"
+  - "Goal updates are revisioned"
+  - "goal_revision"
+  - "previous_revision"
+  - "objective_update"
+  - "constraint_added"
+  - "active_subgoals_notified"
+  - "stale child goals"
+negative_constraints:
+  - Do not rely on the worker model's final answer as the scheduler completion source.
+  - Do not apply material goal updates as silent mutable prompt text.
+  - Do not rely on a model saying "continue" as the only loop mechanism.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+```
+
+### GRS-007 - Goal Replan Event For Material Changes
+
+```yaml
+plan_unit_id: GRS-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Material mid-goal user changes create an explicit Goal Replan Event. The runtime pauses scheduling, classifies the interruption as pause/resume, stop/cancel, constraint update, scope expansion, scope reduction, goal replacement, or clarifying instruction, computes impact, updates the visible task list, re-steers or cancels child goals, and then resumes when valid. Trivial clarifications may apply inline; hard constraints apply immediately; forks are reserved for alternate paths or material conflicts.
+gui_related: true
+gui_classification_reason: The runtime event includes user-visible task-list updates and chat-facing replan feedback.
+depends_on:
+  - GRS-006
+unblocks: []
+acceptance_criteria:
+  - Material scope and constraint changes produce a durable Goal Replan Event.
+  - Hard constraints are applied immediately rather than waiting for a phase boundary.
+  - Active and child work is cancelled, re-scoped, forked, or allowed to finish only after impact analysis.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future goal-update/replan tests
+risk_class: silent_goal_mutation
+reasoning_tier: high
+context_scope: goal_runtime_updates
+implementation_surfaces:
+  - future Goal Mode scheduler
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: goal_replan_event
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0094
+  - pldg-20260616-001-goal-runtime-system:atom-0095
+  - pldg-20260616-001-goal-runtime-system:dec-0014
+preserved_exact_tokens:
+  - "pause / resume"
+  - "stop / cancel"
+  - "constraint update"
+  - "scope expansion"
+  - "scope reduction"
+  - "goal replacement"
+  - "clarifying instruction"
+  - "Goal Replan Event"
+  - "pauses scheduling"
+  - "updates the visible task list"
+  - "hard constraints apply immediately"
+negative_constraints:
+  - Do not silently mutate a running goal for material scope or constraint changes.
+  - Do not queue hard constraints until the current phase finishes.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/assistant-chat-design.md
+```
+
+### GRS-008 - Objective Attachments And Phase-Bound Snapshots
+
+```yaml
+plan_unit_id: GRS-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime preserves oversized objectives, large pasted blocks, image attachments, and remote-session attachments as runtime-readable objective attachment bundles. Objective attachment bundles include goal-objective.md, pasted-text-N.txt, and attachments/manifest.json; local images and remote image URLs must resolve to runtime-readable paths or artifact IDs for local and remote app-server sessions. Objective bundles and referenced attachments freeze at goal creation; read/evaluation inputs freeze at certification or phase boundaries; active editing uses live state while recording start state, checkpoints, diffs, hashes, VCS identity, and test-state identity for replayable evidence.
+gui_related: false
+gui_classification_reason: Attachment preservation and snapshot identity are runtime/evidence behavior, not visual presentation.
+depends_on:
+  - GRS-005
+unblocks: []
+acceptance_criteria:
+  - Attachments are materialized to paths or artifact IDs that workers and verifiers can read.
+  - Attachment bundles preserve goal-objective.md, pasted-text-N.txt, attachments/manifest.json, runtime-readable paths, local images, and remote image URLs where applicable.
+  - Evidence records identify the source state used for each judgment.
+  - Coding goals do not pretend the entire repo is static, but certification does not rely on unspecified latest state.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future attachment preservation tests
+risk_class: evidence_reproducibility
+reasoning_tier: high
+context_scope: goal_inputs_and_evidence
+implementation_surfaces:
+  - future Goal Mode service
+  - future runtime artifact storage
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+node_compile_hint:
+  mode: attachment_snapshot_contract
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0038
+  - pldg-20260616-001-goal-runtime-system:atom-0039
+  - pldg-20260616-001-goal-runtime-system:atom-0040
+  - pldg-20260616-001-goal-runtime-system:atom-0099
+  - pldg-20260616-001-goal-runtime-system:atom-0100
+  - pldg-20260616-001-goal-runtime-system:dec-0010
+  - pldg-20260616-001-goal-runtime-system:dec-0016
+  - pldg-20260616-001-goal-runtime-system:corr-0005
+preserved_exact_tokens:
+  - "oversized text"
+  - "large pasted blocks"
+  - "image attachments"
+  - "remote app-server sessions"
+  - "objective attachment bundle"
+  - "snapshotted at goal phase boundaries"
+  - "Freeze the objective bundle"
+  - "Freeze referenced attachments"
+  - "Freeze read/evaluation inputs"
+  - "VCS commit/diff identity"
+  - "goal-objective.md"
+  - "pasted-text-N.txt"
+  - "attachments/manifest.json"
+  - "runtime-readable paths"
+  - "local images"
+  - "remote image URLs"
+negative_constraints:
+  - Do not lose attachments when a goal runs in a remote session.
+  - Do not truncate or lose large pasted goal content or image inputs.
+  - Do not preserve only placeholder tokens for images, large pasted text, or oversized objectives.
+  - Do not base certification on an unspecified latest file state.
+  - Do not let stale snapshots cause the agent to ignore legitimate current changes.
+owner_hints:
+  - Plans/Goal_Runtime_System.md
+  - Plans/Planning_Ledger_System.md
+  - Plans/Plan_Document_System.md
+```
+
+
+<<< CONTEXT_AFTER 662-673 >>>
+### GRS-009 - Worker Role Separation And Bounded Authority
+
+```yaml
+plan_unit_id: GRS-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Goal_Runtime_System.md
+canonical_text: >-
+  Goal Runtime separates worker, planner, evaluator, reducer, verifier, adjudicator, and runtime controller roles. Workers have bounded authority, and weak-worker outputs are proposal only until stronger or deterministic layers verify, merge, route, or complete them. A low quality agent over massive documents may miss a lot, hallucinate issues, or claim no issues, and must never make global completion judgment. Material worker claims carry source_spans, target_spans, and evidence_refs; no-material claims use no_material_items_found with source_span_checked and reason duplicate, nonmaterial, already_covered, or context_only. Unsupported content cannot become canonical plan content or completion evidence. Workers cannot certify global or parent completion by themselves. Risk-triggered verification escalates when worker capability, confidence, scope, evidence, or validation status is insufficient.
+gui_related: false
+gui_classification_reason: Runtime role separation and safety policy are backend/control-plane behavior.
+depends_on:

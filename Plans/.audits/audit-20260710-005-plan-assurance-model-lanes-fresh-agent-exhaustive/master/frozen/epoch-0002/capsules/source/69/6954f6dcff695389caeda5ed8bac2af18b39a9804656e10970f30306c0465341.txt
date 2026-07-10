@@ -1,0 +1,379 @@
+<<< CONTEXT_BEFORE 12646-12657 >>>
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0093
+preserved_exact_tokens:
+  - "BrainStorm"
+  - "plan-style flow"
+  - "single plan"
+negative_constraints:
+  - "Questions are not asked multiple times by multiple subagents."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+
+<<< AUTHORITATIVE_CORE 12658-13007 >>>
+### ACD-197 - BrainStorm Execution Switch
+
+```yaml
+plan_unit_id: ACD-197
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Starting or executing a BrainStorm plan switches chat to Agent mode, and
+  execution may run through a regular agent, a crew, or Agent plus subagents,
+  with manager auto-decision or user request.
+gui_related: true
+gui_classification_reason: BrainStorm execution switch and user-requested executor choice are visible chat behavior.
+depends_on: [ACD-196]
+unblocks: [ACD-198]
+acceptance_criteria:
+  - BrainStorm execution switches chat to Agent mode.
+  - Execution supports regular agent, crew, and Agent plus subagents.
+  - Manager auto-decision and user-requested executor choice are supported.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: brainstorm
+reasoning_tier: high
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+  - Plans/orchestrator-subagent-integration.md
+node_compile_hint:
+  mode: brainstorm_execution_switch
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0093
+preserved_exact_tokens:
+  - "chat must switch to Agent mode"
+  - "regular agent"
+  - "crew"
+  - "Agent + subagents"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Run_Modes.md
+```
+
+### ACD-198 - BrainStorm Subagent Projection
+
+```yaml
+plan_unit_id: ACD-198
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  BrainStorm subagent collaboration is only the chat-facing projection of the
+  canonical crew message board; schema, routing rules, priority model, rate
+  limit, and orchestrator-visibility contract remain owned by orchestrator
+  docs.
+gui_related: true
+gui_classification_reason: BrainStorm collaboration appears in chat, but this unit preserves its visible projection boundary.
+depends_on: [ACD-196]
+unblocks: []
+acceptance_criteria:
+  - Chat may describe BrainStorm collaboration as user-facing projection.
+  - Orchestrator owner docs retain schema, routing, priority, rate-limit, and visibility contracts.
+  - Assistant Chat does not become the normative schema owner.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: owner_boundary
+reasoning_tier: high
+context_scope: subagents
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/orchestrator-subagent-integration.md
+  - Plans/interview-subagent-integration.md
+  - Plans/Contracts_V0.md
+node_compile_hint:
+  mode: brainstorm_subagent_projection
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0093
+preserved_exact_tokens:
+  - "canonical crew message board"
+  - "schema, routing rules, priority model, rate limit, and orchestrator-visibility contract"
+negative_constraints:
+  - "This chat document is not the normative schema owner."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/orchestrator-subagent-integration.md
+```
+
+### ACD-199 - AI Overseer Documentation
+
+```yaml
+plan_unit_id: ACD-199
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Interview-generated documentation and plans target AI execution and must be
+  unambiguous, wire-explicit, DRY, complete, fully wired to GUI/config/API as
+  intended, and free of built-but-not-wired or stubbed components.
+gui_related: true
+gui_classification_reason: Generated plan content must explicitly wire GUI/config/API behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Generated documents assume an AI agent will execute them.
+  - Generated instructions are unambiguous and wire-explicit.
+  - Generated tasks require completeness and reject built-but-not-wired stubs.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: docs_generation
+reasoning_tier: high
+context_scope: interview
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/interview-subagent-integration.md
+node_compile_hint:
+  mode: ai_overseer_docs
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0094
+preserved_exact_tokens:
+  - "AI agent"
+  - "wire-explicit"
+  - "DRY Method"
+  - "No partially complete components"
+  - "built but not wired"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/interview-subagent-integration.md
+```
+
+### ACD-200 - Reference Owner Deferral
+
+```yaml
+plan_unit_id: ACD-200
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Reference lists defer to live owner docs instead of stale section-number citations.
+gui_related: false
+gui_classification_reason: Reference deferral is documentation ownership behavior.
+depends_on: []
+unblocks: [ACD-201]
+acceptance_criteria:
+  - References route to live owner docs.
+  - Stale section-number citations do not own current behavior.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: reference_drift
+reasoning_tier: high
+context_scope: docs
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: reference_owner_deferral
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0095
+preserved_exact_tokens:
+  - "Reference lists"
+  - "live owner docs"
+  - "stale section-number citations"
+negative_constraints:
+  - "Reference lists must defer to live owner docs instead of stale section-number citations."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-201 - Chat Reference Owner Set
+
+```yaml
+plan_unit_id: ACD-201
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Chat reference ownership routes through AGENTS, interview, orchestrator,
+  HITL, agent-rules, FileSafe, Tools, Commands, UI Command Catalog,
+  Permissions, Skills, MCP, GitHub, usage, and performance owner docs.
+gui_related: false
+gui_classification_reason: Reference owner routing is documentation/source-of-truth behavior.
+depends_on: [ACD-200]
+unblocks: []
+acceptance_criteria:
+  - Chat references preserve live owner-doc routing for commands, permissions, skills, MCP, usage, and performance.
+  - Slash-command and web-provider behavior routes to Commands/UI Command Catalog/Tools/Permissions owners.
+  - MCP naming and availability terms route to MCP_Integration.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: reference_drift
+reasoning_tier: high
+context_scope: owner_map
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/Commands_System.md
+  - Plans/UI_Command_Catalog.md
+  - Plans/Permissions_System.md
+  - Plans/MCP_Integration.md
+node_compile_hint:
+  mode: chat_reference_owner_set
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0095
+preserved_exact_tokens:
+  - "YOLO = no ask prompts"
+  - "Regular"
+  - "/web"
+  - "deprecated aliases"
+  - "MCP naming"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+### ACD-202 - Historical References Non Normative
+
+```yaml
+plan_unit_id: ACD-202
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Historical cited web-search and comparative references are lineage and
+  background only and do not replace Tools, FinalGUISpec, MCP, usage, or
+  performance owner canon.
+gui_related: false
+gui_classification_reason: Historical reference disposition is source-lineage documentation behavior.
+depends_on: [ACD-200]
+unblocks: []
+acceptance_criteria:
+  - Historical cited search references remain background only.
+  - Comparative VBW, GSD, and yume references remain lineage examples only.
+  - Owner canon remains in live Plans owner docs.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: reference_drift
+reasoning_tier: high
+context_scope: source_lineage
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+  - Plans/FinalGUISpec.md
+  - Plans/MCP_Integration.md
+node_compile_hint:
+  mode: historical_refs_non_normative
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0095
+preserved_exact_tokens:
+  - "historical background only"
+  - "opencode-websearch-cited"
+  - "VBW"
+  - "GSD"
+  - "yume"
+negative_constraints:
+  - "These references do not replace the owner canon."
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/Tools.md
+```
+
+### ACD-203 - Dashboard CtA Attention
+
+```yaml
+plan_unit_id: ACD-203
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Dashboard warnings and Calls to Action are user-attention items that require or benefit from explicit user response.
+gui_related: true
+gui_classification_reason: Dashboard warnings and CtAs are visible Dashboard UI.
+depends_on: []
+unblocks: [ACD-204, ACD-205]
+acceptance_criteria:
+  - Dashboard warnings identify items requiring or benefiting from user attention.
+  - Dashboard CtAs prompt explicit user interaction.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: dashboard_cta
+reasoning_tier: standard
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+  - Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: dashboard_cta_attention
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0096
+preserved_exact_tokens:
+  - "warnings"
+  - "Calls to Action (CtAs)"
+  - "approve"
+  - "acknowledge"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/human-in-the-loop.md
+```
+
+### ACD-204 - Assistant Addresses CtA
+
+```yaml
+plan_unit_id: ACD-204
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: The Assistant can address Dashboard warnings and CtAs in natural language before or instead of direct controls.
+gui_related: true
+gui_classification_reason: Assistant handling of Dashboard CtAs is visible chat/Dashboard behavior.
+depends_on: [ACD-203]
+unblocks: [ACD-205]
+acceptance_criteria:
+  - Users can open Assistant and respond to CtAs in natural language.
+  - Users can clarify warnings or suggested actions before taking action.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: dashboard_cta
+reasoning_tier: standard
+context_scope: chat
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: assistant_addresses_cta
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0096
+preserved_exact_tokens:
+  - "approve and continue"
+  - "what's blocking?"
+  - "run the suggested fix"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+
+<<< CONTEXT_AFTER 13008-13019 >>>
+### ACD-205 - HITL Continue In Assistant
+
+```yaml
+plan_unit_id: ACD-205
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  HITL pauses show a Dashboard CtA and spawn a named Assistant thread;
+  orchestrator completion or pause offers `Continue in Assistant` with run
+  summary and package, seam, node, or blocked episode context injected.
+gui_related: true

@@ -1,0 +1,416 @@
+<<< CONTEXT_BEFORE 342-353 >>>
+- `Plans/Progression_Gates.md`
+- `Plans/Decision_Policy.md`
+- `Plans/DRY_Rules.md`
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Document_Packaging_Policy.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+
+<<< AUTHORITATIVE_CORE 354-740 >>>
+### DPP-002 - Scope, Alignment, and Canon Boundaries
+
+```yaml
+plan_unit_id: DPP-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: Document Packaging Policy defines deterministic packaging for long Markdown/text artifacts under .puppet-master/** into Document Sets, while Plans/_shards/** remains process-mirror output and plan graph remains the separate sharded JSON mechanism under .puppet-master/project/plan_graph/index.json with nodes/<node_id>.json shards.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance packaging behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DPP-001.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: document_packaging_policy_drift
+reasoning_tier: standard
+context_scope: document_packaging_policy_standardization
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: scope_alignment_and_canon_boundaries
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0001
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0002
+preserved_exact_tokens:
+- Document Packaging Policy (Canonical)
+- .puppet-master/**
+- Document Sets
+- Plans/_shards/**
+- .puppet-master/project/plan_graph/index.json
+- nodes/<node_id>.json
+- 'ContractRef: ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/DRY_Rules.md#7'
+negative_constraints:
+- Shard mirrors under Plans/_shards/** are process mirrors, not canonical Document Set sources or live edit targets.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plan graph ownership stays with Plans/Project_Output_Artifacts.md; this policy owns large text artifact packaging.
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+### DPP-003 - Document Set Directory Contract
+
+```yaml
+plan_unit_id: DPP-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: A Document Set is a directory artifact containing 00-index.md, manifest.json, ordered NN-*.md or NN-*.txt shard files with exact source segments, and an evidence/ directory for audits A/B/C.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance packaging behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DPP-001.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: document_packaging_policy_drift
+reasoning_tier: standard
+context_scope: document_packaging_policy_standardization
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: document_set_directory_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0003
+preserved_exact_tokens:
+- 00-index.md
+- manifest.json
+- NN-*.md
+- NN-*.txt
+- evidence/
+- audits A/B/C
+- 'ContractRef: ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+### DPP-004 - Document Set Index Requirements
+
+```yaml
+plan_unit_id: DPP-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: 00-index.md must expose source logical path, deterministic generation marker from source_sha256, source sha256, split rule summary, ordered shard listing with filenames and line ranges, and the fixed generated-file warning.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance packaging behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DPP-001.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: document_packaging_policy_drift
+reasoning_tier: standard
+context_scope: document_packaging_policy_standardization
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: document_set_index_requirements
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0004
+preserved_exact_tokens:
+- 00-index.md
+- source_sha256
+- ordered shard listing
+- Generated artifact. Do not edit shards directly; regenerate from canonical source.
+- 'ContractRef: ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+### DPP-005 - Document Set Manifest Requirements
+
+```yaml
+plan_unit_id: DPP-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: manifest.json must include source_path, source_sha256, source_line_count, split_rule, audit_files, and canonical shards[] entries with order, filename, start_line, end_line, segment_sha256, and byte_count.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance packaging behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DPP-001.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: document_packaging_policy_drift
+reasoning_tier: standard
+context_scope: document_packaging_policy_standardization
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: document_set_manifest_requirements
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0005
+preserved_exact_tokens:
+- manifest.json
+- source_path
+- source_sha256
+- source_line_count
+- split_rule
+- audit_files
+- shards[]
+- segment_sha256
+- byte_count
+- 'ContractRef: ContractName:Plans/Document_Packaging_Policy.md, Gate:GATE-014'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+### DPP-006 - Shard Naming and Packaging Input Exclusion
+
+```yaml
+plan_unit_id: DPP-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: 'Shard filenames are deterministic: numbering starts at 01, zero padding width is max(2, digits(total_shards)), filename format is <zero_padded_index>-<slug>.<ext>, and generated .docset/** members must not become packaging inputs.'
+gui_related: false
+gui_classification_reason: This unit defines backend/governance packaging behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DPP-001.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: document_packaging_policy_drift
+reasoning_tier: standard
+context_scope: document_packaging_policy_standardization
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: shard_naming_and_packaging_input_exclusion
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0006
+preserved_exact_tokens:
+- '01'
+- max(2, digits(total_shards))
+- <zero_padded_index>-<slug>.<ext>
+- chunk-<start_line>-<end_line>
+- .docset/**
+- 'ContractRef: PolicyRule:Decision_Policy.md§2, Gate:GATE-014'
+negative_constraints:
+- Existing .docset/** members are generated outputs and must not themselves become new packaging inputs.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+### DPP-007 - Local Auth, Provider, Runtime Evidence Routing
+
+```yaml
+plan_unit_id: DPP-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: Document packages may preserve local auth, provider/account, connect-health, runtime lifecycle, durability, attribution, and provider-facade evidence, but interpretation remains routed to the owning docs and file hints alone never prove readiness.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance packaging behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DPP-001.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: document_packaging_policy_drift
+reasoning_tier: standard
+context_scope: document_packaging_policy_standardization
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: local_auth_provider_runtime_evidence_routing
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0008
+preserved_exact_tokens:
+- google_accounts.json.active
+- json.active
+- google_accounts
+- /project
+- /onboarding
+- provider_definition
+- provider_account
+- provider_account_policy
+- /auth/health
+- /disposal
+- /durability
+- /attribution
+negative_constraints:
+- File hints alone are not sufficient readiness.
+- Document packaging does not own runtime resource-disposal behavior.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Interpretation routes to Multi-Account, Run_Modes, FileSafe, storage-plan, Prompt_Pipeline, Contracts_V0, and CLI_Bridged_Providers owners.
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+### DPP-008 - Command and Event Seam Contradiction Evidence
+
+```yaml
+plan_unit_id: DPP-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: Command and event seam evidence packages keep contradictions visible, including chat.thread.created versus chat.thread_created, terminal run names, requested/effective/runtime mode splits, reserved-name ownership, and /compact owner evidence.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance packaging behavior, not GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DPP-001.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: document_packaging_policy_drift
+reasoning_tier: standard
+context_scope: document_packaging_policy_standardization
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: command_and_event_seam_contradiction_evidence
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0009
+preserved_exact_tokens:
+- chat.thread.created
+- chat.thread_created
+- run.cancelled
+- run.completed
+- '{ mode }'
+- /mode
+- /effective
+- /runtime
+- reserved-name
+- /compact
+- 'ContractRef: ContractName:Plans/Document_Packaging_Policy.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/Wiring_Matrix.md, ContractName:Plans/Widget_System.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/FileManager.md'
+negative_constraints:
+- Do not flatten naming contradictions into unsafe copied command/event lists.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Owning docs remain Contracts_V0, UI_Command_Catalog, Wiring_Matrix, Widget_System, FinalGUISpec, assistant-chat-design, and FileManager.
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+### DPP-009 - Worktree Surface Ownership Evidence
+
+```yaml
+plan_unit_id: DPP-009
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: 'Worktree evidence packages preserve surface ownership: Source Control is the primary operational surface, Orchestrator consumes worktree identity and recovery views, and Settings surfaces expose configuration and diagnostics rather than primary active-worktree management.'
+gui_related: true
+gui_classification_reason: This unit concerns user-visible file/path presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- The covered behavior is addressable through this fine-grained PlanUnit instead of DPP-001.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: document_packaging_policy_drift
+reasoning_tier: standard
+context_scope: document_packaging_policy_standardization
+implementation_surfaces:
+- Plans/Document_Packaging_Policy.md
+node_compile_hint:
+  mode: worktree_surface_ownership_evidence
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Document_Packaging_Policy-S0009
+preserved_exact_tokens:
+- Source Control
+- Orchestrator
+- Settings > Branching
+- Settings > Health
+- active-worktree
+- /history/recovery
+- /diagnostics
+negative_constraints:
+- Settings surfaces are not primary active-worktree management.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes: []
+owner_hints:
+- Plans/Document_Packaging_Policy.md
+```
+
+
+<<< CONTEXT_AFTER 741-752 >>>
+### DPP-010 - Consumer Drift and Packaging Evidence Lineage
+
+```yaml
+plan_unit_id: DPP-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Document_Packaging_Policy.md
+canonical_text: Consumer-drift packages flag mechanical stale examples and preserve glossary artifacts, requirements-staging seglog artifacts, package-generation lineage states, and the distinction between packaging evidence and execution evidence when both use evidence/ naming.
+gui_related: false
+gui_classification_reason: This unit defines backend/governance packaging behavior, not GUI presentation.
+split_recommended: false
+depends_on: []

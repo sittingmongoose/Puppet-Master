@@ -1,0 +1,423 @@
+<<< CONTEXT_BEFORE 3984-3995 >>>
+- 1,10
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs: []
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+
+<<< AUTHORITATIVE_CORE 3996-4389 >>>
+### MGAC-054 - BPM Extraction
+
+```yaml
+plan_unit_id: MGAC-054
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: BPM extraction preserves both number-before-bpm and bpm-keyed forms with bpm and bpm2 capture groups.
+gui_related: false
+gui_classification_reason: The unit defines deterministic media slot-extraction parsing behavior rather than GUI presentation.
+split_recommended: true
+depends_on:
+- MGAC-041
+- MGAC-042
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_slot_extraction_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: bpm_extraction
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- (?i)\b(?P<bpm>\d{2,3})\s*bpm\b|\bbpm\s*[:=]\s*(?P<bpm2>\d{2,3})\b
+- bpm
+- bpm2
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs: []
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+### MGAC-055 - Negative Prompt Extraction And Dedupe
+
+```yaml
+plan_unit_id: MGAC-055
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: Negative prompt extraction preserves explicit negative prompt parsing, avoid-clause collection, and combined explicit-plus-avoid dedupe while preserving order.
+gui_related: false
+gui_classification_reason: The unit defines deterministic media slot-extraction parsing behavior rather than GUI presentation.
+split_recommended: true
+depends_on:
+- MGAC-041
+- MGAC-042
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_slot_extraction_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: negative_prompt_extraction_dedupe
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- (?is)\bnegative\s+prompt\s*[:=]\s*(?P<neg>"[^"]{1,200}"|\'[^\']{1,200}\'|[^,;\n]{1,200})
+- (?is)\b(?:without|no|avoid)\s+(?P<avoid>[^,.;\n]{1,80})
+- Combine explicit + avoid list
+- dedupe
+- preserve order
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs: []
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+### MGAC-056 - Prompt Cleaning After Slot Extraction
+
+```yaml
+plan_unit_id: MGAC-056
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: Prompt cleaning removes a detected controls block and only matched spans introduced by control keywords while preserving all remaining creative prompt text.
+gui_related: false
+gui_classification_reason: The unit defines deterministic media slot-extraction parsing behavior rather than GUI presentation.
+split_recommended: true
+depends_on:
+- MGAC-034
+- MGAC-041
+- MGAC-042
+- MGAC-043
+- MGAC-044
+- MGAC-045
+- MGAC-046
+- MGAC-047
+- MGAC-048
+- MGAC-049
+- MGAC-050
+- MGAC-051
+- MGAC-052
+- MGAC-053
+- MGAC-054
+- MGAC-055
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_slot_extraction_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: prompt_cleaning_after_slot_extraction
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- 'If a controls block is present: remove it from the creative prompt.'
+- Remove only matched spans introduced by control keywords
+- using
+- model
+- size
+- aspect
+- ratio
+- resolution
+- format
+- voice
+- duration
+- negative
+- quality
+- seed
+- bpm
+- Preserve remaining text as the creative prompt.
+negative_constraints:
+- Prompt cleaning must not remove unmatched creative prompt text.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs: []
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+### MGAC-057 - Capability Picker Dropdown Items
+
+```yaml
+plan_unit_id: MGAC-057
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: The composer capability picker dropdown exposes Image, Video, TTS, and Music rows mapped respectively to media.image, media.video, media.tts, and media.music.
+gui_related: true
+gui_classification_reason: The unit defines user-visible capability picker, disabled-state presentation, UI copy, or interactive media behavior.
+split_recommended: true
+depends_on:
+- MGAC-004
+- MGAC-005
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_capability_picker_gui_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: capability_picker_dropdown_items
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- '4'
+- CAPABILITY-PICKER
+- Composer dropdown
+- Image
+- '`media.image`'
+- Video
+- '`media.video`'
+- TTS
+- '`media.tts`'
+- Music
+- '`media.music`'
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md'
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+### MGAC-058 - Disabled Capability Presentation Accessibility
+
+```yaml
+plan_unit_id: MGAC-058
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: Disabled capabilities remain visible, greyed out, keyboard-focusable, and expose the same disabled reason through hover, focus, and assistive-technology description channels using listbox/option semantics rather than color alone.
+gui_related: true
+gui_classification_reason: The unit defines user-visible capability picker, disabled-state presentation, UI copy, or interactive media behavior.
+split_recommended: true
+depends_on:
+- MGAC-057
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_capability_picker_gui_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: disabled_capability_presentation_accessibility
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- Disabled capabilities
+- visible
+- greyed out
+- tooltip
+- hover
+- focus
+- role=listbox
+- role=option
+- assistive technologies
+- rather than color alone
+negative_constraints:
+- Disabled reason must be exposed through tooltip/description rather than color alone.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, Invariant:INV-003'
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+### MGAC-059 - Missing Media Provider Footer Copy
+
+```yaml
+plan_unit_id: MGAC-059
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: When visible media capabilities are disabled because no eligible media generation provider route is configured, the dropdown footer shows route-specific setup copy and helper links without implying Gemini or AI Studio is the default media source. The old Gemini-access copy remains preserved only as source-lineage.
+gui_related: true
+gui_classification_reason: The unit defines user-visible capability picker, disabled-state presentation, UI copy, or interactive media behavior.
+split_recommended: true
+depends_on:
+- MGAC-057
+- MGAC-058
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_capability_picker_gui_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: missing_media_provider_footer_copy
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- Configure Gemini access in Settings → Authentication.
+- Sign in with Gemini OAuth or add a Google/Gemini API key.
+- '[Get API key]'
+- Google AI Studio API-key page
+- MUST NOT imply AI Studio is the only valid source of Gemini API keys
+negative_constraints:
+- The surrounding copy MUST NOT imply AI Studio is the only valid source of Gemini API keys.
+- The active footer MUST NOT use Gemini as the generic missing-media setup path.
+compatibility_only_notes:
+- Old Gemini access copy and Get API key link are retained only as source-lineage examples.
+stale_retired_dispositions:
+- Gemini-default media setup footer is retired by MGAC-094 through MGAC-097.
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, Invariant:INV-003, ContractName:Plans/rewrite-tie-in-memo.md'
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+### MGAC-060 - Shared Missing Configuration Footer Pinning
+
+```yaml
+plan_unit_id: MGAC-060
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: When multiple visible capabilities share the missing-configuration disabled reason, the dropdown shows the footer banner once, keeps it pinned at the bottom while the list scrolls, and still preserves per-item disabled reasons on hover/focus.
+gui_related: true
+gui_classification_reason: The unit defines user-visible capability picker, disabled-state presentation, UI copy, or interactive media behavior.
+split_recommended: true
+depends_on:
+- MGAC-057
+- MGAC-058
+- MGAC-059
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through this MGAC PlanUnit instead of broad MGAC-001 source-preserving coverage.
+- Regexes, examples, exact tokens, ContractRefs, negative constraints, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: media_capability_picker_gui_drift
+reasoning_tier: standard
+context_scope: media_generation_capabilities_standardization
+implementation_surfaces:
+- Plans/Media_Generation_and_Capabilities.md
+node_compile_hint:
+  mode: shared_missing_configuration_footer_pinning
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Media_Generation_and_Capabilities-S0024
+preserved_exact_tokens:
+- show the footer banner once
+- pinned at the bottom of the dropdown
+- while the list scrolls
+- supplemental guidance
+- per-item disabled reasons remain visible on hover/focus
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/Media_Generation_and_Capabilities.md owns media capability, generation, deterministic slot extraction, and media UI behavior while referenced owner docs retain their ContractRef boundaries.
+owner_hints:
+- Plans/Media_Generation_and_Capabilities.md
+preserved_contractrefs:
+- 'ContractRef: ToolID:capabilities.get, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Multi-Account.md'
+split_recommendation_reason: This unit covers one separable concern from the large Media_Generation_and_Capabilities-S0024 source span while the residual bridge preserves the unatomized remainder.
+```
+
+
+<<< CONTEXT_AFTER 4390-4401 >>>
+### MGAC-061 - Cursor Backend Media Capability Behavior
+
+```yaml
+plan_unit_id: MGAC-061
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Media_Generation_and_Capabilities.md
+canonical_text: For the Cursor backend, generated media is enabled only when Cursor declares a verified generated-media route; image-input proof alone is not generated-image support. Unsupported Cursor media kinds remain disabled with BACKEND_UNSUPPORTED, Cursor does not create a separate Gemini account model, and non-Cursor media follows provider/model generated_media_routes[] routing.
+gui_related: false
+gui_classification_reason: The unit defines backend capability routing behavior rather than direct GUI presentation.
+split_recommended: true
+depends_on:

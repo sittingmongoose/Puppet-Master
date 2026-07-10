@@ -1,0 +1,56 @@
+{
+  "assignment_id": "A005-001957-EXACT-WIN-BCDD1AE883C0-0005",
+  "attempt_id": "attempt-0003",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [
+    [
+      1332,
+      1343
+    ],
+    [
+      1740,
+      1751
+    ]
+  ],
+  "core_range": [
+    1344,
+    1739
+  ],
+  "core_sha256": "8dd187bd6f37b559a24ff77b87489ddc3118145cec778192b12773d9166abf60",
+  "document_path": "Plans/Containers_Registry_and_Unraid.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_ref": "capsules/source/b0/b0789d6b65f81a362d7a79f4abae13091510ccf047d8d2c075d2a8ed71343c8b.txt",
+  "source_excerpt_sha256": "b0789d6b65f81a362d7a79f4abae13091510ccf047d8d2c075d2a8ed71343c8b",
+  "source_sha256": "2ff2c1c3c77b3bf336b1d850e592224678e440f82c74e59596393707ac79272b",
+  "window_id": "WIN-BCDD1AE883C0-0005"
+}

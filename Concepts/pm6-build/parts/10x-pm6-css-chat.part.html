@@ -206,7 +206,6 @@
       position: relative;
       overflow: hidden;
       border: 1px solid var(--border-light);
-      border-left: 3px solid var(--accent-primary);
       border-radius: var(--radius-md);
       background: var(--surface-elevated);
       padding: var(--md);
@@ -345,9 +344,9 @@
     }
     .pm6-opcard[data-op-state="denied"] .pm6-opcard-denied { display: flex; flex-wrap: wrap; }
     .pm6-opcard[data-op-state="denied"] .pm6-chat-x1-actions { display: none; }
-    .pm6-opcard-approval { border-left: 3px solid var(--accent-orange); }
-    .pm6-opcard-research { border-left: 3px solid var(--accent-primary); }
-    .pm6-opcard[data-op-state="completed"] { border-left: 3px solid color-mix(in srgb, var(--accent-lime) 60%, transparent); }
+    .pm6-opcard-approval { background: color-mix(in srgb, var(--accent-orange) 8%, transparent); border-color: color-mix(in srgb, var(--accent-orange) 30%, var(--border)); }
+    .pm6-opcard-research { background: color-mix(in srgb, var(--accent-primary) 8%, transparent); border-color: color-mix(in srgb, var(--accent-primary) 30%, var(--border)); }
+    .pm6-opcard[data-op-state="completed"] { background: color-mix(in srgb, var(--accent-lime) 8%, transparent); border-color: color-mix(in srgb, var(--accent-lime) 30%, var(--border)); }
 
     /* ---- subagent card ---- */
     .pm6-subagent-card {
@@ -394,7 +393,6 @@
       flex-shrink: 0;
       margin: 0 var(--md) var(--xs);
       border: 1px solid var(--border-light);
-      border-left: 3px solid var(--accent-magenta);
       border-radius: var(--radius-md);
       background: var(--surface-elevated);
       padding: var(--sm) var(--md);
@@ -519,19 +517,19 @@
     .pm6-chat-files .ft-file { cursor: pointer; }
 
     /* ---- floating chat / layout modes ---- */
-    .pm6-chat-layout-state {
-      font-size: var(--fs-2xs);
-      font-weight: 600;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-pill);
-      padding: 0 7px;
-      margin-left: var(--sm);
-      flex: 1;
-      max-width: max-content;
+    .pm6-chat-badgerow {
+      display: flex;
+      align-items: center;
+      gap: var(--sm);
+      flex-wrap: wrap;
+      min-width: 0;
     }
+    /* floating (detached) mode: header row 1 doubles as the drag handle */
+    .floating-chat:not(.pm6-chat-overlay) .chat-panel-header > div:first-child { cursor: move; }
+    .floating-chat:not(.pm6-chat-overlay) .chat-panel-header > div:first-child button,
+    .floating-chat:not(.pm6-chat-overlay) .chat-panel-header > div:first-child a,
+    .floating-chat:not(.pm6-chat-overlay) .chat-panel-header > div:first-child input,
+    .floating-chat:not(.pm6-chat-overlay) .chat-panel-header > div:first-child [contenteditable] { cursor: auto; }
     .floating-chat.pm6-chat-overlay {
       left: 50% !important;
       top: 8% !important;
@@ -589,9 +587,9 @@
     .pm6-extract-table td { border: 1px solid var(--border-light); padding: 3px 8px; color: var(--text-secondary); }
     .pm6-extract-table .pm6-extract-k { font-family: var(--mono-font); color: var(--text-muted); width: 90px; white-space: nowrap; }
     .pm6-opcard-partial { font-size: var(--fs-xs); color: var(--accent-orange); border-top: 1px dashed var(--border-light); padding-top: var(--xs); }
-    .pm6-opcard[data-op-state="canceled"] { border-left: 3px solid color-mix(in srgb, var(--accent-orange) 60%, transparent); }
-    .pm6-opcard[data-op-state="awaiting_approval"] { border-left: 3px solid var(--accent-orange); }
-    .pm6-opcard[data-op-state="failed"] { border-left: 3px solid color-mix(in srgb, var(--accent-error) 60%, transparent); }
+    .pm6-opcard[data-op-state="canceled"] { background: color-mix(in srgb, var(--accent-orange) 8%, transparent); border-color: color-mix(in srgb, var(--accent-orange) 30%, var(--border)); }
+    .pm6-opcard[data-op-state="awaiting_approval"] { background: color-mix(in srgb, var(--accent-orange) 8%, transparent); border-color: color-mix(in srgb, var(--accent-orange) 30%, var(--border)); }
+    .pm6-opcard[data-op-state="failed"] { background: color-mix(in srgb, var(--accent-error) 8%, transparent); border-color: color-mix(in srgb, var(--accent-error) 30%, var(--border)); }
     /* reduced motion: completion states land instantly, nothing pulses */
     @media (prefers-reduced-motion: reduce) {
       .pm6-opcard-progressfill { transition: none; }
@@ -606,7 +604,7 @@
     [data-theme^="glass"] .pm6-opcard,
     [data-theme^="glass"] .pm6-chat-card,
     [data-theme^="glass"] .pm6-chat-planpanel {
-      background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .10));
+      background: var(--pm6-glass-step-2);
       box-shadow: inset 0 1px 0 var(--glass-edge), inset 0 0 0 1px var(--glass-hairline);
     }
     [data-theme^="glass"] .pm6-chat-send { box-shadow: 0 2px 10px var(--accent-glow); }
@@ -627,10 +625,18 @@
     [data-theme^="retro"] .pm6-chat-btn { border-radius: 0; }
     [data-theme^="retro"] .pm6-chat-suggestchip,
     [data-theme^="retro"] .pm6-route-tree { border-radius: 0; }
-    [data-theme^="glass"] .pm6-chat-suggestchip { background: rgba(var(--glass-tint-rgb), calc(var(--glass-alpha) + .08)); }
+    [data-theme^="glass"] .pm6-chat-suggestchip { background: var(--pm6-glass-step-2); }
     [data-theme^="basic"] .pm6-chat-card,
     [data-theme^="basic"] .pm6-opcard { animation: none; }
-    [data-theme^="friendly"] .pm6-chat-card { box-shadow: var(--elev-1); }
+    /* friendly cozy: neutral chat cards; worktree rows ride lavender */
+    [data-theme^="friendly"] .pm6-chat-card { box-shadow: var(--elev-1); border-radius: var(--radius-md); }
     [data-theme^="friendly"] .pm6-chat-send { border-radius: var(--radius-pill); }
+    [data-theme^="friendly"] .pm6-chat-wt-row {
+      --pm6-sheen-accent: var(--pm6-cozy-lav);
+      border-radius: var(--radius-pill);
+    }
+    [data-theme^="friendly"] .pm6-chat-wt-row:hover {
+      background: color-mix(in srgb, var(--pm6-cozy-lav) 18%, var(--pm6-cozy-card-base));
+    }
     [data-theme$="light"] .pm6-chat-sys { background: var(--surface); }
   </style>

@@ -1,0 +1,229 @@
+<<< CONTEXT_BEFORE canonical_document_lines=8169-8180 >>>
+L00008169	- auto_generated_needs_review
+L00008170	- project_override_active
+L00008171	negative_constraints: []
+L00008172	compatibility_only_notes: []
+L00008173	stale_retired_dispositions: []
+L00008174	owner_boundary_notes:
+L00008175	- The payload token is introduced by the normative override and expanded in the Result payload minima section.
+L00008176	owner_hints:
+L00008177	- Plans/newtools.md
+L00008178	preserved_contractrefs: []
+L00008179	```
+L00008180	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=8181-8380 >>>
+L00008181	### N2-147 - Docker CLI Buildx API Responsibility Split
+L00008182	
+L00008183	```yaml
+L00008184	plan_unit_id: N2-147
+L00008185	unit_type: requirement
+L00008186	status: accepted
+L00008187	owner_doc: Plans/newtools.md
+L00008188	canonical_text: 'DockerHub/Unraid responsibilities are separated: Docker CLI / Buildx performs local runtime, image build, login, and push execution; Docker Hub API is used only for namespace/repository discovery and repository creation when Puppet Master needs app-managed listing/creation behavior; DockerHub is not a storage location for Unraid XML.'
+L00008189	gui_related: false
+L00008190	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00008191	split_recommended: false
+L00008192	depends_on: []
+L00008193	unblocks: []
+L00008194	acceptance_criteria:
+L00008195	- Covered source spans remain losslessly available for exact-text audit.
+L00008196	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00008197	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00008198	validation_surfaces:
+L00008199	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008200	- python3 scripts/pm-plan-index.py validate
+L00008201	risk_class: docker_cli_buildx_api_responsibility_split
+L00008202	reasoning_tier: standard
+L00008203	context_scope: newtools_standardization
+L00008204	implementation_surfaces:
+L00008205	- Plans/newtools.md
+L00008206	node_compile_hint:
+L00008207	  mode: docker_cli_buildx_api_responsibility_split
+L00008208	  create_worknodes: false
+L00008209	source_lineage:
+L00008210	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0078
+L00008211	preserved_exact_tokens:
+L00008212	- Docker CLI / Buildx
+L00008213	- local runtime
+L00008214	- image build
+L00008215	- login
+L00008216	- push execution
+L00008217	- Docker Hub API
+L00008218	- namespace/repository discovery
+L00008219	- repository creation
+L00008220	- Do not treat DockerHub as a storage location for Unraid XML
+L00008221	negative_constraints:
+L00008222	- Do not treat DockerHub as a storage location for Unraid XML.
+L00008223	compatibility_only_notes: []
+L00008224	stale_retired_dispositions: []
+L00008225	owner_boundary_notes: []
+L00008226	owner_hints:
+L00008227	- Plans/newtools.md
+L00008228	preserved_contractrefs: []
+L00008229	```
+L00008230	
+L00008231	### N2-148 - Expanded DockerHub Auth Creation Flow
+L00008232	
+L00008233	```yaml
+L00008234	plan_unit_id: N2-148
+L00008235	unit_type: requirement
+L00008236	status: accepted
+L00008237	owner_doc: Plans/newtools.md
+L00008238	canonical_text: The expanded DockerHub flow detects whether the active project is Docker-related, resolves requested_auth_mode, validates effective_capabilities, allows browser/device login or PAT-based auth with PAT remaining the recommended explicit path, and gates missing-repository creation behind a mandatory confirmation dialog showing namespace, repository name, and privacy that cannot be bypassed by YOLO/autonomy modes.
+L00008239	gui_related: true
+L00008240	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+L00008241	split_recommended: false
+L00008242	depends_on: []
+L00008243	unblocks: []
+L00008244	acceptance_criteria:
+L00008245	- Covered source spans remain losslessly available for exact-text audit.
+L00008246	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00008247	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00008248	validation_surfaces:
+L00008249	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008250	- python3 scripts/pm-plan-index.py validate
+L00008251	risk_class: expanded_dockerhub_auth_creation_flow
+L00008252	reasoning_tier: standard
+L00008253	context_scope: newtools_standardization
+L00008254	implementation_surfaces:
+L00008255	- Plans/newtools.md
+L00008256	node_compile_hint:
+L00008257	  mode: expanded_dockerhub_auth_creation_flow
+L00008258	  create_worknodes: false
+L00008259	source_lineage:
+L00008260	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0078
+L00008261	preserved_exact_tokens:
+L00008262	- Detect whether the active project is Docker-related
+L00008263	- requested_auth_mode
+L00008264	- effective_capabilities
+L00008265	- browser/device login
+L00008266	- PAT-based auth
+L00008267	- PAT remaining the recommended explicit path
+L00008268	- mandatory confirmation dialog
+L00008269	- namespace
+L00008270	- repository name
+L00008271	- privacy
+L00008272	- YOLO/autonomy modes
+L00008273	negative_constraints:
+L00008274	- Missing-repository creation confirmation cannot be bypassed by YOLO/autonomy modes.
+L00008275	compatibility_only_notes: []
+L00008276	stale_retired_dispositions: []
+L00008277	owner_boundary_notes: []
+L00008278	owner_hints:
+L00008279	- Plans/newtools.md
+L00008280	preserved_contractrefs: []
+L00008281	```
+L00008282	
+L00008283	### N2-149 - Buildx Preview Push And Unraid Follow-On Flow
+L00008284	
+L00008285	```yaml
+L00008286	plan_unit_id: N2-149
+L00008287	unit_type: requirement
+L00008288	status: accepted
+L00008289	owner_doc: Plans/newtools.md
+L00008290	canonical_text: The expanded runtime/publish flow builds with docker buildx build, runs containers for preview/testing and surfaces user-facing access points when available, pushes to DockerHub using the selected namespace/repository/tag set, generates or updates Unraid XML by default unless disabled, and for managed template-repo workflows updates the repo, auto-commits by default, exposes a one-click push UI action, and keeps auto-push disabled by default.
+L00008291	gui_related: true
+L00008292	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+L00008293	split_recommended: false
+L00008294	depends_on: []
+L00008295	unblocks: []
+L00008296	acceptance_criteria:
+L00008297	- Covered source spans remain losslessly available for exact-text audit.
+L00008298	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00008299	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00008300	validation_surfaces:
+L00008301	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008302	- python3 scripts/pm-plan-index.py validate
+L00008303	risk_class: buildx_preview_push_unraid_follow_on_flow
+L00008304	reasoning_tier: standard
+L00008305	context_scope: newtools_standardization
+L00008306	implementation_surfaces:
+L00008307	- Plans/newtools.md
+L00008308	node_compile_hint:
+L00008309	  mode: buildx_preview_push_unraid_follow_on_flow
+L00008310	  create_worknodes: false
+L00008311	source_lineage:
+L00008312	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0078
+L00008313	preserved_exact_tokens:
+L00008314	- docker buildx build
+L00008315	- preview/testing
+L00008316	- user-facing access points
+L00008317	- Push to DockerHub
+L00008318	- namespace/repository/tag set
+L00008319	- generate/update Unraid XML by default unless the user disabled it
+L00008320	- managed template-repo workflow
+L00008321	- auto-commit by default
+L00008322	- one-click push UI action
+L00008323	- auto-push disabled by default
+L00008324	negative_constraints: []
+L00008325	compatibility_only_notes: []
+L00008326	stale_retired_dispositions: []
+L00008327	owner_boundary_notes: []
+L00008328	owner_hints:
+L00008329	- Plans/newtools.md
+L00008330	preserved_contractrefs: []
+L00008331	```
+L00008332	
+L00008333	### N2-150 - Docker Unraid Evidence ContractRef Overlay
+L00008334	
+L00008335	```yaml
+L00008336	plan_unit_id: N2-150
+L00008337	unit_type: requirement
+L00008338	status: accepted
+L00008339	owner_doc: Plans/newtools.md
+L00008340	canonical_text: Docker/Unraid evidence/result contract additions preserve docker_auth_result, docker_publish_result, and unraid_template_result summary semantics and retain the final ContractRef overlay to Plans/Containers_Registry_and_Unraid.md, Plans/FinalGUISpec.md, Plans/Orchestrator_Page.md, PolicyRule:no_secrets_in_storage, and SchemaID:evidence.schema.json.
+L00008341	gui_related: false
+L00008342	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00008343	split_recommended: false
+L00008344	depends_on: []
+L00008345	unblocks: []
+L00008346	acceptance_criteria:
+L00008347	- Covered source spans remain losslessly available for exact-text audit.
+L00008348	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00008349	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00008350	validation_surfaces:
+L00008351	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00008352	- python3 scripts/pm-plan-index.py validate
+L00008353	risk_class: docker_unraid_evidence_contractref_overlay
+L00008354	reasoning_tier: standard
+L00008355	context_scope: newtools_standardization
+L00008356	implementation_surfaces:
+L00008357	- Plans/newtools.md
+L00008358	node_compile_hint:
+L00008359	  mode: docker_unraid_evidence_contractref_overlay
+L00008360	  create_worknodes: false
+L00008361	source_lineage:
+L00008362	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0078
+L00008363	preserved_exact_tokens:
+L00008364	- Evidence/result contract additions
+L00008365	- docker_auth_result
+L00008366	- docker_publish_result
+L00008367	- unraid_template_result
+L00008368	- PolicyRule:no_secrets_in_storage
+L00008369	- SchemaID:evidence.schema.json
+L00008370	negative_constraints: []
+L00008371	compatibility_only_notes: []
+L00008372	stale_retired_dispositions: []
+L00008373	owner_boundary_notes:
+L00008374	- Plans/Containers_Registry_and_Unraid.md, FinalGUISpec, Orchestrator_Page, and evidence schema remain cross-doc consumers/authorities through the preserved ContractRef.
+L00008375	owner_hints:
+L00008376	- Plans/newtools.md
+L00008377	preserved_contractrefs:
+L00008378	- 'ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md, PolicyRule:no_secrets_in_storage, SchemaID:evidence.schema.json'
+L00008379	```
+L00008380	
+
+<<< CONTEXT_AFTER canonical_document_lines=8381-8392 >>>
+L00008381	### N2-001 - GUI Testing Tools Retired Source-Preserving Bridge
+L00008382	
+L00008383	```yaml
+L00008384	plan_unit_id: N2-001
+L00008385	unit_type: compatibility_disposition
+L00008386	status: accepted
+L00008387	owner_doc: Plans/newtools.md
+L00008388	canonical_text: N2-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 107 because newtools-S0001 through newtools-S0078 are covered by N2-002 through N2-150 or explicit structural, reference-only, retired, and migration-coverage dispositions. N2-001 no longer carries source_preserving_planunit compile mode and must not own product coverage.
+L00008389	gui_related: false
+L00008390	gui_classification_reason: The live unit is retired migration-lineage compatibility only; GUI-related source coverage is carried by fine-grained newtools PlanUnits and coverage_map proof.
+L00008391	split_recommended: false
+L00008392	depends_on:

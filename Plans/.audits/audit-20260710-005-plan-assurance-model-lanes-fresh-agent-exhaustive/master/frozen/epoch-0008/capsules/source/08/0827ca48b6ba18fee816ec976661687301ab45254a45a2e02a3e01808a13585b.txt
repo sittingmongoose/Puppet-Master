@@ -1,0 +1,221 @@
+<<< CONTEXT_BEFORE canonical_document_lines=58-69 >>>
+L00000058	- `Plans/FileManager.md`
+L00000059	
+L00000060	Rules:
+L00000061	- owner docs are reconciled before consumer docs
+L00000062	- consumer docs must not preserve stale tier-era or request-era canon as peer alternatives
+L00000063	- summary and checklist mirrors are reconciled after owner and primary consumer docs
+L00000064	
+L00000065	ContractRef: ContractName:Plans/DRY_Rules.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Progression_Gates.md
+L00000066	
+L00000067	### Cross-doc owner-map guard
+L00000068	
+L00000069	This index records these routing relationships only; it does not re-own contract, storage, UI, chat, run-graph, HITL, executor, or usage behavior. For each seam below, Primary owners and Primary doc entries carry the owning canon; Cross-owner docs implicated by this seam, Strongly implicated adjacent docs, Adjacent owners implicated, stale-consumer, and already-identified owner entries are reconciliation companions that consume or align to that owner canon.
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=70-261 >>>
+L00000070	
+L00000071	- Contracts/Crosswalk to UI/run seam: Primary owners: `Plans/Contracts_V0.md` and `Plans/Crosswalk.md`; Cross-owner docs implicated by this seam: `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/assistant-chat-design.md`, `Plans/Orchestrator_Page.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/FinalGUISpec.md`.
+L00000072	- Contracts/Final GUI seam: Primary owners: `Plans/Contracts_V0.md` and `Plans/FinalGUISpec.md`; Cross-owner docs implicated by this seam: `Plans/storage-plan.md`, `Plans/assistant-chat-design.md`, `Plans/UI_Command_Catalog.md`, and `Plans/Crosswalk.md`.
+L00000073	- Storage/command/UI/contract seam: Primary owners: `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/FinalGUISpec.md`, and `Plans/Contracts_V0.md`.
+L00000074	- Contracts/Crosswalk file-surface seam: Primary owners: `Plans/Contracts_V0.md` and `Plans/Crosswalk.md`; Strongly implicated adjacent docs: `Plans/storage-plan.md`, `Plans/FileManager.md`, `Plans/FinalGUISpec.md`, and `Plans/UI_Command_Catalog.md`.
+L00000075	- Contracts routing seam with usage carry-through: Primary owners: `Plans/Contracts_V0.md`; Strongly implicated adjacent docs: `Plans/Crosswalk.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`, `Plans/storage-plan.md`, and `Plans/usage-feature.md`.
+L00000076	- Contracts routing seam without usage carry-through: Primary owners: `Plans/Contracts_V0.md`; Strongly implicated adjacent docs: `Plans/Crosswalk.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`, and `Plans/storage-plan.md`.
+L00000077	- Contracts usage/UI seam: Primary owners: `Plans/Contracts_V0.md`; Strongly implicated adjacent docs: `Plans/UI_Command_Catalog.md`, `Plans/FinalGUISpec.md`, `Plans/usage-feature.md`, and `Plans/storage-plan.md`.
+L00000078	- Contracts run-graph seam: Primary owners: `Plans/Contracts_V0.md`; Strongly implicated adjacent docs: `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, `Plans/UI_Command_Catalog.md`, and `Plans/storage-plan.md`.
+L00000079	- Usage stale-consumer seam: Primary stale consumer: `Plans/usage-feature.md`; Owner docs already identified: `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, and `Plans/Runtime_Artifacts_Panel.md`.
+L00000080	- Orchestrator command/storage seam: Owner docs already implicated: `Plans/Orchestrator_Page.md`, `Plans/UI_Command_Catalog.md`, `Plans/Contracts_V0.md`, and `Plans/storage-plan.md`.
+L00000081	- Contracts/HITL/executor seam: Primary doc: `Plans/Contracts_V0.md`; Adjacent owners implicated: `Plans/Crosswalk.md`, `Plans/storage-plan.md`, `Plans/human-in-the-loop.md`, `Plans/Executor_Protocol.md`, `Plans/UI_Command_Catalog.md`, `Plans/FileManager.md`, and `Plans/FinalGUISpec.md`.
+L00000082	- HITL run-graph seam: Primary doc: `Plans/human-in-the-loop.md`; Adjacent owners implicated: `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, and `Plans/orchestrator-subagent-integration.md`.
+L00000083	- UI/run adjacent seam: Adjacent owners implicated: `Plans/Contracts_V0.md`, `Plans/Run_Graph_View.md`, `Plans/FinalGUISpec.md`, `Plans/Widget_System.md`, `Plans/storage-plan.md`, and `Plans/UI_Command_Catalog.md`.
+L00000084	- Runtime-artifact/orchestrator adjacent seam: Adjacent owners implicated: `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Orchestrator_Page.md`, `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`, and `Plans/Runtime_Artifacts_Panel.md`.
+L00000085	- Mixed-era layering seam: `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, and `Plans/UI_Command_Catalog.md` must not preserve `mixed-era` layering where additive patches landed without fully retiring older framing.
+L00000086	- impacted_docs seam: impacted_docs: `Plans/Contracts_V0.md`, `Plans/Executor_Protocol.md`, `Plans/UI_Command_Catalog.md`, `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/assistant-chat-design.md`, `Plans/usage-feature.md`, and `Plans/Orchestrator_Page.md`.
+L00000087	- Priority 3 — Terminology, routing, and anti-drift docs: `Plans/00-plans-index.md`, `Plans/Crosswalk.md`, `Plans/Glossary.md`, `Plans/feature-list.md`, `Plans/OpenCode_Coverage_Matrix.md`, and `Plans/Project_Output_Artifacts.md`.
+L00000088	- Orchestrator/storage/contracts triad: `Plans/Orchestrator_Page.md`, `Plans/storage-plan.md`, and `Plans/Contracts_V0.md`; equivalent source orderings that begin with `Plans/storage-plan.md` or pair `Plans/storage-plan.md` with `Plans/Contracts_V0.md` still route to the same three owner docs.
+L00000089	- Orchestrator/Final GUI storage seam: `Plans/storage-plan.md`, `Plans/Contracts_V0.md`, `Plans/FinalGUISpec.md`, and `Plans/Orchestrator_Page.md`.
+L00000090	- Final GUI/widget storage seam: `Plans/FinalGUISpec.md`, `Plans/Widget_System.md`, `Plans/Contracts_V0.md`, and `Plans/storage-plan.md`.
+L00000091	- Widget/account command seam: `Plans/Widget_System.md`, `Plans/Multi-Account.md`, `Plans/Contracts_V0.md`, and `Plans/UI_Command_Catalog.md`.
+L00000092	- Providers/accounts/cost/auth prompt-pipeline seam: Primary owners: `Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, and `Plans/Multi-Account.md`; source orderings that begin with `Plans/Multi-Account.md` or `Plans/Contracts_V0.md` still route to the same four owner docs.
+L00000093	- Execution-assumption downstream-consumer seam: downstream consumers that depend on these execution assumptions: `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/FinalGUISpec.md`, `Plans/storage-plan.md`, `Plans/UI_Command_Catalog.md`, and `Plans/human-in-the-loop.md`.
+L00000094	- UI command/user-command contract seam: Adjacent owners: `Plans/UI_Command_Catalog.md`, `Plans/Commands_System.md`, and `Plans/Contracts_V0.md`.
+L00000095	- Crosswalk/contract file-manager storage seam: Primary owners: `Plans/Crosswalk.md`, `Plans/Contracts_V0.md`, `Plans/FileManager.md`, and `Plans/storage-plan.md`; unordered source mentions of the same four paths route to the same owner set.
+L00000096	- Contract UI-command crosswalk seam: Primary owners: `Plans/Contracts_V0.md`, `Plans/UI_Command_Catalog.md`, and `Plans/Crosswalk.md`.
+L00000097	- Final GUI/storage/crosswalk/contract seam: Primary owners: `Plans/FinalGUISpec.md`, `Plans/storage-plan.md`, `Plans/Crosswalk.md`, and `Plans/Contracts_V0.md`.
+L00000098	- Contract/Final GUI/UI-command primary seam: Primary owners: `Plans/Contracts_V0.md`, `Plans/FinalGUISpec.md`, and `Plans/UI_Command_Catalog.md`.
+L00000099	- UI-command/contract/crosswalk/Final GUI seam: `Plans/UI_Command_Catalog.md`, `Plans/Contracts_V0.md`, `Plans/Crosswalk.md`, and `Plans/FinalGUISpec.md`.
+L00000100	- Contract UI/chat/file consumer seam: Primary owners: `Plans/Contracts_V0.md`; Strongly implicated adjacent docs: `Plans/Crosswalk.md`, `Plans/FileManager.md`, `Plans/FinalGUISpec.md`, `Plans/storage-plan.md`, `Plans/assistant-chat-design.md`, and `Plans/usage-feature.md`.
+L00000101	- Contract runtime-artifact file/chat consumer seam: Primary owners: `Plans/Contracts_V0.md`; Strongly implicated adjacent docs: `Plans/storage-plan.md`, `Plans/FinalGUISpec.md`, `Plans/FileManager.md`, `Plans/assistant-chat-design.md`, and `Plans/Runtime_Artifacts_Panel.md`.
+L00000102	- UI-command/storage pair seam: `Plans/UI_Command_Catalog.md` and `Plans/storage-plan.md`.
+L00000103	- Contract run/orchestrator GUI-command seam: Primary owners: `Plans/Contracts_V0.md`; Strongly implicated adjacent docs: `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, `Plans/FinalGUISpec.md`, and `Plans/UI_Command_Catalog.md`.
+L00000104	- Contract UI-command/crosswalk/Final GUI adjacent seam: Primary owners: `Plans/Contracts_V0.md`; Strongly implicated adjacent docs: `Plans/UI_Command_Catalog.md`, `Plans/Crosswalk.md`, and `Plans/FinalGUISpec.md`.
+L00000105	- Contract orchestrator/Final GUI/UI-command adjacent seam: Primary owners: `Plans/Contracts_V0.md`; Strongly implicated adjacent docs: `Plans/Orchestrator_Page.md`, `Plans/FinalGUISpec.md`, and `Plans/UI_Command_Catalog.md`.
+L00000106	- Contract/storage run adjacent seam: Primary owners: `Plans/Contracts_V0.md`; Strongly implicated adjacent docs: `Plans/storage-plan.md`, `Plans/Run_Graph_View.md`, and `Plans/Orchestrator_Page.md`.
+L00000107	- Run/GUI/UI primary stale-consumer seam: Primary stale consumers: `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, `Plans/FinalGUISpec.md`, and `Plans/UI_Command_Catalog.md`.
+L00000108	- Contract/Crosswalk/storage already-identified owner seam: Owner docs already identified: `Plans/Contracts_V0.md`, `Plans/Crosswalk.md`, and `Plans/storage-plan.md`.
+L00000109	- Worktree/chat stale-consumer seam: Primary stale consumer: `Plans/WorktreeGitImprovement.md`; Strong aligned adjacent consumer: `Plans/assistant-chat-design.md`.
+L00000110	- Crosswalk/contract owner-gap seam: Primary owner-gap docs: `Plans/Crosswalk.md` and `Plans/Contracts_V0.md`; Strong aligned consumer: `Plans/storage-plan.md`.
+L00000111	- Contract/Crosswalk shell-adoption strata seam: Stratum 1: owner docs: `Plans/Contracts_V0.md` and `Plans/Crosswalk.md`; Stratum 2: command and shell adoption: `Plans/UI_Command_Catalog.md` and `Plans/FinalGUISpec.md`.
+L00000112	- Contract/storage owner-gap seam: Primary owner-gap docs: `Plans/Contracts_V0.md` and `Plans/storage-plan.md`.
+L00000113	- Contract/storage runtime/chat strong-consumer seam: Primary owner docs: `Plans/Contracts_V0.md` and `Plans/storage-plan.md`; Strong adjacent consumers: `Plans/Runtime_Artifacts_Panel.md`, `Plans/assistant-chat-design.md`, and `Plans/Orchestrator_Page.md`.
+L00000114	- Storage owner-gap/executor-adjacent seam: Primary owner-gap doc: `Plans/storage-plan.md`; Strong adjacent owners: `Plans/Contracts_V0.md` and `Plans/Executor_Protocol.md`.
+L00000115	- Contract/storage chat aligned-consumer seam: Primary owner docs: `Plans/Contracts_V0.md` and `Plans/storage-plan.md`; Strong aligned consumer: `Plans/assistant-chat-design.md`.
+L00000116	- Contracts/Crosswalk/storage/HITL seam: `Plans/Contracts_V0.md`, `Plans/Crosswalk.md`, `Plans/storage-plan.md`, and `Plans/human-in-the-loop.md`.
+L00000117	- Prompt-pipeline contracts storage run-modes seam: `Plans/Prompt_Pipeline.md`, `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, and `Plans/Run_Modes.md`.
+L00000118	- Storage/HITL/contract primary-owner seam: Primary owner docs: `Plans/storage-plan.md`, `Plans/human-in-the-loop.md`, and `Plans/Contracts_V0.md`.
+L00000119	- UI/run/orchestrator strong stale-consumer seam: Strong stale consumers: `Plans/UI_Command_Catalog.md`, `Plans/Run_Graph_View.md`, and `Plans/Orchestrator_Page.md`.
+L00000120	- HITL/storage/contract primary-owner seam: Primary owner docs: `Plans/human-in-the-loop.md`, `Plans/storage-plan.md`, and `Plans/Contracts_V0.md`.
+L00000121	- UI/executor stale-consumer aligned-owner seam: Strong stale consumer: `Plans/UI_Command_Catalog.md`; Strong aligned owner: `Plans/Executor_Protocol.md`.
+L00000122	- Run/orchestrator/UI primary stale-consumer seam: Primary stale consumers: `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, and `Plans/UI_Command_Catalog.md`.
+L00000123	- UI/run stale-inconsistent consumer seam: Primary stale/inconsistent consumers: `Plans/UI_Command_Catalog.md` and `Plans/Run_Graph_View.md`; retain `/inconsistent` classification when reconciling those consumers.
+L00000124	- Prompt-pipeline adjacent-owner seam: Primary doc: `Plans/Prompt_Pipeline.md`; Adjacent owners implicated: `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Multi-Account.md`, `Plans/Executor_Protocol.md`, `Plans/Orchestrator_Page.md`, and `Plans/Run_Graph_View.md`.
+L00000125	- Contract/Crosswalk/orchestrator/widget run adjacent seam: Adjacent owners implicated: `Plans/Contracts_V0.md`, `Plans/Crosswalk.md`, `Plans/Orchestrator_Page.md`, `Plans/Widget_System.md`, `Plans/Run_Graph_View.md`, and `Plans/storage-plan.md`.
+L00000126	- Final-GUI/widget/orchestrator command worktree HITL adjacent seam: Adjacent owners implicated: `Plans/FinalGUISpec.md`, `Plans/Widget_System.md`, `Plans/Orchestrator_Page.md`, `Plans/UI_Command_Catalog.md`, `Plans/WorktreeGitImprovement.md`, and `Plans/human-in-the-loop.md`.
+L00000127	- Contracts/Crosswalk/storage/HITL repeat seam: `Plans/Contracts_V0.md`, `Plans/Crosswalk.md`, `Plans/storage-plan.md`, and `Plans/human-in-the-loop.md` remain the owner-map set for repeated source orderings of the same four docs.
+L00000128	- Runtime/storage/policy/UI terminology seam: normalize `safe-point`, `restore-point`, `rollback`, and `contamination` terminology through one authoritative mapping and event taxonomy across runtime, storage, policy, and UI docs; index routing points to `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Decision_Policy.md`, and `Plans/FinalGUISpec.md`.
+L00000129	- Final GUI/UI/orchestrator repeat seam: listed orderings `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`, `Plans/Orchestrator_Page.md` and `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md`, `Plans/UI_Command_Catalog.md` route to the same owner-map set.
+L00000130	- Contracts/Crosswalk/legacy chain-wizard source-lineage seam: `Plans/chain-wizard-flexibility.md` is preserved only as compatibility/source-lineage input; active contract and boundary ownership remains with `Plans/Contracts_V0.md` and `Plans/Crosswalk.md`.
+L00000131	- Legacy chain-wizard/contracts/executor source-lineage seam: `Plans/chain-wizard-flexibility.md` (section 1) is preserved only as historical input; active executor/runtime ownership remains with `Plans/Contracts_V0.md`, `Plans/Executor_Protocol.md`, and the current PRD/Planning owner docs.
+L00000132	- Contracts/executor/multi-account seam: `Plans/Contracts_V0.md`, `Plans/Executor_Protocol.md`, and `Plans/Multi-Account.md`.
+L00000133	- Storage/orchestrator pair seam: `Plans/storage-plan.md` and `Plans/Orchestrator_Page.md`.
+L00000134	- Orchestrator-subagent/executor/storage repeat seam: `Plans/orchestrator-subagent-integration.md`, `Plans/Executor_Protocol.md`, and `Plans/storage-plan.md` remain the owner-map set for repeated source orderings of the same three docs.
+L00000135	- Orchestrator/Final GUI source-lineage seam: `Plans/Orchestrator_Page.md` and `Plans/FinalGUISpec.md`; non-Plan source ledger references are source-lineage only and are excluded from live owner docs.
+L00000136	- Contracts/usage Orchestrator spot-checks seam: `Plans/Contracts_V0.md` and `Plans/usage-feature.md`, with spot-checks against `Plans/Orchestrator_Page.md`.
+L00000137	- UI command/commands/chat seam: `Plans/UI_Command_Catalog.md`, `Plans/Commands_System.md`, and `Plans/assistant-chat-design.md`.
+L00000138	- UI command/Final GUI/FileManager seam: `Plans/UI_Command_Catalog.md`, `Plans/FinalGUISpec.md`, and `Plans/FileManager.md`.
+L00000139	- File/runtime progression seam: Cross-owner docs implicated by this seam: `Plans/FileManager.md`, `Plans/Contracts_V0.md`, `Plans/Progression_Gates.md`, `Plans/Orchestrator_Page.md`, and `Plans/Runtime_Artifacts_Panel.md`.
+L00000140	- Storage/file GUI/runtime primary-owner seam: Primary owners: `Plans/storage-plan.md`, `Plans/FileManager.md`, `Plans/FinalGUISpec.md`, and `Plans/Runtime_Artifacts_Panel.md`.
+L00000141	- GUI/usage/runtime/UI/orchestrator primary-owner seam: Primary owners: `Plans/FinalGUISpec.md`, `Plans/usage-feature.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/UI_Command_Catalog.md`, and `Plans/Orchestrator_Page.md`.
+L00000142	- Contracts/Crosswalk/FileManager primary-owner seam: Primary owners: `Plans/Contracts_V0.md`, `Plans/Crosswalk.md`, and `Plans/FileManager.md`.
+L00000143	- Orchestrator/runtime/storage seam: `Plans/Orchestrator_Page.md`, `Plans/Runtime_Artifacts_Panel.md`, and `Plans/storage-plan.md`.
+L00000144	- Contracts/GUI/orchestrator/FileManager primary-owner seam: Primary owners: `Plans/Contracts_V0.md`, `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md`, and `Plans/FileManager.md`.
+L00000145	- Contracts/Crosswalk/Final GUI primary-owner seam: Primary owners: `Plans/Contracts_V0.md`, `Plans/Crosswalk.md`, and `Plans/FinalGUISpec.md`.
+L00000146	- Storage/chat/orchestrator/Crosswalk seam: Cross-owner docs implicated by this seam: `Plans/storage-plan.md`, `Plans/assistant-chat-design.md`, `Plans/Orchestrator_Page.md`, and `Plans/Crosswalk.md`.
+L00000147	- Binary/DRY/decision/formatter seam: `Plans/BinaryLocator_Spec.md`, `Plans/DRY_Rules.md`, `Plans/Decision_Log.md`, and `Plans/Formatters_System.md`.
+L00000148	- Primary tranche docs seam: Primary docs in this tranche: `Plans/BinaryLocator_Spec.md`, `Plans/DRY_Rules.md`, `Plans/Decision_Log.md`, `Plans/Formatters_System.md`, `Plans/OpenCode_Coverage_Matrix.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, `Plans/feature-list.md`, `Plans/newfeatures.md`, and `Plans/rewrite-tie-in-memo.md`.
+L00000149	- Highest-signal continuation tranche seam: `Plans/Decision_Log.md`, `Plans/Formatters_System.md`, `Plans/OpenCode_Coverage_Matrix.md`, `Plans/Plugins_System.md`, `Plans/Skills_System.md`, `Plans/feature-list.md`, `Plans/newfeatures.md`, and `Plans/rewrite-tie-in-memo.md`; `Plans/DRY_Rules.md` is the mechanical-integrity forcing function, and `Plans/BinaryLocator_Spec.md` is lower-risk but still non-zero.
+L00000150	- Orchestrator source-lineage seam: `Plans/Orchestrator_Page.md`; protected working-ledger source paths are source-lineage only and are excluded from live owner docs.
+L00000151	- FileManager/chat implicit-consumer seam: Primary stale consumer: `Plans/FileManager.md`; Strong aligned-but-implicit consumer: `Plans/assistant-chat-design.md`.
+L00000152	- Runtime/storage/Crosswalk seam: `Plans/Runtime_Artifacts_Panel.md`, `Plans/storage-plan.md`, and `Plans/Crosswalk.md`.
+L00000153	- Contracts/Crosswalk primary-owner seam: Primary owner docs: `Plans/Contracts_V0.md` and `Plans/Crosswalk.md`.
+L00000154	- UI command/Final GUI adoption seam: Primary adoption docs: `Plans/UI_Command_Catalog.md` and `Plans/FinalGUISpec.md`.
+L00000155	- Storage primary-owner seam: Primary owner doc: `Plans/storage-plan.md`.
+L00000156	- Orchestrator/run primary stale-consumer seam: Primary stale consumers: `Plans/Orchestrator_Page.md` and `Plans/Run_Graph_View.md`.
+L00000157	- Prompt pipeline residual stale-scope seam: Strong owner docs with residual stale scope wording: `Plans/Prompt_Pipeline.md`.
+L00000158	- Orchestrator/run/UI targeted-doc seam: `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, and `Plans/UI_Command_Catalog.md`.
+L00000159	- Contracts/executor seam: `Plans/Contracts_V0.md` and `Plans/Executor_Protocol.md`.
+L00000160	- Widget owner-consumer hybrid seam: Primary stale owner/consumer hybrid: `Plans/Widget_System.md`.
+L00000161	- Owner-routing adjacent-owner seam: Adjacent owners implicated by this seam: `Plans/Contracts_V0.md`, `Plans/Progression_Gates.md`, `Plans/Widget_System.md`, `Plans/Orchestrator_Page.md`, and `Plans/FinalGUISpec.md`.
+L00000162	- Progression gate command-normalization seam: `GATE-010` cannot express the routing and `command-normalization` checks now needed; the `GATE` layer remains behind the owner contract layer.
+L00000163	- Rewrite/UI/Final GUI primary-doc seam: Primary docs: `Plans/rewrite-tie-in-memo.md`, `Plans/UI_Command_Catalog.md`, and `Plans/FinalGUISpec.md`.
+L00000164	- UI/run/widget seam: `Plans/UI_Command_Catalog.md`, `Plans/Run_Graph_View.md`, and `Plans/Widget_System.md`.
+L00000165	- Widget/orchestrator/Final GUI seam: `Plans/Widget_System.md`, `Plans/Orchestrator_Page.md`, and `Plans/FinalGUISpec.md`.
+L00000166	- Final GUI/widget pair seam: `Plans/FinalGUISpec.md` and `Plans/Widget_System.md`.
+L00000167	- Usage/widget pair seam: `Plans/usage-feature.md` and `Plans/Widget_System.md`.
+L00000168	- Usage/Multi-Account pair seam: `Plans/usage-feature.md` and `Plans/Multi-Account.md`.
+L00000169	- Orchestrator/Final GUI pair seam: `Plans/Orchestrator_Page.md` and `Plans/FinalGUISpec.md`.
+L00000170	- Usage/Final GUI/orchestrator seam: `Plans/usage-feature.md`, `Plans/FinalGUISpec.md`, and `Plans/Orchestrator_Page.md`.
+L00000171	- Widget/FileManager/runtime seam: `Plans/Widget_System.md`, `Plans/FileManager.md`, and `Plans/Runtime_Artifacts_Panel.md`.
+L00000172	- Glossary/Final GUI/orchestrator/run seam: `Plans/Glossary.md`, `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md`, and `Plans/Run_Graph_View.md`.
+L00000173	- Executor-only seam: `Plans/Executor_Protocol.md`.
+L00000174	- Prompt pipeline/Final GUI seam: `Plans/Prompt_Pipeline.md` and `Plans/FinalGUISpec.md`.
+L00000175	- Prompt pipeline/Multi-Account/executor seam: `Plans/Prompt_Pipeline.md`, `Plans/Multi-Account.md`, and `Plans/Executor_Protocol.md`.
+L00000176	- Orchestrator/Source Control-related seam: `Plans/Orchestrator_Page.md` plus Source Control-related docs.
+L00000177	- Crosswalk precedence rewrite-era seam: `Plans/Crosswalk.md` remains structurally unreliable as a boundary/precedence map when rewrite-era ownership disputes peak; preserve `/precedence`.
+L00000178	- Final-pass core owner set seam: Highest-signal docs remain the same core owner set for final pass: `Plans/Commands_System.md`, `Plans/Wiring_Matrix.md`, `Plans/UI_Wiring_Rules.md`, `Plans/Project_Output_Artifacts.md`, `Plans/FileManager.md`, `Plans/Crosswalk.md`, `Plans/Decision_Policy.md`, `Plans/Run_Modes.md`, `Plans/Progression_Gates.md`, `Plans/newtools.md`, and `Plans/assistant-memory-subsystem.md`.
+L00000179	- Orchestrator/Final GUI/FileManager seam: `Plans/Orchestrator_Page.md`, `Plans/FinalGUISpec.md`, and `Plans/FileManager.md`.
+L00000180	- Containers/DRY/decision seam: `Plans/Containers_Registry_and_Unraid.md`, `Plans/DRY_Rules.md`, and `Plans/Decision_Log.md`.
+L00000181	- Orchestrator/run/Final GUI seam: `Plans/Orchestrator_Page.md`, `Plans/Run_Graph_View.md`, and `Plans/FinalGUISpec.md`.
+L00000182	- Crosswalk/usage/Final GUI/orchestrator seam: `Plans/Crosswalk.md`, `Plans/usage-feature.md`, `Plans/FinalGUISpec.md`, and `Plans/Orchestrator_Page.md`.
+L00000183	- Spec-integrity primary-doc seam: Primary spec-integrity docs: `Plans/Crosswalk.md`, `Plans/usage-feature.md`, `Plans/FinalGUISpec.md`, and `Plans/Orchestrator_Page.md`.
+L00000184	- Executor/orchestrator seam: `Plans/Executor_Protocol.md` and `Plans/Orchestrator_Page.md`.
+L00000185	- Widget/Final GUI/usage seam: `Plans/Widget_System.md`, `Plans/FinalGUISpec.md`, and `Plans/usage-feature.md`.
+L00000186	- Widget/Final GUI spec-integrity seam: Primary spec-integrity docs: `Plans/Widget_System.md` and `Plans/FinalGUISpec.md`.
+L00000187	- Progression Gates adjacent traceability seam: `Plans/Progression_Gates.md`; adjacent references checked through existing owner docs: `Plans/DRY_Rules.md` and `Plans/Crosswalk.md`.
+L00000188	- Run Graph/widget/Progression Gates seam: `Plans/Run_Graph_View.md`, `Plans/Widget_System.md`, and `Plans/Progression_Gates.md`.
+L00000189	- Usage event reference shape seam: `Plans/usage-feature.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/storage-plan.md`, and `Plans/Contracts_V0.md` remain the owner/consumer set for `usage_event_ref`; `usage-feature.md` consumers must not rely on timestamp heuristics or a shape that lacks authoritative storage/runtime linkage.
+L00000190	- Orchestrator page-tab routing seam: `Plans/Orchestrator_Page.md`, `Plans/UI_Command_Catalog.md`, and `Plans/Contracts_V0.md` own `page_tab` route semantics; use `page_tab` only when a routed destination must land inside a known page and force a specific tab.
+L00000191	- Usage cost consumer seam: `Plans/usage-feature.md` owns `cost_usage` routing and duplicate-consumer cleanup, with `Plans/Runtime_Artifacts_Panel.md` and `Plans/storage-plan.md` carrying artifact and persistence alignment so there is one authoritative consumer section.
+L00000192	- Runtime-recovery duplicate-canon seam: `runtime-recovery` addenda and same-file canon duplication are cleanup inputs for `Plans/Crosswalk.md`, `Plans/human-in-the-loop.md`, and `Plans/storage-plan.md`; this index records routing only and does not make duplicated addenda canonical.
+L00000193	- Runtime scheduler/executor blocked-sequence seam: `blocked_sequence` is owned by the runtime scheduler/executor layer through `Plans/Executor_Protocol.md` and `Plans/Contracts_V0.md`; UI/HITL/chat/storage docs, including the legacy `/HITL/chat/storage` bucket shorthand, are consumers and must not re-own the blocked episode.
+L00000194	- Orchestrator subagent coordination-canon seam: `Plans/orchestrator-subagent-integration.md` owns live `coordination-canon` contradictions in its runtime scheduler consumer model; same-file contradictions must be resolved there before `Plans/FileManager.md` or index consumers mirror them.
+L00000195	
+L00000196	## Rewrite tie-in (2026-02-21)
+L00000197	The project is intentionally adapting an OpenCode-style architecture and is mid-transition to a deterministic agent-loop core with:
+L00000198	- **Providers** behind one unified **event model**
+L00000199	- **Event-sourced storage**: `seglog` (canonical ledger) -> projections into `redb` (KV state/settings) + Tantivy (search)
+L00000200	- **Central tool registry + policy engine** and a patch/apply/verify/rollback pipeline
+L00000201	- **UI rewrite**: Rust stable 1.96.1 + Slint 1.17.1 by owner decision on 2026-07-07 (Winit + Skia compiled/default on Windows/Linux/macOS; Winit + FemtoVG-wgpu fallback; Winit software emergency fallback; Slint/WASM canvas web GUI via trusted local daemon for OS capabilities; reverify official stable releases before runtime implementation)
+L00000202	- **Auth**: subscription-first; Gemini Direct (`gemini`, direct key-only/API-key-backed) remains active, while Gemini CLI (`gemini_cli`) is retired from active provider support and preserved only as source-lineage/compatibility terminology. Antigravity CLI is the active CLI-backed Google/agent route replacing the stale Gemini CLI route. Provider identity, requested/effective auth, account identity, account/plan UI, quota/usage labels, media capabilities, and setup/health are route-, account-, and model-dependent across direct providers, CLI-backed providers, coding-plan providers, and generated-media routes.
+L00000203	
+L00000204	ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD
+L00000205	
+L00000206	See: `Plans/rewrite-tie-in-memo.md`, `Plans/Multi-Account.md`, `Plans/usage-feature.md`, and `Plans/FinalGUISpec.md`.
+L00000207	
+L00000208	ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/storage-plan.md
+L00000209	
+L00000210	### Provider/account canon reconciliation note (2026-03-20)
+L00000211	
+L00000212	Provider and usage reconciliation spans `Plans/Models_System.md`, `Plans/usage-feature.md`, `Plans/FinalGUISpec.md`, and `Plans/rewrite-tie-in-memo.md`; concrete owner docs still carry behavior, while this index records the cross-doc impact map. Additional downstream reconciliation may touch provider-health / auth / doctor-related planning docs when those owner surfaces are expanded.
+L00000213	
+L00000214	Provider / account / promoted-shell routing stays split by owner surface. `Plans/Multi-Account.md` and provider-specific docs own requested/effective account, auth, quota, and provider-health semantics; `Plans/Section15_MVP_Promoted_Features_Spec.md` owns the promoted shell and promoted-feature behavior envelope; `Plans/FinalGUISpec.md` consumes that shell-surface canon for visible placement, settings, title-bar, attention, and recovery UI; `Plans/Orchestrator_Page.md`, `Plans/Run_Modes.md`, `Plans/Executor_Protocol.md`, and `Plans/storage-plan.md` own the run/package/lane/runtime records that the shell presents. Stale `pre-promotion` page, `/title-bar/recovery`, or feature-list/newfeatures shell wording is lineage or mirror cleanup input, not a live owner alternative.
+L00000215	
+L00000216	ContractRef: ContractName:Plans/Multi-Account.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Orchestrator_Page.md
+L00000217	
+L00000218	## Plan map
+L00000219	
+L00000220	### PM Bootstrap Planning, PlanUnit, and Node-Readiness Map (2026-06-11)
+L00000221	
+L00000222	The bootstrap planning packet uses the following owner split:
+L00000223	- `Plans/Planning_Ledger_System.md` owns the Bootstrap Ledger and finished-product Native Ledger Service contracts, compact operating state, source-lineage preservation, per-turn ledger protocol, and ledger-to-Plan compilation boundary.
+L00000224	- `Plans/Plan_Document_System.md` owns standardized Plan doc layout, stable PlanUnits, `gui_related: true|false`, lossless Plan conversion proof, owner adjudication metadata, and generated PlanUnit index boundaries.
+L00000225	- `Plans/Plan_To_Node_Compilation.md` owns the safe PlanUnit-to-node-readiness boundary and future compiler interface; it does not create WorkNodes or executable build tasks.
+L00000226	- `Plans/Bootstrap_Planning_Migration.md` owns current bootstrap workflow usage, AGENTS trigger migration, Codex phase model, controlled Plan conversion batches, governance seal timing, and retired-experiment exclusions.
+L00000227	
+L00000228	The ledger `Plans/ledgers/v2/pldg-20260610-001-ledger-plan-system/` is source-lineage/planning memory for these docs, not canonical product prose. Generated governance artifacts remain seal-phase only: ordinary ledger writing, plan drafting, plan conversion, PlanUnit indexing, and node-readiness reporting do not update `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, or `Plans/auto_decisions.jsonl`.
+L00000229	
+L00000230	ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000231	
+L00000232	### PM Semantic Audit Closure Map (2026-06-17)
+L00000233	
+L00000234	Semantic audit closure support uses this owner split:
+L00000235	- `Plans/Planning_Ledger_System.md` / `PLS-012` owns `Plans/.audits/_semantic_closure_registry.jsonl`, `audit_scope_manifest.jsonl`, `repair_impact_matrix.jsonl`, durable closure row shape, `previously_closed` reuse, reopen policy, `subject_ref`/`observation_ref`, and ledger `latest_audit_*` terminal-state rules.
+L00000236	- `Plans/Plan_Document_System.md` / `PDS-014` owns deterministic `finding_key` and `check_id` construction, `repair_required`/`finding_level`, `repair_closure_matrix.jsonl`, audit source artifact validation, cross-artifact ref checks, scope/impact coverage, and validator-facing actionable-row coverage.
+L00000237	- `Plans/bootstrap/Bootstrap_Planning_Workflow.md` and `Plans/bootstrap/Codex_Prompts.md` are workflow and reusable-prompt consumers; they must point back to `PLS-012` and `PDS-014` instead of re-owning schema or enum semantics.
+L00000238	- `scripts/pm-audit-closure.py`, `Plans/.audits/_semantic_closure_registry.jsonl`, `Plans/.audits/audit-*/audit_scope_manifest.jsonl`, `Plans/.audits/audit-*/repair_impact_matrix.jsonl`, and `Plans/.audits/audit-*/repair_closure_matrix.jsonl` are support/governance surfaces, not product implementation, WorkNodes, NodeSeeds, executable queues, or build tasks.
+L00000239	
+L00000240	ContractRef: ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+L00000241	
+L00000242	### Plans-To-Code Handoff Map (2026-06-17)
+L00000243	
+L00000244	The Plans-to-code handoff packet compiled from `pldg-20260617-001-plans-to-code-handoff` uses this owner split:
+L00000245	- `Plans/Plan_To_Node_Compilation.md` owns the design-only PlanCompileRun state machine, low-context stage cards, non-executable NodeSeed candidate and review contracts, WorkGraph draft and WorkNode request contracts, handoff matrix, schema boundary, shared compiler core, Codex bootstrap adapter, and native Puppet Master adapter.
+L00000246	- `Plans/Automated_Testing_System.md` owns Test Capability Discovery, Test Harness Probe, Test Strategy v2, WorkNode test binding, Test Run Receipt, test oracle policy, platform adapter policy, automated visual/browser/device evidence policy, and test-gap blockers.
+L00000247	- `Plans/Executor_Protocol.md` owns ExecutorIntakeReport, WorkNode request acceptance, runnable dispatch boundary, source-control/model/test/authority preflights, failure signatures, loop breakers, PlanChangeDetected handling, and execution receipt chain.
+L00000248	- `Plans/Goal_Runtime_System.md` owns future Planning Wizard approval trigger semantics after explicit enablement, hands-off autonomy policy, HITL consumption boundary, and GoalCompletionReceipt completion certification.
+L00000249	- `Plans/Models_System.md` owns the six user-facing model settings: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model, plus model resolution receipt semantics. There is no user-facing Executor Model setting.
+L00000250	- `Plans/Orchestrator_Page.md` and `Plans/FinalGUISpec.md` own the seven-tab Orchestrator shell, visible Plan Compile tab, animated node-factory UX, Settings placement, progress/status projection, and separation from existing execution views.
+L00000251	- `Plans/WorktreeGitImprovement.md`, `Plans/FileSafe.md`, and `Plans/GitHub_Integration.md` own worktree allocation, safe points, rollback, FileSafe guard inputs, and optional GitHub promotion/output after Executor intake.
+L00000252	- `Plans/Project_Output_Artifacts.md` and `Plans/Runtime_Artifacts_Panel.md` own packaged receipt artifacts and user-visible evidence projection without becoming runtime truth.
+L00000253	- `Plans/Contracts_V0.md` owns shared contract envelopes and points to `Plans/plans_to_code_handoff.schema.json` as the design-only schema draft.
+L00000254	- `Plans/Planning_Ledger_System.md` and `Plans/Plan_Document_System.md` own implementation-readiness/doc-impact matrix handling and the owner/consumer/reference scan gate for this compile class.
+L00000255	
+L00000256	The ledger is source-lineage/planning memory only. Metadata-only PlanUnit index and governance registration may refresh `Plans/.plan_index/**`, `Plans/Spec_Lock.json`, `Plans/_shards/**`, `Plans/.evidence/**`, `Plans/plan_graph.json`, and `Plans/auto_decisions.jsonl` after the live Plans docs are stable. Those artifacts remain governance/registering outputs only; this compile does not enable PlanCompile runtime, native Planning Wizard launch, Codex bootstrap launch, WorkNodes, NodeSeeds, executable queues, final node manifests, product implementation files, dispatched GoalRuns, production build tasks, or runtime dispatch.
+L00000257	
+L00000258	ContractRef: ContractName:Plans/Plan_To_Node_Compilation.md, ContractName:Plans/Automated_Testing_System.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Goal_Runtime_System.md, ContractName:Plans/Models_System.md, ContractName:Plans/Orchestrator_Page.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/WorktreeGitImprovement.md, ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Project_Output_Artifacts.md, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Planning_Ledger_System.md, ContractName:Plans/Plan_Document_System.md
+L00000259	
+L00000260	
+L00000261	### PRD Builder And Planning Wizard Map (2026-06-18)
+
+<<< CONTEXT_AFTER canonical_document_lines=262-273 >>>
+L00000262	
+L00000263	The PRD Builder and Planning Wizard packet compiled from `pldg-20260618-001-prd-planning-wizard` uses this owner split:
+L00000264	- `Plans/PRD_Builder.md` owns finished-product PRD Builder intake, source ingestion, PRD projection, Approved PRD Pack creation, annotation/readiness behavior, and the explicit `Approve PRD for Planning Wizard` handoff.
+L00000265	- `Plans/Planning_Wizard.md` owns PlanningRun, dynamic topic graphs, topic-scoped ledger work, Planning Context Capsules, topic conversion/audit, final integration, ApprovedPlanPack, compile readiness, Planning Wizard GUI states, and `Approve And Build`.
+L00000266	- `Plans/Automated_Testing_System.md` owns testing defaults, current official-source capability research, safe installation policy, Auto/On/Off testing settings, visible verification sessions, redaction, and test receipts.
+L00000267	- `Plans/Plan_To_Node_Compilation.md`, `Plans/Executor_Protocol.md`, and `Plans/Goal_Runtime_System.md` own the downstream PlanCompile, Executor intake, WorkNodeRecord materialization, activation, receipt, and runtime boundary contracts. This compile records a runtime-capable v2 contract direction but does not enable runtime launch or emit runtime artifacts.
+L00000268	- `Plans/prd_planning_runtime_contracts.json` and `Plans/prd_planning_runtime_contracts.schema.json` instantiate strict PRD/Planning runtime contracts around Native Ledger Service APIs, ProjectContextSnapshot variants, Plan Compile stage cards, WorkNode and activation records, testing receipts, typed UICommand contracts, clean-room positive/negative scenarios, and retired compatibility retrieval exclusions.
+L00000269	- `Plans/FinalGUISpec.md`, `Plans/Orchestrator_Page.md`, `Plans/UI_Command_Catalog.md`, `Plans/Commands_System.md`, `Plans/assistant-chat-design.md`, `Plans/Crosswalk.md`, and `Plans/Wiring_Matrix.md` consume or route the user-facing surfaces, command families, thread model, and reference terminology.
+L00000270	- `Plans/Contracts_V0.md` owns the shared event, pack, record, exception, and runtime-envelope contract terms consumed by PRD Builder, Planning Wizard, Plan Compile, Executor, and Goal Runtime.
+L00000271	- `Plans/00-plans-index.md`, `Plans/Bootstrap_Planning_Migration.md`, `Plans/FileSafe.md`, `Plans/GitHub_API_Auth_and_Flows.md`, `Plans/GitHub_Integration.md`, `Plans/Media_Generation_and_Capabilities.md`, `Plans/Models_System.md`, `Plans/Multi-Account.md`, `Plans/Permissions_System.md`, `Plans/Personas.md`, `Plans/Plan_Document_System.md`, `Plans/Planning_Ledger_System.md`, `Plans/Progression_Gates.md`, `Plans/Project_Output_Artifacts.md`, `Plans/Run_Graph_View.md`, `Plans/Runtime_Artifacts_Panel.md`, `Plans/WorktreeGitImprovement.md`, `Plans/human-in-the-loop.md`, and `Plans/storage-plan.md` remain valid PlanUnit-index owner docs for lineage/support/consumer addenda from this compile; they are not ContractRef promotion targets for the PRD Builder and Planning Wizard product map.
+L00000272	- `Plans/chain-wizard.md` and `Plans/chain-wizard-flexibility.md` are compatibility/source-lineage consumers for semantically migrated legacy wizard material and are excluded from active product/runtime retrieval by the runtime contract packet; `Chain Wizard`, `Plan Wizard`, `Requirements Doc Builder`, and `Start Chain` are not active current-product names except where explicitly marked historical or compatibility-only.
+L00000273	

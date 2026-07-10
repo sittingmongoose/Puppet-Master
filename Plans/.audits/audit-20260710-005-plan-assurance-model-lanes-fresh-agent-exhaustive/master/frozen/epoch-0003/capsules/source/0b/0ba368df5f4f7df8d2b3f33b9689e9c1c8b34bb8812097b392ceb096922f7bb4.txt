@@ -1,0 +1,427 @@
+<<< CONTEXT_BEFORE 14126-14137 >>>
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0104
+preserved_exact_tokens:
+  - "default 10"
+  - "max_total_active_agents=32"
+negative_constraints:
+  - "Assistant UI concurrent thread setting must not redefine global runtime concurrency."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+
+<<< AUTHORITATIVE_CORE 14138-14535 >>>
+### ACD-232 - Plan Panel Error Scope
+
+```yaml
+plan_unit_id: ACD-232
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Plan panel is per-thread and Accessibility is not MVP; custom/built-in command conflicts explain why, and error UX suggests switching platform or model when appropriate.
+gui_related: true
+gui_classification_reason: Plan panel, command conflict copy, accessibility scope, and error suggestions are visible UI behavior.
+depends_on: [ACD-227]
+unblocks: []
+acceptance_criteria:
+  - Plan panel is per-thread.
+  - Accessibility is explicitly not MVP in this scope.
+  - Custom/built-in command conflicts explain why.
+  - Error UX can suggest platform/model switch when appropriate.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: adopted_mvp
+reasoning_tier: standard
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: plan_panel_error_scope
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0104
+preserved_exact_tokens:
+  - "Accessibility is not MVP"
+  - "no conflicting names"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-233 - No Blanket Closure Traceability
+
+```yaml
+plan_unit_id: ACD-233
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Previously open gaps are traceability only and do not claim blanket closure; competitive-comparison traceability remains intact.
+gui_related: false
+gui_classification_reason: Previously open gaps traceability is documentation/governance behavior.
+depends_on: [ACD-225]
+unblocks: []
+acceptance_criteria:
+  - Previously open gaps table remains traceability.
+  - The table does not claim blanket closure.
+  - Competitive-comparison traceability remains intact.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: traceability
+reasoning_tier: standard
+context_scope: docs
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+node_compile_hint:
+  mode: no_blanket_closure
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0105
+preserved_exact_tokens:
+  - "without claiming blanket closure"
+negative_constraints:
+  - "This traceability table must not claim blanket closure."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-234 - Git Parity Chat
+
+```yaml
+plan_unit_id: ACD-234
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Git and GitHub parity is specified in GitHub_Integration, and chat git commands drive git operations without switching to the Git panel.
+gui_related: true
+gui_classification_reason: Chat git commands and Git panel handoff are visible UI behavior.
+depends_on: []
+unblocks: []
+acceptance_criteria:
+  - Git/GitHub parity routes to GitHub_Integration.
+  - Chat git commands can drive git operations.
+  - Users need not switch to the Git panel to use chat git commands.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: git
+reasoning_tier: standard
+context_scope: chat_consumer
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/GitHub_Integration.md
+node_compile_hint:
+  mode: git_parity_chat
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0106
+preserved_exact_tokens:
+  - "Git panel"
+  - "GitHub API integration"
+  - "SSH remote dev servers"
+  - "no-wizard project flows"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/GitHub_Integration.md
+```
+
+### ACD-235 - Long Thread Performance Scope
+
+```yaml
+plan_unit_id: ACD-235
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Long chat thread performance requirements apply to chat message list and thread content on Rust + Slint with advanced renderer assumptions.
+gui_related: true
+gui_classification_reason: Long-thread performance applies to visible chat message list rendering.
+depends_on: [ACD-224]
+unblocks: [ACD-236]
+acceptance_criteria:
+  - Long chat thread requirements cover message list and related thread content.
+  - Rust + Slint and advanced renderer assumptions remain explicit.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: performance
+reasoning_tier: high
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: long_thread_scope
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0107
+preserved_exact_tokens:
+  - "Rust + Slint"
+  - "winit + Skia"
+  - "Composergui5"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+```
+
+### ACD-236 - Virtualized Message List
+
+```yaml
+plan_unit_id: ACD-236
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  The message list must virtualize the visible viewport plus overscan of 10
+  items above and below, using virtual spacer height and estimated or measured
+  item heights.
+gui_related: true
+gui_classification_reason: Message-list virtualization and overscan affect visible scrolling and rendering.
+depends_on: [ACD-235]
+unblocks: [ACD-237, ACD-242, ACD-243, ACD-244, ACD-248]
+acceptance_criteria:
+  - Only visible viewport plus overscan is rendered.
+  - Overscan defaults to 10 items above and below.
+  - Scrollbar height uses virtual spacer and estimated/measured item heights.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: performance
+reasoning_tier: high
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/newfeatures.md
+node_compile_hint:
+  mode: virtualized_message_list
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0108
+preserved_exact_tokens:
+  - "ui.chat.virtualization_overscan"
+  - "10"
+  - "virtual spacer height"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/newfeatures.md
+```
+
+### ACD-237 - Slint Visible Slice Stable ID
+
+```yaml
+plan_unit_id: ACD-237
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: >-
+  Slint implementation uses ListView or an equivalent visible-slice model with
+  stable message/block IDs to avoid huge widget trees and reduce flicker.
+gui_related: true
+gui_classification_reason: Slint visible-slice rendering and stable IDs affect visible chat UI performance.
+depends_on: [ACD-236]
+unblocks: [ACD-238, ACD-239, ACD-241]
+acceptance_criteria:
+  - Slint renders only a visible slice rather than a full thread widget tree.
+  - Visible slice can be driven by start_index and count.
+  - Message/block IDs remain stable across scrolling.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: performance
+reasoning_tier: high
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: slint_visible_slice_stable_id
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0108
+preserved_exact_tokens:
+  - "ListView"
+  - "(start_index, count)"
+  - "message_id"
+  - "event_id"
+negative_constraints:
+  - "Avoid building a single huge widget tree for the entire thread."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-238 - No Full Replace Streaming
+
+```yaml
+plan_unit_id: ACD-238
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Streaming appends or updates the active message in place and never replaces or rebuilds the entire visible message list on chunks.
+gui_related: true
+gui_classification_reason: Streaming updates and flicker avoidance are visible chat UI behavior.
+depends_on: [ACD-237]
+unblocks: [ACD-240, ACD-244]
+acceptance_criteria:
+  - Streaming updates the current message node in place.
+  - Stream chunks do not rebuild the full visible list.
+  - Other visible items do not re-render or jump because of active streaming content.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: performance
+reasoning_tier: high
+context_scope: streaming
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: no_full_replace_streaming
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0109
+preserved_exact_tokens:
+  - "not replace the entire message list"
+  - "do not trigger a full re-layout or re-build"
+negative_constraints:
+  - "Do not replace the entire message list on stream chunks."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-239 - Scroll Layout Stability
+
+```yaml
+plan_unit_id: ACD-239
+unit_type: constraint
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Expand/collapse preserves scroll position, caches or estimates heights, and avoids read-write-read layout thrash.
+gui_related: true
+gui_classification_reason: Expand/collapse and scroll stability are visible chat UI behavior.
+depends_on: [ACD-237]
+unblocks: [ACD-249]
+acceptance_criteria:
+  - Expand/collapse preserves or minimally adjusts scroll position.
+  - Height estimates or caches prevent recalculating every item on every action.
+  - Layout avoids read-write-read patterns.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: performance
+reasoning_tier: high
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: scroll_layout_stability
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0109
+preserved_exact_tokens:
+  - "scroll position"
+  - "read-write-read"
+  - "visible slice"
+negative_constraints:
+  - "Avoid read-write-read layout thrash."
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-240 - Streaming Single Update Path
+
+```yaml
+plan_unit_id: ACD-240
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Active streaming uses one buffer/model update path with coalescing or throttling rather than node replacement.
+gui_related: true
+gui_classification_reason: Streaming update path affects visible chat streaming performance.
+depends_on: [ACD-238]
+unblocks: []
+acceptance_criteria:
+  - Active streaming appends to a buffer or model.
+  - Renderer draws current streamed state on a coalesced cadence.
+  - Streaming does not replace the whole active node.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: performance
+reasoning_tier: standard
+context_scope: streaming
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/FinalGUISpec.md
+node_compile_hint:
+  mode: streaming_single_update_path
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0109
+preserved_exact_tokens:
+  - "1-2 frames per second"
+  - "single update path"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+```
+
+### ACD-241 - Lazy Collapsed Content
+
+```yaml
+plan_unit_id: ACD-241
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Collapsed sections lazily render only summary lines while full content remains stored for persistence and search.
+gui_related: true
+gui_classification_reason: Collapsed section lazy rendering is visible chat UI behavior.
+depends_on: [ACD-237]
+unblocks: []
+acceptance_criteria:
+  - Collapsed thought, bash, diff, and web sections render only summary content.
+  - Full content remains in the thread model for persistence and search.
+  - Full content renders only after expansion.
+validation_surfaces:
+  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+  - python3 scripts/pm-plan-index.py validate
+risk_class: performance
+reasoning_tier: standard
+context_scope: gui
+implementation_surfaces:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+node_compile_hint:
+  mode: lazy_collapsed_content
+  create_worknodes: false
+source_lineage:
+  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:assistant-chat-design-S0110
+preserved_exact_tokens:
+  - "Thought stream (expand)"
+  - "Ran: cargo test"
+negative_constraints: []
+owner_hints:
+  - Plans/assistant-chat-design.md
+  - Plans/storage-plan.md
+```
+
+
+<<< CONTEXT_AFTER 14536-14547 >>>
+### ACD-242 - Load Older Optional
+
+```yaml
+plan_unit_id: ACD-242
+unit_type: requirement
+status: accepted
+owner_doc: Plans/assistant-chat-design.md
+canonical_text: Optional load-older pagination may bound extreme thread display while preserving full history in storage.
+gui_related: true
+gui_classification_reason: Load older pagination is visible long-thread UI behavior.
+depends_on: [ACD-236]
+unblocks: [ACD-250]

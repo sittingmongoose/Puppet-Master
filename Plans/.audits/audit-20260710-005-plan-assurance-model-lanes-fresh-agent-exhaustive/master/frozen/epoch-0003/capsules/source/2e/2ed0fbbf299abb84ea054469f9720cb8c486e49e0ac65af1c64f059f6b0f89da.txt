@@ -1,0 +1,425 @@
+<<< CONTEXT_BEFORE 685-696 >>>
+
+### Enhancement 5: Usage in header (compact)
+
+
+- **Benefit**
+  - One line in app header (e.g. "Cursor 5h: 80% - Claude 7d: 45%") reduces need to open Usage page for a quick check.
+- **Notes**
+  - Option C in GUI placement. Keep compact to avoid clutter; link to full Usage page.
+- **Phase**
+  - v1 or post-v1 depending on placement choice.
+
+### Enhancement 6: Doctor integration
+
+<<< AUTHORITATIVE_CORE 697-1092 >>>
+
+- **Benefit**
+  - Cross-links: "View in Usage" from Doctor when usage warning/error; "Run Doctor" for usage from Usage page. Keeps usage and health in one mental model.
+- **Notes**
+  - Doctor already has `usage_check`; add navigation message or button to Usage; from Usage add button to run Doctor (or open Doctor tab with usage checks).
+- **Phase**
+  - v1 optional; small UX improvement.
+
+### Enhancement 7: Cost column when available
+
+- **Benefit**
+  - When platforms expose cost (e.g. in stream-json result), persist and show in Ledger and analytics; enables "cost by project/date".
+- **Notes**
+  - Orchestrator currently writes `cost: None`. Extend write path when runner or parser provides cost; add column to Ledger and to analytics aggregates.
+- **Phase**
+  - When at least one platform provides cost; then extend to others.
+
+### Enhancement 8: Alerts history
+
+- **Benefit**
+  - Log when we showed "approaching limit" or "quota exhausted"; user can review "I was warned at 14:00" for debugging or awareness.
+- **Notes**
+  - Optional; store in a small log or append to a file under `.puppet-master/usage/` (e.g. `alerts.jsonl`). Display in Usage or Settings.
+- **Phase**
+  - Post-v1.
+
+### Enhancement 9: Comparison with peers / benchmarks
+
+- **Benefit**
+  - e.g. "You use more tokens than 60% of users" could motivate optimization or reassure; would require anonymized opt-in data and a backend.
+- **Notes**
+  - Out of scope for current plan; possible future if we add opt-in telemetry and a comparison service.
+- **Phase**
+  - Future; not in scope.
+
+## Out of Scope for This Plan
+
+- Changes to platform CLI contracts or new platform-specific APIs beyond what AGENTS.md already describes.
+- Token counting or context-window usage for chat/assistant (covered by assistant-chat-design §12 and newfeatures §10/§15).
+- Implementation details of the current stack (Rust/Iced); the feature should be realizable in a future stack with the same data contracts and UX goals.
+
+## Success Criteria
+
+
+- Users can see 5h/7d usage (and plan, where available) without running a manual "usage" command.
+- Users can open a dedicated Usage view (or equivalent) to see ledger and, if implemented, analytics.
+- When approaching or hitting a limit, users see a clear warning or message and a path to Usage or tier config.
+- Tier/config flows show current usage when choosing a platform.
+- Usage section aligns with ecosystem norms: **always-visible** 5h/7d (and plan where available), plus optional analytics/cost view (yume/openclaudecto-style).
+
+## Version History
+
+| Date | Change |
+|------|--------|
+| 2026-02-21 | Initial plan: Usage as first-class app/GUI feature; quota visibility, ledger, optional analytics; alignment with AGENTS.md and newfeatures; external references (OpenSync, yume, openclaudecto, OpenCode Monitor). GUI-based usage (not CLI like OpenCode Monitor). |
+| 2026-02-21 | Fleshed out: Gaps (5h/7d not in GUI, no live APIs in GUI path, Ledger vs usage_tracker split, quota only from errors, alert threshold, analytics, interview/orchestrator policy); Potential problems (API secrets, rate limits, two tracker types, platform semantics, file size, stale data, multi-project); Enhancements (time-window selector, reset countdown, per-tier usage, export, header compact, Doctor integration, cost column, alerts history). |
+| 2026-02-21 | Data sources: added "Data Sources: State Files (JSON/JSONL)" as an early draft direction. That historical note is now superseded by canonical child-run/runtime accounting: `usage.jsonl` and similar state files may still appear as implementation artifacts, but `active-subagents.json` is not canonical usage truth. |
+| 2026-02-21 | Fleshed out Gaps, Potential Problems, Enhancements: each gap has Current state / Desired / Acceptance; each problem has Risk / Impact / Mitigation; each enhancement has Benefit / Notes / Phase. |
+| 2026-02-21 | Per-platform usage data: added section on Cursor API (augment with usage/limits; CURSOR_API_KEY); Codex CLI stream/provider data; Copilot CLI + metrics API; Claude Admin API + stream-json (existing); Gemini direct-provider local counters and estimated cost (now superseded by the mode-dependent Gemini Direct/Gemini CLI rules above). Summary table and implementation order. |
+| 2026-02-21 | Clarified Cursor API: usage/account/limits only -- we do not use it for model invocation; model engagement stays OAuth + CLI. AGENTS.md "No API available" refers to model invocation; Cursor has a separate API for augmenting the Usage view. |
+| 2026-02-22 | Added "Storage dependency (implementation)": Usage depends on seglog + redb + projectors + analytics scan; embedded implementation checklist from storage-plan.md; clarified state-file-first fallback until stack exists; cross-referenced storage-plan.md and deterministic verifier/evidence contracts in Relationship to Existing Docs. |
+| 2026-02-23 | Added widget-composed page layout addendum (sections below): Usage page is fully widget-composed with grid-based resizing, per-widget config, Multi-Account widget as first-class catalog entry, and Dashboard reuse via add-widget flow. |
+
+---
+
+<a id="widget-composition"></a>
+## Widget-Composed Page Layout (Addendum -- 2026-02-23)
+
+### Scope of This Addendum
+
+This section extends the Usage page from a static layout to a **fully widget-composed, grid-based page** using the Widget System defined in Plans/Widget_System.md. The Usage page is a required, dedicated top-level page. Every content area on the Usage page is a widget.
+
+ContractRef: ContractName:Plans/Widget_System.md
+
+### Usage Page is Widget-Composed
+
+The Usage page MUST be composed entirely of widgets from the widget catalog (Plans/Widget_System.md section 2). There is no static/fixed content area -- every panel, chart, and table is a widget that can be moved, resized, and configured.
+
+Users can:
+- **Move** widgets within the grid (drag-and-drop).
+- **Resize** widgets by grid spans (drag widget edge, grid-snapping per Plans/Widget_System.md section 3).
+- **Configure** each widget individually (gear icon for time window, platform filter, chart type, etc.).
+- **Add** new widgets from the catalog via the add-widget flow.
+- **Remove** widgets they don't want to see.
+
+ContractRef: ContractName:Plans/Widget_System.md#3, ContractName:Plans/Widget_System.md#4
+
+### Default Widget Layout (4-column grid)
+
+The Usage page ships with this default layout. No page starts empty. Users can customize after first load.
+
+### Analytics signal contract
+
+Usage analytics consumers interpret grep/Search acceleration through `tool.invoked.index_used`: `true` counts queries served by sparse-n-gram candidate narrowing, while `false` counts raw ripgrep fallback or another unindexed path.
+
+| Col | Row | Widget ID | Size | What It Shows |
+|-----|-----|-----------|------|---------------|
+| 0 | 0 | `widget.quota_summary` | 2x1 | 5h/7d usage bars per platform with plan type |
+| 2 | 0 | `widget.alert_thresholds` | 2x1 | Approaching-limit warnings and threshold status |
+| 0 | 1 | `widget.analytics_chart` | 2x2 | Aggregate usage over time (bar/line/area chart) |
+| 2 | 1 | `widget.budget_donuts` | 2x2 | Donut charts for budget consumption per platform |
+| 0 | 3 | `widget.tool_usage` | 2x2 | Tool invocation count, latency (p50/p95), error rate, and grep/Search `index_used` fallback mix |
+| 2 | 3 | `widget.multi_account` | 2x2 | Per-platform account list, active account, cooldown state |
+| 0 | 5 | `widget.ledger_table` | 4x3 | Event-level usage/token/cost ledger with filtering |
+
+### Grid-Based Resizing
+
+- Uses the grid system from Plans/Widget_System.md section 3.
+- Column count is responsive: 2 columns (<1200px), 3 columns (1200-1600px), 4 columns (>1600px) per Plans/FinalGUISpec.md section 12.3.
+- Each widget can be independently resized within its declared min/max grid constraints.
+- Resizing a widget can affect what data it shows: e.g., a wider `widget.analytics_chart` shows more time granularity, a taller `widget.ledger_table` shows more rows.
+
+ContractRef: ContractName:Plans/Widget_System.md#3, ContractName:Plans/FinalGUISpec.md#12.3
+
+### Per-Widget Configuration
+
+Each Usage widget has a gear icon in its header for per-widget configuration. Examples:
+
+| Widget | Config Options |
+|--------|---------------|
+| `widget.quota_summary` | Time window (5h/7d), platforms to display |
+| `widget.analytics_chart` | Time window (5h/7d/24h/custom), chart type (bar/line/area), platforms to include |
+| `widget.budget_donuts` | Time window, chart style (donut/bar) |
+| `widget.tool_usage` | Time window, sort by (count/latency/errors/index_used fallback rate) |
+| `widget.ledger_table` | Visible columns, page size, default sort, event type filter |
+| `widget.multi_account` | Platforms to show, show cooldown timers (on/off) |
+
+Configuration is persisted alongside the widget layout per Plans/Widget_System.md section 7.
+
+ContractRef: ContractName:Plans/Widget_System.md#5
+
+### Multi-Account Widget as First-Class Catalog Entry
+The multi-account widget remains a first-class catalog entry, but it is now a status and observability widget rather than the canonical setup surface.
+
+ContractRef: ContractName:Plans/Widget_System.md, ContractName:Plans/Multi-Account.md, ContractName:Plans/FinalGUISpec.md
+
+Required content:
+- provider entry or server-profile row label
+- active/effective marker
+- plain-language status (`Working` or a concrete reason)
+- internal readiness may still record an `Operational` layer, but the GUI keeps that layer separate from the user-facing status
+- pressure/cooldown summary
+- source-confidence / stale label where needed
+- direct link/action into Agent-Config for setup, validation, or repair
+
+Rules:
+- the widget does not replace Agent-Config for account management, billing/entity selection, instruction control, skills, or MCP setup.
+- one GitHub Copilot auth-backed row may show a selected organization/billing entity beneath it rather than rendering duplicate top-level rows.
+- OpenCode server profiles appear alongside account-backed rows with explicit profile-mode labels.
+- the widget must not imply that every provider row has literal installed-local-state semantics; some rows are account-backed, some are server-profile-backed.
+
+ContractRef: ContractName:Plans/Provider_OpenCode.md, ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md
+### Reuse on Dashboard via Add-Widget Flow
+
+All widgets that appear on the Usage page are **also hostable on the Dashboard**. Users can add any Usage widget to the Dashboard through the add-widget flow (Plans/Widget_System.md section 4):
+
+1. On the Dashboard, click "Add Widget".
+2. The catalog overlay shows all Dashboard-compatible widgets, including all Usage widgets.
+3. Select a widget (e.g., `widget.quota_summary`) and click "Add".
+4. The widget appears on the Dashboard grid with its default size.
+5. Configure and resize as needed.
+
+This means users can build a Dashboard that includes usage information alongside orchestrator status and other widgets, without needing to navigate to the Usage page.
+
+ContractRef: ContractName:Plans/Widget_System.md#4
+
+### Cross-References
+
+- Plans/Widget_System.md -- grid system (section 3), widget catalog (section 2), add-widget flow (section 4), layout persistence (section 7)
+- Plans/Multi-Account.md -- multi-account data model and GUI requirements
+- Plans/FinalGUISpec.md -- responsive grid (section 12.3), existing Usage view (section 7.8)
+- Plans/storage-plan.md -- redb rollup keys for usage data
+
+## Runtime Scheduler / Recovery Observability Addendum (2026-03-09)
+
+### Recommended counters / views
+- blocked attempts by `blocked_reason_code`
+- retries by `failure_class`
+- remediation children spawned and resolved
+- queue-analysis passes and wake reasons
+- safe-point creates/restores
+- blocked outcomes remain distinct from failures
+- blocked counters also retain `escalation_level` and the shared blocked-action disclosure (`action_available`)
+
+### Metrics integrity rule
+- usage rollups may keep executed-tool metrics separate while blocked and remediation disclosure remains queryable
+- blocked outcomes remain distinct from failures in user-visible statistics
+## Source Control, GitHub Actions, and Docker Manager Cost Attribution Addendum (2026-03-12)
+
+Cross-surface receipts from Source Control, GitHub Actions, Docker Manager, Kubernetes, and Orchestrator must not create feature-local cost views.
+
+Rules:
+- when a receipt or artifact carries `usage_event_ref` or equivalent canonical usage identity, `Show in Ledger` and `Show in Usage` open the canonical Usage surfaces with that event in scope
+- if a user reruns workflows, tails logs, performs repeated registry refreshes, or executes other cost-bearing remote actions, the resulting cost attribution still resolves through canonical usage records
+- any feature-local summary is secondary presentation only and must not replace the canonical Usage/Ledger pipeline
+
+Reversibility and undo disclosure is part of user-facing `/accounting` for cost-bearing actions. Receipts and confirmations classify each action as immediately undoable, reversible with a compensating action, non-reversible but confirmable, or destructive and `non-undoable`; user copy may also show `non-reversible` when no practical reversal exists. If `/undo` exists, the UI records the undo-window duration, whether the undo is `local-only` or `remote-compensating`, what invalidates it, and whether a background refresh, `/poll`, or subsequent mutation closes the window. Non-reversible and non-undoable actions must disclose that before execution rather than only in `/history`.
+
+Bulk-operation receipts preserve the parent/child shape for usage and history. A parent bulk receipt carries aggregate counts for `/failed/blocked/skipped` plus completed targets; child receipts carry `per-target` result, usage_event_ref, rollback or `/undo` expectation, and any blocked reason. Orchestrator and history must not flatten a bulk action into one ambiguous line item.
+
+Potentially `high-cost` or repeated remote actions show cost forecast and warning semantics when platform/provider data allows it. Examples include rerun-many-workflows, bulk log retrieval, repeated registry refreshes, many `/Kubernetes` refreshes, and user-requested long-lived observation. Usage history distinguishes `user-requested` actions from automatic refresh or `/poll` overhead so the Ledger does not make background maintenance look like explicit user intent.
+
+Small-sweep owner precedence is explicit for these hidden cross-cutting contracts. `usage-feature.md` owns cost_usage routing and cost attribution; `newtools.md` owns Docker/Actions readiness and deprecated-alias doctor IDs; Crosswalk owns `/precedence` between feature-owner docs; Docker, GitHub Actions, and Orchestrator owners keep their operational IDs rather than duplicating cost rules here. References hidden in `Crosswalk.md`, `newtools.md`, or `usage-feature.md` are still canonical when they are the named owner, including `/Docker/Orchestrator` readiness/cost links and `deprecated-alias` handling. Legacy `allowed_actions[]` remains compatibility-only; blocked/recovery flows use ordered `allowed_action_ids[]` without accidental global find/replace.
+
+ContractRef: ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/storage-plan.md, ContractName:Plans/GitHub_Integration.md
+
+## Cross-Surface Usage Routing Clarifications
+
+- `manual_preferred_account_id` is a run-request field, not a project policy default. Usage must keep policy defaults separate from the per-run requested concrete account so the two meanings do not collapse.
+- Account pressure and switching use an append-only event `/record` family. Usage, Ledger, History, and routing projections read account-pressure and account-switch records instead of inferring them from mutable view state.
+- Gate-side usage contract changes must land with verifiable `/schema` evidence before prose expands; matrix/schema drift and gate-side drift are the same contract-risk pattern when prose runs ahead of enforceable fields.
+- JSON export labels distinguish exact record payload, filtered table dump, and convenience summary. A JSON export that lacks the record envelope is a view export even when the file extension is the same.
+- Runtime artifacts and receipts preserve canonical usage identity plus run `/thread/attempt/worktree` linkage; Usage must not invent feature-local routing semantics when a receipt or runtime artifact already carries the shared subject.
+- Historical-only projects do not become degraded solely because they have completed unrelated historical runs. `no-active-run` is an absence of current execution, not a problem state by itself.
+- A2A duplicate attempt-continuity addenda and the tier-boundary schema signal a version-governed consolidation requirement; Usage waits for that consolidated contract instead of scattering more annotations.
+- `inspector_target = history` is used for chronological or `/detail-history` focus inside an already-selected object; Usage, details, evidence, and history targets change focus, not the selected subject identity.
+- Quiet-window behavior applies to advisory pressure or `/threshold` warnings only. Blocked states and canonical `action-needed` episodes must not quietly disappear behind the same suppression rule.
+- Usage exports include filtered ledger CSV, filtered concern `/table` CSV, and analytics chart/table export as view exports unless they carry the exact record envelope required for canonical record export.
+- Source Control usage views stay compact around current `/live` worktree rows with `/toggles` for retained, cleanup-eligible, and archived `/removed` history instead of dumping all backing history into the narrow surface.
+- The `effective-resolution` record carries blocked and `/degraded` reason fields plus confidence and `/source` hooks so Usage can display why resolution changed without owning provider or runtime truth.
+- Usage history preserves graph generation history, safe-point and recovery history, promotion `/revocation` audit, and cleanup `/archive/remove` traceability as distinct history dimensions rather than flattening them into one cleanup note.
+- Project run history remains chronological-first. If cross-run derivation or `/continuation` concepts are added later, they require explicit run-relationship metadata instead of reordering history around inferred relationships.
+- Account switching and quota pressure share an append-only account-switch / pressure-episode family with shared projection consumers, so Usage, Ledger, History, and account-pressure views read one durable record family.
+- OpenCode bridge limits, DAE enforcement, promoted-feature shell ownership, and runtime identity provenance remain explicit architectural edges before Usage presents those events as fully resolved provider/account facts.
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/usage-feature.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### UF-002 - Usage Feature Envelope
+
+```yaml
+plan_unit_id: UF-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: The Usage feature is a first-class app/GUI area that remains a plan-only, implementation-agnostic specification for quota visibility, plan type, ledger inspection, analytics, and alerts, including 5h/7d usage and plan type where available.
+gui_related: true
+gui_classification_reason: This unit defines the user-visible Usage app/GUI feature envelope.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-002 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_194
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: usage_feature_envelope
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0011
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0015
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0018
+preserved_exact_tokens:
+- PLAN DOCUMENT ONLY
+- first-class area in the app/GUI
+- Usage
+- 5h/7d
+- plan type
+- ledger
+- analytics
+- alerts
+- implementation-agnostic
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-003 - Rollup Backed Storage Dependency
+
+```yaml
+plan_unit_id: UF-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage reads 5h/7d, dashboard, and analytics values from redb rollups produced by analytics scan jobs over the canonical seglog pipeline, with Tantivy search/projector support where applicable; usage.jsonl remains a human-readable mirror or compatibility input, not the canonical rollup source.
+gui_related: true
+gui_classification_reason: The unit supports user-visible Usage numbers but primarily preserves storage-backed projection requirements.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-003 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_194
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: rollup_backed_storage_dependency
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0012
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0013
+preserved_exact_tokens:
+- seglog
+- redb
+- Tantivy
+- analytics scan jobs
+- 5h/7d
+- dashboard
+- usage.jsonl
+- canonical rollup source
+- Projector pipeline
+negative_constraints:
+- 5h/7d and dashboard windows are owned by rollups, not by ad hoc `usage.jsonl` scans.
+preserved_contractrefs: []
+compatibility_only_notes:
+- usage.jsonl may still appear as a human-readable mirror or Ledger compatibility input during migration, but it is not the canonical rollup source.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+### UF-004 - Usage Storage Routing Identity
+
+```yaml
+plan_unit_id: UF-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: Usage storage and routing are scoped by canonical project, run, package, lane, UsageRecord, runtime object identity, usage_event_ref, and Ledger/Usage route targets rather than legacy timestamp/thread/tier shortcuts.
+gui_related: true
+gui_classification_reason: The unit governs user-visible deep-links and route targets in Usage surfaces.
+split_recommended: true
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UF-004 remains addressable as a fine-grained Usage Feature PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: usage_feature_drift
+reasoning_tier: standard
+context_scope: usage_feature_batch_194
+implementation_surfaces:
+- Plans/usage-feature.md
+node_compile_hint:
+  mode: usage_storage_routing_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:usage-feature-S0014
+preserved_exact_tokens:
+- project
+- run
+- package
+- lane
+- usage_event_ref
+- UsageRecord
+- Ledger/Usage route targets
+- run_id/thread_id/timestamp
+- usage_event_seq
+negative_constraints:
+- Usage `/runtime/storage` paths and artifacts are scoped per-project, per-run, per-package, and per-lane; old tier/workspace-only layouts remain migration inputs and must not replace canonical project/run/package/lane identity.
+- GUI deep-links no longer use `run_id/thread_id/timestamp`, `/thread_id/timestamp`, `usage_event_seq`, broad timestamp filters, or tier-based `usage.jsonl` rollups as canonical navigation.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/usage-feature.md
+```
+
+
+<<< CONTEXT_AFTER 1093-1104 >>>
+### UF-005 - Usage Export Taxonomy
+
+```yaml
+plan_unit_id: UF-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/usage-feature.md
+canonical_text: 'Usage export semantics stay distinct: record export returns exact record envelopes with stable ids, canonical ids, refs, metadata, and schema-aware payloads; bundle export packages records, Evidence, blobs/files, selected-object bundles, manifests, and run-history artifacts; view export produces filtered tables, charts, CSV/JSON summaries, search results, analytics views, and graph renders without becoming canonical record truth.'
+gui_related: true
+gui_classification_reason: Export is user-facing Usage behavior and file output presentation.
+split_recommended: false
+depends_on:

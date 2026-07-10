@@ -1,0 +1,378 @@
+<<< CONTEXT_BEFORE 1968-1979 >>>
+- operational_identity
+- created_utc
+negative_constraints:
+- Command normalization preserves user intent without rewriting route_target or OpenSubject.
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Contracts_V0.md §route_target and OpenSubject, ContractName:Plans/FileSafe.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+
+<<< AUTHORITATIVE_CORE 1980-2328 >>>
+### UCC-016 - Tier Era Compatibility Retirement
+
+```yaml
+plan_unit_id: UCC-016
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: TierContext, tier_id, TierType, Tiers, allowed_actions[], reason_code, recovery_options[], approve_continue, and tier-era event examples are compatibility-only and current runtime approvals resolve through package/seam/lane identity and blocked-state contracts.
+gui_related: false
+gui_classification_reason: This unit preserves backend/governance command identity, metadata, compatibility, or owner-boundary rules without primary visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-016 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: tier_era_compatibility_retirement
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0013
+preserved_exact_tokens:
+- TierContext
+- tier_id
+- TierType
+- Tiers
+- allowed_actions[]
+- reason_code
+- recovery_options[]
+- approve_continue
+- run.started
+- usage.event
+- hitl.approval_requested
+- package/seam/lane
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes:
+- Legacy tier-era event and approval examples are compatibility-only.
+stale_retired_dispositions:
+- Tier-era runtime canon is retired from live command catalog semantics.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-017 - Stale Command Family Retirement Guard
+
+```yaml
+plan_unit_id: UCC-017
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Highest-risk stale command, environment/config, question, persona/runtime, blocked recovery, web error, and web action enum tokens remain explicit retirement evidence rather than active command IDs or payload fields.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-017 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: stale_command_family_retirement_guard
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0014
+preserved_exact_tokens:
+- cmd.chat.delete_message
+- Bare /web
+- cmd.web.search
+- cmd.web.fetch
+- cmd.web.extract
+- cmd.web.research
+- cmd.chat.web.search
+- OPENCODE_DISABLE_LSP_DOWNLOAD
+- OPENCODE_LSP_TIMEOUT
+- QuestionInput
+- QuestionAnswer
+- requested_persona_id
+- effective_persona_id
+- unblock_action_ids
+- invalid_url
+- fetch_failed
+- provider_unavailable
+- credit_cap_exceeded
+- wait | screenshot | select | hover | evaluate | press | focus
+negative_constraints:
+- cmd.chat.delete_message is not an active catalog command.
+- cmd.web.search is not the implicit destination for bare /web.
+- Open in Terminal and Show Terminal must not both normalize to cmd.terminal.show.
+preserved_contractrefs: []
+compatibility_only_notes:
+- Legacy grouped cmd.web.* names are compatibility-only retirement evidence.
+stale_retired_dispositions:
+- The stale web-action enum string is not the canonical WebAction enum.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-018 - Artifact Drill Through Gap Guard
+
+```yaml
+plan_unit_id: UCC-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: gap-003 artifact drill-through commands route through Usage and the shared route/open contract; old tool-summary payloads such as tool_name, invocation_summary, options, and No remaining gaps remain source-lineage only.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-018 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: artifact_drill_through_gap_guard
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0015
+preserved_exact_tokens:
+- gap-003
+- artifact drill-through
+- '{ tool_name, invocation_summary, options }'
+- tool_name
+- invocation_summary
+- No remaining gaps
+negative_constraints:
+- Old tool-summary tuples are not active command-catalog payload canon.
+preserved_contractrefs: []
+compatibility_only_notes:
+- Tool summary payload tokens remain source-lineage only unless owner contracts bind current route/open behavior.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-019 - Gui Readiness Command Coverage Gaps
+
+```yaml
+plan_unit_id: UCC-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Later-model GUI readiness requires projection-trust, gating, MVP, GUI, IDs, promoted-feature, multi-project-tab, attention-center, runtime cmd.runtime.* ownership, and cross-doc command-family gaps to resolve to catalog rows or owner retirements.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-019 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: gui_readiness_command_coverage_gaps
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0015
+preserved_exact_tokens:
+- /projection-trust
+- /gating
+- MVP
+- GUI
+- IDs
+- later-model
+- promoted-feature
+- multi-project-tab
+- attention-center
+- cmd.runtime.*
+- FinalGUISpec.md
+- Orchestrator_Page.md
+- cmd.orchestrator.switch_tab
+- cmd.chat.run_user_command
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Cross-doc command ownership gaps are machine-breaking gaps, not editorial cleanup.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-020 - Readiness Blocker Owner Defects
+
+```yaml
+plan_unit_id: UCC-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Audit survivors, wiring/template drift, uncataloged IDs, stable action IDs, stale references, packaging authority splits, and naming-rule claims remain command-readiness blockers until resolved through catalog IDs, wiring rows, and owner-documented retirement.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-020 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: readiness_blocker_owner_defects
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0015
+preserved_exact_tokens:
+- Audit-survivor command gaps
+- /wiring/template
+- uncataloged command IDs
+- stable action IDs
+- Plans/Commands_System.md
+- missing anchors
+- stale section references
+- /packaging
+- naming-rule
+negative_constraints: []
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions:
+- Command readiness blockers are gate-breaking owner defects, not summary cleanup.
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+### UCC-021 - Uncataloged Signal And Extraction Hazard Guard
+
+```yaml
+plan_unit_id: UCC-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Uncataloged owner signals and extraction hazards remain registration or retirement obligations; prose, filenames, examples, indexes, deprecated-ID markers, and cmd.*.json/schema.json names do not become command IDs merely by appearing in source text.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- UCC-021 remains addressable as a fine-grained UI Command Catalog PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: ui_command_catalog_drift
+reasoning_tier: standard
+context_scope: ui_command_catalog_batch_188
+implementation_surfaces:
+- Plans/UI_Command_Catalog.md
+node_compile_hint:
+  mode: uncataloged_signal_extraction_hazard_guard
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:UI_Command_Catalog-S0015
+preserved_exact_tokens:
+- cmd.orchestrator.preview_open
+- cmd.orchestrator.preview_stop
+- cmd.orchestrator.open_preview_artifact
+- cmd.orchestrator.push_image
+- /build/open-artifact
+- CustomHeadlessTool
+- ToolID
+- /tool/permission
+- memory.gist
+- live.*
+- auto-trigger
+- /project-switch
+- /handoff
+- /deprecated-ID
+- owner-doc-to-catalog
+- Wiring_Matrix.schema.json
+- cmd.*.json
+- schema.json
+- workspace-tab
+negative_constraints:
+- Extraction hazards are not valid command IDs merely because they appear in prose, filenames, examples, or index summaries.
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/UI_Command_Catalog.md
+```
+
+
+<<< CONTEXT_AFTER 2329-2340 >>>
+### UCC-022 - Lean Wiring Schema And Usage Drift Boundary
+
+```yaml
+plan_unit_id: UCC-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/UI_Command_Catalog.md
+canonical_text: Wiring_Matrix.schema.json stays lean by pointing to catalog and route/open contracts, while usage and artifact summary drift remains a consumer/owner gap rather than a command payload shape.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI command, command-palette, routing, wiring, or surface behavior.
+split_recommended: false
+depends_on:

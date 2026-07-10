@@ -1,0 +1,393 @@
+<<< CONTEXT_BEFORE 388-399 >>>
+- Remote skill discovery (URLs) is out of scope for v1; remote distribution should flow through the Catalog system (§7.4.3 in `Plans/FinalGUISpec.md`) rather than ad-hoc URL pulls.
+
+ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, PolicyRule:Decision_Policy.md§2
+
+---
+
+## 8. Acceptance criteria
+
+<a id="ACCEPTANCE"></a>
+
+<a id="AC-SK01"></a>
+**AC-SK01:** Skills MUST be discovered from the canonical roots and in the canonical order defined in §3.2.
+
+<<< AUTHORITATIVE_CORE 400-763 >>>
+
+ContractRef: ContractName:Plans/Skills_System.md#SEARCH-ORDER
+
+<a id="AC-SK02"></a>
+**AC-SK02:** Duplicate Skill IDs MUST be resolved first-wins, and shadowed duplicates MUST be visible in the GUI.
+
+ContractRef: ContractName:Plans/Skills_System.md#SEARCH-ORDER, ContractName:Plans/FinalGUISpec.md
+
+<a id="AC-SK03"></a>
+**AC-SK03:** The `skill` tool MUST enforce that explicit file paths are under allowed discovery roots.
+
+ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Permissions_System.md
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Skills_System.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+### SS-002 - Skills SSOT Authority And DRY References
+
+```yaml
+plan_unit_id: SS-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: Skills_System.md is the single canonical SSOT for Puppet Master Skills, preserving compliance, deterministic defaults, anchor-reference rule, and adjacent SSOT references without redefining owner documents.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- CV-215
+- T-001
+- PS-001
+unblocks: []
+acceptance_criteria:
+- SS-002 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: skills_ssot_authority_dry_references
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0001
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0002
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0003
+preserved_exact_tokens:
+- Skills System (Canonical SSOT)
+- Puppet Master
+- single canonical SSOT
+- SKILL.md
+- default_skill_refs
+- skill tool
+- GUI ownership/requirements
+- Plans/Skills_System.md#DISCOVERY
+- Plans/Spec_Lock.json
+- Plans/Contracts_V0.md
+- Plans/DRY_Rules.md
+- Plans/Glossary.md
+- Plans/Decision_Policy.md
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Contracts_V0.md
+- Plans/DRY_Rules.md
+- Plans/Tools.md
+- Plans/Permissions_System.md
+- Plans/FinalGUISpec.md
+```
+
+### SS-003 - Skill Definition And Skill ID Schema
+
+```yaml
+plan_unit_id: SS-003
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: A Skill is a user-authored SKILL.md context module, and Skill ID is the stable YAML frontmatter name field matching the OpenCode baseline regex and 1-64 character length.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- CV-215
+unblocks: []
+acceptance_criteria:
+- SS-003 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: skill_definition_id_schema
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0004
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0005
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0006
+preserved_exact_tokens:
+- Skill
+- Skill ID
+- SKILL.md
+- YAML frontmatter
+- name
+- ^[a-z0-9]+(-[a-z0-9]+)*$
+- 1–64 characters
+- OpenCode baseline
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/OpenCode_Deep_Extraction.md
+```
+
+### SS-004 - SKILL.md Layout And Frontmatter Contract
+
+```yaml
+plan_unit_id: SS-004
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: Each skill uses one required <skill_root>/<skill_id>/SKILL.md with YAML frontmatter requiring name and description, allowing optional metadata, and keeping required_tool_refs and optional_tool_refs in the skill frontmatter as the single source for tool dependency metadata.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+unblocks: []
+acceptance_criteria:
+- SS-004 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: skill_md_layout_frontmatter_contract
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0007
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0008
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0009
+preserved_exact_tokens:
+- SKILL.md
+- <skill_root>/<skill_id>/SKILL.md
+- name
+- description
+- license
+- compatibility
+- metadata
+- tags
+- required_tool_refs
+- optional_tool_refs
+- default_skill_refs
+- /export/interoperability
+negative_constraints:
+- PM MUST NOT move required tool metadata into a PM-only /overlay or sidecar-only MCP schema.
+- 'Tool dependency metadata belongs in `SKILL.md` frontmatter when present: `required_tool_refs` and `optional_tool_refs` name canonical PM tool refs and keep the skill self-describing for import, `default_skill_refs` resolution, and `/export/interoperability`. PM MUST NOT move required tool metadata into a PM-only `/overlay` or sidecar-only MCP schema that would create a second source of truth outside the skill''s `name` and `description`.'
+preserved_contractrefs: []
+compatibility_only_notes:
+- Additional frontmatter fields MAY be present (e.g., `license`, `compatibility`, `metadata`, `tags`) but are not required for core discovery and loading.
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Tools.md
+```
+
+### SS-005 - SKILL.md Body Preservation
+
+```yaml
+plan_unit_id: SS-005
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: The SKILL.md Markdown body is skill content preserved verbatim by the loader with no templating in v1.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- T-001
+unblocks: []
+acceptance_criteria:
+- SS-005 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: skill_md_body_preservation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0010
+preserved_exact_tokens:
+- Markdown body
+- Skill content
+- verbatim
+- no templating in v1
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/Tools.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/Tools.md
+```
+
+### SS-006 - Discovery Roots And Project Global Resolution
+
+```yaml
+plan_unit_id: SS-006
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: Skill discovery uses deterministic project-local and global roots and resolves project-local roots relative to the active project root or git worktree root.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- SP-001
+unblocks: []
+acceptance_criteria:
+- SS-006 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: discovery_roots_project_global_resolution
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0011
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0012
+preserved_exact_tokens:
+- .puppet-master/skills/**/SKILL.md
+- .claude/skills/**/SKILL.md
+- .agents/skills/**/SKILL.md
+- ~/.config/puppet-master/skills/**/SKILL.md
+- ~/.claude/skills/**/SKILL.md
+- ~/.agents/skills/**/SKILL.md
+- active project root
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/MiscPlan.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/MiscPlan.md
+- Plans/storage-plan.md
+```
+
+### SS-007 - Search Order And First Wins Shadowing
+
+```yaml
+plan_unit_id: SS-007
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: Discovery walks roots in canonical order and resolves duplicate Skill IDs by first match wins, treating later duplicates as shadowed.
+gui_related: false
+gui_classification_reason: This unit preserves backend, runtime, policy, storage, provider, or ownership requirements rather than visual presentation.
+split_recommended: false
+depends_on:
+- PDS-003
+- PDS-004
+- PDS-005
+- PNC-001
+- SP-001
+unblocks: []
+acceptance_criteria:
+- SS-007 remains addressable as a fine-grained Skills System PlanUnit with source-span coverage.
+- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: skills_system_drift
+reasoning_tier: standard
+context_scope: skills_system
+implementation_surfaces:
+- Plans/Skills_System.md
+node_compile_hint:
+  mode: search_order_first_wins_shadowing
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Skills_System-S0013
+preserved_exact_tokens:
+- SEARCH-ORDER
+- first match wins
+- Project .puppet-master/skills
+- Project .claude/skills
+- Project .agents/skills
+- Global ~/.config/puppet-master/skills
+- shadowed
+negative_constraints: []
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/MiscPlan.md, ContractName:Plans/FinalGUISpec.md'
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- Plans/Skills_System.md
+- Plans/MiscPlan.md
+```
+
+
+<<< CONTEXT_AFTER 764-775 >>>
+### SS-008 - Shadowed And Invalid Skill GUI Visibility
+
+```yaml
+plan_unit_id: SS-008
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Skills_System.md
+canonical_text: The GUI exposes shadowed duplicates and invalid skills with validation errors even though invalid skills are not loadable by ID.
+gui_related: true
+gui_classification_reason: This unit preserves user-visible GUI, UI, surface, workflow, or visual presentation requirements.
+split_recommended: false
+depends_on:

@@ -1,0 +1,415 @@
+<<< CONTEXT_BEFORE 1494-1505 >>>
+compatibility_only_notes:
+- Reject, Cancel Run, and Skip are action-label surface copy over runtime action families.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+owner_hints:
+- Plans/human-in-the-loop.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/orchestrator-subagent-integration.md'
+split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+```
+
+
+<<< AUTHORITATIVE_CORE 1506-1891 >>>
+### HITL-021 - Dashboard CtA And Assistant Addressability
+
+```yaml
+plan_unit_id: HITL-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/human-in-the-loop.md
+canonical_text: When Orchestrator pauses for HITL, Dashboard surfaces the state as a warning or Call to Action, and HITL prompts are addressable through the chat Assistant or direct Dashboard controls while remaining a single concept owned by Dashboard warning/CtA and Assistant integration.
+gui_related: true
+gui_classification_reason: This unit governs visible Dashboard warnings, calls to action, Assistant response, and direct controls.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through HITL-021 instead of broad HITL-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: hitl_contract_drift
+reasoning_tier: standard
+context_scope: human_in_the_loop_standardization
+implementation_surfaces:
+- Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: dashboard_cta_and_assistant_addressability
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0022
+preserved_exact_tokens:
+- Dashboard
+- Warnings
+- Calls to Action
+- CtA
+- Phase X complete -- approval required to continue
+- Task Y done -- approve to proceed
+- Assistant
+- approve and continue
+- Approve & continue
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+owner_hints:
+- Plans/human-in-the-loop.md
+preserved_contractrefs:
+- 'ContractRef: ContractName:Plans/assistant-chat-design.md'
+```
+
+### HITL-022 - HITL Gate, Global Pause, And DRY Summary
+
+```yaml
+plan_unit_id: HITL-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/human-in-the-loop.md
+canonical_text: 'HITL is separate from the global PAUSE.md pause gate: global pause can coexist, while HITL adds package-complete or seam-complete approval points when enabled. DRY alignment keeps Phase/Task/Subtask labels from redefining blocked identity, uses one config schema shared by GUI and Orchestrator, and introduces only a blocked-episode approval step after existing verification work.'
+gui_related: true
+gui_classification_reason: This unit covers user-facing pause/gate distinction and GUI/runtime DRY alignment.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through HITL-022 instead of broad HITL-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: hitl_contract_drift
+reasoning_tier: standard
+context_scope: human_in_the_loop_standardization
+implementation_surfaces:
+- Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: hitl_gate_global_pause_and_dry_summary
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0023
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0024
+preserved_exact_tokens:
+- PAUSE.md
+- global pause
+- package-complete / seam-complete approval gate
+- Display grouping labels
+- Phase/Task/Subtask
+- one config schema
+- GUI and orchestrator
+- Verification order
+- no new verification concept
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+owner_hints:
+- Plans/human-in-the-loop.md
+```
+
+### HITL-023 - Implementation Hooks For Config, Runtime, Persistence, And Dashboard
+
+```yaml
+plan_unit_id: HITL-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/human-in-the-loop.md
+canonical_text: Implementation planning hooks require shared runtime config for approval/blocking policy, transition into canonical blocked episode flow rather than tier-local pause flags, persistence and restore of the same blocked episode so restart, retry, skip, abort, and recovery actions stay attached to original runtime identity, and Dashboard/Assistant surfacing without rewriting identity or action set.
+gui_related: true
+gui_classification_reason: This unit includes implementation-facing hooks for visible Dashboard/Assistant HITL surfacing and runtime integration.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through HITL-023 instead of broad HITL-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: hitl_contract_drift
+reasoning_tier: standard
+context_scope: human_in_the_loop_standardization
+implementation_surfaces:
+- Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: implementation_hooks_for_config_runtime_persistence_and_dashboard
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0025
+preserved_exact_tokens:
+- Implementation Hooks (Planning Only)
+- Config
+- Runtime loop
+- Persistence
+- Dashboard CtAs
+- shared runtime config
+- canonical blocked episode flow
+- tier-local pause flag
+- persist and restore
+- restart
+- retry
+- skip
+- abort
+- Dashboard and Assistant
+negative_constraints:
+- Dashboard and Assistant must surface the blocked episode without rewriting its identity or action set.
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+owner_hints:
+- Plans/human-in-the-loop.md
+```
+
+### HITL-024 - Restart Recovery Carry-Through And Approval Scope Correlation
+
+```yaml
+plan_unit_id: HITL-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/human-in-the-loop.md
+canonical_text: Acceptance carry-through transfers execution_role, requested_account_id, operational_identity, account switch and pressure ownership, blocked_sequence minting, startup recovery handshake, and DAE jail/approval policy into owner and consumer docs; approval_scope_key is the durable blocked-episode scope key across actor, lane, run, node, and account context, reused across permissions, HITL, doom-loop handling, and session approval caching, while provider-native correlation lives in dedicated fields and approver identity persists durably.
+gui_related: false
+gui_classification_reason: This unit defines restart recovery, approval-scope identity, provider correlation, and audit persistence rather than GUI presentation.
+split_recommended: false
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through HITL-024 instead of broad HITL-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: hitl_contract_drift
+reasoning_tier: standard
+context_scope: human_in_the_loop_standardization
+implementation_surfaces:
+- Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: restart_recovery_carry_through_and_approval_scope_correlation
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0027
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0028
+preserved_exact_tokens:
+- execution_role
+- requested_account_id
+- operational_identity
+- account-switch
+- pressure ownership
+- blocked_sequence
+- startup recovery handshake
+- DAE jail/approval policy
+- approval_scope_key
+- actor
+- lane
+- run
+- node
+- account context
+- doom-loop handling
+- session approval caching
+- approver identity
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+owner_hints:
+- Plans/human-in-the-loop.md
+```
+
+### HITL-025 - Tier-Era Payload Retirement And Canonical Blocked Identity
+
+```yaml
+plan_unit_id: HITL-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/human-in-the-loop.md
+canonical_text: Legacy tier-era runtime context, identifier, type, collection labels, and Phase-Task-Subtask wording are retired compatibility-only display/grouping aliases that must not appear in runtime-owned blocked payloads, approval events, persistence records, cache keys, or recovery state; canonical blocked-episode identity is run_id plus node_id plus blocked_sequence and owns lookup, replay, restart recovery, audit joins, and resolver routing.
+gui_related: false
+gui_classification_reason: This unit defines runtime payload identity and retired compatibility vocabulary rather than GUI presentation.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through HITL-025 instead of broad HITL-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: hitl_contract_drift
+reasoning_tier: standard
+context_scope: human_in_the_loop_standardization
+implementation_surfaces:
+- Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: tier_era_payload_retirement_and_canonical_blocked_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0029
+preserved_exact_tokens:
+- Tier-era compatibility retirement
+- legacy tier-era runtime canon
+- Phase-Task-Subtask
+- compatibility-only display/grouping aliases
+- run_id
+- node_id
+- blocked_sequence
+- lookup
+- replay
+- restart recovery
+- audit joins
+- resolver routing
+negative_constraints:
+- Legacy tier-era labels must not appear in runtime-owned blocked payloads, approval events, persistence records, cache keys, or recovery state.
+compatibility_only_notes: []
+stale_retired_dispositions:
+- The legacy tier-era runtime canon is retired.
+owner_boundary_notes:
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+owner_hints:
+- Plans/human-in-the-loop.md
+split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+```
+
+### HITL-026 - Blocked Classification, Action Enumeration, And Approval Outcome Identity
+
+```yaml
+plan_unit_id: HITL-026
+unit_type: requirement
+status: accepted
+owner_doc: Plans/human-in-the-loop.md
+canonical_text: Canonical blocked classification uses concern_reason with optional detail_ref for additional structured metadata; ordered allowed_action_ids is the only canonical action enumeration for Runtime, Dashboard, Assistant, and APIs; canonical approval resolution uses approval_outcome and approval_recorded_at scoped by approval_scope_key, and durable approver_identity records who approved or declined.
+gui_related: true
+gui_classification_reason: This unit governs visible controls derived from allowed_action_ids and approval outcome identity.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through HITL-026 instead of broad HITL-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: hitl_contract_drift
+reasoning_tier: standard
+context_scope: human_in_the_loop_standardization
+implementation_surfaces:
+- Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: blocked_classification_action_enumeration_and_approval_outcome_identity
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0029
+preserved_exact_tokens:
+- concern_reason
+- detail_ref?
+- allowed_action_ids[]
+- Runtime
+- Dashboard
+- Assistant
+- APIs
+- approval_outcome
+- approval_recorded_at
+- approval_scope_key
+- approver_identity
+negative_constraints:
+- No legacy short-code survivor field remains in the live contract.
+- Runtime, Dashboard, Assistant, and APIs must not carry a second survivor array for blocked or recovery actions.
+compatibility_only_notes:
+- Canonical approval resolution is represented by recorded approval outcome, not a legacy continue-decision field.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+owner_hints:
+- Plans/human-in-the-loop.md
+split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+```
+
+### HITL-027 - Recovery Semantics And Phase/Task Label Compatibility
+
+```yaml
+plan_unit_id: HITL-027
+unit_type: requirement
+status: accepted
+owner_doc: Plans/human-in-the-loop.md
+canonical_text: 'Blocked-episode recovery semantics are canonical: retry, resume-after-prerequisite, skip, abort, replan, and safe-point restore remain attached to the same run_id/node_id/blocked_sequence episode, with affordances derived from allowed_action_ids, concern_reason, and safe-point metadata; remaining phase/task/subtask labels may render as explanatory UI copy but must not redefine approval scope, blocked identity, recovery semantics, or persistence ownership.'
+gui_related: true
+gui_classification_reason: This unit governs visible recovery affordances and explanatory grouping copy.
+split_recommended: true
+depends_on: []
+unblocks: []
+acceptance_criteria:
+- The covered source span remains losslessly available for exact-text audit.
+- This behavior is addressable through HITL-027 instead of broad HITL-001 source-preserving coverage.
+- ContractRefs, aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: hitl_contract_drift
+reasoning_tier: standard
+context_scope: human_in_the_loop_standardization
+implementation_surfaces:
+- Plans/human-in-the-loop.md
+node_compile_hint:
+  mode: recovery_semantics_and_phase_task_label_compatibility
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:human-in-the-loop-S0029
+preserved_exact_tokens:
+- retry
+- resume-after-prerequisite
+- skip
+- abort
+- replan
+- safe-point restore
+- run_id + node_id + blocked_sequence
+- allowed_action_ids[]
+- concern_reason
+- safe-point metadata
+- phase/task/subtask labels
+- approval_scope_key
+negative_constraints:
+- Phase/task/subtask labels must not redefine approval scope, blocked identity, recovery semantics, or persistence ownership.
+compatibility_only_notes:
+- Remaining phase/task/subtask labels are explanatory UI copy only.
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Plans/human-in-the-loop.md remains the HITL owner for the covered behavior while referenced owner docs keep their own SSOT boundaries.
+owner_hints:
+- Plans/human-in-the-loop.md
+split_recommendation_reason: The source span contains multiple separable HITL concerns; repeated source lineage preserves exact source provenance without inventing subspans.
+```
+
+
+<<< CONTEXT_AFTER 1892-1903 >>>
+### HITL-028 - Scheduler Wake And Approval Wait Timers
+
+```yaml
+plan_unit_id: HITL-028
+unit_type: requirement
+status: accepted
+owner_doc: Plans/human-in-the-loop.md
+canonical_text: 'HITL approval/rejection resolution is a primary scheduler wake trigger: hitl.approved and hitl.rejected cause immediate queue reevaluation while unrelated runnable work continues; approval waits consume the shared temporal taxonomy as approval_wait and possibly long_governance_wait, known timers must not render generic deadlock/stall or auto-pause unrelated runnable work, and user_visible_wait_timer_expiry keeps the same blocked episode identity.'
+gui_related: true
+gui_classification_reason: This unit includes user-visible wait timers and scheduler wake behavior.
+split_recommended: false
+depends_on: []

@@ -1,0 +1,251 @@
+<<< CONTEXT_BEFORE canonical_document_lines=395-406 >>>
+L00000395	- `Plans/assistant-chat-design.md` is the Assistant Debug Mode owner for mode-strip behavior, Investigation Context visibility, thread lifecycle, attach-to-chat payload handling, and slash-command expectations
+L00000396	- `Plans/Run_Modes.md`, `Plans/Permissions_System.md`, and `Plans/storage-plan.md` own runtime posture, Debug Automation Profile behavior, and persisted investigation identity/state
+L00000397	- `Plans/Section15_MVP_Promoted_Features_Spec.md` owns browser-target debug behavior and the visible browser evidence / automation contract, including browser-backed `automation_session` visibility, Debug-specific auto-ingestion, auth handoff / `attention_required`, session-class consistency, and takeover/`/promote` behavior
+L00000398	- `Plans/Runtime_Artifacts_Panel.md`, `Plans/Contracts_V0.md`, `Plans/Prompt_Pipeline.md`, and `Plans/Tools.md` own artifact grouping, event fields, prompt assembly, and shared debug-capable tool semantics
+L00000399	- `Plans/FinalGUISpec.md`, `Plans/UI_Command_Catalog.md`, `Plans/newtools.md`, `Plans/GitHub_Integration.md`, and `Plans/feature-list.md` are primary consumers for shell placement, command routing, tooling discovery, remote scope, and summary coverage
+L00000400	- `Commands_System.md`, `Glossary.md`, `FileManager.md`, `human-in-the-loop.md`, `Architecture_Invariants.md`, `orchestrator-subagent-integration.md`, `interview-subagent-integration.md`, `Wiring_Matrix.md`, `rewrite-tie-in-memo.md`, and `MiscPlan.md` are required reconciliation companions
+L00000401	
+L00000402	Debug packetization must keep `Plans/Commands_System.md`, `Plans/Glossary.md`, and `Plans/Wiring_Matrix.md` in scope together; if it omits any of them, the shipped canon will still drift on slash-command semantics, terminology, and command-routing coverage.
+L00000403	
+L00000404	Debug packetization must keep `Plans/Contracts_V0.md`, `Plans/Prompt_Pipeline.md`, and `Plans/GitHub_Integration.md` in scope together; if the packet only follows the earlier minimum checklist and omits any of them, canon will drift on persisted fields, prompt assembly, and remote Debug scope even if the primary UI/runtime docs are updated.
+L00000405	
+L00000406	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=407-628 >>>
+L00000407	
+L00000408	| Plan | Primary scope | Notes / canonical intent |
+L00000409	|------|--------------|--------------------------|
+L00000410	| `rewrite-tie-in-memo.md` | Locked rewrite decisions | Canonical for rewrite constraints + deltas to apply elsewhere |
+L00000411	| `Section15_MVP_Promoted_Features_Spec.md` | Promoted Section 15 feature owner | Canonical owner for the promoted Section 15 shell, browser, project-switch, workspace-tab/window, thread-usage, catalog-lifecycle, terminal/dev-loop, and cross-feature defaults/identities/non-goals set. |
+L00000412	| `agent-rules-context.md` | Application/project rules pipeline | Canonical for rules sourcing + injection into every agent/provider run |
+L00000413	| `orchestrator-subagent-integration.md` | Main run loop policy: tiers, subagents, wiring validation | Registry-driven Persona set (canonical list §4: Phase, Task lang/domain/framework, Subtask, Iteration, Cross-phase including `explorer` and `requirements-quality-reviewer`). DRY:DATA:subagent_registry; task tool (Tools.md §3.6) validates against this list. Persona definitions, storage, schema, and injection: `Plans/Personas.md` (SSOT). Treat platform specifics as Provider concerns. |
+L00000414	| `interview-subagent-integration.md` | Interview phases + subagent use | `Plans/interview-subagent-integration.md` owns interview-phase subagent use. Phase assignments use the registry-driven Persona set; cross-phase (`ux-researcher`, `knowledge-synthesizer`, `explorer`, `requirements-quality-reviewer`, etc.). Mirrors orchestrator patterns at interview-phase boundaries. Persona injection per `Plans/Personas.md` §5.2. `context-manager` is source-lineage/import seed vocabulary, not a PM Persona catalog entry. |
+L00000415	| `assistant-chat-design.md` | Assistant/Chat UX and modes | Canonical for chat/thread/session navigation, PM-native Ask/Plan semantics, slash-command behavior, shared question flows, activity transparency, `/web`, `/skill`, and plan/TODO semantics. |
+L00000416	| `assistant-memory-subsystem.md` | Assistant-only memory continuity subsystem | Canonical SSOT for Assistant memory boundary, per-project memory stores (`assistant_memory.redb` + lexical/semantic indexes), decay scoring, capsule/retrieval budgets, and maintenance operations. Explicitly separate from rules pipeline contracts. |
+L00000417	| `FinalGUISpec.md` | Slint GUI contract | Canonical UI source for shell/layout/view placement, responsive behavior, settings IA, chat widgets/activity cards/plan tracker, Agent Config > Skills, Agent Config > Personas placement, browser/terminal surfaces, and Interaction Mode (Expert/ELI5) + Chat ELI5 defaults/independence. |
+L00000418	| `GitHub_Integration.md` | GitHub/Git IDE integration spec | Git panel (repo/branch/diff/operations), GitHub API (OAuth device-code, PRs, Actions), SSH remote dev servers, no-wizard project flows (Add Existing / New Local / New GitHub Repo). Cross-refs: Plans/GitHub_API_Auth_and_Flows.md, Plans/FileManager.md, and legacy/source-lineage examples in Plans/chain-wizard-flexibility.md. |
+L00000419	| `FileManager.md` | File Manager panel, IDE-style editor, @ mention, click-to-open | Canonical for file tree, editor (tabs, split panes, save, line numbers, syntax), image viewer, HTML/browser preview, detached preview behavior, `@` mention integration, terminal/browser tabs (§9), editor enhancements MVP (§10), language/framework presets (§11). |
+L00000420	| `LSPSupport.md` | LSP client support for rewrite | **LSP is MVP** -- in scope for desktop release. Canonical for LSP diagnostics, navigation, chat/editor LSP behavior, server registry/root discovery, and the widened canonical `lsp` tool surface used by Assistant Chat and editor workflows. |
+L00000421	| `storage-plan.md` | seglog, redb, Tantivy, projectors, analytics scan | Canonical persistence and restore model for project identity, EventRecord seglog/redb persistence boundaries, workspace tabs, windows, browser/preview state, terminal sessions, dev sessions, plan/TODO/question/activity state, usage projections, and analytics scan rollups. |
+L00000422	| `chain-wizard-flexibility.md` | Retired legacy Chain Wizard / Interview source-lineage | Compatibility/source-lineage only for historical intent, requirements, interview, GitHub, fork, PR, blocked-state, and route examples; current PRD intake and planning authority is owned by `PRD_Builder.md`, `Planning_Wizard.md`, `FinalGUISpec.md`, and downstream contract/runtime/PlanCompile/Executor owner docs. |
+L00000423	| `Document_Packaging_Policy.md` | Deterministic packaging for large Markdown/text artifacts | Canonical Document Set contract: sharded set + `00-index.md` + `manifest.json` + full audits with non-bypassable run failure on verification breach. |
+L00000424	| `Planning_Ledger_System.md` | Bootstrap planning ledger and finished-product Native Ledger Service | Canonical for the Bootstrap Ledger, Native Ledger Service import/export boundary, compact operating capsules, per-turn ledger protocol, design_atom lifecycle, exact source-lineage preservation, owner ambiguity handling, ledger-to-Plan compilation boundary, semantic closure registry row shape, audit scope manifests, repair impact matrices, and reopen policy. |
+L00000425	| `Plan_Document_System.md` | Standardized Plan docs and PlanUnit contract | Canonical for Plan doc layout, PlanUnit fields including `gui_related: true|false`, owner adjudication metadata, lossless Plan conversion proof, generated PlanUnit indexes, node-readiness metadata, deterministic semantic finding keys, and repair closure matrix validation. |
+L00000426	| `Plan_To_Node_Compilation.md` | PlanUnit index and node-readiness boundary | Canonical for future PlanUnit-to-NodeSeed-to-WorkNode compiler inputs and the current readiness-only boundary. It does not create WorkNodes, executable build tasks, or NodeSeed candidates until the compiler contract is complete and the `PNC-019` executable lifecycle certification harness has passed with recorded evidence. |
+L00000427	| `Bootstrap_Planning_Migration.md` | Bootstrap ledger migration and governance seal workflow | Canonical for AGENTS trigger use, Codex Goal-phase migration, less-than-4,000-character goal prompt posture, controlled Plan conversion batches, Spec Lock seal timing, and retired prompt-packet/tranche experiment exclusions. |
+L00000428	| `Goal_Runtime_System.md` | Native Goal Mode runtime/control-plane system | Canonical owner for native Goal Runtime state, scheduler/replan behavior, invisible and visible goal execution semantics, child goals, write authority, completion receipts, evidence/certification, weak-model safety, verifier/adjudicator policy, approval-boundary invocation, and goal task templates. |
+L00000429	| `human-in-the-loop.md` | HITL semantics at tier boundaries | Canonical for pause-for-approval toggles + tier boundary meaning |
+L00000430	| `FileSafe.md` | Safe-edit guards + context compilation | Canonical blocked destructive-command behavior and restore-before-rerun integration; maps to central tool policy + patch pipeline. |
+L00000431	| `Prompt_Pipeline.md` | Prompt assembly pipeline + compaction contract | SSOT for prompt assembly stage ordering and compaction/rotation contracts (pairs with FileSafe Part B for compilation details). |
+L00000432	| `WorktreeGitImprovement.md` | Worktree/git correctness + GUI wiring | Canonical for stable project identity vs path rebinding and worktree-aware project-switch/restore behavior. |
+L00000433	| `MiscPlan.md` | Cleanup + runner contract + artifact retention | Maps to patch pipeline + event artifacts retention |
+L00000434	| `newtools.md` | GUI testing/tools discovery + MCP tooling | Canonical for MCP settings/UI flow, cited search, testing-tool discovery, and runtime-health-oriented MCP GUI behavior. |
+L00000435	| `Tools.md` | Built-in tools, custom tools, permissions (allow/deny/ask) | Canonical for tool semantics, MCP integration, requested-vs-effective tool availability, normalized `question` / TODO tool contracts, expanded web operations, Site Reader structured browser runtime, `task`, widened `lsp`, and permission-adjacent tool behavior. |
+L00000436	| `OpenCode_Deep_Extraction.md` | OpenCode pattern extraction procedure + known-good baseline | Provenance doc for extracting upstream patterns and mapping them into Puppet Master SSOT docs. Covers 8 subsystems (run modes, agents, permissions, commands, formatters, skills, plugins, models) with file pointers, behavior summaries, SSOT mapping table (§8), and delta hooks (§9). |
+L00000437	| `Decision_Log.md` | Decisions made during plan updates | Records decisions not captured in `auto_decisions.jsonl`; timestamped and final. |
+L00000438	| `usage-feature.md` | Usage UX + dashboards | Canonical for app-wide Usage plus per-thread usage in chat, shared UsageRecord ownership, and cost_usage deep-link behavior. |
+L00000439	| `Runtime_Artifacts_Panel.md` | Artifacts panel (runtime artifacts) | Canonical for 19 artifact types, seglog `runtime_artifact.*`, redb `artifacts_index.v1:{project_id}:{artifact_id}`, cost_usage, Show in Ledger/Usage, browser recordings, and JSON schemas. Distinct from Project Plan Package (`Project_Output_Artifacts.md`). |
+L00000440	| `Project_Output_Artifacts.md` | Project Plan Package outputs | Canonical owner for user-project Project Plan Package artifacts under `.puppet-master/project/**`, including plan graph indexes/nodes, acceptance and requirements quality reports, requirements coverage outputs, quickstart derivation, and deterministic validation rules. Distinct from runtime artifacts, permission approval scope, and transfer packet recovery policy. |
+L00000441	| `newfeatures.md` | Feature ideas + patterns | Historical/origin source for promoted Section 15 ideas; normative behavior for promoted items now lives in the promoted Section 15 owner and reconciled subsystem SSOTs. |
+L00000442	| `Widget_System.md` | Cross-cutting widget catalog, grid layout, add-widget flow | Canonical for portable page widgets, grid-based resizing, layout persistence. Referenced by Dashboard, Usage, Orchestrator pages. Single widget catalog shared across all widget-composed surfaces. |
+L00000443	| `Run_Graph_View.md` | Node Graph Display (Airflow-style DAG view) | Canonical for the full-page graph visualization tab on the Orchestrator page. NOT a portable widget. Includes Slint implementation guide, data model contract, 5 layout presets, 8-section detail panel, HITL controls, performance targets (500 nodes). |
+L00000444	| `Orchestrator_Page.md` | Orchestrator single-page seven-tab structure | Canonical for tab layout (`Progress` / `Plan Compile` / `Seams` / `Node Graph` / `Evidence` / `History` / `Ledger`). `Progress` is the only widget-composed Orchestrator tab. `Node Graph` references `Run_Graph_View.md`; `Plan Compile` references design-only plans-to-code projection contracts. Terminal widgets, prose summaries, and data source documentation remain consumers of this shell. |
+L00000445	| `GUI_Rebuild_Requirements_Checklist.md` | Auditable summary checklist for 2026-02-23 GUI rebuild handoff requirements | `Plans/GUI_Rebuild_Requirements_Checklist.md` is the single verification table confirming coverage for widget system, Usage page, chat context enhancements, Dashboard widget grid migration, Orchestrator seven-tab structure with `Plan Compile`, and Node Graph image-backed spec. |
+L00000446	| `Executor_Protocol.md` | Deterministic overseer flow and lifecycle semantics | Canonical for Builder/Verifier/Overseer roles, next-ready selection, verifier-driven auto completion to `done`, and the versioned `execution_unit_context` contract in `Plans/execution_unit_context.schema.json`. |
+L00000447	| `UI_Wiring_Rules.md` | UI wiring rules + verification | Canonical for Rule 1 (UI dispatches only typed UICommands) and Rule 2 (every UI element maps to one UICommandID). Defines UI Command Dispatcher boundary and Wiring Matrix verification concept. |
+L00000448	| `Provider_Stream_Mapping_External_Reference_A2A.md` | Upstream external-framework + A2A bridge → V0 stream mapping | Canonical mapping of upstream native events and A2A bridge concepts to V0 normalized stream events. Diagnostic instrumentation categories, deterministic rules, and Overseer audit protocol instrumentation. Cross-refs: CLI_Bridged_Providers.md, Architecture_Invariants.md#INV-001, Glossary.md, Executor_Protocol.md. |
+L00000449	| `Provider_OpenCode.md` | OpenCode server-bridged provider integration | Optional provider; user installs OpenCode locally; Puppet Master connects via HTTP REST + SSE. See also CLI_Bridged_Providers.md (extended for HTTP transport). |
+L00000450	| `BinaryLocator_Spec.md` | Deterministic provider CLI discovery | Canonical algorithm for locating + validating external Provider CLIs (initially Cursor Agent + Claude Code) across OS using only official install footprints (override/PATH/common locations/launchers). |
+L00000451	| `Run_Modes.md` | Canonical run-mode definitions + CLI-bridged strategy selection | SSOT for Mode enum (ask/plan/regular/yolo), HTE vs DAE strategy selection, budget defaults, kill conditions, outcome taxonomy, and mode-specific context-management deltas. |
+L00000452	| `Personas.md` | Canonical Persona system definitions | SSOT for Persona vs Agent vs Subagent definitions, storage layout (`.puppet-master/personas/` + `~/.config/puppet-master/personas/` plus PM-owned built-ins), PERSONA.md schema (YAML frontmatter + body), validation rules, protected core IDs (`assistant`, `general-purpose`, `overseer`, `bash`, `teacher`, `collaborator`, `researcher`, `deep-researcher`, `explorer`), the explicit non-core `Document Writer` boundary, Agent Config > Personas management rules, prompt visibility, specialty curation, context-injection rules, and registry relationship. |
+L00000453	| `Permissions_System.md` | Canonical permission system definitions | SSOT for permission actions (`allow`/`ask`/`deny`), multi-layer precedence (mode > session > Persona > project > global > defaults), PM-native Ask/Plan mode semantics, granular rules (wildcard syntax, last-match-wins), special guards (`doom_loop`, `external_directory`), question/TODO/web tool defaults, `.env` deny rules, resolution algorithm, TOML persistence, permission profiles, and GUI requirements (Settings > Permissions). |
+L00000454	| `Commands_System.md` | Canonical User Commands system | SSOT for User Commands (user-authored command presets): definitions (User Command vs UICommand distinction), storage layout (`.puppet-master/commands/` + `~/.config/puppet-master/commands/`), command schema (YAML frontmatter + Markdown template body), template syntax (`$ARGUMENTS`, `$N`, `@path`, `` !`cmd` ``), execution semantics (subtask, Persona/mode/model overrides), reserved built-in slash-command collision rules, permissions integration, GUI requirements (Settings > Rules & Commands > Commands), and dry-run preview. |
+L00000455	| `Skills_System.md` | Canonical skills system | SSOT for skill discovery/storage roots, SKILL.md schema (frontmatter + body), validation rules, permission integration, Persona skill refs (`default_skill_refs`), runtime surface (via `skill` tool), and GUI requirements under Agent Config > Skills. |
+L00000456	| `Plugins_System.md` | Canonical plugin system | SSOT for plugin discovery (internal/project/global/config paths), load order (deterministic), plugin context, 10 hook events with typed I/O and return enums, compaction hook (InjectContext/ReplacePrompt), custom tool registration with collision policy, structured plugin logging, GUI requirements (Settings > Plugins), and OpenCode baseline/deltas. |
+L00000457	| `Formatters_System.md` | Canonical formatter system | SSOT for formatter lifecycle (HTE-only, triggered on File.Edited), built-in formatter table (21 formatters), per-formatter config (disabled/command/environment/extensions, `$FILE` placeholder), evidence tracking via `format.applied` events, GUI requirements (Settings > Formatters), and OpenCode baseline/deltas. |
+L00000458	| `Models_System.md` | Canonical model system | SSOT for canonical model ID (`provider_id/model_id`), 6-level selection priority, model options (per-provider+model), per-Persona model overrides (`default_model`/`default_variant` in PERSONA.md frontmatter), variants (built-in default/fast/powerful + custom + disabling + cycling), canonical media model alias table (§6.8: Nano Banana, Nano Banana Pro, Veo fast, TTS flash, TTS pro), GUI requirements (Settings > Models, Chat model picker, variant picker), and OpenCode baseline/deltas. |
+L00000459	| `Media_Generation_and_Capabilities.md` | Media generation and capability system SSOT | Canonical for `capabilities.get` (internal tool returning all media + provider-tool capabilities with enabled/disabled + disabled_reason + setup hints), `media.generate` (uniform media generation interface with per-request `model_override`, artifact-path output, route-specific provider/model generated-media capabilities, artifact-path output, and stable error codes), natural-language slot extraction grammar, capability picker dropdown UI/UX, OpenAI/Codex subscription and API-key image routes, MiniMax Image-01, Gemini Direct where verified, provider-specific gated/unsupported rows, and media alias resolution. Cursor image-input proof and media aliases such as Nano Banana are not provider availability proof without route/catalog/artifact evidence. |
+L00000460	| `OpenCode_Coverage_Matrix.md` | OpenCode-to-SSOT coverage audit | Audit of all OpenCode-derived capabilities (extraction §7A–§7H) vs Puppet Master SSOT docs. Coverage matrix, DRY authority audit, GUI/config wiring audit, and mandatory fix list (anchors/subsections). |
+L00000461	| `Wiring_Matrix.md` | Wiring matrix template + examples | Canonical routing for UI command producer/consumer mappings and required runtime/browser/dev/catalog wiring coverage; example/template posture is subordinate to the canonical runtime wiring sections. |
+L00000462	
+L00000463	
+L00000464	### Instant Grep (sparse n-gram index) canon reconciliation note
+L00000465	
+L00000466	
+L00000467	The Instant Grep packet uses the following ownership split:
+L00000468	- `Tools.md` is the primary owner for grep tool semantics, index-accelerated query flow, covering algorithm, fallback behavior, and `tool.invoked` analytics fields
+L00000469	- `storage-plan.md` is the primary owner for regex index storage layout (§2.1), binary file formats, generation directory scheme, file watcher dual-consumer model (§2.4), and sensitive indexing guards
+L00000470	- `FinalGUISpec.md` is the primary owner for status bar Indexing indicator (§3.2), Indexing settings section (§7.4.2), and Search panel index-acceleration UX (Search side-panel owner)
+L00000471	- `GitHub_Integration.md` is the primary owner for remote project search index cache (§C.3), bare Git clone lifecycle, non-Git remote indexer binary, and cache settings
+L00000472	- `assistant-chat-design.md`, `UI_Command_Catalog.md`, `Glossary.md`, `Architecture_Invariants.md`, `BinaryLocator_Spec.md`, `usage-feature.md`, `Wiring_Matrix.md`, and `00-plans-index.md` are reconciliation consumers
+L00000473	
+L00000474	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/GitHub_Integration.md
+L00000475	
+L00000476	## Known cross-cutting duplication hotspots
+L00000477	
+L00000478	
+L00000479	The highest-risk duplication hotspots for this planning set are now:
+L00000480	
+L00000481	- child-run canon versus provider-native subagent language
+L00000482	- Persona selection versus subagent registry language
+L00000483	- crew shared-state versus legacy memory-manager language
+L00000484	- dynamic context shrinking versus compaction and Subcompact language
+L00000485	- requested/effective runtime surface and effort language
+L00000486	- blocked/awaiting-parent versus older denial or recovery aliases
+L00000487	- Context Lens UI wording versus command and wiring ownership
+L00000488	
+L00000489	ContractRef: ContractName:Plans/Tools.md, ContractName:Plans/Personas.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Contracts_V0.md
+L00000490	
+L00000491	Rewrite-era guidance:
+L00000492	- owner docs define the canon.
+L00000493	- consumer docs should reference owner docs rather than re-describing the full model.
+L00000494	- packetization and reconciliation should prefer rewrite-outright where stale canon would remain misleading if left in place.
+L00000495	
+L00000496	ContractRef: ContractName:Plans/Crosswalk.md, ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Progression_Gates.md
+L00000497	## Shard indexes
+L00000498	
+L00000499	Agent-friendly shards for long plan docs. Regenerate with `python3 scripts/pm-shard-plans.py --generate` and verify with `python3 scripts/pm-shard-plans.py --check`; `Plans/_shards/**` and `Plans/.evidence/**` remain regen-only after canonical doc edits, with evidence outputs regenerated/validated as applicable; do not hand-edit them during packetization or any transfer work. Post-edit validation/checks remain required after actual packet doc edits, including packet validation / gates as appropriate. `Plans/Spec_Lock.json` is validated through its locked protocol with `python3 scripts/pm-plans-verify.py verify-spec-lock`, and `Plans/auto_decisions.jsonl` is deterministic-log managed; stale `packet-decision` references are source-lineage only, not live packet doc intents.
+L00000500	
+L00000501	| Source doc | Shard index |
+L00000502	| --- | --- |
+L00000503	| `orchestrator-subagent-integration.md` | [`Plans/_shards/orchestrator-subagent-integration/00-index.md`](Plans/_shards/orchestrator-subagent-integration/00-index.md) |
+L00000504	| `FinalGUISpec.md` | [`Plans/_shards/finalguispec/00-index.md`](Plans/_shards/finalguispec/00-index.md) |
+L00000505	| `interview-subagent-integration.md` | [`Plans/_shards/interview-subagent-integration/00-index.md`](Plans/_shards/interview-subagent-integration/00-index.md) |
+L00000506	| `newtools.md` | [`Plans/_shards/newtools/00-index.md`](Plans/_shards/newtools/00-index.md) |
+L00000507	| `rewrite-tie-in-memo.md` | [`Plans/_shards/rewrite-tie-in-memo/00-index.md`](Plans/_shards/rewrite-tie-in-memo/00-index.md) |
+L00000508	| `agent-rules-context.md` | [`Plans/_shards/agent-rules-context/00-index.md`](Plans/_shards/agent-rules-context/00-index.md) |
+L00000509	| `OpenCode_Deep_Extraction.md` | [`Plans/_shards/opencode_deep_extraction/00-index.md`](Plans/_shards/opencode_deep_extraction/00-index.md) |
+L00000510	| `LSPSupport.md` | [`Plans/_shards/lspsupport/00-index.md`](Plans/_shards/lspsupport/00-index.md) |
+L00000511	| `FileManager.md` | [`Plans/_shards/filemanager/00-index.md`](Plans/_shards/filemanager/00-index.md) |
+L00000512	| `FileSafe.md` | [`Plans/_shards/filesafe/00-index.md`](Plans/_shards/filesafe/00-index.md) |
+L00000513	| `Project_Output_Artifacts.md` | [`Plans/_shards/project_output_artifacts/00-index.md`](Plans/_shards/project_output_artifacts/00-index.md) |
+L00000514	| `chain-wizard-flexibility.md` | [`Plans/_shards/chain-wizard-flexibility/00-index.md`](Plans/_shards/chain-wizard-flexibility/00-index.md) |
+L00000515	| `assistant-chat-design.md` | [`Plans/_shards/assistant-chat-design/00-index.md`](Plans/_shards/assistant-chat-design/00-index.md) |
+L00000516	| `assistant-memory-subsystem.md` | [`Plans/_shards/assistant-memory-subsystem/00-index.md`](Plans/_shards/assistant-memory-subsystem/00-index.md) |
+L00000517	| `MiscPlan.md` | [`Plans/_shards/miscplan/00-index.md`](Plans/_shards/miscplan/00-index.md) |
+L00000518	| `newfeatures.md` | [`Plans/_shards/newfeatures/00-index.md`](Plans/_shards/newfeatures/00-index.md) |
+L00000519	| `WorktreeGitImprovement.md` | [`Plans/_shards/worktreegitimprovement/00-index.md`](Plans/_shards/worktreegitimprovement/00-index.md) |
+L00000520	| `Tools.md` | [`Plans/_shards/tools/00-index.md`](Plans/_shards/tools/00-index.md) |
+L00000521	| `GitHub_Integration.md` | [`Plans/_shards/github_integration/00-index.md`](Plans/_shards/github_integration/00-index.md) |
+L00000522	| `feature-list.md` | [`Plans/_shards/feature-list/00-index.md`](Plans/_shards/feature-list/00-index.md) |
+L00000523	| `usage-feature.md` | [`Plans/_shards/usage-feature/00-index.md`](Plans/_shards/usage-feature/00-index.md) |
+L00000524	| `Run_Graph_View.md` | [`Plans/_shards/run_graph_view/00-index.md`](Plans/_shards/run_graph_view/00-index.md) |
+L00000525	| `Orchestrator_Page.md` | [`Plans/_shards/orchestrator_page/00-index.md`](Plans/_shards/orchestrator_page/00-index.md) |
+L00000526	| `storage-plan.md` | [`Plans/_shards/storage-plan/00-index.md`](Plans/_shards/storage-plan/00-index.md) |
+L00000527	| `Runtime_Artifacts_Panel.md` | [`Plans/_shards/runtime_artifacts_panel/00-index.md`](Plans/_shards/runtime_artifacts_panel/00-index.md) |
+L00000528	| `Permissions_System.md` | [`Plans/_shards/permissions_system/00-index.md`](Plans/_shards/permissions_system/00-index.md) |
+L00000529	| `Contracts_V0.md` | [`Plans/_shards/contracts_v0/00-index.md`](Plans/_shards/contracts_v0/00-index.md) |
+L00000530	| `Crosswalk.md` | [`Plans/_shards/crosswalk/00-index.md`](Plans/_shards/crosswalk/00-index.md) |
+L00000531	| `Section15_MVP_Promoted_Features_Spec.md` | [`Plans/_shards/section15_mvp_promoted_features_spec/00-index.md`](Plans/_shards/section15_mvp_promoted_features_spec/00-index.md) |
+L00000532	| `MCP_Integration.md` | [`Plans/_shards/mcp_integration/00-index.md`](Plans/_shards/mcp_integration/00-index.md) |
+L00000533	| `CLI_Bridged_Providers.md` | [`Plans/_shards/cli_bridged_providers/00-index.md`](Plans/_shards/cli_bridged_providers/00-index.md) |
+L00000534	| `Models_System.md` | [`Plans/_shards/models_system/00-index.md`](Plans/_shards/models_system/00-index.md) |
+L00000535	| `Run_Modes.md` | [`Plans/_shards/run_modes/00-index.md`](Plans/_shards/run_modes/00-index.md) |
+L00000536	| `Goal_Runtime_System.md` | [`Plans/_shards/goal_runtime_system/00-index.md`](Plans/_shards/goal_runtime_system/00-index.md) |
+L00000537	| `PRD_Builder.md` | [`Plans/_shards/prd_builder/00-index.md`](Plans/_shards/prd_builder/00-index.md) |
+L00000538	| `Planning_Wizard.md` | [`Plans/_shards/planning_wizard/00-index.md`](Plans/_shards/planning_wizard/00-index.md) |
+L00000539	| `Commands_System.md` | [`Plans/_shards/commands_system/00-index.md`](Plans/_shards/commands_system/00-index.md) |
+L00000540	| `Executor_Protocol.md` | [`Plans/_shards/executor_protocol/00-index.md`](Plans/_shards/executor_protocol/00-index.md) |
+L00000541	| `UI_Command_Catalog.md` | [`Plans/_shards/ui_command_catalog/00-index.md`](Plans/_shards/ui_command_catalog/00-index.md) |
+L00000542	| `Skills_System.md` | [`Plans/_shards/skills_system/00-index.md`](Plans/_shards/skills_system/00-index.md) |
+L00000543	| `Multi-Account.md` | [`Plans/_shards/multi-account/00-index.md`](Plans/_shards/multi-account/00-index.md) |
+L00000544	| `Personas.md` | [`Plans/_shards/personas/00-index.md`](Plans/_shards/personas/00-index.md) |
+L00000545	| `Provider_OpenCode.md` | [`Plans/_shards/provider_opencode/00-index.md`](Plans/_shards/provider_opencode/00-index.md) |
+L00000546	| `human-in-the-loop.md` | [`Plans/_shards/human-in-the-loop/00-index.md`](Plans/_shards/human-in-the-loop/00-index.md) |
+L00000547	| `00-plans-index.md` | [`Plans/_shards/00-plans-index/00-index.md`](Plans/_shards/00-plans-index/00-index.md) |
+L00000548	| `Architecture_Invariants.md` | [`Plans/_shards/architecture_invariants/00-index.md`](Plans/_shards/architecture_invariants/00-index.md) |
+L00000549	| `BinaryLocator_Spec.md` | [`Plans/_shards/binarylocator_spec/00-index.md`](Plans/_shards/binarylocator_spec/00-index.md) |
+L00000550	| `Containers_Registry_and_Unraid.md` | [`Plans/_shards/containers_registry_and_unraid/00-index.md`](Plans/_shards/containers_registry_and_unraid/00-index.md) |
+L00000551	| `DRY_Rules.md` | [`Plans/_shards/dry_rules/00-index.md`](Plans/_shards/dry_rules/00-index.md) |
+L00000552	| `Decision_Log.md` | [`Plans/_shards/decision_log/00-index.md`](Plans/_shards/decision_log/00-index.md) |
+L00000553	| `Decision_Policy.md` | [`Plans/_shards/decision_policy/00-index.md`](Plans/_shards/decision_policy/00-index.md) |
+L00000554	| `Document_Packaging_Policy.md` | [`Plans/_shards/document_packaging_policy/00-index.md`](Plans/_shards/document_packaging_policy/00-index.md) |
+L00000555	| `Formatters_System.md` | [`Plans/_shards/formatters_system/00-index.md`](Plans/_shards/formatters_system/00-index.md) |
+L00000556	| `GitHub_API_Auth_and_Flows.md` | [`Plans/_shards/github_api_auth_and_flows/00-index.md`](Plans/_shards/github_api_auth_and_flows/00-index.md) |
+L00000557	| `Glossary.md` | [`Plans/_shards/glossary/00-index.md`](Plans/_shards/glossary/00-index.md) |
+L00000558	| `Media_Generation_and_Capabilities.md` | [`Plans/_shards/media_generation_and_capabilities/00-index.md`](Plans/_shards/media_generation_and_capabilities/00-index.md) |
+L00000559	| `OpenCode_Coverage_Matrix.md` | [`Plans/_shards/opencode_coverage_matrix/00-index.md`](Plans/_shards/opencode_coverage_matrix/00-index.md) |
+L00000560	| `Plugins_System.md` | [`Plans/_shards/plugins_system/00-index.md`](Plans/_shards/plugins_system/00-index.md) |
+L00000561	| `Progression_Gates.md` | [`Plans/_shards/progression_gates/00-index.md`](Plans/_shards/progression_gates/00-index.md) |
+L00000562	| `Provider_Stream_Mapping_External_Reference_A2A.md` | [`Plans/_shards/provider_stream_mapping_external_reference_a2a/00-index.md`](Plans/_shards/provider_stream_mapping_external_reference_a2a/00-index.md) |
+L00000563	| `UI_Wiring_Rules.md` | [`Plans/_shards/ui_wiring_rules/00-index.md`](Plans/_shards/ui_wiring_rules/00-index.md) |
+L00000564	| `Planning_Ledger_System.md` | [`Plans/_shards/planning_ledger_system/00-index.md`](Plans/_shards/planning_ledger_system/00-index.md) |
+L00000565	| `Plan_Document_System.md` | [`Plans/_shards/plan_document_system/00-index.md`](Plans/_shards/plan_document_system/00-index.md) |
+L00000566	| `Plan_To_Node_Compilation.md` | [`Plans/_shards/plan_to_node_compilation/00-index.md`](Plans/_shards/plan_to_node_compilation/00-index.md) |
+L00000567	| `Automated_Testing_System.md` | [`Plans/_shards/automated_testing_system/00-index.md`](Plans/_shards/automated_testing_system/00-index.md) |
+L00000568	| `Bootstrap_Planning_Migration.md` | [`Plans/_shards/bootstrap_planning_migration/00-index.md`](Plans/_shards/bootstrap_planning_migration/00-index.md) |
+L00000569	| `Prompt_Pipeline.md` | [`Plans/_shards/prompt_pipeline/00-index.md`](Plans/_shards/prompt_pipeline/00-index.md) |
+L00000570	| `Wiring_Matrix.md` | [`Plans/_shards/wiring_matrix/00-index.md`](Plans/_shards/wiring_matrix/00-index.md) |
+L00000571	| `GUI_Rebuild_Requirements_Checklist.md` | [`Plans/_shards/gui_rebuild_requirements_checklist/00-index.md`](Plans/_shards/gui_rebuild_requirements_checklist/00-index.md) |
+L00000572	| `Widget_System.md` | [`Plans/_shards/widget_system/00-index.md`](Plans/_shards/widget_system/00-index.md) |
+L00000573	| `prd_planning_runtime_contracts.json` | [`Plans/_shards/prd_planning_runtime_contracts/00-index.md`](Plans/_shards/prd_planning_runtime_contracts/00-index.md) |
+L00000574	| `prd_planning_runtime_contracts.schema.json` | [`Plans/_shards/prd_planning_runtime_contracts.schema/00-index.md`](Plans/_shards/prd_planning_runtime_contracts.schema/00-index.md) |
+L00000575	| `event_record.schema.json` | [`Plans/_shards/event_record.schema/00-index.md`](Plans/_shards/event_record.schema/00-index.md) |
+L00000576	| `storage_value_registry.schema.json` | [`Plans/_shards/storage_value_registry.schema/00-index.md`](Plans/_shards/storage_value_registry.schema/00-index.md) |
+L00000577	| `storage_value_registry.json` | [`Plans/_shards/storage_value_registry/00-index.md`](Plans/_shards/storage_value_registry/00-index.md) |
+L00000578	| `non_executable_closure_evidence.schema.json` | [`Plans/_shards/non_executable_closure_evidence.schema/00-index.md`](Plans/_shards/non_executable_closure_evidence.schema/00-index.md) |
+L00000579	| `non_executable_closure_evidence.json` | [`Plans/_shards/non_executable_closure_evidence/00-index.md`](Plans/_shards/non_executable_closure_evidence/00-index.md) |
+L00000580	| `web_agent_policy_fixtures.json` | [`Plans/_shards/web_agent_policy_fixtures/00-index.md`](Plans/_shards/web_agent_policy_fixtures/00-index.md) |
+L00000581	| `web_capability_findings_coverage.json` | [`Plans/_shards/web_capability_findings_coverage/00-index.md`](Plans/_shards/web_capability_findings_coverage/00-index.md) |
+L00000582	| `web_capability_findings_coverage.schema.json` | [`Plans/_shards/web_capability_findings_coverage.schema/00-index.md`](Plans/_shards/web_capability_findings_coverage.schema/00-index.md) |
+L00000583	| `web_capability_source_packet_receipt.json` | [`Plans/_shards/web_capability_source_packet_receipt/00-index.md`](Plans/_shards/web_capability_source_packet_receipt/00-index.md) |
+L00000584	| `web_capability_source_packet_receipt.schema.json` | [`Plans/_shards/web_capability_source_packet_receipt.schema/00-index.md`](Plans/_shards/web_capability_source_packet_receipt.schema/00-index.md) |
+L00000585	| `web_intent_routing_fixtures.json` | [`Plans/_shards/web_intent_routing_fixtures/00-index.md`](Plans/_shards/web_intent_routing_fixtures/00-index.md) |
+L00000586	| `web_operation_card_fixtures.json` | [`Plans/_shards/web_operation_card_fixtures/00-index.md`](Plans/_shards/web_operation_card_fixtures/00-index.md) |
+L00000587	| `web_operation_contracts.schema.json` | [`Plans/_shards/web_operation_contracts.schema/00-index.md`](Plans/_shards/web_operation_contracts.schema/00-index.md) |
+L00000588	| `web_operation_job_fixtures.json` | [`Plans/_shards/web_operation_job_fixtures/00-index.md`](Plans/_shards/web_operation_job_fixtures/00-index.md) |
+L00000589	| `web_policy_negative_fixtures.json` | [`Plans/_shards/web_policy_negative_fixtures/00-index.md`](Plans/_shards/web_policy_negative_fixtures/00-index.md) |
+L00000590	| `web_policy_negative_fixtures.schema.json` | [`Plans/_shards/web_policy_negative_fixtures.schema/00-index.md`](Plans/_shards/web_policy_negative_fixtures.schema/00-index.md) |
+L00000591	| `web_provider_adapter_registry.seed.json` | [`Plans/_shards/web_provider_adapter_registry.seed/00-index.md`](Plans/_shards/web_provider_adapter_registry.seed/00-index.md) |
+L00000592	| `web_provider_projection_fixtures.json` | [`Plans/_shards/web_provider_projection_fixtures/00-index.md`](Plans/_shards/web_provider_projection_fixtures/00-index.md) |
+L00000593	| `web_research_run_fixtures.json` | [`Plans/_shards/web_research_run_fixtures/00-index.md`](Plans/_shards/web_research_run_fixtures/00-index.md) |
+L00000594	| `Release_Supply_Chain.md` | [`Plans/_shards/release_supply_chain/00-index.md`](Plans/_shards/release_supply_chain/00-index.md) |
+L00000595	## 2026-03-07 addendum — containers, registry, and Unraid
+L00000596	
+L00000597	- Registered `Plans/Containers_Registry_and_Unraid.md` as the canonical SSOT for first-class DockerHub image publishing, contextual Docker management UI, managed Unraid template repositories, and `ca_profile.xml` behavior.
+L00000598	
+L00000599	| Plan | Primary scope | Notes / canonical intent |
+L00000600	|------|--------------|--------------------------|
+L00000601	| `Containers_Registry_and_Unraid.md` | First-class DockerHub publishing, container runtime management, and Unraid template workflows | Canonical for DockerHub browser/PAT auth UX, requested vs effective auth capability, protected repo creation, contextual Docker Manager UI, managed template-repo defaults, `ca_profile.xml` scope/editability, and maintainer-asset handling. |
+L00000602	
+L00000603	## Runtime Packet Index Coverage Consolidation Addendum (2026-03-09)
+L00000604	
+L00000605	
+L00000606	Update index descriptions so readers can find the owning docs for:
+L00000607	- scheduler semantics and queue analysis
+L00000608	- event/contracts and storage for attempts, safe points, and remediation lineage
+L00000609	- blocked-state UX and recovery actions
+L00000610	- provider/auth/permission mappings into runtime taxonomy
+L00000611	- glossary ownership for new runtime terms
+L00000612	
+L00000613	Index descriptions for this packet MUST point readers to:
+L00000614	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Glossary.md
+L00000615	- `Plans/Contracts_V0.md` for canonical events, enums, identities, and action fields
+L00000616	- `Plans/Executor_Protocol.md` for scheduler semantics, attempt lifecycle, and graph-lock behavior
+L00000617	- `Plans/storage-plan.md` for persistence and restart rules
+L00000618	- `Plans/Run_Graph_View.md`, `Plans/Orchestrator_Page.md`, and `Plans/FinalGUISpec.md` for rendering and interaction
+L00000619	- `Plans/assistant-chat-design.md` and `Plans/interview-subagent-integration.md` for active paused/degraded planning-state semantics; `Plans/chain-wizard-flexibility.md` preserves legacy examples only as compatibility/source-lineage input
+L00000620	- `Plans/Glossary.md` for canonical runtime terminology
+L00000621	
+L00000622	## 2026-03-12 addendum — source control, GitHub Actions, and Docker Manager
+L00000623	
+L00000624	- `Plans/GitHub_Integration.md` now owns two distinct operational surfaces: Git-first Source Control and GitHub Actions.
+L00000625	- `Plans/WorktreeGitImprovement.md` remains canonical for worktree correctness and runtime alignment, but Source Control is the primary user-facing worktree surface.
+L00000626	- `Plans/Containers_Registry_and_Unraid.md` is the canonical owner for Docker Manager, including Publish / Unraid and project-focused Kubernetes placement.
+L00000627	- `Plans/newtools.md` remains canonical for Docker/Actions doctor and result minima and must be read alongside the feature-owner docs.
+L00000628	- `Plans/Contracts_V0.md`, `Plans/storage-plan.md`, `Plans/Permissions_System.md`, and `Plans/usage-feature.md` are required anti-drift companions for this packet.
+
+<<< CONTEXT_AFTER canonical_document_lines=629-640 >>>
+L00000629	
+L00000630	Restart-pass by-doc owner map:
+L00000631	- `Plans/FinalGUISpec.md` owns the activity-bar and side-panel vocabulary for Source Control, GitHub Actions, Docker Manager, cross-surface deep links, blocked-state presentation, and mirror/owner attention behavior.
+L00000632	- `Plans/GitHub_Integration.md` owns the Source Control versus GitHub Actions split, including GitHub Actions `Current Branch` / `Workflows` / `Settings`, secrets, variables, `/environments`, rerun/cancel/pin, and workflow authoring help. `Git (GitHub)` is retained only as a retired migration alias.
+L00000633	- `Plans/WorktreeGitImprovement.md` owns worktree-native Source Control details, including worktree inventory, compare/lineage/recovery, review mode, conflict assistant, and blocked-state handoff.
+L00000634	- `Plans/Containers_Registry_and_Unraid.md` owns Docker Manager operational subviews, `/auth/Unraid`, Publish / Unraid, Kubernetes placement, and the retirement of `Docker Manage` as a canonical surface name.
+L00000635	- `Plans/Orchestrator_Page.md` owns lane/run/package truth, Orchestrator receipts, run-blocking recovery pivots, and deep links into Source Control, GitHub Actions, Docker Manager, and Kubernetes owner surfaces.
+L00000636	- Highest `stale-canon` replacement risk for this source-control/GitHub Actions/Docker Manager sweep remains concentrated in `Plans/rewrite-tie-in-memo.md`, `Plans/usage-feature.md`, `Plans/FinalGUISpec.md`, and `Plans/Media_Generation_and_Capabilities.md`; reconcile those consumer docs against the feature owners above before treating older wording as authoritative.
+L00000637	
+L00000638	ContractRef: ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/newtools.md, ContractName:Plans/storage-plan.md
+L00000639	
+L00000640	

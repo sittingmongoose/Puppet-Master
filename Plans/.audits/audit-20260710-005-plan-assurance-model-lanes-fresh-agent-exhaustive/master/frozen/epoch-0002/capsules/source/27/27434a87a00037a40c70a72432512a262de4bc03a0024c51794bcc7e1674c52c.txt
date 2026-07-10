@@ -1,0 +1,216 @@
+<<< CONTEXT_BEFORE 647-658 >>>
+negative_constraints:
+  - Do not use raw Assistant Chat transcript as the sole source selection proof.
+  - Do not collapse PRD Builder into Planning Wizard.
+  - Do not create implementation-ready Plans or runtime work from PRD source discovery alone.
+owner_hints: [Plans/PRD_Builder.md, Plans/FinalGUISpec.md, Plans/Tools.md, Plans/storage-plan.md]
+```
+
+
+## Ledger Compile Addendum - pldg-20260626-001-feature-name
+
+This addendum compiles accepted source-lineage obligations from bootstrap ledger `pldg-20260626-001-feature-name` into this existing owner/consumer doc. It creates canonical PlanUnits only; it does not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, generated governance artifacts, or production build tasks.
+
+
+<<< AUTHORITATIVE_CORE 659-859 >>>
+### PRDB-010 - PRD Builder Historical Document Records
+
+```yaml
+plan_unit_id: PRDB-010
+unit_type: requirement
+status: accepted
+owner_doc: Plans/PRD_Builder.md
+canonical_text: PRD Builder outputs that become wizard-created documents must emit immutable project-scoped history
+  records addressable by Orchestrator History. Final/approved PRD outputs are retained forever by default and appear
+  in the default approved-only view; retained drafts, intermediate outputs, previous non-final versions, superseded
+  outputs, archived rows, and exports remain discoverable only through the expanded all-history controls and retention/archive
+  policy. Records preserve PRD identity, status, version, created/approved times, source wizard/run refs, artifacts,
+  archive state, and lifecycle event refs for projection rebuild.
+gui_related: false
+gui_classification_reason: Defines PRD Builder output/history record obligations; GUI presentation is owned by Orchestrator
+  History.
+depends_on:
+- SP-219
+unblocks:
+- OP-026
+- POA-051
+acceptance_criteria:
+- Live PlanUnit exists in the adjudicated owner doc with reciprocal ledger source_lineage.
+- Exact source tokens, negative constraints, owner hints, and user corrections are preserved in PlanUnit metadata.
+- No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks
+  are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260626-001-feature-name
+- python3 scripts/pm-plan-index.py validate
+- git diff --check
+risk_class: prd_history_lineage_loss
+reasoning_tier: standard
+context_scope: prd_builder_history_records
+implementation_surfaces:
+- Plans/PRD_Builder.md
+- future PRD Builder output records
+node_compile_hint:
+  mode: prd_history_record_contract
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260626-001-feature-name:atom-0008
+- pldg-20260626-001-feature-name:atom-0015
+- pldg-20260626-001-feature-name:atom-0016
+- pldg-20260626-001-feature-name:atom-0024
+- pldg-20260626-001-feature-name:atom-0025
+- pldg-20260626-001-feature-name:atom-0033
+- pldg-20260626-001-feature-name:atom-0044
+- pldg-20260626-001-feature-name:atom-0045
+- pldg-20260626-001-feature-name:atom-0047
+- pldg-20260626-001-feature-name:atom-0052
+- chat:misc-history-scope
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- Plans/Project_Output_Artifacts.md
+- Plans/Runtime_Artifacts_Panel.md
+- chat:history-defaults-answers
+- chat:history-scope-retention-actions-answers
+- chat:history-columns-toggle-deep-compare-answers
+- chat:history-export-compare-archive-answers
+- chat:history-source-index-answer
+- chat:history-projection-lifecycle-answer
+source_atom_ids:
+- atom-0008
+- atom-0015
+- atom-0016
+- atom-0024
+- atom-0025
+- atom-0033
+- atom-0044
+- atom-0045
+- atom-0047
+- atom-0052
+decision_refs:
+- dec-0002
+- dec-0003
+- dec-0004
+- dec-0005
+- dec-0007
+- dec-0008
+- dec-0009
+preserved_exact_tokens:
+- see historical documents that are made
+- by documents I mean the plans and PRD docs that are created by the wizard
+- plans and PRD docs
+- created by the wizard
+- By default it should show only final/approved outputs
+- final/approved outputs
+- it can be exapnded by the user to show everything
+- show everything
+- retained forever by default
+- 'yes'
+- retention/archive rules
+- Approved only
+- All history
+- per-project toggle/chip
+- only after include archived extra
+- Include archived
+- archived
+- project-scoped unified History index/projection
+- source-of-truth shape
+- wizard save/approval
+- run lifecycle
+- artifact/evidence write
+- archive/unarchive
+- lineage/manifest events
+negative_constraints:
+- Do not collapse PRD Builder outputs, Planning Wizard outputs, Plan packs, and runtime artifacts into an anonymous
+  flat document list.
+- Do not treat mutable draft projections as the same thing as immutable approved packs or historical snapshots.
+- Do not show every draft/intermediate artifact in the default Documents view.
+- Do not hide final/approved artifacts inside raw ledger or export-only views.
+- Do not make expanded history indistinguishable from approved/final history.
+- Do not omit authority labels such as draft, approved, final, superseded, exported, or generated when showing everything.
+- Do not apply ordinary draft/intermediate retention cleanup to final/approved outputs by default.
+- Do not silently remove final/approved outputs from History.
+- Do not promise draft/intermediate rows remain visible forever by default.
+- Do not make archived/hidden all-history rows indistinguishable from deleted records.
+- Do not make All history a hidden advanced-only affordance.
+- Do not persist the control globally across unrelated projects.
+- Do not show archived records inline by default in All history.
+- Do not make archived records appear without an explicit additional control.
+- Do not make archived records appear identical to normal retained all-history records.
+- Do not implement the History surface as fragile cross-subsystem ad hoc scans at view time.
+- Do not make the History read model global or cross-project by default.
+- Do not rely on view-time scanning as the primary way to discover normal History changes.
+- Do not omit archive/unarchive or lineage/manifest updates from the projection lifecycle.
+owner_hints:
+- Plans/PRD_Builder.md
+- Plans/Planning_Wizard.md
+- Plans/Project_Output_Artifacts.md
+- Plans/Runtime_Artifacts_Panel.md
+- Plans/storage-plan.md
+- Plans/Contracts_V0.md
+- Plans/Orchestrator_Page.md
+- Plans/FinalGUISpec.md
+- Plans/UI_Command_Catalog.md
+```
+
+## FABLE Residual PRD Builder Contract Cleanup Addendum - 2026-07-07
+
+This addendum closes only residual FABLE Critical/High PRD Builder rows for conflict records, scoring defaults, resource defaults, and approval command naming. It does not certify runtime readiness or create build tasks.
+
+### PRDB-011 - Conflict, Scoring, Resource Defaults, And Approval Command Contract
+
+```yaml
+plan_unit_id: PRDB-011
+unit_type: schema_contract
+status: accepted
+owner_doc: Plans/PRD_Builder.md
+canonical_text: >-
+  PRD Builder conflict resolution uses a typed ConflictRecord and deterministic scoring defaults before a PRD can
+  be approved into Planning Wizard. Conflicts record conflict_id, prd_id, field_path, competing_values[], source_refs[],
+  confidence_scores[], detected_at_ms, resolution_state, selected_value?, resolver_actor?, resolved_at_ms?, and
+  audit_receipt_ref?. Readiness scoring uses weighted completeness, evidence, conflict, dependency, and resource axes,
+  while resource defaults provide explicit time, token, cost, provider, and review placeholders instead of silent nulls.
+gui_related: true
+gui_classification_reason: PRD conflict review, scoring, and approval are user-visible Planning Wizard handoff surfaces.
+depends_on: [PRDB-005, PRDB-007, PRDB-008, PLS-015]
+unblocks: []
+acceptance_criteria:
+  - ConflictRecord tie-break order is explicit user resolution, higher-authority source_ref, latest accepted user correction, higher confidence, then blocked_requires_user_decision.
+  - User resolution command is cmd.prd_builder.resolve_conflict with prd_id, conflict_id, selected_value, optional rationale, and actor_ref.
+  - Readiness score defaults are completeness 0.35, evidence 0.25, conflicts 0.20, dependencies 0.10, resources 0.10, with approve threshold >= 0.85 and conflicts axis requiring no blocking conflicts.
+  - Resource defaults include estimated_tokens = unknown, estimated_cost_microusd = unknown, max_review_minutes = 30, provider_preference = unset, and required_human_review = true when estimates are unknown.
+  - The canonical approval command is cmd.prd_builder.approve_for_planning_wizard; compatibility alias cmd.prd_builder.approve_for_planning must project to the canonical command and emit the same approval receipt.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - python3 scripts/pm-plans-verify.py lint-contractrefs
+  - python3 scripts/pm-audit-closure.py validate --audit-dir Plans/.audits/fable-20260706 --require-closure-matrix --require-effective-status --source-artifact residual_feature_contract_findings.jsonl
+risk_class: fable_residual_prd_builder_contract_drift
+reasoning_tier: high
+context_scope: residual_feature_contract_cleanup
+implementation_surfaces:
+  - Plans/PRD_Builder.md
+  - Plans/Planning_Wizard.md
+  - Plans/Planning_Ledger_System.md
+node_compile_hint:
+  mode: prd_builder_residual_contract_defaults
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+  - fablereport.md:1203
+  - fablereport.md:1204
+  - Plans/.audits/fable-20260706/buildability_repair_registry.jsonl
+source_atom_ids: []
+preserved_exact_tokens:
+  - "ConflictRecord"
+  - "cmd.prd_builder.approve_for_planning_wizard"
+  - "cmd.prd_builder.approve_for_planning"
+  - "readiness scoring"
+  - "resource defaults"
+negative_constraints:
+  - Do not approve a PRD with unresolved blocking conflicts by scoring alone.
+  - Do not silently substitute resource defaults as runtime capacity proof.
+  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime certification evidence, or production build tasks.
+owner_hints:
+  - Plans/PRD_Builder.md
+  - Plans/Planning_Wizard.md
+  - Plans/UI_Command_Catalog.md
+```

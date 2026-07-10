@@ -1,0 +1,393 @@
+<<< CONTEXT_BEFORE canonical_document_lines=22083-22094 >>>
+L00022083	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022084	        },
+L00022085	        {
+L00022086	          "test_id": "wiring.catalog.runtime_replan.events",
+L00022087	          "evidence_kind": "event_test",
+L00022088	          "requirement": "Assert cmd.runtime.replan emits canonical event type goal.replanned with command_id, origin, correlation_id, and handler target."
+L00022089	        }
+L00022090	      ],
+L00022091	      "event_test_requirements": [
+L00022092	        "Assert cmd.runtime.replan emits canonical event type goal.replanned with command_id, origin, correlation_id, and handler target."
+L00022093	      ]
+L00022094	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=22095-22458 >>>
+L00022095	    "catalog.runtime_restore_safe_point_then_retry": {
+L00022096	      "ui_element_id": "catalog.runtime_restore_safe_point_then_retry",
+L00022097	      "ui_location": "Orchestrator > Blocked run actions > Restore Safe Point Then Retry",
+L00022098	      "ui_command_id": "cmd.runtime.restore_safe_point_then_retry",
+L00022099	      "handler_location": "handlers::runtime::restore_safe_point_then_retry",
+L00022100	      "expected_event_types": [
+L00022101	        "safe_point.restored",
+L00022102	        "scheduler.pass"
+L00022103	      ],
+L00022104	      "acceptance_checks": [
+L00022105	        "cmd.runtime.restore_safe_point_then_retry must be registered in the UICommand dispatcher with typed args and result contract",
+L00022106	        "cmd.runtime.restore_safe_point_then_retry must expose projected state selector and disabled reason before dispatch",
+L00022107	        "cmd.runtime.restore_safe_point_then_retry dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022108	        "cmd.runtime.restore_safe_point_then_retry must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022109	        "cmd.runtime.restore_safe_point_then_retry must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00022110	      ],
+L00022111	      "evidence_required": "Production wiring contract for cmd.runtime.restore_safe_point_then_retry; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00022112	      "state_selector": "state.commands.runtime_restore_safe_point_then_retry.availability",
+L00022113	      "disabled_reason_projection": "state.commands.runtime_restore_safe_point_then_retry.disabled_reason",
+L00022114	      "effect_contract": {
+L00022115	        "effect_kind": "event",
+L00022116	        "description": "cmd.runtime.restore_safe_point_then_retry emits canonical domain event(s) and records dispatch correlation evidence; placeholder command_applied events are invalid.",
+L00022117	        "receipt_or_event_refs": [
+L00022118	          "safe_point.restored",
+L00022119	          "scheduler.pass"
+L00022120	        ]
+L00022121	      },
+L00022122	      "accessibility_contract": {
+L00022123	        "role_or_semantics": "catalog.runtime_restore_safe_point_then_retry exposes a stable role/name/description matching cmd.runtime.restore_safe_point_then_retry.",
+L00022124	        "keyboard_access": "catalog.runtime_restore_safe_point_then_retry is reachable and activatable by keyboard where the control is visible.",
+L00022125	        "focus_management": "catalog.runtime_restore_safe_point_then_retry preserves visible focus and returns focus deterministically after dispatch or error.",
+L00022126	        "disabled_announcement": "catalog.runtime_restore_safe_point_then_retry surfaces state.commands.runtime_restore_safe_point_then_retry.disabled_reason to assistive technology when unavailable."
+L00022127	      },
+L00022128	      "test_evidence": [
+L00022129	        {
+L00022130	          "test_id": "wiring.catalog.runtime_restore_safe_point_then_retry.dispatcher",
+L00022131	          "evidence_kind": "dispatcher_fixture",
+L00022132	          "requirement": "Dispatching cmd.runtime.restore_safe_point_then_retry reaches handlers::runtime::restore_safe_point_then_retry with typed args/result contract."
+L00022133	        },
+L00022134	        {
+L00022135	          "test_id": "wiring.catalog.runtime_restore_safe_point_then_retry.state_projection",
+L00022136	          "evidence_kind": "state_projection",
+L00022137	          "requirement": "Availability reads state.commands.runtime_restore_safe_point_then_retry.availability and disabled copy reads state.commands.runtime_restore_safe_point_then_retry.disabled_reason."
+L00022138	        },
+L00022139	        {
+L00022140	          "test_id": "wiring.catalog.runtime_restore_safe_point_then_retry.effect",
+L00022141	          "evidence_kind": "receipt_or_event_assertion",
+L00022142	          "requirement": "cmd.runtime.restore_safe_point_then_retry must emit the declared event types and record dispatch correlation evidence."
+L00022143	        },
+L00022144	        {
+L00022145	          "test_id": "wiring.catalog.runtime_restore_safe_point_then_retry.accessibility",
+L00022146	          "evidence_kind": "accessibility_regression",
+L00022147	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022148	        },
+L00022149	        {
+L00022150	          "test_id": "wiring.catalog.runtime_restore_safe_point_then_retry.events",
+L00022151	          "evidence_kind": "event_test",
+L00022152	          "requirement": "Assert cmd.runtime.restore_safe_point_then_retry emits canonical event type safe_point.restored with command_id, origin, correlation_id, and handler target. Assert cmd.runtime.restore_safe_point_then_retry emits canonical event type scheduler.pass with command_id, origin, correlation_id, and handler target."
+L00022153	        }
+L00022154	      ],
+L00022155	      "event_test_requirements": [
+L00022156	        "Assert cmd.runtime.restore_safe_point_then_retry emits canonical event type safe_point.restored with command_id, origin, correlation_id, and handler target.",
+L00022157	        "Assert cmd.runtime.restore_safe_point_then_retry emits canonical event type scheduler.pass with command_id, origin, correlation_id, and handler target."
+L00022158	      ]
+L00022159	    },
+L00022160	    "catalog.runtime_resume_after_prerequisite": {
+L00022161	      "ui_element_id": "catalog.runtime_resume_after_prerequisite",
+L00022162	      "ui_location": "Orchestrator > Blocked run actions > Resume After Prerequisite",
+L00022163	      "ui_command_id": "cmd.runtime.resume_after_prerequisite",
+L00022164	      "handler_location": "handlers::runtime::resume_after_prerequisite",
+L00022165	      "expected_event_types": [
+L00022166	        "node.unblocked",
+L00022167	        "scheduler.pass"
+L00022168	      ],
+L00022169	      "acceptance_checks": [
+L00022170	        "cmd.runtime.resume_after_prerequisite must be registered in the UICommand dispatcher with typed args and result contract",
+L00022171	        "cmd.runtime.resume_after_prerequisite must expose projected state selector and disabled reason before dispatch",
+L00022172	        "cmd.runtime.resume_after_prerequisite dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022173	        "cmd.runtime.resume_after_prerequisite must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022174	        "cmd.runtime.resume_after_prerequisite must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00022175	      ],
+L00022176	      "evidence_required": "Production wiring contract for cmd.runtime.resume_after_prerequisite; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00022177	      "state_selector": "state.commands.runtime_resume_after_prerequisite.availability",
+L00022178	      "disabled_reason_projection": "state.commands.runtime_resume_after_prerequisite.disabled_reason",
+L00022179	      "effect_contract": {
+L00022180	        "effect_kind": "event",
+L00022181	        "description": "cmd.runtime.resume_after_prerequisite emits canonical domain event(s) and records dispatch correlation evidence; placeholder command_applied events are invalid.",
+L00022182	        "receipt_or_event_refs": [
+L00022183	          "node.unblocked",
+L00022184	          "scheduler.pass"
+L00022185	        ]
+L00022186	      },
+L00022187	      "accessibility_contract": {
+L00022188	        "role_or_semantics": "catalog.runtime_resume_after_prerequisite exposes a stable role/name/description matching cmd.runtime.resume_after_prerequisite.",
+L00022189	        "keyboard_access": "catalog.runtime_resume_after_prerequisite is reachable and activatable by keyboard where the control is visible.",
+L00022190	        "focus_management": "catalog.runtime_resume_after_prerequisite preserves visible focus and returns focus deterministically after dispatch or error.",
+L00022191	        "disabled_announcement": "catalog.runtime_resume_after_prerequisite surfaces state.commands.runtime_resume_after_prerequisite.disabled_reason to assistive technology when unavailable."
+L00022192	      },
+L00022193	      "test_evidence": [
+L00022194	        {
+L00022195	          "test_id": "wiring.catalog.runtime_resume_after_prerequisite.dispatcher",
+L00022196	          "evidence_kind": "dispatcher_fixture",
+L00022197	          "requirement": "Dispatching cmd.runtime.resume_after_prerequisite reaches handlers::runtime::resume_after_prerequisite with typed args/result contract."
+L00022198	        },
+L00022199	        {
+L00022200	          "test_id": "wiring.catalog.runtime_resume_after_prerequisite.state_projection",
+L00022201	          "evidence_kind": "state_projection",
+L00022202	          "requirement": "Availability reads state.commands.runtime_resume_after_prerequisite.availability and disabled copy reads state.commands.runtime_resume_after_prerequisite.disabled_reason."
+L00022203	        },
+L00022204	        {
+L00022205	          "test_id": "wiring.catalog.runtime_resume_after_prerequisite.effect",
+L00022206	          "evidence_kind": "receipt_or_event_assertion",
+L00022207	          "requirement": "cmd.runtime.resume_after_prerequisite must emit the declared event types and record dispatch correlation evidence."
+L00022208	        },
+L00022209	        {
+L00022210	          "test_id": "wiring.catalog.runtime_resume_after_prerequisite.accessibility",
+L00022211	          "evidence_kind": "accessibility_regression",
+L00022212	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022213	        },
+L00022214	        {
+L00022215	          "test_id": "wiring.catalog.runtime_resume_after_prerequisite.events",
+L00022216	          "evidence_kind": "event_test",
+L00022217	          "requirement": "Assert cmd.runtime.resume_after_prerequisite emits canonical event type node.unblocked with command_id, origin, correlation_id, and handler target. Assert cmd.runtime.resume_after_prerequisite emits canonical event type scheduler.pass with command_id, origin, correlation_id, and handler target."
+L00022218	        }
+L00022219	      ],
+L00022220	      "event_test_requirements": [
+L00022221	        "Assert cmd.runtime.resume_after_prerequisite emits canonical event type node.unblocked with command_id, origin, correlation_id, and handler target.",
+L00022222	        "Assert cmd.runtime.resume_after_prerequisite emits canonical event type scheduler.pass with command_id, origin, correlation_id, and handler target."
+L00022223	      ]
+L00022224	    },
+L00022225	    "catalog.runtime_retry_now": {
+L00022226	      "ui_element_id": "catalog.runtime_retry_now",
+L00022227	      "ui_location": "Orchestrator > Blocked run actions > Retry Now",
+L00022228	      "ui_command_id": "cmd.runtime.retry_now",
+L00022229	      "handler_location": "handlers::runtime::retry_now",
+L00022230	      "expected_event_types": [],
+L00022231	      "acceptance_checks": [
+L00022232	        "cmd.runtime.retry_now must be registered in the UICommand dispatcher with typed args and result contract",
+L00022233	        "cmd.runtime.retry_now must expose projected state selector and disabled reason before dispatch",
+L00022234	        "cmd.runtime.retry_now dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022235	        "cmd.runtime.retry_now must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022236	        "cmd.runtime.retry_now must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00022237	      ],
+L00022238	      "evidence_required": "Production wiring contract for cmd.runtime.retry_now; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00022239	      "state_selector": "state.commands.runtime_retry_now.availability",
+L00022240	      "disabled_reason_projection": "state.commands.runtime_retry_now.disabled_reason",
+L00022241	      "effect_contract": {
+L00022242	        "effect_kind": "receipt",
+L00022243	        "description": "cmd.runtime.retry_now records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00022244	        "receipt_or_event_refs": [
+L00022245	          "cmd.runtime.retry_now.dispatch_receipt"
+L00022246	        ]
+L00022247	      },
+L00022248	      "accessibility_contract": {
+L00022249	        "role_or_semantics": "catalog.runtime_retry_now exposes a stable role/name/description matching cmd.runtime.retry_now.",
+L00022250	        "keyboard_access": "catalog.runtime_retry_now is reachable and activatable by keyboard where the control is visible.",
+L00022251	        "focus_management": "catalog.runtime_retry_now preserves visible focus and returns focus deterministically after dispatch or error.",
+L00022252	        "disabled_announcement": "catalog.runtime_retry_now surfaces state.commands.runtime_retry_now.disabled_reason to assistive technology when unavailable."
+L00022253	      },
+L00022254	      "test_evidence": [
+L00022255	        {
+L00022256	          "test_id": "wiring.catalog.runtime_retry_now.dispatcher",
+L00022257	          "evidence_kind": "dispatcher_fixture",
+L00022258	          "requirement": "Dispatching cmd.runtime.retry_now reaches handlers::runtime::retry_now with typed args/result contract."
+L00022259	        },
+L00022260	        {
+L00022261	          "test_id": "wiring.catalog.runtime_retry_now.state_projection",
+L00022262	          "evidence_kind": "state_projection",
+L00022263	          "requirement": "Availability reads state.commands.runtime_retry_now.availability and disabled copy reads state.commands.runtime_retry_now.disabled_reason."
+L00022264	        },
+L00022265	        {
+L00022266	          "test_id": "wiring.catalog.runtime_retry_now.effect",
+L00022267	          "evidence_kind": "receipt_or_event_assertion",
+L00022268	          "requirement": "cmd.runtime.retry_now records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00022269	        },
+L00022270	        {
+L00022271	          "test_id": "wiring.catalog.runtime_retry_now.accessibility",
+L00022272	          "evidence_kind": "accessibility_regression",
+L00022273	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022274	        }
+L00022275	      ],
+L00022276	      "event_test_requirements": [
+L00022277	        "Assert cmd.runtime.retry_now records dispatch receipt cmd.runtime.retry_now.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00022278	      ]
+L00022279	    },
+L00022280	    "catalog.runtime_skip_node": {
+L00022281	      "ui_element_id": "catalog.runtime_skip_node",
+L00022282	      "ui_location": "Orchestrator > Blocked run actions > Skip Node",
+L00022283	      "ui_command_id": "cmd.runtime.skip_node",
+L00022284	      "handler_location": "handlers::runtime::skip_node",
+L00022285	      "expected_event_types": [
+L00022286	        "goal_run.stopped"
+L00022287	      ],
+L00022288	      "acceptance_checks": [
+L00022289	        "cmd.runtime.skip_node must be registered in the UICommand dispatcher with typed args and result contract",
+L00022290	        "cmd.runtime.skip_node must expose projected state selector and disabled reason before dispatch",
+L00022291	        "cmd.runtime.skip_node dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022292	        "cmd.runtime.skip_node must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022293	        "cmd.runtime.skip_node must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00022294	      ],
+L00022295	      "evidence_required": "Production wiring contract for cmd.runtime.skip_node; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00022296	      "state_selector": "state.commands.runtime_skip_node.availability",
+L00022297	      "disabled_reason_projection": "state.commands.runtime_skip_node.disabled_reason",
+L00022298	      "effect_contract": {
+L00022299	        "effect_kind": "event",
+L00022300	        "description": "cmd.runtime.skip_node emits canonical domain event(s) and records dispatch correlation evidence; placeholder command_applied events are invalid.",
+L00022301	        "receipt_or_event_refs": [
+L00022302	          "goal_run.stopped"
+L00022303	        ]
+L00022304	      },
+L00022305	      "accessibility_contract": {
+L00022306	        "role_or_semantics": "catalog.runtime_skip_node exposes a stable role/name/description matching cmd.runtime.skip_node.",
+L00022307	        "keyboard_access": "catalog.runtime_skip_node is reachable and activatable by keyboard where the control is visible.",
+L00022308	        "focus_management": "catalog.runtime_skip_node preserves visible focus and returns focus deterministically after dispatch or error.",
+L00022309	        "disabled_announcement": "catalog.runtime_skip_node surfaces state.commands.runtime_skip_node.disabled_reason to assistive technology when unavailable."
+L00022310	      },
+L00022311	      "test_evidence": [
+L00022312	        {
+L00022313	          "test_id": "wiring.catalog.runtime_skip_node.dispatcher",
+L00022314	          "evidence_kind": "dispatcher_fixture",
+L00022315	          "requirement": "Dispatching cmd.runtime.skip_node reaches handlers::runtime::skip_node with typed args/result contract."
+L00022316	        },
+L00022317	        {
+L00022318	          "test_id": "wiring.catalog.runtime_skip_node.state_projection",
+L00022319	          "evidence_kind": "state_projection",
+L00022320	          "requirement": "Availability reads state.commands.runtime_skip_node.availability and disabled copy reads state.commands.runtime_skip_node.disabled_reason."
+L00022321	        },
+L00022322	        {
+L00022323	          "test_id": "wiring.catalog.runtime_skip_node.effect",
+L00022324	          "evidence_kind": "receipt_or_event_assertion",
+L00022325	          "requirement": "cmd.runtime.skip_node must emit the declared event types and record dispatch correlation evidence."
+L00022326	        },
+L00022327	        {
+L00022328	          "test_id": "wiring.catalog.runtime_skip_node.accessibility",
+L00022329	          "evidence_kind": "accessibility_regression",
+L00022330	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022331	        },
+L00022332	        {
+L00022333	          "test_id": "wiring.catalog.runtime_skip_node.events",
+L00022334	          "evidence_kind": "event_test",
+L00022335	          "requirement": "Assert cmd.runtime.skip_node emits canonical event type goal_run.stopped with command_id, origin, correlation_id, and handler target."
+L00022336	        }
+L00022337	      ],
+L00022338	      "event_test_requirements": [
+L00022339	        "Assert cmd.runtime.skip_node emits canonical event type goal_run.stopped with command_id, origin, correlation_id, and handler target."
+L00022340	      ]
+L00022341	    },
+L00022342	    "catalog.runtime_start_fresh_attempt": {
+L00022343	      "ui_element_id": "catalog.runtime_start_fresh_attempt",
+L00022344	      "ui_location": "Orchestrator > Blocked run actions > Start Fresh Attempt",
+L00022345	      "ui_command_id": "cmd.runtime.start_fresh_attempt",
+L00022346	      "handler_location": "handlers::runtime::start_fresh_attempt",
+L00022347	      "expected_event_types": [
+L00022348	        "scheduler.pass"
+L00022349	      ],
+L00022350	      "acceptance_checks": [
+L00022351	        "cmd.runtime.start_fresh_attempt must be registered in the UICommand dispatcher with typed args and result contract",
+L00022352	        "cmd.runtime.start_fresh_attempt must expose projected state selector and disabled reason before dispatch",
+L00022353	        "cmd.runtime.start_fresh_attempt dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022354	        "cmd.runtime.start_fresh_attempt must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022355	        "cmd.runtime.start_fresh_attempt must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00022356	      ],
+L00022357	      "evidence_required": "Production wiring contract for cmd.runtime.start_fresh_attempt; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00022358	      "state_selector": "state.commands.runtime_start_fresh_attempt.availability",
+L00022359	      "disabled_reason_projection": "state.commands.runtime_start_fresh_attempt.disabled_reason",
+L00022360	      "effect_contract": {
+L00022361	        "effect_kind": "event",
+L00022362	        "description": "cmd.runtime.start_fresh_attempt emits canonical domain event(s) and records dispatch correlation evidence; placeholder command_applied events are invalid.",
+L00022363	        "receipt_or_event_refs": [
+L00022364	          "scheduler.pass"
+L00022365	        ]
+L00022366	      },
+L00022367	      "accessibility_contract": {
+L00022368	        "role_or_semantics": "catalog.runtime_start_fresh_attempt exposes a stable role/name/description matching cmd.runtime.start_fresh_attempt.",
+L00022369	        "keyboard_access": "catalog.runtime_start_fresh_attempt is reachable and activatable by keyboard where the control is visible.",
+L00022370	        "focus_management": "catalog.runtime_start_fresh_attempt preserves visible focus and returns focus deterministically after dispatch or error.",
+L00022371	        "disabled_announcement": "catalog.runtime_start_fresh_attempt surfaces state.commands.runtime_start_fresh_attempt.disabled_reason to assistive technology when unavailable."
+L00022372	      },
+L00022373	      "test_evidence": [
+L00022374	        {
+L00022375	          "test_id": "wiring.catalog.runtime_start_fresh_attempt.dispatcher",
+L00022376	          "evidence_kind": "dispatcher_fixture",
+L00022377	          "requirement": "Dispatching cmd.runtime.start_fresh_attempt reaches handlers::runtime::start_fresh_attempt with typed args/result contract."
+L00022378	        },
+L00022379	        {
+L00022380	          "test_id": "wiring.catalog.runtime_start_fresh_attempt.state_projection",
+L00022381	          "evidence_kind": "state_projection",
+L00022382	          "requirement": "Availability reads state.commands.runtime_start_fresh_attempt.availability and disabled copy reads state.commands.runtime_start_fresh_attempt.disabled_reason."
+L00022383	        },
+L00022384	        {
+L00022385	          "test_id": "wiring.catalog.runtime_start_fresh_attempt.effect",
+L00022386	          "evidence_kind": "receipt_or_event_assertion",
+L00022387	          "requirement": "cmd.runtime.start_fresh_attempt must emit the declared event types and record dispatch correlation evidence."
+L00022388	        },
+L00022389	        {
+L00022390	          "test_id": "wiring.catalog.runtime_start_fresh_attempt.accessibility",
+L00022391	          "evidence_kind": "accessibility_regression",
+L00022392	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022393	        },
+L00022394	        {
+L00022395	          "test_id": "wiring.catalog.runtime_start_fresh_attempt.events",
+L00022396	          "evidence_kind": "event_test",
+L00022397	          "requirement": "Assert cmd.runtime.start_fresh_attempt emits canonical event type scheduler.pass with command_id, origin, correlation_id, and handler target."
+L00022398	        }
+L00022399	      ],
+L00022400	      "event_test_requirements": [
+L00022401	        "Assert cmd.runtime.start_fresh_attempt emits canonical event type scheduler.pass with command_id, origin, correlation_id, and handler target."
+L00022402	      ]
+L00022403	    },
+L00022404	    "catalog.search_evict_remote_cache": {
+L00022405	      "ui_element_id": "catalog.search_evict_remote_cache",
+L00022406	      "ui_location": "Search surface",
+L00022407	      "ui_command_id": "cmd.search.evict_remote_cache",
+L00022408	      "handler_location": "handlers::search::evict_remote_cache",
+L00022409	      "expected_event_types": [],
+L00022410	      "acceptance_checks": [
+L00022411	        "cmd.search.evict_remote_cache must be registered in the UICommand dispatcher with typed args and result contract",
+L00022412	        "cmd.search.evict_remote_cache must expose projected state selector and disabled reason before dispatch",
+L00022413	        "cmd.search.evict_remote_cache dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022414	        "cmd.search.evict_remote_cache must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022415	        "cmd.search.evict_remote_cache must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00022416	      ],
+L00022417	      "evidence_required": "Production wiring contract for cmd.search.evict_remote_cache; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00022418	      "state_selector": "state.commands.search_evict_remote_cache.availability",
+L00022419	      "disabled_reason_projection": "state.commands.search_evict_remote_cache.disabled_reason",
+L00022420	      "effect_contract": {
+L00022421	        "effect_kind": "receipt",
+L00022422	        "description": "cmd.search.evict_remote_cache has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00022423	        "receipt_or_event_refs": [
+L00022424	          "cmd.search.evict_remote_cache.dispatch_receipt"
+L00022425	        ]
+L00022426	      },
+L00022427	      "accessibility_contract": {
+L00022428	        "role_or_semantics": "catalog.search_evict_remote_cache exposes a stable role/name/description matching cmd.search.evict_remote_cache.",
+L00022429	        "keyboard_access": "catalog.search_evict_remote_cache is reachable and activatable by keyboard where the control is visible.",
+L00022430	        "focus_management": "catalog.search_evict_remote_cache preserves visible focus and returns focus deterministically after dispatch or error.",
+L00022431	        "disabled_announcement": "catalog.search_evict_remote_cache surfaces state.commands.search_evict_remote_cache.disabled_reason to assistive technology when unavailable."
+L00022432	      },
+L00022433	      "test_evidence": [
+L00022434	        {
+L00022435	          "test_id": "wiring.catalog.search_evict_remote_cache.dispatcher",
+L00022436	          "evidence_kind": "dispatcher_fixture",
+L00022437	          "requirement": "Dispatching cmd.search.evict_remote_cache reaches handlers::search::evict_remote_cache with typed args/result contract."
+L00022438	        },
+L00022439	        {
+L00022440	          "test_id": "wiring.catalog.search_evict_remote_cache.state_projection",
+L00022441	          "evidence_kind": "state_projection",
+L00022442	          "requirement": "Availability reads state.commands.search_evict_remote_cache.availability and disabled copy reads state.commands.search_evict_remote_cache.disabled_reason."
+L00022443	        },
+L00022444	        {
+L00022445	          "test_id": "wiring.catalog.search_evict_remote_cache.effect",
+L00022446	          "evidence_kind": "receipt_or_event_assertion",
+L00022447	          "requirement": "cmd.search.evict_remote_cache has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00022448	        },
+L00022449	        {
+L00022450	          "test_id": "wiring.catalog.search_evict_remote_cache.accessibility",
+L00022451	          "evidence_kind": "accessibility_regression",
+L00022452	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00022453	        }
+L00022454	      ],
+L00022455	      "event_test_requirements": [
+L00022456	        "Assert cmd.search.evict_remote_cache records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00022457	      ]
+L00022458	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=22459-22470 >>>
+L00022459	    "catalog.search_find_in_files": {
+L00022460	      "ui_element_id": "catalog.search_find_in_files",
+L00022461	      "ui_location": "Search surface",
+L00022462	      "ui_command_id": "cmd.search.find_in_files",
+L00022463	      "handler_location": "handlers::search::find_in_files",
+L00022464	      "expected_event_types": [],
+L00022465	      "acceptance_checks": [
+L00022466	        "cmd.search.find_in_files must be registered in the UICommand dispatcher with typed args and result contract",
+L00022467	        "cmd.search.find_in_files must expose projected state selector and disabled reason before dispatch",
+L00022468	        "cmd.search.find_in_files dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00022469	        "cmd.search.find_in_files must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00022470	        "cmd.search.find_in_files must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

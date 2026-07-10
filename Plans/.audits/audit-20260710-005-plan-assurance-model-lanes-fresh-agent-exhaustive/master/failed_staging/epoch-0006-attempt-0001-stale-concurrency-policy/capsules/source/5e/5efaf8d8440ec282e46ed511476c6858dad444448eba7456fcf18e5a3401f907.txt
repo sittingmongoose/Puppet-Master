@@ -1,0 +1,53 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-38 >>>
+L00000001	{
+L00000002	  "$schema": "pm.pmconcept_control_reconciliation.v0",
+L00000003	  "generated_at": "2026-07-02T20:20:00Z",
+L00000004	  "source": "Concepts/PMConcept.html",
+L00000005	  "source_report": "Plans/00-plans-index.md#gui-pmconcept-implementation-readiness-repair-artifacts",
+L00000006	  "scope_note": "Concept reconciliation inventory only. PMConcept remains source-lineage/concept input, not canonical product implementation or toolchain proof. Concept-only controls, stale terminal transcripts, mock runtime/provider state, local paths, localhost URLs, sample secrets, and old Rust/Slint version strings are fixture-only until a live owner doc and production wiring row promote them.",
+L00000007	  "summary": {
+L00000008	    "total_controls_inventoried": 1284,
+L00000009	    "with_inline_handlers": 339,
+L00000010	    "with_command_tokens": 71,
+L00000011	    "with_accessibility_gaps": 250,
+L00000012	    "with_local_or_demo_markers": 13,
+L00000013	    "by_disposition": {
+L00000014	      "concept_only_owner_adjudicated": 1175,
+L00000015	      "concept_fixture_only": 64,
+L00000016	      "production_wiring_required": 44,
+L00000017	      "retired_or_rescoped_non_launch_authority": 1
+L00000018	    },
+L00000019	    "production_intended_without_command": 0,
+L00000020	    "concept_only_pending_owner_adjudication": 0,
+L00000021	    "concept_only_owner_adjudicated": 1175,
+L00000022	    "production_accessibility_gaps": 0,
+L00000023	    "production_accessibility_contracts_added": 17,
+L00000024	    "source_sha256": "80a19bfb97f817a2faaf70d5a50963e8553117d13a5e6c8a05c0dd3b3f6e3e06"
+L00000025	  },
+L00000026	  "retired_or_rescoped_controls": {
+L00000027	    "ordinary_start_build_after_approval": "retired; Approve And Build is the only ordinary approval-to-PlanCompileRun launch authority.",
+L00000028	    "START": "retired or scoped to post-approval runtime resume/start only after a durable PlanCompileRun/BuildStarted authority exists.",
+L00000029	    "BUILD": "retired as ordinary launch; use cmd.plan_compile.open_build or artifact/build-result actions after BuildStarted.",
+L00000030	    "Approve & Continue": "retired as planning/build approval label; use Approve And Build for final approval or cmd.runtime.approve for HITL recovery only.",
+L00000031	    "Compile Settings": "source-lineage label; production copy uses Plan Compile configuration or testing/model policy settings."
+L00000032	  },
+L00000033	  "command_aliases_and_false_positives": {
+L00000034	    "cmd.git.open_diff": "compatibility alias for cmd.git.diff_open",
+L00000035	    "cmd.git.show_commit": "compatibility alias for cmd.source_control.history_open_commit",
+L00000036	    "cmd.terminal.focus_session": "compatibility alias kept for terminal session focus; production may normalize to cmd.terminal.focus when catalog chooses that final name",
+L00000037	    "cmd.indexOf": "JavaScript parser false-positive; not a UICommand"
+L00000038	  },
+
+<<< CONTEXT_AFTER canonical_document_lines=39-50 >>>
+L00000039	  "controls": [
+L00000040	    {
+L00000041	      "inventory_id": "pmconcept.l8932.0001",
+L00000042	      "line": 8932,
+L00000043	      "tag": "span",
+L00000044	      "html_id": "tab-dashboard",
+L00000045	      "name": null,
+L00000046	      "role": "tab",
+L00000047	      "class": "page-tab active",
+L00000048	      "ui_location": "page-tabs",
+L00000049	      "label": "Home",
+L00000050	      "attrs": {

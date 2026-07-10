@@ -1,0 +1,49 @@
+{
+  "assignment_id": "A005-001120-ADVERSARIAL-WIN-7FB69CE77AE4-0001",
+  "attempt_id": "attempt-0006",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [],
+  "core_range": [
+    1,
+    1
+  ],
+  "core_sha256": "1ca98d9ca0796a60b44a1e22ed456a3f6c14b85e09a68dab447d0e757b31c2fc",
+  "document_path": "Plans/runtime_artifact_suggested_next_steps.schema.json",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "missing_callers_consumers",
+    "invalid_states_transitions",
+    "concurrency_races",
+    "partial_failure",
+    "recovery_rollback",
+    "authority_boundaries",
+    "privacy_data_lifecycle",
+    "untrusted_inputs",
+    "gui_misleading_states",
+    "offline_network_loss",
+    "scale_limits",
+    "accessibility",
+    "localization",
+    "compatibility_migration",
+    "observability_support",
+    "destructive_actions",
+    "cross_document_seams",
+    "test_falsifiability",
+    "unknown_unknowns"
+  ],
+  "role": "adversarial_negative_space",
+  "role_instructions": "Attack the negative space in every authoritative core line. Seek missing callers, states, transitions, authority, failure and recovery, security and privacy boundaries, misleading GUI truth, propagation, operations, scale, accessibility, compatibility, migration, and test oracles. Record explicit non-gaps as well as gaps. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/e0/e00e4bcc614ca7eb5c2a1975a7589bca2baf55f071160dbfcd2fba2db5f89481.txt",
+  "source_excerpt_sha256": "e00e4bcc614ca7eb5c2a1975a7589bca2baf55f071160dbfcd2fba2db5f89481",
+  "source_sha256": "1ca98d9ca0796a60b44a1e22ed456a3f6c14b85e09a68dab447d0e757b31c2fc",
+  "window_id": "WIN-7FB69CE77AE4-0001"
+}

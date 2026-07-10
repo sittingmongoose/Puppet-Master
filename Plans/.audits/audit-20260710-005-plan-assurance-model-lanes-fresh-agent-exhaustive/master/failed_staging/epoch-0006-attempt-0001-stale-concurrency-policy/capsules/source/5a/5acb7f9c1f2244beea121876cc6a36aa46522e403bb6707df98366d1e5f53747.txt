@@ -1,0 +1,367 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1442-1453 >>>
+L00001442	  - "resumable"
+L00001443	  - "Pattern D"
+L00001444	negative_constraints:
+L00001445	  - "Input-required is a non-terminal pause; no done event is emitted solely because upstream A2A polling treats input_required as complete."
+L00001446	preserved_contractrefs:
+L00001447	  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/human-in-the-loop.md, Gate:GATE-009"
+L00001448	owner_hints:
+L00001449	  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+L00001450	  - "Plans/human-in-the-loop.md"
+L00001451	  - "Plans/CLI_Bridged_Providers.md"
+L00001452	```
+L00001453	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1454-1791 >>>
+L00001454	### PSMERA-017 - Auth Barrier Mapping
+L00001455	
+L00001456	```yaml
+L00001457	plan_unit_id: PSMERA-017
+L00001458	unit_type: runtime_contract
+L00001459	status: accepted
+L00001460	owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+L00001461	canonical_text: >-
+L00001462	  When authenticated A2A card fetches or bridge transport detect an authentication barrier, the adapter emits
+L00001463	  auth_state using the CLI_Bridged_Providers auth state machine and must not attempt autonomous
+L00001464	  re-authentication because auth recovery policy is owned by the PM auth subsystem.
+L00001465	gui_related: false
+L00001466	gui_classification_reason: "This unit maps auth barriers into auth state rather than visual presentation."
+L00001467	split_recommended: false
+L00001468	depends_on:
+L00001469	  - "PDS-003"
+L00001470	  - "PDS-004"
+L00001471	  - "PNC-001"
+L00001472	  - "BPM-004"
+L00001473	  - "PSMERA-008"
+L00001474	  - "CBP-014"
+L00001475	unblocks: []
+L00001476	acceptance_criteria:
+L00001477	  - "Auth Barrier Mapping remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+L00001478	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00001479	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00001480	validation_surfaces:
+L00001481	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00001482	  - "python3 scripts/pm-plan-index.py validate"
+L00001483	risk_class: provider_stream_mapping_drift
+L00001484	reasoning_tier: standard
+L00001485	context_scope: provider_stream_mapping
+L00001486	implementation_surfaces:
+L00001487	  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+L00001488	node_compile_hint:
+L00001489	  mode: auth_state_mapping_contract
+L00001490	  create_worknodes: false
+L00001491	source_lineage:
+L00001492	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0018"
+L00001493	preserved_exact_tokens:
+L00001494	  - "supports_authenticated_extended_card"
+L00001495	  - "_get_agent_card"
+L00001496	  - "authentication barrier"
+L00001497	  - "auth-required response/state"
+L00001498	  - "auth_state"
+L00001499	  - "payload.state"
+L00001500	  - "auth state machine"
+L00001501	  - "Auth recovery policy"
+L00001502	  - "prompts, device flows, key refresh"
+L00001503	  - "adapter MUST NOT attempt re-authentication autonomously"
+L00001504	negative_constraints:
+L00001505	  - "The adapter must not attempt re-authentication autonomously."
+L00001506	preserved_contractrefs:
+L00001507	  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Contracts_V0.md, Gate:GATE-009"
+L00001508	owner_hints:
+L00001509	  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+L00001510	  - "Plans/CLI_Bridged_Providers.md"
+L00001511	  - "Plans/Contracts_V0.md"
+L00001512	  - "Plans/Multi-Account.md"
+L00001513	```
+L00001514	
+L00001515	### PSMERA-018 - Artifact Persistence And Streaming Projection
+L00001516	
+L00001517	```yaml
+L00001518	plan_unit_id: PSMERA-018
+L00001519	unit_type: runtime_contract
+L00001520	status: accepted
+L00001521	owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+L00001522	canonical_text: >-
+L00001523	  Binary and non-text A2A artifacts must never inline into normalized text; adapters persist artifacts, emit
+L00001524	  artifact_update, artifact_data_part, or artifact_file_part diagnostics with artifact metadata, and project
+L00001525	  text_delta only where text projection is safe while retaining full data or chunk metadata.
+L00001526	gui_related: false
+L00001527	gui_classification_reason: "This unit governs artifact persistence and stream projection rather than visual presentation."
+L00001528	split_recommended: false
+L00001529	depends_on:
+L00001530	  - "PDS-003"
+L00001531	  - "PDS-004"
+L00001532	  - "PNC-001"
+L00001533	  - "BPM-004"
+L00001534	  - "PSMERA-013"
+L00001535	  - "PSMERA-015"
+L00001536	  - "POA-001"
+L00001537	unblocks: []
+L00001538	acceptance_criteria:
+L00001539	  - "Artifact Persistence And Streaming Projection remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+L00001540	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00001541	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00001542	validation_surfaces:
+L00001543	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00001544	  - "python3 scripts/pm-plan-index.py validate"
+L00001545	risk_class: provider_stream_mapping_drift
+L00001546	reasoning_tier: standard
+L00001547	context_scope: provider_stream_mapping
+L00001548	implementation_surfaces:
+L00001549	  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+L00001550	node_compile_hint:
+L00001551	  mode: artifact_stream_contract
+L00001552	  create_worknodes: false
+L00001553	source_lineage:
+L00001554	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0019"
+L00001555	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0030"
+L00001556	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0033"
+L00001557	preserved_exact_tokens:
+L00001558	  - "Binary content MUST NOT appear"
+L00001559	  - "V0 normalized stream"
+L00001560	  - "artifact store"
+L00001561	  - "artifact_id"
+L00001562	  - "artifact_update"
+L00001563	  - "artifact_name"
+L00001564	  - "append"
+L00001565	  - "last_chunk"
+L00001566	  - "part_kind"
+L00001567	  - "TextPart"
+L00001568	  - "DataPart"
+L00001569	  - "mixed"
+L00001570	  - "artifact_file_part"
+L00001571	  - "file_path"
+L00001572	  - "persisted = `true`"
+L00001573	  - "text projection"
+L00001574	  - "text_delta"
+L00001575	  - "chunk metadata"
+L00001576	  - "Pattern E"
+L00001577	  - "update_artifact_to_streaming"
+L00001578	negative_constraints:
+L00001579	  - "Binary content must not appear in the V0 normalized stream."
+L00001580	  - "Non-text/binary data must not be inlined into text_delta."
+L00001581	preserved_contractrefs:
+L00001582	  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Project_Output_Artifacts.md, Gate:GATE-009"
+L00001583	  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/newfeatures.md, ContractName:Plans/Architecture_Invariants.md#INV-001, ContractName:Plans/Project_Output_Artifacts.md, Gate:GATE-009"
+L00001584	owner_hints:
+L00001585	  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+L00001586	  - "Plans/Project_Output_Artifacts.md"
+L00001587	  - "Plans/storage-plan.md"
+L00001588	  - "Plans/CLI_Bridged_Providers.md"
+L00001589	```
+L00001590	
+L00001591	### PSMERA-019 - Terminal Done Arbitration
+L00001592	
+L00001593	```yaml
+L00001594	plan_unit_id: PSMERA-019
+L00001595	unit_type: runtime_contract
+L00001596	status: accepted
+L00001597	owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+L00001598	canonical_text: >-
+L00001599	  When upstream emits multiple terminal indicators such as TerminationEvent or RunCompletionEvent, the adapter
+L00001600	  emits exactly one final done event, prefers RunCompletionEvent semantics when available, and preserves extra
+L00001601	  terminal indicators as raw_observation diagnostics without causing additional done events.
+L00001602	gui_related: false
+L00001603	gui_classification_reason: "This unit defines terminal event arbitration rather than visual presentation."
+L00001604	split_recommended: false
+L00001605	depends_on:
+L00001606	  - "PDS-003"
+L00001607	  - "PDS-004"
+L00001608	  - "PNC-001"
+L00001609	  - "BPM-004"
+L00001610	  - "PSMERA-008"
+L00001611	  - "AI-003"
+L00001612	unblocks: []
+L00001613	acceptance_criteria:
+L00001614	  - "Terminal Done Arbitration remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+L00001615	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00001616	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00001617	validation_surfaces:
+L00001618	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00001619	  - "python3 scripts/pm-plan-index.py validate"
+L00001620	risk_class: provider_stream_mapping_drift
+L00001621	reasoning_tier: standard
+L00001622	context_scope: provider_stream_mapping
+L00001623	implementation_surfaces:
+L00001624	  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+L00001625	node_compile_hint:
+L00001626	  mode: terminal_done_arbitration
+L00001627	  create_worknodes: false
+L00001628	source_lineage:
+L00001629	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0022"
+L00001630	preserved_exact_tokens:
+L00001631	  - "Terminal event arbitration"
+L00001632	  - "exactly one `done`"
+L00001633	  - "done event"
+L00001634	  - "final"
+L00001635	  - "TerminationEvent"
+L00001636	  - "RunCompletionEvent"
+L00001637	  - "Prefer `RunCompletionEvent` semantics"
+L00001638	  - "additional terminal indicators"
+L00001639	  - "raw_observation"
+L00001640	  - "MUST NOT cause additional `done` events"
+L00001641	negative_constraints:
+L00001642	  - "Additional terminal indicators must not cause additional done events."
+L00001643	preserved_contractrefs:
+L00001644	  - "ContractRef: ContractName:Plans/CLI_Bridged_Providers.md, ContractName:Plans/Architecture_Invariants.md#INV-001, Gate:GATE-009"
+L00001645	owner_hints:
+L00001646	  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+L00001647	  - "Plans/CLI_Bridged_Providers.md"
+L00001648	  - "Plans/Architecture_Invariants.md"
+L00001649	```
+L00001650	
+L00001651	### PSMERA-020 - Overseer Audit Diagnostic Protocol
+L00001652	
+L00001653	```yaml
+L00001654	plan_unit_id: PSMERA-020
+L00001655	unit_type: audit_requirement
+L00001656	status: accepted
+L00001657	owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+L00001658	canonical_text: >-
+L00001659	  Overseer subjective audits at tier boundaries must be reconstructable from V0 diagnostic categories for
+L00001660	  audit start, reviewer spawn, reviewer verdict, consensus, and final verdict, including forced remediation
+L00001661	  when subjective audit findings override a deterministic verifier pass.
+L00001662	gui_related: false
+L00001663	gui_classification_reason: "This unit defines audit diagnostics rather than visual presentation."
+L00001664	split_recommended: true
+L00001665	depends_on:
+L00001666	  - "PDS-003"
+L00001667	  - "PDS-004"
+L00001668	  - "PNC-001"
+L00001669	  - "BPM-004"
+L00001670	  - "PSMERA-008"
+L00001671	  - "AI-039"
+L00001672	unblocks: []
+L00001673	acceptance_criteria:
+L00001674	  - "Overseer Audit Diagnostic Protocol remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+L00001675	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00001676	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00001677	validation_surfaces:
+L00001678	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00001679	  - "python3 scripts/pm-plan-index.py validate"
+L00001680	risk_class: provider_stream_mapping_drift
+L00001681	reasoning_tier: standard
+L00001682	context_scope: provider_stream_mapping
+L00001683	implementation_surfaces:
+L00001684	  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+L00001685	node_compile_hint:
+L00001686	  mode: overseer_audit_diagnostics
+L00001687	  create_worknodes: false
+L00001688	source_lineage:
+L00001689	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0023"
+L00001690	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0024"
+L00001691	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0025"
+L00001692	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0026"
+L00001693	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0027"
+L00001694	preserved_exact_tokens:
+L00001695	  - "Overseer subjective audit protocol instrumentation"
+L00001696	  - "tier boundaries"
+L00001697	  - "start-of-tier"
+L00001698	  - "end-of-tier"
+L00001699	  - "overseer_audit_started"
+L00001700	  - "overseer_reviewer_spawned"
+L00001701	  - "overseer_reviewer_verdict"
+L00001702	  - "overseer_audit_consensus"
+L00001703	  - "overseer_audit_verdict"
+L00001704	  - "exactly 2 reviewer subagents"
+L00001705	  - "R1, R2"
+L00001706	  - "accept"
+L00001707	  - "remediate"
+L00001708	  - "escalate"
+L00001709	  - "verifier_passed"
+L00001710	  - "forced_remediation"
+L00001711	  - "legitimate outcome"
+L00001712	  - "auditable"
+L00001713	  - "diagnostic stream alone"
+L00001714	negative_constraints: []
+L00001715	preserved_contractrefs:
+L00001716	  - "ContractRef: ContractName:Plans/Glossary.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/CLI_Bridged_Providers.md, Gate:GATE-009"
+L00001717	compatibility_only_notes:
+L00001718	  - "Tier-boundary wording is preserved as compatibility-sensitive diagnostic-schema evidence."
+L00001719	owner_hints:
+L00001720	  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+L00001721	  - "Plans/Glossary.md"
+L00001722	  - "Plans/Executor_Protocol.md"
+L00001723	  - "Plans/CLI_Bridged_Providers.md"
+L00001724	```
+L00001725	
+L00001726	### PSMERA-021 - Retry And Remediation Lineage Continuity
+L00001727	
+L00001728	```yaml
+L00001729	plan_unit_id: PSMERA-021
+L00001730	unit_type: runtime_contract
+L00001731	status: accepted
+L00001732	owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+L00001733	canonical_text: >-
+L00001734	  Provider/A2A normalization must preserve continuity for the shared runtime scheduler packet, including
+L00001735	  attempt identity evidence where exposed, failure_class distinctions, input_provided, forced remediation,
+L00001736	  malformed artifact streaming, interruption/resume signals, origin_failure_event_id, remediation generation,
+L00001737	  scheduler wake reasons, and blocked-to-runnable wakeups.
+L00001738	gui_related: false
+L00001739	gui_classification_reason: "This unit defines retry/remediation lineage preservation rather than visual presentation."
+L00001740	split_recommended: false
+L00001741	depends_on:
+L00001742	  - "PDS-003"
+L00001743	  - "PDS-004"
+L00001744	  - "PNC-001"
+L00001745	  - "BPM-004"
+L00001746	  - "PSMERA-016"
+L00001747	  - "OSI-414"
+L00001748	  - "OSI-418"
+L00001749	  - "OSI-419"
+L00001750	unblocks: []
+L00001751	acceptance_criteria:
+L00001752	  - "Retry And Remediation Lineage Continuity remains addressable as a fine-grained Provider Stream Mapping PlanUnit."
+L00001753	  - "ContractRefs, anchors, exact tokens, negative constraints, compatibility-only notes, stale/retired dispositions, owner/consumer boundaries, and source lineage from the source spans remain preserved."
+L00001754	  - "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created by this PlanUnit."
+L00001755	validation_surfaces:
+L00001756	  - "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00001757	  - "python3 scripts/pm-plan-index.py validate"
+L00001758	risk_class: provider_stream_mapping_drift
+L00001759	reasoning_tier: standard
+L00001760	context_scope: provider_stream_mapping
+L00001761	implementation_surfaces:
+L00001762	  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+L00001763	node_compile_hint:
+L00001764	  mode: retry_remediation_lineage
+L00001765	  create_worknodes: false
+L00001766	source_lineage:
+L00001767	  - "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Provider_Stream_Mapping_External_Reference_A2A-S0034"
+L00001768	preserved_exact_tokens:
+L00001769	  - "Retry/Remediation Event Continuity Addendum"
+L00001770	  - "shared runtime scheduler packet"
+L00001771	  - "attempt identity"
+L00001772	  - "failure_class"
+L00001773	  - "input_provided"
+L00001774	  - "forced remediation"
+L00001775	  - "malformed artifact streaming"
+L00001776	  - "interruption/resume signals"
+L00001777	  - "origin_failure_event_id"
+L00001778	  - "remediation generation"
+L00001779	  - "scheduler wake reasons"
+L00001780	  - "blocked-to-runnable wakeups"
+L00001781	  - "A2A/provider normalization does not erase retry/remediation lineage"
+L00001782	  - "deterministically"
+L00001783	negative_constraints: []
+L00001784	preserved_contractrefs: []
+L00001785	owner_hints:
+L00001786	  - "Plans/Provider_Stream_Mapping_External_Reference_A2A.md"
+L00001787	  - "Plans/Executor_Protocol.md"
+L00001788	  - "Plans/Contracts_V0.md"
+L00001789	  - "Plans/storage-plan.md"
+L00001790	```
+L00001791	
+
+<<< CONTEXT_AFTER canonical_document_lines=1792-1803 >>>
+L00001792	### PSMERA-022 - Wake Reason Mapping And Continuity
+L00001793	
+L00001794	```yaml
+L00001795	plan_unit_id: PSMERA-022
+L00001796	unit_type: runtime_contract
+L00001797	status: accepted
+L00001798	owner_doc: Plans/Provider_Stream_Mapping_External_Reference_A2A.md
+L00001799	canonical_text: >-
+L00001800	  Provider/A2A normalized streams must preserve canonical wake reasons and attempt continuity: completion,
+L00001801	  approval/input resolution, auth recovery, startup recovery, watchdog recheck, backoff expiry, remediation
+L00001802	  completion, and replan application map to canonical wake_reason values, while reconnect/observe-only flows
+L00001803	  preserve attempt_id and do not create hidden provider-local retry identity.

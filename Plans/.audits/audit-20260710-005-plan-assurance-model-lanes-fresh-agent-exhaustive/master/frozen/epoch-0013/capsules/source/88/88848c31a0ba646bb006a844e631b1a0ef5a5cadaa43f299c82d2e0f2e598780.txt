@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=5929-5940 >>>
+L00005929	- evidence_capture_mode
+L00005930	negative_constraints: []
+L00005931	compatibility_only_notes:
+L00005932	- The schema extension is additive.
+L00005933	stale_retired_dispositions: []
+L00005934	owner_boundary_notes: []
+L00005935	owner_hints:
+L00005936	- Plans/newtools.md
+L00005937	preserved_contractrefs:
+L00005938	- 'ContractRef: SchemaID:pm.test_strategy.schema.v1, ContractName:Plans/Runtime_Artifacts_Panel.md, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md'
+L00005939	```
+L00005940	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=5941-6325 >>>
+L00005941	### N2-102 - Live Visualization Seglog Events
+L00005942	
+L00005943	```yaml
+L00005944	plan_unit_id: N2-102
+L00005945	unit_type: requirement
+L00005946	status: accepted
+L00005947	owner_doc: Plans/newtools.md
+L00005948	canonical_text: Live visualization emits live.session.started, live.step.updated, live.artifact.created, live.session.completed, and live.session.degraded events; visible PM built-in browser targets additionally carry browser_session_id? and session_class? when available.
+L00005949	gui_related: false
+L00005950	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00005951	split_recommended: false
+L00005952	depends_on: []
+L00005953	unblocks: []
+L00005954	acceptance_criteria:
+L00005955	- Covered source spans remain losslessly available for exact-text audit.
+L00005956	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00005957	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00005958	validation_surfaces:
+L00005959	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00005960	- python3 scripts/pm-plan-index.py validate
+L00005961	risk_class: live_visualization_seglog_events
+L00005962	reasoning_tier: standard
+L00005963	context_scope: newtools_standardization
+L00005964	implementation_surfaces:
+L00005965	- Plans/newtools.md
+L00005966	node_compile_hint:
+L00005967	  mode: live_visualization_seglog_events
+L00005968	  create_worknodes: false
+L00005969	source_lineage:
+L00005970	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0053
+L00005971	preserved_exact_tokens:
+L00005972	- live.session.started
+L00005973	- live.step.updated
+L00005974	- live.artifact.created
+L00005975	- live.session.completed
+L00005976	- live.session.degraded
+L00005977	- browser_session_id?
+L00005978	- session_class?
+L00005979	negative_constraints: []
+L00005980	compatibility_only_notes: []
+L00005981	stale_retired_dispositions: []
+L00005982	owner_boundary_notes: []
+L00005983	owner_hints:
+L00005984	- Plans/newtools.md
+L00005985	preserved_contractrefs:
+L00005986	- 'ContractRef: ContractName:Plans/Contracts_V0.md#EventRecord, ContractName:Plans/storage-plan.md, ContractName:Plans/Runtime_Artifacts_Panel.md'
+L00005987	```
+L00005988	
+L00005989	### N2-103 - Live Visualization Doctor Checks
+L00005990	
+L00005991	```yaml
+L00005992	plan_unit_id: N2-103
+L00005993	unit_type: requirement
+L00005994	status: accepted
+L00005995	owner_doc: Plans/newtools.md
+L00005996	canonical_text: Doctor coverage for live visualization preserves doctor.live_visualization, doctor.live_visualization.evidence, and doctor.browser.runtime checks.
+L00005997	gui_related: false
+L00005998	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00005999	split_recommended: false
+L00006000	depends_on: []
+L00006001	unblocks: []
+L00006002	acceptance_criteria:
+L00006003	- Covered source spans remain losslessly available for exact-text audit.
+L00006004	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00006005	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006006	validation_surfaces:
+L00006007	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006008	- python3 scripts/pm-plan-index.py validate
+L00006009	risk_class: live_visualization_doctor_checks
+L00006010	reasoning_tier: standard
+L00006011	context_scope: newtools_standardization
+L00006012	implementation_surfaces:
+L00006013	- Plans/newtools.md
+L00006014	node_compile_hint:
+L00006015	  mode: live_visualization_doctor_checks
+L00006016	  create_worknodes: false
+L00006017	source_lineage:
+L00006018	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0053
+L00006019	preserved_exact_tokens:
+L00006020	- doctor.live_visualization
+L00006021	- doctor.live_visualization.evidence
+L00006022	- doctor.browser.runtime
+L00006023	negative_constraints: []
+L00006024	compatibility_only_notes: []
+L00006025	stale_retired_dispositions: []
+L00006026	owner_boundary_notes: []
+L00006027	owner_hints:
+L00006028	- Plans/newtools.md
+L00006029	preserved_contractrefs:
+L00006030	- 'ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/Runtime_Artifacts_Panel.md'
+L00006031	```
+L00006032	
+L00006033	### N2-104 - Chat Renderer Live Run Contract
+L00006034	
+L00006035	```yaml
+L00006036	plan_unit_id: N2-104
+L00006037	unit_type: requirement
+L00006038	status: accepted
+L00006039	owner_doc: Plans/newtools.md
+L00006040	canonical_text: The chat renderer keeps live_run_card as the live status card type; PM browser open/focus actions resolve through browser_session_id when present rather than raw path guessing; artifact links resolve through manifest IDs only.
+L00006041	gui_related: true
+L00006042	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+L00006043	split_recommended: false
+L00006044	depends_on: []
+L00006045	unblocks: []
+L00006046	acceptance_criteria:
+L00006047	- Covered source spans remain losslessly available for exact-text audit.
+L00006048	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00006049	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006050	validation_surfaces:
+L00006051	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006052	- python3 scripts/pm-plan-index.py validate
+L00006053	risk_class: chat_renderer_live_run_contract
+L00006054	reasoning_tier: standard
+L00006055	context_scope: newtools_standardization
+L00006056	implementation_surfaces:
+L00006057	- Plans/newtools.md
+L00006058	node_compile_hint:
+L00006059	  mode: chat_renderer_live_run_contract
+L00006060	  create_worknodes: false
+L00006061	source_lineage:
+L00006062	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0053
+L00006063	preserved_exact_tokens:
+L00006064	- live_run_card
+L00006065	- browser_session_id
+L00006066	- raw path guessing
+L00006067	- manifest IDs only
+L00006068	negative_constraints:
+L00006069	- Open/focus actions for PM browser runs resolve through browser_session_id when present rather than raw path guessing.
+L00006070	- Artifact links resolve through manifest IDs only.
+L00006071	compatibility_only_notes: []
+L00006072	stale_retired_dispositions: []
+L00006073	owner_boundary_notes: []
+L00006074	owner_hints:
+L00006075	- Plans/newtools.md
+L00006076	preserved_contractrefs:
+L00006077	- 'ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/storage-plan.md'
+L00006078	```
+L00006079	
+L00006080	### N2-105 - Mobile Testing Stack Defaults Scope
+L00006081	
+L00006082	```yaml
+L00006083	plan_unit_id: N2-105
+L00006084	unit_type: requirement
+L00006085	status: accepted
+L00006086	owner_doc: Plans/newtools.md
+L00006087	canonical_text: The Mobile Testing Stacks section adds concrete command-level defaults for iOS, Android, and Expo/React Native testing and preview workflows.
+L00006088	gui_related: false
+L00006089	gui_classification_reason: The unit covers backend, policy, schema, compatibility, or owner-boundary behavior rather than GUI presentation.
+L00006090	split_recommended: false
+L00006091	depends_on: []
+L00006092	unblocks: []
+L00006093	acceptance_criteria:
+L00006094	- Covered source spans remain losslessly available for exact-text audit.
+L00006095	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00006096	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006097	validation_surfaces:
+L00006098	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006099	- python3 scripts/pm-plan-index.py validate
+L00006100	risk_class: mobile_testing_stack_defaults_scope
+L00006101	reasoning_tier: standard
+L00006102	context_scope: newtools_standardization
+L00006103	implementation_surfaces:
+L00006104	- Plans/newtools.md
+L00006105	node_compile_hint:
+L00006106	  mode: mobile_testing_stack_defaults_scope
+L00006107	  create_worknodes: false
+L00006108	source_lineage:
+L00006109	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0054
+L00006110	preserved_exact_tokens:
+L00006111	- 14.5 Mobile Testing Stacks
+L00006112	- research-mobile-testing-stacks
+L00006113	- iOS
+L00006114	- Android
+L00006115	- Expo/React Native
+L00006116	- testing and preview workflows
+L00006117	negative_constraints: []
+L00006118	compatibility_only_notes: []
+L00006119	stale_retired_dispositions: []
+L00006120	owner_boundary_notes: []
+L00006121	owner_hints:
+L00006122	- Plans/newtools.md
+L00006123	preserved_contractrefs: []
+L00006124	```
+L00006125	
+L00006126	### N2-106 - Mobile Testing Comparison Matrix
+L00006127	
+L00006128	```yaml
+L00006129	plan_unit_id: N2-106
+L00006130	unit_type: requirement
+L00006131	status: accepted
+L00006132	owner_doc: Plans/newtools.md
+L00006133	canonical_text: 'The comparison matrix preserves Swift/iOS XCTest, XCUITest, SwiftUI #Preview, @Previewable, Xcode Canvas, and iOS Simulator; Kotlin/Android Jetpack Compose testing, createComposeRule, Espresso, UIAutomator, Appium UiAutomator2, Android Emulator, and ADB; and Expo/React Native Jest/unit, Detox default, Maestro/Appium fallbacks, Expo CLI, Detox artifacts, screenshots, video, and logs.'
+L00006134	gui_related: true
+L00006135	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+L00006136	split_recommended: false
+L00006137	depends_on: []
+L00006138	unblocks: []
+L00006139	acceptance_criteria:
+L00006140	- Covered source spans remain losslessly available for exact-text audit.
+L00006141	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00006142	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006143	validation_surfaces:
+L00006144	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006145	- python3 scripts/pm-plan-index.py validate
+L00006146	risk_class: mobile_testing_comparison_matrix
+L00006147	reasoning_tier: standard
+L00006148	context_scope: newtools_standardization
+L00006149	implementation_surfaces:
+L00006150	- Plans/newtools.md
+L00006151	node_compile_hint:
+L00006152	  mode: mobile_testing_comparison_matrix
+L00006153	  create_worknodes: false
+L00006154	source_lineage:
+L00006155	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0055
+L00006156	preserved_exact_tokens:
+L00006157	- XCTest
+L00006158	- XCUITest
+L00006159	- '#Preview'
+L00006160	- '@Previewable'
+L00006161	- Xcode Canvas
+L00006162	- iOS Simulator
+L00006163	- Jetpack Compose testing
+L00006164	- createComposeRule
+L00006165	- Espresso
+L00006166	- UIAutomator
+L00006167	- Appium UiAutomator2
+L00006168	- Expo / React Native
+L00006169	- Detox
+L00006170	- Maestro
+L00006171	- Appium
+L00006172	- Detox artifacts plugin
+L00006173	negative_constraints: []
+L00006174	compatibility_only_notes: []
+L00006175	stale_retired_dispositions: []
+L00006176	owner_boundary_notes: []
+L00006177	owner_hints:
+L00006178	- Plans/newtools.md
+L00006179	preserved_contractrefs: []
+L00006180	```
+L00006181	
+L00006182	### N2-107 - Mobile Stack Default And Fallback Paths
+L00006183	
+L00006184	```yaml
+L00006185	plan_unit_id: N2-107
+L00006186	unit_type: requirement
+L00006187	status: accepted
+L00006188	owner_doc: Plans/newtools.md
+L00006189	canonical_text: Recommended mobile paths are SwiftUI previews plus XCTest/XCUITest on iOS Simulator with Appium XCUITest fallback; Compose UI tests plus Espresso and UIAutomator with Appium UiAutomator2 fallback; and Expo CLI plus Detox with Maestro/Appium fallbacks for Expo/React Native.
+L00006190	gui_related: true
+L00006191	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+L00006192	split_recommended: false
+L00006193	depends_on: []
+L00006194	unblocks: []
+L00006195	acceptance_criteria:
+L00006196	- Covered source spans remain losslessly available for exact-text audit.
+L00006197	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00006198	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006199	validation_surfaces:
+L00006200	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006201	- python3 scripts/pm-plan-index.py validate
+L00006202	risk_class: mobile_stack_default_fallback_paths
+L00006203	reasoning_tier: standard
+L00006204	context_scope: newtools_standardization
+L00006205	implementation_surfaces:
+L00006206	- Plans/newtools.md
+L00006207	node_compile_hint:
+L00006208	  mode: mobile_stack_default_fallback_paths
+L00006209	  create_worknodes: false
+L00006210	source_lineage:
+L00006211	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0056
+L00006212	preserved_exact_tokens:
+L00006213	- SwiftUI previews
+L00006214	- '#Preview'
+L00006215	- '@Previewable'
+L00006216	- XCTest/XCUITest
+L00006217	- Appium XCUITest driver
+L00006218	- Compose UI tests
+L00006219	- Espresso
+L00006220	- UIAutomator
+L00006221	- Appium UiAutomator2
+L00006222	- Expo CLI
+L00006223	- Detox
+L00006224	- Maestro
+L00006225	negative_constraints: []
+L00006226	compatibility_only_notes: []
+L00006227	stale_retired_dispositions: []
+L00006228	owner_boundary_notes: []
+L00006229	owner_hints:
+L00006230	- Plans/newtools.md
+L00006231	preserved_contractrefs: []
+L00006232	```
+L00006233	
+L00006234	### N2-108 - Swift IOS Generated Plan Snippets
+L00006235	
+L00006236	```yaml
+L00006237	plan_unit_id: N2-108
+L00006238	unit_type: requirement
+L00006239	status: accepted
+L00006240	owner_doc: Plans/newtools.md
+L00006241	canonical_text: 'Generated Swift/iOS plans preserve the manual Xcode preview loop using #Preview and @Previewable, xcodebuild test with -scheme MyApp and -destination platform=iOS Simulator,name=iPhone 16, and simulator screenshot capture to .puppet-master/evidence/ios/sim.png.'
+L00006242	gui_related: true
+L00006243	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+L00006244	split_recommended: false
+L00006245	depends_on: []
+L00006246	unblocks: []
+L00006247	acceptance_criteria:
+L00006248	- Covered source spans remain losslessly available for exact-text audit.
+L00006249	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00006250	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006251	validation_surfaces:
+L00006252	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006253	- python3 scripts/pm-plan-index.py validate
+L00006254	risk_class: swift_ios_generated_plan_snippets
+L00006255	reasoning_tier: standard
+L00006256	context_scope: newtools_standardization
+L00006257	implementation_surfaces:
+L00006258	- Plans/newtools.md
+L00006259	node_compile_hint:
+L00006260	  mode: swift_ios_generated_plan_snippets
+L00006261	  create_worknodes: false
+L00006262	source_lineage:
+L00006263	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0058
+L00006264	preserved_exact_tokens:
+L00006265	- '#Preview'
+L00006266	- '@Previewable'
+L00006267	- xcodebuild test
+L00006268	- -scheme MyApp
+L00006269	- -destination 'platform=iOS Simulator,name=iPhone 16'
+L00006270	- xcrun simctl io booted screenshot .puppet-master/evidence/ios/sim.png
+L00006271	negative_constraints: []
+L00006272	compatibility_only_notes: []
+L00006273	stale_retired_dispositions: []
+L00006274	owner_boundary_notes: []
+L00006275	owner_hints:
+L00006276	- Plans/newtools.md
+L00006277	preserved_contractrefs: []
+L00006278	```
+L00006279	
+L00006280	### N2-109 - Kotlin Android Generated Plan Snippets
+L00006281	
+L00006282	```yaml
+L00006283	plan_unit_id: N2-109
+L00006284	unit_type: requirement
+L00006285	status: accepted
+L00006286	owner_doc: Plans/newtools.md
+L00006287	canonical_text: Generated Kotlin/Android plans preserve ./gradlew testDebugUnitTest, ./gradlew connectedDebugAndroidTest, adb exec-out screencap -p, adb shell screenrecord /sdcard/test.mp4, and adb pull /sdcard/test.mp4 .puppet-master/evidence/android/test.mp4.
+L00006288	gui_related: true
+L00006289	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+L00006290	split_recommended: false
+L00006291	depends_on: []
+L00006292	unblocks: []
+L00006293	acceptance_criteria:
+L00006294	- Covered source spans remain losslessly available for exact-text audit.
+L00006295	- The covered requirement remains represented by a fine-grained PlanUnit instead of the residual source-preserving bridge.
+L00006296	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00006297	validation_surfaces:
+L00006298	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00006299	- python3 scripts/pm-plan-index.py validate
+L00006300	risk_class: kotlin_android_generated_plan_snippets
+L00006301	reasoning_tier: standard
+L00006302	context_scope: newtools_standardization
+L00006303	implementation_surfaces:
+L00006304	- Plans/newtools.md
+L00006305	node_compile_hint:
+L00006306	  mode: kotlin_android_generated_plan_snippets
+L00006307	  create_worknodes: false
+L00006308	source_lineage:
+L00006309	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:newtools-S0059
+L00006310	preserved_exact_tokens:
+L00006311	- ./gradlew testDebugUnitTest
+L00006312	- ./gradlew connectedDebugAndroidTest
+L00006313	- adb exec-out screencap -p
+L00006314	- .puppet-master/evidence/android/screen.png
+L00006315	- adb shell screenrecord /sdcard/test.mp4
+L00006316	- adb pull /sdcard/test.mp4 .puppet-master/evidence/android/test.mp4
+L00006317	negative_constraints: []
+L00006318	compatibility_only_notes: []
+L00006319	stale_retired_dispositions: []
+L00006320	owner_boundary_notes: []
+L00006321	owner_hints:
+L00006322	- Plans/newtools.md
+L00006323	preserved_contractrefs: []
+L00006324	```
+L00006325	
+
+<<< CONTEXT_AFTER canonical_document_lines=6326-6337 >>>
+L00006326	### N2-110 - Expo React Native Generated Plan Commands
+L00006327	
+L00006328	```yaml
+L00006329	plan_unit_id: N2-110
+L00006330	unit_type: requirement
+L00006331	status: accepted
+L00006332	owner_doc: Plans/newtools.md
+L00006333	canonical_text: Generated Expo/React Native plans preserve npx expo start with i/a simulator shortcuts, npx expo run:ios, npx expo run:android, detox test -c ios.sim.debug, and detox test -c android.emu.debug.
+L00006334	gui_related: true
+L00006335	gui_classification_reason: The unit covers GUI/user-visible testing, settings, evidence, or surface behavior.
+L00006336	split_recommended: false
+L00006337	depends_on: []

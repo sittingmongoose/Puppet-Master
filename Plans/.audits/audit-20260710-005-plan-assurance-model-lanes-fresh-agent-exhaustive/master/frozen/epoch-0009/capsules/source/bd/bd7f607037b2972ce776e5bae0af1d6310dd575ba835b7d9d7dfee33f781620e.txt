@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=21105-21116 >>>
+L00021105	- "open questions count"
+L00021106	- "has_gui"
+L00021107	- "preloaded feature/enhancement path"
+L00021108	negative_constraints: []
+L00021109	compatibility_only_notes: []
+L00021110	stale_retired_dispositions: []
+L00021111	owner_boundary_notes:
+L00021112	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021113	owner_hints:
+L00021114	- "Plans/FinalGUISpec.md"
+L00021115	```
+L00021116	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=21117-21501 >>>
+L00021117	### F3-326 - Planning Recommendation Non-Goals
+L00021118	
+L00021119	```yaml
+L00021120	plan_unit_id: F3-326
+L00021121	unit_type: requirement
+L00021122	status: accepted
+L00021123	owner_doc: Plans/FinalGUISpec.md
+L00021124	canonical_text: >-
+L00021125	  Planning recommendation UI must not copy external GUI layout from OpenCode, Cursor, VSCode,
+L00021126	  or other tools; must not auto-create repo files for planning artifacts without explicit user
+L00021127	  action; and must not silently redirect the user from chat into the wizard.
+L00021128	gui_related: true
+L00021129	gui_classification_reason: >-
+L00021130	  This unit defines visible FinalGUISpec GUI behavior.
+L00021131	split_recommended: false
+L00021132	depends_on: []
+L00021133	unblocks: []
+L00021134	acceptance_criteria:
+L00021135	- "The covered source span remains losslessly available for exact-text audit."
+L00021136	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00021137	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00021138	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00021139	validation_surfaces:
+L00021140	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00021141	- "python3 scripts/pm-plan-index.py validate"
+L00021142	risk_class: finalgui_drift
+L00021143	reasoning_tier: standard
+L00021144	context_scope: finalgui_standardization
+L00021145	implementation_surfaces:
+L00021146	- "Plans/FinalGUISpec.md"
+L00021147	node_compile_hint:
+L00021148	  mode: planning_recommendation_non_goals
+L00021149	  create_worknodes: false
+L00021150	source_lineage:
+L00021151	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0195"
+L00021152	preserved_exact_tokens:
+L00021153	- "Do not copy external GUI layout from OpenCode, Cursor, VSCode, or other tools."
+L00021154	- "Do not auto-create repo files for planning artifacts without explicit user action."
+L00021155	- "Do not silently redirect the user from chat into the wizard."
+L00021156	negative_constraints:
+L00021157	- "Do not copy external GUI layout from OpenCode, Cursor, VSCode, or other tools."
+L00021158	- "Do not auto-create repo files for planning artifacts without explicit user action."
+L00021159	- "Do not silently redirect the user from chat into the wizard."
+L00021160	compatibility_only_notes: []
+L00021161	stale_retired_dispositions: []
+L00021162	owner_boundary_notes:
+L00021163	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021164	owner_hints:
+L00021165	- "Plans/FinalGUISpec.md"
+L00021166	```
+L00021167	
+L00021168	### F3-327 - Wizard Blocked Dashboard Card
+L00021169	
+L00021170	```yaml
+L00021171	plan_unit_id: F3-327
+L00021172	unit_type: requirement
+L00021173	status: accepted
+L00021174	owner_doc: Plans/FinalGUISpec.md
+L00021175	canonical_text: >-
+L00021176	  The Dashboard distinguishes wizard_attention_required, wizard_blocked, HITL blocked actions,
+L00021177	  and remote-side-effect blocked actions. The wizard_blocked card is first-class, more severe
+L00021178	  than wizard_attention_required, carries card_type, wizard_id, wizard_step,
+L00021179	  blocked_reason_code, report_ref, resume_url, and optional thread_id, exposes Resume Wizard
+L00021180	  and View report actions, auto-dismisses only when the wizard leaves blocked, and
+L00021181	  participates in the priority order wizard_blocked > HITL approval >
+L00021182	  wizard_attention_required > interrupted > rate limit > warnings.
+L00021183	gui_related: true
+L00021184	gui_classification_reason: >-
+L00021185	  This unit defines visible FinalGUISpec GUI behavior.
+L00021186	split_recommended: true
+L00021187	depends_on: []
+L00021188	unblocks: []
+L00021189	acceptance_criteria:
+L00021190	- "The covered source span remains losslessly available for exact-text audit."
+L00021191	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00021192	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00021193	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00021194	validation_surfaces:
+L00021195	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00021196	- "python3 scripts/pm-plan-index.py validate"
+L00021197	risk_class: finalgui_drift
+L00021198	reasoning_tier: standard
+L00021199	context_scope: finalgui_standardization
+L00021200	implementation_surfaces:
+L00021201	- "Plans/FinalGUISpec.md"
+L00021202	node_compile_hint:
+L00021203	  mode: wizard_blocked_dashboard_card
+L00021204	  create_worknodes: false
+L00021205	source_lineage:
+L00021206	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0198"
+L00021207	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0210"
+L00021208	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0217"
+L00021209	preserved_exact_tokens:
+L00021210	- "wizard_attention_required"
+L00021211	- "wizard_blocked"
+L00021212	- "HITL blocked actions"
+L00021213	- "remote-side-effect blocked actions"
+L00021214	- "card_type = wizard_blocked"
+L00021215	- "wizard_id"
+L00021216	- "wizard_step"
+L00021217	- "blocked_reason_code"
+L00021218	- "report_ref"
+L00021219	- "resume_url"
+L00021220	- "thread_id?"
+L00021221	- "Resume Wizard"
+L00021222	- "View report"
+L00021223	- "wizard_blocked > HITL approval > wizard_attention_required > interrupted > rate limit > warnings"
+L00021224	negative_constraints: []
+L00021225	compatibility_only_notes: []
+L00021226	stale_retired_dispositions: []
+L00021227	owner_boundary_notes:
+L00021228	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021229	owner_hints:
+L00021230	- "Plans/FinalGUISpec.md"
+L00021231	```
+L00021232	
+L00021233	### F3-328 - Thread Worktree Icon Presence And Placement
+L00021234	
+L00021235	```yaml
+L00021236	plan_unit_id: F3-328
+L00021237	unit_type: requirement
+L00021238	status: accepted
+L00021239	owner_doc: Plans/FinalGUISpec.md
+L00021240	canonical_text: >-
+L00021241	  Each thread row displays a worktree icon only when a thread has an active worktree binding;
+L00021242	  the icon sits in the left gutter below the status badge, uses a theme-consistent branch/tree
+L00021243	  glyph, matches status icon size, omits placeholders for unbound threads, and uses theme
+L00021244	  token colors for clean, dirty, and conflict states.
+L00021245	gui_related: true
+L00021246	gui_classification_reason: >-
+L00021247	  This unit defines visible FinalGUISpec GUI behavior.
+L00021248	split_recommended: false
+L00021249	depends_on: []
+L00021250	unblocks: []
+L00021251	acceptance_criteria:
+L00021252	- "The covered source span remains losslessly available for exact-text audit."
+L00021253	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00021254	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00021255	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00021256	validation_surfaces:
+L00021257	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00021258	- "python3 scripts/pm-plan-index.py validate"
+L00021259	risk_class: finalgui_drift
+L00021260	reasoning_tier: standard
+L00021261	context_scope: finalgui_standardization
+L00021262	implementation_surfaces:
+L00021263	- "Plans/FinalGUISpec.md"
+L00021264	node_compile_hint:
+L00021265	  mode: thread_worktree_icon_presence_and_placement
+L00021266	  create_worknodes: false
+L00021267	source_lineage:
+L00021268	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0200"
+L00021269	preserved_exact_tokens:
+L00021270	- "worktree icon"
+L00021271	- "active worktree binding"
+L00021272	- "Left gutter"
+L00021273	- "branch/tree glyph"
+L00021274	- "Clean: `icon-secondary`"
+L00021275	- "Dirty: `accent-warning`"
+L00021276	- "Conflict: `accent-error`"
+L00021277	negative_constraints: []
+L00021278	compatibility_only_notes: []
+L00021279	stale_retired_dispositions: []
+L00021280	owner_boundary_notes:
+L00021281	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021282	owner_hints:
+L00021283	- "Plans/FinalGUISpec.md"
+L00021284	```
+L00021285	
+L00021286	### F3-329 - Thread Worktree Tooltip Stale And Accessibility Behavior
+L00021287	
+L00021288	```yaml
+L00021289	plan_unit_id: F3-329
+L00021290	unit_type: requirement
+L00021291	status: accepted
+L00021292	owner_doc: Plans/FinalGUISpec.md
+L00021293	canonical_text: >-
+L00021294	  Thread-selector worktree icons show tooltip lines for branch name, status pill text, and
+L00021295	  worktree path; stale projections desaturate the icon and append (status may be outdated);
+L00021296	  the accessible label is Has worktree: {branch_name}, {status}; aria-live polite
+L00021297	  announcements cover create, unbind, remove, dirty, conflict, and creation-failed
+L00021298	  transitions; and dirty completed or failed worktrees remain visible without auto-cleanup.
+L00021299	gui_related: true
+L00021300	gui_classification_reason: >-
+L00021301	  This unit defines visible FinalGUISpec GUI behavior.
+L00021302	split_recommended: false
+L00021303	depends_on: []
+L00021304	unblocks: []
+L00021305	acceptance_criteria:
+L00021306	- "The covered source span remains losslessly available for exact-text audit."
+L00021307	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00021308	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00021309	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00021310	validation_surfaces:
+L00021311	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00021312	- "python3 scripts/pm-plan-index.py validate"
+L00021313	risk_class: finalgui_drift
+L00021314	reasoning_tier: standard
+L00021315	context_scope: finalgui_standardization
+L00021316	implementation_surfaces:
+L00021317	- "Plans/FinalGUISpec.md"
+L00021318	node_compile_hint:
+L00021319	  mode: thread_worktree_tooltip_stale_and_accessibility_behavior
+L00021320	  create_worknodes: false
+L00021321	source_lineage:
+L00021322	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0200"
+L00021323	preserved_exact_tokens:
+L00021324	- "branch name"
+L00021325	- "clean"
+L00021326	- "dirty"
+L00021327	- "conflict"
+L00021328	- ".puppet-master/worktrees/wt-abc123"
+L00021329	- "(status may be outdated)"
+L00021330	- "aria-label=\"Has worktree: {branch_name}, {status}\""
+L00021331	- "aria-live=\"polite\""
+L00021332	- "dirty · completed"
+L00021333	- "dirty · failed"
+L00021334	- "no auto-cleanup"
+L00021335	negative_constraints: []
+L00021336	compatibility_only_notes: []
+L00021337	stale_retired_dispositions:
+L00021338	- "Stale projection icons show last-known state with desaturation and tooltip freshness copy."
+L00021339	owner_boundary_notes:
+L00021340	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021341	owner_hints:
+L00021342	- "Plans/FinalGUISpec.md"
+L00021343	```
+L00021344	
+L00021345	### F3-330 - Persistent Thread Selector Badge And Branch Navigation
+L00021346	
+L00021347	```yaml
+L00021348	plan_unit_id: F3-330
+L00021349	unit_type: requirement
+L00021350	status: accepted
+L00021351	owner_doc: Plans/FinalGUISpec.md
+L00021352	canonical_text: >-
+L00021353	  Thread and session navigation uses a persistent sidebar or equivalent persistent region
+L00021354	  rather than only a floating overlay; the active-thread list exposes running, queued,
+L00021355	  blocked, and attention-required badges; branch lineage is visible through stable branch
+L00021356	  labels and source-origin metadata; badge aggregation preserves highest severity while
+L00021357	  showing blocked counts; and the project/session browser complements rather than replaces
+L00021358	  active-thread navigation.
+L00021359	gui_related: true
+L00021360	gui_classification_reason: >-
+L00021361	  This unit defines visible FinalGUISpec GUI behavior.
+L00021362	split_recommended: false
+L00021363	depends_on: []
+L00021364	unblocks: []
+L00021365	acceptance_criteria:
+L00021366	- "The covered source span remains losslessly available for exact-text audit."
+L00021367	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00021368	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00021369	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00021370	validation_surfaces:
+L00021371	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00021372	- "python3 scripts/pm-plan-index.py validate"
+L00021373	risk_class: finalgui_drift
+L00021374	reasoning_tier: standard
+L00021375	context_scope: finalgui_standardization
+L00021376	implementation_surfaces:
+L00021377	- "Plans/FinalGUISpec.md"
+L00021378	node_compile_hint:
+L00021379	  mode: persistent_thread_selector_badge_and_branch_navigation
+L00021380	  create_worknodes: false
+L00021381	source_lineage:
+L00021382	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0200"
+L00021383	preserved_exact_tokens:
+L00021384	- "persistent sidebar"
+L00021385	- "running, queued, blocked, and attention-required badges"
+L00021386	- "branch lineage"
+L00021387	- "stable branch labels"
+L00021388	- "highest-severity state"
+L00021389	- "blocked counts"
+L00021390	- "The floating thread-list overlay pattern is not canonical after this section."
+L00021391	negative_constraints:
+L00021392	- "The floating thread-list overlay pattern is not canonical after this section."
+L00021393	compatibility_only_notes: []
+L00021394	stale_retired_dispositions:
+L00021395	- "Floating thread-list overlay navigation is not canonical after this section."
+L00021396	owner_boundary_notes:
+L00021397	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021398	owner_hints:
+L00021399	- "Plans/FinalGUISpec.md"
+L00021400	```
+L00021401	
+L00021402	### F3-331 - Scheduler Remediation Runtime Data Visibility
+L00021403	
+L00021404	```yaml
+L00021405	plan_unit_id: F3-331
+L00021406	unit_type: requirement
+L00021407	status: accepted
+L00021408	owner_doc: Plans/FinalGUISpec.md
+L00021409	canonical_text: >-
+L00021410	  Run Graph and Orchestrator surfaces expose wake reason, ready/blocked/backoff/remediation
+L00021411	  counts, selected-node score breakdown, ready-but-unselected reasons, safe-point ID, and
+L00021412	  remediation lineage identifiers.
+L00021413	gui_related: true
+L00021414	gui_classification_reason: >-
+L00021415	  This unit defines visible scheduler and remediation data in run surfaces; the source span
+L00021416	  inference is corrected from false to GUI-related true.
+L00021417	split_recommended: false
+L00021418	depends_on: []
+L00021419	unblocks: []
+L00021420	acceptance_criteria:
+L00021421	- "The covered source span remains losslessly available for exact-text audit."
+L00021422	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00021423	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00021424	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00021425	validation_surfaces:
+L00021426	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00021427	- "python3 scripts/pm-plan-index.py validate"
+L00021428	risk_class: finalgui_drift
+L00021429	reasoning_tier: standard
+L00021430	context_scope: finalgui_standardization
+L00021431	implementation_surfaces:
+L00021432	- "Plans/FinalGUISpec.md"
+L00021433	node_compile_hint:
+L00021434	  mode: scheduler_remediation_runtime_data_visibility
+L00021435	  create_worknodes: false
+L00021436	source_lineage:
+L00021437	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0201"
+L00021438	preserved_exact_tokens:
+L00021439	- "wake reason"
+L00021440	- "ready/blocked/backoff/remediation counts"
+L00021441	- "selected-node score breakdown"
+L00021442	- "ready-but-unselected reasons"
+L00021443	- "safe-point ID"
+L00021444	- "remediation lineage identifiers"
+L00021445	negative_constraints: []
+L00021446	compatibility_only_notes: []
+L00021447	stale_retired_dispositions: []
+L00021448	owner_boundary_notes:
+L00021449	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021450	owner_hints:
+L00021451	- "Plans/FinalGUISpec.md"
+L00021452	```
+L00021453	
+L00021454	### F3-332 - Blocked Outcome Copy
+L00021455	
+L00021456	```yaml
+L00021457	plan_unit_id: F3-332
+L00021458	unit_type: requirement
+L00021459	status: accepted
+L00021460	owner_doc: Plans/FinalGUISpec.md
+L00021461	canonical_text: >-
+L00021462	  When a remote side effect or guard prevents execution, the GUI presents the outcome as
+L00021463	  blocked, not failed, and preserves completed local work.
+L00021464	gui_related: true
+L00021465	gui_classification_reason: >-
+L00021466	  This unit defines visible FinalGUISpec GUI behavior.
+L00021467	split_recommended: false
+L00021468	depends_on: []
+L00021469	unblocks: []
+L00021470	acceptance_criteria:
+L00021471	- "The covered source span remains losslessly available for exact-text audit."
+L00021472	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F3-001 coverage."
+L00021473	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00021474	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00021475	validation_surfaces:
+L00021476	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00021477	- "python3 scripts/pm-plan-index.py validate"
+L00021478	risk_class: finalgui_drift
+L00021479	reasoning_tier: standard
+L00021480	context_scope: finalgui_standardization
+L00021481	implementation_surfaces:
+L00021482	- "Plans/FinalGUISpec.md"
+L00021483	node_compile_hint:
+L00021484	  mode: blocked_outcome_copy
+L00021485	  create_worknodes: false
+L00021486	source_lineage:
+L00021487	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FinalGUISpec-S0202"
+L00021488	preserved_exact_tokens:
+L00021489	- "blocked"
+L00021490	- "failed"
+L00021491	- "completed local work"
+L00021492	negative_constraints:
+L00021493	- "Remote side-effect or guard blocks must not be mislabeled as failed outcomes."
+L00021494	compatibility_only_notes: []
+L00021495	stale_retired_dispositions: []
+L00021496	owner_boundary_notes:
+L00021497	- "FinalGUISpec owns visible GUI consumer behavior; runtime event/state ownership remains with the referenced owner docs."
+L00021498	owner_hints:
+L00021499	- "Plans/FinalGUISpec.md"
+L00021500	```
+L00021501	
+
+<<< CONTEXT_AFTER canonical_document_lines=21502-21513 >>>
+L00021502	### F3-333 - Event-Driven Blocked Scheduler UI Correctness
+L00021503	
+L00021504	```yaml
+L00021505	plan_unit_id: F3-333
+L00021506	unit_type: requirement
+L00021507	status: accepted
+L00021508	owner_doc: Plans/FinalGUISpec.md
+L00021509	canonical_text: >-
+L00021510	  Scheduler, blocked, remediation, and all-nodes-blocked UI updates follow runtime events or
+L00021511	  projections through the event-driven rule and must not rely on timer polling for
+L00021512	  correctness; when all runnable nodes are blocked, runtime blocked/recovery events drive the
+L00021513	  corresponding persistent GUI banner or card immediately.

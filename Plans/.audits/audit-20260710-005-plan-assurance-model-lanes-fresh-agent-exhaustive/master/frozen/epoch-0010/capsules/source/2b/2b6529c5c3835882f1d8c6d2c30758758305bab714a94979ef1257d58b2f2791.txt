@@ -1,0 +1,394 @@
+<<< CONTEXT_BEFORE canonical_document_lines=25500-25511 >>>
+L00025500	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00025501	        },
+L00025502	        {
+L00025503	          "test_id": "wiring.catalog.testing_session_background.events",
+L00025504	          "evidence_kind": "event_test",
+L00025505	          "requirement": "Assert cmd.testing.session.background emits expected event type testing.session.backgrounded with command_id, origin, correlation_id, and handler target."
+L00025506	        }
+L00025507	      ],
+L00025508	      "event_test_requirements": [
+L00025509	        "Assert cmd.testing.session.background emits expected event type testing.session.backgrounded with command_id, origin, correlation_id, and handler target."
+L00025510	      ]
+L00025511	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=25512-25876 >>>
+L00025512	    "catalog.testing_session_open": {
+L00025513	      "ui_element_id": "catalog.testing_session_open",
+L00025514	      "ui_location": "Settings > Testing Capability and visible test sessions",
+L00025515	      "ui_command_id": "cmd.testing.session.open",
+L00025516	      "handler_location": "handlers::testing::session_open",
+L00025517	      "expected_event_types": [
+L00025518	        "testing.session.opened"
+L00025519	      ],
+L00025520	      "acceptance_checks": [
+L00025521	        "Open action routes to the visible testing session with stable session id, active target, projection freshness, and receipt refs",
+L00025522	        "Disabled reasons cover no active session, unavailable surface, missing evidence stream, redaction block, and stale session projection",
+L00025523	        "Regression evidence proves Open never fabricates a running test session from fixture/demo state",
+L00025524	        "cmd.testing.session.open must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00025525	        "cmd.testing.session.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00025526	      ],
+L00025527	      "evidence_required": "Production wiring contract for cmd.testing.session.open; Production certification requires typed Automated Testing owner evidence for testing.session.opened, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00025528	      "state_selector": "state.commands.testing_session_open.availability",
+L00025529	      "disabled_reason_projection": "state.commands.testing_session_open.disabled_reason",
+L00025530	      "effect_contract": {
+L00025531	        "effect_kind": "event",
+L00025532	        "description": "cmd.testing.session.open must emit the declared event types and record dispatch correlation evidence.",
+L00025533	        "receipt_or_event_refs": [
+L00025534	          "testing.session.opened"
+L00025535	        ]
+L00025536	      },
+L00025537	      "accessibility_contract": {
+L00025538	        "role_or_semantics": "catalog.testing_session_open exposes a stable role/name/description matching cmd.testing.session.open.",
+L00025539	        "keyboard_access": "catalog.testing_session_open is reachable and activatable by keyboard where the control is visible.",
+L00025540	        "focus_management": "catalog.testing_session_open preserves visible focus and returns focus deterministically after dispatch or error.",
+L00025541	        "disabled_announcement": "catalog.testing_session_open surfaces state.commands.testing_session_open.disabled_reason to assistive technology when unavailable."
+L00025542	      },
+L00025543	      "test_evidence": [
+L00025544	        {
+L00025545	          "test_id": "wiring.catalog.testing_session_open.dispatcher",
+L00025546	          "evidence_kind": "dispatcher_fixture",
+L00025547	          "requirement": "Dispatching cmd.testing.session.open reaches handlers::testing::session_open with typed args/result contract."
+L00025548	        },
+L00025549	        {
+L00025550	          "test_id": "wiring.catalog.testing_session_open.state_projection",
+L00025551	          "evidence_kind": "state_projection",
+L00025552	          "requirement": "Availability reads state.commands.testing_session_open.availability and disabled copy reads state.commands.testing_session_open.disabled_reason."
+L00025553	        },
+L00025554	        {
+L00025555	          "test_id": "wiring.catalog.testing_session_open.effect",
+L00025556	          "evidence_kind": "receipt_or_event_assertion",
+L00025557	          "requirement": "cmd.testing.session.open must emit the declared event types and record dispatch correlation evidence."
+L00025558	        },
+L00025559	        {
+L00025560	          "test_id": "wiring.catalog.testing_session_open.accessibility",
+L00025561	          "evidence_kind": "accessibility_regression",
+L00025562	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00025563	        },
+L00025564	        {
+L00025565	          "test_id": "wiring.catalog.testing_session_open.events",
+L00025566	          "evidence_kind": "event_test",
+L00025567	          "requirement": "Assert cmd.testing.session.open emits expected event type testing.session.opened with command_id, origin, correlation_id, and handler target."
+L00025568	        }
+L00025569	      ],
+L00025570	      "event_test_requirements": [
+L00025571	        "Assert cmd.testing.session.open emits expected event type testing.session.opened with command_id, origin, correlation_id, and handler target."
+L00025572	      ]
+L00025573	    },
+L00025574	    "catalog.testing_session_redaction_inspect": {
+L00025575	      "ui_element_id": "catalog.testing_session_redaction_inspect",
+L00025576	      "ui_location": "Settings > Testing Capability and visible test sessions",
+L00025577	      "ui_command_id": "cmd.testing.session.redaction.inspect",
+L00025578	      "handler_location": "handlers::testing::session_redaction_inspect",
+L00025579	      "expected_event_types": [
+L00025580	        "testing.session.redaction_inspected"
+L00025581	      ],
+L00025582	      "acceptance_checks": [
+L00025583	        "Redaction inspection opens only redaction manifest/projection evidence for the selected testing session",
+L00025584	        "Disabled reasons cover missing manifest, policy denial, unavailable evidence, and stale projection",
+L00025585	        "Regression evidence proves raw secret/local account data is not exposed by redaction inspection",
+L00025586	        "cmd.testing.session.redaction.inspect must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00025587	        "cmd.testing.session.redaction.inspect must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00025588	      ],
+L00025589	      "evidence_required": "Production wiring contract for cmd.testing.session.redaction.inspect; Production certification requires typed Automated Testing owner evidence for testing.session.redaction_inspected, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00025590	      "state_selector": "state.commands.testing_session_redaction_inspect.availability",
+L00025591	      "disabled_reason_projection": "state.commands.testing_session_redaction_inspect.disabled_reason",
+L00025592	      "effect_contract": {
+L00025593	        "effect_kind": "event",
+L00025594	        "description": "cmd.testing.session.redaction.inspect must emit the declared event types and record dispatch correlation evidence.",
+L00025595	        "receipt_or_event_refs": [
+L00025596	          "testing.session.redaction_inspected"
+L00025597	        ]
+L00025598	      },
+L00025599	      "accessibility_contract": {
+L00025600	        "role_or_semantics": "catalog.testing_session_redaction_inspect exposes a stable role/name/description matching cmd.testing.session.redaction.inspect.",
+L00025601	        "keyboard_access": "catalog.testing_session_redaction_inspect is reachable and activatable by keyboard where the control is visible.",
+L00025602	        "focus_management": "catalog.testing_session_redaction_inspect preserves visible focus and returns focus deterministically after dispatch or error.",
+L00025603	        "disabled_announcement": "catalog.testing_session_redaction_inspect surfaces state.commands.testing_session_redaction_inspect.disabled_reason to assistive technology when unavailable."
+L00025604	      },
+L00025605	      "test_evidence": [
+L00025606	        {
+L00025607	          "test_id": "wiring.catalog.testing_session_redaction_inspect.dispatcher",
+L00025608	          "evidence_kind": "dispatcher_fixture",
+L00025609	          "requirement": "Dispatching cmd.testing.session.redaction.inspect reaches handlers::testing::session_redaction_inspect with typed args/result contract."
+L00025610	        },
+L00025611	        {
+L00025612	          "test_id": "wiring.catalog.testing_session_redaction_inspect.state_projection",
+L00025613	          "evidence_kind": "state_projection",
+L00025614	          "requirement": "Availability reads state.commands.testing_session_redaction_inspect.availability and disabled copy reads state.commands.testing_session_redaction_inspect.disabled_reason."
+L00025615	        },
+L00025616	        {
+L00025617	          "test_id": "wiring.catalog.testing_session_redaction_inspect.effect",
+L00025618	          "evidence_kind": "receipt_or_event_assertion",
+L00025619	          "requirement": "cmd.testing.session.redaction.inspect must emit the declared event types and record dispatch correlation evidence."
+L00025620	        },
+L00025621	        {
+L00025622	          "test_id": "wiring.catalog.testing_session_redaction_inspect.accessibility",
+L00025623	          "evidence_kind": "accessibility_regression",
+L00025624	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00025625	        },
+L00025626	        {
+L00025627	          "test_id": "wiring.catalog.testing_session_redaction_inspect.events",
+L00025628	          "evidence_kind": "event_test",
+L00025629	          "requirement": "Assert cmd.testing.session.redaction.inspect emits expected event type testing.session.redaction_inspected with command_id, origin, correlation_id, and handler target."
+L00025630	        }
+L00025631	      ],
+L00025632	      "event_test_requirements": [
+L00025633	        "Assert cmd.testing.session.redaction.inspect emits expected event type testing.session.redaction_inspected with command_id, origin, correlation_id, and handler target."
+L00025634	      ]
+L00025635	    },
+L00025636	    "catalog.testing_session_watch": {
+L00025637	      "ui_element_id": "catalog.testing_session_watch",
+L00025638	      "ui_location": "Settings > Testing Capability and visible test sessions",
+L00025639	      "ui_command_id": "cmd.testing.session.watch",
+L00025640	      "handler_location": "handlers::testing::session_watch",
+L00025641	      "expected_event_types": [
+L00025642	        "testing.session.watch_started"
+L00025643	      ],
+L00025644	      "acceptance_checks": [
+L00025645	        "Watch action subscribes to an existing visible testing session stream with stable session id and evidence refs",
+L00025646	        "Disabled reasons cover no active session, unavailable stream, policy Off, missing approval, redaction block, and stale session projection",
+L00025647	        "Regression evidence proves Watch is a view/subscription action and does not start or complete tests by itself",
+L00025648	        "cmd.testing.session.watch must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00025649	        "cmd.testing.session.watch must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00025650	      ],
+L00025651	      "evidence_required": "Production wiring contract for cmd.testing.session.watch; Production certification requires typed Automated Testing owner evidence for testing.session.watch_started, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00025652	      "state_selector": "state.commands.testing_session_watch.availability",
+L00025653	      "disabled_reason_projection": "state.commands.testing_session_watch.disabled_reason",
+L00025654	      "effect_contract": {
+L00025655	        "effect_kind": "event",
+L00025656	        "description": "cmd.testing.session.watch must emit the declared event types and record dispatch correlation evidence.",
+L00025657	        "receipt_or_event_refs": [
+L00025658	          "testing.session.watch_started"
+L00025659	        ]
+L00025660	      },
+L00025661	      "accessibility_contract": {
+L00025662	        "role_or_semantics": "catalog.testing_session_watch exposes a stable role/name/description matching cmd.testing.session.watch.",
+L00025663	        "keyboard_access": "catalog.testing_session_watch is reachable and activatable by keyboard where the control is visible.",
+L00025664	        "focus_management": "catalog.testing_session_watch preserves visible focus and returns focus deterministically after dispatch or error.",
+L00025665	        "disabled_announcement": "catalog.testing_session_watch surfaces state.commands.testing_session_watch.disabled_reason to assistive technology when unavailable."
+L00025666	      },
+L00025667	      "test_evidence": [
+L00025668	        {
+L00025669	          "test_id": "wiring.catalog.testing_session_watch.dispatcher",
+L00025670	          "evidence_kind": "dispatcher_fixture",
+L00025671	          "requirement": "Dispatching cmd.testing.session.watch reaches handlers::testing::session_watch with typed args/result contract."
+L00025672	        },
+L00025673	        {
+L00025674	          "test_id": "wiring.catalog.testing_session_watch.state_projection",
+L00025675	          "evidence_kind": "state_projection",
+L00025676	          "requirement": "Availability reads state.commands.testing_session_watch.availability and disabled copy reads state.commands.testing_session_watch.disabled_reason."
+L00025677	        },
+L00025678	        {
+L00025679	          "test_id": "wiring.catalog.testing_session_watch.effect",
+L00025680	          "evidence_kind": "receipt_or_event_assertion",
+L00025681	          "requirement": "cmd.testing.session.watch must emit the declared event types and record dispatch correlation evidence."
+L00025682	        },
+L00025683	        {
+L00025684	          "test_id": "wiring.catalog.testing_session_watch.accessibility",
+L00025685	          "evidence_kind": "accessibility_regression",
+L00025686	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00025687	        },
+L00025688	        {
+L00025689	          "test_id": "wiring.catalog.testing_session_watch.events",
+L00025690	          "evidence_kind": "event_test",
+L00025691	          "requirement": "Assert cmd.testing.session.watch emits expected event type testing.session.watch_started with command_id, origin, correlation_id, and handler target."
+L00025692	        }
+L00025693	      ],
+L00025694	      "event_test_requirements": [
+L00025695	        "Assert cmd.testing.session.watch emits expected event type testing.session.watch_started with command_id, origin, correlation_id, and handler target."
+L00025696	      ]
+L00025697	    },
+L00025698	    "catalog.testing_visibility_policy_set": {
+L00025699	      "ui_element_id": "catalog.testing_visibility_policy_set",
+L00025700	      "ui_location": "Settings > Testing Capability and visible test sessions",
+L00025701	      "ui_command_id": "cmd.testing.visibility_policy.set",
+L00025702	      "handler_location": "handlers::testing::visibility_policy_set",
+L00025703	      "expected_event_types": [
+L00025704	        "testing.visibility_policy.updated"
+L00025705	      ],
+L00025706	      "acceptance_checks": [
+L00025707	        "show_when_possible visibility policy persists at global/project scope and appears in the effective testing policy snapshot",
+L00025708	        "Disabled reasons cover unavailable visual stream, redaction block, policy Off, missing approval, and stale project context",
+L00025709	        "Regression evidence proves show_when_possible does not hide unavailable evidence or critical blockers",
+L00025710	        "cmd.testing.visibility_policy.set must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00025711	        "cmd.testing.visibility_policy.set must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00025712	      ],
+L00025713	      "evidence_required": "Production wiring contract for cmd.testing.visibility_policy.set; Production certification requires typed Automated Testing owner evidence for testing.visibility_policy.updated, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00025714	      "state_selector": "state.commands.testing_visibility_policy_set.availability",
+L00025715	      "disabled_reason_projection": "state.commands.testing_visibility_policy_set.disabled_reason",
+L00025716	      "effect_contract": {
+L00025717	        "effect_kind": "event",
+L00025718	        "description": "cmd.testing.visibility_policy.set must emit the declared event types and record dispatch correlation evidence.",
+L00025719	        "receipt_or_event_refs": [
+L00025720	          "testing.visibility_policy.updated"
+L00025721	        ]
+L00025722	      },
+L00025723	      "accessibility_contract": {
+L00025724	        "role_or_semantics": "catalog.testing_visibility_policy_set exposes a stable role/name/description matching cmd.testing.visibility_policy.set.",
+L00025725	        "keyboard_access": "catalog.testing_visibility_policy_set is reachable and activatable by keyboard where the control is visible.",
+L00025726	        "focus_management": "catalog.testing_visibility_policy_set preserves visible focus and returns focus deterministically after dispatch or error.",
+L00025727	        "disabled_announcement": "catalog.testing_visibility_policy_set surfaces state.commands.testing_visibility_policy_set.disabled_reason to assistive technology when unavailable."
+L00025728	      },
+L00025729	      "test_evidence": [
+L00025730	        {
+L00025731	          "test_id": "wiring.catalog.testing_visibility_policy_set.dispatcher",
+L00025732	          "evidence_kind": "dispatcher_fixture",
+L00025733	          "requirement": "Dispatching cmd.testing.visibility_policy.set reaches handlers::testing::visibility_policy_set with typed args/result contract."
+L00025734	        },
+L00025735	        {
+L00025736	          "test_id": "wiring.catalog.testing_visibility_policy_set.state_projection",
+L00025737	          "evidence_kind": "state_projection",
+L00025738	          "requirement": "Availability reads state.commands.testing_visibility_policy_set.availability and disabled copy reads state.commands.testing_visibility_policy_set.disabled_reason."
+L00025739	        },
+L00025740	        {
+L00025741	          "test_id": "wiring.catalog.testing_visibility_policy_set.effect",
+L00025742	          "evidence_kind": "receipt_or_event_assertion",
+L00025743	          "requirement": "cmd.testing.visibility_policy.set must emit the declared event types and record dispatch correlation evidence."
+L00025744	        },
+L00025745	        {
+L00025746	          "test_id": "wiring.catalog.testing_visibility_policy_set.accessibility",
+L00025747	          "evidence_kind": "accessibility_regression",
+L00025748	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00025749	        },
+L00025750	        {
+L00025751	          "test_id": "wiring.catalog.testing_visibility_policy_set.events",
+L00025752	          "evidence_kind": "event_test",
+L00025753	          "requirement": "Assert cmd.testing.visibility_policy.set emits expected event type testing.visibility_policy.updated with command_id, origin, correlation_id, and handler target."
+L00025754	        }
+L00025755	      ],
+L00025756	      "event_test_requirements": [
+L00025757	        "Assert cmd.testing.visibility_policy.set emits expected event type testing.visibility_policy.updated with command_id, origin, correlation_id, and handler target."
+L00025758	      ]
+L00025759	    },
+L00025760	    "catalog.theme_preview": {
+L00025761	      "ui_element_id": "catalog.theme_preview",
+L00025762	      "ui_location": "Settings > Appearance / Theme > Preview",
+L00025763	      "ui_command_id": "cmd.theme.preview",
+L00025764	      "handler_location": "handlers::theme::preview",
+L00025765	      "expected_event_types": [],
+L00025766	      "acceptance_checks": [
+L00025767	        "cmd.theme.preview is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+L00025768	        "cmd.theme.preview exposes state selector and disabled reason before dispatch.",
+L00025769	        "cmd.theme.preview dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+L00025770	        "cmd.theme.preview uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+L00025771	        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+L00025772	      ],
+L00025773	      "evidence_required": "Production wiring contract for cmd.theme.preview. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00025774	      "state_selector": "state.commands.theme_preview.availability",
+L00025775	      "disabled_reason_projection": "state.commands.theme_preview.disabled_reason",
+L00025776	      "effect_contract": {
+L00025777	        "effect_kind": "receipt",
+L00025778	        "description": "cmd.theme.preview records an explicit no-persist command receipt or route/open disposition and emits no fabricated domain event.",
+L00025779	        "receipt_or_event_refs": [
+L00025780	          "cmd.theme.preview.dispatch_receipt"
+L00025781	        ]
+L00025782	      },
+L00025783	      "accessibility_contract": {
+L00025784	        "role_or_semantics": "catalog.theme_preview exposes a stable role/name/description matching cmd.theme.preview.",
+L00025785	        "keyboard_access": "catalog.theme_preview is reachable and activatable by keyboard where the control is visible.",
+L00025786	        "focus_management": "catalog.theme_preview preserves visible focus and returns focus deterministically after dispatch or error.",
+L00025787	        "disabled_announcement": "catalog.theme_preview surfaces state.commands.theme_preview.disabled_reason to assistive technology when unavailable."
+L00025788	      },
+L00025789	      "test_evidence": [
+L00025790	        {
+L00025791	          "test_id": "wiring.catalog.theme_preview.dispatcher",
+L00025792	          "evidence_kind": "dispatcher_fixture",
+L00025793	          "requirement": "Dispatching cmd.theme.preview reaches handlers::theme::preview with typed args/result contract."
+L00025794	        },
+L00025795	        {
+L00025796	          "test_id": "wiring.catalog.theme_preview.state_projection",
+L00025797	          "evidence_kind": "state_projection",
+L00025798	          "requirement": "Availability reads state.commands.theme_preview.availability and disabled copy reads state.commands.theme_preview.disabled_reason."
+L00025799	        },
+L00025800	        {
+L00025801	          "test_id": "wiring.catalog.theme_preview.effect",
+L00025802	          "evidence_kind": "receipt_or_event_assertion",
+L00025803	          "requirement": "cmd.theme.preview records an explicit no-persist command receipt or route/open disposition and emits no fabricated domain event."
+L00025804	        },
+L00025805	        {
+L00025806	          "test_id": "wiring.catalog.theme_preview.accessibility",
+L00025807	          "evidence_kind": "accessibility_regression",
+L00025808	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00025809	        }
+L00025810	      ],
+L00025811	      "event_test_requirements": [
+L00025812	        "Assert cmd.theme.preview records dispatch receipt cmd.theme.preview.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00025813	      ]
+L00025814	    },
+L00025815	    "catalog.theme_reset": {
+L00025816	      "ui_element_id": "catalog.theme_reset",
+L00025817	      "ui_location": "Settings > Appearance / Theme > Reset",
+L00025818	      "ui_command_id": "cmd.theme.reset",
+L00025819	      "handler_location": "handlers::theme::reset",
+L00025820	      "expected_event_types": [
+L00025821	        "settings.theme.updated"
+L00025822	      ],
+L00025823	      "acceptance_checks": [
+L00025824	        "cmd.theme.reset is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+L00025825	        "cmd.theme.reset exposes state selector and disabled reason before dispatch.",
+L00025826	        "cmd.theme.reset dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+L00025827	        "cmd.theme.reset uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+L00025828	        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+L00025829	      ],
+L00025830	      "evidence_required": "Production wiring contract for cmd.theme.reset. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00025831	      "state_selector": "state.commands.theme_reset.availability",
+L00025832	      "disabled_reason_projection": "state.commands.theme_reset.disabled_reason",
+L00025833	      "effect_contract": {
+L00025834	        "effect_kind": "event",
+L00025835	        "description": "cmd.theme.reset emits the declared domain event(s) and records dispatch correlation evidence.",
+L00025836	        "receipt_or_event_refs": [
+L00025837	          "settings.theme.updated"
+L00025838	        ]
+L00025839	      },
+L00025840	      "accessibility_contract": {
+L00025841	        "role_or_semantics": "catalog.theme_reset exposes a stable role/name/description matching cmd.theme.reset.",
+L00025842	        "keyboard_access": "catalog.theme_reset is reachable and activatable by keyboard where the control is visible.",
+L00025843	        "focus_management": "catalog.theme_reset preserves visible focus and returns focus deterministically after dispatch or error.",
+L00025844	        "disabled_announcement": "catalog.theme_reset surfaces state.commands.theme_reset.disabled_reason to assistive technology when unavailable."
+L00025845	      },
+L00025846	      "test_evidence": [
+L00025847	        {
+L00025848	          "test_id": "wiring.catalog.theme_reset.dispatcher",
+L00025849	          "evidence_kind": "dispatcher_fixture",
+L00025850	          "requirement": "Dispatching cmd.theme.reset reaches handlers::theme::reset with typed args/result contract."
+L00025851	        },
+L00025852	        {
+L00025853	          "test_id": "wiring.catalog.theme_reset.state_projection",
+L00025854	          "evidence_kind": "state_projection",
+L00025855	          "requirement": "Availability reads state.commands.theme_reset.availability and disabled copy reads state.commands.theme_reset.disabled_reason."
+L00025856	        },
+L00025857	        {
+L00025858	          "test_id": "wiring.catalog.theme_reset.effect",
+L00025859	          "evidence_kind": "receipt_or_event_assertion",
+L00025860	          "requirement": "cmd.theme.reset emits the declared domain event(s) and records dispatch correlation evidence."
+L00025861	        },
+L00025862	        {
+L00025863	          "test_id": "wiring.catalog.theme_reset.accessibility",
+L00025864	          "evidence_kind": "accessibility_regression",
+L00025865	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00025866	        },
+L00025867	        {
+L00025868	          "test_id": "wiring.catalog.theme_reset.events",
+L00025869	          "evidence_kind": "event_test",
+L00025870	          "requirement": "Assert cmd.theme.reset emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+L00025871	        }
+L00025872	      ],
+L00025873	      "event_test_requirements": [
+L00025874	        "Assert cmd.theme.reset emits settings.theme.updated with command_id, origin, correlation_id, and handler target."
+L00025875	      ]
+L00025876	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=25877-25888 >>>
+L00025877	    "catalog.theme_set_accent": {
+L00025878	      "ui_element_id": "catalog.theme_set_accent",
+L00025879	      "ui_location": "Settings > Appearance / Theme > Set Accent",
+L00025880	      "ui_command_id": "cmd.theme.set_accent",
+L00025881	      "handler_location": "handlers::theme::set_accent",
+L00025882	      "expected_event_types": [
+L00025883	        "settings.theme.updated"
+L00025884	      ],
+L00025885	      "acceptance_checks": [
+L00025886	        "cmd.theme.set_accent is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+L00025887	        "cmd.theme.set_accent exposes state selector and disabled reason before dispatch.",
+L00025888	        "cmd.theme.set_accent dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",

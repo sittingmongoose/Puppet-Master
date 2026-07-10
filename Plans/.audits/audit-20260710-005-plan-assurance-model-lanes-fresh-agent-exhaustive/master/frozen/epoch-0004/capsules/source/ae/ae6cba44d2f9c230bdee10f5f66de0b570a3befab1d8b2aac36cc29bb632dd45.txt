@@ -1,0 +1,378 @@
+<<< CONTEXT_BEFORE 7390-7401 >>>
+negative_constraints: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_boundary_notes:
+- Selection reason metadata supports inspector and auditor traceability without creating WorkNodes.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:Persona, Primitive:ExecutionUnitContext, ContractName:Plans/Executor_Protocol.md'
+split_recommendation_reason: The covered span set is narrow enough for this PlanUnit; mixed GUI/backend surfaces were split
+  where safe.
+```
+
+<<< AUTHORITATIVE_CORE 7402-7750 >>>
+### MS-001 - Models System Retired Source-Preserving Bridge
+
+```yaml
+plan_unit_id: MS-001
+unit_type: compatibility_disposition
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: MS-001 is retired to migration-lineage-only compatibility disposition after Phase 2B batch 099 because Models_System-S0001
+  through Models_System-S0081 are covered by MS-002 through MS-106 or explicit structural, retired, and migration-coverage
+  dispositions. MS-001 no longer carries source_preserving_planunit compile mode and must not own product coverage.
+gui_related: false
+gui_classification_reason: The live unit is retired migration-lineage compatibility only; GUI-related source coverage is carried
+  by fine-grained Models_System PlanUnits and coverage_map proof.
+split_recommended: false
+depends_on:
+- MS-099
+- MS-100
+- MS-101
+- MS-102
+- MS-103
+- MS-104
+- MS-105
+- MS-106
+unblocks: []
+acceptance_criteria:
+- MS-001 no longer uses node_compile_hint.mode source_preserving_planunit after Phase 2B batch 099.
+- Models_System-S0001 through Models_System-S0081 product coverage is owned by MS-002 through MS-106 or explicit structural,
+  retired, and migration-coverage dispositions.
+- MS-001 remains only to preserve migration lineage for the former source-preserving bridge.
+- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: migration_lineage
+reasoning_tier: standard
+context_scope: residual_plan_standardization
+implementation_surfaces:
+- Plans/Models_System.md
+node_compile_hint:
+  mode: source_preserving_bridge_retired
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Models_System-S0080
+preserved_exact_tokens:
+- MS-001
+- Models System Residual Source-Preserving PlanUnit
+- source_preserving_planunit
+- source_preserving_bridge_retired
+- Owner / Consumer Map
+- PlanUnits
+- Migration Coverage
+negative_constraints:
+- MS-001 must not re-own Models_System-S0001 through Models_System-S0081 after Phase 2B batch 099.
+- MS-001 must not use node_compile_hint.mode=source_preserving_planunit.
+- Retired bridge lineage must not be treated as implementation-ready product coverage.
+- The retired bridge must not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+compatibility_only_notes:
+- MS-001 remains only as a retired source-preserving bridge audit record for migration lineage.
+- The token source_preserving_planunit is preserved for audit compatibility only and is not the node compile mode.
+stale_retired_dispositions:
+- The former MS-001 residual source-preserving bridge is retired by Phase 2B batch 099.
+owner_boundary_notes:
+- MS-002 through MS-106 and explicit coverage dispositions own Models_System product coverage after bridge retirement.
+- Models_System-S0080 is migration-lineage coverage only after bridge retirement.
+owner_hints:
+- Plans/Models_System.md
+preserved_contractrefs:
+- 'ContractRef: Primitive:DRYRules, ContractName:Plans/DRY_Rules.md'
+- 'ContractRef: Primitive:Persona, Primitive:ExecutionUnitContext, ContractName:Plans/Executor_Protocol.md'
+- 'ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md'
+split_recommendation_reason: No split remains for the retired bridge; product coverage has been atomized or structurally dispositioned.
+```
+
+## Migration Coverage
+
+Original hash: `c21e126a333195a8bcdc1cd0e36aeb481c934defeb85a72b60479c5b519f134c`.
+
+Run-scoped proof artifacts:
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/original_hashes.json`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/coverage_map.jsonl`
+- `Plans/.plan_migration/pds-20260611-002-atomize-planunits/anchor_aliases.json`
+
+Phase 2B batch `phase2b-096-models-system-lines-1-400` atomized `Models_System-S0001` through `Models_System-S0025` into `MS-002` through `MS-023`. Phase 2B batch `phase2b-097-models-system-lines-393-792` atomized `Models_System-S0026` through `Models_System-S0050` into `MS-024` through `MS-073`. Phase 2B batch `phase2b-098-models-system-lines-781-1180` atomized `Models_System-S0051` through `Models_System-S0073` into `MS-074` through `MS-098`. Phase 2B batch `phase2b-099-models-system-lines-1171-1244` atomized `Models_System-S0074` through `Models_System-S0077` into `MS-099` through `MS-106` and dispositioned `Models_System-S0078` through `Models_System-S0081` as structural, retired bridge, or migration-coverage rows. `MS-001` is retired to `source_preserving_bridge_retired` migration-lineage compatibility. These batches did not update Spec Lock, generated shards, evidence bundles, auto_decisions, or plan_graph, and did not create WorkNodes, NodeSeeds, or executable build tasks.
+
+## Ledger Compile Addendum - pldg-20260614-001
+
+### MS-107 - Provider Model Precedence Owner Pointer Compile Addendum
+
+```yaml
+plan_unit_id: MS-107
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: >-
+  Models_System owns provider/model precedence, model availability, and provider/model selection semantics. Executor, WorktreeGitImprovement,
+  orchestrator-subagent-integration, and Crosswalk consume this owner section when they need dispatch-time carry-through; they must not define
+  independent provider/model precedence rules in empty owner stubs.
+gui_related: true
+gui_classification_reason: Provider/model precedence affects visible model selectors and settings, even though the owner rule is shared runtime metadata.
+depends_on: [MS-001]
+unblocks: []
+acceptance_criteria:
+  - Provider/model precedence stubs in adjacent docs point to Models_System or consume its PlanUnits.
+  - Dispatch-time carry-through preserves requested and effective provider/model identity without creating a second precedence owner.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - manual provider/model owner review
+risk_class: provider_model_precedence_drift
+reasoning_tier: standard
+context_scope: provider_model_precedence_owner
+implementation_surfaces: [Plans/Models_System.md, Plans/Executor_Protocol.md, Plans/orchestrator-subagent-integration.md]
+node_compile_hint: {mode: provider_model_owner_pointer, create_worknodes: false}
+source_lineage:
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0070
+  - pldg-20260614-001-part-2-cleanup-fable-audit:atom-0072
+preserved_exact_tokens: ["Coverage blocker provider/model precedence owner section", "provider/model precedence", "dispatch-time carry-through", "requested_provider", "effective_provider", "requested_model", "effective_model"]
+negative_constraints:
+  - Do not make Executor or WorktreeGitImprovement replace Models_System provider/model precedence ownership.
+owner_hints: [Plans/Models_System.md, Plans/Executor_Protocol.md, Plans/WorktreeGitImprovement.md, Plans/orchestrator-subagent-integration.md]
+```
+
+## Ledger Compile Addendum - pldg-20260616-001
+
+### MS-108 - Goal Runtime Model Role Resolution Consumer
+
+```yaml
+plan_unit_id: MS-108
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: >-
+  Models_System owns concrete requested/effective model resolution for Goal Runtime worker, planner, evaluator, verifier, and adjudicator roles, plus model capability evidence needed by Goal_Runtime_System certification policy. Goal_Runtime_System owns block/degrade semantics, and provider-specific default tier mappings remain deferred.
+gui_related: false
+gui_classification_reason: Concrete model-role resolution and capability evidence are backend provider/model policy; F3-393 owns the visible Settings selectors.
+depends_on:
+  - MS-017
+  - MS-073
+  - MS-074
+  - GRS-010
+unblocks: []
+acceptance_criteria:
+  - Goal Runtime role policies can request model resolution for worker, planner, evaluator, verifier, and adjudicator roles.
+  - Resolution exposes requested/effective model identity and capability evidence for each role where relevant.
+  - Models_System does not override Goal Runtime certification-tier block/degrade semantics and does not hard-code provider defaults.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future Goal Runtime model-role resolver review
+risk_class: goal_runtime_model_resolution_drift
+reasoning_tier: high
+context_scope: goal_runtime_model_policy
+implementation_surfaces:
+  - Plans/Models_System.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/Multi-Account.md
+node_compile_hint:
+  mode: goal_runtime_model_role_resolution
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-001-goal-runtime-system:atom-0075
+  - pldg-20260616-001-goal-runtime-system:atom-0076
+  - pldg-20260616-001-goal-runtime-system:atom-0103
+  - pldg-20260616-001-goal-runtime-system:atom-0104
+  - pldg-20260616-001-goal-runtime-system:atom-0105
+  - pldg-20260616-001-goal-runtime-system:dec-0018
+  - pldg-20260616-001-goal-runtime-system:dec-0019
+preserved_exact_tokens:
+  - "worker_default"
+  - "planner"
+  - "evaluator"
+  - "adjudicator"
+  - "verifier"
+  - "requested/effective model"
+  - "capability evidence"
+negative_constraints:
+  - Do not hard-code provider defaults in Models_System for Goal Runtime certification correctness.
+  - Do not collapse verifier/adjudicator and worker model roles into one effective selection.
+owner_hints:
+  - Plans/Models_System.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/Multi-Account.md
+```
+
+## Ledger Compile Addendum - pldg-20260616-002
+
+### MS-109 - Orchestrator Capability Lane Binding Policy
+
+```yaml
+plan_unit_id: MS-109
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: >-
+  Models_System owns model and provider resolution for Orchestrator Goal Runtime capability_lane and agent_role bindings. Required lane roles include low_cost_executor, standard_reviewer, high_reasoning_orchestrator, verifier, adjudicator, and certifier. Resolution must use configured providers, accounts, model profiles, and provider-specific owner docs such as Plans/Provider_OpenCode.md, expose requested/effective identity and capability evidence, and return unconfigured-lane blockers when a required lane has no valid binding. Old tier-era wording may remain only as compatibility/search aliases where necessary; capability_lane and agent_role are Models-owned binding inputs, while write_mode and certification_tier are consumed references from Goal Runtime, Contracts, storage, Permissions, and Worktree owner surfaces rather than Models-owned enforcement or certification semantics.
+gui_related: false
+gui_classification_reason: Lane binding resolution is backend model/provider policy; FinalGUISpec owns visible Settings controls.
+depends_on:
+  - MS-108
+unblocks: []
+acceptance_criteria:
+  - Model resolution accepts capability_lane and agent_role inputs for Orchestrator Goal Runtime.
+  - Required lane roles resolve through configured providers, accounts, and model profiles.
+  - requested/effective identity and capability evidence are exposed to runtime receipts and GUI projections.
+  - Missing required bindings return unconfigured-lane blockers instead of selecting arbitrary defaults.
+  - Legacy tier labels are treated only as compatibility/search aliases; capability_lane and agent_role remain Models-owned binding inputs, while write_mode and certification_tier are carried as owner-surface references rather than Models-owned enforcement or certification semantics.
+validation_surfaces:
+  - python3 scripts/pm-plan-index.py validate
+  - future capability-lane resolver review
+risk_class: capability_lane_resolution_drift
+reasoning_tier: high
+context_scope: orchestrator_goal_model_policy
+implementation_surfaces:
+  - Plans/Models_System.md
+  - Plans/FinalGUISpec.md
+  - Plans/Multi-Account.md
+  - Plans/Provider_OpenCode.md
+  - Plans/Goal_Runtime_System.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+  - Plans/WorktreeGitImprovement.md
+node_compile_hint:
+  mode: orchestrator_capability_lane_binding
+  create_worknodes: false
+source_lineage:
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0027
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0028
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0029
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0030
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0033
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0034
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0038
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0055
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0090
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0092
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0093
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:atom-0102
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:dec-0004
+  - pldg-20260616-002-orchestrator-goal-runtime-flow:corr-0002
+preserved_exact_tokens:
+  - "capability_lane"
+  - "agent_role"
+  - "low_cost_executor"
+  - "standard_reviewer"
+  - "high_reasoning_orchestrator"
+  - "verifier"
+  - "adjudicator"
+  - "certifier"
+  - "requested/effective"
+  - "unconfigured-lane"
+  - "compatibility/search aliases"
+  - "tier-era wording"
+  - "write_mode"
+  - "certification_tier"
+negative_constraints:
+  - Do not hardcode provider/model defaults.
+  - Do not resolve low_cost_executor lanes as verifier, adjudicator, or certifier roles.
+  - Do not preserve old tier-era wording as the canonical execution model.
+  - Do not make Models_System own write_mode enforcement, worktree lease policy, or certification semantics.
+owner_hints:
+  - Plans/Models_System.md
+  - Plans/FinalGUISpec.md
+  - Plans/Multi-Account.md
+  - Plans/Provider_OpenCode.md
+  - Plans/Contracts_V0.md
+  - Plans/storage-plan.md
+  - Plans/Permissions_System.md
+  - Plans/WorktreeGitImprovement.md
+```
+
+## Ledger Compile Addendum - pldg-20260617-001-plans-to-code-handoff
+
+### MS-110 - Condensed Plans-To-Code Model Settings
+
+```yaml
+plan_unit_id: MS-110
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: >-
+  Models_System owns the six user-facing model settings for plans-to-code automation: Default Model, Overseer Model, Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, and Auditor Model. Default Model covers assistant chat, normal Planning Wizard conversation, ordinary research/browser lookup, and fallback behavior. Overseer Model covers Planning Wizard ledger-to-Plans conversion, PRD Builder structured conversion, Plans-to-WorkNode-request compilation, seam/split/merge decisions, execution supervision, graph patch recommendations, and blocked-state reasoning. Worker Model handles normal WorkNode implementation; GUI / Frontend Worker Model handles GUI/frontend/UX/layout/visual WorkNodes; High-Effort Worker Model handles difficult, broad, repo-wide, high-risk, or high-reasoning WorkNodes; Auditor Model owns the Auditor audit-to-repair loop, verification, certification, quality gates, and evidence review. The loop repeats audit, bounded repair, and re-audit, also recorded by the legacy source token audit/repair/audit, until completion is certified or a critical block or authority boundary stops the loop. Executor has no user-facing Executor Model setting because Executor is deterministic scheduler/runtime machinery and Overseer handles execution-level reasoning around it.
+  High-Effort Worker Model covers repo-wide reasoning explicitly, and Executor deterministic runtime behavior stays outside user-facing model settings.
+gui_related: true
+gui_classification_reason: This unit defines user-facing Settings labels and GUI/frontend model routing labels.
+depends_on: [MS-109]
+unblocks: [F3-396, EP-100, OP-023, GRS-028]
+acceptance_criteria:
+  - Exactly six user-facing model settings are exposed for this flow unless a later advanced override is accepted.
+  - Plan Compiler, Planning Wizard ledger-to-Plans, and PRD Builder structured conversion map to Overseer Model.
+  - Old fixed validation-pass model settings are replaced by Auditor Model and an Auditor audit-to-repair loop where this compile touches the concept.
+  - Legacy `validation_pass_report` artifact family names and old Pass 1 / Pass 2 / Pass 3 names remain Project Output/Chain Wizard lineage or compatibility aliases only; they are not user-facing validation-pass model selectors or active process stages.
+  - Executor remains deterministic runtime/scheduler machinery and does not gain an Executor Model setting.
+validation_surfaces:
+  - python3 scripts/pm-plans-verify.py run-gates
+  - python3 scripts/pm-plans-verify.py validate-plans-to-code-handoff-schema
+  - future Settings model-role review
+risk_class: model_role_drift
+reasoning_tier: high
+context_scope: plans_to_code_model_settings
+implementation_surfaces: [Plans/Models_System.md, Plans/FinalGUISpec.md, Plans/Executor_Protocol.md, Plans/Goal_Runtime_System.md]
+node_compile_hint: {mode: model_settings_contract, create_worknodes: false}
+source_lineage:
+  - pldg-20260617-001-plans-to-code-handoff:atom-0018
+  - pldg-20260617-001-plans-to-code-handoff:atom-0019
+  - pldg-20260617-001-plans-to-code-handoff:atom-0020
+  - pldg-20260617-001-plans-to-code-handoff:atom-0021
+  - pldg-20260617-001-plans-to-code-handoff:atom-0022
+  - pldg-20260617-001-plans-to-code-handoff:atom-0023
+  - pldg-20260617-001-plans-to-code-handoff:dec-0006
+  - pldg-20260617-001-plans-to-code-handoff:dec-0007
+  - pldg-20260617-001-plans-to-code-handoff:dec-0008
+  - pldg-20260617-001-plans-to-code-handoff:corr-0001
+  - pldg-20260617-001-plans-to-code-handoff:corr-0002
+  - pldg-20260617-001-plans-to-code-handoff:corr-0003
+preserved_exact_tokens:
+  - "Default Model"
+  - "Overseer Model"
+  - "Worker Model"
+  - "GUI / Frontend Worker Model"
+  - "High-Effort Worker Model"
+  - "Auditor Model"
+  - "assistant chat"
+  - "Plan Wizard conversation"
+  - "research/browser lookup"
+  - "ledger-to-Plans"
+  - "PRD Builder"
+  - "Plans-to-WorkNode"
+  - "execution supervision"
+  - "graph patch recommendations"
+  - "repo-wide reasoning"
+  - "Auditor audit-to-repair loop"
+  - "audit/repair/audit"
+  - "critical block"
+  - "No Executor Model"
+  - "Executor deterministic"
+negative_constraints:
+  - Do not expose a long list of internal subrole settings.
+  - Do not create a separate user-facing Plan Compiler Model unless later added as advanced override.
+  - Do not expose legacy Pass 1 / Pass 2 / Pass 3 Plan Wizard model settings or active stages; those names may survive only as legacy compatibility aliases.
+  - Do not call the deterministic scheduler a model-backed Executor agent.
+stale_retired_dispositions:
+  - "Plan Wizard conversation is retained only as a legacy source token from the plans-to-code handoff cycle; current model-setting prose uses Planning Wizard."
+owner_hints:
+  - Plans/Models_System.md
+  - Plans/FinalGUISpec.md
+  - Plans/Executor_Protocol.md
+  - Plans/Goal_Runtime_System.md
+```
+
+
+<<< CONTEXT_AFTER 7751-7762 >>>
+### MS-111 - Plans-To-Code Model Resolution Receipt
+
+```yaml
+plan_unit_id: MS-111
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Models_System.md
+canonical_text: >-
+  Every dispatched WorkNode and every plans-to-code role resolution records a model resolution receipt with requested_lane, requested_model_profile, effective_model_profile, fallback_used, fallback_reason, and capability_checks. WorkNode requests carry work_type, gui_related, frontend_related, effort class, reasoning tier, context size, validation cost, risk class, authority risk, user-visible risk, and capability lane metadata so native routing can choose Worker Model, GUI / Frontend Worker Model, High-Effort Worker Model, Auditor Model, or Overseer Model without exposing Codex-only external GUI-agent CLI bridge settings in built Puppet Master.
+  The receipt is the native provider/model routing proof for built Puppet Master and preserves effort_class and capability_lane in the canonical routing body.
+gui_related: false
+gui_classification_reason: This unit defines backend model-resolution receipts and routing metadata; visible labels are consumed by FinalGUISpec.

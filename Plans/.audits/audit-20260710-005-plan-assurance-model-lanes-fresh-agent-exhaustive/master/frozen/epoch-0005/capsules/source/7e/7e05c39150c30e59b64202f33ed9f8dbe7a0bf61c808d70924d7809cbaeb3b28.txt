@@ -1,0 +1,102 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1454-1465 >>>
+L00001454	  - Do not create WorkNodes, NodeSeeds, executable queues, implementation files, or runtime/build surfaces as part of first-run handoff.
+L00001455	owner_hints:
+L00001456	  - Plans/Planning_Wizard.md
+L00001457	  - Plans/FinalGUISpec.md
+L00001458	  - Plans/Wiring_Matrix.md
+L00001459	  - Plans/Contracts_V0.md
+L00001460	```
+L00001461	
+L00001462	## Implementation Readiness Gate Addendum - 2026-07-05
+L00001463	
+L00001464	This addendum installs the Planning Wizard buildability gate without creating WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, runtime dispatch, production build tasks, generated governance seal artifacts, or executable PlanCompile artifacts.
+L00001465	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1466-1552 >>>
+L00001466	### PWIZ-018 - Approve And Build Buildability Gate
+L00001467	
+L00001468	```yaml
+L00001469	plan_unit_id: PWIZ-018
+L00001470	unit_type: requirement
+L00001471	status: accepted
+L00001472	owner_doc: Plans/Planning_Wizard.md
+L00001473	canonical_text: >-
+L00001474	  Captured source, plan-complete documentation, PlanUnit indexes, semantic closure, schema existence, wiring JSON
+L00001475	  existence, and validator success are separate preconditions and none of them prove implementation buildability.
+L00001476	  Planning Wizard final review must represent the ladder as Captured != Plan-complete != Buildable. The
+L00001477	  `cmd.planning_wizard.approve_and_build` control is disabled unless
+L00001478	  `Plans/.implementation_readiness/buildability_gate_report.json` reports `buildability_gate_passed=true`.
+L00001479	  When disabled, the final-review state projection must list each currently open blocker family and the exact owner
+L00001480	  docs from the buildability report. `PNC-019` from `Plans/.plan_index/node_readiness_report.json` is a hard disabled
+L00001481	  reason only while the report's node_readiness.hard_disabled projection is true, until executable lifecycle
+L00001482	  certification evidence proves Approve And Build through PlanCompile, Executor intake, activation, Orchestrator
+L00001483	  projection, testing evidence, cancellation/restart, and negative-case rejection. PNC-019 bootstrap authority for
+L00001484	  the compiler/harness/certifier path is not ordinary Approve And Build enablement and must remain disabled for
+L00001485	  product work unless the buildability gate passes.
+L00001486	gui_related: true
+L00001487	gui_classification_reason: Defines final-review button enablement and disabled reason behavior in the Planning Wizard GUI.
+L00001488	depends_on: [PWIZ-010, PWIZ-012, PWIZ-014, PNC-019, PNC-022]
+L00001489	unblocks: [UIW-009, PG-060]
+L00001490	acceptance_criteria:
+L00001491	  - Planning Wizard distinguishes Captured, Plan-complete, and Buildable states.
+L00001492	  - Approve And Build is disabled whenever buildability_gate_passed is false.
+L00001493	  - The disabled reason lists currently open blocker families and exact owner docs from Plans/.implementation_readiness/buildability_gate_report.json.
+L00001494	  - The production final-review control projects availability and disabled reason through the wiring matrix and cannot emit PlanApproved while buildability_gate_passed is false.
+L00001495	  - PNC-019 appears as a hard disabled reason while node readiness remains blocked_runtime_certification_incomplete.
+L00001496	  - PNC-019 bootstrap authority does not enable ordinary product Approve And Build or suppress open blocker-family disabled reasons.
+L00001497	  - Closed or accepted_risk readiness-blocker rows may remain as historical evidence without keeping Approve And Build disabled.
+L00001498	  - No WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks are created by this gate.
+L00001499	validation_surfaces:
+L00001500	  - python3 scripts/pm-implementation-readiness.py validate
+L00001501	  - python3 scripts/pm-plans-verify.py validate-implementation-readiness
+L00001502	  - python3 scripts/pm-plan-index.py validate
+L00001503	risk_class: false_buildability_enablement
+L00001504	reasoning_tier: high
+L00001505	context_scope: planning_wizard_final_review_buildability_gate
+L00001506	implementation_surfaces:
+L00001507	  - Plans/Planning_Wizard.md
+L00001508	  - Plans/.implementation_readiness/buildability_gate_report.json
+L00001509	  - Plans/.implementation_readiness/readiness_blockers.jsonl
+L00001510	  - Plans/.plan_index/node_readiness_report.json
+L00001511	node_compile_hint:
+L00001512	  mode: approve_and_build_buildability_gate
+L00001513	  create_worknodes: false
+L00001514	  create_nodeseeds: false
+L00001515	source_lineage:
+L00001516	  - source_ref:chat:2026-07-05-implementation-readiness-buildability-gate
+L00001517	  - Plans/Plan_To_Node_Compilation.md#PNC-019
+L00001518	preserved_exact_tokens:
+L00001519	  - "Captured != Plan-complete != Buildable"
+L00001520	  - "Approve And Build is disabled unless buildability gate passes"
+L00001521	  - "blocker families and exact owner docs"
+L00001522	  - "PNC-019"
+L00001523	negative_constraints:
+L00001524	  - Do not treat source preservation, schema existence, wiring JSON existence, semantic closure, or passing validators as proof of implementation buildability.
+L00001525	  - Do not allow Approve And Build to emit PlanApproved or create/bind PlanCompileRun while the buildability gate is blocked.
+L00001526	  - Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, implementation files, or production build tasks from this gate.
+L00001527	owner_hints:
+L00001528	  - Plans/Planning_Wizard.md
+L00001529	  - Plans/Plan_To_Node_Compilation.md
+L00001530	  - Plans/UI_Wiring_Rules.md
+L00001531	  - Plans/Progression_Gates.md
+L00001532	```
+L00001533	
+L00001534	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_BEGIN -->
+L00001535	## FABLE Remaining Action Plan Audit-Lineage Notes (2026-07-08)
+L00001536	
+L00001537	These rows are preserved as audit-lineage notes only. They do not prove repair by themselves; repaired status requires concrete canonical prose/schema/enum/command/algorithm evidence in this owner doc or an explicit non-repair disposition in `Plans/.audits/fable-20260706/owner_note_closure_fidelity_after.jsonl`. This note creates no WorkNodes, NodeSeeds, queues, runtime artifacts, implementation files, production build tasks, final manifests, or PNC-019 receipts, and it does not mark `buildability_gate_passed` true.
+L00001538	
+L00001539	- `registry_line 338` (explicitly_deferred; source line 1145; `sfk-78f02d9a707edd394637f596`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] whole doc: every PWIZ unit is prose-only YAML no data schema for PlanningRun, topic map, Planning Context Capsule, or ledger record shape anywhere.
+L00001540	- `registry_line 339` (explicitly_deferred; source line 1146; `sfk-9fb886bd6cf16ee54c7e1f0e`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [CRITICAL] L1075-1139 (PWIZ-013): topic card states (11 named) have no transition table, trigger events, or command/IPC names.
+L00001541	- `registry_line 343` (explicitly_deferred; source line 1158; `sfk-dfcc395f84654bcabdfbe6aa`): Explicitly deferred: closing this row requires a dedicated owner-doc/schema/detail lane beyond safe non-runtime hygiene; no buildability or runtime proof is claimed here. Source summary: - [HIGH] whole doc vs Planning_Wizard.md's later ledger addenda: describes an AGENTS.md/Codex-thread workflow that appears superseded by more detailed, differently-worded later addenda not marked stale/retired.
+L00001542	
+L00001543	## FABLE Deferred Action Concrete Repair Addendum - 2026-07-08
+L00001544	
+L00001545	This addendum repairs non-runtime Planning Wizard rows without creating WorkNodes, implementation files, runtime artifacts, or PNC-019 evidence.
+L00001546	
+L00001547	- Repairs `sfk-78f02d9a707edd394637f596`: `PlanningRun` fields are `planning_run_id`, `project_id`, `topic_map_ref`, `context_capsule_ref`, `ledger_ref`, `state`, `created_at_utc`, and `updated_at_utc`. `PlanningContextCapsule` fields are `capsule_id`, `source_refs[]`, `constraints[]`, `open_questions[]`, `accepted_defaults[]`, and `redaction_profile_id`.
+L00001548	- Repairs `sfk-9fb886bd6cf16ee54c7e1f0e`: topic card states are `new`, `active`, `needs_user`, `answered`, `accepted`, `deferred`, `blocked`, `superseded`, `compiled`, `sealed`, and `retired`. Commands are `cmd.planning.topic.open`, `cmd.planning.topic.answer`, `cmd.planning.topic.accept`, `cmd.planning.topic.defer`, and `cmd.planning.topic.supersede`.
+L00001549	- Repairs `sfk-4dcdcb5c0b63f442e90451bb`: PWIZ-010 consumes the CAS/idempotency mechanism owned by PWIZ-014; duplicate CAS prose in PWIZ-010 is source-lineage only.
+L00001550	- Repairs `sfk-dfcc395f84654bcabdfbe6aa`: `Plans/Bootstrap_Planning_Migration.md` is legacy migration workflow lineage. Current Planning Wizard + ledger addenda own the live PM ledger conversational flow.
+L00001551	
+L00001552	<!-- FABLE_REMAINING_ACTION_PLAN_REPAIR_20260708_END -->

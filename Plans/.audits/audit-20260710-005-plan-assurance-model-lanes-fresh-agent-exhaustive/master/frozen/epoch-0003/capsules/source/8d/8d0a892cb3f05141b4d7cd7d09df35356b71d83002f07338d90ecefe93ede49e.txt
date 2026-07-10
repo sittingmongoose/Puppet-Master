@@ -1,0 +1,420 @@
+<<< CONTEXT_BEFORE 593-604 >>>
+- Puppet Master MAY use an internal normalized model rather than hard-coding UI logic directly to raw XML tags.
+- However, the normalized model MUST map 1:1 to emitted XML content and MUST be documented.
+- Unknown fields present in an existing template MUST be preserved on update unless the user explicitly removes them.
+
+#### `ca_profile.xml` round-trip rule
+#### Explicit editability contract for all fields
+
+
+The statement "all `ca_profile.xml` fields are editable" is satisfied by a two-layer editor model:
+
+1. **Structured editor** for the canonical known fields exposed in the standard UI.
+2. **Advanced raw XML editor** for any field, element, attribute, or passthrough content not yet modeled by structured controls.
+
+<<< AUTHORITATIVE_CORE 605-995 >>>
+
+Normative rules:
+- The structured editor MUST round-trip through the same normalized model used by generation/update.
+- Unknown or currently unmodeled content MUST remain editable through the advanced raw XML surface.
+- Saving from either surface MUST preserve unmodified passthrough content verbatim.
+- Puppet Master MUST NOT claim "all fields editable" unless both layers exist.
+
+`ca_profile.xml` editing is a **round-trip** contract, not a one-way generator.
+
+Required behavior:
+- Puppet Master MUST parse existing `ca_profile.xml` into a normalized editor model.
+- The editor model MUST preserve all existing fields, including fields the current UI does not yet expose individually.
+- The first implementation MUST expose editable controls for, at minimum:
+  - maintainer display name
+  - maintainer slug
+  - overview/about text
+  - support URL
+  - icon/image source
+- When the user uploads an image, Puppet Master MUST copy it into the managed template repo by default and rewrite the profile to reference that repo-managed asset.
+- When the user selects external URL mode, Puppet Master MUST preserve the external URL exactly as entered.
+
+#### Validation and review rules
+
+- A successful Docker publish is required before Puppet Master may treat `image_ref` as final for generated template output.
+- Missing `support_url`, `overview_markdown`, or `icon_source` MUST mark the generated result as `needs_review`.
+- `needs_review` MUST NOT block local save or local auto-commit, but it MUST block auto-push and MUST surface a visible warning in Docker Manager.
+- If Puppet Master updates an existing template and cannot map a field safely, it MUST preserve the existing field and mark the template result as `needs_review` rather than dropping data silently.
+
+#### Known-field registry and XML mapping (first implementation)
+
+
+#### XML emission minima for first implementation
+
+The first implementation emits application templates with one canonical root shape:
+
+```xml
+<Container version="2">
+  <Name>Example App</Name>
+  <Repository>namespace/repository:tag</Repository>
+  <Registry>https://registry-1.docker.io</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <WebUI>http://[IP]:[PORT:8080]</WebUI>
+  <Support>https://example.invalid/support</Support>
+  <Overview><![CDATA[Markdown or HTML-safe overview text]]></Overview>
+  <Category>Tools:Utilities</Category>
+  <Icon>assets/maintainer/icon.png</Icon>
+  <Config ... />
+</Container>
+```
+
+Canonical rules:
+- Root element is exactly `<Container version="2">`.
+- Known child elements emit in this order: `Name`, `Repository`, `Registry`, `Network`, `MyIP`, `WebUI`, `Support`, `Overview`, `Category`, `Icon`, then repeated `Config`.
+- `Overview` emits as CDATA.
+- All other known text nodes emit as escaped text.
+- Optional known elements are omitted when empty.
+- Unknown elements, unknown attributes, and XML comments from an existing template MUST be preserved verbatim and re-emitted after the last known sibling in their original relative order unless the user explicitly removes them.
+- Existing unknown root attributes MUST be preserved verbatim on round-trip update.
+
+`Config` type mapping for first implementation:
+
+| Normalized field | Emitted `Config` shape | Required attributes |
+|---|---|---|
+| Port mapping | `<Config Type="Port" ... />` | `Name`, `Target`, `Default`, `Mode`, `Display`, `Required`, `Mask="false"` |
+| Path / bind mount | `<Config Type="Path" ... />` | `Name`, `Target`, `Default`, `Display`, `Required`, `Mask="false"` |
+| Environment variable | `<Config Type="Variable" ... />` | `Name`, `Target`, `Default`, `Display`, `Required`, `Mask` |
+| Device mapping | `<Config Type="Device" ... />` | `Name`, `Target`, `Default`, `Display`, `Required`, `Mask="false"` |
+
+Attribute mapping rules:
+- `Name` = stable user-visible label; fall back to `Target` when no label exists.
+- `Target` = container-side port/path/variable/device identifier.
+- `Default` = host-side or default value.
+- `Display` = `always` for first implementation unless hidden by explicit user choice.
+- `Required` = `true` only when the value is mandatory for a successful container run.
+- `Mask` = `true` only for secret environment variables; otherwise `false`.
+- `Mode` is required only for `Type="Port"` and is exactly `tcp` or `udp`.
+
+If Puppet Master cannot map a source item into the required attribute set without inventing values, it MUST preserve the prior XML unchanged for that item and mark the result `needs_review`.
+
+##### Application template XML
+
+| Normalized field | XML element / shape | Required for local save | Required for auto-push |
+|---|---|---|---|
+| `display_name` | `<Name>` text | Yes | Yes |
+| `image_ref` | `<Repository>` text | Yes | Yes |
+| `registry_host` | `<Registry>` text | No | Yes |
+| `web_ui_url` | `<WebUI>` text | No | No |
+| `support_url` | `<Support>` text | No | Yes |
+| `overview_markdown` | `<Overview>` CDATA | No | Yes |
+| `icon_source` | `<Icon>` text | No | Yes |
+| `category_labels[]` | `<Category>` text | No | Yes |
+| `config_items[]` | repeated `<Config ... />` elements | No | No |
+
+##### `ca_profile.xml` recognized fields
+
+| Normalized field | XML element | Required for auto-push |
+|---|---|---|
+| `display_name` | `<Name>` | Yes |
+| `overview_markdown` | `<Overview>` | Yes |
+| `support_url` | `<Support>` | Yes |
+| `icon_source` | `<Icon>` | Yes |
+
+### Distribution model
+### Unmanaged generation target contract
+
+If `Generate/Update Unraid XML after successful publish` is enabled but managed template-repo handling is disabled, unconfigured, or invalid, Puppet Master MUST still generate a local artifact set under:
+
+`.puppet-master/generated/unraid/<project_id>/<publish_result_id>/`
+
+Required output:
+- `template/<maintainer_slug>/<project_slug>.xml`
+- `template/ca_profile.xml` when the active profile is projected into the result
+- `template/assets/maintainer/**` for repo-managed uploaded assets referenced by the result
+
+In this mode:
+- `unraid.template.generation.completed` still fires
+- `template_repo_id` is `null`
+- `commit_status` is `not_attempted`
+- `push_status` is `not_attempted`
+- UI copy MUST describe the result as **generated locally / not attached to a managed repo**
+
+The default distribution target for generated Unraid XML is a separate Unraid template repository / Community Applications-friendly template location. The main application repository may still be offered as an optional export target, but it is not the primary default.
+
+Rationale that must be preserved in docs:
+- DockerHub stores images, not Unraid XML
+- public Unraid template distribution is commonly done through GitHub template repositories / Community Applications workflows
+- installed copies are stored locally on the Unraid server under `/boot/config/plugins/dockerMan/templates-user`
+
+### Generation default
+- automatically generate/update Unraid XML after successful image publish by default
+- nearby GUI toggle disables this behavior
+- generation is part of the first-class Docker publish flow, not a hidden manual afterthought
+
+### Managed template-repo workflow default
+- Puppet Master should manage the Unraid template repository workflow itself by default
+- the user can disable managed template-repo handling in settings
+
+## Unraid template repository setup, layout, and publishing
+
+### Managed template-repo identity and lifecycle contract
+
+#### Default identity rules
+
+
+When the user chooses **create new template repo**, Puppet Master defaults to:
+
+- **repo name:** `<project_slug>-unraid-template`
+- **default branch:** `main`
+- **local managed working copy:** `.puppet-master/unraid-template-repos/<project_id>/`
+- **template path inside repo:** `<maintainer_slug>/<project_slug>.xml`
+- **maintainer profile path:** `ca_profile.xml`
+
+The user may override repo name, branch, local path, and maintainer slug during setup.
+
+#### Existing-repo selection validation
+
+When the user chooses **select existing template repo**, Puppet Master MUST validate:
+
+1. the path/repo is reachable
+2. the repo root is writable locally
+3. the selected branch exists or can be created explicitly
+4. the repo either already matches the required layout or can be migrated with explicit user confirmation
+5. the repo does not contain uncommitted unrelated changes unless the user explicitly adopts the repo in its current state
+
+If validation fails, Puppet Master MUST keep managed publishing disabled for that project and show the exact failing condition.
+
+#### Template-repo status enum
+
+The template-repo status row MUST use one canonical state model:
+
+| State | Meaning | User-visible consequence |
+|---|---|---|
+| `unconfigured` | Managed publishing enabled but no repo has been set up yet | Show setup CTA |
+| `config_invalid` | Repo/path/branch settings exist but validation failed | Block publish follow-on push; show remediation |
+| `clean` | Repo is configured and has no pending local changes | Ready for next generation/update |
+| `dirty_uncommitted` | Managed files changed locally and are not yet committed | Auto-commit may run if changes are PM-owned and safe |
+| `committed_local_only` | Latest managed change is committed locally but not yet pushed | Show one-click push CTA |
+| `push_in_progress` | Remote push is running | Disable duplicate push actions |
+| `push_failed` | Remote push failed after local commit | Preserve local commit; show retry CTA and error |
+| `diverged_remote` | Remote branch changed or local branch is behind/ahead unexpectedly | Block auto-push; require review/reconcile |
+| `needs_review` | Generated template/profile content is incomplete or review-blocked | Allow local inspection/editing; block auto-push |
+
+#### Transition rules
+
+- After successful image publish, Puppet Master generates or updates the managed XML artifacts.
+- If managed publishing is enabled and validation passes, Puppet Master MAY auto-commit the change by default.
+- `needs_review` is entered when required review fields are missing (`support_url`, `overview_markdown`, `icon_source`) or when existing XML cannot be mapped safely without preserving passthrough content.
+- `needs_review` is cleared only when a regeneration pass or explicit user save produces a template/profile with all review-required fields present and no unmapped-field warning remains.
+- When `needs_review` clears, the next state is:
+  - `dirty_uncommitted` if managed files changed locally
+  - `clean` if no local managed diff remains
+- PM-owned paths are exactly:
+  - `ca_profile.xml`
+  - `<maintainer_slug>/<project_slug>.xml`
+  - `assets/maintainer/**` written in the current generation pass
+- Auto-commit is allowed only when the working-tree diff is fully contained within the PM-owned path set for the current generation pass.
+- Any unrelated tracked or untracked file change blocks auto-commit and surfaces a `Review repo state` CTA.
+- Auto-commit MUST stop and surface review instead of committing when:
+  - repo status is `config_invalid`, `diverged_remote`, or `needs_review`
+  - unrelated uncommitted files exist in the repo
+  - required managed paths cannot be updated deterministically
+- A successful local auto-commit transitions the repo to `committed_local_only`.
+- One-click push transitions `committed_local_only -> push_in_progress -> clean` on success.
+- A failed push transitions `push_in_progress -> push_failed` and MUST preserve the local commit for retry.
+- `diverged_remote` exits only after the user resolves the branch divergence externally or through a future dedicated reconcile flow and Puppet Master re-validates the repo state.
+
+`commit_status` enum:
+- `not_attempted`
+- `committed`
+- `skipped_review_required`
+- `skipped_unrelated_changes`
+- `failed`
+
+`push_status` enum:
+- `not_attempted`
+- `skipped_auto_push_disabled`
+- `push_in_progress`
+- `completed`
+- `failed`
+
+#### Dirty-repo safety rule
+
+If the selected repo already contains unrelated local modifications, Puppet Master MUST NOT silently fold managed template changes into that worktree state. It MUST require one of:
+
+- user cleans the repo first
+- user explicitly adopts the dirty repo state
+- user switches to a different managed repo path
+
+This prevents the managed workflow from mutating unrelated maintainer work without review.
+
+### Setup flow
+When managed Unraid template-repo publishing is enabled and no template repo is configured yet, Puppet Master must offer both:
+- creating a new template repo automatically
+- selecting an existing template repo
+
+### Default repo shape
+- default: one template repo per project
+
+### Default layout
+For managed per-project template repos, use:
+- root-level `ca_profile.xml`
+- maintainer folder
+- `project-name.xml` inside that maintainer folder
+
+### Maintainer folder source
+- default the maintainer folder name to the project’s DockerHub namespace
+- allow the user to override it with a custom maintainer slug
+
+### Commit and push behavior
+- auto-commit template-repo changes by default
+- auto-push remains configurable but default disabled
+- expose a one-click push action in the UI after commit
+- present template-repo dirty / committed / ready-to-push status in the Docker Manager surface
+
+## `ca_profile.xml` behavior
+
+### Generation rule
+If `ca_profile.xml` does not exist, Puppet Master must generate it and tell the user it still needs to be configured/reviewed.
+
+### Scope model
+- default scope: shared cross-project maintainer profile
+- optional override: per-project maintainer profile
+
+### Editability rule
+All `ca_profile.xml` fields must be editable by the user.
+
+### Image handling
+The `ca_profile.xml` editor must support both:
+- uploading/selecting an image that Puppet Master copies into the managed template repository
+- referencing an external hosted image URL
+
+Default for uploaded images:
+- if the user uploads a picture through Puppet Master, copy it into the managed template repository by default and point `ca_profile.xml` at that repo-managed asset
+
+### User-visible messaging
+When `ca_profile.xml` was auto-generated, the UI must show a clear reminder that the user should configure public-facing maintainer metadata before treating the repo as final.
+
+## Data/state model to preserve in implementation docs
+
+
+### Canonical scope split and blocked-outcome state
+
+To keep GUI, orchestrator, storage, and post-publish behavior aligned, the following scope rules are normative:
+
+- `Hide Docker Manager when not used in Project.` is a **global** setting; the older `Hide Docker Manage when not used in Project.` key is a migration alias only.
+- Docker Manager navigation/dock/panel state is **project-scoped**.
+- For project-centric surfaces, widget layouts are project-scoped with a limited global fallback only when no project is open.
+- Shared `ca_profile` source state is **global** unless the project explicitly enables per-project override.
+- Template-repo configuration and TemplateRepoStatus are **project-scoped**.
+- Effective-auth snapshots are advisory cached state only until revalidation.
+- Blocked remote side effects are first-class state transitions and MUST remain distinguishable from runtime failures in UI state, event state, and persisted results.
+
+Implementation-facing docs should preserve the following state concepts so GUI, orchestration, and persistence agree on one model:
+- Docker project detection state
+- `Hide Docker Manager when not used in Project.` setting, with the legacy `Hide Docker Manage when not used in Project.` alias migrated on read
+- requested auth mode
+- effective auth capability set
+- validated DockerHub account identity
+- selected namespace and repository
+- selected repository privacy for first-time creation
+- push policy
+- image/tag template defaults
+- auto-generate Unraid XML toggle
+- managed template-repo enabled toggle
+- template-repo location / remote / branch state
+- auto-push toggle
+- template-repo dirty/committed/pushed status
+- shared vs per-project `ca_profile.xml` scope
+- uploaded image asset mode vs external URL mode
+
+### Orchestrator-linked state vocabulary and help semantics
+
+Docker Manager is a consumer of shared orchestrator/runtime vocabulary, not a separate owner for those terms. `Glossary.md`, `Crosswalk.md`, `Decision_Policy.md`, `00-plans-index.md`, and `plans-index` retain first-class ownership for definitions and routing boundaries such as Feature Seam, Work Package, package/seam overseers, promotion class, lane pool, contamination, safe point, restore point, rollback, and effective execution identity. Docker Manager copy and state preserve the boundary between execution truth, projections, and `/page` or widget/page UI-only overlays.
+
+For orchestrator-linked rows, badges, receipts, disabled controls, and GUI help-entry text:
+- `hard_gate` / HITL `/blocked` `remote-side-effect` actions use the canonical approval/blocked flow and cannot be bypassed by generic UI confirmation; Docker Manager may render the blocker, but must not downgrade it into local confirmation copy.
+- `action-specific` confirmation rules remain distinct from HITL approval: create repository, push, rollback, cleanup, delete, and cluster mutation flows keep their own reversibility and confirmation evidence while non-bypassable `hard_gate` actions still use allowed action IDs rather than generic modals.
+- The requested vs effective execution identity remains runtime-facing and auditable. Runtime facts and visible state preserve `requested`, `effective`, `selection_reason`, `/clamped`, `/switch`, `/switching`, `/auth/account`, `/persona/runtime`, `/provider/model`, `/model/variant/auth/account`, requested Persona, effective Persona, requested platform/model/variant/auth/account policy, effective platform/model/variant/auth/account, provider/auth/account selection flow, selection/switch reason, skipped vs honored/clamped Persona controls, and skipped/clamped controls. `requested_account_policy` is not a substitute for a user-selected `requested_account_id`; concrete account selection and fallback remain visible to provider, chat-thread, `/chat/SCM`, and SCM consumers.
+- Runtime/projection events are classified as runtime-internal, operator-visible, or chat-thread resolution events. The multi-project, multi-account, and multi-worktree orchestration model scopes identity, `/projection/storage`, `/seam/package/node`, account selection, and account fallback by project, package, seam, node, account, and worktree instead of collapsing them into a single current context.
+- Stale `tier_id` usage is migration-only compatibility state, not a coordination-state key for Docker Manager. Package, seam, lane, node, attempt, receipt, worktree, and runtime asset references remain the owner keys for new navigation and audit joins.
+- `cmd.panel.switch` is shell-state only: it may choose Docker Manager as the panel/shell occupant, but object-bearing targeting must route through the shared route/open target contract instead of extending the panel-switch args shape. A `route-activation` request must not reuse destination-local state when doing so would obscure the requested target in `/GUI`.
+- PM-owned SCM state is cross-surface state. Managed template repositories, active git operations, live-run artifact roots, and worktree recovery state register with Orchestrator, Source Control, `/Source`, and Docker Manager rather than remaining hidden in one surface; `Orchestrator_Page`, `Orchestrator_Page.md`, `/recovery`, `/worktree`, cross-surface lineage, `allowed_action_ids`, and `allowed_action_ids[]` stay visible where recovery and destination panels consume them.
+- Requested/effective display groups use the exact labels `Requested`, `Effective`, `Reason`, `Support`, `Inherited from`, and `Overridden by` when Docker Manager explains inherited policy, project policy, user override, account fallback, or capability degradation.
+- Help text must not flatten Feature Seam, Work Package, Weak Integration, Corroboration, Promotion, Graph Patch, Concern lifecycle, Lane vs Worktree, requested vs effective, safe point vs restore point, historical vs superseded vs revoked, or History vs Ledger into a one-line tooltip. Simple/Expert/ELI5, `/Expert/ELI5`, and `/tooltip` variants use stable canonical terminology, distinguish object vs state vs action, and explain why the state exists from canonical reason codes and evidence rather than panel-local prose.
+- Dedicated help-entry candidates include Feature Seam, Work Package, Package Overseer, Seam Overseer, Weak Integration, Promotion, Corroboration, Concern, Graph Patch, Graph Generation, Lane, requested vs effective, History vs Ledger, and historical vs superseded vs revoked vs reopened.
+- Contextual help is limited to local button affordances, simple counts or `/badges`, one-surface-only controls whose meaning is obvious from context, and provider-specific caveats shown near the relevant controls; it must not replace the canonical state vocabulary above.
+- Runtime recovery copy keeps `safe-point`, `restore-point`, rollback, and contamination distinct across `/storage/UI`; a safe point is an execution recovery anchor, a restore point is user-facing saved-state/recovery vocabulary only where the owning UI/storage contract declares it, rollback is the explicit mutation outcome, and contamination is a governance/storage condition that affects reuse, retry, and promotion eligibility.
+- Blocked payload normalization treats legacy `reason_code` and `recovery_options[]` as compatibility inputs while runtime-facing blocked payloads use canonical `blocked_reason_code`, `allowed_action_ids`, and `allowed_action_ids[]`.
+
+## Safety and constraints
+- repository creation confirmation is mandatory and non-bypassable
+- secrets must not be written to redb, project files, YAML, or evidence
+- publish/template-repo flows must redact secrets in logs/evidence
+- docs must distinguish DockerHub image distribution from Unraid template distribution
+- browser login and PAT must be documented as different inputs that may lead to different effective capability
+- the UI must not claim full repository-management support when validation shows only partial capability
+
+## Initial non-goals
+The first-class scope above does **not** require initial automation for:
+- Community Applications submission-form submission
+- forum support-thread creation
+- fully automatic remote template-repo push by default
+- bypassing manual review for public maintainer metadata correctness
+
+## Acceptance criteria
+- The GUI exposes both browser login and PAT entry, with PAT-recommended helper text and clear guidance.
+- The GUI shows requested auth mode and effective capability separately.
+- DockerHub namespace and repository discovery works from supported auth inputs.
+- Missing DockerHub repo creation is guarded by a mandatory non-bypassable confirmation showing namespace, repo name, and privacy.
+- New repository creation defaults to private.
+- Puppet Master can build and run project containers for testing and provide user-openable access points when available.
+- Docker publish results surface digest/tag/registry info without leaking credentials.
+- Unraid XML auto-generation/update is enabled by default after successful publish and can be disabled near DockerHub settings.
+- Managed Unraid template-repo workflow is enabled by default and can be disabled.
+- The default template-repo layout is root `ca_profile.xml` plus maintainer folder plus `project-name.xml`.
+- The default maintainer folder source is the DockerHub namespace, but the user can override it.
+- `ca_profile.xml` is generated if missing, all fields are editable, shared cross-project scope is default, and per-project override is available.
+- Profile images can be either repo-managed uploaded assets or externally hosted URLs; uploaded images default to repo-managed assets.
+- Template-repo changes auto-commit by default, do not auto-push by default, and expose a one-click push action in the UI.
+
+## Remote Side-Effect Blocked Payload Normalization (2026-03-09)
+
+The Docker/Unraid remote-side-effect contracts remain the reference pattern for blocked remote mutation and must use canonical runtime payload names.
+
+Required runtime-facing rules:
+- remote side effects blocked by confirmation/policy remain `blocked`, not `failed`
+- preserve completed local work whenever remote publish/creation steps are blocked
+- auth expiry during publish blocks the publish path without discarding the completed local build result
+- remote-side-effect approval requirements remain blocked until explicitly resolved
+- auth recovery alone does not auto-resubmit or auto-publish a blocked remote side effect; explicit resume/retry remains required
+- UI must explain when a local artifact exists but remote publish remains blocked
+- runtime-facing blocked payloads MUST use canonical `blocked_reason_code` plus ordered `allowed_action_ids[]`
+- domain-specific `reason_code` values MAY remain internal detail, but MUST map into canonical runtime taxonomy at shared surfaces
+
+Canonical runtime-facing blocked payload shape:
+- `blocked_reason_code`
+- ordered `allowed_action_ids[]`
+- `preserved_local_work`
+- `detail_ref?`
+
+Legacy fields such as `reason_code` and `recovery_options[]` are non-canonical and MUST NOT be copied into new shared runtime contracts.
+
+## Owner / Consumer Map
+
+This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Containers_Registry_and_Unraid.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+
+ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+
+## PlanUnits
+
+
+<<< CONTEXT_AFTER 996-1007 >>>
+### CRAU-002 - Document Scope And Owner Boundaries
+
+```yaml
+plan_unit_id: CRAU-002
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Containers_Registry_and_Unraid.md
+canonical_text: >-
+  Containers, Registry, and Unraid Integration is the SSOT for DockerHub
+  authentication UX and state, requested-vs-effective Docker auth capability,
+  namespace/repository discovery and creation, protected repository creation,
+  first-class Docker Manager GUI behavior, Unraid template workflows, and

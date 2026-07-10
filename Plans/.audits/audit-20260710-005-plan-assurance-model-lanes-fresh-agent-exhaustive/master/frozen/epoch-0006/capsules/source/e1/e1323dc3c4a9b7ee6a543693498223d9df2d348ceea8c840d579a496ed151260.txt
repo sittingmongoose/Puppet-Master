@@ -1,0 +1,389 @@
+<<< CONTEXT_BEFORE canonical_document_lines=19454-19465 >>>
+L00019454	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00019455	        },
+L00019456	        {
+L00019457	          "test_id": "wiring.catalog.persona_duplicate.events",
+L00019458	          "evidence_kind": "event_test",
+L00019459	          "requirement": "Assert cmd.persona.duplicate emits persona.created with command_id, origin, correlation_id, and handler target."
+L00019460	        }
+L00019461	      ],
+L00019462	      "event_test_requirements": [
+L00019463	        "Assert cmd.persona.duplicate emits persona.created with command_id, origin, correlation_id, and handler target."
+L00019464	      ]
+L00019465	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=19466-19825 >>>
+L00019466	    "catalog.persona_export": {
+L00019467	      "ui_element_id": "catalog.persona_export",
+L00019468	      "ui_location": "Agent Config > Personas > Export",
+L00019469	      "ui_command_id": "cmd.persona.export",
+L00019470	      "handler_location": "handlers::persona::export",
+L00019471	      "expected_event_types": [
+L00019472	        "persona.exported"
+L00019473	      ],
+L00019474	      "acceptance_checks": [
+L00019475	        "cmd.persona.export is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+L00019476	        "cmd.persona.export exposes state selector and disabled reason before dispatch.",
+L00019477	        "cmd.persona.export dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+L00019478	        "cmd.persona.export uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+L00019479	        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+L00019480	      ],
+L00019481	      "evidence_required": "Production wiring contract for cmd.persona.export. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00019482	      "state_selector": "state.commands.persona_export.availability",
+L00019483	      "disabled_reason_projection": "state.commands.persona_export.disabled_reason",
+L00019484	      "effect_contract": {
+L00019485	        "effect_kind": "event",
+L00019486	        "description": "cmd.persona.export emits the declared domain event(s) and records dispatch correlation evidence.",
+L00019487	        "receipt_or_event_refs": [
+L00019488	          "persona.exported"
+L00019489	        ]
+L00019490	      },
+L00019491	      "accessibility_contract": {
+L00019492	        "role_or_semantics": "catalog.persona_export exposes a stable role/name/description matching cmd.persona.export.",
+L00019493	        "keyboard_access": "catalog.persona_export is reachable and activatable by keyboard where the control is visible.",
+L00019494	        "focus_management": "catalog.persona_export preserves visible focus and returns focus deterministically after dispatch or error.",
+L00019495	        "disabled_announcement": "catalog.persona_export surfaces state.commands.persona_export.disabled_reason to assistive technology when unavailable."
+L00019496	      },
+L00019497	      "test_evidence": [
+L00019498	        {
+L00019499	          "test_id": "wiring.catalog.persona_export.dispatcher",
+L00019500	          "evidence_kind": "dispatcher_fixture",
+L00019501	          "requirement": "Dispatching cmd.persona.export reaches handlers::persona::export with typed args/result contract."
+L00019502	        },
+L00019503	        {
+L00019504	          "test_id": "wiring.catalog.persona_export.state_projection",
+L00019505	          "evidence_kind": "state_projection",
+L00019506	          "requirement": "Availability reads state.commands.persona_export.availability and disabled copy reads state.commands.persona_export.disabled_reason."
+L00019507	        },
+L00019508	        {
+L00019509	          "test_id": "wiring.catalog.persona_export.effect",
+L00019510	          "evidence_kind": "receipt_or_event_assertion",
+L00019511	          "requirement": "cmd.persona.export emits the declared domain event(s) and records dispatch correlation evidence."
+L00019512	        },
+L00019513	        {
+L00019514	          "test_id": "wiring.catalog.persona_export.accessibility",
+L00019515	          "evidence_kind": "accessibility_regression",
+L00019516	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00019517	        },
+L00019518	        {
+L00019519	          "test_id": "wiring.catalog.persona_export.events",
+L00019520	          "evidence_kind": "event_test",
+L00019521	          "requirement": "Assert cmd.persona.export emits persona.exported with command_id, origin, correlation_id, and handler target."
+L00019522	        }
+L00019523	      ],
+L00019524	      "event_test_requirements": [
+L00019525	        "Assert cmd.persona.export emits persona.exported with command_id, origin, correlation_id, and handler target."
+L00019526	      ]
+L00019527	    },
+L00019528	    "catalog.persona_import": {
+L00019529	      "ui_element_id": "catalog.persona_import",
+L00019530	      "ui_location": "Agent Config > Personas > Import",
+L00019531	      "ui_command_id": "cmd.persona.import",
+L00019532	      "handler_location": "handlers::persona::import",
+L00019533	      "expected_event_types": [
+L00019534	        "persona.imported"
+L00019535	      ],
+L00019536	      "acceptance_checks": [
+L00019537	        "cmd.persona.import is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+L00019538	        "cmd.persona.import exposes state selector and disabled reason before dispatch.",
+L00019539	        "cmd.persona.import dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+L00019540	        "cmd.persona.import uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+L00019541	        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+L00019542	      ],
+L00019543	      "evidence_required": "Production wiring contract for cmd.persona.import. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00019544	      "state_selector": "state.commands.persona_import.availability",
+L00019545	      "disabled_reason_projection": "state.commands.persona_import.disabled_reason",
+L00019546	      "effect_contract": {
+L00019547	        "effect_kind": "event",
+L00019548	        "description": "cmd.persona.import emits the declared domain event(s) and records dispatch correlation evidence.",
+L00019549	        "receipt_or_event_refs": [
+L00019550	          "persona.imported"
+L00019551	        ]
+L00019552	      },
+L00019553	      "accessibility_contract": {
+L00019554	        "role_or_semantics": "catalog.persona_import exposes a stable role/name/description matching cmd.persona.import.",
+L00019555	        "keyboard_access": "catalog.persona_import is reachable and activatable by keyboard where the control is visible.",
+L00019556	        "focus_management": "catalog.persona_import preserves visible focus and returns focus deterministically after dispatch or error.",
+L00019557	        "disabled_announcement": "catalog.persona_import surfaces state.commands.persona_import.disabled_reason to assistive technology when unavailable."
+L00019558	      },
+L00019559	      "test_evidence": [
+L00019560	        {
+L00019561	          "test_id": "wiring.catalog.persona_import.dispatcher",
+L00019562	          "evidence_kind": "dispatcher_fixture",
+L00019563	          "requirement": "Dispatching cmd.persona.import reaches handlers::persona::import with typed args/result contract."
+L00019564	        },
+L00019565	        {
+L00019566	          "test_id": "wiring.catalog.persona_import.state_projection",
+L00019567	          "evidence_kind": "state_projection",
+L00019568	          "requirement": "Availability reads state.commands.persona_import.availability and disabled copy reads state.commands.persona_import.disabled_reason."
+L00019569	        },
+L00019570	        {
+L00019571	          "test_id": "wiring.catalog.persona_import.effect",
+L00019572	          "evidence_kind": "receipt_or_event_assertion",
+L00019573	          "requirement": "cmd.persona.import emits the declared domain event(s) and records dispatch correlation evidence."
+L00019574	        },
+L00019575	        {
+L00019576	          "test_id": "wiring.catalog.persona_import.accessibility",
+L00019577	          "evidence_kind": "accessibility_regression",
+L00019578	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00019579	        },
+L00019580	        {
+L00019581	          "test_id": "wiring.catalog.persona_import.events",
+L00019582	          "evidence_kind": "event_test",
+L00019583	          "requirement": "Assert cmd.persona.import emits persona.imported with command_id, origin, correlation_id, and handler target."
+L00019584	        }
+L00019585	      ],
+L00019586	      "event_test_requirements": [
+L00019587	        "Assert cmd.persona.import emits persona.imported with command_id, origin, correlation_id, and handler target."
+L00019588	      ]
+L00019589	    },
+L00019590	    "catalog.persona_select": {
+L00019591	      "ui_element_id": "catalog.persona_select",
+L00019592	      "ui_location": "Agent Config > Personas > Select",
+L00019593	      "ui_command_id": "cmd.persona.select",
+L00019594	      "handler_location": "handlers::persona::select",
+L00019595	      "expected_event_types": [
+L00019596	        "persona.selected"
+L00019597	      ],
+L00019598	      "acceptance_checks": [
+L00019599	        "cmd.persona.select is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+L00019600	        "cmd.persona.select exposes state selector and disabled reason before dispatch.",
+L00019601	        "cmd.persona.select dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+L00019602	        "cmd.persona.select uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+L00019603	        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+L00019604	      ],
+L00019605	      "evidence_required": "Production wiring contract for cmd.persona.select. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00019606	      "state_selector": "state.commands.persona_select.availability",
+L00019607	      "disabled_reason_projection": "state.commands.persona_select.disabled_reason",
+L00019608	      "effect_contract": {
+L00019609	        "effect_kind": "event",
+L00019610	        "description": "cmd.persona.select emits the declared domain event(s) and records dispatch correlation evidence.",
+L00019611	        "receipt_or_event_refs": [
+L00019612	          "persona.selected"
+L00019613	        ]
+L00019614	      },
+L00019615	      "accessibility_contract": {
+L00019616	        "role_or_semantics": "catalog.persona_select exposes a stable role/name/description matching cmd.persona.select.",
+L00019617	        "keyboard_access": "catalog.persona_select is reachable and activatable by keyboard where the control is visible.",
+L00019618	        "focus_management": "catalog.persona_select preserves visible focus and returns focus deterministically after dispatch or error.",
+L00019619	        "disabled_announcement": "catalog.persona_select surfaces state.commands.persona_select.disabled_reason to assistive technology when unavailable."
+L00019620	      },
+L00019621	      "test_evidence": [
+L00019622	        {
+L00019623	          "test_id": "wiring.catalog.persona_select.dispatcher",
+L00019624	          "evidence_kind": "dispatcher_fixture",
+L00019625	          "requirement": "Dispatching cmd.persona.select reaches handlers::persona::select with typed args/result contract."
+L00019626	        },
+L00019627	        {
+L00019628	          "test_id": "wiring.catalog.persona_select.state_projection",
+L00019629	          "evidence_kind": "state_projection",
+L00019630	          "requirement": "Availability reads state.commands.persona_select.availability and disabled copy reads state.commands.persona_select.disabled_reason."
+L00019631	        },
+L00019632	        {
+L00019633	          "test_id": "wiring.catalog.persona_select.effect",
+L00019634	          "evidence_kind": "receipt_or_event_assertion",
+L00019635	          "requirement": "cmd.persona.select emits the declared domain event(s) and records dispatch correlation evidence."
+L00019636	        },
+L00019637	        {
+L00019638	          "test_id": "wiring.catalog.persona_select.accessibility",
+L00019639	          "evidence_kind": "accessibility_regression",
+L00019640	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00019641	        },
+L00019642	        {
+L00019643	          "test_id": "wiring.catalog.persona_select.events",
+L00019644	          "evidence_kind": "event_test",
+L00019645	          "requirement": "Assert cmd.persona.select emits persona.selected with command_id, origin, correlation_id, and handler target."
+L00019646	        }
+L00019647	      ],
+L00019648	      "event_test_requirements": [
+L00019649	        "Assert cmd.persona.select emits persona.selected with command_id, origin, correlation_id, and handler target."
+L00019650	      ]
+L00019651	    },
+L00019652	    "catalog.persona_update": {
+L00019653	      "ui_element_id": "catalog.persona_update",
+L00019654	      "ui_location": "Agent Config > Personas > Update",
+L00019655	      "ui_command_id": "cmd.persona.update",
+L00019656	      "handler_location": "handlers::persona::update",
+L00019657	      "expected_event_types": [
+L00019658	        "persona.updated"
+L00019659	      ],
+L00019660	      "acceptance_checks": [
+L00019661	        "cmd.persona.update is registered in the UICommand dispatcher with typed payload, result, error, and UICommandResponse contract.",
+L00019662	        "cmd.persona.update exposes state selector and disabled reason before dispatch.",
+L00019663	        "cmd.persona.update dispatch preserves command_id, origin, correlation_id, handler target, result, and receipt/event refs.",
+L00019664	        "cmd.persona.update uses canonical domain events or explicit no-persist dispatch receipts; fabricated *.command_applied events are invalid.",
+L00019665	        "Render/control evidence, dispatcher fixture, state projection, receipt/event assertion, accessibility check, and regression evidence are required before production certification."
+L00019666	      ],
+L00019667	      "evidence_required": "Production wiring contract for cmd.persona.update. Certification requires render/control evidence, dispatcher fixture, typed payload/result/error assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00019668	      "state_selector": "state.commands.persona_update.availability",
+L00019669	      "disabled_reason_projection": "state.commands.persona_update.disabled_reason",
+L00019670	      "effect_contract": {
+L00019671	        "effect_kind": "event",
+L00019672	        "description": "cmd.persona.update emits the declared domain event(s) and records dispatch correlation evidence.",
+L00019673	        "receipt_or_event_refs": [
+L00019674	          "persona.updated"
+L00019675	        ]
+L00019676	      },
+L00019677	      "accessibility_contract": {
+L00019678	        "role_or_semantics": "catalog.persona_update exposes a stable role/name/description matching cmd.persona.update.",
+L00019679	        "keyboard_access": "catalog.persona_update is reachable and activatable by keyboard where the control is visible.",
+L00019680	        "focus_management": "catalog.persona_update preserves visible focus and returns focus deterministically after dispatch or error.",
+L00019681	        "disabled_announcement": "catalog.persona_update surfaces state.commands.persona_update.disabled_reason to assistive technology when unavailable."
+L00019682	      },
+L00019683	      "test_evidence": [
+L00019684	        {
+L00019685	          "test_id": "wiring.catalog.persona_update.dispatcher",
+L00019686	          "evidence_kind": "dispatcher_fixture",
+L00019687	          "requirement": "Dispatching cmd.persona.update reaches handlers::persona::update with typed args/result contract."
+L00019688	        },
+L00019689	        {
+L00019690	          "test_id": "wiring.catalog.persona_update.state_projection",
+L00019691	          "evidence_kind": "state_projection",
+L00019692	          "requirement": "Availability reads state.commands.persona_update.availability and disabled copy reads state.commands.persona_update.disabled_reason."
+L00019693	        },
+L00019694	        {
+L00019695	          "test_id": "wiring.catalog.persona_update.effect",
+L00019696	          "evidence_kind": "receipt_or_event_assertion",
+L00019697	          "requirement": "cmd.persona.update emits the declared domain event(s) and records dispatch correlation evidence."
+L00019698	        },
+L00019699	        {
+L00019700	          "test_id": "wiring.catalog.persona_update.accessibility",
+L00019701	          "evidence_kind": "accessibility_regression",
+L00019702	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00019703	        },
+L00019704	        {
+L00019705	          "test_id": "wiring.catalog.persona_update.events",
+L00019706	          "evidence_kind": "event_test",
+L00019707	          "requirement": "Assert cmd.persona.update emits persona.updated with command_id, origin, correlation_id, and handler target."
+L00019708	        }
+L00019709	      ],
+L00019710	      "event_test_requirements": [
+L00019711	        "Assert cmd.persona.update emits persona.updated with command_id, origin, correlation_id, and handler target."
+L00019712	      ]
+L00019713	    },
+L00019714	    "catalog.plan_compile_cancel": {
+L00019715	      "ui_element_id": "catalog.plan_compile_cancel",
+L00019716	      "ui_location": "Orchestrator > Plan Compile",
+L00019717	      "ui_command_id": "cmd.plan_compile.cancel",
+L00019718	      "handler_location": "handlers::plan_compile::cancel",
+L00019719	      "expected_event_types": [],
+L00019720	      "acceptance_checks": [
+L00019721	        "cmd.plan_compile.cancel must be registered in the UICommand dispatcher with typed args and result contract",
+L00019722	        "cmd.plan_compile.cancel must expose projected state selector and disabled reason before dispatch",
+L00019723	        "cmd.plan_compile.cancel dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00019724	        "cmd.plan_compile.cancel must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00019725	        "Plan Compile command is pre-enable/design-only unless Plans/Plan_To_Node_Compilation.md, Executor_Protocol, and Goal_Runtime_System explicitly enable runtime activation; it must not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks.",
+L00019726	        "cmd.plan_compile.cancel must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00019727	      ],
+L00019728	      "evidence_required": "Production wiring contract for cmd.plan_compile.cancel; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Disabled/pre-enable disposition: this row covers UI contract shape only and cannot certify runtime launch/build effects while PlanCompile runtime activation remains disabled.",
+L00019729	      "state_selector": "state.commands.plan_compile_cancel.availability",
+L00019730	      "disabled_reason_projection": "state.commands.plan_compile_cancel.disabled_reason",
+L00019731	      "effect_contract": {
+L00019732	        "effect_kind": "receipt",
+L00019733	        "description": "cmd.plan_compile.cancel records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00019734	        "receipt_or_event_refs": [
+L00019735	          "cmd.plan_compile.cancel.dispatch_receipt"
+L00019736	        ]
+L00019737	      },
+L00019738	      "accessibility_contract": {
+L00019739	        "role_or_semantics": "catalog.plan_compile_cancel exposes a stable role/name/description matching cmd.plan_compile.cancel.",
+L00019740	        "keyboard_access": "catalog.plan_compile_cancel is reachable and activatable by keyboard where the control is visible.",
+L00019741	        "focus_management": "catalog.plan_compile_cancel preserves visible focus and returns focus deterministically after dispatch or error.",
+L00019742	        "disabled_announcement": "catalog.plan_compile_cancel surfaces state.commands.plan_compile_cancel.disabled_reason to assistive technology when unavailable."
+L00019743	      },
+L00019744	      "test_evidence": [
+L00019745	        {
+L00019746	          "test_id": "wiring.catalog.plan_compile_cancel.dispatcher",
+L00019747	          "evidence_kind": "dispatcher_fixture",
+L00019748	          "requirement": "Dispatching cmd.plan_compile.cancel reaches handlers::plan_compile::cancel with typed args/result contract."
+L00019749	        },
+L00019750	        {
+L00019751	          "test_id": "wiring.catalog.plan_compile_cancel.state_projection",
+L00019752	          "evidence_kind": "state_projection",
+L00019753	          "requirement": "Availability reads state.commands.plan_compile_cancel.availability and disabled copy reads state.commands.plan_compile_cancel.disabled_reason."
+L00019754	        },
+L00019755	        {
+L00019756	          "test_id": "wiring.catalog.plan_compile_cancel.effect",
+L00019757	          "evidence_kind": "receipt_or_event_assertion",
+L00019758	          "requirement": "cmd.plan_compile.cancel records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00019759	        },
+L00019760	        {
+L00019761	          "test_id": "wiring.catalog.plan_compile_cancel.accessibility",
+L00019762	          "evidence_kind": "accessibility_regression",
+L00019763	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00019764	        }
+L00019765	      ],
+L00019766	      "event_test_requirements": [
+L00019767	        "Assert cmd.plan_compile.cancel records dispatch receipt cmd.plan_compile.cancel.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00019768	      ]
+L00019769	    },
+L00019770	    "catalog.plan_compile_inspect_assignment": {
+L00019771	      "ui_element_id": "catalog.plan_compile_inspect_assignment",
+L00019772	      "ui_location": "Orchestrator > Plan Compile",
+L00019773	      "ui_command_id": "cmd.plan_compile.inspect_assignment",
+L00019774	      "handler_location": "handlers::plan_compile::inspect_assignment",
+L00019775	      "expected_event_types": [],
+L00019776	      "acceptance_checks": [
+L00019777	        "cmd.plan_compile.inspect_assignment must be registered in the UICommand dispatcher with typed args and result contract",
+L00019778	        "cmd.plan_compile.inspect_assignment must expose projected state selector and disabled reason before dispatch",
+L00019779	        "cmd.plan_compile.inspect_assignment dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00019780	        "cmd.plan_compile.inspect_assignment must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00019781	        "Plan Compile command is pre-enable/design-only unless Plans/Plan_To_Node_Compilation.md, Executor_Protocol, and Goal_Runtime_System explicitly enable runtime activation; it must not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks.",
+L00019782	        "cmd.plan_compile.inspect_assignment must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00019783	      ],
+L00019784	      "evidence_required": "Production wiring contract for cmd.plan_compile.inspect_assignment; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence. Disabled/pre-enable disposition: this row covers UI contract shape only and cannot certify runtime launch/build effects while PlanCompile runtime activation remains disabled.",
+L00019785	      "state_selector": "state.commands.plan_compile_inspect_assignment.availability",
+L00019786	      "disabled_reason_projection": "state.commands.plan_compile_inspect_assignment.disabled_reason",
+L00019787	      "effect_contract": {
+L00019788	        "effect_kind": "receipt",
+L00019789	        "description": "cmd.plan_compile.inspect_assignment records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid.",
+L00019790	        "receipt_or_event_refs": [
+L00019791	          "cmd.plan_compile.inspect_assignment.dispatch_receipt"
+L00019792	        ]
+L00019793	      },
+L00019794	      "accessibility_contract": {
+L00019795	        "role_or_semantics": "catalog.plan_compile_inspect_assignment exposes a stable role/name/description matching cmd.plan_compile.inspect_assignment.",
+L00019796	        "keyboard_access": "catalog.plan_compile_inspect_assignment is reachable and activatable by keyboard where the control is visible.",
+L00019797	        "focus_management": "catalog.plan_compile_inspect_assignment preserves visible focus and returns focus deterministically after dispatch or error.",
+L00019798	        "disabled_announcement": "catalog.plan_compile_inspect_assignment surfaces state.commands.plan_compile_inspect_assignment.disabled_reason to assistive technology when unavailable."
+L00019799	      },
+L00019800	      "test_evidence": [
+L00019801	        {
+L00019802	          "test_id": "wiring.catalog.plan_compile_inspect_assignment.dispatcher",
+L00019803	          "evidence_kind": "dispatcher_fixture",
+L00019804	          "requirement": "Dispatching cmd.plan_compile.inspect_assignment reaches handlers::plan_compile::inspect_assignment with typed args/result contract."
+L00019805	        },
+L00019806	        {
+L00019807	          "test_id": "wiring.catalog.plan_compile_inspect_assignment.state_projection",
+L00019808	          "evidence_kind": "state_projection",
+L00019809	          "requirement": "Availability reads state.commands.plan_compile_inspect_assignment.availability and disabled copy reads state.commands.plan_compile_inspect_assignment.disabled_reason."
+L00019810	        },
+L00019811	        {
+L00019812	          "test_id": "wiring.catalog.plan_compile_inspect_assignment.effect",
+L00019813	          "evidence_kind": "receipt_or_event_assertion",
+L00019814	          "requirement": "cmd.plan_compile.inspect_assignment records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00019815	        },
+L00019816	        {
+L00019817	          "test_id": "wiring.catalog.plan_compile_inspect_assignment.accessibility",
+L00019818	          "evidence_kind": "accessibility_regression",
+L00019819	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00019820	        }
+L00019821	      ],
+L00019822	      "event_test_requirements": [
+L00019823	        "Assert cmd.plan_compile.inspect_assignment records dispatch receipt cmd.plan_compile.inspect_assignment.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00019824	      ]
+L00019825	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=19826-19837 >>>
+L00019826	    "catalog.plan_compile_inspect_blocker": {
+L00019827	      "ui_element_id": "catalog.plan_compile_inspect_blocker",
+L00019828	      "ui_location": "Orchestrator > Plan Compile",
+L00019829	      "ui_command_id": "cmd.plan_compile.inspect_blocker",
+L00019830	      "handler_location": "handlers::plan_compile::inspect_blocker",
+L00019831	      "expected_event_types": [],
+L00019832	      "acceptance_checks": [
+L00019833	        "cmd.plan_compile.inspect_blocker must be registered in the UICommand dispatcher with typed args and result contract",
+L00019834	        "cmd.plan_compile.inspect_blocker must expose projected state selector and disabled reason before dispatch",
+L00019835	        "cmd.plan_compile.inspect_blocker dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00019836	        "cmd.plan_compile.inspect_blocker must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00019837	        "Plan Compile command is pre-enable/design-only unless Plans/Plan_To_Node_Compilation.md, Executor_Protocol, and Goal_Runtime_System explicitly enable runtime activation; it must not create WorkNodes, NodeSeeds, executable queues, runtime dispatch, implementation files, or production build tasks.",

@@ -1,0 +1,99 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-98 >>>
+L00000001	{
+L00000002	  "$schema": "https://json-schema.org/draft/2020-12/schema",
+L00000003	  "$id": "pm.project-plan-graph-index.v1",
+L00000004	  "title": "Puppet Master Project Plan Graph Index",
+L00000005	  "type": "object",
+L00000006	  "additionalProperties": false,
+L00000007	  "required": [
+L00000008	    "schema_version",
+L00000009	    "graph_id",
+L00000010	    "nodes",
+L00000011	    "entrypoints",
+L00000012	    "execution_ordering",
+L00000013	    "validation"
+L00000014	  ],
+L00000015	  "properties": {
+L00000016	    "$schema": {"type": "string"},
+L00000017	    "schema_version": {"type": "string", "minLength": 1},
+L00000018	    "graph_id": {"type": "string", "minLength": 1},
+L00000019	    "created_at_utc": {"type": "string"},
+L00000020	    "nodes": {
+L00000021	      "type": "array",
+L00000022	      "minItems": 1,
+L00000023	      "items": {
+L00000024	        "type": "object",
+L00000025	        "additionalProperties": false,
+L00000026	        "required": ["node_id", "path", "sha256"],
+L00000027	        "properties": {
+L00000028	          "node_id": {"type": "string", "minLength": 1},
+L00000029	          "path": {"type": "string", "minLength": 1},
+L00000030	          "sha256": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"},
+L00000031	          "subgraph": {"type": "string"},
+L00000032	          "depends_on": {
+L00000033	            "type": "array",
+L00000034	            "uniqueItems": true,
+L00000035	            "items": {"type": "string", "minLength": 1}
+L00000036	          }
+L00000037	        }
+L00000038	      }
+L00000039	    },
+L00000040	    "entrypoints": {
+L00000041	      "type": "array",
+L00000042	      "minItems": 1,
+L00000043	      "uniqueItems": true,
+L00000044	      "items": {"type": "string", "minLength": 1}
+L00000045	    },
+L00000046	    "execution_ordering": {
+L00000047	      "type": "object",
+L00000048	      "additionalProperties": false,
+L00000049	      "required": [
+L00000050	        "ready_rule",
+L00000051	        "selection_rule",
+L00000052	        "completion_rule",
+L00000053	        "spec_lock_source",
+L00000054	        "node_state_source"
+L00000055	      ],
+L00000056	      "properties": {
+L00000057	        "ready_rule": {
+L00000058	          "type": "string",
+L00000059	          "const": "all_blockers_done_and_spec_lock_satisfied"
+L00000060	        },
+L00000061	        "selection_rule": {
+L00000062	          "type": "string",
+L00000063	          "const": "lexicographic_node_id"
+L00000064	        },
+L00000065	        "completion_rule": {
+L00000066	          "type": "string",
+L00000067	          "const": "verifier_evidence_then_auto_done"
+L00000068	        },
+L00000069	        "spec_lock_source": {
+L00000070	          "type": "string",
+L00000071	          "const": "Plans/Spec_Lock.json"
+L00000072	        },
+L00000073	        "node_state_source": {
+L00000074	          "type": "string",
+L00000075	          "const": "plan_graph/nodes/<node_id>.json"
+L00000076	        }
+L00000077	      }
+L00000078	    },
+L00000079	    "validation": {
+L00000080	      "type": "object",
+L00000081	      "additionalProperties": false,
+L00000082	      "required": ["index_schema_id", "node_schema_id", "targets"],
+L00000083	      "properties": {
+L00000084	        "index_schema_id": {"type": "string", "const": "pm.project-plan-graph-index.v1"},
+L00000085	        "node_schema_id": {"type": "string", "const": "pm.project-plan-node.v1"},
+L00000086	        "targets": {
+L00000087	          "type": "object",
+L00000088	          "additionalProperties": false,
+L00000089	          "required": ["acceptance_manifest", "contracts_index"],
+L00000090	          "properties": {
+L00000091	            "acceptance_manifest": {"type": "string", "minLength": 1},
+L00000092	            "contracts_index": {"type": "string", "minLength": 1}
+L00000093	          }
+L00000094	        }
+L00000095	      }
+L00000096	    }
+L00000097	  }
+L00000098	}

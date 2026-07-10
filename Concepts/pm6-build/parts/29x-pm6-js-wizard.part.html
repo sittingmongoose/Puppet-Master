@@ -43,13 +43,16 @@
 
   /* ---------------- page-local UI state (render state only) -------- */
   var W = {
-    stage: 'intake',            /* intake | discovery | workspace */
+    stage: 'intake',            /* intake | requirements | discovery | workspace */
     attach: 'github',
     intent: 'feature',
     discovering: false,
     threadMode: 'overview',     /* overview | topic | review */
-    drafts: {},                 /* 'tid|qid' -> value */
-    ffOpen: {},                 /* 'tid|qid' -> freeform textarea open */
+    drafts: {},                 /* kept for safety; interview path no longer uses drafts */
+    ffOpen: {},                 /* kept for safety; interview path no longer uses freeform toggles */
+    typing: {},                 /* tid -> thread entries to show while typing dots run */
+    reqTurnPending: null,       /* PRD builder: turn entries to show while typing dots run */
+    lastReqTurns: 0,            /* PRD builder: last seen turn count (typing detection) */
     theater: null,              /* step index while the integration sequence plays */
     theaterDone: false,
     testing: 'full'
@@ -71,6 +74,11 @@
     compiling: 'Compiling', auditing: 'Auditing', repairing: 'Repairing',
     ready: 'Ready', impacted: 'Impacted', 'review-impact': 'Review impact',
     reopened: 'Reopened', deferred: 'Deferred', blocked: 'Blocked'
+  };
+  var REASON_LABEL = {
+    blocked_by_gate: 'Blocked', busy: 'Busy', already_done: 'Done',
+    stale: 'Stale', unsupported: 'Unavailable', not_configured: 'Not configured',
+    not_signed_in: 'Signed out', rate_limited: 'Rate limited', demo_scope: 'Demo'
   };
   var BUSY_STATES = { ledger_syncing: 1, compiling: 1, auditing: 1, repairing: 1, reopened: 1 };
   var STATE_PCT = {
@@ -153,7 +161,9 @@
     '</button>';
   }
   function reasonLine(code, hint) {
-    return '<div class="pm6-wiz-reason"><span class="pm6-wiz-reason-code">' + esc(code) + '</span><span>' + esc(hint) + '</span></div>';
+    return '<div class="pm6-wiz-reason"><span class="pm6-wiz-reason-code' +
+      (code === 'already_done' ? ' ok' : '') + '" data-reason-code="' + esc(code) + '">' +
+      esc(REASON_LABEL[code] || 'Blocked') + '</span><span>' + esc(hint) + '</span></div>';
   }
 
   /* ---------------- topic map ---------------- */
@@ -291,8 +301,10 @@
         ? reasonLine('blocked_by_gate', 'Final audit is still closing — this unlocks in a few seconds.')
         : reasonLine('blocked_by_gate', 'Reach zero incomplete items: finish all ' + n + ' topics, then Integrate the Final Plan Pack.');
     }
+    var prd = (s.reqs && s.reqs.prd) || {};
     host.innerHTML =
       '<div class="pm6-wiz-rail-title">Compile readiness — zero incomplete</div>' +
+      gate(!!prd.approved, false, esc('Approved PRD Pack bound — ' + (prd.packId || 'prd-9c2e41') + ' ' + (prd.version || 'v1'))) +
       gate(nReady === n, nReady < n && nReady > 0, esc(nReady + ' of ' + n) + ' topics Ready') +
       gate(storageAnswered(), false, 'Storage decision recorded (Topic 8)') +
       gate(!!s.pack, false, 'Final Plan Pack integrated') +
@@ -301,6 +313,188 @@
       '<button type="button" class="pm6-wiz-approve' + (canApprove ? ' armed' : '') + '"' + btnAttrs +
         ' data-demo-action="wizard.approve_and_build">' + ico('rocket') + btnLabel + '</button>' + hint;
     hydrateIcons(host);
+  }
+
+  /* ---------------- requirements stage (docs + PRD builder) ---------------- */
+  function reqSeed() {
+    var d = D();
+    return (d && d.data && d.data.wizard && d.data.wizard.reqs) ||
+      { sampleDocs: [], builderTurns: [], outline: [], prd: {} };
+  }
+  function bubble(en) {
+    if (!en) return '';
+    if (en.role === 'note') {
+      return '<div class="pm6-wiz-thread-note pm6-wiz-msg-note"><span class="pm6-wiz-glyph">↳</span> ' + esc(en.text) + '</div>';
+    }
+    if (en.role === 'user') {
+      return '<div class="pm6-wiz-msg user"><span class="pm6-wiz-msg-body">' + esc(en.text) + '</span></div>';
+    }
+    return '<div class="pm6-wiz-msg agent">' + ico('wand', 'pm6-wiz-msg-av') +
+      '<span class="pm6-wiz-msg-body">' + esc(en.text) + '</span></div>';
+  }
+  function typingBubble() {
+    return '<div class="pm6-wiz-msg agent">' + ico('wand', 'pm6-wiz-msg-av') +
+      '<span class="pm6-wiz-typing"><span></span><span></span><span></span></span></div>';
+  }
+  function composerHtml(action, base, ph) {
+    return '<div class="pm6-wiz-composer">' +
+      '<textarea rows="1" data-pm6-wiz-input="' + esc(base) + '" placeholder="' + esc(ph) + '"></textarea>' +
+      '<button type="button" class="pm6-wiz-send" aria-disabled="true" data-demo-reason="blocked_by_gate"' +
+        ' data-demo-action="' + esc(action) + '" data-demo-arg="' + esc(base) + '|">Send</button>' +
+    '</div>';
+  }
+  /* focus-preserving chat write: while the user is typing in the composer,
+     only the log + quick chips above it re-render — the composer node stays. */
+  function writeChat(host, key, bubbles, chips, composer) {
+    var ta = $('.pm6-wiz-composer textarea', host);
+    var keep = !!(composer && ta && document.activeElement === ta &&
+      host.getAttribute('data-pm6-wiz-key') === key);
+    if (keep) {
+      var b = $('[data-pm6-wiz-bubbles]', host);
+      var c = $('[data-pm6-wiz-chips]', host);
+      if (b) b.innerHTML = bubbles;
+      if (c) c.innerHTML = chips;
+    } else {
+      host.setAttribute('data-pm6-wiz-key', key);
+      host.innerHTML = '<div class="pm6-wiz-chat">' +
+        '<div class="pm6-wiz-chat-log" data-pm6-wiz-bubbles>' + bubbles + '</div>' +
+        '<div class="pm6-wiz-quickchips" data-pm6-wiz-chips>' + chips + '</div>' +
+        composer + '</div>';
+    }
+    hydrateIcons(host);
+  }
+
+  function docStatusChip(doc) {
+    var label;
+    if (doc.status === 'preflight') label = 'preflight';
+    else if (doc.status === 'extracting') label = 'extracting · slice 2 of 3';
+    else if (doc.status === 'parsed_warn') label = 'parsed with warnings · ' + (doc.warnings || '');
+    else label = 'parsed · ' + doc.atoms + ' requirement atoms';
+    return '<span class="pm6-wiz-doc-status" data-docstate="' + esc(doc.status) + '">' + esc(label) + '</span>';
+  }
+  function docSecBadge(doc) {
+    var cleared = doc.security === 'cleared';
+    return '<span class="pm6-wiz-secbadge" data-sec="' + (cleared ? 'cleared' : 'untrusted') + '">' +
+      esc(cleared ? 'cleared ✓ · sandboxed parse · quarantine clear' : 'untrusted · preflight') + '</span>';
+  }
+  function renderReqDocs(rq) {
+    var host = byId('pm6WizReqDocs');
+    if (!host) return;
+    if (!rq.docs.length) {
+      host.innerHTML = '<div class="pm6-wiz-thread-note">No docs attached yet — drop one above or use a demo file. ' +
+        'Docs are optional; the builder alone can carry the PRD.</div>';
+    } else {
+      host.innerHTML = rq.docs.map(function (doc, i) {
+        return '<div class="pm6-wiz-docrow" data-docstate="' + esc(doc.status) + '" style="--i:' + i + '">' +
+          '<div class="pm6-wiz-docrow-top">' + ico('clipboard') +
+            '<span class="pm6-wiz-doc-name">' + esc(doc.name) + '</span>' +
+            '<span class="pm6-wiz-doc-meta">' + esc(doc.kind + ' · ' + doc.size + ' · ' + doc.hash) + '</span></div>' +
+          '<div class="pm6-wiz-docrow-chips">' + docStatusChip(doc) + docSecBadge(doc) + '</div>' +
+          '<div class="pm6-wiz-doc-receipt">' + esc(doc.receipt || '') + '</div>' +
+        '</div>';
+      }).join('');
+    }
+    $$('[data-demo-action="wizard.upload_doc"]', byId('pm6WizStageReqs')).forEach(function (btn) {
+      var id = btn.getAttribute('data-demo-arg');
+      if (!id) return; /* drop zone stays live — it attaches the next un-attached doc */
+      var attached = rq.docs.some(function (x) { return x.id === id; });
+      btn.classList.toggle('attached', attached);
+      if (attached) { btn.setAttribute('aria-disabled', 'true'); btn.setAttribute('data-demo-reason', 'already_done'); }
+      else { btn.removeAttribute('aria-disabled'); btn.removeAttribute('data-demo-reason'); }
+    });
+  }
+  function renderPrdChat(rq, seed) {
+    var host = byId('pm6WizPrdChat');
+    if (!host) return;
+    var entries = rq.turns.slice();
+    var cur = seed.builderTurns[rq.turnIdx];
+    if (cur && !rq.answers[cur.id]) {
+      var hasQ = entries.some(function (en) { return en.role === 'agent' && en.turnId === cur.id && !en.ack; });
+      if (!hasQ) entries.push({ role: 'agent', turnId: cur.id, text: cur.agent });
+    }
+    var pend = W.reqTurnPending;
+    var shown = (pend != null && pend < entries.length) ? entries.slice(0, pend) : entries;
+    var bubbles = shown.map(bubble).join('');
+    if (pend != null) bubbles += typingBubble();
+    var open = (cur && !rq.answers[cur.id] && pend == null) ? cur : null;
+    if (!cur && pend == null) {
+      bubbles += '<div class="pm6-wiz-thread-note">Builder complete — the outline reflects the PRD ledger. Approve below when it looks right.</div>';
+    }
+    var chips = '';
+    if (open) {
+      chips = open.chips.map(function (c) {
+        return '<button type="button" class="pm6-wiz-opt" data-demo-action="wizard.prd_chat"' +
+          ' data-demo-arg="' + esc(open.id + '|' + c) + '">' + esc(c) + '</button>';
+      }).join('');
+    }
+    var composer = (open && open.freeform)
+      ? composerHtml('wizard.prd_chat', open.id, 'Type your own answer — recorded straight into the PRD ledger')
+      : '';
+    writeChat(host, open ? String(open.id) : '', bubbles, chips, composer);
+  }
+  function renderPrdOutline(rq, seed) {
+    var host = byId('pm6WizPrdOutline');
+    if (!host) return;
+    host.innerHTML = seed.outline.map(function (sec, i) {
+      var prov = rq.filled[sec.id];
+      if (prov) {
+        return '<div class="pm6-wiz-prd-sec filled" style="--i:' + i + '"><span class="pm6-wiz-glyph">✓</span>' +
+          '<span class="pm6-wiz-prd-sec-t">' + esc(sec.label) + '</span>' +
+          '<span class="pm6-wiz-tbadge">' + esc(prov) + '</span></div>';
+      }
+      return '<div class="pm6-wiz-prd-sec" style="--i:' + i + '"><span class="pm6-wiz-glyph">·</span>' +
+        '<span class="pm6-wiz-prd-sec-t">' + esc(sec.label) + '</span>' +
+        '<span class="pm6-wiz-skel-line" style="width:' + (46 + (i * 13) % 38) + '%"></span></div>';
+    }).join('');
+  }
+  function renderReqFoot(rq) {
+    var host = byId('pm6WizReqFoot');
+    if (!host) return;
+    var chipMap = {
+      blocked: ['blocked', 'Blocked — no requirements captured yet'],
+      ready_with_warnings: ['warn', 'Ready with Warnings — 1 open question carries into planning'],
+      ready: ['ok', 'Ready — every section grounded']
+    };
+    var rc = chipMap[rq.readiness] || chipMap.blocked;
+    var approved = !!rq.prd.approved;
+    var html = '<div class="pm6-wiz-reqfoot-status">' +
+      '<span class="pm6-wiz-readychip" data-ready="' + rc[0] + '">' + esc(rc[1]) + '</span>' +
+      (approved
+        ? '<span class="pm6-wiz-prdpack-chip">' +
+            esc('Approved PRD Pack ' + (rq.prd.version || 'v1') + ' · ' + (rq.prd.packId || 'prd-9c2e41')) +
+            ' <span class="pm6-wiz-glyph">✓</span></span>'
+        : '') +
+      '</div><div class="pm6-wiz-reqfoot-actions">';
+    if (!approved) {
+      var apDis = rq.readiness === 'blocked' ? ' aria-disabled="true" data-demo-reason="blocked_by_gate"' : '';
+      html += '<button type="button" class="pm6-wiz-btn primary"' + apDis +
+        ' data-demo-action="wizard.approve_prd">Approve PRD for Planning Wizard</button>';
+    }
+    var sdDis = approved ? '' : ' aria-disabled="true" data-demo-reason="blocked_by_gate"';
+    html += '<button type="button" class="pm6-wiz-bigbtn pm-press"' + sdDis +
+      ' data-demo-action="wizard.startDiscovery">Start discovery <span class="pm6-wiz-glyph">→</span></button></div>';
+    if (!approved) {
+      html += rq.readiness === 'blocked'
+        ? reasonLine('blocked_by_gate', 'Attach a requirement doc or answer a builder question — the PRD needs at least one captured requirement before approval.')
+        : reasonLine('blocked_by_gate', 'Approve the PRD pack first — attach docs or answer the builder, then Approve PRD for Planning Wizard.');
+    }
+    host.innerHTML = html;
+  }
+  function renderReqs() {
+    var s = WS();
+    if (!s || !s.reqs) return;
+    var rq = s.reqs;
+    var seed = reqSeed();
+    renderReqDocs(rq);
+    renderPrdChat(rq, seed);
+    renderPrdOutline(rq, seed);
+    renderReqFoot(rq);
+    var chip = byId('pm6WizPrdChip');
+    if (chip) {
+      chip.hidden = !rq.prd.approved;
+      chip.style.display = rq.prd.approved ? '' : 'none';
+    }
+    hydrateIcons(byId('pm6WizStageReqs'));
   }
 
   /* ---------------- center thread ---------------- */
@@ -331,36 +525,14 @@
     hydrateIcons(host);
   }
 
-  function questionBlock(t, q, idx) {
-    var key = t.id + '|' + q.id;
-    var draft = W.drafts[key];
-    var answered = !!q.answer && t.state === 'ready';
-    var chips = q.chips.map(function (c) {
-      var sel = draft === c || (!draft && q.answer === c);
-      return '<button type="button" class="pm6-wiz-opt' + (sel ? ' sel' : '') + '"' +
-        ' data-demo-action="wizard.chip" data-demo-arg="' + esc(key + '|' + c) + '">' + esc(c) + '</button>';
-    }).join('');
-    var ffSel = !!draft && q.chips.indexOf(draft) === -1;
-    chips += '<button type="button" class="pm6-wiz-opt something' + (ffSel || W.ffOpen[key] ? ' sel' : '') + '"' +
-      ' data-demo-action="wizard.something_else" data-demo-arg="' + esc(key) + '">' + esc(q.freeform || 'Something else') + '…</button>';
-    var ff = W.ffOpen[key]
-      ? '<textarea class="pm6-wiz-freeform" data-pm6-wiz-ff="' + esc(key) + '" placeholder="Tell the wizard what you have in mind — this becomes the recorded decision.">' + esc(ffSel ? draft : '') + '</textarea>'
-      : '';
-    var draftChip = draft ? '<span class="pm6-wiz-draftchip">Draft — not submitted</span>' : '';
-    return '<div class="pm6-wiz-q" style="--i:' + idx + '">' +
-      '<div class="pm6-wiz-q-toprow"><span class="pm6-wiz-q-num">Q' + (idx + 1) + '</span>' +
-        '<div class="pm6-wiz-q-flags">' + (answered ? '<span class="pm6-wiz-tbadge">answered</span>' : '<span class="pm6-wiz-tbadge">product decision</span>') + '</div></div>' +
-      '<div class="pm6-wiz-q-text">' + esc(q.text) + '</div>' +
-      '<div class="pm6-wiz-q-help">Answer in any order — drafts stay editable until you submit.</div>' +
-      '<div class="pm6-wiz-opts">' + chips + '</div>' + ff + draftChip +
-    '</div>';
-  }
-
   function answeredRows(t) {
-    return t.questions.map(function (q, i) {
+    var prd = (WS() && WS().reqs && WS().reqs.prd) || {};
+    return t.questions.filter(function (q) { return q.answer; }).map(function (q, i) {
       var src = (t.id === 't1' || t.id === 't4')
         ? 'Auto-resolved from repo evidence · assumption recorded'
-        : 'Answered · recorded in the planning ledger';
+        : (t.id === 't2'
+          ? 'Carried from Approved PRD Pack ' + (prd.packId || 'prd-9c2e41')
+          : 'Answered · recorded in the planning ledger');
       return '<div class="pm6-wiz-ans" style="--i:' + i + '">' +
         '<span class="pm6-wiz-ans-check">✓</span><div>' +
         '<div class="pm6-wiz-ans-q">' + esc(q.text) + '</div>' +
@@ -396,7 +568,7 @@
     var meta = TOPIC_META[t.id] || { icon: 'clipboard' };
     var body = '';
     if (t.state === 'blocked') {
-      body += '<div class="pm6-wiz-blockbar"><span class="pm6-wiz-reason-code">blocked</span>' +
+      body += '<div class="pm6-wiz-blockbar"><span class="pm6-wiz-reason-code">Blocked</span>' +
         '<span><strong>Needs your decision.</strong> Storage is a credentials + cost call the wizard will not make for you. ' +
         'Answer below and the topic unblocks itself.</span></div>';
       body += evdCard('t8');
@@ -414,8 +586,17 @@
       body += activityCard(t);
       if (t.id === 't6' && t.state === 'auditing') body += evdCard('t6');
     }
-    if (t.state === 'ready') {
+    /* conversational transcript (thread bubbles) or the pre-seeded summary */
+    var th = t.thread || [];
+    var typing = W.typing[t.id];
+    if (th.length) {
+      var shown = (typing != null && typing < th.length) ? th.slice(0, typing) : th;
+      body += shown.map(bubble).join('');
+      if (typing != null) body += typingBubble();
+    } else if (t.questions.some(function (q) { return q.answer; })) {
       body += answeredRows(t);
+    }
+    if (t.state === 'ready') {
       if (t.id === 't6') body += evdCard('t6');
       if (!t.accepted) {
         body += '<div class="pm6-wiz-thread-actions">' +
@@ -424,24 +605,44 @@
       } else {
         body += '<div class="pm6-wiz-thread-note">Accepted — pinned for the Final Plan Pack.</div>';
       }
-    } else {
-      var hasDraft = false;
-      body += t.questions.map(function (q, i) {
-        var key = t.id + '|' + q.id;
-        if (W.drafts[key]) hasDraft = true;
-        return questionBlock(t, q, i);
-      }).join('');
-      var subAttrs = hasDraft ? '' : ' aria-disabled="true" data-demo-reason="blocked_by_gate"';
-      body += '<div class="pm6-wiz-thread-actions">' +
-        '<button type="button" class="pm6-wiz-btn primary"' + subAttrs +
-          ' data-demo-action="wizard.submit_answers" data-demo-arg="' + esc(t.id) + '">Submit answers →</button>' +
-        (hasDraft ? '' : '<span class="pm6-wiz-thread-note">Pick an option (or &ldquo;Something else&rdquo;) to enable Submit.</span>') +
-      '</div>';
     }
-    host.innerHTML =
-      '<div class="pm6-wiz-thread-head">' + ico(meta.icon) +
-        '<div class="pm6-wiz-thread-title">' + t.num + ' · ' + esc(t.title) + '</div>' + schip(t.state) + '</div>' +
-      '<div class="pm6-wiz-thread-body">' + body + '</div>';
+    /* quick-reply chips + persistent composer for the current open question */
+    var open = null;
+    t.questions.forEach(function (q) { if (!open && !q.answer) open = q; });
+    var chips = '';
+    var composer = '';
+    if (open && t.state !== 'ready') {
+      if (typing == null) {
+        chips = open.chips.map(function (c) {
+          return '<button type="button" class="pm6-wiz-opt" data-demo-action="wizard.reply"' +
+            ' data-demo-arg="' + esc(t.id + '|' + open.id + '|' + c) + '">' + esc(c) + '</button>';
+        }).join('');
+      }
+      composer = composerHtml('wizard.reply', t.id + '|' + open.id, 'Reply — your answer becomes the recorded decision');
+    }
+    var headInner = ico(meta.icon) +
+      '<div class="pm6-wiz-thread-title">' + t.num + ' · ' + esc(t.title) + '</div>' + schip(t.state);
+    var key = composer ? t.id + '|' + open.id : '';
+    var ta = $('.pm6-wiz-composer textarea', host);
+    var keep = !!(composer && ta && document.activeElement === ta &&
+      host.getAttribute('data-pm6-wiz-key') === key);
+    if (keep) {
+      var thead = $('[data-pm6-wiz-thead]', host);
+      var b = $('[data-pm6-wiz-bubbles]', host);
+      var c = $('[data-pm6-wiz-chips]', host);
+      if (thead) thead.innerHTML = headInner;
+      if (b) b.innerHTML = body;
+      if (c) c.innerHTML = chips;
+    } else {
+      host.setAttribute('data-pm6-wiz-key', key);
+      host.innerHTML =
+        '<div class="pm6-wiz-thread-head" data-pm6-wiz-thead>' + headInner + '</div>' +
+        '<div class="pm6-wiz-thread-body pm6-wiz-chat">' +
+          '<div class="pm6-wiz-chat-log" data-pm6-wiz-bubbles>' + body + '</div>' +
+          '<div class="pm6-wiz-quickchips" data-pm6-wiz-chips>' + chips + '</div>' +
+          composer +
+        '</div>';
+    }
   }
 
   /* ---------------- integration sequence + final review ---------------- */
@@ -520,6 +721,7 @@
           '<div class="pm6-wiz-rev-stat"><span class="pm6-wiz-rev-num">2</span><span class="pm6-wiz-rev-cap">Findings repaired</span></div>' +
         '</div>' +
         '<div class="pm6-wiz-pack"><div class="pm6-wiz-pack-title">' + ico('check') + 'Pack currentness — the CAS values Approve And Build verifies</div>' +
+          hashRow('Approved PRD Pack', ((s.reqs && s.reqs.prd && s.reqs.prd.packId) || 'prd-9c2e41') + ' ' + ((s.reqs && s.reqs.prd && s.reqs.prd.version) || 'v1')) +
           hashRow('PlanningRun revision', String(h.planningRunRev)) +
           hashRow('Topic map version', h.topicMapVersion) +
           hashRow('Project-context hash', 'a19c44…') +
@@ -551,6 +753,7 @@
   /* ---------------- render everything ---------------- */
   function renderAll() {
     if (!WS()) return;
+    try { renderReqs(); } catch (e) {}
     try { renderTopics(); } catch (e) {}
     try { renderDock(); } catch (e) {}
     try { renderStatePill(); } catch (e) {}
@@ -561,6 +764,16 @@
   }
 
   /* ---------------- discovery ---------------- */
+  var DERIVE_ROWS = [
+    ['1 · Recipe data model', 'from PRD section Goals', true],
+    ['2 · Auth & accounts', 'from repo context', false],
+    ['3 · Editor & media upload', 'from PRD section Media pipeline behavior', false],
+    ['4 · Search', 'from repo context', true],
+    ['5 · Comments & ratings', 'from PRD section Goals', false],
+    ['6 · Import from URL', 'from PRD section Import hardening', false],
+    ['7 · Notifications', 'from repo context', false],
+    ['8 · Deployment & backups', 'from PRD section Open questions', false]
+  ];
   function runDiscovery() {
     var d = D();
     var disc = (d && d.data && d.data.project && d.data.project.discovery) || {
@@ -569,7 +782,11 @@
     };
     var rowsHost = byId('pm6WizScanRows');
     var bar = byId('pm6WizScanBar');
+    var deriveHost = byId('pm6WizDeriveRows');
+    var foot = byId('pm6WizDiscFoot');
     if (rowsHost) rowsHost.innerHTML = '';
+    if (deriveHost) deriveHost.innerHTML = '';
+    if (foot) { foot.hidden = true; foot.style.display = 'none'; }
     if (bar) bar.style.width = '4%';
     var rows = [
       ['branch', disc.branch + ' · ' + (disc.worktreeClean ? 'clean worktree' : 'dirty worktree')],
@@ -577,8 +794,9 @@
       ['packages', disc.packageManagers.join(' · ')],
       ['tests', disc.testCommands.join(' · ')]
     ];
-    var total = rows.length + 2; /* + evidence card + settle beat */
-    function paintRow(i) {
+    var total = rows.length + 1 + DERIVE_ROWS.length + 1; /* scan + evidence + derive + settle */
+    function bump(done) { if (bar) bar.style.width = Math.min(100, Math.round((done / total) * 100)) + '%'; }
+    function paintScan(i) {
       if (!rowsHost) return;
       if (i < rows.length) {
         rowsHost.insertAdjacentHTML('beforeend',
@@ -589,26 +807,59 @@
         rowsHost.insertAdjacentHTML('beforeend', evdCard('discovery'));
         hydrateIcons(rowsHost);
       }
-      if (bar) bar.style.width = Math.round(((i + 1) / total) * 100) + '%';
+      bump(i + 1);
+    }
+    function paintDeriveHead() {
+      if (!deriveHost) return;
+      deriveHost.insertAdjacentHTML('beforeend',
+        '<div class="pm6-wiz-disc-sub pm6-wiz-derive-head">Deriving topics from Approved PRD Pack + repo context</div>');
+    }
+    function paintDerive(i) {
+      if (!deriveHost) return;
+      var r = DERIVE_ROWS[i];
+      deriveHost.insertAdjacentHTML('beforeend',
+        '<div class="pm6-wiz-scanrow"><span class="pm6-wiz-glyph">▸</span>' +
+        '<span class="pm6-wiz-scan-k">topic proposed</span>' +
+        '<span class="pm6-wiz-scan-v">' + esc(r[0]) + ' ▸ ' + esc(r[1]) + '</span>' +
+        (r[2] ? '<span class="pm6-wiz-tbadge">auto-resolving from repo evidence</span>' : '') +
+        '</div>');
+      bump(rows.length + 2 + i);
+    }
+    function showFoot() {
+      W.discovering = false;
+      bump(total);
+      if (foot) { foot.hidden = false; foot.style.display = ''; }
+      say('Discovery complete — 8 topics proposed from the Approved PRD Pack and repo evidence.');
     }
     if (reduced()) {
-      for (var i = 0; i <= rows.length; i++) paintRow(i);
-      finishDiscovery();
+      /* paint everything instantly — the workspace still needs your click */
+      for (var i = 0; i <= rows.length; i++) paintScan(i);
+      paintDeriveHead();
+      for (var j = 0; j < DERIVE_ROWS.length; j++) paintDerive(j);
+      showFoot();
       return;
     }
     var idx = 0;
     (function tick() {
-      paintRow(idx);
+      paintScan(idx);
       idx++;
-      if (idx < total) { later(tick, 520); }
-      else { later(finishDiscovery, 420); }
+      if (idx <= rows.length) { later(tick, 520); return; }
+      paintDeriveHead();
+      var dIdx = 0;
+      (function dTick() {
+        paintDerive(dIdx);
+        dIdx++;
+        if (dIdx < DERIVE_ROWS.length) { later(dTick, 380); }
+        else { later(showFoot, 420); }
+      })();
     })();
   }
+  /* workspace entry — runs when the engine confirms wizard.enter_workspace */
   function finishDiscovery() {
     W.discovering = false;
     setStage('workspace');
     renderAll();
-    say('Discovery complete — read-only scan, nothing changed.');
+    say('Workspace open — the wizard is already interviewing; ' + readyCount() + ' of ' + topics().length + ' topics are Ready.');
   }
 
   /* ---------------- replay (rewind wizard-local flow; run #47 untouched) ---------------- */
@@ -616,11 +867,19 @@
   function resetLocalForReplay() {
     W.drafts = {};
     W.ffOpen = {};
+    W.typing = {};
+    W.reqTurnPending = null;
+    W.lastReqTurns = 0;
     W.threadMode = 'overview';
     W.theater = null;
     W.theaterDone = false;
     W.discovering = false;
     setStage('intake');
+    var foot = byId('pm6WizDiscFoot');
+    if (foot) { foot.hidden = true; foot.style.display = 'none'; }
+    var derive = byId('pm6WizDeriveRows');
+    if (derive) derive.innerHTML = '';
+    try { renderReqs(); } catch (e) {} /* pristine requirements + re-hidden PRD chip */
     hydrateIcons();
     say('Rewound to intake — replay the planning flow from the start. Run #47 keeps running untouched.');
   }
@@ -641,8 +900,13 @@
       W.threadMode = 'review';
       setStage('workspace');
       renderAll();
+    } else if (W.stage === 'discovery' && !W.discovering) {
+      /* the engine confirmed wizard.enter_workspace — move into the workspace */
+      finishDiscovery();
     } else if (W.stage === 'workspace') {
       renderAll();
+    } else {
+      try { renderReqs(); } catch (e) {}
     }
   }
 
@@ -676,7 +940,14 @@
       if (chatIcon && (!panel || panel.classList.contains('hidden'))) { try { chatIcon.click(); } catch (e) {} }
       return { toast: 'The imported goal lives in Assistant Chat — thread "Tastebook media pipeline".' };
     });
+    reg('wizard.to_requirements', function () {
+      setStage('requirements');
+      renderReqs();
+      return { ok: true };
+    });
     reg('wizard.startDiscovery', function () {
+      var s = WS();
+      if (s && s.reqs && s.reqs.prd && !s.reqs.prd.approved) return { disabled: true, reason: 'blocked_by_gate' };
       if (W.discovering) return { disabled: true, reason: 'busy' };
       if (W.stage === 'workspace') return { disabled: true, reason: 'already_done' };
       W.discovering = true;
@@ -689,44 +960,19 @@
       if (head) head.classList.toggle('collapsed');
       return { ok: true };
     });
-    reg('wizard.chip', function (ctx) {
+    function sendReply(ctx) {
       var a = String((ctx && ctx.arg) || '').split('|'); /* tid|qid|value */
-      if (a.length < 3) return { toast: 'Nothing to select.' };
-      var key = a[0] + '|' + a[1];
-      W.drafts[key] = a.slice(2).join('|');
-      delete W.ffOpen[key];
-      renderThread();
+      if (a.length < 2 || !a[0]) return { toast: 'Nothing to send yet.' };
+      return d.wizard.answer(a[0], a[1], a.slice(2).join('|').trim());
+    }
+    reg('wizard.reply', sendReply);
+    reg('wizard.chip', sendReply); /* legacy alias — same tid|qid|value shape */
+    reg('wizard.something_else', function () {
+      /* legacy no-op — the composer replaced the freeform toggle */
       return { ok: true };
     });
-    reg('wizard.something_else', function (ctx) {
-      var key = String((ctx && ctx.arg) || '');
-      if (!key) return { toast: 'Nothing to open.' };
-      W.ffOpen[key] = !W.ffOpen[key];
-      renderThread();
-      if (W.ffOpen[key]) {
-        var ta = $('[data-pm6-wiz-ff="' + key.replace(/["\\]/g, '') + '"]', root());
-        if (ta) { try { ta.focus(); } catch (e) {} }
-      }
-      return { ok: true };
-    });
-    reg('wizard.submit_answers', function (ctx) {
-      var tid = String((ctx && ctx.arg) || '');
-      var s = WS();
-      var t = s && s.topics[tid];
-      if (!t) return { toast: 'Unknown topic.' };
-      var sent = 0, res = null;
-      t.questions.forEach(function (q) {
-        var key = tid + '|' + q.id;
-        if (W.drafts[key]) {
-          res = d.wizard.answer(tid, q.id, W.drafts[key]);
-          delete W.drafts[key];
-          delete W.ffOpen[key];
-          sent++;
-        }
-      });
-      if (!sent) return { disabled: true, reason: 'blocked_by_gate' };
-      if (res && (res.toast || res.disabled)) return res;
-      say('Decision recorded — syncing it to the planning ledger…');
+    reg('wizard.submit_answers', function () {
+      /* legacy no-op — answers send straight from the thread composer */
       return { ok: true };
     });
     reg('wizard.review_impact', function () {
@@ -749,9 +995,40 @@
     d.on('wizard.topic', function (p) {
       if (!p) return;
       if (p.opened) W.threadMode = 'topic';
+      if (p.answered && p.topic && !reduced() && p.topic.thread && p.topic.thread.length) {
+        /* a reply just landed — show it (plus the ledger note), let typing dots
+           cover the agent ack for a beat, then reveal the full transcript */
+        var lastUser = -1;
+        p.topic.thread.forEach(function (en, i) { if (en.role === 'user') lastUser = i; });
+        if (lastUser >= 0) {
+          var tid = p.topic.id;
+          W.typing[tid] = lastUser + 2;
+          later(function () {
+            delete W.typing[tid];
+            if (W.stage === 'workspace' && W.threadMode !== 'review') { try { renderThread(); } catch (e) {} }
+          }, 900);
+        }
+      }
       if (W.stage !== 'workspace') return;
       try { renderTopics(); renderDock(); renderStatePill(); renderDoc(); renderRail(); } catch (e) {}
       if (W.threadMode !== 'review') { try { renderThread(); } catch (e) {} }
+    });
+    d.on('wizard.reqs', function () {
+      var s = WS();
+      if (!s || !s.reqs) return;
+      var turns = s.reqs.turns || [];
+      if (!reduced() && turns.length > W.lastReqTurns) {
+        var lastUser = -1;
+        turns.forEach(function (en, i) { if (en.role === 'user') lastUser = i; });
+        if (lastUser >= 0 && lastUser >= W.lastReqTurns) {
+          /* a builder reply just landed — typing dots cover the ack for a beat */
+          W.reqTurnPending = lastUser + 1;
+          later(function () { W.reqTurnPending = null; try { renderReqs(); } catch (e) {} }, 800);
+        }
+      }
+      W.lastReqTurns = turns.length;
+      try { renderReqs(); } catch (e) {}
+      if (W.stage === 'workspace') { try { renderRail(); } catch (e) {} }
     });
     d.on('wizard.pack', function () {
       if (W.stage !== 'workspace') setStage('workspace');
@@ -780,20 +1057,51 @@
   function wireInputs() {
     var r = root();
     if (!r) return;
+    function sendBtnFor(ta) {
+      var wrap = ta.closest ? ta.closest('.pm6-wiz-composer') : null;
+      return wrap ? $('.pm6-wiz-send', wrap) : null;
+    }
+    /* composer typing: keep the Send button's arg + gate in sync without
+       re-rendering the composer itself (the textarea keeps focus) */
     r.addEventListener('input', function (e) {
-      var ta = e.target && e.target.closest ? e.target.closest('[data-pm6-wiz-ff]') : null;
+      var ta = e.target && e.target.closest ? e.target.closest('[data-pm6-wiz-input]') : null;
       if (!ta) return;
-      var key = ta.getAttribute('data-pm6-wiz-ff');
+      var btn = sendBtnFor(ta);
+      if (!btn) return;
+      var base = ta.getAttribute('data-pm6-wiz-input') || '';
       var v = String(ta.value || '').trim();
-      if (v) W.drafts[key] = v; else delete W.drafts[key];
-      /* refresh only the submit row so the textarea keeps focus */
-      var btn = $('[data-demo-action="wizard.submit_answers"]', r);
-      if (btn) {
-        var tid = key.split('|')[0];
-        var any = Object.keys(W.drafts).some(function (k) { return k.indexOf(tid + '|') === 0; });
-        if (any) { btn.removeAttribute('aria-disabled'); btn.removeAttribute('data-demo-reason'); }
-        else { btn.setAttribute('aria-disabled', 'true'); btn.setAttribute('data-demo-reason', 'blocked_by_gate'); }
-      }
+      btn.setAttribute('data-demo-arg', base + '|' + v);
+      if (v) { btn.removeAttribute('aria-disabled'); btn.removeAttribute('data-demo-reason'); }
+      else { btn.setAttribute('aria-disabled', 'true'); btn.setAttribute('data-demo-reason', 'blocked_by_gate'); }
+    });
+    /* Enter sends; Shift+Enter keeps the newline */
+    r.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' || e.shiftKey) return;
+      var ta = e.target && e.target.closest ? e.target.closest('[data-pm6-wiz-input]') : null;
+      if (!ta) return;
+      e.preventDefault();
+      var btn = sendBtnFor(ta);
+      if (!btn || btn.getAttribute('aria-disabled') === 'true') return;
+      try { ta.blur(); } catch (err) {}
+      try { btn.click(); } catch (err) {}
+      /* land focus in the next composer (multi-question topics keep flowing) */
+      var next = $('.pm6-wiz-composer textarea', r);
+      if (next) { try { next.focus(); } catch (err) {} }
+    });
+  }
+  /* real drag/drop on the requirements drop zone — any drop attaches the
+     next un-attached sample doc (same as clicking the zone) */
+  function wireDropZone() {
+    var drop = byId('pm6WizReqDrop');
+    if (!drop) return;
+    ['dragenter', 'dragover'].forEach(function (evt) {
+      drop.addEventListener(evt, function (e) { e.preventDefault(); drop.classList.add('over'); });
+    });
+    drop.addEventListener('dragleave', function () { drop.classList.remove('over'); });
+    drop.addEventListener('drop', function (e) {
+      e.preventDefault();
+      drop.classList.remove('over');
+      try { drop.click(); } catch (err) {}
     });
   }
 
@@ -803,6 +1111,7 @@
         PM_PAGES.registerSubtab('wizard', function (sub) {
           if (!sub) return;
           if (sub === 'intake') { setStage('intake'); hydrateIcons(); return; }
+          if (sub === 'requirements') { setStage('requirements'); renderReqs(); return; }
           if (sub === 'final_review' || sub === 'review') {
             ensureWorkspace();
             var s = WS();
@@ -823,10 +1132,14 @@
       return;
     }
     hydrateIcons(root());
+    var s0 = WS();
+    W.lastReqTurns = (s0 && s0.reqs && s0.reqs.turns) ? s0.reqs.turns.length : 0;
     registerActions();
     subscribe();
     wireInputs();
+    wireDropZone();
     registerSubtabs();
+    renderReqs(); /* requirements stage is ready before the user reaches it */
     resync(); /* if a chapter jump already approved the plan, land in review */
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);

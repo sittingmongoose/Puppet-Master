@@ -1,0 +1,428 @@
+<<< CONTEXT_BEFORE 2224-2235 >>>
+- "Plugin-added, MCP, custom-tool, and other extensibility surfaces do not get plugin-private network exceptions."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Containers_Registry_and_Unraid.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Plugins_System.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Containers_Registry_and_Unraid.md"
+- "Plans/Contracts_V0.md"
+- "Plans/Plugins_System.md"
+```
+
+
+<<< AUTHORITATIVE_CORE 2236-2634 >>>
+### PS-019 - Permission Action Triad
+
+```yaml
+plan_unit_id: PS-019
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Exactly three permission actions exist: allow proceeds without approval, ask pauses pending canonical user resolution options, and deny blocks execution, emits tool.denied, and returns an error."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-002
+unblocks: []
+acceptance_criteria:
+- "PS-019 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_205
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_action_triad
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0017
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0018
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0019
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0020
+preserved_exact_tokens:
+- "Permission actions"
+- "PERM-ACTIONS"
+- "allow"
+- "ask"
+- "deny"
+- "Exactly three permission actions exist"
+- "deny"
+- "once"
+- "for session"
+- "always"
+- "tool.denied"
+negative_constraints:
+- "Every tool invocation resolves to exactly one action."
+- "The denied tool is not executed."
+preserved_contractrefs:
+- "ContractRef: PolicyRule:Decision_Policy.md§2"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Decision_Policy.md"
+- "Plans/FileSafe.md"
+- "Plans/Contracts_V0.md"
+- "Plans/human-in-the-loop.md"
+```
+
+### PS-020 - Precedence Layers And Child Inheritance
+
+```yaml
+plan_unit_id: PS-020
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Permission rules evaluate in strict layer precedence for mode override, parent/run ceiling, session cache, Persona overrides, project, global, and defaults, while child runs inherit restrictive action ceilings and argument-pattern rules additively without widening."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-019
+unblocks: []
+acceptance_criteria:
+- "PS-020 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_205
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: permission_precedence_layers
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0021
+preserved_exact_tokens:
+- "Deterministic precedence across layers"
+- "Mode override"
+- "Parent/run ceiling"
+- "Session cache"
+- "Persona overrides"
+- "Project-level"
+- "Global-level"
+- "Defaults"
+- "ask / plan"
+- "yolo"
+- "merge-not-replace"
+- "Parent Agent -> Parent Session -> Child Session -> Child Agent"
+negative_constraints:
+- "Higher-precedence layers shadow lower layers on a per-rule basis but do not replace the entire lower ruleset."
+- "A child may narrow authority, but must not widen or replace away inherited restrictions."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Personas.md#PERSONA-INJECTION, PolicyRule:Decision_Policy.md§2"
+- "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md"
+- "ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Executor_Protocol.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Run_Modes.md"
+- "Plans/Personas.md"
+- "Plans/Tools.md"
+- "Plans/orchestrator-subagent-integration.md"
+- "Plans/Executor_Protocol.md"
+```
+
+### PS-021 - Scope Specificity And Account Aware Carryover Fields
+
+```yaml
+plan_unit_id: PS-021
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Scope specificity resolves lane before seam before package before project before global, carries role-scoped account policy overrides, and preserves execution_entity_id, account_id, permission_scope, and approval_carryover_scope for multi-lane account-aware permission carry-through."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-020
+unblocks: []
+acceptance_criteria:
+- "PS-021 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_205
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: scope_specificity_account_carryover
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0021
+preserved_exact_tokens:
+- "lane:{lane_id}"
+- "seam:{seam_id}"
+- "package:{package_id}"
+- "allowed_roles"
+- "disallowed_roles"
+- "cooldown_policy_override"
+- "switch_threshold_override"
+- "execution_entity_id"
+- "account_id"
+- "permission_scope"
+- "approval_carryover_scope"
+- "effective-account"
+negative_constraints:
+- "Permission resolution and approval carryover must be multi-lane and account-aware rather than session-only."
+- "Role-scoped account policy override fields narrow authority but do not widen the parent/run permission ceiling."
+preserved_contractrefs:
+- "ContractRef: Plans/FinalGUISpec.md#10.8 Human-in-the-loop approvals, Plans/Tools.md#10.7A Web-operation approval summary rules"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/FinalGUISpec.md"
+- "Plans/Tools.md"
+```
+
+### PS-022 - Requested Vs Effective Capability Disclosure
+
+```yaml
+plan_unit_id: PS-022
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "UI and runtime distinguish requested from effective permissioned capability state for tools, MCP, browser trust, project overrides, Persona profiles, and child ceilings, and disclose the governing layer on the owning surface."
+gui_related: true
+gui_classification_reason: "This unit defines user-visible permission disclosure, approval presentation, GUI references, or compact surface wording."
+split_recommended: false
+depends_on:
+- PS-020
+- PS-021
+unblocks: []
+acceptance_criteria:
+- "PS-022 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_205
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: requested_effective_capability_disclosure
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0022
+preserved_exact_tokens:
+- "Requested vs effective permissioned capability state"
+- "PRECEDENCE-LAYERS"
+- "#PRECEDENCE-LAYERS"
+- "requested state"
+- "effective state"
+- "MCP server/tool availability"
+- "browser trust/capability tiers"
+- "/requested-vs-effective"
+- "Section15"
+- "terminal action"
+negative_constraints:
+- "The PRECEDENCE-LAYERS alias does not redefine the layer table."
+- "Permission UI must not imply a terminal action is allowed when the effective permission or capability state is clamped."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/Run_Modes.md, ContractName:Plans/Tools.md, PolicyRule:Decision_Policy.md§2"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/Run_Modes.md"
+- "Plans/Tools.md"
+- "Plans/Section15_MVP_Promoted_Features_Spec.md"
+```
+
+### PS-023 - Granular Permission Rule Object Shape
+
+```yaml
+plan_unit_id: PS-023
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Granular permission rules may be simple action strings or objects containing pattern-based sub-rules that match invocation context such as file path, bash command string, or URL."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-019
+unblocks: []
+acceptance_criteria:
+- "PS-023 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_205
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: granular_permission_rule_object
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0023
+preserved_exact_tokens:
+- "Granular rules"
+- "GRANULAR-RULES"
+- "allow"
+- "ask"
+- "deny"
+- "file path"
+- "read"
+- "edit"
+- "bash"
+- "URL"
+- "webfetch"
+negative_constraints: []
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, PolicyRule:Decision_Policy.md§2"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/OpenCode_Deep_Extraction.md"
+- "Plans/Decision_Policy.md"
+```
+
+### PS-024 - Wildcard Matching Ordering And Case Mode
+
+```yaml
+plan_unit_id: PS-024
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Wildcard matching defines star, question mark, optional trailing command portions, tool-family prefixes, definition-order last-match wins, path case sensitivity from resolved root semantics, and fail-closed behavior when stable roots cannot be determined."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-014
+- PS-023
+unblocks: []
+acceptance_criteria:
+- "PS-024 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_205
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: wildcard_matching_case_semantics
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0024
+preserved_exact_tokens:
+- "Wildcard syntax and matching"
+- "WILDCARD-SYNTAX"
+- "*"
+- "?"
+- "git *"
+- "github_*"
+- "last matching rule wins"
+- "case-sensitive"
+- "case-insensitive"
+- "bytewise case-sensitive"
+- "fail closed"
+negative_constraints:
+- "If PM cannot determine a stable canonical root for a path comparison, it fails closed rather than guessing a case mode."
+preserved_contractrefs:
+- "ContractRef: ContractName:Plans/OpenCode_Deep_Extraction.md, PolicyRule:Decision_Policy.md§2"
+- "ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/WorktreeGitImprovement.md"
+- "ContractRef: ContractName:Plans/Architecture_Invariants.md, ContractName:Plans/Executor_Protocol.md"
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+- "Plans/OpenCode_Deep_Extraction.md"
+- "Plans/FileSafe.md"
+- "Plans/WorktreeGitImprovement.md"
+- "Plans/Architecture_Invariants.md"
+- "Plans/Executor_Protocol.md"
+```
+
+### PS-025 - Home Expansion Pattern Rule
+
+```yaml
+plan_unit_id: PS-025
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Home expansion applies only when ~ or $HOME appear at the start of a pattern; mid-pattern occurrences remain literal characters."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:
+- PS-024
+unblocks: []
+acceptance_criteria:
+- "PS-025 remains addressable as a fine-grained Permissions System PlanUnit with source-span coverage."
+- "ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source spans remain preserved."
+- "No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit."
+validation_surfaces:
+- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+- python3 scripts/pm-plan-index.py validate
+risk_class: permission_system_drift
+reasoning_tier: standard
+context_scope: permissions_system_batch_205
+implementation_surfaces:
+- Plans/Permissions_System.md
+node_compile_hint:
+  mode: home_expansion_pattern_rule
+  create_worknodes: false
+source_lineage:
+- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Permissions_System-S0025
+preserved_exact_tokens:
+- "Home expansion"
+- "HOME-EXPANSION"
+- "~"
+- "$HOME"
+- "start of a pattern"
+- "literal characters"
+negative_constraints:
+- "Mid-pattern ~ and $HOME occurrences must be treated as literal characters."
+preserved_contractrefs: []
+compatibility_only_notes: []
+stale_retired_dispositions: []
+owner_hints:
+- "Plans/Permissions_System.md"
+```
+
+
+<<< CONTEXT_AFTER 2635-2646 >>>
+### PS-026 - External Directory Guard And Allowlist
+
+```yaml
+plan_unit_id: PS-026
+unit_type: constraint
+status: accepted
+owner_doc: Plans/Permissions_System.md
+canonical_text: "Any tool invocation referencing a path outside active project working roots triggers the external_directory permission key with default ask, except paths on the external directory allowlist, whose entries support wildcard syntax."
+gui_related: false
+gui_classification_reason: "This unit defines backend/runtime, policy, security, storage, dispatch, or governance behavior rather than visual presentation."
+split_recommended: false
+depends_on:

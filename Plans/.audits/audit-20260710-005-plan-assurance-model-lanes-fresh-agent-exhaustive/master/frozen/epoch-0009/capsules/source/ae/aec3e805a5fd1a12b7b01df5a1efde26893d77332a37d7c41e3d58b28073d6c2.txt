@@ -1,0 +1,395 @@
+<<< CONTEXT_BEFORE canonical_document_lines=26374-26385 >>>
+L00026374	- '`stale agents pruned` is projection metric evidence only.'
+L00026375	compatibility_only_notes:
+L00026376	- Metrics/logging list is source evidence pending analytics owner acceptance.
+L00026377	stale_retired_dispositions:
+L00026378	- Stale-agent pruning metrics remain compatibility evidence.
+L00026379	owner_boundary_notes:
+L00026380	- Usage/analytics owners consume event taxonomy if promoted.
+L00026381	owner_hints:
+L00026382	- Plans/orchestrator-subagent-integration.md
+L00026383	preserved_contractrefs: []
+L00026384	```
+L00026385	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=26386-26751 >>>
+L00026386	### OSI-344 - Coordination GUI Monitoring Consumer
+L00026387	
+L00026388	```yaml
+L00026389	plan_unit_id: OSI-344
+L00026390	unit_type: requirement
+L00026391	status: accepted
+L00026392	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026393	canonical_text: GUI may show coordination state, active agents, file locks, and conflicts as a consumer projection.
+L00026394	gui_related: true
+L00026395	gui_classification_reason: This unit covers a user-visible GUI monitoring projection.
+L00026396	split_recommended: false
+L00026397	depends_on:
+L00026398	- OSI-321
+L00026399	- OSI-307
+L00026400	- OSI-343
+L00026401	unblocks: []
+L00026402	acceptance_criteria:
+L00026403	- Covered GUI monitoring bullet remains losslessly available for exact-text audit.
+L00026404	- GUI monitoring remains a consumer projection and does not own backend coordination state.
+L00026405	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026406	validation_surfaces:
+L00026407	- >-
+L00026408	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026409	- python3 scripts/pm-plan-index.py validate
+L00026410	reasoning_tier: standard
+L00026411	context_scope: orchestrator_subagent_standardization
+L00026412	implementation_surfaces:
+L00026413	- Plans/orchestrator-subagent-integration.md
+L00026414	risk_class: coordination_gui_monitoring_consumer
+L00026415	node_compile_hint:
+L00026416	  mode: coordination_gui_monitoring_consumer
+L00026417	  create_worknodes: false
+L00026418	source_lineage:
+L00026419	- >-
+L00026420	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+L00026421	preserved_exact_tokens:
+L00026422	- Add coordination state to GUI
+L00026423	- show active agents, file locks, conflicts
+L00026424	negative_constraints:
+L00026425	- GUI monitoring does not own backend coordination state.
+L00026426	compatibility_only_notes: []
+L00026427	stale_retired_dispositions: []
+L00026428	owner_boundary_notes:
+L00026429	- Final GUI owns presentation; orchestrator supplies state.
+L00026430	owner_hints:
+L00026431	- Plans/orchestrator-subagent-integration.md
+L00026432	preserved_contractrefs: []
+L00026433	```
+L00026434	
+L00026435	### OSI-345 - Coordination Effectiveness Analytics
+L00026436	
+L00026437	```yaml
+L00026438	plan_unit_id: OSI-345
+L00026439	unit_type: requirement
+L00026440	status: accepted
+L00026441	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026442	canonical_text: Preserve analytics evidence for conflicts prevented, false positives, and coordination accuracy.
+L00026443	gui_related: false
+L00026444	gui_classification_reason: This unit covers analytics evidence rather than GUI presentation.
+L00026445	split_recommended: false
+L00026446	depends_on:
+L00026447	- OSI-343
+L00026448	unblocks: []
+L00026449	acceptance_criteria:
+L00026450	- Covered analytics bullet and trailing boundary line remain losslessly available for exact-text audit.
+L00026451	- Analytics evidence is not promoted into executable telemetry work.
+L00026452	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026453	validation_surfaces:
+L00026454	- >-
+L00026455	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026456	- python3 scripts/pm-plan-index.py validate
+L00026457	reasoning_tier: standard
+L00026458	context_scope: orchestrator_subagent_standardization
+L00026459	implementation_surfaces:
+L00026460	- Plans/orchestrator-subagent-integration.md
+L00026461	risk_class: coordination_effectiveness_analytics
+L00026462	node_compile_hint:
+L00026463	  mode: coordination_effectiveness_analytics
+L00026464	  create_worknodes: false
+L00026465	source_lineage:
+L00026466	- >-
+L00026467	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0154
+L00026468	preserved_exact_tokens:
+L00026469	- Analytics
+L00026470	- conflicts prevented
+L00026471	- false positives
+L00026472	- coordination accuracy
+L00026473	negative_constraints:
+L00026474	- Analytics evidence is not executable telemetry work.
+L00026475	compatibility_only_notes:
+L00026476	- Line 5226 is trailing boundary coverage only.
+L00026477	stale_retired_dispositions: []
+L00026478	owner_boundary_notes:
+L00026479	- Usage/analytics owner consumes event taxonomy if promoted.
+L00026480	owner_hints:
+L00026481	- Plans/orchestrator-subagent-integration.md
+L00026482	preserved_contractrefs: []
+L00026483	```
+L00026484	
+L00026485	### OSI-346 - Coordination State Query And Filtering Requirement
+L00026486	
+L00026487	```yaml
+L00026488	plan_unit_id: OSI-346
+L00026489	unit_type: requirement
+L00026490	status: accepted
+L00026491	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026492	canonical_text: >-
+L00026493	  Coordination state must remain queryable by platform, tier compatibility label, file path, or agent ID so orchestrator
+L00026494	  coordination consumers can inspect active agent projections without promoting tier labels above canonical execution refs.
+L00026495	gui_related: false
+L00026496	gui_classification_reason: This unit covers backend coordination query behavior, not GUI presentation.
+L00026497	split_recommended: false
+L00026498	depends_on:
+L00026499	- OSI-257
+L00026500	unblocks: []
+L00026501	acceptance_criteria:
+L00026502	- Covered coordination query/filtering prose remains losslessly available for exact-text audit.
+L00026503	- '`tier` remains compatibility vocabulary and must not outrank canonical execution refs.'
+L00026504	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026505	validation_surfaces:
+L00026506	- >-
+L00026507	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026508	- python3 scripts/pm-plan-index.py validate
+L00026509	reasoning_tier: standard
+L00026510	context_scope: orchestrator_subagent_standardization
+L00026511	implementation_surfaces:
+L00026512	- Plans/orchestrator-subagent-integration.md
+L00026513	risk_class: coordination_query_filtering
+L00026514	node_compile_hint:
+L00026515	  mode: coordination_query_filtering
+L00026516	  create_worknodes: false
+L00026517	source_lineage:
+L00026518	- >-
+L00026519	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0155
+L00026520	preserved_exact_tokens:
+L00026521	- platform
+L00026522	- tier
+L00026523	- file path
+L00026524	- agent ID
+L00026525	negative_constraints:
+L00026526	- Tier compatibility labels must not outrank canonical execution refs.
+L00026527	compatibility_only_notes:
+L00026528	- '`tier` is retained only as compatibility vocabulary.'
+L00026529	stale_retired_dispositions: []
+L00026530	owner_boundary_notes:
+L00026531	- Orchestrator consumes the coordination projection; runtime/storage contracts own canonical execution identity.
+L00026532	owner_hints:
+L00026533	- Plans/orchestrator-subagent-integration.md
+L00026534	preserved_contractrefs: []
+L00026535	```
+L00026536	
+L00026537	### OSI-347 - AgentCoordinator Query Methods Example
+L00026538	
+L00026539	```yaml
+L00026540	plan_unit_id: OSI-347
+L00026541	unit_type: requirement
+L00026542	status: accepted
+L00026543	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026544	canonical_text: >-
+L00026545	  Preserve the AgentCoordinator query-method snippet as source evidence for filtering active agent projections by platform,
+L00026546	  node ID, and edited file path; canonical implementations query redb projections and do not call `load_state` for
+L00026547	  authoritative scheduling or prompt context.
+L00026548	gui_related: false
+L00026549	gui_classification_reason: This unit covers backend coordination example code, not GUI presentation.
+L00026550	split_recommended: false
+L00026551	depends_on:
+L00026552	- OSI-346
+L00026553	- OSI-258
+L00026554	unblocks: []
+L00026555	acceptance_criteria:
+L00026556	- Covered query-method Rust snippet remains losslessly available for exact-text audit.
+L00026557	- The snippet is preserved as plan evidence and does not by itself create implementation work.
+L00026558	- Query behavior reads `coordination_agent_projection.v1`, `coordination_file_projection.v1`, or `coordination_snapshot_projection.v1` for authority.
+L00026559	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026560	validation_surfaces:
+L00026561	- >-
+L00026562	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026563	- python3 scripts/pm-plan-index.py validate
+L00026564	reasoning_tier: standard
+L00026565	context_scope: orchestrator_subagent_standardization
+L00026566	implementation_surfaces:
+L00026567	- Plans/orchestrator-subagent-integration.md
+L00026568	risk_class: coordination_query_methods_example
+L00026569	node_compile_hint:
+L00026570	  mode: coordination_query_methods_example
+L00026571	  create_worknodes: false
+L00026572	source_lineage:
+L00026573	- >-
+L00026574	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0155
+L00026575	preserved_exact_tokens:
+L00026576	- get_agents_by_platform
+L00026577	- get_agents_by_node
+L00026578	- get_agents_editing_file
+L00026579	- load_state
+L00026580	- active_agents
+L00026581	- files_being_edited
+L00026582	negative_constraints:
+L00026583	- Example code does not override canonical runtime/storage ownership.
+L00026584	- Do not use `load_state` as the authority path for active-agent queries.
+L00026585	compatibility_only_notes:
+L00026586	- Rust snippet is source-lineage evidence only until implementation owners accept it.
+L00026587	stale_retired_dispositions:
+L00026588	- "`load_state` query methods are mirror/source-lineage only."
+L00026589	owner_boundary_notes:
+L00026590	- Storage/runtime own durable coordination state; orchestrator consumes and filters the projection.
+L00026591	owner_hints:
+L00026592	- Plans/orchestrator-subagent-integration.md
+L00026593	preserved_contractrefs: []
+L00026594	```
+L00026595	
+L00026596	### OSI-348 - Coordination Backup Before Write Requirement
+L00026597	
+L00026598	```yaml
+L00026599	plan_unit_id: OSI-348
+L00026600	unit_type: requirement
+L00026601	status: accepted
+L00026602	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026603	canonical_text: >-
+L00026604	  Optional coordination mirror writes should preserve backup-before-write and retention-policy evidence for recovery of the
+L00026605	  compatibility state file, while canonical projection writes are redb transactions rebuildable from seglog.
+L00026606	gui_related: false
+L00026607	gui_classification_reason: This unit covers backend coordination recovery behavior, not GUI presentation.
+L00026608	split_recommended: false
+L00026609	depends_on:
+L00026610	- OSI-265
+L00026611	- OSI-328
+L00026612	unblocks: []
+L00026613	acceptance_criteria:
+L00026614	- Covered backup-before-write and retention-policy prose remains losslessly available for exact-text audit.
+L00026615	- Backup behavior remains scoped to coordination debug/export mirrors unless a storage owner explicitly adopts it.
+L00026616	- Canonical projection recovery is replay/rebuild from seglog plus checkpoint, not timestamped JSON backups.
+L00026617	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026618	validation_surfaces:
+L00026619	- >-
+L00026620	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026621	- python3 scripts/pm-plan-index.py validate
+L00026622	reasoning_tier: standard
+L00026623	context_scope: orchestrator_subagent_standardization
+L00026624	implementation_surfaces:
+L00026625	- Plans/orchestrator-subagent-integration.md
+L00026626	risk_class: coordination_backup_before_write
+L00026627	node_compile_hint:
+L00026628	  mode: coordination_backup_before_write
+L00026629	  create_worknodes: false
+L00026630	source_lineage:
+L00026631	- >-
+L00026632	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0155
+L00026633	preserved_exact_tokens:
+L00026634	- Automatically backup coordination state before each write
+L00026635	- retention policy
+L00026636	negative_constraints:
+L00026637	- Projection backups must not become canonical storage durability rules by implication.
+L00026638	compatibility_only_notes:
+L00026639	- Backup behavior applies to mirror/debug state evidence.
+L00026640	stale_retired_dispositions:
+L00026641	- Backup-before-write of JSON files is retired as canonical coordination durability.
+L00026642	owner_boundary_notes:
+L00026643	- Storage owner adjudicates durable backup and retention semantics.
+L00026644	owner_hints:
+L00026645	- Plans/orchestrator-subagent-integration.md
+L00026646	preserved_contractrefs: []
+L00026647	```
+L00026648	
+L00026649	### OSI-349 - Save State Backup And Cleanup Example
+L00026650	
+L00026651	```yaml
+L00026652	plan_unit_id: OSI-349
+L00026653	unit_type: requirement
+L00026654	status: accepted
+L00026655	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026656	canonical_text: >-
+L00026657	  Preserve the save_state backup and cleanup example, including timestamped .bak files and the "keep last 10" cleanup
+L00026658	  note, as optional coordination mirror recovery evidence.
+L00026659	gui_related: false
+L00026660	gui_classification_reason: This unit covers backend coordination example code, not GUI presentation.
+L00026661	split_recommended: false
+L00026662	depends_on:
+L00026663	- OSI-348
+L00026664	unblocks: []
+L00026665	acceptance_criteria:
+L00026666	- Covered save_state backup snippet remains losslessly available for exact-text audit.
+L00026667	- The cleanup threshold is compatibility evidence and not promoted to a durable storage retention contract.
+L00026668	- Timestamped `.bak` files are not canonical coordination history and cannot override seglog/redb state.
+L00026669	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026670	validation_surfaces:
+L00026671	- >-
+L00026672	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026673	- python3 scripts/pm-plan-index.py validate
+L00026674	reasoning_tier: standard
+L00026675	context_scope: orchestrator_subagent_standardization
+L00026676	implementation_surfaces:
+L00026677	- Plans/orchestrator-subagent-integration.md
+L00026678	risk_class: coordination_save_state_backup_example
+L00026679	node_compile_hint:
+L00026680	  mode: coordination_save_state_backup_example
+L00026681	  create_worknodes: false
+L00026682	source_lineage:
+L00026683	- >-
+L00026684	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0155
+L00026685	preserved_exact_tokens:
+L00026686	- save_state
+L00026687	- 'with_extension(format!("bak.{}", Utc::now().timestamp()))'
+L00026688	- cleanup_old_backups
+L00026689	- keep last 10
+L00026690	negative_constraints:
+L00026691	- Timestamped backup snippet does not own canonical storage retention.
+L00026692	compatibility_only_notes:
+L00026693	- Cleanup threshold is source-lineage compatibility evidence only.
+L00026694	stale_retired_dispositions:
+L00026695	- "`save_state` backup cleanup is mirror/source-lineage only."
+L00026696	owner_boundary_notes:
+L00026697	- Storage owner adjudicates cleanup policy if the example is promoted.
+L00026698	owner_hints:
+L00026699	- Plans/orchestrator-subagent-integration.md
+L00026700	preserved_contractrefs: []
+L00026701	```
+L00026702	
+L00026703	### OSI-350 - Coordination Schema Versioning Requirement
+L00026704	
+L00026705	```yaml
+L00026706	plan_unit_id: OSI-350
+L00026707	unit_type: requirement
+L00026708	status: accepted
+L00026709	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026710	canonical_text: Coordination projection formats should retain explicit schema-versioning evidence for controlled format changes.
+L00026711	gui_related: false
+L00026712	gui_classification_reason: This unit covers backend schema compatibility, not GUI presentation.
+L00026713	split_recommended: false
+L00026714	depends_on:
+L00026715	- OSI-257
+L00026716	- OSI-330
+L00026717	unblocks: []
+L00026718	acceptance_criteria:
+L00026719	- Covered schema-versioning prose remains losslessly available for exact-text audit.
+L00026720	- Schema versioning remains scoped to coordination projection schema unless adopted by storage owners.
+L00026721	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00026722	validation_surfaces:
+L00026723	- >-
+L00026724	  python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00026725	- python3 scripts/pm-plan-index.py validate
+L00026726	reasoning_tier: standard
+L00026727	context_scope: orchestrator_subagent_standardization
+L00026728	implementation_surfaces:
+L00026729	- Plans/orchestrator-subagent-integration.md
+L00026730	risk_class: coordination_schema_versioning
+L00026731	node_compile_hint:
+L00026732	  mode: coordination_schema_versioning
+L00026733	  create_worknodes: false
+L00026734	source_lineage:
+L00026735	- >-
+L00026736	  Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:orchestrator-subagent-integration-S0155
+L00026737	preserved_exact_tokens:
+L00026738	- schema versioning
+L00026739	- coordination state
+L00026740	- format changes
+L00026741	negative_constraints:
+L00026742	- Coordination projection schema versioning does not redefine canonical storage schema ownership.
+L00026743	compatibility_only_notes: []
+L00026744	stale_retired_dispositions: []
+L00026745	owner_boundary_notes:
+L00026746	- Storage/schema owners accept or reject durable schema semantics.
+L00026747	owner_hints:
+L00026748	- Plans/orchestrator-subagent-integration.md
+L00026749	preserved_contractrefs: []
+L00026750	```
+L00026751	
+
+<<< CONTEXT_AFTER canonical_document_lines=26752-26763 >>>
+L00026752	### OSI-351 - AgentCoordinationState Schema Version Example
+L00026753	
+L00026754	```yaml
+L00026755	plan_unit_id: OSI-351
+L00026756	unit_type: requirement
+L00026757	status: accepted
+L00026758	owner_doc: Plans/orchestrator-subagent-integration.md
+L00026759	canonical_text: >-
+L00026760	  Preserve the AgentCoordinationState schema version example as evidence for schema_version, current version constants,
+L00026761	  validation, and migration hooks on coordination projections.
+L00026762	gui_related: false
+L00026763	gui_classification_reason: This unit covers backend schema example code, not GUI presentation.

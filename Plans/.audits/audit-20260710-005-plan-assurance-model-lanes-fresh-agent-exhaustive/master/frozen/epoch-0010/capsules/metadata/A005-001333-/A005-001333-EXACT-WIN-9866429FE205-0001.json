@@ -1,0 +1,48 @@
+{
+  "assignment_id": "A005-001333-EXACT-WIN-9866429FE205-0001",
+  "attempt_id": "attempt-0010",
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "blindness": {
+    "external_research": "deferred_to_later_feature_phase",
+    "peer_results": "forbidden",
+    "prior_audits": "forbidden",
+    "unrelated_sources": "forbidden"
+  },
+  "context_ranges": [],
+  "core_range": [
+    1,
+    241
+  ],
+  "core_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793",
+  "document_path": "Plans/bootstrap/Codex_Prompts.md",
+  "output_schema_ref": "schemas/assignment_result.schema.json",
+  "phase": "blind_document_window_review",
+  "required_dimensions": [
+    "behavior",
+    "capabilities",
+    "inputs_outputs",
+    "contracts",
+    "states_transitions",
+    "authority",
+    "ownership",
+    "consumers",
+    "gui_truth",
+    "failures_recovery",
+    "security_privacy",
+    "propagation",
+    "operations",
+    "scale_performance",
+    "compatibility_migration",
+    "acceptance_oracles",
+    "builder_discretion",
+    "ambiguity_unknowns"
+  ],
+  "role": "exact_behavior",
+  "role_instructions": "Review every authoritative core line. Extract exact behaviors, capabilities, inputs, outputs, contracts, states, authorities, owners, consumers, GUI truth, failures, recovery, validation oracles, and consequential builder discretion. Identify under-specification only with exact source evidence. Do not consult prior audits, peer results, unrelated windows, or the web.",
+  "schema_version": "context-capsule-v1",
+  "source_excerpt_line_format": "L######## followed by a tab and source text; evidence uses the canonical number and exact_quote excludes the prefix",
+  "source_excerpt_ref": "capsules/source/6a/6af29a734d36317060760000c825c3617d67b6930b55f454a7bfd511b53013ce.txt",
+  "source_excerpt_sha256": "6af29a734d36317060760000c825c3617d67b6930b55f454a7bfd511b53013ce",
+  "source_sha256": "c5c7619bf49ce3a96d2eea94e0c6d2a1f861461239760a67e4877448828f3793",
+  "window_id": "WIN-9866429FE205-0001"
+}

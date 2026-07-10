@@ -1,0 +1,388 @@
+<<< CONTEXT_BEFORE canonical_document_lines=2837-2848 >>>
+L00002837	- deny_classes[] wins for account-bearing state.
+L00002838	compatibility_only_notes: []
+L00002839	stale_retired_dispositions: []
+L00002840	owner_boundary_notes:
+L00002841	- PM-managed overlays for instructions, skills, selected MCP definitions, and selected bridge config are allowed only when target-specific.
+L00002842	owner_hints:
+L00002843	- Plans/Multi-Account.md
+L00002844	preserved_contractrefs:
+L00002845	- 'ContractRef: ContractName:Plans/rewrite-tie-in-memo.md, ContractName:Plans/OpenCode_Deep_Extraction.md, ContractName:Plans/FinalGUISpec.md'
+L00002846	split_recommendation_reason: Sharing deny classes close the provider-specific S0020 split.
+L00002847	```
+L00002848	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=2849-3207 >>>
+L00002849	### MA-032 - Runner Orchestration Account Contract
+L00002850	
+L00002851	```yaml
+L00002852	plan_unit_id: MA-032
+L00002853	unit_type: requirement
+L00002854	status: accepted
+L00002855	owner_doc: Plans/Multi-Account.md
+L00002856	canonical_text: The multi-account contract applies across assistant, interviewer, builders, overseers, and node workers.
+L00002857	  Auto-switching is on by default for provider-using actors, provider selection is provider-aware, account-aware, and
+L00002858	  role-aware, same-provider accounts are not interchangeable, and manual set-active remains an override/debug control.
+L00002859	gui_related: false
+L00002860	gui_classification_reason: The unit defines runtime actor coverage rather than GUI presentation.
+L00002861	split_recommended: false
+L00002862	depends_on:
+L00002863	- MA-031
+L00002864	unblocks: []
+L00002865	acceptance_criteria:
+L00002866	- Covered source spans remain losslessly available for exact-text audit.
+L00002867	- Multi-account applies across all listed provider-using actor classes.
+L00002868	- Provider selection remains provider-aware, account-aware, and role-aware.
+L00002869	- Same-provider accounts are not interchangeable.
+L00002870	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002871	validation_surfaces:
+L00002872	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002873	- python3 scripts/pm-plan-index.py validate
+L00002874	risk_class: runner_orchestration_account_contract
+L00002875	reasoning_tier: standard
+L00002876	context_scope: multi_account_standardization
+L00002877	implementation_surfaces:
+L00002878	- Plans/Multi-Account.md
+L00002879	node_compile_hint:
+L00002880	  mode: runner_orchestration_account_contract
+L00002881	  create_worknodes: false
+L00002882	source_lineage:
+L00002883	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0021
+L00002884	preserved_exact_tokens:
+L00002885	- assistant
+L00002886	- interviewer
+L00002887	- builders
+L00002888	- overseers
+L00002889	- node workers
+L00002890	- provider-aware
+L00002891	- account-aware
+L00002892	- role-aware
+L00002893	- manual set-active
+L00002894	negative_constraints:
+L00002895	- Same-provider accounts are not interchangeable.
+L00002896	compatibility_only_notes: []
+L00002897	stale_retired_dispositions: []
+L00002898	owner_boundary_notes:
+L00002899	- Runner and orchestration consumers inherit the Multi-Account requested/effective account contract.
+L00002900	owner_hints:
+L00002901	- Plans/Multi-Account.md
+L00002902	preserved_contractrefs:
+L00002903	- 'ContractRef: ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/usage-feature.md'
+L00002904	split_recommendation_reason: The source span is narrow enough for one runner/orchestration PlanUnit.
+L00002905	```
+L00002906	
+L00002907	### MA-033 - Owner Consumer Account Binding And Pressure History
+L00002908	
+L00002909	```yaml
+L00002910	plan_unit_id: MA-033
+L00002911	unit_type: requirement
+L00002912	status: accepted
+L00002913	owner_doc: Plans/Multi-Account.md
+L00002914	canonical_text: Runtime-account consumers defer to Multi-Account for requested/effective account selection. requested_account_binding
+L00002915	  and operational_identity remain shared runtime fields, required account binding fields remain explicit, blocked switch
+L00002916	  decisions stay historically material, pressure history persists through account_switch_event and account_pressure_episode,
+L00002917	  and hard-blocked evidence keeps accounts ineligible until successful revalidation.
+L00002918	gui_related: false
+L00002919	gui_classification_reason: The unit defines runtime storage/history fields rather than GUI presentation.
+L00002920	split_recommended: false
+L00002921	depends_on:
+L00002922	- MA-032
+L00002923	unblocks: []
+L00002924	acceptance_criteria:
+L00002925	- Covered source spans remain losslessly available for exact-text audit.
+L00002926	- requested_account_policy alone is not treated as sufficient account-selection evidence.
+L00002927	- requested_account_binding remains closed to none, preferred, and required.
+L00002928	- account_switch_event and account_pressure_episode preserve durable history.
+L00002929	- hard_blocked evidence waits for successful revalidation before routing resumes.
+L00002930	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002931	validation_surfaces:
+L00002932	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002933	- python3 scripts/pm-plan-index.py validate
+L00002934	risk_class: account_binding_pressure_history
+L00002935	reasoning_tier: standard
+L00002936	context_scope: multi_account_standardization
+L00002937	implementation_surfaces:
+L00002938	- Plans/Multi-Account.md
+L00002939	node_compile_hint:
+L00002940	  mode: account_binding_pressure_history
+L00002941	  create_worknodes: false
+L00002942	source_lineage:
+L00002943	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0022
+L00002944	preserved_exact_tokens:
+L00002945	- requested_account_policy
+L00002946	- requested_account_id?
+L00002947	- requested_account_binding?
+L00002948	- effective_account_id?
+L00002949	- account_switch_reason?
+L00002950	- execution_role
+L00002951	- none
+L00002952	- preferred
+L00002953	- required
+L00002954	- account_switch_event
+L00002955	- account_pressure_episode
+L00002956	- nominal
+L00002957	- hard_block=true
+L00002958	- hard_blocked
+L00002959	negative_constraints:
+L00002960	- requested_account_policy alone is not enough to explain concrete account selection.
+L00002961	compatibility_only_notes: []
+L00002962	stale_retired_dispositions: []
+L00002963	owner_boundary_notes:
+L00002964	- Runtime-account consumers defer to Plans/Multi-Account.md for requested/effective account selection.
+L00002965	owner_hints:
+L00002966	- Plans/Multi-Account.md
+L00002967	preserved_contractrefs:
+L00002968	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Decision_Policy.md, ContractName:Plans/Models_System.md'
+L00002969	split_recommendation_reason: The owner/consumer binding span is narrow enough for one PlanUnit.
+L00002970	```
+L00002971	
+L00002972	### MA-034 - Usage Pressure Owner And Pick-Best Evidence
+L00002973	
+L00002974	```yaml
+L00002975	plan_unit_id: MA-034
+L00002976	unit_type: requirement
+L00002977	status: accepted
+L00002978	owner_doc: Plans/Multi-Account.md
+L00002979	canonical_text: Usage/account pressure plugs into the shared Usage model rather than creating a parallel quota system.
+L00002980	  Provider-using interactions may update account health, pick-best uses the strongest available account-health signals
+L00002981	  plus policy, and Gemini provider-level-only quota/status projections are incomplete when they omit account-level state.
+L00002982	gui_related: false
+L00002983	gui_classification_reason: The unit defines Usage-owned runtime pressure and pick-best behavior rather than GUI presentation.
+L00002984	split_recommended: true
+L00002985	depends_on:
+L00002986	- MA-033
+L00002987	unblocks: []
+L00002988	acceptance_criteria:
+L00002989	- Covered source spans remain losslessly available for exact-text audit.
+L00002990	- No parallel quota system is created for multi-account routing.
+L00002991	- Account health can update from every provider-using interaction.
+L00002992	- Pick-best does not treat all signals as equally authoritative.
+L00002993	- Gemini family summaries preserve account-level state.
+L00002994	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002995	validation_surfaces:
+L00002996	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002997	- python3 scripts/pm-plan-index.py validate
+L00002998	risk_class: usage_pressure_owner
+L00002999	reasoning_tier: standard
+L00003000	context_scope: multi_account_standardization
+L00003001	implementation_surfaces:
+L00003002	- Plans/Multi-Account.md
+L00003003	node_compile_hint:
+L00003004	  mode: usage_pressure_owner
+L00003005	  create_worknodes: false
+L00003006	source_lineage:
+L00003007	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0023
+L00003008	preserved_exact_tokens:
+L00003009	- Usage/account pressure
+L00003010	- shared usage model
+L00003011	- parallel quota system
+L00003012	- account-health signals
+L00003013	- /quota/status
+L00003014	- usage
+L00003015	- pressure
+L00003016	- cooldown
+L00003017	- source-confidence
+L00003018	negative_constraints:
+L00003019	- Do not create a parallel quota system for multi-account routing.
+L00003020	- Gemini provider-level-only /quota/status projection is incomplete without account-level state.
+L00003021	compatibility_only_notes: []
+L00003022	stale_retired_dispositions: []
+L00003023	owner_boundary_notes:
+L00003024	- Plans/usage-feature.md remains the Usage owner consumed by Multi-Account routing.
+L00003025	owner_hints:
+L00003026	- Plans/Multi-Account.md
+L00003027	preserved_contractrefs:
+L00003028	- 'ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/storage-plan.md, ContractName:Plans/Contracts_V0.md#42-authpolicy'
+L00003029	split_recommendation_reason: Multi-Account-S0023 is split between Usage owner, Gemini labels, and priority rules.
+L00003030	```
+L00003031	
+L00003032	### MA-035 - Gemini Usage Source Labels And Confidence
+L00003033	
+L00003034	```yaml
+L00003035	plan_unit_id: MA-035
+L00003036	unit_type: requirement
+L00003037	status: accepted
+L00003038	owner_doc: Plans/Multi-Account.md
+L00003039	canonical_text: Gemini Direct usage/source expectations preserve source-qualified labels. API-key/local-only views use
+L00003040	  source-qualified estimated wording, source_confidence uses only high, medium, low, or unknown ordinal confidence values,
+L00003041	  and authoritative, structured, heuristic, or local-only provenance is carried by source_authority, source_class, value/projection
+L00003042	  state, or display copy. Legacy Gemini CLI family-usage and signal_confidence wording is compatibility/source-lineage only.
+L00003043	gui_related: true
+L00003044	gui_classification_reason: The unit defines user-visible Gemini usage labels and confidence disclosure.
+L00003045	split_recommended: true
+L00003046	depends_on:
+L00003047	- MA-034
+L00003048	unblocks: []
+L00003049	acceptance_criteria:
+L00003050	- Covered source spans remain losslessly available for exact-text audit.
+L00003051	- Gemini Direct usage remains source-qualified; retired Gemini CLI family aggregation is not an active UI requirement.
+L00003052	- Gemini quota and Gemini (estimated) labels remain source-qualified.
+L00003053	- source_confidence remains visible; legacy signal_confidence is an alias/source-lineage token only.
+L00003054	- Authoritative, structured, heuristic, and local-only confidence levels remain distinguishable.
+L00003055	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003056	validation_surfaces:
+L00003057	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003058	- python3 scripts/pm-plan-index.py validate
+L00003059	risk_class: gemini_usage_labels
+L00003060	reasoning_tier: standard
+L00003061	context_scope: multi_account_standardization
+L00003062	implementation_surfaces:
+L00003063	- Plans/Multi-Account.md
+L00003064	node_compile_hint:
+L00003065	  mode: gemini_usage_labels
+L00003066	  create_worknodes: false
+L00003067	source_lineage:
+L00003068	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0023
+L00003069	preserved_exact_tokens:
+L00003070	- Gemini-family usage surface
+L00003071	- Gemini quota
+L00003072	- Gemini (estimated)
+L00003073	- signal_confidence
+L00003074	- source_confidence
+L00003075	- authoritative
+L00003076	- structured
+L00003077	- heuristic
+L00003078	- local-only
+L00003079	negative_constraints: []
+L00003080	compatibility_only_notes: []
+L00003081	stale_retired_dispositions: []
+L00003082	owner_boundary_notes:
+L00003083	- Usage labels consume Plans/usage-feature.md while preserving Multi-Account account context.
+L00003084	owner_hints:
+L00003085	- Plans/Multi-Account.md
+L00003086	preserved_contractrefs:
+L00003087	- 'ContractRef: ContractName:Plans/usage-feature.md, ContractName:Plans/FinalGUISpec.md, ContractName:Plans/rewrite-tie-in-memo.md'
+L00003088	split_recommendation_reason: Gemini labels are split from generic pick-best evidence and priority ordering.
+L00003089	```
+L00003090	
+L00003091	### MA-036 - Priority Ordering And Sticky Selection
+L00003092	
+L00003093	```yaml
+L00003094	plan_unit_id: MA-036
+L00003095	unit_type: requirement
+L00003096	status: accepted
+L00003097	owner_doc: Plans/Multi-Account.md
+L00003098	canonical_text: Priority, GUI ordering, and stickiness rules use lower numeric priority first, prefer the current effective
+L00003099	  account when healthy enough, otherwise choose the highest-priority eligible account inside the highest-ranked viable
+L00003100	  auth surface, and avoid bouncing back to a recovered higher-priority account unless policy and health justify it.
+L00003101	gui_related: true
+L00003102	gui_classification_reason: The unit covers GUI ordering and user-visible account priority/stickiness behavior.
+L00003103	split_recommended: true
+L00003104	depends_on:
+L00003105	- MA-035
+L00003106	unblocks: []
+L00003107	acceptance_criteria:
+L00003108	- Covered source spans remain losslessly available for exact-text audit.
+L00003109	- Lower numeric priority wins.
+L00003110	- Current effective account remains preferred when healthy enough.
+L00003111	- Selection considers highest-ranked viable auth surface.
+L00003112	- Recovered higher-priority accounts do not immediately steal traffic back without policy and health support.
+L00003113	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003114	validation_surfaces:
+L00003115	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003116	- python3 scripts/pm-plan-index.py validate
+L00003117	risk_class: priority_sticky_selection
+L00003118	reasoning_tier: standard
+L00003119	context_scope: multi_account_standardization
+L00003120	implementation_surfaces:
+L00003121	- Plans/Multi-Account.md
+L00003122	node_compile_hint:
+L00003123	  mode: priority_sticky_selection
+L00003124	  create_worknodes: false
+L00003125	source_lineage:
+L00003126	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0023
+L00003127	preserved_exact_tokens:
+L00003128	- lower numeric priority wins
+L00003129	- '1'
+L00003130	- '2'
+L00003131	- '3'
+L00003132	- current effective account
+L00003133	- highest-priority eligible account
+L00003134	- highest-ranked viable auth surface
+L00003135	negative_constraints:
+L00003136	- Do not bounce immediately back to a recovered higher-priority account unless policy and health justify it.
+L00003137	compatibility_only_notes: []
+L00003138	stale_retired_dispositions: []
+L00003139	owner_boundary_notes:
+L00003140	- Priority and stickiness rules align GUI ordering with requested/effective runtime selection.
+L00003141	owner_hints:
+L00003142	- Plans/Multi-Account.md
+L00003143	preserved_contractrefs:
+L00003144	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md#EFFECTIVE-RESOLUTION-RECORD, PolicyRule:Decision_Policy.md§3'
+L00003145	split_recommendation_reason: Priority ordering closes the S0023 split.
+L00003146	```
+L00003147	
+L00003148	### MA-037 - GUI UX-Only Boundary And Agent-Config Section Order
+L00003149	
+L00003150	```yaml
+L00003151	plan_unit_id: MA-037
+L00003152	unit_type: requirement
+L00003153	status: accepted
+L00003154	owner_doc: Plans/Multi-Account.md
+L00003155	canonical_text: Multi-account GUI requirements are UX requirements independent of implementation stack. Agent-Config is the
+L00003156	  canonical management surface for provider defaults, accounts/profiles, models, instructions, skills, and advanced
+L00003157	  runtime controls, with required section order and a persistent Effective Runtime inspector in the provider detail flow.
+L00003158	gui_related: true
+L00003159	gui_classification_reason: The unit defines GUI surface structure, navigation order, and persistent runtime inspector behavior.
+L00003160	split_recommended: true
+L00003161	depends_on:
+L00003162	- MA-036
+L00003163	unblocks: []
+L00003164	acceptance_criteria:
+L00003165	- Covered source spans remain losslessly available for exact-text audit.
+L00003166	- GUI requirements remain implementation-stack independent.
+L00003167	- Agent-Config remains the canonical management surface.
+L00003168	- Required Agent-Config section order remains preserved.
+L00003169	- Effective Runtime inspector remains persistently visible in the provider detail flow.
+L00003170	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00003171	validation_surfaces:
+L00003172	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003173	- python3 scripts/pm-plan-index.py validate
+L00003174	risk_class: agent_config_gui_structure
+L00003175	reasoning_tier: standard
+L00003176	context_scope: multi_account_standardization
+L00003177	implementation_surfaces:
+L00003178	- Plans/Multi-Account.md
+L00003179	node_compile_hint:
+L00003180	  mode: agent_config_gui_structure
+L00003181	  create_worknodes: false
+L00003182	source_lineage:
+L00003183	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0024
+L00003184	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Multi-Account-S0025
+L00003185	preserved_exact_tokens:
+L00003186	- GUI requirements (UX only)
+L00003187	- Agent-Config
+L00003188	- Overview
+L00003189	- Defaults
+L00003190	- Accounts / Profiles
+L00003191	- Models
+L00003192	- Instructions
+L00003193	- Skills
+L00003194	- Advanced Runtime
+L00003195	- Effective Runtime
+L00003196	negative_constraints: []
+L00003197	compatibility_only_notes: []
+L00003198	stale_retired_dispositions: []
+L00003199	owner_boundary_notes:
+L00003200	- Agent-Config owns the provider/account management surface while runtime records own actual requested/effective execution.
+L00003201	owner_hints:
+L00003202	- Plans/Multi-Account.md
+L00003203	preserved_contractrefs:
+L00003204	- 'ContractRef: ContractName:Plans/FinalGUISpec.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/usage-feature.md'
+L00003205	split_recommendation_reason: GUI structure is split from family pooling guardrails.
+L00003206	```
+L00003207	
+
+<<< CONTEXT_AFTER canonical_document_lines=3208-3219 >>>
+L00003208	### MA-038 - Provider Pooling Family Guardrails And No Pseudo-Providers
+L00003209	
+L00003210	```yaml
+L00003211	plan_unit_id: MA-038
+L00003212	unit_type: requirement
+L00003213	status: accepted
+L00003214	owner_doc: Plans/Multi-Account.md
+L00003215	canonical_text: >-
+L00003216	  Agent-Config surfaces provider/family pooling where a provider entry participates in family-level pooling, preserves active Gemini Direct, Antigravity CLI public `agy` rows, and the separate Antigravity OAuth/internal `gemini-3.1-flash-image` generated-image route as real provider-entry/account rows where configured, treats Gemini CLI as retired source-lineage only, requires requested/effective disclosure when family pooling selects a different backend, capability-checks media/effort/tooling needs, and forbids fake OAuth/API-key pseudo-providers.
+L00003217	gui_related: true
+L00003218	gui_classification_reason: The unit defines GUI pooling controls, account row badges, and requested/effective disclosure.
+L00003219	split_recommended: true

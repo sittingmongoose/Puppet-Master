@@ -1,0 +1,211 @@
+<<< CONTEXT_BEFORE canonical_document_lines=609-620 >>>
+L00000609	- `todowrite` / `todoread` use the same normalized TODO schema as planning outputs.
+L00000610	- Crew/subagent execution consumes the same TODO contract without translation.
+L00000611	- Remove `todowrite` from blanket `ask/plan` mode auto-deny
+L00000612	- editing Deep Plan markdown (the rich artifact) MUST update the normalized TODO projection BEFORE execution begins
+L00000613	ContractRef: ContractName:Plans/assistant-chat-design.md#8.1 Canonical planning model, ContractName:Plans/storage-plan.md#4.3 Plan and TODO state, ContractName:Plans/Contracts_V0.md#1.1 Assistant worktree seglog events
+L00000614	
+L00000615	Labels and values:
+L00000616	- Plan
+L00000617	- Deep Plan
+L00000618	### 3.5D Web operation family runtime contract
+L00000619	
+L00000620	This section defines the canonical contract for this surface.
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=621-802 >>>
+L00000621	
+L00000622	Core rules:
+L00000623	- WebAction is a locked typed interface with an exact action enum, required and optional fields, hard timing limits, sequential execution, and invalid_input on unknown action types.
+L00000624	- The web operation family is provider-pluggable and PM-owned above individual providers. The PM-native layer provides native page read/extract (`/extract`), optional site crawl, optional site map extraction (`/crawl/map`), and research/synthesis (`/synthesis`) orchestration; providers plug into that layer for discovery and optional backend-native retrieval. This keeps the operation family future-proof instead of treating providers as the only place web capability can live. Stored support-tier canon is the normalized enum `native`, `model_native`, `native_ish`, `near_native`, `pm_composed`, `partial`, `fallback_only`, `unsupported`, or `unavailable`; GUI/help surfaces may display aliases such as `native (model)`, `native-ish`, `near-native`, `PM-composed`, and `fallback-only`, but adapter kind, backend-native retrieval, and routing posture remain separate qualifiers.
+L00000625	- The WebProviderAdapterRegistry is the PM-owned single source of truth for web provider and adapter capability. Registry rows bind provider ID, adapter ID, adapter kind (`pm_native`, `direct_api`, `mcp_server`, `model_native`, `cli_bridge`, or `server_bridge`), operation capability, support tier, effective cost/cache policy, fallback rank, health state, robots behavior, egress policy, SSRF/private-host policy, credential reference, and projection state. Provider config files, MCP projections, model-native provider projections, coding-agent projections, and GUI settings rows are consumers of this registry, not competing sources of provider truth, and they must serialize credential references only, never raw secrets.
+L00000626	- The web dispatcher maps each invocation to one canonical operation (`search`, `extract`, `research`, `deep_research`, `crawl`, `map`, or `fetch`/`read`), validates parameters against that operation's contract before adapter routing, and rejects malformed or unsupported inputs with `invalid_input` instead of handing them to a provider.
+L00000627	- Slash commands, command palette entries, natural-language user requests, assistant-initiated needs, subagent needs, Goal Runtime work, PRD Builder work, and Planning Wizard work all converge on the same WebOperation / BrowserAction dispatcher. Slash commands are optional entrypoints; slash help must not be treated as the capability boundary. Retired Chain Wizard references remain compatibility/source-lineage only and normalize to Planning Wizard rather than becoming a live product dependency. Every invocation persists `invocation_source`, optional `agent_reason`, and source IDs such as `source_user_message_id`, `source_goal_id`, `source_subagent_id`, `source_prd_id`, or `source_planning_run_id` when present.
+L00000628	- Minimal canonical input shapes are stable across adapters: `websearch` accepts `query: string`, `max_results?: number`, compatibility `limit?: number` for source-specific search-result caps, `adapter_hint?: string`, `sources?: ("web" | "news" | "images" | "code" | "academic")[]`, `categories?: ("github" | "research" | "pdf")[]`, `include_domains?: string[]`, `exclude_domains?: string[]`, and `time_range?: string`; source-lineage shorthand `/news/images/code/academic` maps to the `sources` enum, category shorthand `/research/pdf` maps to the `categories` enum, and the default `sources` value is `["web"]`. The `categories` filter is applied during search when the effective provider supports it, otherwise post-search before PM chooses candidate sources. A requested source or category unsupported by the effective provider returns `unsupported_operation` for that source or category. `webfetch` is the PM-native site read via Site Reader / native fallback fetch and its PDF handling is specified by `pdf_mode?: "fast" | "auto" | "ocr"` (`/auto/ocr` lineage), default `"auto"`, applied when the URL serves PDF content; `webextract` accepts `url: string`, `adapter_hint?: string`, `detail_hint?: "fast" | "balanced" | "deep"` for provider/API-side (`/API-side`) extraction or PM-composed extraction, `schema?: object` (JSON Schema defining expected output structure), and `prompt?: string` (natural-language extraction guidance, max 2000 chars) when schema alone is insufficient or no schema is supplied; `webresearch` accepts `task: string`, `max_sources?: number`, `adapter_hint?: string`, `depth_hint?: "fast" | "balanced" | "deep"`, `autonomous?: boolean`, `auto_read_cap?: number`, `schema?: object`, and `schema_mode?: "strict" | "lenient"`; `webcrawl` accepts `root_url: string`, `max_pages?: number`, `max_depth?: number`, `same_origin_only?: boolean`, `adapter_hint?: string`, `include_paths?: string[]`, `exclude_paths?: string[]`, `dedup?: boolean`, `respect_robots?: boolean`, and `search?: string`; `webmap` accepts `root_url: string`, `max_pages?: number`, `max_depth?: number`, `same_origin_only?: boolean`, `adapter_hint?: string`, `include_paths?: string[]`, `exclude_paths?: string[]`, and `search?: string`.
+L00000629	- `webresearch` may also accept `starting_urls?: string[]` as optional seed URLs to begin research from, capped at five URLs; each URL follows the same normalization and validation rules as `webfetch`, and malformed or non-HTTP(S) URLs return `invalid_input`.
+L00000630	- `deep_research` is an operation-level research mode over the same `webresearch` tool ID and dispatcher, not a seventh slash family. It records a deep-research run with subquestion coverage, read receipts, extract receipts, citations from read/extract artifacts, subagent or closure refs when used, and explicit `closure_state` / `failure_reason_code`. PM-composed research is the default path; provider-autonomous research is optional and bounded by the provider adapter capability contract.
+L00000631	- When `autonomous: true` is set on `webresearch`, PM may use provider-native autonomous research when available; Firecrawl delegates to `/v2/agent`, Tavily uses its advanced search + extract chain, and other providers use the PM-composed enhanced recipe: search, read top pages through Site Reader, refine and repeat only when evidence is insufficient, then synthesize with citations. Autonomous research remains bounded to at most three search iterations, at most `max_sources` page reads, and a 120s total runtime unless a narrower provider or run limit applies; each step surfaces activity such as `Searching Web: <refined query>` and `Reading Site: <url>`.
+L00000632	- When `autonomous: false` or omitted on `webresearch`, the default PM-composed research recipe is deterministic and bounded: search with the highest-priority provider, select top candidate URLs up to `max_sources`, read/extract up to `auto_read_cap` pages via Site Reader as the auto-read cap, then synthesize an answer with citations from read content. In this branch the agent does NOT navigate or interact with pages; interaction-capable browser work must route through the explicit WebAction or browser/session contracts.
+L00000633	- Agent-web-research is the shared web-tools flow for Assistant, Interview, Orchestrator, requirements-doc-builder, and doc-builder surfaces: activity cards and the audit-trail must expose search plus `/fetch/read` steps rather than burying them in generic history text, and dangling or `/brittle` cited-search cross-references are replaced by this owner contract.
+L00000634	- Native site-reading uses the PM Site Reader/browser-reader layer for `/token-efficient` structured reading with iframe-aware support; `/plain` fetch is a fallback/degraded read mode, not the default product path.
+L00000635	- Permission requests for `websearch` and `webresearch` are wildcard-only operation approvals because the URL set is not known before discovery, while `/extract/crawl/map` and `webfetch` use host/site-scoped approvals when their target is known.
+L00000636	- `webfetch` accepts `formats?: Array<"markdown" | "html" | "rawHtml" | "screenshot" | "pdf" | "summary" | "links" | "images">` with default `["markdown"]`; provider slash shorthand such as `/html/rawHtml/screenshot/pdf/summary/links/images` and legacy `/PDF/summary` wording normalize to this typed `formats` enum instead of becoming a path or mode family.
+L00000637	- Format semantics stay explicit: `"screenshot"` returns a full-page or viewport screenshot as a base64 image artifact through the browser runtime, `"pdf"` renders the page to a PDF artifact through the browser runtime, and `"summary"` returns an LLM-generated page summary. Summary execution is provider-dependent: Firecrawl may satisfy it natively when selected and supported, while other providers use PM-composed summarization over the fetched/read page content.
+L00000638	- `webcrawl` accepts compatibility `formats?: string[]` with default `["markdown"]`; the same options as `webfetch` apply to each crawled page and normalize into the typed `formats` enum before dispatch.
+L00000639	- Permission and GUI consumers must preserve URL/domain pattern visibility for extract/crawl/map, query/task pattern visibility for search/research where supported, and provider availability in `/web` help/autocomplete and Settings rather than hiding fan-out behind generic `webfetch`.
+L00000640	- `snapshot` and `screenshot` action results are included in the parent tool output, specifically the `webfetch` or `/webextract` result that owns the browser session.
+L00000641	- For `webcrawl`/`webmap`, result-shape hints include `depth_limit?` as the effective depth limit applied. It may differ from `max_depth` when a provider imposes a lower ceiling, and it is an audit/transparency field, not an input parameter.
+L00000642	- `webcrawl` and `webmap` accept `include_paths?: string[]` and `exclude_paths?: string[]` as glob-style path matching, with examples such as `/docs/*`, `/api/**`, and `!/internal/*`; the patterns apply to the URL path component only, not the query string or fragment. Include rules are applied first to establish the candidate URL/path set, `/exclude_paths` removes matches from that set before crawl or map dispatch, and `search?: string` filters discovered URLs by search term.
+L00000643	- `webcrawl` preserves `change_tracking`, `dedup`, `respect_robots`, `formats`, and `include/exclude_paths` as explicit web-operation inputs; providers may narrow unsupported behavior only through structured warnings or capability disclosure.
+L00000644	- `webcrawl` `dedup` defaults to true and uses content-hash based duplicate detection unless caller policy or provider capability narrows the effective behavior.
+L00000645	- For `webcrawl` change tracking, each crawled page is compared to the previous crawl of the same root URL and the output includes a per-page `change_status` field with `new`, `same`, `changed`, or `removed`; removed pages are pages present in the previous crawl but absent from the current crawl, and `change_summary` reports counts for each status.
+L00000646	- Research sessions use a research-session action subset and may use read-only `automation_session` actions for web research: `navigate` navigates to a URL for reading; `back` returns to the previous page; `reload` refreshes a stale page; `snapshot` captures structured page state for extraction; `screenshot` captures visual evidence of page state; `console` debugs page errors that prevent content access; and `network` debugs failed requests that prevent content.
+L00000647	- Research-appropriate `automation_session` actions may also use `click`, `scroll`, `type`, `press_key`, `wait_for`, and `set_viewport` when needed to access page evidence. `click` expands collapsed content or dismisses overlays, `scroll` is viewport scroll for lazy or below-fold content, `type` fills search boxes or forms, `press_key` submits or dismisses modals, `wait_for` waits for dynamic content, and `set_viewport` switches responsive views; `drag` remains precise element manipulation for the full automation/browser action surface, not a research-read default.
+L00000648	- Activity transparency uses `Reading Site: <url> (with browser interaction)` as a sub-annotation on the existing `Reading Site` label when browser interaction was needed for evidence access, not as a distinct seventh web activity label.
+L00000649	- Firecrawl action aliases are adapter-boundary mappings, not a replacement WebAction enum: provider `wait` maps to PM `wait_for`, provider `write` maps to PM `type`, and provider `press` maps to PM `press_key`; provider `click`, `scroll`, and `screenshot` preserve their names.
+L00000650	- `extraction_empty` means extraction completed but produced no data because page content did not match the schema or prompt. Output includes `extracted_data: null` and `schema_conformance: "none"`; lenient mode treats this as a WARNING with empty data plus a warning, while strict mode treats it as an ERROR.
+L00000651	- `schema_too_large` means the extraction schema exceeds the 50KB limit. `schema_invalid` means the schema is not valid JSON Schema draft-07.
+L00000652	- Schema-backed web extraction uses JSON Schema draft-07. Supported schema constructs include `$ref`, `oneOf`, `anyOf`, `enum`, `required`, and nested objects/arrays; providers may narrow unsupported constructs only with structured `schema_invalid` or `schema_too_large` feedback rather than silently flattening the schema.
+L00000653	- `webresearch` output extends locked common fields with `extracted_data?: object` when a schema is provided and `iterations_used?: number` when autonomous, counting the search-read cycles used.
+L00000654	- Multiple extraction `formats` may be requested together. `screenshot` and `pdf` formats require browser runtime; when that runtime is unavailable, return a `capability_unavailable` warning rather than an error. `export_pdf` is retired as a browser/trace action for research access; callers request PDF capture through `webfetch` with `formats: ["pdf"]`. Trace/video actions are testing evidence only and are excluded from `research_session` web-operation actions.
+L00000655	- Browser permissions/safety use a three-layer `/safety` model aligned with `Plans/Permissions_System.md`: always-allowed read/evidence actions cover `navigate`, `back`, `reload`, `snapshot`, `screenshot`, console read, network read, open DevTools, normal selection/copy, and explicit share-to-chat actions; `session_granted` actions cover `click`, `type`, `fill_form`, tab management, uploads, dialog handling, viewport `/device` changes, and trace `/video` capture; high-risk explicit confirmation covers auth flows, storage import `/export`, cookie or `/storage` mutation, offline mode, network mock routing, download execution, and promotion of automation state into normal browsing.
+L00000656	- The browser-testing action family is named-action based rather than arbitrary browser-code execution. Its top-level buckets are Session `/setup`, Navigation `/tabs`, Interaction, Wait `/assert`, Debug `/evidence`, and Environment; canonical token lineage includes `/mock`, `/online`, `/select/close`, `/element/state`, `/element/value`, and `/element/value/list`.
+L00000657	- Named browser action coverage includes navigation/session basics (`navigate`, `back`, `refresh`, `wait`, `tabs`), richer interaction (`hover`, `drag`, `press key`, `press_key`, `select option`, `select_option`, `fill form`, `fill_form`, `file upload`, `upload_file`, `dialog handle`, `handle_dialog`), inspection/evidence (`snapshot`, `console`, `network`, `screenshot`, `trace`, `video`, `PDF`, `pdf`), state control (`cookies`, `localStorage`, `sessionStorage`, storage import/export, `storage_import`, `storage_export`, network offline/mock routing), and verification/debug helpers (`verify visible text/element/value`, `verify_text`, `verify_element`, `verify_value`, locator/debug targeting helpers).
+L00000658	- Browser action records treat the ledger-canonical long-name labels such as `press key`, `select option`, `fill form`, `file upload`, and `dialog handle` as aliases for the same operations as the short snake_case shorthands `press_key`, `select_option`, `fill_form`, `upload_file`, and `handle_dialog`; dispatch and persistence normalize both vocabularies to the same canonical action identity.
+L00000659	- Guaranteed everyday browser/testing action IDs include `open_tab`, `select_tab`, `close_tab`, `click`, `type`, `fill_form`, `select_option`, `hover`, `drag`, `press_key`, `upload_file`, `handle_dialog`, `wait_for`, `verify_text`, `verify_element`, `verify_value`, `snapshot`, `screenshot`, `console`, `network`, and `set_viewport`; advanced `/testing` actions include `trace_start`, `trace_stop`, `video_start`, `video_stop`, `export_pdf`, `cookie_*`, `local_storage_*`, `session_storage_*`, `network_offline`, `network_online`, `route_mock`, and `generate_locator`.
+L00000660	- Degraded or blocked browser capabilities return explicit reason codes: `platform_unsupported`, `runtime_unavailable`, `permission_not_granted`, `session_class_restricted`, and `temporarily_unavailable_after_recovery`.
+L00000661	- For `webextract`, when both prompt and schema are provided, the prompt guides extraction and the schema validates output as a two-phase flow; schema validation must not silently rewrite the LLM prompt. With prompt only and no schema, free-form extraction is guided by prompt and output shape is provider/LLM-determined.
+L00000662	- `webextract` accepts `schema_mode?: "strict" | "lenient"` with default `"lenient"`; when browser interaction is required before extraction it may accept `actions?: Array<WebAction>` with the same max-10 action count and 30s total action cap as the WebAction contract.
+L00000663	- Schema validation modes apply to `webextract` and schema-backed `webresearch`. In `"strict"` mode, output MUST conform to schema, non-conforming fields are dropped, and missing required fields return `extraction_schema_mismatch`; in `"lenient"` mode (default), output uses best-effort conformance, keeps non-conforming fields with `_schema_violation: true` annotation, and treats missing required fields as a warning, not an error.
+L00000664	- `detail_level` does not map to Firecrawl `onlyMainContent` / `onlyCleanContent` as a PM-side input. These Firecrawl params are adapter-internal defaults derived from format selection based on requested `formats`: when `formats` includes `"rawHtml"`, both `onlyMainContent` and `onlyCleanContent` are false; for `"markdown"` or `"html"`, `onlyMainContent: true`.
+L00000665	- Firecrawl `scrapeOptions.depth` is not a canonical PM mapping. The legacy `detail_hint -> scrapeOptions depth` / `detail_hint → scrapeOptions depth` mapping is explicitly removed as unconfirmed; `detail_hint` remains PM advisory input for provider/API-side extraction or PM-composed extraction unless a future provider contract reintroduces that mapping explicitly.
+L00000666	- Firecrawl PDF processing does not make `LlamaParse` PM canon. The source claim that Firecrawl uses `LlamaParse` for PDF handling is intentionally retired as unconfirmed; PM-owned PDF behavior stays on `pdf_mode?: "fast" | "auto" | "ocr"` and platform OCR / fallback text extraction.
+L00000667	- Format output semantics are locked: `"html"` is cleaned HTML with scripts/nav/ads stripped via Site Reader, while `"rawHtml"` is unprocessed HTML as-is from the server.
+L00000668	- Web-operation outputs expose `execution_path?: string` as a routing/audit field. `websearch` may report `provider_search_native` or `pm_search_plus_site_reader`; `webextract` may report `provider_extract_native` or `pm_extract_composed`; `webfetch`/Site Reader reads may report `pm_site_reader`, `provider_firecrawl_scrape`, or `pm_fetch_fallback`; `webresearch` may report `provider_firecrawl_agent` or `pm_research_composed`; `webcrawl` may report `provider_crawl_native` or `pm_crawl_composed`; `webmap` may report `provider_map_native` or `pm_map_composed`.
+L00000669	- Operation cache TTL defaults are exact unless overridden by caller policy: `websearch` defaults `cache_policy?: { max_age_seconds?: number, store?: boolean }` to `{ max_age_seconds: 3600, store: true }`; `webfetch` and `webextract` default the same shape to `{max_age_seconds: 14400, store: true}`; `webcrawl` and `webmap` default the same shape to `{ max_age_seconds: 86400, store: true }`. `webresearch` may reuse cached search/read/extract artifacts under those operation TTLs, but the synthesized research answer is task-specific and is not cached as reusable web content. Non-fetch web operations that use the shared web cache expose `cache_policy` input and `cache_state` output rather than relying on invisible TTL-only caching.
+L00000670	- Web cache outputs use `cache_state?: "hit" | "miss" | "bypassed"`; `bypassed` means request policy, action-driven reads, or a provider/runtime constraint skipped read-time cache lookup while still allowing post-action storage when permitted.
+L00000671	- Web operation outputs share a locked common result envelope: `success: boolean`, `web_operation`, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred: boolean`, `provider_fallback_summary?`, `source_count?: number`, `sources?: Array<{ title?, url, snippet?, provenance_badge? }>`, `warnings?: string[]`, `error_code?: string`, and `error_message?: string`.
+L00000672	- Operation-specific result fields extend the common envelope without replacing it: `websearch` adds `results: Array<{ title, url, snippet?, score? }>`; `webfetch` returns `content: string`, `status?: number`, `formats_returned?: string[]`, `screenshot?`, `cache_state?`, and `change_status?` for the requested URL; `batch_webfetch` returns `results: Array<{ url, success, content?, formats_returned?, screenshot?, cache_state?, change_status?, error_code?, error_message? }>` plus `summary: { total, succeeded, failed, cached }`; `webextract` returns extracted content + provenance refs and adds `content_ref?: string`, `content_preview?: string`, `content_format?: "text" | "markdown" | "structured"`, `extracted_data?: object` when schema-backed structured extraction is requested, `links?: Array<{ url, text?, rel? }>` for requested link extraction, and `images?: Array<{ url, alt?, dimensions? }>` for requested image extraction; `webresearch` adds `answer_summary?: string`, `sources_used_count?: number`, and `evidence_refs?: string[]`; `webcrawl` adds `pages_visited_count?: number`, `pages_returned_count?: number`, and `scope_summary?: string`; `webmap` adds `nodes_count?: number`, `edges_count?: number`, `scope_summary?: string`, `map_ref?`, and `sitemap_used?: boolean` when `sitemap.xml` was found and used.
+L00000673	- Web outputs that surface canonical citation provenance use `provenance_badge?: string` from the Part P citation precedence hierarchy. Crawl/map operations that skip pages during deduplication report `dedup_skipped?: number` alongside their operation-specific counters.
+L00000674	- `web_operation` uses semantic audit values `search`, `extract`, `research`, `crawl`, `map`, and `read`; `read` maps to the canonical `webfetch` tool. Audit payloads use `read` as the semantic operation name, while the underlying tool invocation is `webfetch`, and consumers MUST map between these vocabularies.
+L00000675	- Default execution limits begin with `websearch` `max_results = 8`; `webresearch` `max_sources = 6` and `auto_read_cap?: number`; the default auto-read cap = 4 pages before answering; `webextract` one URL only per invocation; `webcrawl` `max_pages = 25`, `max_depth = 2`, and `same_origin_only = true`; and `webmap` `max_pages = 50`, `max_depth = 3`, and `same_origin_only = true` unless a caller or provider capability contract supplies a narrower effective limit.
+L00000676	- The web-operation child payload used by `tool.invoked` / `tool.denied` stores operation-local data under the web child payload, while requested/effective runtime identity remains top-level and shared. Required child fields are `web_operation`, `operation_input`, `invocation_source`, `support_tier`, `execution_path`, `requested_adapter_id?`, `effective_adapter_id?`, `adapter_selection_reason?`, `projection_freshness?`, `projection_health?`, `provider_fallback_occurred`, `provider_fallback_summary?`, `source_count?`, `sources_ref?`, and operation-specific counters/refs. `web_input` is a retired compatibility alias that normalizes to `operation_input` at ingress; it is not a new canonical field. Source shorthand `/refs`, `/shared`, and `/provisional` resolve to these explicit fields rather than to a loose extras bag.
+L00000677	- Common web-operation audit fields live under `payload.meta`: `warnings_count?: number` counts non-fatal warnings during the operation, and `error_code?: string` is present when `success = false` with a canonical Web Error Taxonomy value.
+L00000678	- Operation-specific payload refs include `content_ref?` for fetched/extracted content, `page_representation_ref?` and `browser_session_id?` for Site Reader evidence, `read_receipt_refs?` and `citation_refs?` for read/extract-backed claims, `map_ref?` for map output, and `answer_summary_ref?` for research summaries. `operation_input` is the canonical structured routing/audit input; `operation_input_preview` and legacy `web_input_preview` are derived display text only and must not replace structured input. For web/tool denial child payloads, `denial_reason_code` is the operation-local reason field; legacy child payload `blocked_reason_code?` aliases normalize to `denial_reason_code`, while the top-level runtime blocked payload may still carry the shared `blocked_reason_code`.
+L00000679	- Provider-doc volatility must not make the web tool contract brittle. Implementation-safe canon keeps the user-facing and tool-facing (`/tool-facing`) contract stable for `/web`, `search`, `extract`, `research`, `crawl`, `map`, `Searching Web`, `Extracting Site`, `Researching Web`, `Crawling Site`, `Mapping Site`, `Reading Site`, support tiers, citation/provenance rules, and permission keys/defaults, while provider-doc `/classes`, provider-internal, account-vs-API-key grouping, exact global-vs-per-operation ordering UI, and provider row layout remain adapter/provider details until restated through the shared runtime-identity model. This avoids over-locking the provider seam while preserving command semantics.
+L00000680	- `webfetch` is one non-search web primitive among extract/research/crawl/map/read paths, so web notes must not treat it as the only non-search operation. Provenance display follows stronger-evidence precedence, and `/web` UI, `/help/autocomplete`, and slash-command surfaces expose operation support tiers instead of hiding capability behind generic `webfetch`.
+L00000681	
+L00000682	Fields:
+L00000683	- `type: "click" | "scroll" | "type" | "press_key" | "wait_for" | "navigate" | "screenshot" | "set_viewport" | "fill_form" | "select_option" | "back" | "reload" | "snapshot" | "console" | "network";`
+L00000684	- `selector?: string`
+L00000685	- `value?: string`
+L00000686	- `timeout_ms?: number`
+L00000687	- `description?: string`
+L00000688	- `include/exclude_paths`
+L00000689	- `/exclude_paths`
+L00000690	- `respect_robots`
+L00000691	- `dedup`
+L00000692	- `formats`
+L00000693	- `detail_level`
+L00000694	- `onlyMainContent`
+L00000695	- `onlyMainContent: true`
+L00000696	- `onlyCleanContent`
+L00000697	- `rawHtml`
+L00000698	- scripts/nav/ads
+L00000699	- /nav/ads
+L00000700	- glob-style
+L00000701	- `WebAction.timeout_ms` / `timeout_ms` defaults to 5000ms; max 30000ms; total across all actions capped at 30s
+L00000702	- Unknown `type` values → `invalid_input` error
+L00000703	- Actions are executed sequentially in array order
+L00000704	- Firecrawl official action labels: wait, click, scroll, write, press, screenshot
+L00000705	
+L00000706	Labels and values:
+L00000707	- Firecrawl
+L00000708	- websearch
+L00000709	- webfetch
+L00000710	- webextract
+L00000711	- webresearch
+L00000712	- webcrawl
+L00000713	- webmap
+L00000714	- execution_path?: string
+L00000715	- provider_search_native
+L00000716	- pm_search_plus_site_reader
+L00000717	- pm_site_reader
+L00000718	- provider_firecrawl_scrape
+L00000719	- pm_fetch_fallback
+L00000720	- provider_firecrawl_agent
+L00000721	- pm_research_composed
+L00000722	- cache_policy?: { max_age_seconds?: number, store?: boolean }
+L00000723	- { max_age_seconds: 3600, store: true }
+L00000724	- { max_age_seconds: 14400, store: true }
+L00000725	- { max_age_seconds: 86400, store: true }
+L00000726	
+L00000727	#### Site Reader structured browser runtime
+L00000728	
+L00000729	Site Reader is part of the agent web-research seam, not a browser-display feature or thin search helper. PM treats it as the native full browser-automation/structured-reading runtime behind `webfetch` and `Reading Site` when rendered-page evidence is needed. `websearch` remains discovery, while `webfetch`/Site Reader/`Reading Site` own the site/page reading path; these web/read paths do not own the full built-in browser, click-to-context, DevTools-linked capture, or visible browser-session product surface. The runtime exposes grouped internal tool families for navigation, observation, interaction, dialog handling, session state, monitoring, `dev-mode`, evaluate, and a meta-tool for `tool-profile` enable/disable.
+L00000730	
+L00000731	The Site Reader renderer pipeline MUST build a structured `PageRepresentation` rather than returning an untyped page dump. It extracts the accessibility tree, layout bounds for relevant nodes, landmarks, headings, interactive elements, forms, content summary/full content according to the requested detail level, and optionally discovered/merged iframe content. The representation carries typed page structure, interactive elements, forms, errors, optional interactive summary, optional iframes, console/network refs, screenshot/PDF artifact refs when requested, redaction profile IDs, and visible prompt-injection chips so downstream agents can reason about the page before acting. Prompt-injection indicators are visible chips and audit fields, not hidden prompt text.
+L00000732	
+L00000733	Site Reader iframe handling is read-target behavior, not inline visualizer sandboxing. During structured reading, PM recursively discovers nested iframes up to 3 levels deep, attempts cross-origin iframe content extraction only where browser security policy allows, gracefully skips blocked same-origin or X-Frame-Options cases with a warning, may use per-frame diagnostic sessions when the PM-managed native browser runtime is available, and merges iframe content into the parent `PageRepresentation` with source-frame attribution. Playwright and CDP are reference/fallback test-driver vocabulary only; they do not replace the PM-managed native browser runtime or become product terms.
+L00000734	
+L00000735	Navigation returns a rendered page representation after URL load. The default detail level is `minimal` for orientation, not full-page extraction; agents escalate detail or use `find` / `/observe` when they need more. Page/session state is owned by the Site Reader runtime: a `PageManager`-equivalent component tracks tabs, the active tab, console/network logs, pending dialogs, popup capture, and error queues. Browser sessions persist `browser_session_id`, `show_when_possible`, collapsed/detached/background/runtime-unavailable state, Open/Watch availability, and `runtime_unavailable` remediation action IDs so GUI and testing surfaces can explain degraded browser evidence without inventing separate routing.
+L00000736	
+L00000737	Site Reader is the default structured-reader engine for web-reading behind `Reading Site` / `webfetch`; plain `/raw` fetch is fallback behavior when the structured reader cannot produce a usable result. The structured-reader subsystem (`/subsystem`) is token-efficient and token-budgeted: it prefers `/text/markdown` and structured page summaries over raw page dumps, preserves stable element identity, separates read/observe (`/observe`) from act/interact (`/interact`, `/interaction`), and may use frame-discovery with frame-level/per-frame CDP session handling for iframes. Non-PM implementation, package, repository, and source-file names do not become PM product vocabulary; the canonical product vocabulary remains `Site Reader`, `Searching Web`, `Reading Site`, `visual module`, `visual card`, `Skill Store`, source-canonical documents, and preview-capable editor/document surfaces; legacy `Skills page` labels normalize to `Agent Config > Skills`, and external `skill-management` labels do not replace PM vocabulary. External editor architecture remains non-normative inspiration, not PM implementation guidance.
+L00000738	
+L00000739	#### `webfetch`
+L00000740	
+L00000741	This section defines the canonical contract for this surface.
+L00000742	
+L00000743	Core rules:
+L00000744	- webfetch URL handling is locked: reject non-HTTP(S) schemes such as `file://`, `ftp://`, and `javascript:`, normalize before routing, default bare domains to https://, reject malformed URLs with invalid_input, and enforce a default 5 MB max_content_length unless configured otherwise.
+L00000745	- Binary `/non-text` webfetch URL responses are detected from the HTTP `Content-Type` header. Supported image types (`image/png`, `image/jpeg`, `image/gif`, `image/webp`, `image/svg+xml`; source shorthands `/png`, `/jpeg`, `/gif`, `/webp`, and `/svg`) return as inline attachments with MIME type preserved and size capped by `max_content_length` (5 MB by default). Unsupported or `/large` binary media such as video, audio, or executables returns metadata only (`MIME type`, `content-length`, `URL`) without downloading the body, and non-text responses do not enter HTML-to-Markdown conversion.
+L00000746	- webfetch defaults `cache_policy` to `{ max_age_seconds: 14400, store: true }` and uses hash-based `change_tracking` with status values `new|same|changed|removed`.
+L00000747	- webfetch accepts `url: string` and returns extracted page `content: string` in the requested format, with markdown as the default content view. Output also carries `execution_path?: string`; valid paths include `pm_site_reader`, `provider_firecrawl_scrape`, and `pm_fetch_fallback`.
+L00000748	
+L00000749	Rules:
+L00000750	- reject non-HTTP(S) schemes
+L00000751	- invalid_input
+L00000752	- normalize URL before routing
+L00000753	- default to `https://` if bare domain
+L00000754	- reject malformed URLs
+L00000755	- `max_content_length`
+L00000756	- 5 MB default
+L00000757	- `cache_policy`
+L00000758	- `{ max_age_seconds: 14400, store: true }`
+L00000759	- `execution_path?: string`
+L00000760	- `pm_site_reader`
+L00000761	- `provider_firecrawl_scrape`
+L00000762	- `pm_fetch_fallback`
+L00000763	- `change_tracking`
+L00000764	- hash-based
+L00000765	- `new|same|changed|removed`
+L00000766	### 3.5E LSP tool runtime reconciliation
+L00000767	The `lsp` tool surface is widened beyond the minimal MVP read trio.
+L00000768	
+L00000769	Recommended read operations:
+L00000770	- `goToDefinition`
+L00000771	- `findReferences`
+L00000772	- `hover`
+L00000773	- `documentSymbol`
+L00000774	- `workspaceSymbol`
+L00000775	- `goToImplementation`
+L00000776	- `prepareCallHierarchy`
+L00000777	- `incomingCalls`
+L00000778	- `outgoingCalls`
+L00000779	
+L00000780	Write-like operation retained:
+L00000781	- `rename` with explicit approval before apply
+L00000782	
+L00000783	ContractRef: ContractName:Plans/LSPSupport.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md
+L00000784	
+L00000785	Additional rules:
+L00000786	- it complements, but does not replace, context bundling performed by the context compiler
+L00000787	- it does not require provider-native skill installation to function in MVP
+L00000788	
+L00000789	ContractRef: ContractName:Plans/Skills_System.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md
+L00000790	
+L00000791	#### 3.5.A Additional semantics: chatsearch / logs / repo import and codesearch multi-tier (MVP)
+L00000792	
+L00000793	This subsection supplements the per-tool table below with required behavior for new MVP tools and multi-lane search backends.
+L00000794	
+L00000795	**chatsearch (project chat index)**
+L00000796	- **Input:** `query: string`, optional `filters: { thread_id?, time_range? }`, `k?: number`.
+L00000797	- **Output:** hits with `{ thread_id, message_id, ts, role, snippet, score }`.
+L00000798	- **Scope rule:** MUST be project-scoped (per-project Tantivy index directory).
+L00000799	- **Secrets policy:** Persisted chat index content MUST comply with PolicyRule:no_secrets_in_storage / INV-002 (mandatory strict secrets scrubbing before persistence).
+L00000800	- **Context Lens integration:** When Context Lens mutes messages, chatsearch MUST exclude muted message_ids from results returned to the agent (or annotate them as excluded so the context packer can drop them).
+L00000801	
+L00000802	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Permissions_System.md
+
+<<< CONTEXT_AFTER canonical_document_lines=803-814 >>>
+L00000803	
+L00000804	**codesearch (project workspace code search; MVP multi-lane)**
+L00000805	- **Primary backend:** Tantivy code index (filesystem watcher + chunked documents; see Plans/storage-plan.md).
+L00000806	- **Secondary backend:** LSP `workspace/symbol` and/or `documentSymbol` for symbol-aware search when LSP is active (Plans/LSPSupport.md).
+L00000807	- **Fallback backend:** text grep (`grep` tool, index-accelerated when sparse n-gram index is available) when Tantivy index is unavailable or query requires regex semantics.
+L00000808	- **Tool split:** `codesearch` is a multi-tier workspace search tool (Tantivy full-text index, LSP symbol search, and grep fallback), while `lsp` is the direct language-server operation surface for go-to-definition, references, hover, and related symbol calls.
+L00000809	- **Tool boundary:** `grep` is regex pattern matching over raw text, while `codesearch` is semantic/keyword/phrase/symbol workspace search (`/keyword` and `/phrase/symbol`) over code-search indexes and symbol-aware sources. They have different tool contracts, indexes, and use cases even when codesearch falls back to text search.
+L00000810	- **Output:** Return best-effort results with stable `{ path, line_or_range, snippet, kind? }`.
+L00000811	- **Ignore + sensitive guards:** Respect `.gitignore` by default; exclude `.env` and `.env.*` (allow `.env.example`) consistent with FileSafe + Permissions defaults.
+L00000812	- **Secrets policy:** Any indexed/stored snippet text MUST be secrets-scrubbed before persistence to Tantivy.
+L00000813	
+L00000814	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/LSPSupport.md, ContractName:Plans/FileSafe.md

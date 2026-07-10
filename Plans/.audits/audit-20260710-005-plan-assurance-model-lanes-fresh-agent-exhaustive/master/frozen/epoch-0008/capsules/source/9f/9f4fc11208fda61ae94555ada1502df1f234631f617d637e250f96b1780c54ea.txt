@@ -1,0 +1,374 @@
+<<< CONTEXT_BEFORE canonical_document_lines=9774-9785 >>>
+L00009774	- second project-local lock
+L00009775	negative_constraints:
+L00009776	- PM MUST NOT create a second project-local lock beside the owner-derived path.
+L00009777	preserved_contractrefs:
+L00009778	- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Commands_System.md'
+L00009779	compatibility_only_notes:
+L00009780	- Legacy hardcoded /.puppet-master/pm.lock and <project>/.puppet-master/pm.lock strings are migration evidence only.
+L00009781	stale_retired_dispositions: []
+L00009782	owner_hints:
+L00009783	- Plans/storage-plan.md
+L00009784	```
+L00009785	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=9786-10130 >>>
+L00009786	### SP-130 - Run Completed Usage Snapshot Boundary
+L00009787	
+L00009788	```yaml
+L00009789	plan_unit_id: SP-130
+L00009790	unit_type: requirement
+L00009791	status: accepted
+L00009792	owner_doc: Plans/storage-plan.md
+L00009793	canonical_text: Storage owns run.completed.usage as an optional bounded run-completion usage snapshot derived from canonical usage.event records, not as a replacement for the usage event ledger.
+L00009794	gui_related: false
+L00009795	gui_classification_reason: This unit preserves backend usage snapshot storage and ledger boundary semantics.
+L00009796	split_recommended: false
+L00009797	depends_on:
+L00009798	- PDS-003
+L00009799	- PDS-004
+L00009800	- PDS-005
+L00009801	- PNC-001
+L00009802	unblocks: []
+L00009803	acceptance_criteria:
+L00009804	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+L00009805	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00009806	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00009807	validation_surfaces:
+L00009808	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009809	- python3 scripts/pm-plan-index.py validate
+L00009810	risk_class: storage_plan_drift
+L00009811	reasoning_tier: standard
+L00009812	context_scope: storage_batch_177_runtime_terminal_storage
+L00009813	implementation_surfaces:
+L00009814	- Plans/storage-plan.md
+L00009815	node_compile_hint:
+L00009816	  mode: run_completed_usage_snapshot_boundary
+L00009817	  create_worknodes: false
+L00009818	source_lineage:
+L00009819	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0082
+L00009820	preserved_exact_tokens:
+L00009821	- run.completed.usage
+L00009822	- optional run-completion usage snapshot
+L00009823	- bounded snapshot
+L00009824	- canonical usage.event records
+L00009825	- usage event ledger
+L00009826	negative_constraints:
+L00009827	- run.completed.usage is not a replacement for the usage event ledger.
+L00009828	preserved_contractrefs:
+L00009829	- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Run_Modes.md, ContractName:Plans/Commands_System.md'
+L00009830	compatibility_only_notes: []
+L00009831	stale_retired_dispositions: []
+L00009832	owner_hints:
+L00009833	- Plans/storage-plan.md
+L00009834	```
+L00009835	
+L00009836	### SP-131 - Same-Directory Atomic Durable-Store Rewrite
+L00009837	
+L00009838	```yaml
+L00009839	plan_unit_id: SP-131
+L00009840	unit_type: requirement
+L00009841	status: accepted
+L00009842	owner_doc: Plans/storage-plan.md
+L00009843	canonical_text: All non-append durable-store rewrites use same-directory temporary files, fsync, and rename/promote; append-only seglog writers remain subject to durable flush and corruption detection, and replacement-write failures are hard errors without direct-overwrite fallback.
+L00009844	gui_related: false
+L00009845	gui_classification_reason: This unit preserves backend durable storage rewrite atomicity and failure rules.
+L00009846	split_recommended: false
+L00009847	depends_on:
+L00009848	- PDS-003
+L00009849	- PDS-004
+L00009850	- PDS-005
+L00009851	- PNC-001
+L00009852	unblocks: []
+L00009853	acceptance_criteria:
+L00009854	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+L00009855	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00009856	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00009857	validation_surfaces:
+L00009858	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009859	- python3 scripts/pm-plan-index.py validate
+L00009860	risk_class: storage_plan_drift
+L00009861	reasoning_tier: standard
+L00009862	context_scope: storage_batch_177_runtime_terminal_storage
+L00009863	implementation_surfaces:
+L00009864	- Plans/storage-plan.md
+L00009865	node_compile_hint:
+L00009866	  mode: same_directory_atomic_durable_store_rewrite
+L00009867	  create_worknodes: false
+L00009868	source_lineage:
+L00009869	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0083
+L00009870	preserved_exact_tokens:
+L00009871	- same-directory temporary files
+L00009872	- <target>.tmp.<random>
+L00009873	- fsync
+L00009874	- rename/promote
+L00009875	- Append-only seglog/event writers
+L00009876	- durable flush
+L00009877	- corruption-detection
+L00009878	- Per-session temp directories
+L00009879	- same-filesystem atomic rename
+L00009880	- hard error
+L00009881	- direct overwrite
+L00009882	negative_constraints:
+L00009883	- Per-session temp directories MUST NOT be used for replacement writes that rely on same-filesystem atomic rename.
+L00009884	- Failure to create the temp file, fsync it, or rename/promote it is a hard error; PM MUST NOT silently fall back to direct overwrite.
+L00009885	preserved_contractrefs:
+L00009886	- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md'
+L00009887	compatibility_only_notes: []
+L00009888	stale_retired_dispositions: []
+L00009889	owner_hints:
+L00009890	- Plans/storage-plan.md
+L00009891	```
+L00009892	
+L00009893	### SP-132 - Storage Root Selection And Durable Authority
+L00009894	
+L00009895	```yaml
+L00009896	plan_unit_id: SP-132
+L00009897	unit_type: requirement
+L00009898	status: accepted
+L00009899	owner_doc: Plans/storage-plan.md
+L00009900	canonical_text: Storage-root selection prefers explicit configured roots, valid PUPPET_MASTER_DATA_DIR overrides, project-scoped durable roots, app-level durable roots, and session temp roots only for temporary data; durable state survives process restart unless the owning contract says otherwise.
+L00009901	gui_related: false
+L00009902	gui_classification_reason: This unit preserves backend storage-root selection and durable authority rules.
+L00009903	split_recommended: false
+L00009904	depends_on:
+L00009905	- PDS-003
+L00009906	- PDS-004
+L00009907	- PDS-005
+L00009908	- PNC-001
+L00009909	unblocks: []
+L00009910	acceptance_criteria:
+L00009911	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+L00009912	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00009913	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00009914	validation_surfaces:
+L00009915	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009916	- python3 scripts/pm-plan-index.py validate
+L00009917	risk_class: storage_plan_drift
+L00009918	reasoning_tier: standard
+L00009919	context_scope: storage_batch_177_runtime_terminal_storage
+L00009920	implementation_surfaces:
+L00009921	- Plans/storage-plan.md
+L00009922	node_compile_hint:
+L00009923	  mode: storage_root_selection_and_durable_authority
+L00009924	  create_worknodes: false
+L00009925	source_lineage:
+L00009926	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0083
+L00009927	preserved_exact_tokens:
+L00009928	- storage-root
+L00009929	- Explicit user-configured storage root
+L00009930	- PUPPET_MASTER_DATA_DIR
+L00009931	- Project-scoped durable root
+L00009932	- App-level durable root
+L00009933	- Session temp root
+L00009934	- temporary or disposable
+L00009935	- Durable state MUST survive process restart
+L00009936	- Remote-mode projects
+L00009937	- owning authority
+L00009938	- temp mirrors
+L00009939	negative_constraints:
+L00009940	- A feature may write to a session temp root only if its contract explicitly classifies the artifact as temporary or disposable.
+L00009941	preserved_contractrefs:
+L00009942	- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md'
+L00009943	compatibility_only_notes: []
+L00009944	stale_retired_dispositions: []
+L00009945	owner_hints:
+L00009946	- Plans/storage-plan.md
+L00009947	```
+L00009948	
+L00009949	### SP-133 - Durable-Store Safety Unsafe Filesystem And Migration Backups
+L00009950	
+L00009951	```yaml
+L00009952	plan_unit_id: SP-133
+L00009953	unit_type: requirement
+L00009954	status: accepted
+L00009955	owner_doc: Plans/storage-plan.md
+L00009956	canonical_text: Durable-store safety detects unsafe-filesystem classes, fails closed or enters read-only mode when needed, preserves safe-local fallback lineage, and requires backup-before-any-migration-step before validation, schema rewrite, file promotion, destructive cleanup, or rollback-sensitive repair.
+L00009957	gui_related: false
+L00009958	gui_classification_reason: This unit preserves backend durable-store safety, unsafe-filesystem handling, and migration backup requirements.
+L00009959	split_recommended: false
+L00009960	depends_on:
+L00009961	- PDS-003
+L00009962	- PDS-004
+L00009963	- PDS-005
+L00009964	- PNC-001
+L00009965	unblocks: []
+L00009966	acceptance_criteria:
+L00009967	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+L00009968	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00009969	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00009970	validation_surfaces:
+L00009971	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00009972	- python3 scripts/pm-plan-index.py validate
+L00009973	risk_class: storage_plan_drift
+L00009974	reasoning_tier: standard
+L00009975	context_scope: storage_batch_177_runtime_terminal_storage
+L00009976	implementation_surfaces:
+L00009977	- Plans/storage-plan.md
+L00009978	node_compile_hint:
+L00009979	  mode: durable_store_safety_unsafe_filesystem_and_migration_backups
+L00009980	  create_worknodes: false
+L00009981	source_lineage:
+L00009982	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0083
+L00009983	preserved_exact_tokens:
+L00009984	- cross-filesystem temp paths
+L00009985	- atomic rename
+L00009986	- Janitor cleanup
+L00009987	- active durable targets
+L00009988	- preserved checkpoints
+L00009989	- fail closed
+L00009990	- structured error
+L00009991	- unsafe-filesystem
+L00009992	- NFS
+L00009993	- remote mounts
+L00009994	- same-directory atomic rename semantics
+L00009995	- safe local durable-store fallback
+L00009996	- /read-only
+L00009997	- backup-before-any-migration-step
+L00009998	- schema rewrite
+L00009999	- file promotion
+L00010000	- destructive cleanup
+L00010001	- rollback-sensitive repair
+L00010002	negative_constraints:
+L00010003	- Never rewrite durable files via cross-filesystem temp paths when the final correctness contract depends on atomic rename.
+L00010004	- Janitor cleanup MUST NOT touch active durable targets or preserved checkpoints.
+L00010005	- When a durable store is unavailable, writers fail closed and surface a structured error instead of downgrading silently to temp-only persistence.
+L00010006	preserved_contractrefs:
+L00010007	- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/storage-plan.md'
+L00010008	compatibility_only_notes: []
+L00010009	stale_retired_dispositions: []
+L00010010	owner_hints:
+L00010011	- Plans/storage-plan.md
+L00010012	```
+L00010013	
+L00010014	### SP-134 - Active Durable-Store Lock Identity
+L00010015	
+L00010016	```yaml
+L00010017	plan_unit_id: SP-134
+L00010018	unit_type: requirement
+L00010019	status: accepted
+L00010020	owner_doc: Plans/storage-plan.md
+L00010021	canonical_text: The active durable-store lock is keyed by storage_root, authority_scope, and store_family; session or run ids are insufficient lock identities, and store families with independent recovery or retention policies must not share a lock merely because they live under the same root.
+L00010022	gui_related: false
+L00010023	gui_classification_reason: This unit preserves backend durable-store lock identity rules.
+L00010024	split_recommended: false
+L00010025	depends_on:
+L00010026	- PDS-003
+L00010027	- PDS-004
+L00010028	- PDS-005
+L00010029	- PNC-001
+L00010030	unblocks: []
+L00010031	acceptance_criteria:
+L00010032	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+L00010033	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00010034	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00010035	validation_surfaces:
+L00010036	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010037	- python3 scripts/pm-plan-index.py validate
+L00010038	risk_class: storage_plan_drift
+L00010039	reasoning_tier: standard
+L00010040	context_scope: storage_batch_177_runtime_terminal_storage
+L00010041	implementation_surfaces:
+L00010042	- Plans/storage-plan.md
+L00010043	node_compile_hint:
+L00010044	  mode: active_durable_store_lock_identity
+L00010045	  create_worknodes: false
+L00010046	source_lineage:
+L00010047	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0084
+L00010048	preserved_exact_tokens:
+L00010049	- (storage_root, authority_scope, store_family)
+L00010050	- Session or run ids
+L00010051	- durable-store lock identities
+L00010052	- independent recovery
+L00010053	- retention policies
+L00010054	- same root
+L00010055	negative_constraints:
+L00010056	- Session or run ids are not sufficient durable-store lock identities by themselves.
+L00010057	- Store families that require independent recovery or retention policies must not share a lock identity merely because they live under the same root.
+L00010058	preserved_contractrefs:
+L00010059	- 'ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Run_Modes.md'
+L00010060	compatibility_only_notes: []
+L00010061	stale_retired_dispositions: []
+L00010062	owner_hints:
+L00010063	- Plans/storage-plan.md
+L00010064	```
+L00010065	
+L00010066	### SP-135 - Bounded Collection Retention Contracts
+L00010067	
+L00010068	```yaml
+L00010069	plan_unit_id: SP-135
+L00010070	unit_type: requirement
+L00010071	status: accepted
+L00010072	owner_doc: Plans/storage-plan.md
+L00010073	canonical_text: Live storage-managed collections must declare TTL, max-cardinality, or both; bounded-collections canon is satisfied when owner sections name family, bound type/source, and retention/eviction notes for active maps, auth caches, LSP maps, queues, event records, safe points, temp artifacts, and stale rewrite remnants.
+L00010074	gui_related: false
+L00010075	gui_classification_reason: This unit preserves backend bounded collection retention contracts.
+L00010076	split_recommended: false
+L00010077	depends_on:
+L00010078	- PDS-003
+L00010079	- PDS-004
+L00010080	- PDS-005
+L00010081	- PNC-001
+L00010082	unblocks: []
+L00010083	acceptance_criteria:
+L00010084	- This Storage Plan PlanUnit remains addressable with source-span coverage for batch 177.
+L00010085	- ContractRefs, anchors or aliases, exact tokens, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage from the source span remain preserved.
+L00010086	- No WorkNodes, NodeSeeds, executable queues, final node manifests, production build tasks, implementation files, or source code are created by this PlanUnit.
+L00010087	validation_surfaces:
+L00010088	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00010089	- python3 scripts/pm-plan-index.py validate
+L00010090	risk_class: storage_plan_drift
+L00010091	reasoning_tier: standard
+L00010092	context_scope: storage_batch_177_runtime_terminal_storage
+L00010093	implementation_surfaces:
+L00010094	- Plans/storage-plan.md
+L00010095	node_compile_hint:
+L00010096	  mode: bounded_collection_retention_contracts
+L00010097	  create_worknodes: false
+L00010098	source_lineage:
+L00010099	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:storage-plan-S0085
+L00010100	preserved_exact_tokens:
+L00010101	- TTL
+L00010102	- /max-cardinality
+L00010103	- /long-lived
+L00010104	- bounded-collections
+L00010105	- Active assistant and child-session state maps
+L00010106	- max_total_active_agents
+L00010107	- MCP connection and auth-handle caches
+L00010108	- LSP session and host/root attachment maps
+L00010109	- Projector and analytics work queues
+L00010110	- seglog.event_appended
+L00010111	- Run/thread retention policy
+L00010112	- legal-hold
+L00010113	- preserved-run anchors
+L00010114	- Safe points
+L00010115	- snapshot metadata
+L00010116	- undo indexes
+L00010117	- Temp artifacts and stale rewrite remnants
+L00010118	- .tmp.*
+L00010119	- abandoned scratch artifacts
+L00010120	negative_constraints: []
+L00010121	preserved_contractrefs:
+L00010122	- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/LSPSupport.md'
+L00010123	- 'ContractRef: ContractName:Plans/FileSafe.md, ContractName:Plans/Prompt_Pipeline.md, ContractName:Plans/LSPSupport.md'
+L00010124	compatibility_only_notes: []
+L00010125	stale_retired_dispositions:
+L00010126	- Temp artifacts and stale rewrite remnants retain their literal row label as bounded-collection material, not a new storage owner.
+L00010127	owner_hints:
+L00010128	- Plans/storage-plan.md
+L00010129	```
+L00010130	
+
+<<< CONTEXT_AFTER canonical_document_lines=10131-10142 >>>
+L00010131	### SP-136 - Regex Index Byte Build Concurrency And Mmap Contract
+L00010132	
+L00010133	```yaml
+L00010134	plan_unit_id: SP-136
+L00010135	unit_type: requirement
+L00010136	status: accepted
+L00010137	owner_doc: Plans/storage-plan.md
+L00010138	canonical_text: Regex-index projector rules require byte-level u8 extraction without Unicode decoding, shared build-thread-pool concurrency with one project build slot and FIFO queueing, and platform mmap deletion/open semantics using memmap2 share_mode(0x7) on Windows and inode-by-fd safety on Linux/macOS.
+L00010139	gui_related: false
+L00010140	gui_classification_reason: This unit preserves backend regex-index byte, concurrency, and mmap file-handle contracts.
+L00010141	split_recommended: false
+L00010142	depends_on:

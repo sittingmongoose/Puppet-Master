@@ -1,0 +1,409 @@
+<<< CONTEXT_BEFORE canonical_document_lines=384-395 >>>
+L00000384	- Runtime-display consumers may show `/runtime-disclosure`, but they must not perform runtime-identity re-ownership. Prompt Pipeline and Multi-Account remain the owners for account routing and resolved runtime/account snapshots.
+L00000385	- Chat scroll `auto-follow` is a UI state that follows activity-card and question-card ownership; it is not a source of storage or permission policy.
+L00000386	- Debug `browser-context` auto-ingestion is visible, bounded, and revocable: storage-backed browser capture may feed active Debug investigations only as visible Investigation Context items or chips, never as silent chat capture or hidden messages.
+L00000387	- Debug investigation `blocked` reopen states render canonical blocked-state UI and must not auto-execute until the prerequisite changes.
+L00000388	- When a linked Debug runtime identity no longer exists and no deterministic rebinding target exists, reopen into `attention_required` with reason `target_selection_required`; PM must not silently mint or infer a replacement target.
+L00000389	
+L00000390	Provider-owned identity and auth-surface wording must remain subordinate to `AuthState` and the bridge owner. Decision policy may decide fallback posture, but it must not redefine `provider_identity`, `auth_surface`, or bridge capability facts; those checks route to `Plans/Contracts_V0.md` and `Plans/CLI_Bridged_Providers.md` (`/CLI_Bridged_Providers.md`).
+L00000391	
+L00000392	Storage/runtime lock ambiguity resolves through the storage owner: `lock-path` is derived from the canonical `logical-root` and the storage fallback canon, not from surface-local path guesses.
+L00000393	
+L00000394	ContractRef: ContractName:Plans/storage-plan.md, ContractName:Plans/Permissions_System.md, ContractName:Plans/FinalGUISpec.md
+L00000395	## Runtime Recovery Deterministic Defaults Canonical Alignment (2026-03-09)
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=396-775 >>>
+L00000396	
+L00000397	Where higher-precedence sources do not decide, use these defaults:
+L00000398	- scored event-driven scheduling is the default runtime model
+L00000399	- canonical event names and enum families from `Plans/Contracts_V0.md` win over older aliases
+L00000400	- `watchdog_recheck` may emit redundant wakeups defensively, but MUST NOT become the primary correctness path
+L00000401	  ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+L00000402	- no critical-path scheduler term in MVP
+L00000403	- blind retry is forbidden
+L00000404	- default retry ceiling remains `3` attempts unless a higher-precedence contract narrows it
+L00000405	- default remediation ceiling remains `3` generations unless a higher-precedence contract narrows it
+L00000406	- blocked outcomes preserve completed local work by default when execution stopped because a prerequisite or remote side effect was unresolved
+L00000407	- prerequisite resolution always creates a new attempt snapshot rather than mutating an old one in place
+L00000408	- draft decomposition may degrade only before graph lock
+L00000409	- canonical graph integrity failures do not degrade silently
+L00000410	- Mutation-sensitive git snapshot failures are CRITICAL and must not be swallowed: if `git add` or an equivalent snapshot step fails, `/undo` metadata must not advance to a poisoned hash or silently point at a weeks-old state.
+L00000411	- Provider response guards are deterministic: PROV adapters must check `choices.len` before indexing; an empty content-filtered response maps to `FinishReasonContentFilter` instead of a panic or normal completion.
+L00000412	
+L00000413	Where earlier policy prose is ambiguous, these defaults win.
+L00000414	
+L00000415	ContractRef: PolicyRule:Decision_Policy.md§2, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+L00000416	## Canonical Runtime Recovery Matrix Completion
+L00000417	
+L00000418	
+L00000419	### Additional blocked rows
+L00000420	| classifier family | classifier | automatic next step | counter family | backoff | requires safe-point restore | remediation | terminal / escalation |
+L00000421	|---|---|---|---|---|---|---|---|
+L00000422	| `blocked_reason_code` | `validation_blocked` | wait for corrected input or explicit user action | `manual_resume_count` | none | no | optional | remain blocked |
+L00000423	| `blocked_reason_code` | `remediation_ceiling_exceeded` | no automatic retry | none | none | no | no | remain blocked until replan, manual fix, or abort |
+L00000424	| `blocked_reason_code` | `worktree_conflict` | wait for conflict resolution | `manual_resume_count` | none | maybe | no | remain blocked |
+L00000425	| `blocked_reason_code` | `dirty_worktree` | wait for cleanup or restore action | `manual_resume_count` | none | maybe | no | remain blocked |
+L00000426	| `blocked_reason_code` | `plugin_hook_blocked` | wait for hook resolution or explicit override action | `manual_resume_count` | none | no | no | remain blocked |
+L00000427	
+L00000428	### Timeout normalization
+L00000429	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
+L00000430	`tool_outcome = timed_out` MUST first normalize to `failure_class = provider_transient`, then follow the canonical provider-transient row.
+L00000431	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
+L00000432	
+L00000433	### Field-level override
+L00000434	
+L00000435	
+L00000436	When a blocked payload sets `requires_safe_point_restore = true`, that field overrides the row-default rerun path.
+L00000437	
+L00000438	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/FileSafe.md
+L00000439	
+L00000440	## Source Control, GitHub Actions, and Docker Manager Blocked-State Addendum (2026-03-12)
+L00000441	
+L00000442	Additional deterministic blocked defaults for this packet:
+L00000443	
+L00000444	| blocked trigger | default posture | required user-visible effect |
+L00000445	|---|---|---|
+L00000446	| `worktree_conflict` | remain blocked until resolution | show Source Control recovery CTA |
+L00000447	| `dirty_worktree` | remain blocked until cleanup or restore action | show Source Control recovery CTA |
+L00000448	| `failure_class = auth_expired` for GitHub-hosted Actions admin/run actions when refresh cannot recover | remain blocked until auth refresh | show GitHub Actions recovery CTA |
+L00000449	| `external_side_effect_blocked` for Docker repo create/push/template push | remain blocked until approval or explicit decline | preserve local build/publish result |
+L00000450	| Kubernetes apply/exec/port-forward prerequisite block | remain blocked until context/prerequisite resolves | show Docker Manager Kubernetes CTA |
+L00000451	
+L00000452	Approval/preflight blind-spot defaults are target-bound, not action-name-bound, including in multi-repo projects. SCM approvals carry `project_id`, `repo_id`, optional `worktree_id`, `/worktree/context`, `branch`, and `commit`; GitHub Actions approvals carry `repo_remote`, optional `workflow_id`, `run_id`, and `/environment`; Docker approvals carry `runtime`, `registry_host`, `namespace`, `/repository`, and optional `image_ref`; Kubernetes approvals carry `kube_context`, `namespace`, optional `workload_ref`, and optional `resource_ref`. The deterministic order is static policy check, cheap capability or `/precondition` preflight, approval request only while still actionable, then full execution-time `/revalidate` immediately before mutation. Each approval records a `preflight_revision`; stale-preflight evidence or any changed target identity invalidates the approval and returns the action to blocked state.
+L00000453	
+L00000454	Domain-bound approvals also include the attempted operation or action class, not only resource identity. `/admin/domain-sensitive` operations bind SCM `/repositories` and `/worktrees/refs`, GitHub Actions workflow and `/environment` targets, Docker registries/repositories, and Kubernetes clusters/namespaces/verbs plus workload or resource refs to the approval scope; `policy-vs-approval-vs-preflight` outcomes remain distinct blocked families. `/research-safe` plan-mode tools such as `todoread`, `todowrite`, `webfetch`, `webcrawl`, `webmap`, and question-driven planning flows may be allowed for planning without granting mutation authority. Durable approval scope and reuse are governed by `approval_scope_key`, actor/lane/run/account context, requested/effective permission disclosure, and permission-snapshot drift rules in `Plans/Permissions_System.md` and `Plans/Contracts_V0.md`.
+L00000455	
+L00000456	ContractRef: ContractName:Plans/Permissions_System.md, ContractName:Plans/GitHub_Integration.md, ContractName:Plans/Containers_Registry_and_Unraid.md
+L00000457	
+L00000458	## Owner / Consumer Map
+L00000459	
+L00000460	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/Decision_Policy.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000461	
+L00000462	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000463	
+L00000464	## PlanUnits
+L00000465	
+L00000466	### DP-002 - Canonical Name And Policy Scope Signals
+L00000467	
+L00000468	```yaml
+L00000469	plan_unit_id: DP-002
+L00000470	unit_type: requirement
+L00000471	status: accepted
+L00000472	owner_doc: Plans/Decision_Policy.md
+L00000473	canonical_text: >-
+L00000474	  Decision Policy preserves the canonical Puppet Master naming rule, compliance
+L00000475	  posture, and source-scope statement for deterministic ambiguity resolution.
+L00000476	gui_related: false
+L00000477	gui_classification_reason: This unit defines naming and policy scope, not UI presentation.
+L00000478	split_recommended: false
+L00000479	depends_on: []
+L00000480	unblocks: []
+L00000481	acceptance_criteria:
+L00000482	  - Policy text keeps Puppet Master as the only canonical platform name.
+L00000483	  - Legacy naming may be referenced only as legacy naming without quoting the retired name.
+L00000484	validation_surfaces:
+L00000485	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000486	  - python3 scripts/pm-plan-index.py validate
+L00000487	risk_class: canonical_name_drift
+L00000488	reasoning_tier: standard
+L00000489	context_scope: decision_policy_scope
+L00000490	implementation_surfaces:
+L00000491	  - Plans/Decision_Policy.md
+L00000492	node_compile_hint:
+L00000493	  mode: canonical_name_policy_scope
+L00000494	  create_worknodes: false
+L00000495	source_lineage:
+L00000496	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0001
+L00000497	preserved_exact_tokens:
+L00000498	  - "`Puppet Master`"
+L00000499	  - "`legacy naming`"
+L00000500	  - "`Plans/DRY_Rules.md`"
+L00000501	  - "`Plans/Contracts_V0.md`"
+L00000502	negative_constraints:
+L00000503	  - "Do not quote older platform names; refer to them only as legacy naming."
+L00000504	owner_hints:
+L00000505	  - Plans/Decision_Policy.md
+L00000506	```
+L00000507	
+L00000508	### DP-003 - Ambiguity Scope And Decision Policy Contract
+L00000509	
+L00000510	```yaml
+L00000511	plan_unit_id: DP-003
+L00000512	unit_type: requirement
+L00000513	status: accepted
+L00000514	owner_doc: Plans/Decision_Policy.md
+L00000515	canonical_text: >-
+L00000516	  Decision Policy applies when ambiguity is unresolved by Spec Lock, Crosswalk,
+L00000517	  DRY Rules, or Glossary, and exposes PolicyRule:Decision_Policy.md as the
+L00000518	  governing policy reference.
+L00000519	gui_related: false
+L00000520	gui_classification_reason: This unit defines policy applicability and contract routing.
+L00000521	split_recommended: false
+L00000522	depends_on: [DP-002]
+L00000523	unblocks: []
+L00000524	acceptance_criteria:
+L00000525	  - Ambiguity resolution only falls to Decision Policy after higher-precedence sources do not decide.
+L00000526	  - PolicyRule:Decision_Policy.md remains the contract reference for this scope.
+L00000527	validation_surfaces:
+L00000528	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000529	  - python3 scripts/pm-plan-index.py validate
+L00000530	risk_class: policy_scope_drift
+L00000531	reasoning_tier: standard
+L00000532	context_scope: ambiguity_scope
+L00000533	implementation_surfaces:
+L00000534	  - Plans/Decision_Policy.md
+L00000535	node_compile_hint:
+L00000536	  mode: ambiguity_scope_policy_contract
+L00000537	  create_worknodes: false
+L00000538	source_lineage:
+L00000539	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0002
+L00000540	preserved_exact_tokens:
+L00000541	  - "`Spec Lock`"
+L00000542	  - "`Crosswalk`"
+L00000543	  - "`DRY Rules`"
+L00000544	  - "`Glossary`"
+L00000545	  - "`ContractRef: PolicyRule:Decision_Policy.md`"
+L00000546	negative_constraints: []
+L00000547	owner_hints:
+L00000548	  - Plans/Decision_Policy.md
+L00000549	```
+L00000550	
+L00000551	### DP-004 - Precedence Stack And Spec Lock Priority
+L00000552	
+L00000553	```yaml
+L00000554	plan_unit_id: DP-004
+L00000555	unit_type: requirement
+L00000556	status: accepted
+L00000557	owner_doc: Plans/Decision_Policy.md
+L00000558	canonical_text: >-
+L00000559	  Ambiguity resolution must follow the fixed precedence stack:
+L00000560	  Plans/Spec_Lock.json, Plans/Crosswalk.md, Plans/DRY_Rules.md,
+L00000561	  Plans/Glossary.md, then Decision Policy.
+L00000562	gui_related: false
+L00000563	gui_classification_reason: This unit defines policy ordering only.
+L00000564	split_recommended: false
+L00000565	depends_on: [DP-003]
+L00000566	unblocks: []
+L00000567	acceptance_criteria:
+L00000568	  - The five-source precedence stack remains ordered and non-negotiable.
+L00000569	  - The mechanical alias id 2 remains preserved for downstream anchors.
+L00000570	validation_surfaces:
+L00000571	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000572	  - python3 scripts/pm-plan-index.py validate
+L00000573	risk_class: precedence_order_drift
+L00000574	reasoning_tier: high
+L00000575	context_scope: policy_precedence
+L00000576	implementation_surfaces:
+L00000577	  - Plans/Decision_Policy.md
+L00000578	node_compile_hint:
+L00000579	  mode: precedence_stack
+L00000580	  create_worknodes: false
+L00000581	source_lineage:
+L00000582	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0003
+L00000583	preserved_exact_tokens:
+L00000584	  - "`Plans/Spec_Lock.json`"
+L00000585	  - "`Plans/Crosswalk.md`"
+L00000586	  - "`Plans/DRY_Rules.md`"
+L00000587	  - "`Plans/Glossary.md`"
+L00000588	  - "`ContractRef: SchemaID:Spec_Lock.json`"
+L00000589	  - "`<a id=\"2\"></a>`"
+L00000590	negative_constraints:
+L00000591	  - "Do not reorder the precedence stack."
+L00000592	owner_hints:
+L00000593	  - Plans/Decision_Policy.md
+L00000594	```
+L00000595	
+L00000596	### DP-005 - Safe Autonomous Default Ordering
+L00000597	
+L00000598	```yaml
+L00000599	plan_unit_id: DP-005
+L00000600	unit_type: requirement
+L00000601	status: accepted
+L00000602	owner_doc: Plans/Decision_Policy.md
+L00000603	canonical_text: >-
+L00000604	  When higher-precedence sources do not decide, deterministic defaults prefer
+L00000605	  the simplest safe non-scope-expanding choice, API-only paths over forbidden
+L00000606	  CLI subprocesses, idempotent behavior, and bounded retries with explicit
+L00000607	  backoff.
+L00000608	gui_related: false
+L00000609	gui_classification_reason: This unit defines backend policy defaults.
+L00000610	split_recommended: false
+L00000611	depends_on: [DP-004]
+L00000612	unblocks: []
+L00000613	acceptance_criteria:
+L00000614	  - Defaults prefer a simplest safe choice that does not expand scope.
+L00000615	  - Retries have explicit limits and backoff.
+L00000616	validation_surfaces:
+L00000617	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000618	  - python3 scripts/pm-plan-index.py validate
+L00000619	risk_class: autonomous_default_drift
+L00000620	reasoning_tier: standard
+L00000621	context_scope: deterministic_defaults
+L00000622	implementation_surfaces:
+L00000623	  - Plans/Decision_Policy.md
+L00000624	node_compile_hint:
+L00000625	  mode: safe_autonomous_defaults
+L00000626	  create_worknodes: false
+L00000627	source_lineage:
+L00000628	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0004
+L00000629	preserved_exact_tokens:
+L00000630	  - "`GitHub.com`"
+L00000631	  - "`API-only`"
+L00000632	  - "`idempotent`"
+L00000633	  - "`bounded retries`"
+L00000634	  - "`ContractRef: PolicyRule:Decision_Policy.md§2`"
+L00000635	negative_constraints:
+L00000636	  - "Do not expand product scope while resolving an implementation ambiguity."
+L00000637	owner_hints:
+L00000638	  - Plans/Decision_Policy.md
+L00000639	```
+L00000640	
+L00000641	### DP-006 - Stable Identity And Attribution Defaults
+L00000642	
+L00000643	```yaml
+L00000644	plan_unit_id: DP-006
+L00000645	unit_type: requirement
+L00000646	status: accepted
+L00000647	owner_doc: Plans/Decision_Policy.md
+L00000648	canonical_text: >-
+L00000649	  Stable IDs win over inferred labels: UI commands use cmd.* IDs, event types
+L00000650	  use stable type strings, OpenCode bridge persistence prefers
+L00000651	  connection_profile_id, usage_record growth stays attribution-relevant, and
+L00000652	  debug investigations group by investigation_id.
+L00000653	gui_related: true
+L00000654	gui_classification_reason: This unit includes user-visible UI command identity and bridge/debug identity labels.
+L00000655	split_recommended: false
+L00000656	depends_on: [DP-005]
+L00000657	unblocks: []
+L00000658	acceptance_criteria:
+L00000659	  - UI commands keep cmd.* IDs and event types keep stable type strings.
+L00000660	  - connection_profile_id is the persisted account/server identity for OpenCode bridge decisions.
+L00000661	validation_surfaces:
+L00000662	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000663	  - python3 scripts/pm-plan-index.py validate
+L00000664	risk_class: identity_attribution_drift
+L00000665	reasoning_tier: high
+L00000666	context_scope: stable_identity_defaults
+L00000667	implementation_surfaces:
+L00000668	  - Plans/Decision_Policy.md
+L00000669	node_compile_hint:
+L00000670	  mode: stable_identity_attribution_defaults
+L00000671	  create_worknodes: false
+L00000672	source_lineage:
+L00000673	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0004
+L00000674	preserved_exact_tokens:
+L00000675	  - "`cmd.*`"
+L00000676	  - "`type`"
+L00000677	  - "`connection_profile_id`"
+L00000678	  - "`selectable_unit_id`"
+L00000679	  - "`usage_record`"
+L00000680	  - "`investigation_id`"
+L00000681	negative_constraints:
+L00000682	  - "Do not replace persisted account/server identity with selectable_unit_id."
+L00000683	owner_hints:
+L00000684	  - Plans/Decision_Policy.md
+L00000685	```
+L00000686	
+L00000687	### DP-007 - Provider Policy Stale-Table Retirement
+L00000688	
+L00000689	```yaml
+L00000690	plan_unit_id: DP-007
+L00000691	unit_type: compatibility_disposition
+L00000692	status: accepted
+L00000693	owner_doc: Plans/Decision_Policy.md
+L00000694	canonical_text: >-
+L00000695	  Provider-specific behavior tables for Codex, Copilot, Gemini, Cursor, and
+L00000696	  OpenCode are advisory when stale; current selection policy is owned by
+L00000697	  Contracts, Multi-Account, Models, and provider contracts, with remaining
+L00000698	  provider-table cleanup limited to edge-case review.
+L00000699	gui_related: false
+L00000700	gui_classification_reason: This unit retires stale provider-policy tables, not UI presentation.
+L00000701	split_recommended: false
+L00000702	depends_on: [DP-006]
+L00000703	unblocks: []
+L00000704	acceptance_criteria:
+L00000705	  - Stale provider rows do not override current owner contracts.
+L00000706	  - Remaining cleanup is not a blocker for requested/effective account policy.
+L00000707	validation_surfaces:
+L00000708	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000709	  - python3 scripts/pm-plan-index.py validate
+L00000710	risk_class: stale_provider_policy_drift
+L00000711	reasoning_tier: standard
+L00000712	context_scope: provider_policy_cleanup
+L00000713	implementation_surfaces:
+L00000714	  - Plans/Decision_Policy.md
+L00000715	node_compile_hint:
+L00000716	  mode: stale_provider_table_retirement
+L00000717	  create_worknodes: false
+L00000718	source_lineage:
+L00000719	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0004
+L00000720	preserved_exact_tokens:
+L00000721	  - "`Codex/Copilot/Gemini/Cursor/OpenCode`"
+L00000722	  - "`advisory when stale`"
+L00000723	  - "`Contracts, Multi-Account, Models, and provider contracts`"
+L00000724	negative_constraints:
+L00000725	  - "Do not let stale provider tables override current selection policy."
+L00000726	owner_hints:
+L00000727	  - Plans/Decision_Policy.md
+L00000728	```
+L00000729	
+L00000730	### DP-008 - Operational Identity And Execution Role Separation
+L00000731	
+L00000732	```yaml
+L00000733	plan_unit_id: DP-008
+L00000734	unit_type: requirement
+L00000735	status: accepted
+L00000736	owner_doc: Plans/Decision_Policy.md
+L00000737	canonical_text: >-
+L00000738	  Operational identity is separate from provider-account identity; runtime and
+L00000739	  attempt packets carry execution_role when role-aware policy decides the route
+L00000740	  and must not collapse operational side effects into model/persona/auth/account
+L00000741	  fields.
+L00000742	gui_related: false
+L00000743	gui_classification_reason: This unit defines runtime identity policy.
+L00000744	split_recommended: false
+L00000745	depends_on: [DP-006]
+L00000746	unblocks: []
+L00000747	acceptance_criteria:
+L00000748	  - Runtime identity keeps github_api, registry, Kubernetes, provider-account, and operational side-effect identity distinct.
+L00000749	  - Runtime and attempt packets carry execution_role when required.
+L00000750	validation_surfaces:
+L00000751	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000752	  - python3 scripts/pm-plan-index.py validate
+L00000753	risk_class: runtime_identity_collapse
+L00000754	reasoning_tier: high
+L00000755	context_scope: runtime_identity_defaults
+L00000756	implementation_surfaces:
+L00000757	  - Plans/Decision_Policy.md
+L00000758	node_compile_hint:
+L00000759	  mode: operational_identity_separation
+L00000760	  create_worknodes: false
+L00000761	source_lineage:
+L00000762	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Decision_Policy-S0005
+L00000763	preserved_exact_tokens:
+L00000764	  - "`github_api`"
+L00000765	  - "`execution_role`"
+L00000766	  - "`/model/persona/auth/account`"
+L00000767	  - "`ContractName:Plans/Multi-Account.md`"
+L00000768	negative_constraints:
+L00000769	  - "Do not collapse operational identity into provider-account identity."
+L00000770	owner_hints:
+L00000771	  - Plans/Decision_Policy.md
+L00000772	  - Plans/Multi-Account.md
+L00000773	  - Plans/Prompt_Pipeline.md
+L00000774	```
+L00000775	
+
+<<< CONTEXT_AFTER canonical_document_lines=776-787 >>>
+L00000776	### DP-009 - HITL Recovery Defaults And Projection Trust Copy
+L00000777	
+L00000778	```yaml
+L00000779	plan_unit_id: DP-009
+L00000780	unit_type: requirement
+L00000781	status: accepted
+L00000782	owner_doc: Plans/Decision_Policy.md
+L00000783	canonical_text: >-
+L00000784	  HITL recovery defaults normalize allowed_action_ids, keep HITL off by default
+L00000785	  except configured or critical failure cases, and require explicit projection
+L00000786	  trust copy before mutating or decision-bearing actions.
+L00000787	gui_related: true

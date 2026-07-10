@@ -1,0 +1,82 @@
+<<< CONTEXT_BEFORE 1149-1160 >>>
+- P2-AI-TRIAGE-CLOSURE-CONFIDENCE
+- P2
+- AI triage closure confidence and reopen policy
+- Pi
+- Ghostty
+- Cline
+negative_constraints: []
+observed_signal: Auto-closed/untriaged issue surfaces can bury real UI/input bugs while recurring warnings create noise.
+pm_gap_or_delta: Semantic closure registry should extend to external issue triage with confidence, actor, evidence quality, and reopen triggers.
+compile_disposition: create_new_planunit
+```
+
+
+<<< AUTHORITATIVE_CORE 1161-1227 >>>
+### PLS-018 - external_issue_closure
+
+```yaml
+plan_unit_id: PLS-018
+unit_type: requirement
+status: accepted
+owner_doc: Plans/Planning_Ledger_System.md
+canonical_text: >-
+  external_issue_closure (P1) is compiled as canonical Puppet Master intent for external_issue_closure: Add ExternalIssueClosureRegistry The preserved PM gap/delta is: External issue/PR closure governance not clearly extended The observed external-repo signal remains source-lineage evidence: OpenCode needs:compliance auto-close user frustration
+gui_related: false
+gui_classification_reason: Backend/orchestration contract; not itself GUI implementation work.
+depends_on:
+- PDS-003
+- PNC-001
+unblocks: []
+acceptance_criteria:
+- No auto-close without evidence/triage schema
+- reopen conditions
+- No WorkNodes, NodeSeeds, executable queues, implementation files, production build tasks, generated governance artifacts, or governance seal outputs are created by this compile.
+validation_surfaces:
+- python3 scripts/pm-plan-index.py validate
+- python3 scripts/pm-bootstrap-ledger-validate.py Plans/ledgers/v2/pldg-20260703-001-feature-intake
+- No auto-close without evidence/triage schema
+- reopen conditions
+risk_class: p1_external_handoff_and_triage_hardening
+reasoning_tier: standard
+context_scope: external_handoff_and_triage
+implementation_surfaces:
+- Plans/Planning_Ledger_System.md
+node_compile_hint:
+  mode: external_issue_closure
+  create_worknodes: false
+  create_nodeseeds: false
+source_lineage:
+- pldg-20260703-001-feature-intake:atom-0116
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/records/design_atoms.jsonl:atom-0116
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0112/external_issue_closure@line=112
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/02_LEDGER_READY_ATOMS.jsonl:extrepo-20260703-0112/external_issue_closure
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/04_EVIDENCE_REGISTRY.json
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/raw_source_artifacts/opencode_pm_plan_change_matrix.csv:14
+- Plans/ledgers/v2/pldg-20260703-001-feature-intake/source_shards/external_repo_import_20260703/01_FULL_SOURCE_PACKET.md:3448-3472
+source_atom_ids:
+- atom-0116
+external_atom_id: extrepo-20260703-0112
+source_row_id: external_issue_closure
+priority: P1
+finding_family: external_issue_closure
+target_docs:
+- Plans/Planning_Ledger_System.md
+- Plans/Prompt_Packet_Update_Process_Defect_Repair equivalent
+- audit closure docs
+owner_hints:
+- Plans/Planning_Ledger_System.md
+- Plans/Prompt_Packet_Update_Process_Defect_Repair equivalent
+- audit closure docs
+preserved_exact_tokens:
+- extrepo-20260703-0112
+- external_issue_closure
+- P1
+negative_constraints: []
+observed_signal: OpenCode needs:compliance auto-close user frustration
+pm_current_coverage: Semantic closure registry exists for audits
+pm_gap_or_delta: External issue/PR closure governance not clearly extended
+proposal_or_recommendation: Add ExternalIssueClosureRegistry
+compile_disposition: create_new_planunit
+```

@@ -1,0 +1,414 @@
+<<< CONTEXT_BEFORE canonical_document_lines=24771-24782 >>>
+L00024771	          "requirement": "cmd.source_control.toggle_generated_filter records an explicit no-persist command receipt or route/open disposition; placeholder command_applied events are invalid."
+L00024772	        },
+L00024773	        {
+L00024774	          "test_id": "wiring.catalog.source_control_toggle_generated_filter.accessibility",
+L00024775	          "evidence_kind": "accessibility_regression",
+L00024776	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00024777	        }
+L00024778	      ],
+L00024779	      "event_test_requirements": [
+L00024780	        "Assert cmd.source_control.toggle_generated_filter records dispatch receipt cmd.source_control.toggle_generated_filter.dispatch_receipt or explicit route/open disposition and emits no unexpected persisted domain event."
+L00024781	      ]
+L00024782	    },
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=24783-25167 >>>
+L00024783	    "catalog.terminal_clear_scrollback": {
+L00024784	      "ui_element_id": "catalog.terminal_clear_scrollback",
+L00024785	      "ui_location": "Terminal and bottom runtime panels",
+L00024786	      "ui_command_id": "cmd.terminal.clear_scrollback",
+L00024787	      "handler_location": "handlers::terminal::clear_scrollback",
+L00024788	      "expected_event_types": [],
+L00024789	      "acceptance_checks": [
+L00024790	        "cmd.terminal.clear_scrollback must be registered in the UICommand dispatcher with typed args and result contract",
+L00024791	        "cmd.terminal.clear_scrollback must expose projected state selector and disabled reason before dispatch",
+L00024792	        "cmd.terminal.clear_scrollback dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00024793	        "cmd.terminal.clear_scrollback must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00024794	        "cmd.terminal.clear_scrollback must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00024795	      ],
+L00024796	      "evidence_required": "Production wiring contract for cmd.terminal.clear_scrollback; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00024797	      "state_selector": "state.commands.terminal_clear_scrollback.availability",
+L00024798	      "disabled_reason_projection": "state.commands.terminal_clear_scrollback.disabled_reason",
+L00024799	      "effect_contract": {
+L00024800	        "effect_kind": "receipt",
+L00024801	        "description": "cmd.terminal.clear_scrollback has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00024802	        "receipt_or_event_refs": [
+L00024803	          "cmd.terminal.clear_scrollback.dispatch_receipt"
+L00024804	        ]
+L00024805	      },
+L00024806	      "accessibility_contract": {
+L00024807	        "role_or_semantics": "catalog.terminal_clear_scrollback exposes a stable role/name/description matching cmd.terminal.clear_scrollback.",
+L00024808	        "keyboard_access": "catalog.terminal_clear_scrollback is reachable and activatable by keyboard where the control is visible.",
+L00024809	        "focus_management": "catalog.terminal_clear_scrollback preserves visible focus and returns focus deterministically after dispatch or error.",
+L00024810	        "disabled_announcement": "catalog.terminal_clear_scrollback surfaces state.commands.terminal_clear_scrollback.disabled_reason to assistive technology when unavailable."
+L00024811	      },
+L00024812	      "test_evidence": [
+L00024813	        {
+L00024814	          "test_id": "wiring.catalog.terminal_clear_scrollback.dispatcher",
+L00024815	          "evidence_kind": "dispatcher_fixture",
+L00024816	          "requirement": "Dispatching cmd.terminal.clear_scrollback reaches handlers::terminal::clear_scrollback with typed args/result contract."
+L00024817	        },
+L00024818	        {
+L00024819	          "test_id": "wiring.catalog.terminal_clear_scrollback.state_projection",
+L00024820	          "evidence_kind": "state_projection",
+L00024821	          "requirement": "Availability reads state.commands.terminal_clear_scrollback.availability and disabled copy reads state.commands.terminal_clear_scrollback.disabled_reason."
+L00024822	        },
+L00024823	        {
+L00024824	          "test_id": "wiring.catalog.terminal_clear_scrollback.effect",
+L00024825	          "evidence_kind": "receipt_or_event_assertion",
+L00024826	          "requirement": "cmd.terminal.clear_scrollback has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00024827	        },
+L00024828	        {
+L00024829	          "test_id": "wiring.catalog.terminal_clear_scrollback.accessibility",
+L00024830	          "evidence_kind": "accessibility_regression",
+L00024831	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00024832	        }
+L00024833	      ],
+L00024834	      "event_test_requirements": [
+L00024835	        "Assert cmd.terminal.clear_scrollback records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00024836	      ]
+L00024837	    },
+L00024838	    "catalog.terminal_close_pane": {
+L00024839	      "ui_element_id": "catalog.terminal_close_pane",
+L00024840	      "ui_location": "Terminal and bottom runtime panels",
+L00024841	      "ui_command_id": "cmd.terminal.close_pane",
+L00024842	      "handler_location": "handlers::terminal::close_pane",
+L00024843	      "expected_event_types": [],
+L00024844	      "acceptance_checks": [
+L00024845	        "cmd.terminal.close_pane must be registered in the UICommand dispatcher with typed args and result contract",
+L00024846	        "cmd.terminal.close_pane must expose projected state selector and disabled reason before dispatch",
+L00024847	        "cmd.terminal.close_pane dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00024848	        "cmd.terminal.close_pane must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00024849	        "cmd.terminal.close_pane must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00024850	      ],
+L00024851	      "evidence_required": "Production wiring contract for cmd.terminal.close_pane; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00024852	      "state_selector": "state.commands.terminal_close_pane.availability",
+L00024853	      "disabled_reason_projection": "state.commands.terminal_close_pane.disabled_reason",
+L00024854	      "effect_contract": {
+L00024855	        "effect_kind": "receipt",
+L00024856	        "description": "cmd.terminal.close_pane has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00024857	        "receipt_or_event_refs": [
+L00024858	          "cmd.terminal.close_pane.dispatch_receipt"
+L00024859	        ]
+L00024860	      },
+L00024861	      "accessibility_contract": {
+L00024862	        "role_or_semantics": "catalog.terminal_close_pane exposes a stable role/name/description matching cmd.terminal.close_pane.",
+L00024863	        "keyboard_access": "catalog.terminal_close_pane is reachable and activatable by keyboard where the control is visible.",
+L00024864	        "focus_management": "catalog.terminal_close_pane preserves visible focus and returns focus deterministically after dispatch or error.",
+L00024865	        "disabled_announcement": "catalog.terminal_close_pane surfaces state.commands.terminal_close_pane.disabled_reason to assistive technology when unavailable."
+L00024866	      },
+L00024867	      "test_evidence": [
+L00024868	        {
+L00024869	          "test_id": "wiring.catalog.terminal_close_pane.dispatcher",
+L00024870	          "evidence_kind": "dispatcher_fixture",
+L00024871	          "requirement": "Dispatching cmd.terminal.close_pane reaches handlers::terminal::close_pane with typed args/result contract."
+L00024872	        },
+L00024873	        {
+L00024874	          "test_id": "wiring.catalog.terminal_close_pane.state_projection",
+L00024875	          "evidence_kind": "state_projection",
+L00024876	          "requirement": "Availability reads state.commands.terminal_close_pane.availability and disabled copy reads state.commands.terminal_close_pane.disabled_reason."
+L00024877	        },
+L00024878	        {
+L00024879	          "test_id": "wiring.catalog.terminal_close_pane.effect",
+L00024880	          "evidence_kind": "receipt_or_event_assertion",
+L00024881	          "requirement": "cmd.terminal.close_pane has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00024882	        },
+L00024883	        {
+L00024884	          "test_id": "wiring.catalog.terminal_close_pane.accessibility",
+L00024885	          "evidence_kind": "accessibility_regression",
+L00024886	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00024887	        }
+L00024888	      ],
+L00024889	      "event_test_requirements": [
+L00024890	        "Assert cmd.terminal.close_pane records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00024891	      ]
+L00024892	    },
+L00024893	    "catalog.terminal_detach": {
+L00024894	      "ui_element_id": "catalog.terminal_detach",
+L00024895	      "ui_location": "Terminal and bottom runtime panels",
+L00024896	      "ui_command_id": "cmd.terminal.detach",
+L00024897	      "handler_location": "handlers::terminal::detach",
+L00024898	      "expected_event_types": [],
+L00024899	      "acceptance_checks": [
+L00024900	        "cmd.terminal.detach must be registered in the UICommand dispatcher with typed args and result contract",
+L00024901	        "cmd.terminal.detach must expose projected state selector and disabled reason before dispatch",
+L00024902	        "cmd.terminal.detach dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00024903	        "cmd.terminal.detach must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00024904	        "cmd.terminal.detach must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00024905	      ],
+L00024906	      "evidence_required": "Production wiring contract for cmd.terminal.detach; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00024907	      "state_selector": "state.commands.terminal_detach.availability",
+L00024908	      "disabled_reason_projection": "state.commands.terminal_detach.disabled_reason",
+L00024909	      "effect_contract": {
+L00024910	        "effect_kind": "receipt",
+L00024911	        "description": "cmd.terminal.detach has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00024912	        "receipt_or_event_refs": [
+L00024913	          "cmd.terminal.detach.dispatch_receipt"
+L00024914	        ]
+L00024915	      },
+L00024916	      "accessibility_contract": {
+L00024917	        "role_or_semantics": "catalog.terminal_detach exposes a stable role/name/description matching cmd.terminal.detach.",
+L00024918	        "keyboard_access": "catalog.terminal_detach is reachable and activatable by keyboard where the control is visible.",
+L00024919	        "focus_management": "catalog.terminal_detach preserves visible focus and returns focus deterministically after dispatch or error.",
+L00024920	        "disabled_announcement": "catalog.terminal_detach surfaces state.commands.terminal_detach.disabled_reason to assistive technology when unavailable."
+L00024921	      },
+L00024922	      "test_evidence": [
+L00024923	        {
+L00024924	          "test_id": "wiring.catalog.terminal_detach.dispatcher",
+L00024925	          "evidence_kind": "dispatcher_fixture",
+L00024926	          "requirement": "Dispatching cmd.terminal.detach reaches handlers::terminal::detach with typed args/result contract."
+L00024927	        },
+L00024928	        {
+L00024929	          "test_id": "wiring.catalog.terminal_detach.state_projection",
+L00024930	          "evidence_kind": "state_projection",
+L00024931	          "requirement": "Availability reads state.commands.terminal_detach.availability and disabled copy reads state.commands.terminal_detach.disabled_reason."
+L00024932	        },
+L00024933	        {
+L00024934	          "test_id": "wiring.catalog.terminal_detach.effect",
+L00024935	          "evidence_kind": "receipt_or_event_assertion",
+L00024936	          "requirement": "cmd.terminal.detach has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00024937	        },
+L00024938	        {
+L00024939	          "test_id": "wiring.catalog.terminal_detach.accessibility",
+L00024940	          "evidence_kind": "accessibility_regression",
+L00024941	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00024942	        }
+L00024943	      ],
+L00024944	      "event_test_requirements": [
+L00024945	        "Assert cmd.terminal.detach records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00024946	      ]
+L00024947	    },
+L00024948	    "catalog.terminal_focus": {
+L00024949	      "ui_element_id": "catalog.terminal_focus",
+L00024950	      "ui_location": "Terminal and bottom runtime panels",
+L00024951	      "ui_command_id": "cmd.terminal.focus",
+L00024952	      "handler_location": "handlers::terminal::focus",
+L00024953	      "expected_event_types": [],
+L00024954	      "acceptance_checks": [
+L00024955	        "cmd.terminal.focus must be registered in the UICommand dispatcher with typed args and result contract",
+L00024956	        "cmd.terminal.focus must expose projected state selector and disabled reason before dispatch",
+L00024957	        "cmd.terminal.focus dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00024958	        "cmd.terminal.focus must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00024959	        "cmd.terminal.focus must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00024960	      ],
+L00024961	      "evidence_required": "Production wiring contract for cmd.terminal.focus; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00024962	      "state_selector": "state.commands.terminal_focus.availability",
+L00024963	      "disabled_reason_projection": "state.commands.terminal_focus.disabled_reason",
+L00024964	      "effect_contract": {
+L00024965	        "effect_kind": "receipt",
+L00024966	        "description": "cmd.terminal.focus has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00024967	        "receipt_or_event_refs": [
+L00024968	          "cmd.terminal.focus.dispatch_receipt"
+L00024969	        ]
+L00024970	      },
+L00024971	      "accessibility_contract": {
+L00024972	        "role_or_semantics": "catalog.terminal_focus exposes a stable role/name/description matching cmd.terminal.focus.",
+L00024973	        "keyboard_access": "catalog.terminal_focus is reachable and activatable by keyboard where the control is visible.",
+L00024974	        "focus_management": "catalog.terminal_focus preserves visible focus and returns focus deterministically after dispatch or error.",
+L00024975	        "disabled_announcement": "catalog.terminal_focus surfaces state.commands.terminal_focus.disabled_reason to assistive technology when unavailable."
+L00024976	      },
+L00024977	      "test_evidence": [
+L00024978	        {
+L00024979	          "test_id": "wiring.catalog.terminal_focus.dispatcher",
+L00024980	          "evidence_kind": "dispatcher_fixture",
+L00024981	          "requirement": "Dispatching cmd.terminal.focus reaches handlers::terminal::focus with typed args/result contract."
+L00024982	        },
+L00024983	        {
+L00024984	          "test_id": "wiring.catalog.terminal_focus.state_projection",
+L00024985	          "evidence_kind": "state_projection",
+L00024986	          "requirement": "Availability reads state.commands.terminal_focus.availability and disabled copy reads state.commands.terminal_focus.disabled_reason."
+L00024987	        },
+L00024988	        {
+L00024989	          "test_id": "wiring.catalog.terminal_focus.effect",
+L00024990	          "evidence_kind": "receipt_or_event_assertion",
+L00024991	          "requirement": "cmd.terminal.focus has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00024992	        },
+L00024993	        {
+L00024994	          "test_id": "wiring.catalog.terminal_focus.accessibility",
+L00024995	          "evidence_kind": "accessibility_regression",
+L00024996	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00024997	        }
+L00024998	      ],
+L00024999	      "event_test_requirements": [
+L00025000	        "Assert cmd.terminal.focus records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00025001	      ]
+L00025002	    },
+L00025003	    "catalog.terminal_focus_session": {
+L00025004	      "ui_element_id": "catalog.terminal_focus_session",
+L00025005	      "ui_location": "Terminal and bottom runtime panels",
+L00025006	      "ui_command_id": "cmd.terminal.focus_session",
+L00025007	      "handler_location": "handlers::terminal::focus_session",
+L00025008	      "expected_event_types": [],
+L00025009	      "acceptance_checks": [
+L00025010	        "cmd.terminal.focus_session must be registered in the UICommand dispatcher with typed args and result contract",
+L00025011	        "cmd.terminal.focus_session must expose projected state selector and disabled reason before dispatch",
+L00025012	        "cmd.terminal.focus_session dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00025013	        "cmd.terminal.focus_session must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00025014	        "cmd.terminal.focus_session must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00025015	      ],
+L00025016	      "evidence_required": "Production wiring contract for cmd.terminal.focus_session; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00025017	      "state_selector": "state.commands.terminal_focus_session.availability",
+L00025018	      "disabled_reason_projection": "state.commands.terminal_focus_session.disabled_reason",
+L00025019	      "effect_contract": {
+L00025020	        "effect_kind": "receipt",
+L00025021	        "description": "cmd.terminal.focus_session has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00025022	        "receipt_or_event_refs": [
+L00025023	          "cmd.terminal.focus_session.dispatch_receipt"
+L00025024	        ]
+L00025025	      },
+L00025026	      "accessibility_contract": {
+L00025027	        "role_or_semantics": "catalog.terminal_focus_session exposes a stable role/name/description matching cmd.terminal.focus_session.",
+L00025028	        "keyboard_access": "catalog.terminal_focus_session is reachable and activatable by keyboard where the control is visible.",
+L00025029	        "focus_management": "catalog.terminal_focus_session preserves visible focus and returns focus deterministically after dispatch or error.",
+L00025030	        "disabled_announcement": "catalog.terminal_focus_session surfaces state.commands.terminal_focus_session.disabled_reason to assistive technology when unavailable."
+L00025031	      },
+L00025032	      "test_evidence": [
+L00025033	        {
+L00025034	          "test_id": "wiring.catalog.terminal_focus_session.dispatcher",
+L00025035	          "evidence_kind": "dispatcher_fixture",
+L00025036	          "requirement": "Dispatching cmd.terminal.focus_session reaches handlers::terminal::focus_session with typed args/result contract."
+L00025037	        },
+L00025038	        {
+L00025039	          "test_id": "wiring.catalog.terminal_focus_session.state_projection",
+L00025040	          "evidence_kind": "state_projection",
+L00025041	          "requirement": "Availability reads state.commands.terminal_focus_session.availability and disabled copy reads state.commands.terminal_focus_session.disabled_reason."
+L00025042	        },
+L00025043	        {
+L00025044	          "test_id": "wiring.catalog.terminal_focus_session.effect",
+L00025045	          "evidence_kind": "receipt_or_event_assertion",
+L00025046	          "requirement": "cmd.terminal.focus_session has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00025047	        },
+L00025048	        {
+L00025049	          "test_id": "wiring.catalog.terminal_focus_session.accessibility",
+L00025050	          "evidence_kind": "accessibility_regression",
+L00025051	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00025052	        }
+L00025053	      ],
+L00025054	      "event_test_requirements": [
+L00025055	        "Assert cmd.terminal.focus_session records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00025056	      ]
+L00025057	    },
+L00025058	    "catalog.terminal_move_pane": {
+L00025059	      "ui_element_id": "catalog.terminal_move_pane",
+L00025060	      "ui_location": "Terminal and bottom runtime panels",
+L00025061	      "ui_command_id": "cmd.terminal.move_pane",
+L00025062	      "handler_location": "handlers::terminal::move_pane",
+L00025063	      "expected_event_types": [],
+L00025064	      "acceptance_checks": [
+L00025065	        "cmd.terminal.move_pane must be registered in the UICommand dispatcher with typed args and result contract",
+L00025066	        "cmd.terminal.move_pane must expose projected state selector and disabled reason before dispatch",
+L00025067	        "cmd.terminal.move_pane dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00025068	        "cmd.terminal.move_pane must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00025069	        "cmd.terminal.move_pane must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00025070	      ],
+L00025071	      "evidence_required": "Production wiring contract for cmd.terminal.move_pane; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00025072	      "state_selector": "state.commands.terminal_move_pane.availability",
+L00025073	      "disabled_reason_projection": "state.commands.terminal_move_pane.disabled_reason",
+L00025074	      "effect_contract": {
+L00025075	        "effect_kind": "receipt",
+L00025076	        "description": "cmd.terminal.move_pane has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00025077	        "receipt_or_event_refs": [
+L00025078	          "cmd.terminal.move_pane.dispatch_receipt"
+L00025079	        ]
+L00025080	      },
+L00025081	      "accessibility_contract": {
+L00025082	        "role_or_semantics": "catalog.terminal_move_pane exposes a stable role/name/description matching cmd.terminal.move_pane.",
+L00025083	        "keyboard_access": "catalog.terminal_move_pane is reachable and activatable by keyboard where the control is visible.",
+L00025084	        "focus_management": "catalog.terminal_move_pane preserves visible focus and returns focus deterministically after dispatch or error.",
+L00025085	        "disabled_announcement": "catalog.terminal_move_pane surfaces state.commands.terminal_move_pane.disabled_reason to assistive technology when unavailable."
+L00025086	      },
+L00025087	      "test_evidence": [
+L00025088	        {
+L00025089	          "test_id": "wiring.catalog.terminal_move_pane.dispatcher",
+L00025090	          "evidence_kind": "dispatcher_fixture",
+L00025091	          "requirement": "Dispatching cmd.terminal.move_pane reaches handlers::terminal::move_pane with typed args/result contract."
+L00025092	        },
+L00025093	        {
+L00025094	          "test_id": "wiring.catalog.terminal_move_pane.state_projection",
+L00025095	          "evidence_kind": "state_projection",
+L00025096	          "requirement": "Availability reads state.commands.terminal_move_pane.availability and disabled copy reads state.commands.terminal_move_pane.disabled_reason."
+L00025097	        },
+L00025098	        {
+L00025099	          "test_id": "wiring.catalog.terminal_move_pane.effect",
+L00025100	          "evidence_kind": "receipt_or_event_assertion",
+L00025101	          "requirement": "cmd.terminal.move_pane has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00025102	        },
+L00025103	        {
+L00025104	          "test_id": "wiring.catalog.terminal_move_pane.accessibility",
+L00025105	          "evidence_kind": "accessibility_regression",
+L00025106	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00025107	        }
+L00025108	      ],
+L00025109	      "event_test_requirements": [
+L00025110	        "Assert cmd.terminal.move_pane records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00025111	      ]
+L00025112	    },
+L00025113	    "catalog.terminal_open": {
+L00025114	      "ui_element_id": "catalog.terminal_open",
+L00025115	      "ui_location": "Terminal and bottom runtime panels",
+L00025116	      "ui_command_id": "cmd.terminal.open",
+L00025117	      "handler_location": "handlers::terminal::open",
+L00025118	      "expected_event_types": [],
+L00025119	      "acceptance_checks": [
+L00025120	        "cmd.terminal.open must be registered in the UICommand dispatcher with typed args and result contract",
+L00025121	        "cmd.terminal.open must expose projected state selector and disabled reason before dispatch",
+L00025122	        "cmd.terminal.open dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00025123	        "cmd.terminal.open must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00025124	        "cmd.terminal.open must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"
+L00025125	      ],
+L00025126	      "evidence_required": "Production wiring contract for cmd.terminal.open; Production certification requires render/control evidence, dispatcher fixture, typed payload/result assertion, projected state selector, disabled-reason proof, receipt/event assertion, accessibility check, and regression test evidence.",
+L00025127	      "state_selector": "state.commands.terminal_open.availability",
+L00025128	      "disabled_reason_projection": "state.commands.terminal_open.disabled_reason",
+L00025129	      "effect_contract": {
+L00025130	        "effect_kind": "receipt",
+L00025131	        "description": "cmd.terminal.open has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition.",
+L00025132	        "receipt_or_event_refs": [
+L00025133	          "cmd.terminal.open.dispatch_receipt"
+L00025134	        ]
+L00025135	      },
+L00025136	      "accessibility_contract": {
+L00025137	        "role_or_semantics": "catalog.terminal_open exposes a stable role/name/description matching cmd.terminal.open.",
+L00025138	        "keyboard_access": "catalog.terminal_open is reachable and activatable by keyboard where the control is visible.",
+L00025139	        "focus_management": "catalog.terminal_open preserves visible focus and returns focus deterministically after dispatch or error.",
+L00025140	        "disabled_announcement": "catalog.terminal_open surfaces state.commands.terminal_open.disabled_reason to assistive technology when unavailable."
+L00025141	      },
+L00025142	      "test_evidence": [
+L00025143	        {
+L00025144	          "test_id": "wiring.catalog.terminal_open.dispatcher",
+L00025145	          "evidence_kind": "dispatcher_fixture",
+L00025146	          "requirement": "Dispatching cmd.terminal.open reaches handlers::terminal::open with typed args/result contract."
+L00025147	        },
+L00025148	        {
+L00025149	          "test_id": "wiring.catalog.terminal_open.state_projection",
+L00025150	          "evidence_kind": "state_projection",
+L00025151	          "requirement": "Availability reads state.commands.terminal_open.availability and disabled copy reads state.commands.terminal_open.disabled_reason."
+L00025152	        },
+L00025153	        {
+L00025154	          "test_id": "wiring.catalog.terminal_open.effect",
+L00025155	          "evidence_kind": "receipt_or_event_assertion",
+L00025156	          "requirement": "cmd.terminal.open has no declared persisted event; dispatch must still record a no-persist command receipt or route/open disposition."
+L00025157	        },
+L00025158	        {
+L00025159	          "test_id": "wiring.catalog.terminal_open.accessibility",
+L00025160	          "evidence_kind": "accessibility_regression",
+L00025161	          "requirement": "Render/control evidence proves role/name, keyboard activation, focus handling, and disabled-state announcement."
+L00025162	        }
+L00025163	      ],
+L00025164	      "event_test_requirements": [
+L00025165	        "Assert cmd.terminal.open records a dispatch receipt or explicit no-persist route/open disposition and emits no unexpected persisted domain event."
+L00025166	      ]
+L00025167	    },
+
+<<< CONTEXT_AFTER canonical_document_lines=25168-25179 >>>
+L00025168	    "catalog.terminal_rerun": {
+L00025169	      "ui_element_id": "catalog.terminal_rerun",
+L00025170	      "ui_location": "Terminal and bottom runtime panels",
+L00025171	      "ui_command_id": "cmd.terminal.rerun",
+L00025172	      "handler_location": "handlers::terminal::rerun",
+L00025173	      "expected_event_types": [],
+L00025174	      "acceptance_checks": [
+L00025175	        "cmd.terminal.rerun must be registered in the UICommand dispatcher with typed args and result contract",
+L00025176	        "cmd.terminal.rerun must expose projected state selector and disabled reason before dispatch",
+L00025177	        "cmd.terminal.rerun dispatch evidence must preserve command_id, origin, correlation_id, handler target, result, and receipt or event effect",
+L00025178	        "cmd.terminal.rerun must have a typed payload/result contract or explicit route/open no-persist disposition",
+L00025179	        "cmd.terminal.rerun must declare state selector, disabled reason, receipt or event effect, and regression evidence before production certification"

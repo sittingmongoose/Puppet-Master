@@ -1,0 +1,411 @@
+<<< AUTHORITATIVE_CORE canonical_document_lines=1-396 >>>
+L00000001	# CLI-Bridged Providers (Provider Facade)
+L00000002	
+L00000003	
+L00000004	## Canonical owner-section requirements
+L00000005	
+L00000006	These requirements are canonical live specification text for this owner document and preserve the required product, runtime, storage, UI, and governance details in owner-section form.
+L00000007	
+L00000008	### Requested/effective account identity contract
+L00000009	
+L00000010	
+L00000011	- Compatibility-only source vocabulary is noncanonical; live wording uses the owner terminology below.
+L00000012	> **Compliance:** This document follows `Plans/DRY_Rules.md` and references SSOT contracts in `Plans/Contracts_V0.md`. Naming: “Puppet Master” only. No open questions; deterministic defaults per `Plans/Decision_Policy.md`.
+L00000013	
+L00000014	
+L00000015	## Purpose
+L00000016	Define the **Provider facade** used by Puppet Master to run **bridged providers** (CLI-bridged and server-bridged) with a single, uniform contract for:
+L00000017	
+L00000018	- **Structured request envelopes** (deterministic, replayable runs)
+L00000019	- **Normalized streaming events** (one consumer; no UI special-casing)
+L00000020	- **Tool-call correlation + reconciliation** (CLI oddities tolerated)
+L00000021	- **Authentication / UX-state detection** (logged out, expired or invalid, rate limit, outage)
+L00000022	- **Stream resilience** (bounded retry, replay safety, and circuit breaking)
+L00000023	
+L00000024	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+L00000025	
+L00000026	This document owns bridged-provider transport normalization only. PM-internal child orchestration, crew control, runtime ceilings, and parent/child lineage remain owned by `Plans/orchestrator-subagent-integration.md` and `Plans/Contracts_V0.md`.
+L00000027	
+L00000028	ContractRef: ContractName:Plans/orchestrator-subagent-integration.md, ContractName:Plans/Contracts_V0.md
+L00000029	
+L00000030	Canonical mapping SSOT for upstream external-framework and A2A bridge concepts is `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`. That document is external-reference and future-interop guidance for adapter implementors. It MUST NOT be interpreted as approval to move PM-internal orchestration or child-run control onto A2A semantics.
+L00000031	
+L00000032	ContractRef: ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, ContractName:Plans/orchestrator-subagent-integration.md
+L00000033	
+L00000034	A2A seam warning: A2A bridge packet verification keeps `Plans/Provider_Stream_Mapping_External_Reference_A2A.md` in the highest-risk verify-only omission lane unless its intro and `/non-goal` framing still read as external-reference and `/future-interop` only; otherwise, it must be promoted out of `MUST VERIFY`. Adjacent docs rechecked and kept out of the packet for now are `Plans/Models_System.md`, whose current capability and compaction-threshold fields already match the narrowed owner set, and `Plans/Provider_Stream_Mapping_External_Reference_A2A.md`, whose current intro/non-goal framing already keeps A2A external-only. Other `MUST VERIFY` watchers must confirm that `Plans/Section15_MVP_Promoted_Features_Spec.md` defers `terminate_session` / graceful shutdown to `Run_Modes.md`; `Plans/Runtime_Artifacts_Panel.md` keeps `cost_usage` and `reasoning_tokens` compatible with microdollars and usage canon; `Plans/Wiring_Matrix.md` terminal kill wiring and checksum-validation flows do not conflict with process-group kills or mandatory CRC recovery; `Plans/MiscPlan.md` SIGTERM, symlink, and multi-instance notes remain advisory and do not shadow the new SSOT; and `Plans/assistant-chat-design.md` concurrent-thread UI defaults are not misread as global subagent concurrency limits.
+L00000035	
+L00000036	### Normalized provider diagnostic details schema
+L00000037	
+L00000038	Provider-facade diagnostics share a versioned details slot so external bridge mappings can preserve runtime continuity without adding V0 event types. Every runtime-scoped `diagnostic` event MUST expose these fields before category-specific details are interpreted:
+L00000039	
+L00000040	```typescript
+L00000041	ProviderDiagnosticDetailsV1 {
+L00000042	  schema_version: "pm.provider.diagnostic_details.v1";
+L00000043	  run_id: string;
+L00000044	  source: string;
+L00000045	  attempt_id: string;              // PM runtime attempt identity for runtime-scoped diagnostics
+L00000046	  timestamp?: string;              // RFC3339 UTC when known
+L00000047	  provider_attempt_ref?: string;   // upstream provider/session/task continuity, never a PM attempt id
+L00000048	  correlation_id?: string;         // bridge-local ordering/correlation handle
+L00000049	  sequence?: number;               // monotonically increasing within run_id/source when available
+L00000050	  actor_ref?: string;
+L00000051	  account_ref?: string;
+L00000052	  trust_state_ref?: string;
+L00000053	  pressure_state_ref?: string;
+L00000054	}
+L00000055	```
+L00000056	
+L00000057	Pre-admission discovery, static provider health, or configuration diagnostics that are not attached to a runtime dispatch MUST set `attempt_id` to `pre_attempt` and include the concrete provider/account/config identity in `provider_attempt_ref?` or `correlation_id?`. Runtime retries, remediation reruns, prerequisite resumes, and restore-before-reruns create a new PM `attempt_id`; reconnect or observe-only flows for the same runtime attempt keep the same `attempt_id` and update only provider continuity fields. Provider/session/task IDs MUST NOT replace PM runtime attempt identity.
+L00000058	
+L00000059	ContractRef: ContractName:Plans/Provider_Stream_Mapping_External_Reference_A2A.md, ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md
+L00000060	
+L00000061	## Canonical data-shape reconciliation
+L00000062	
+L00000063	### Required data shape
+L00000064	
+L00000065	
+L00000066	### Contract shape (facade)
+L00000067	
+L00000068	The contract shape is the provider facade handoff record used by bridge launchers, HTTP adapters, and normalized stream consumers.
+L00000069	
+L00000070	The `BRIDGE_INVOKE_OPTIONS` record passed through the shell command line MUST preserve these fields:
+L00000071	
+L00000072	```typescript
+L00000073	BRIDGE_INVOKE_OPTIONS {
+L00000074	  persona: string;            // Which Persona is active
+L00000075	  model: string;              // AI model requested (no provider precompute)
+L00000076	  model_variant?: string;     // Optional variant (effort, reasoning, etc.)
+L00000077	  provider_override?: string; // Explicitly requested provider
+L00000078	  run_mode: string;           // 'automate' | 'interactive' | 'diagnostic'
+L00000079	  trace_level: string;        // 'none' | 'summary' | 'detailed' | 'debug'
+L00000080	  account_id?: string;        // Requested GitHub account context
+L00000081	  dag_input?: string;         // Serialized DAG for this stage
+L00000082	  execution_role: string;     // Executor identity for permission/quota/logs
+L00000083	  shell_env?: Record;         // Safe shell environment snapshot
+L00000084	  worktree_id?: string;       // Assigned worktree for this node
+L00000085	  approve_mode?: string;      // 'auto_approve' | 'require_approval' | 'suggest_only'
+L00000086	  approval_id?: string;       // ID for prior approval context if resuming
+L00000087	  mutation_policy: string;    // 'conservative' | 'standard' | 'aggressive'
+L00000088	  timeout_ms?: number;        // Explicit timeout if scoped
+L00000089	  retry_policy?: string;      // 'backoff' | 'immediate' | 'custom'
+L00000090	  max_retries?: number;       // Retry ceiling for this provider
+L00000091	}
+L00000092	```
+L00000093	
+L00000094	## Ledger Compile Addendum - pldg-20260630-001-feature-intake
+L00000095	
+L00000096	This addendum compiles containerized-host bridged-provider context obligations from bootstrap ledger `pldg-20260630-001-feature-intake`. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, production build tasks, generated governance artifacts, or a governance seal.
+L00000097	
+L00000098	### CBP-023 - Bridged Provider Host Capability Context Projection
+L00000099	
+L00000100	```yaml
+L00000101	plan_unit_id: CBP-023
+L00000102	unit_type: requirement
+L00000103	status: accepted
+L00000104	owner_doc: Plans/CLI_Bridged_Providers.md
+L00000105	canonical_text: >-
+L00000106	  CLI-backed and bridged provider request envelopes may carry containerized-host capability context so provider tools can
+L00000107	  understand the selected worktree/runtime environment, but that context is not direct host authority and does not make a
+L00000108	  provider bridge the owner of containerized-host execution. ProviderRequestEnvelope-style payloads may include
+L00000109	  host_capability_ref, host_profile_id, runtime_family, working_directory, requested/effective runtime, provider, model,
+L00000110	  account descriptors, blocked/degraded state, and required receipt refs. Any host operation still resolves through
+L00000111	  HostCapabilityCommand, Executor intake, Tools policy, Run Modes, Permissions, FileSafe, and cleanup/retention receipt
+L00000112	  paths. OpenCode remains reference-only for this compile unless a later OpenCode-specific host hook is explicitly
+L00000113	  accepted.
+L00000114	gui_related: false
+L00000115	gui_classification_reason: Provider bridge context is backend/provider routing behavior, not GUI presentation.
+L00000116	depends_on: [T-166, MI-031, EP-109, RM-048, PS-126]
+L00000117	unblocks: []
+L00000118	acceptance_criteria:
+L00000119	  - Bridged provider envelopes can reference host_capability_ref and host_profile_id as context while preserving requested/effective provider, model, and account identity.
+L00000120	  - Provider bridge context does not authorize Docker, Kubernetes, SSH, shell, file, terminal, or cleanup operations by itself.
+L00000121	  - Host unavailable, blocked, disabled, stale, or degraded states become normalized provider/tool blocker outcomes rather than silent fallback.
+L00000122	  - OpenCode is not promoted to a generic host owner by this compile.
+L00000123	validation_surfaces:
+L00000124	  - python3 scripts/pm-plan-index.py validate
+L00000125	  - future bridged-provider host-context fixture
+L00000126	risk_class: provider_bridge_host_authority_drift
+L00000127	reasoning_tier: standard
+L00000128	context_scope: bridged_provider_containerized_host_context
+L00000129	implementation_surfaces:
+L00000130	  - Plans/CLI_Bridged_Providers.md
+L00000131	  - future ProviderRequestEnvelope and CLI bridge context payloads
+L00000132	node_compile_hint:
+L00000133	  mode: bridged_provider_host_context_projection
+L00000134	  create_worknodes: false
+L00000135	  create_nodeseeds: false
+L00000136	source_lineage:
+L00000137	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0029
+L00000138	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0034
+L00000139	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0040
+L00000140	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0044
+L00000141	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0047
+L00000142	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0053
+L00000143	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0069
+L00000144	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/records/design_atoms.jsonl:atom-0081
+L00000145	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/implementation_readiness_hardening_20260701.json#execution_lane_matrix
+L00000146	  - Plans/ledgers/v2/pldg-20260630-001-feature-intake/source_shards/subagent_hardening_synthesis_20260701.json#ref-005-host-capability-command
+L00000147	source_atom_ids: [atom-0029, atom-0034, atom-0040, atom-0044, atom-0047, atom-0053, atom-0069, atom-0081]
+L00000148	preserved_exact_tokens:
+L00000149	  - "provider bridges"
+L00000150	  - "provider tools"
+L00000151	  - "ProviderRequestEnvelope"
+L00000152	  - "requested/effective runtime/provider/model/account descriptors"
+L00000153	  - "working_directory"
+L00000154	  - "host_capability_ref"
+L00000155	  - "host_profile_id"
+L00000156	negative_constraints:
+L00000157	  - Do not treat provider bridge context as direct host authority.
+L00000158	  - Do not silently fallback from a blocked host to a different runtime or host without evidence.
+L00000159	  - Do not promote OpenCode to a generic containerized-host owner.
+L00000160	owner_hints:
+L00000161	  - Plans/CLI_Bridged_Providers.md
+L00000162	  - Plans/Tools.md
+L00000163	  - Plans/MCP_Integration.md
+L00000164	  - Plans/Provider_OpenCode.md
+L00000165	```
+L00000166	
+L00000167	ContractRef: Primitive:Provider, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Executor_Protocol.md
+L00000168	
+L00000169	`ProviderRequestEnvelope` is the canonical provider-facade handoff record above provider-specific command-line or HTTP encodings. The expanded identity bundle in `ProviderRequestEnvelope` MUST include run/thread/parent/child lineage, attempt identity when present, execution role, requested/effective runtime/provider/model/account descriptors, permission/tool-policy snapshot refs, working-directory or worktree identity, prompt parts, and retry/approval context. Provider-specific projections such as `BRIDGE_INVOKE_OPTIONS` may encode a subset for launch, but they must remain derivable from `ProviderRequestEnvelope` and must not replace it as the ownership boundary.
+L00000170	
+L00000171	The existing `working_directory` passthrough is sufficient for assistant worktree context: when the executor launches a CLI-bridged provider from a bound thread, `working_directory` is the worktree path and no provider-specific worktree field is required beyond the canonical runtime envelope.
+L00000172	
+L00000173	When a thread has a worktree binding, MCP tools and CLI-bridged provider launches receive the frozen execution-context `working_directory`; tool invocations that use `cwd` run in that worktree path, and git-aware commands such as `git status` resolve git context from that cwd. No additional provider-specific worktree configuration is required.
+L00000174	
+L00000175	<a id="PROVIDER-TRANSFORM"></a>
+L00000176	
+L00000177	Normalized output preservation (`normalized output preservation`) is mandatory for every bridge. CLI/server adapters must keep provider output, tool-call fragments, errors, truncation markers, ordering/repair evidence, usage/cost observations, and correlation ids in the normalized stream before UI, storage, or retry logic consumes them; adapters may redact secrets, but they must not collapse provider output into unstructured text or drop fields needed to replay, audit, or compare the request.
+L00000178	
+L00000179	### Provider guard rails
+L00000180	
+L00000181	Provider adapters MUST run bridge-side `/parsing/sanitization/payload-preflight` before admitting request envelopes, tool-call fragments, tool-event payloads, or provider stream events into the normalized event stream. The preflight validates schema shape, required identifiers, tool-call JSON, stream framing, usage/cost observations, and retry/correlation metadata; sanitization may redact secrets or unsafe control bytes, but it MUST NOT remove fields needed for replay, audit, permission review, usage attribution, or deterministic failure classification. Any adapter prose that over-summarizes normalization, parsing, sanitization, and payload preflight into generic "bridge handling" is non-canonical.
+L00000182	
+L00000183	Because OpenAI, Anthropic, MiniMax, Gemini, and Bedrock can format tool calls differently across JSON shape, parallel-tool layout, provider call identifiers, finish metadata, schema subsets, or stream framing, provider adapters MUST preserve those provider/runtime facts through parsing, sanitization, and payload preflight before normalizing them into PM's canonical tool-call event stream.
+L00000184	
+L00000185	For JSON, JSONL, and `/NDJSON` streams from LLM providers, including GLM-4.7, GLM-5, and Kimi, parser state is incremental and chunk-boundary aware. A bridge accumulates partial UTF-8 and line-delimited fragments until a complete JSON value is available; malformed or incomplete fragments become structured provider error events and never become fabricated tool calls, silently dropped history, or reserialized clean output.
+L00000186	
+L00000187	Stream resilience is a facade-level floor, with provider-specific constants allowed only when they preserve the shared retry taxonomy. Reconnect/resume attempts are bounded to `max_retries=3` unless a stricter provider policy applies, use exponential backoff `1s -> 2s -> 4s` with `+/-25%` jitter, and open a circuit breaker after `5` consecutive transient stream failures within `2 minutes`; the breaker stays open for `30s`, then moves through half-open probe state before close/reopen. `Plans/Provider_OpenCode.md` (`/Provider_OpenCode.md`) records the OpenCode-specific streaming-resilience owner details, but those details must remain compatible with this facade floor.
+L00000188	
+L00000189	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Contracts_V0.md, ContractName:Plans/Provider_OpenCode.md
+L00000190	
+L00000191	### Bridged-provider capability projection
+L00000192	
+L00000193	CLI-bridged and server-bridged providers are not exempt from the shared provider capability metadata surface in Plans/Models_System.md. When a bridged provider participates in multi-account routing, account switching, or pressure interpretation, the facade MUST project the canonical account-routing capability fields, including `supports_multi_account`, `account_identity_kind`, `quota_signal_sources`, `quota_signal_confidence`, `supports_threshold_switch`, `supports_hard_exhaustion_detection`, `supports_rate_limit_detection`, `supports_reset_countdown`, `supports_manual_set_active`, `supports_cooldown`, `supports_retry_budget`, `supports_role_scoped_account_pools`, signal sources/confidence, cooldown/retry-budget support, and reset countdown support.
+L00000194	
+L00000195	If the bridge cannot observe a provider fact directly, it MUST mark the capability or signal as `unsupported`, `opaque`, `inferred`, or `stale` rather than copying direct-provider confidence. Bridge invoke options such as `account_id?`, `retry_policy?`, and `max_retries?` do not by themselves prove multi-account support; they only carry the selected request once the canonical resolver has accepted the provider capability snapshot.
+L00000196	
+L00000197	Provider eligibility filtering runs before adapter selection. The facade removes providers that are not configured, including missing API key, missing URL, or other required connection fields; providers currently rate-limited from a known recent 429; and providers temporarily unavailable from a known recent 5xx. If the filter removes every candidate, the facade returns `no_eligible_adapter` instead of silently falling back to an unrelated provider.
+L00000198	
+L00000199	Bridged-provider docs own adapter-facing capability, buffering, and role-mapping rules. The provider-facade must make adapter-facing role and capability projections explicit instead of leaving them implied by the ledger or by a provider CLI's native labels.
+L00000200	
+L00000201	`Plans/CLI_Bridged_Providers.md` / `/CLI_Bridged_Providers.md` is the facade owner for canonical account identity, `switch-reason` disclosure, and `conversational-actor` routing through bridged providers. `Plans/Provider_Stream_Mapping_External_Reference_A2A.md` / `/Provider_Stream_Mapping_External_Reference_A2A.md` remains external-reference mapping only; before A2A introduces new actor/account/trust semantics, it must publish explicit `/migration` guidance and `/account/trust` versioning that the PM facade can project without moving PM orchestration identity into A2A.
+L00000202	
+L00000203	Bridged providers are not exempt from the multi-account/switch capability surface expected of direct providers: `CLI_Bridged_Providers` and `CLI_Bridged_Providers.md` must declare bridged multi-account support, `/switch` behavior, switch attribution, and account-routing limits in parity with `Multi-Account.md`. Omission is not a declaration that bridged routing is unsupported.
+L00000204	
+L00000205	For provider-facade `/auth/ingestion`, CLI/server bridges preserve credential precedence and proactive refresh-before-expiry behavior: explicit config wins over stored OAuth state unless the resolver records an override, `/expiry` evidence triggers refresh before a mid-session 401 stall, and credential refresh that changes the effective token/client requires client `/reconfigure` before reuse. Provider-specific cache markers, including cache-with-OAuth, cache-point, or cache-boundary annotations, remain positive adapter obligations when the provider requires them. `OC-PROV-009` keeps this as PROV evidence for Copilot and any bridge whose HTTP client caches auth state.
+L00000206	
+L00000207	Gemini/VertexAI adapter initialization is fail-fast: a nil/error client init result MUST propagate immediately as a provider error and must not be stored behind a typed-interface value that later appears valid.
+L00000208	
+L00000209	Bridged providers must map upstream termination metadata into PM's normalized event stream. A provider `finishReason=length` attached to an incomplete `tool_use` never becomes an `/execute` request; the bridge emits a closing `tool_result(ok=false, error=truncated_by_length)` event for downstream tool policy to record without synthesizing missing arguments.
+L00000210	
+L00000211	<a id="ERROR-CLASSIFICATION"></a>
+L00000212	
+L00000213	Provider-adapter finish-reason canon includes `FinishReasonUnknown`, `FinishReasonContentFilter`, and `FinishReasonSafety`; `finishReason=length` on an incomplete tool call is a `/no-dispatch` path, while empty-choices, nil-client, JSON, and bounds guards fail as structured provider errors before tool dispatch.
+L00000214	
+L00000215	Tool call identity for bridged providers is keyed by provider call IDs / UUIDs, never by `Name+Input` deduplication, so Gemini duplicate names or inputs do not collapse distinct tool calls.
+L00000216	
+L00000217	Provider retry and schema handling (`OC-EXEC-113`, `OC-PROV-003`) are structured, not string-matched: per-provider and `/per-status` retry decisions use provider error codes/HTTP status and failure class instead of fragile substring matching, unknown errors default to not retrying, Gemini stream retries MUST restart the underlying connection/iterator from an OUTER retry loop rather than breaking only out of a select inside the iterator, empty choice arrays are checked before indexing, and adapter-emitted tool schemas include required fields.
+L00000218	
+L00000219	Provider-facade ingestion owns adapter-facing `/schema` capability declarations for role surfaces. `system_role_name`, developer-role handling, and any provider-native role aliases must be declared as bridge capabilities and normalized before request construction; the bridge must not let a provider CLI's native label silently redefine PM roles.
+L00000220	
+L00000221	Buffering and stream ingestion must preserve provider ordering semantics while making any adapter-facing `/reordering` explicit. If a bridge buffers, batches, retries, or resumes stream segments, the provider-facade records the ordering boundary and exposes whether downstream consumers are seeing original order, replay order, or a repaired order. Any wording that under-specifies this bridge scope is non-canonical.
+L00000222	
+L00000223	Stream cancellation checks are fail-open only for live streams: adapter code must treat `ctx.Err() != nil` as cancellation, not invert the nil-check; cancellation emits `EventError` with the cancellation reason before the normalized stream closes.
+L00000224	
+L00000225	Malformed tool-call JSON is validated when the bridge stores or admits the tool-call event, not during later re-serialization. `OC-EXEC-109` keeps this as EXEC evidence: a malformed provider tool-call may be persisted only as a structured error event and MUST NOT be silently dropped from history.
+L00000226	
+L00000227	### CLI provider protocol and state surfaces
+L00000228	
+L00000229	Retired Gemini CLI account, `/session/config`, subagents, extensions, model routing, telemetry, `OTLP`, `GEMINI_CLI_HOME`, and probe vocabulary are retained only as source-lineage for the deprecated/unsupported Gemini CLI route. PM must not provision, launch, or expose Gemini CLI as an active CLI-bridged provider. Active Google-owned CLI-runtime support is Antigravity CLI, with its own account/root/setup contract; Gemini Direct remains the separate direct API provider.
+L00000230	
+L00000231	`ACP` is tracked as provider-protocol capability metadata for CLI-bridged adapters. Cursor `ACP` support supersedes stale assumptions in `Plans/rewrite-tie-in-memo.md` that Cursor cannot expose ACP; PM still keeps provider ontology, account identity, and transport/runtime boundaries separate, so ACP support does not turn Cursor into a PM orchestration node and does not replace account-root isolation.
+L00000232	
+L00000233	## Owner / Consumer Map
+L00000234	
+L00000235	This source-preserving standardization keeps the owner and consumer boundaries stated in the original document body. During this batch, `Plans/CLI_Bridged_Providers.md` remains the owner doc for the behavior described by its preserved sections, while cross-doc ownership follows the ContractRefs and boundary notes already present in the original text.
+L00000236	
+L00000237	ContractRef: ContractName:Plans/Plan_Document_System.md, ContractName:Plans/Bootstrap_Planning_Migration.md
+L00000238	
+L00000239	## PlanUnits
+L00000240	
+L00000241	### CBP-001 - CLI-Bridged Providers Source-Preserving Bridge Retired
+L00000242	
+L00000243	```yaml
+L00000244	plan_unit_id: CBP-001
+L00000245	unit_type: compatibility_disposition
+L00000246	status: accepted
+L00000247	owner_doc: Plans/CLI_Bridged_Providers.md
+L00000248	canonical_text: >-
+L00000249	  The former doc-level source-preserving bridge is retired in place after Phase
+L00000250	  2B atomized CLI_Bridged_Providers-S0001 through
+L00000251	  CLI_Bridged_Providers-S0010 into CBP-002 through CBP-018. CBP-001 remains
+L00000252	  only as migration lineage for the retired bridge span and must not re-own
+L00000253	  atomized source coverage.
+L00000254	gui_related: false
+L00000255	gui_classification_reason: The retired bridge is migration lineage and no longer owns GUI or product behavior.
+L00000256	split_recommended: false
+L00000257	depends_on: []
+L00000258	unblocks: []
+L00000259	acceptance_criteria:
+L00000260	- CBP-001 no longer uses the source-preserving PlanUnit compile hint.
+L00000261	- Prior source coverage remains carried by CBP-002 through CBP-018.
+L00000262	- The retired bridge does not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks.
+L00000263	- Coverage for the retired bridge is recorded in the Phase 2B batch 024 coverage map.
+L00000264	validation_surfaces:
+L00000265	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000266	- python3 scripts/pm-plan-index.py validate
+L00000267	risk_class: migration_lineage
+L00000268	reasoning_tier: standard
+L00000269	context_scope: plan_standardization
+L00000270	implementation_surfaces:
+L00000271	- Plans/CLI_Bridged_Providers.md
+L00000272	node_compile_hint:
+L00000273	  mode: source_preserving_bridge_retired
+L00000274	  create_worknodes: false
+L00000275	source_lineage:
+L00000276	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0013
+L00000277	preserved_exact_tokens:
+L00000278	- CBP-001
+L00000279	- source_preserving_planunit
+L00000280	- CBP-002
+L00000281	- CBP-018
+L00000282	negative_constraints:
+L00000283	- "Do not remap atomized CLI_Bridged_Providers spans back to CBP-001."
+L00000284	- "Do not treat the retired bridge as implementation-ready product coverage."
+L00000285	- "Do not create WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks from this migration-lineage unit."
+L00000286	compatibility_only_notes:
+L00000287	- "The old source-preserving bridge is retained only so migration lineage and historical references to CBP-001 remain auditable."
+L00000288	owner_hints:
+L00000289	- Plans/CLI_Bridged_Providers.md
+L00000290	```
+L00000291	
+L00000292	### CBP-002 - Provider Facade Authority and Account Identity Compliance
+L00000293	
+L00000294	```yaml
+L00000295	plan_unit_id: CBP-002
+L00000296	unit_type: constraint
+L00000297	status: accepted
+L00000298	owner_doc: Plans/CLI_Bridged_Providers.md
+L00000299	canonical_text: >-
+L00000300	  CLI-Bridged Providers is the live owner-section specification for provider
+L00000301	  facade requirements, preserving product, runtime, storage, UI, and governance
+L00000302	  details while using canonical requested/effective account identity terminology.
+L00000303	gui_related: true
+L00000304	gui_classification_reason: The authority span explicitly includes UI details as part of owner-section requirements.
+L00000305	split_recommended: true
+L00000306	split_recommendation_reason: Source spans S0001-S0003 combine document authority, compliance, account identity heading, and compatibility vocabulary.
+L00000307	depends_on: []
+L00000308	unblocks: [CBP-003, CBP-005, CBP-011, CBP-013]
+L00000309	acceptance_criteria:
+L00000310	  - The document remains the canonical live owner-section specification for CLI-bridged provider facade behavior.
+L00000311	  - Compatibility-only source vocabulary remains noncanonical.
+L00000312	  - Live wording uses owner terminology.
+L00000313	  - Puppet Master naming and deterministic defaults are preserved.
+L00000314	  - DRY_Rules, Contracts_V0, and Decision_Policy compliance references remain preserved.
+L00000315	validation_surfaces:
+L00000316	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000317	  - python3 scripts/pm-plan-index.py validate
+L00000318	risk_class: owner_authority_drift
+L00000319	reasoning_tier: standard
+L00000320	context_scope: provider_facade
+L00000321	implementation_surfaces:
+L00000322	  - Plans/CLI_Bridged_Providers.md
+L00000323	node_compile_hint:
+L00000324	  mode: cli_bridged_provider_authority_account_identity
+L00000325	  create_worknodes: false
+L00000326	source_lineage:
+L00000327	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0001
+L00000328	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0002
+L00000329	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0003
+L00000330	preserved_exact_tokens:
+L00000331	  - "CLI-Bridged Providers (Provider Facade)"
+L00000332	  - "Canonical owner-section requirements"
+L00000333	  - "Requested/effective account identity contract"
+L00000334	  - "Compatibility-only source vocabulary"
+L00000335	  - "Puppet Master"
+L00000336	negative_constraints:
+L00000337	  - "Compatibility-only source vocabulary is noncanonical."
+L00000338	owner_hints:
+L00000339	  - Plans/CLI_Bridged_Providers.md
+L00000340	```
+L00000341	
+L00000342	### CBP-003 - Provider Facade Purpose and Transport Scope
+L00000343	
+L00000344	```yaml
+L00000345	plan_unit_id: CBP-003
+L00000346	unit_type: requirement
+L00000347	status: accepted
+L00000348	owner_doc: Plans/CLI_Bridged_Providers.md
+L00000349	canonical_text: >-
+L00000350	  The Provider facade runs CLI-bridged and server-bridged providers through a
+L00000351	  uniform transport-normalization contract for deterministic request envelopes,
+L00000352	  normalized streams, tool-call reconciliation, auth/UX-state detection, and
+L00000353	  stream resilience, without taking ownership of PM-internal child orchestration.
+L00000354	gui_related: true
+L00000355	gui_classification_reason: The facade owns normalized streaming with one consumer and no UI special-casing plus auth/UX-state detection.
+L00000356	split_recommended: true
+L00000357	split_recommendation_reason: Source span S0004 mixes provider transport scope, UX-state detection, stream resilience, and A2A owner boundaries.
+L00000358	depends_on: [CBP-002]
+L00000359	unblocks: [CBP-004, CBP-005, CBP-008, CBP-010]
+L00000360	acceptance_criteria:
+L00000361	  - The facade supports structured request envelopes for deterministic replayable runs.
+L00000362	  - Normalized streaming events have one consumer and no UI special-casing.
+L00000363	  - Tool-call correlation and reconciliation tolerate CLI oddities.
+L00000364	  - Auth/UX-state detection includes logged out, expired or invalid, rate limit, and outage.
+L00000365	  - Stream resilience includes bounded retry, replay safety, and circuit breaking.
+L00000366	  - PM-internal child orchestration, crew control, runtime ceilings, and parent/child lineage remain owned by orchestrator-subagent-integration and Contracts_V0.
+L00000367	validation_surfaces:
+L00000368	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00000369	  - python3 scripts/pm-plan-index.py validate
+L00000370	risk_class: provider_facade_scope_drift
+L00000371	reasoning_tier: high
+L00000372	context_scope: provider_facade
+L00000373	implementation_surfaces:
+L00000374	  - Plans/CLI_Bridged_Providers.md
+L00000375	  - Plans/Executor_Protocol.md
+L00000376	  - Plans/Contracts_V0.md
+L00000377	  - Plans/orchestrator-subagent-integration.md
+L00000378	node_compile_hint:
+L00000379	  mode: cli_bridged_provider_facade_transport_scope
+L00000380	  create_worknodes: false
+L00000381	source_lineage:
+L00000382	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:CLI_Bridged_Providers-S0004
+L00000383	preserved_exact_tokens:
+L00000384	  - "Structured request envelopes"
+L00000385	  - "Normalized streaming events"
+L00000386	  - "no UI special-casing"
+L00000387	  - "Authentication / UX-state detection"
+L00000388	  - "bounded retry"
+L00000389	  - "circuit breaking"
+L00000390	negative_constraints:
+L00000391	  - "Provider facade transport normalization does not own PM-internal child orchestration."
+L00000392	owner_hints:
+L00000393	  - Plans/CLI_Bridged_Providers.md
+L00000394	  - Plans/orchestrator-subagent-integration.md
+L00000395	```
+L00000396	
+
+<<< CONTEXT_AFTER canonical_document_lines=397-408 >>>
+L00000397	### CBP-004 - A2A External Reference Boundary
+L00000398	
+L00000399	```yaml
+L00000400	plan_unit_id: CBP-004
+L00000401	unit_type: constraint
+L00000402	status: accepted
+L00000403	owner_doc: Plans/CLI_Bridged_Providers.md
+L00000404	canonical_text: >-
+L00000405	  A2A and external-framework mapping remains external-reference and
+L00000406	  future-interop guidance for adapter implementors, with verify-only watchers
+L00000407	  preventing PM-internal orchestration or child-run control from moving onto A2A
+L00000408	  semantics without explicit migration and account/trust versioning.

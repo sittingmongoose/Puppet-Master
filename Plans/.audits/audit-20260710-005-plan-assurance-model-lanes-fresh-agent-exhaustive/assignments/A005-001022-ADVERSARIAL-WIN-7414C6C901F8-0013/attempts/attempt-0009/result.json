@@ -1,0 +1,638 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001022-ADVERSARIAL-WIN-7414C6C901F8-0013",
+  "attempt_id": "attempt-0009",
+  "task_thread_id": "/root/a005_blind_wave_0003_b_cohort_dispatcher_attempt_0009/leaf_a005_001022_adversarial_0013_attempt_0009_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "40cef18e7e144f06fe26465cb1bb18af55f8e8368279a391e983916b01152eea",
+    "core_range": [4467, 4832]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001022-0013-I001",
+      "item_type": "gap",
+      "title": "Lifecycle failure and recovery contract is absent",
+      "statement": "The foundation names spawn, handshake, shutdown, and exit but does not define spawn failure, initialize failure, unexpected process death, restart/backoff limits, resource cleanup, or recovery of open-document state.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "partial_failure_recovery",
+      "impact": "A dead or half-initialized server can leave the registry and UI in an indeterminate state or silently lose language service until restart.",
+      "builder_discretion": "Choose mechanisms only after the required state transitions, retry ceilings, and cleanup invariants are specified.",
+      "feature_keys": ["LSPS-062"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4473,
+          "line_end": 4473,
+          "exact_quote": "canonical_text: The implementation phase guide requires a foundation with client crate integration, in-memory registry, config loading, spawn/lifecycle, stdio transport, initialize handshake, shutdown/exit, and document sync with debounce, versioning, didClose, didSave, and incremental sync when supported.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I002",
+      "item_type": "gap",
+      "title": "Document synchronization race semantics are unspecified",
+      "statement": "Debounce, version tracking, didClose, didSave, and incremental sync are listed, but ordering across concurrent edits, close during debounce, save before change flush, rejected versions, full-sync downgrade, and late transport writes are not defined.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "concurrency_state_transition",
+      "impact": "Servers may analyze stale text, accept events after close, or diverge from the editor buffer.",
+      "builder_discretion": "Implementation may choose a queueing model after event-order and version invariants become normative.",
+      "feature_keys": ["LSPS-062"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4509,
+          "line_end": 4509,
+          "exact_quote": "- didChange (debounced)",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4512,
+          "line_end": 4512,
+          "exact_quote": "- version tracking",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I003",
+      "item_type": "gap",
+      "title": "Diagnostics freshness and multi-producer semantics are missing",
+      "statement": "Storing diagnostics per URI does not specify replacement versus merge, document-version checks, clearing on didClose or empty publish, duplicate diagnostics from multiple servers, URI normalization, or ordering against edits.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "diagnostic_concurrency_lifecycle",
+      "impact": "Problems and gutter surfaces can retain stale errors, erase another server's results, or navigate to obsolete lines.",
+      "builder_discretion": "Storage structure is discretionary only after producer identity, replacement, expiry, and version rules are fixed.",
+      "feature_keys": ["LSPS-063"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4531,
+          "line_end": 4531,
+          "exact_quote": "canonical_text: Diagnostics implementation subscribes to publishDiagnostics, stores diagnostics per URI, exposes them to the UI, and accepts completion when Problems shows errors and warnings, gutter markers render, and clicking opens the file at the diagnostic line.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I004",
+      "item_type": "explicit_non_gap",
+      "title": "Late interactive responses are explicitly rejected",
+      "statement": "The window explicitly requires stale hover, completion, and navigation responses to be discarded, preventing a known misleading-response class.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-064"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4620,
+          "line_end": 4620,
+          "exact_quote": "- Stale hover/completion/navigation responses must be discarded.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I005",
+      "item_type": "gap",
+      "title": "Staleness and cancellation identity are not defined",
+      "statement": "Although stale responses must be discarded, the plan does not define the correlation key, buffer/version snapshot, cursor movement rules, server-generation identity, or whether timeout and cancel propagate to the server.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "invalid_state_transition",
+      "impact": "Different builders can display mutually inconsistent results or cancel the wrong request while all claiming conformance.",
+      "builder_discretion": "Internal tokens are discretionary; the externally testable freshness predicate is not.",
+      "feature_keys": ["LSPS-064"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4581,
+          "line_end": 4581,
+          "exact_quote": "canonical_text: Hover, completion, documentSymbol, definition, references, breadcrumbs, and go-to-symbol features use LSP when available, enforce timeout/cancel/stale handling, and accept completion when hover, completion, breadcrumbs, symbol, and definition navigation work correctly.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I006",
+      "item_type": "explicit_non_gap",
+      "title": "Workspace edits have a named safety boundary",
+      "statement": "Code actions and workspace edits are explicitly required to route through FileSafe-backed workspace/applyEdit rather than bypassing the file-safety boundary.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-065"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4672,
+          "line_end": 4672,
+          "exact_quote": "- Code actions and workspace edits must route through FileSafe-backed workspace/applyEdit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I007",
+      "item_type": "gap",
+      "title": "Untrusted workspace-edit authorization and rollback are not closed",
+      "statement": "Routing through FileSafe does not specify validation of server-supplied URIs and edit ranges, workspace containment, symlink handling, preview or consent for destructive edits, atomicity across files, conflict detection, or rollback after partial application.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "authority_untrusted_input_destructive_action",
+      "impact": "A buggy or malicious language server could overwrite unintended files or leave a multi-file refactor partially applied.",
+      "builder_discretion": "UI presentation and transaction mechanism may vary; authorization boundaries, preconditions, and all-or-recover behavior must be normative.",
+      "feature_keys": ["LSPS-065"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4637,
+          "line_end": 4637,
+          "exact_quote": "canonical_text: Inlay hints, semantic tokens, signature help, code actions, and code lens render or invoke through editor affordances, with code actions and workspace edits routed through FileSafe-backed workspace/applyEdit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I008",
+      "item_type": "explicit_non_gap",
+      "title": "Fallback cannot masquerade as healthy LSP",
+      "statement": "The user-visible truth boundary explicitly forbids heuristic fallback from being presented as healthy language-server capability.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-066"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4723,
+          "line_end": 4723,
+          "exact_quote": "- Fallback heuristic behavior must not masquerade as healthy LSP state.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I009",
+      "item_type": "gap",
+      "title": "Status state machine remains underspecified",
+      "statement": "The status bar must show server state, but there is no enumerated state model or transition truth for starting, initializing, ready, degraded, disabled, restarting, crashed, timed out, and fallback-active conditions.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "gui_truth_invalid_states",
+      "impact": "The UI can avoid falsely claiming healthy LSP yet still mislead users about transient, failed, or fallback conditions.",
+      "builder_discretion": "Visual styling is discretionary; the state taxonomy and truthful transition mapping are not.",
+      "feature_keys": ["LSPS-066"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4689,
+          "line_end": 4689,
+          "exact_quote": "canonical_text: Status and fallback behavior show LSP state in the status bar, honor per-server enable/disable, use heuristic fallback when no server is available, and may show optional install hints without claiming healthy LSP capability.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I010",
+      "item_type": "gap",
+      "title": "Diagnostics-to-agent privacy lifecycle is unspecified",
+      "statement": "Including current diagnostics in Assistant and Interview context lacks consent, sensitive-path and message redaction, tenant or workspace boundary, retention, truncation, provenance, and deletion rules.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "privacy_data_lifecycle_authority",
+      "impact": "Diagnostic messages can disclose source fragments, filesystem paths, secrets, or unrelated-file metadata to an agent without a defined authority boundary.",
+      "builder_discretion": "Selection algorithms may vary only within explicit consent, minimization, and lifecycle constraints.",
+      "feature_keys": ["LSPS-067"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4740,
+          "line_end": 4740,
+          "exact_quote": "canonical_text: Current diagnostics are included in Assistant and Interview context so agents receive diagnostic lists for relevant files when composing context.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I011",
+      "item_type": "explicit_non_gap",
+      "title": "Configuration merge precedence is deterministic",
+      "statement": "App-before-project precedence, nested object override, array replacement, absent-key inheritance, and server-id-first resolution are explicitly preserved.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["LSPS-068"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4787,
+          "line_end": 4787,
+          "exact_quote": "canonical_text: MVP LSP config closes implementation policy by storing app-level config under config.lsp, project overrides at .puppet-master/lsp.json, applying app then project precedence, replacing arrays, inheriting absent keys, and resolving server-specific settings by server id before language/filetype mapping.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I012",
+      "item_type": "gap",
+      "title": "Config validation, reload, and migration behavior are missing",
+      "statement": "The merge policy does not define malformed JSON handling, schema and unknown-key rejection, unsafe command or environment values, live-reload atomicity, last-known-good fallback, config version migration, or compatibility with renamed server ids.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "untrusted_input_compatibility_recovery",
+      "impact": "A project-controlled config can crash startup, inject unsafe process parameters, or produce inconsistent behavior during upgrades and reloads.",
+      "builder_discretion": "Parser implementation is discretionary; validation authority, failure state, rollback, and migration contract are not.",
+      "feature_keys": ["LSPS-068"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4813,
+          "line_end": 4813,
+          "exact_quote": "- .puppet-master/lsp.json",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4820,
+          "line_end": 4820,
+          "exact_quote": "- absent keys inherit",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I013",
+      "item_type": "gap",
+      "title": "Semantic dependencies and consumers are unmodeled",
+      "statement": "Every unit in this window declares empty depends_on and unblocks arrays even though diagnostics, navigation, semantic features, status, and agent context consume the foundation, registry, document synchronization, and each other's state.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_callers_consumers_cross_document_seam",
+      "impact": "Compilation or implementation can schedule consumers before prerequisites and omit propagation contracts across UI, FileSafe, Assistant, and Interview boundaries.",
+      "builder_discretion": "Dependency granularity is flexible, but the actual prerequisite and consumer seams must be represented.",
+      "feature_keys": ["LSPS-062", "LSPS-063", "LSPS-064", "LSPS-065", "LSPS-066", "LSPS-067", "LSPS-068"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4535,
+          "line_end": 4535,
+          "exact_quote": "depends_on: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4744,
+          "line_end": 4744,
+          "exact_quote": "depends_on: []",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I014",
+      "item_type": "gap",
+      "title": "Acceptance criteria do not falsify runtime behavior",
+      "statement": "The repeated criteria prove source preservation and addressability but provide no executable oracle for lifecycle, synchronization, diagnostics, UI interactions, workspace edits, fallback state, agent context, or config merging.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "Migration and index validators can pass while the required product behavior is absent or incorrect.",
+      "builder_discretion": "Test framework is discretionary; observable setup, action, expected result, and failure cases are required.",
+      "feature_keys": ["LSPS-062", "LSPS-063", "LSPS-064", "LSPS-065", "LSPS-066", "LSPS-067", "LSPS-068"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4479,
+          "line_end": 4479,
+          "exact_quote": "acceptance_criteria:",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4480,
+          "line_end": 4480,
+          "exact_quote": "- The covered source span remains losslessly available for exact-text audit.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I015",
+      "item_type": "gap",
+      "title": "Accessibility behavior is not specified for LSP UI",
+      "statement": "Problems, gutter markers, hover tooltips, completion lists, breadcrumbs, code lenses, status, and install hints lack keyboard navigation, focus, screen-reader names, non-color cues, and announcement requirements.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "accessibility",
+      "impact": "Core language-service feedback and actions may be unusable or invisible to keyboard and assistive-technology users.",
+      "builder_discretion": "Platform-specific accessibility APIs may vary; equivalent perceivability and operability are required.",
+      "feature_keys": ["LSPS-063", "LSPS-064", "LSPS-065", "LSPS-066"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4560,
+          "line_end": 4560,
+          "exact_quote": "- Problems tab",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4611,
+          "line_end": 4611,
+          "exact_quote": "- completion list",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I016",
+      "item_type": "gap",
+      "title": "Localization and unbounded server text are not addressed",
+      "statement": "User-visible status, install hints, diagnostics, completion detail, hover content, and code-action labels have no localization ownership, bidi handling, truncation, or separation of translated app copy from untrusted server-supplied text.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "localization_untrusted_gui_content",
+      "impact": "Localized layouts can overflow, mixed-direction text can mislead, and server text can be mistaken for trusted application copy.",
+      "builder_discretion": "Translation system and layout mechanics are discretionary within explicit localization and trust-presentation constraints.",
+      "feature_keys": ["LSPS-063", "LSPS-064", "LSPS-065", "LSPS-066"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4718,
+          "line_end": 4718,
+          "exact_quote": "- optional install hint",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I017",
+      "item_type": "gap",
+      "title": "Transport loss and offline behavior have no contract",
+      "statement": "The stdio transport and server-availability fallback requirements do not state how broken pipes, hung processes, laptop sleep, remote-server network loss, reconnect, or queued requests affect state, UI, and unsent document changes.",
+      "severity": "high",
+      "confidence": "medium",
+      "gap_kind": "offline_network_loss",
+      "impact": "Users can receive stale results or lose language service without truthful state or deterministic recovery.",
+      "builder_discretion": "Reconnect technology is discretionary; loss detection, request failure, state truth, and recovery invariants are not.",
+      "feature_keys": ["LSPS-062", "LSPS-066"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4505,
+          "line_end": 4505,
+          "exact_quote": "- stdio transport",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4689,
+          "line_end": 4689,
+          "exact_quote": "canonical_text: Status and fallback behavior show LSP state in the status bar, honor per-server enable/disable, use heuristic fallback when no server is available, and may show optional install hints without claiming healthy LSP capability.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I018",
+      "item_type": "gap",
+      "title": "Scale and resource ceilings are absent",
+      "statement": "The in-memory registry, per-URI diagnostics, symbol and reference results, semantic tokens, workspace edits, and agent-context diagnostics have no caps, pagination, eviction, backpressure, or oversized-payload behavior in the core window.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "scale_limits",
+      "impact": "Large workspaces or pathological servers can exhaust memory, stall rendering, overload agent context, or make cancellation ineffective.",
+      "builder_discretion": "Exact limits may be tuned, but bounded behavior and user-visible degradation need normative requirements.",
+      "feature_keys": ["LSPS-062", "LSPS-063", "LSPS-064", "LSPS-065", "LSPS-067"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4502,
+          "line_end": 4502,
+          "exact_quote": "- server registry (in-memory)",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4767,
+          "line_end": 4767,
+          "exact_quote": "- Agent receives diagnostic list",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I019",
+      "item_type": "gap",
+      "title": "Operational observability and support evidence are missing",
+      "statement": "No requirements define structured logs, redaction, metrics, health probes, request and server correlation, crash diagnostics, user-facing support export, or evidence for lifecycle and performance failures.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "observability_support",
+      "impact": "Intermittent server, transport, synchronization, and workspace-edit failures will be difficult to diagnose without leaking source content.",
+      "builder_discretion": "Telemetry backend is discretionary; diagnosable events and privacy-safe support surfaces are required.",
+      "feature_keys": ["LSPS-062", "LSPS-063", "LSPS-064", "LSPS-065", "LSPS-066"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4484,
+          "line_end": 4484,
+          "exact_quote": "validation_surfaces:",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4486,
+          "line_end": 4486,
+          "exact_quote": "- python3 scripts/pm-plan-index.py validate",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001022-0013-I020",
+      "item_type": "unknown",
+      "title": "Protocol coordinate and capability compatibility cannot be determined",
+      "statement": "The window does not reveal how UTF-8/UTF-16 position encodings, server capability negotiation, dynamic registration, unsupported methods, protocol-version differences, or workspace-folder compatibility affect diagnostics and navigation.",
+      "severity": "high",
+      "confidence": "medium",
+      "gap_kind": "unknown_unknown_compatibility",
+      "impact": "Line navigation and edit ranges can target incorrect text, and servers with different capability profiles can fail unpredictably.",
+      "builder_discretion": "Protocol library choice is discretionary; negotiated capability and coordinate semantics require an explicit compatibility contract.",
+      "feature_keys": ["LSPS-062", "LSPS-063", "LSPS-064", "LSPS-065"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4506,
+          "line_end": 4506,
+          "exact_quote": "- initialize handshake",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 4563,
+          "line_end": 4563,
+          "exact_quote": "- click opens file at line",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "Consumers are described in prose but semantic dependency and unblocks edges remain empty.",
+      "evidence_item_ids": ["A005-001022-0013-I013"]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Lifecycle, synchronization, request freshness, and status transition models are incomplete.",
+      "evidence_item_ids": ["A005-001022-0013-I001", "A005-001022-0013-I002", "A005-001022-0013-I005", "A005-001022-0013-I009"]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Edit debounce and diagnostic publication lack ordering, version, and multi-producer rules.",
+      "evidence_item_ids": ["A005-001022-0013-I002", "A005-001022-0013-I003"]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Server lifecycle and multi-file edit partial-failure outcomes are not defined.",
+      "evidence_item_ids": ["A005-001022-0013-I001", "A005-001022-0013-I007"]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "Restart recovery, open-document rehydration, last-known-good config, and workspace-edit rollback are absent.",
+      "evidence_item_ids": ["A005-001022-0013-I001", "A005-001022-0013-I007", "A005-001022-0013-I012"]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "FileSafe provides a named boundary, but edit authorization and diagnostics-to-agent authority remain unspecified.",
+      "evidence_item_ids": ["A005-001022-0013-I006", "A005-001022-0013-I007", "A005-001022-0013-I010"]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Agent-context diagnostics have no consent, minimization, retention, redaction, or deletion contract.",
+      "evidence_item_ids": ["A005-001022-0013-I010"]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Server-supplied edits and project-controlled config lack explicit validation and containment rules.",
+      "evidence_item_ids": ["A005-001022-0013-I007", "A005-001022-0013-I012", "A005-001022-0013-I016"]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Fallback truth and stale-response rejection are explicit, but the full status taxonomy and transient-state presentation are absent.",
+      "evidence_item_ids": ["A005-001022-0013-I004", "A005-001022-0013-I008", "A005-001022-0013-I009"]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "Transport loss, suspension, reconnect, queued request, and unsent edit behavior are not specified.",
+      "evidence_item_ids": ["A005-001022-0013-I017"]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Core registry, diagnostics, result, edit, and context payloads have no bounded behavior.",
+      "evidence_item_ids": ["A005-001022-0013-I018"]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "No keyboard, focus, assistive-technology, non-color, or announcement behavior is defined for LSP UI.",
+      "evidence_item_ids": ["A005-001022-0013-I015"]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "Localization, bidi, overflow, and trust separation for server-provided UI text are absent.",
+      "evidence_item_ids": ["A005-001022-0013-I016"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Config versions, renamed server ids, capability differences, and protocol coordinate compatibility are unresolved.",
+      "evidence_item_ids": ["A005-001022-0013-I012", "A005-001022-0013-I020"]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Plan validators are named, but runtime health, correlation, redaction-safe logs, metrics, and support evidence are not.",
+      "evidence_item_ids": ["A005-001022-0013-I019"]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "FileSafe routing is explicit, but preview, consent, atomicity, conflict detection, and rollback for destructive workspace edits are not.",
+      "evidence_item_ids": ["A005-001022-0013-I006", "A005-001022-0013-I007"]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "gap_found",
+      "summary": "UI, FileSafe, Assistant, and Interview are referenced without represented dependency or propagation contracts.",
+      "evidence_item_ids": ["A005-001022-0013-I013"]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Acceptance and validation surfaces test plan structure rather than observable product behavior and failure cases.",
+      "evidence_item_ids": ["A005-001022-0013-I014"]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "unknown",
+      "summary": "Capability negotiation and position-encoding behavior cannot be resolved from the assigned core window.",
+      "evidence_item_ids": ["A005-001022-0013-I020"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

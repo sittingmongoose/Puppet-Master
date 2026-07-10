@@ -1,0 +1,394 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1972-1983 >>>
+L00001972	- File too large
+L00001973	- read-only reason in UI
+L00001974	negative_constraints:
+L00001975	- No auto-save in MVP.
+L00001976	- Hex view is out of scope for MVP.
+L00001977	compatibility_only_notes: []
+L00001978	stale_retired_dispositions: []
+L00001979	owner_boundary_notes: []
+L00001980	owner_hints:
+L00001981	- Plans/FileManager.md
+L00001982	```
+L00001983	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1984-2348 >>>
+L00001984	### F-028 - Large File Strategy And Limits
+L00001985	
+L00001986	```yaml
+L00001987	plan_unit_id: F-028
+L00001988	unit_type: requirement
+L00001989	status: accepted
+L00001990	owner_doc: Plans/FileManager.md
+L00001991	canonical_text: >-
+L00001992	  Large-file MVP uses truncated read-only view plus Load full file above the line threshold, enforces a 10 000-line default and 5 MB hard cap, offers read-only/system-editor alternatives above cap, and persists configurable editor thresholds.
+L00001993	gui_related: true
+L00001994	gui_classification_reason: This unit defines visible large-file affordances and settings.
+L00001995	split_recommended: false
+L00001996	depends_on: []
+L00001997	unblocks: []
+L00001998	acceptance_criteria:
+L00001999	- The covered source span remains losslessly available for exact-text audit.
+L00002000	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00002001	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002002	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002003	validation_surfaces:
+L00002004	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002005	- python3 scripts/pm-plan-index.py validate
+L00002006	risk_class: file_manager_drift
+L00002007	reasoning_tier: standard
+L00002008	context_scope: file_manager_standardization
+L00002009	implementation_surfaces:
+L00002010	- Plans/FileManager.md
+L00002011	node_compile_hint:
+L00002012	  mode: large_file_strategy_and_limits
+L00002013	  create_worknodes: false
+L00002014	source_lineage:
+L00002015	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0028
+L00002016	preserved_exact_tokens:
+L00002017	- truncated view + "Load full file"
+L00002018	- 10 000 lines
+L00002019	- 5 MB
+L00002020	- File too large to edit
+L00002021	- View read-only (truncated)
+L00002022	- Open in system editor
+L00002023	- Large file threshold (lines)
+L00002024	- Hard cap (MB)
+L00002025	negative_constraints:
+L00002026	- Do not implement read-only virtualized editing in MVP unless needed.
+L00002027	compatibility_only_notes: []
+L00002028	stale_retired_dispositions: []
+L00002029	owner_boundary_notes: []
+L00002030	owner_hints:
+L00002031	- Plans/FileManager.md
+L00002032	```
+L00002033	
+L00002034	### F-029 - Editor Keyboard Shortcuts And Focus Policy
+L00002035	
+L00002036	```yaml
+L00002037	plan_unit_id: F-029
+L00002038	unit_type: requirement
+L00002039	status: accepted
+L00002040	owner_doc: Plans/FileManager.md
+L00002041	canonical_text: >-
+L00002042	  Editor focus handles Save, Close tab, Go to line, Next/Previous tab, Save As, and app/chat shortcut routing; floating editor windows handle editor shortcuts when any editor window has OS focus and open-file actions target/focus the floating editor.
+L00002043	gui_related: true
+L00002044	gui_classification_reason: This unit covers user-visible keyboard shortcuts and floating-editor focus routing.
+L00002045	split_recommended: false
+L00002046	depends_on: []
+L00002047	unblocks: []
+L00002048	acceptance_criteria:
+L00002049	- The covered source span remains losslessly available for exact-text audit.
+L00002050	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00002051	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002052	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002053	validation_surfaces:
+L00002054	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002055	- python3 scripts/pm-plan-index.py validate
+L00002056	risk_class: file_manager_drift
+L00002057	reasoning_tier: standard
+L00002058	context_scope: file_manager_standardization
+L00002059	implementation_surfaces:
+L00002060	- Plans/FileManager.md
+L00002061	node_compile_hint:
+L00002062	  mode: editor_keyboard_shortcuts_focus_policy
+L00002063	  create_worknodes: false
+L00002064	source_lineage:
+L00002065	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0029
+L00002066	preserved_exact_tokens:
+L00002067	- Ctrl+S
+L00002068	- Ctrl+W
+L00002069	- Ctrl+G
+L00002070	- Ctrl+Tab
+L00002071	- Ctrl+Shift+Tab
+L00002072	- Save As
+L00002073	- Floating editor
+L00002074	- OS focus
+L00002075	- open the file there
+L00002076	negative_constraints:
+L00002077	- When focus is elsewhere, app/chat shortcuts apply instead of editor shortcuts.
+L00002078	compatibility_only_notes: []
+L00002079	stale_retired_dispositions: []
+L00002080	owner_boundary_notes: []
+L00002081	owner_hints:
+L00002082	- Plans/FileManager.md
+L00002083	```
+L00002084	
+L00002085	### F-030 - Editor Persistence Schema
+L00002086	
+L00002087	```yaml
+L00002088	plan_unit_id: F-030
+L00002089	unit_type: requirement
+L00002090	status: accepted
+L00002091	owner_doc: Plans/FileManager.md
+L00002092	canonical_text: >-
+L00002093	  Editor persistence stores open tab order, active tab index, scroll/cursor state, max tabs, session view state, layout/recent files, lazy-load restore behavior, persisted tab cap, dirty-buffer exit prompts, and recover-unsaved availability using redb-backed per-project/session keys without persisting full buffer content.
+L00002094	gui_related: true
+L00002095	gui_classification_reason: This unit defines persisted editor tab, cursor, and layout state visible across sessions.
+L00002096	split_recommended: true
+L00002097	depends_on: []
+L00002098	unblocks: []
+L00002099	acceptance_criteria:
+L00002100	- The covered source span remains losslessly available for exact-text audit.
+L00002101	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00002102	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002103	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002104	validation_surfaces:
+L00002105	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002106	- python3 scripts/pm-plan-index.py validate
+L00002107	risk_class: file_manager_drift
+L00002108	reasoning_tier: standard
+L00002109	context_scope: file_manager_standardization
+L00002110	implementation_surfaces:
+L00002111	- Plans/FileManager.md
+L00002112	node_compile_hint:
+L00002113	  mode: editor_persistence_schema
+L00002114	  create_worknodes: false
+L00002115	source_lineage:
+L00002116	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0030
+L00002117	preserved_exact_tokens:
+L00002118	- tabs.{project_id}
+L00002119	- active_tab.{project_id}
+L00002120	- scroll_cursor.{project_id}.{path_hash}
+L00002121	- max_tabs
+L00002122	- session.{project_id}.{session_id}
+L00002123	- Do not persist full buffer content
+L00002124	- editor.max_persisted_tabs
+L00002125	- default `50`
+L00002126	- Dirty buffers on exit
+L00002127	- Recover unsaved
+L00002128	negative_constraints:
+L00002129	- Do not persist full buffer content as ordinary editor state.
+L00002130	compatibility_only_notes: []
+L00002131	stale_retired_dispositions: []
+L00002132	owner_boundary_notes: []
+L00002133	owner_hints:
+L00002134	- Plans/FileManager.md
+L00002135	split_recommendation_reason: Source span also contains transient state and accessibility requirements split into F-031.
+L00002136	```
+L00002137	
+L00002138	### F-031 - Transient Editor States And Accessibility
+L00002139	
+L00002140	```yaml
+L00002141	plan_unit_id: F-031
+L00002142	unit_type: requirement
+L00002143	status: accepted
+L00002144	owner_doc: Plans/FileManager.md
+L00002145	canonical_text: >-
+L00002146	  Editor and File Manager surfaces show consistent transient UI states and support keyboard-only operation, focus indicators, logical focus order, screen-reader-friendly labels where available, and reduced-motion preferences.
+L00002147	gui_related: true
+L00002148	gui_classification_reason: This unit covers visible loading/error states and accessibility behavior.
+L00002149	split_recommended: true
+L00002150	depends_on: []
+L00002151	unblocks: []
+L00002152	acceptance_criteria:
+L00002153	- The covered source span remains losslessly available for exact-text audit.
+L00002154	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00002155	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002156	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002157	validation_surfaces:
+L00002158	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002159	- python3 scripts/pm-plan-index.py validate
+L00002160	risk_class: file_manager_drift
+L00002161	reasoning_tier: standard
+L00002162	context_scope: file_manager_standardization
+L00002163	implementation_surfaces:
+L00002164	- Plans/FileManager.md
+L00002165	node_compile_hint:
+L00002166	  mode: transient_editor_states_and_accessibility
+L00002167	  create_worknodes: false
+L00002168	source_lineage:
+L00002169	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0030
+L00002170	preserved_exact_tokens:
+L00002171	- Loading...
+L00002172	- Decoding...
+L00002173	- Cannot decode as UTF-8
+L00002174	- File not found
+L00002175	- Deleted
+L00002176	- Binary file
+L00002177	- File too large
+L00002178	- Indexing...
+L00002179	- Open failed
+L00002180	- keyboard-only use
+L00002181	- visible focus indicators
+L00002182	- logical focus order
+L00002183	- screen reader-friendly labels
+L00002184	- reduced-motion preferences
+L00002185	negative_constraints:
+L00002186	- Editor and File Manager must not be mouse-only.
+L00002187	compatibility_only_notes: []
+L00002188	stale_retired_dispositions: []
+L00002189	owner_boundary_notes: []
+L00002190	owner_hints:
+L00002191	- Plans/FileManager.md
+L00002192	split_recommendation_reason: Split from persistence schema so accessibility and transient UI states are independently addressable.
+L00002193	```
+L00002194	
+L00002195	### F-032 - Mention In Chat Identity Preserving References
+L00002196	
+L00002197	```yaml
+L00002198	plan_unit_id: F-032
+L00002199	unit_type: requirement
+L00002200	status: accepted
+L00002201	owner_doc: Plans/FileManager.md
+L00002202	canonical_text: >-
+L00002203	  The @ mention system is project-scoped and identity-preserving: invoking @ opens a picker rooted in active project context, sources can include recent/modified/folder/symbol results, inserted mentions preserve canonical file identity/path, and already-open references resolve to existing editor state.
+L00002204	gui_related: true
+L00002205	gui_classification_reason: Although span_map inferred non-GUI, this unit governs the visible @ mention picker and chat navigation behavior.
+L00002206	split_recommended: false
+L00002207	depends_on: []
+L00002208	unblocks: []
+L00002209	acceptance_criteria:
+L00002210	- The covered source span remains losslessly available for exact-text audit.
+L00002211	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00002212	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002213	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002214	validation_surfaces:
+L00002215	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002216	- python3 scripts/pm-plan-index.py validate
+L00002217	risk_class: file_manager_drift
+L00002218	reasoning_tier: standard
+L00002219	context_scope: file_manager_standardization
+L00002220	implementation_surfaces:
+L00002221	- Plans/FileManager.md
+L00002222	node_compile_hint:
+L00002223	  mode: mention_in_chat_identity_preserving_references
+L00002224	  create_worknodes: false
+L00002225	source_lineage:
+L00002226	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0031
+L00002227	preserved_exact_tokens:
+L00002228	- "@ mention"
+L00002229	- project-scoped
+L00002230	- identity-preserving
+L00002231	- recent files
+L00002232	- modified files
+L00002233	- folder navigation
+L00002234	- symbol-aware results
+L00002235	- canonical file identity/path
+L00002236	- Assistant and Interview chat surfaces
+L00002237	- existing editor state
+L00002238	negative_constraints: []
+L00002239	compatibility_only_notes: []
+L00002240	stale_retired_dispositions: []
+L00002241	owner_boundary_notes:
+L00002242	- GUI-related classification corrects span_map inference because this span defines visible chat picker/navigation behavior.
+L00002243	owner_hints:
+L00002244	- Plans/FileManager.md
+L00002245	```
+L00002246	
+L00002247	### F-033 - File Manager Editor Chat Shared Project Integration
+L00002248	
+L00002249	```yaml
+L00002250	plan_unit_id: F-033
+L00002251	unit_type: requirement
+L00002252	status: accepted
+L00002253	owner_doc: Plans/FileManager.md
+L00002254	canonical_text: >-
+L00002255	  File Manager, editor, and chat share one project context, @ mention uses the same file list as File Manager, and clicking a file path or code block in chat opens the file in the editor.
+L00002256	gui_related: true
+L00002257	gui_classification_reason: Although span_map inferred non-GUI, this unit governs visible click-to-open integration between chat and editor.
+L00002258	split_recommended: false
+L00002259	depends_on: []
+L00002260	unblocks: []
+L00002261	acceptance_criteria:
+L00002262	- The covered source span remains losslessly available for exact-text audit.
+L00002263	- The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage.
+L00002264	- ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable.
+L00002265	- No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created.
+L00002266	validation_surfaces:
+L00002267	- python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00002268	- python3 scripts/pm-plan-index.py validate
+L00002269	risk_class: file_manager_drift
+L00002270	reasoning_tier: standard
+L00002271	context_scope: file_manager_standardization
+L00002272	implementation_surfaces:
+L00002273	- Plans/FileManager.md
+L00002274	node_compile_hint:
+L00002275	  mode: file_manager_editor_chat_shared_project_integration
+L00002276	  create_worknodes: false
+L00002277	source_lineage:
+L00002278	- Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0032
+L00002279	preserved_exact_tokens:
+L00002280	- same project context
+L00002281	- "@ mention resolution"
+L00002282	- same file list
+L00002283	- single source of truth for project files
+L00002284	- Clicking a file path or code block in chat opens the file in the editor
+L00002285	- §5
+L00002286	negative_constraints: []
+L00002287	compatibility_only_notes: []
+L00002288	stale_retired_dispositions: []
+L00002289	owner_boundary_notes:
+L00002290	- GUI-related classification corrects span_map inference because this span defines visible click-to-open behavior.
+L00002291	owner_hints:
+L00002292	- Plans/FileManager.md
+L00002293	```
+L00002294	
+L00002295	### F-034 - Identity-Based Open Routing And Worktree File Realization
+L00002296	
+L00002297	```yaml
+L00002298	plan_unit_id: F-034
+L00002299	unit_type: requirement
+L00002300	status: accepted
+L00002301	owner_doc: Plans/FileManager.md
+L00002302	canonical_text: >-
+L00002303	  FileManager owns identity-based file-open routing: route_target paths resolve through
+L00002304	  Contracts_V0 route/open semantics, opened files bind to the active worktree
+L00002305	  execution_unit_context, and chat file-edit cards open the worktree filesystem path resolved from
+L00002306	  working_directory + relative_path without a special rewrite layer.
+L00002307	gui_related: true
+L00002308	gui_classification_reason: >-
+L00002309	  This unit governs visible file/editor open behavior from GUI, CLI, chat cards, and internal
+L00002310	  routing.
+L00002311	split_recommended: false
+L00002312	depends_on: []
+L00002313	unblocks: []
+L00002314	acceptance_criteria:
+L00002315	- "The covered source span remains losslessly available for exact-text audit."
+L00002316	- "The behavior is addressable through this fine-grained PlanUnit instead of broad F-001 coverage."
+L00002317	- "ContractRefs, anchors or aliases, exact tokens, examples, negative constraints, compatibility notes, stale/retired dispositions, owner boundaries, and source lineage remain traceable."
+L00002318	- "No WorkNodes, NodeSeeds, executable queues, final node manifests, or production build tasks are created."
+L00002319	validation_surfaces:
+L00002320	- "python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits"
+L00002321	- "python3 scripts/pm-plan-index.py validate"
+L00002322	risk_class: file_manager_drift
+L00002323	reasoning_tier: standard
+L00002324	context_scope: file_manager_standardization
+L00002325	implementation_surfaces:
+L00002326	- "Plans/FileManager.md"
+L00002327	node_compile_hint:
+L00002328	  mode: identity_based_open_routing_and_worktree_file_realization
+L00002329	  create_worknodes: false
+L00002330	source_lineage:
+L00002331	- "Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:FileManager-S0033"
+L00002332	preserved_exact_tokens:
+L00002333	- "route_target"
+L00002334	- "github://owner/repo/file.md"
+L00002335	- "execution_unit_context"
+L00002336	- "working_directory + relative_path"
+L00002337	- "to-open"
+L00002338	- "real file on disk"
+L00002339	- "worktree path"
+L00002340	negative_constraints: []
+L00002341	compatibility_only_notes: []
+L00002342	stale_retired_dispositions: []
+L00002343	owner_boundary_notes:
+L00002344	- "Contracts_V0 owns shared route/open semantics; FileManager realizes workspace file opens rather than raw route_target reads."
+L00002345	owner_hints:
+L00002346	- "Plans/FileManager.md"
+L00002347	```
+L00002348	
+
+<<< CONTEXT_AFTER canonical_document_lines=2349-2360 >>>
+L00002349	### F-035 - Artifact Identity Storage And Approval-Scoped Open Visibility
+L00002350	
+L00002351	```yaml
+L00002352	plan_unit_id: F-035
+L00002353	unit_type: requirement
+L00002354	status: accepted
+L00002355	owner_doc: Plans/FileManager.md
+L00002356	canonical_text: >-
+L00002357	  Artifact opens are identity-backed and approval-scoped: artifacts are stored by content hash
+L00002358	  with concern_id, route_target, artifact_type, and timestamp identity, raw paths are deprecated,
+L00002359	  and the GUI open-file list filters by active execution_role and approval_scope.
+L00002360	gui_related: true

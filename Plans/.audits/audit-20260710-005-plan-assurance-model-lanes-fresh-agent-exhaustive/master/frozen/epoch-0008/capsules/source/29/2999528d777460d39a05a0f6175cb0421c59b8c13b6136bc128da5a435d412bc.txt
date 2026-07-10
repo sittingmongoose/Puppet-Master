@@ -1,0 +1,412 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3006-3017 >>>
+L00003006	  - "runtime identity"
+L00003007	  - "concern/episode lifecycle"
+L00003008	  - "`route_target`"
+L00003009	  - "`OpenSubject`"
+L00003010	  - "all surfaces"
+L00003011	  - "execution contexts"
+L00003012	negative_constraints:
+L00003013	  - "Consumer surfaces must not own alternate runtime identity, concern, route_target, or OpenSubject semantics."
+L00003014	owner_hints:
+L00003015	  - Plans/Contracts_V0.md
+L00003016	```
+L00003017	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3018-3400 >>>
+L00003018	### CV-004 - Owner-First Canonicalization Sequence
+L00003019	
+L00003020	```yaml
+L00003021	plan_unit_id: CV-004
+L00003022	unit_type: constraint
+L00003023	status: accepted
+L00003024	owner_doc: Plans/Contracts_V0.md
+L00003025	canonical_text: >-
+L00003026	  Canonicalization proceeds owner repairs first, dependent consumer updates
+L00003027	  second, mirror cleanup third, and final verification last; Crosswalk.md,
+L00003028	  DRY_Rules.md, and Decision_Log.md stay ordered when touched, and partial
+L00003029	  reviewer slices do not close coverage until reconciled.
+L00003030	gui_related: false
+L00003031	gui_classification_reason: This is a governance sequencing constraint rather than GUI behavior.
+L00003032	split_recommended: true
+L00003033	split_recommendation_reason: Source span S0003 is a heading-only owner-section alias while S0023 carries the detailed canonicalization sequence.
+L00003034	depends_on: [CV-003]
+L00003035	unblocks: []
+L00003036	acceptance_criteria:
+L00003037	  - Owner repairs precede dependent consumer updates.
+L00003038	  - Mirror cleanup precedes final verification evidence.
+L00003039	  - Crosswalk.md, DRY_Rules.md, and Decision_Log.md preserve their ordered integrity stack when touched.
+L00003040	  - Partial reviewer slices must be reconciled before declaring coverage closure.
+L00003041	validation_surfaces:
+L00003042	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003043	  - python3 scripts/pm-plan-index.py validate
+L00003044	risk_class: canonicalization_false_closure
+L00003045	reasoning_tier: high
+L00003046	context_scope: owner_first_canonicalization
+L00003047	implementation_surfaces:
+L00003048	  - Plans/Contracts_V0.md
+L00003049	  - Plans/Crosswalk.md
+L00003050	  - Plans/DRY_Rules.md
+L00003051	  - Plans/Decision_Log.md
+L00003052	node_compile_hint:
+L00003053	  mode: canonicalization_sequence
+L00003054	  create_worknodes: false
+L00003055	source_lineage:
+L00003056	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0003
+L00003057	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0023
+L00003058	preserved_exact_tokens:
+L00003059	  - "owner-doc corrections"
+L00003060	  - "consumer"
+L00003061	  - "mirror cleanup"
+L00003062	  - "final verification evidence"
+L00003063	  - "`Crosswalk.md`"
+L00003064	  - "`DRY_Rules.md`"
+L00003065	  - "`Decision_Log.md`"
+L00003066	  - "`re-check`"
+L00003067	  - "`/consumer`"
+L00003068	stale_retired_dispositions:
+L00003069	  - "stale-residue retirement remains owner-first."
+L00003070	negative_constraints:
+L00003071	  - "A cleared partial reviewer slice must not be treated as full coverage closure until reconciled."
+L00003072	owner_hints:
+L00003073	  - Plans/Contracts_V0.md
+L00003074	  - Plans/Crosswalk.md
+L00003075	  - Plans/DRY_Rules.md
+L00003076	  - Plans/Decision_Log.md
+L00003077	```
+L00003078	
+L00003079	### CV-005 - Route Open Compatibility Fallback Disposition
+L00003080	
+L00003081	```yaml
+L00003082	plan_unit_id: CV-005
+L00003083	unit_type: compatibility_disposition
+L00003084	status: accepted
+L00003085	owner_doc: Plans/Contracts_V0.md
+L00003086	canonical_text: >-
+L00003087	  Compatibility-only source vocabulary is noncanonical; route/open fallback
+L00003088	  notes remain lineage or lookup metadata while live route/open auditing focuses
+L00003089	  on refinement omissions after RouteTarget and OpenSubject primitives have
+L00003090	  landed, and view-state fields stay outside base route identity.
+L00003091	gui_related: false
+L00003092	gui_classification_reason: This unit is a route/open compatibility and ownership disposition rather than visible layout.
+L00003093	split_recommended: true
+L00003094	split_recommendation_reason: Source span S0001 contains a large token bank; this unit only covers route/open compatibility and view-state ownership tokens from that span plus S0004 and S0018.
+L00003095	depends_on: [CV-003]
+L00003096	unblocks: []
+L00003097	acceptance_criteria:
+L00003098	  - Compatibility-only source vocabulary is treated as noncanonical.
+L00003099	  - Route/open fallback notes are lineage or lookup metadata, not peer canonical route identity.
+L00003100	  - Route/open audits focus on refinement omissions after RouteTarget and OpenSubject primitives have landed.
+L00003101	  - View-state fields remain outside base route identity.
+L00003102	validation_surfaces:
+L00003103	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003104	  - python3 scripts/pm-plan-index.py validate
+L00003105	risk_class: compatibility_route_drift
+L00003106	reasoning_tier: high
+L00003107	context_scope: route_open_compatibility_fallback
+L00003108	implementation_surfaces:
+L00003109	  - Plans/Contracts_V0.md
+L00003110	node_compile_hint:
+L00003111	  mode: compatibility_disposition
+L00003112	  create_worknodes: false
+L00003113	source_lineage:
+L00003114	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0001
+L00003115	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0004
+L00003116	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0018
+L00003117	preserved_exact_tokens:
+L00003118	  - "ContractRef: ContractName:Plans/Contracts_V0.md, Primitive:RouteTarget, Primitive:OpenSubject"
+L00003119	  - "`allowed_actions[]`"
+L00003120	  - "`active_subview`"
+L00003121	  - "filters"
+L00003122	  - "compare targets"
+L00003123	  - "pinned selections"
+L00003124	  - "`navigation_wrapper`"
+L00003125	  - "`domain_action`"
+L00003126	  - "Base route/open primitives landed"
+L00003127	  - "refinement omissions"
+L00003128	compatibility_only_notes:
+L00003129	  - "Compatibility-only source vocabulary is noncanonical."
+L00003130	negative_constraints:
+L00003131	  - "Route/open auditing must not re-claim absence of primitives that already landed."
+L00003132	owner_hints:
+L00003133	  - Plans/Contracts_V0.md
+L00003134	```
+L00003135	
+L00003136	### CV-006 - Shared Governance Runtime Record Envelope Fields
+L00003137	
+L00003138	```yaml
+L00003139	plan_unit_id: CV-006
+L00003140	unit_type: requirement
+L00003141	status: accepted
+L00003142	owner_doc: Plans/Contracts_V0.md
+L00003143	canonical_text: >-
+L00003144	  Shared governance/runtime records carry the required record envelope and actor
+L00003145	  envelope fields, including identity, project scope, lineage refs, status
+L00003146	  timestamps, and attributable actor/runtime role fields.
+L00003147	gui_related: false
+L00003148	gui_classification_reason: This unit defines persisted record envelope fields rather than UI presentation.
+L00003149	split_recommended: true
+L00003150	split_recommendation_reason: Source span S0024 covers several envelope, identity, attribution, temporal, and storage-owner concerns split across CV-006 through CV-010.
+L00003151	depends_on: [CV-002, CV-003]
+L00003152	unblocks: [CV-007, CV-008, CV-009, CV-010]
+L00003153	acceptance_criteria:
+L00003154	  - Shared records include the required record identity, project, lineage, artifact, evidence, supersession, status, and timestamp fields.
+L00003155	  - Attributable record actions include the shared actor envelope fields.
+L00003156	  - Actor runtime role is carried through execution_role when relevant.
+L00003157	validation_surfaces:
+L00003158	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003159	  - python3 scripts/pm-plan-index.py validate
+L00003160	risk_class: envelope_schema_drift
+L00003161	reasoning_tier: high
+L00003162	context_scope: shared_governance_runtime_envelope
+L00003163	implementation_surfaces:
+L00003164	  - Plans/Contracts_V0.md
+L00003165	node_compile_hint:
+L00003166	  mode: shared_record_envelope
+L00003167	  create_worknodes: false
+L00003168	source_lineage:
+L00003169	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0024
+L00003170	preserved_exact_tokens:
+L00003171	  - "`record_id`"
+L00003172	  - "`record_kind`"
+L00003173	  - "`project_id`"
+L00003174	  - "`scope_ref?`"
+L00003175	  - "`source_refs[]?`"
+L00003176	  - "`artifact_refs[]?`"
+L00003177	  - "`evidence_refs[]?`"
+L00003178	  - "`supersedes_record_id?`"
+L00003179	  - "`superseded_by_record_id?`"
+L00003180	  - "`status`"
+L00003181	  - "`created_at_utc`"
+L00003182	  - "`updated_at_utc?`"
+L00003183	  - "`actor_kind`"
+L00003184	  - "`actor_ref?`"
+L00003185	  - "`execution_role?`"
+L00003186	negative_constraints:
+L00003187	  - "Shared records must not drop lineage, status, timestamp, or actor attribution fields."
+L00003188	owner_hints:
+L00003189	  - Plans/Contracts_V0.md
+L00003190	```
+L00003191	
+L00003192	### CV-007 - Record Object Identity And Payload Specialization
+L00003193	
+L00003194	```yaml
+L00003195	plan_unit_id: CV-007
+L00003196	unit_type: constraint
+L00003197	status: accepted
+L00003198	owner_doc: Plans/Contracts_V0.md
+L00003199	canonical_text: >-
+L00003200	  Record objects stay distinct from artifacts, receipts, rendered summaries, and
+L00003201	  process reports; first-class object families reuse the shared envelope, and
+L00003202	  family-specific payloads specialize underneath it rather than inventing
+L00003203	  one-off top-level shapes.
+L00003204	gui_related: false
+L00003205	gui_classification_reason: This is a persisted object identity and schema-shape constraint.
+L00003206	split_recommended: true
+L00003207	split_recommendation_reason: Source span S0024 mixes record identity, family payload specialization, status vocabulary, temporal fields, and storage ownership.
+L00003208	depends_on: [CV-006]
+L00003209	unblocks: [CV-008]
+L00003210	acceptance_criteria:
+L00003211	  - Record IDs and kinds are not artifact IDs, receipt IDs, rendered summary IDs, or process report IDs.
+L00003212	  - First-class object families reuse the shared envelope.
+L00003213	  - Family-specific payload fields specialize under the shared envelope rather than becoming one-off top-level shapes.
+L00003214	validation_surfaces:
+L00003215	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003216	  - python3 scripts/pm-plan-index.py validate
+L00003217	risk_class: record_identity_drift
+L00003218	reasoning_tier: high
+L00003219	context_scope: record_identity_payload_specialization
+L00003220	implementation_surfaces:
+L00003221	  - Plans/Contracts_V0.md
+L00003222	node_compile_hint:
+L00003223	  mode: record_identity_constraint
+L00003224	  create_worknodes: false
+L00003225	source_lineage:
+L00003226	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0024
+L00003227	preserved_exact_tokens:
+L00003228	  - "`feature_seam`"
+L00003229	  - "`work_package`"
+L00003230	  - "`lane`"
+L00003231	  - "`promotion`"
+L00003232	  - "`review`"
+L00003233	  - "`resolution_thread`"
+L00003234	  - "`concern`"
+L00003235	  - "`graph_patch`"
+L00003236	  - "`worktree`"
+L00003237	negative_constraints:
+L00003238	  - "Family-specific payloads must not invent one-off top-level shapes."
+L00003239	owner_hints:
+L00003240	  - Plans/Contracts_V0.md
+L00003241	```
+L00003242	
+L00003243	### CV-008 - Shared Attribution Historical Status Boundary
+L00003244	
+L00003245	```yaml
+L00003246	plan_unit_id: CV-008
+L00003247	unit_type: requirement
+L00003248	status: accepted
+L00003249	owner_doc: Plans/Contracts_V0.md
+L00003250	canonical_text: >-
+L00003251	  Contracts own the shared attribution packet and historical/status vocabulary,
+L00003252	  while storage-plan owns persistence and projection of attempt, usage, receipt,
+L00003253	  and artifact joins; family-local workflow states remain distinct.
+L00003254	gui_related: false
+L00003255	gui_classification_reason: Attribution packets and status vocabulary define runtime/storage contracts rather than visual presentation.
+L00003256	split_recommended: true
+L00003257	split_recommendation_reason: Source span S0024 combines attribution ownership, historical vocabulary, and storage persistence ownership.
+L00003258	depends_on: [CV-006, CV-007]
+L00003259	unblocks: []
+L00003260	acceptance_criteria:
+L00003261	  - Historical/status vocabulary remains shared and canonical.
+L00003262	  - Family-local workflow states remain distinct from shared historical vocabulary.
+L00003263	  - Contracts own the attribution packet shape while storage-plan owns persistence/projection mechanics.
+L00003264	validation_surfaces:
+L00003265	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003266	  - python3 scripts/pm-plan-index.py validate
+L00003267	risk_class: attribution_join_drift
+L00003268	reasoning_tier: high
+L00003269	context_scope: attribution_status_owner_boundary
+L00003270	implementation_surfaces:
+L00003271	  - Plans/Contracts_V0.md
+L00003272	  - Plans/storage-plan.md
+L00003273	node_compile_hint:
+L00003274	  mode: attribution_status_boundary
+L00003275	  create_worknodes: false
+L00003276	source_lineage:
+L00003277	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0024
+L00003278	preserved_exact_tokens:
+L00003279	  - "historical"
+L00003280	  - "stale_historical"
+L00003281	  - "superseded"
+L00003282	  - "revoked"
+L00003283	  - "reopened"
+L00003284	  - "archived"
+L00003285	  - "removed"
+L00003286	  - "`remediation.resolved`"
+L00003287	  - "run/attempt/thread/node/artifact/provider/usage anchors"
+L00003288	  - "execution/runtime identity"
+L00003289	  - "storage-plan"
+L00003290	stale_retired_dispositions:
+L00003291	  - "Historical/status stale markers remain disposition metadata rather than deleted source lineage."
+L00003292	negative_constraints:
+L00003293	  - "Storage persistence and projection mechanics must not be re-owned by Contracts_V0."
+L00003294	owner_hints:
+L00003295	  - Plans/Contracts_V0.md
+L00003296	  - Plans/storage-plan.md
+L00003297	```
+L00003298	
+L00003299	### CV-009 - Temporal Wait Timeout Recovery Envelope Fields
+L00003300	
+L00003301	```yaml
+L00003302	plan_unit_id: CV-009
+L00003303	unit_type: requirement
+L00003304	status: accepted
+L00003305	owner_doc: Plans/Contracts_V0.md
+L00003306	canonical_text: >-
+L00003307	  Temporal records affecting receipts, blocked states, stream sessions, or
+L00003308	  recovery carry typed wait, timeout, observation, timer, and retention-anchor
+L00003309	  fields in the shared envelope rather than hiding them in rendered summaries.
+L00003310	gui_related: false
+L00003311	gui_classification_reason: This unit defines typed runtime/envelope fields, not UI layout.
+L00003312	split_recommended: true
+L00003313	split_recommendation_reason: Source span S0024 joins temporal fields with record identity, attribution, and storage-owner boundaries.
+L00003314	depends_on: [CV-006]
+L00003315	unblocks: [CV-010]
+L00003316	acceptance_criteria:
+L00003317	  - Receipt, blocked-state, stream-session, and recovery records can carry typed wait and timeout fields.
+L00003318	  - Observation, timer, and retention anchor details remain typed envelope fields when applicable.
+L00003319	  - Rendered summaries do not become the only place wait/timeout facts exist.
+L00003320	validation_surfaces:
+L00003321	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003322	  - python3 scripts/pm-plan-index.py validate
+L00003323	risk_class: runtime_timeout_recovery_drift
+L00003324	reasoning_tier: high
+L00003325	context_scope: temporal_recovery_envelope_fields
+L00003326	implementation_surfaces:
+L00003327	  - Plans/Contracts_V0.md
+L00003328	node_compile_hint:
+L00003329	  mode: temporal_envelope_fields
+L00003330	  create_worknodes: false
+L00003331	source_lineage:
+L00003332	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0024
+L00003333	preserved_exact_tokens:
+L00003334	  - "`timeout_class?`"
+L00003335	  - "`wait_state_class?`"
+L00003336	  - "`observation_state?`"
+L00003337	  - "`source_timer_ref?`"
+L00003338	  - "`retention_anchor_kind?`"
+L00003339	  - "`retention_anchor_at_utc?`"
+L00003340	negative_constraints:
+L00003341	  - "Typed wait and timeout facts must not be buried only in rendered summaries."
+L00003342	owner_hints:
+L00003343	  - Plans/Contracts_V0.md
+L00003344	```
+L00003345	
+L00003346	### CV-010 - Storage-Owned Runtime Persistence Boundary
+L00003347	
+L00003348	```yaml
+L00003349	plan_unit_id: CV-010
+L00003350	unit_type: constraint
+L00003351	status: accepted
+L00003352	owner_doc: Plans/Contracts_V0.md
+L00003353	canonical_text: >-
+L00003354	  storage-plan owns persistence mechanics for crash-critical active
+L00003355	  receipt/session lifecycle, blocked episode creation/resolution, follow-mode
+L00003356	  intent, last inspected run/node/log context, and retention anchors; Contracts
+L00003357	  preserves the shared envelope and owner boundary.
+L00003358	gui_related: false
+L00003359	gui_classification_reason: This is a storage owner boundary and persistence mechanics constraint.
+L00003360	split_recommended: true
+L00003361	split_recommendation_reason: Source span S0024 includes storage persistence mechanics while Contracts only owns the shared envelope.
+L00003362	depends_on: [CV-006, CV-009]
+L00003363	unblocks: []
+L00003364	acceptance_criteria:
+L00003365	  - storage-plan owns the listed persistence mechanics.
+L00003366	  - Contracts_V0 preserves envelope fields and owner boundary without re-owning storage implementation.
+L00003367	  - Crash-critical receipt/session lifecycle and retention anchors remain explicitly routed to storage-plan.
+L00003368	validation_surfaces:
+L00003369	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00003370	  - python3 scripts/pm-plan-index.py validate
+L00003371	risk_class: storage_owner_drift
+L00003372	reasoning_tier: high
+L00003373	context_scope: storage_owned_runtime_persistence
+L00003374	implementation_surfaces:
+L00003375	  - Plans/Contracts_V0.md
+L00003376	  - Plans/storage-plan.md
+L00003377	node_compile_hint:
+L00003378	  mode: storage_owner_boundary
+L00003379	  create_worknodes: false
+L00003380	source_lineage:
+L00003381	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Contracts_V0-S0024
+L00003382	preserved_exact_tokens:
+L00003383	  - "crash-critical active receipt/session lifecycle"
+L00003384	  - "blocked episode creation/resolution"
+L00003385	  - "follow-mode intent"
+L00003386	  - "last inspected run/node/log context"
+L00003387	  - "receipts"
+L00003388	  - "log tails"
+L00003389	  - "watch buffers"
+L00003390	  - "explorer snapshots"
+L00003391	  - "stale caches"
+L00003392	stale_retired_dispositions:
+L00003393	  - "Stale cache retention anchor language is preserved as storage-owner boundary evidence, not a Contracts-owned persistence schema."
+L00003394	negative_constraints:
+L00003395	  - "Contracts_V0 must not become the owner of storage-plan persistence mechanics."
+L00003396	owner_hints:
+L00003397	  - Plans/Contracts_V0.md
+L00003398	  - Plans/storage-plan.md
+L00003399	```
+L00003400	
+
+<<< CONTEXT_AFTER canonical_document_lines=3401-3412 >>>
+L00003401	### CV-011 - RuntimeIdentity Owner ContractRefs
+L00003402	
+L00003403	```yaml
+L00003404	plan_unit_id: CV-011
+L00003405	unit_type: requirement
+L00003406	status: accepted
+L00003407	owner_doc: Plans/Contracts_V0.md
+L00003408	canonical_text: >-
+L00003409	  Requested/effective account and execution identity resolves through the
+L00003410	  shared RuntimeIdentity primitive, with Plans/Executor_Protocol.md and
+L00003411	  Plans/Permissions_System.md as referenced companion and consumer contracts.
+L00003412	gui_related: false

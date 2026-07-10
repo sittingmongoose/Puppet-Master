@@ -1,0 +1,418 @@
+<<< CONTEXT_BEFORE canonical_document_lines=3279-3290 >>>
+L00003279	- requested vs effective persona/platform/model remains visible where runtime substitution occurred
+L00003280	
+L00003281	### Scope rule
+L00003282	The GUI does not synthesize alternate blocked schemas, alternate action arrays, or alternate retry classes for specific surfaces.
+L00003283	
+L00003284	The shared blocked/remediation taxonomy preserves actor-specific state machines and object identities: assistant, interview/builder, runtime, and Orchestrator actors consume common blocked fields without collapsing their lifecycle models.
+L00003285	
+L00003286	### Visual distinction
+L00003287	- blocked episodes are visually distinct from ordinary paused/idle states
+L00003288	- multiple simultaneous blocked episodes show per-episode controls and a count summary where appropriate
+L00003289	- remediation-ceiling-exceeded and validation-blocked use the same blocked-payload contract as other blocked episodes rather than bespoke one-off UI treatment
+L00003290	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=3291-3679 >>>
+L00003291	### Runtime state presentation
+L00003292	Scheduler surfaces MUST visually distinguish:
+L00003293	- blocked waiting for prerequisite or approval
+L00003294	- retrying/backoff
+L00003295	- remediation in progress
+L00003296	- terminal failure
+L00003297	
+L00003298	### Recovery UX rules
+L00003299	- safe points are runtime recovery anchors and MUST NOT be presented as user-facing restore points
+L00003300	- retry controls MUST distinguish `Retry from safe point` from `Start fresh attempt`
+L00003301	- if no valid safe point exists, `Retry from safe point` is disabled with an explanation
+L00003302	- Seam review outputs include a review verdict, failure classes with severity, evidence bundle/rationale, remediation-node or graph-patch recommendations, and corroboration requirement/outcome when invoked.
+L00003303	
+L00003304	ContractRef: ContractName:Plans/Contracts_V0.md, ContractName:Plans/human-in-the-loop.md, ContractName:Plans/UI_Command_Catalog.md, ContractName:Plans/assistant-chat-design.md
+L00003305	## Compatibility/source-lineage - Blocked-State Visual Distinction and Recovery UX Addendum
+L00003306	
+L00003307	> **Superseded — see Canonical Blocked/Recovery Behavior above. Compatibility/source-lineage only.** This section preserves visual-distinction examples and older recovery wording; it is subordinate to the canonical GUI summary and referenced owner docs.
+L00003308	
+L00003309	### Blocked-state visual distinction
+L00003310	
+L00003311	| State | Badge Color | Icon | Label Text | Tooltip |
+L00003312	|-------|-------------|------|------------|---------|
+L00003313	| `attention_required` | Amber | Warning triangle | "Needs input" | "This step needs your input to continue. The system can still make progress on other steps." |
+L00003314	| `blocked` | Red | Stop circle | "Blocked" | "This step is blocked and cannot continue until you take action. All automatic retries are exhausted." |
+L00003315	| `waiting_approval` | Blue | User badge | "Awaiting approval" | "This step is waiting for your approval before proceeding with a sensitive operation." |
+L00003316	
+L00003317	- `attention_required` and `blocked` MUST be visually distinct -- they represent different escalation levels.
+L00003318	- `attention_required` allows continued background work; `blocked` does not.
+L00003319	- Dashboard cards, thread badges, and Run Graph View node badges all use this canonical visual mapping.
+L00003320	
+L00003321	ContractRef: ContractName:Plans/Run_Graph_View.md, ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Contracts_V0.md
+L00003322	
+L00003323	### Concurrent blocked episodes
+L00003324	
+L00003325	When multiple nodes are blocked simultaneously:
+L00003326	
+L00003327	1. The dashboard MUST show a count badge (e.g., "3 blocked") on the run card.
+L00003328	2. Clicking the badge opens a filtered list of all currently blocked nodes, sorted by `blocked_sequence` descending (most recently blocked first).
+L00003329	3. Each list item shows: node name, `blocked_reason_code` label, time since blocked, and the primary `allowed_action_ids[]` as action buttons.
+L00003330	4. The user can expand any item to see full blocked detail (explanation, `detail_ref` contents, remediation lineage if applicable).
+L00003331	5. Multiple concurrent blocked episodes MUST NOT be collapsed into a single notification -- each blocked node is a distinct actionable item.
+L00003332	
+L00003333	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Run_Graph_View.md
+L00003334	
+L00003335	### Remediation ceiling exceeded UX
+L00003336	
+L00003337	When the remediation generation count reaches the ceiling (default: 3 per Plans/Decision_Policy.md):
+L00003338	
+L00003339	1. The node transitions to `blocked` with `blocked_reason_code: remediation_ceiling_exceeded`.
+L00003340	2. The Run Graph View displays a red "Remediation limit reached" banner on the node detail panel.
+L00003341	3. Available actions presented to the user:
+L00003342	   - **Replan** (`cmd.orchestrator.replan_node`): Trigger a graph replan that may restructure the node's dependencies.
+L00003343	   - **Manual fix** (`cmd.orchestrator.open_for_edit`): Open the relevant files for manual editing, then resume.
+L00003344	   - **Abort node** (`cmd.orchestrator.abort_node`): Mark the node as permanently failed and continue the run without it (if the graph allows).
+L00003345	4. The remediation lineage tree remains visible for diagnostic purposes.
+L00003346	5. No automatic retry is permitted after ceiling is reached.
+L00003347	
+L00003348	ContractRef: ContractName:Plans/Decision_Policy.md, ContractName:Plans/Run_Graph_View.md
+L00003349	
+L00003350	### Degradation warning
+L00003351	
+L00003352	When draft decomposition degrades from graph to flat sequencing (before canonical graph lock):
+L00003353	
+L00003354	1. The UI displays an amber warning banner: "Plan simplified to sequential steps due to structural issues in the decomposition. Performance may be reduced."
+L00003355	2. The banner includes a "View details" link that shows the specific `graph_integrity` issues detected.
+L00003356	3. No user action is required -- the run continues with flat sequencing automatically.
+L00003357	
+L00003358	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/chain-wizard-flexibility.md
+L00003359	
+L00003360	### All-nodes-blocked circuit breaker
+L00003361	
+L00003362	If all runnable nodes in a run are simultaneously in blocked state:
+L00003363	
+L00003364	> **Superseded** — event-driven blocked-state transitions are canonical. The GUI must react to runtime events and projections, not timer-driven pause or warning thresholds.
+L00003365	
+L00003366	Canonical rule:
+L00003367	1. When all runnable nodes are blocked, the runtime emits the relevant blocked/recovery events and the UI shows the corresponding persistent blocked-state banner or card immediately.
+L00003368	2. The user can resume at any time after resolving blocks.
+L00003369	3. Polling intervals are acceptable only for external systems without push delivery (for example GitHub Actions status refresh every 30s) and must be documented as freshness aids rather than canonical correctness logic.
+L00003370	
+L00003371	ContractRef: ContractName:Plans/Executor_Protocol.md, ContractName:Plans/Run_Modes.md
+L00003372	
+L00003373	## 15. Promoted widget catalog (web tools, planning, question, operation cards)
+L00003374	
+L00003375	The promoted widget catalog mirrors the shared runtime contracts. Widget entries below replace the older mixed status taxonomy and Mermaid-only collapse.
+L00003376	
+L00003377	ContractRef: ContractName:Plans/assistant-chat-design.md, ContractName:Plans/Tools.md, ContractName:Plans/storage-plan.md
+L00003378	
+L00003379	Traceability carry-through for this widget catalog preserves consumer/owner obligations `obl-008`, `obl-009`, `obl-021`, `obl-029`, `obl-038`, `obl-061`, `obl-062`, `obl-035`, `obl-036`, `obl-037`, `obl-045`, `obl-051`, `obl-053`, `obl-056`, `obl-059`, `obl-060`, and `obl-064`.
+L00003380	
+L00003381	Currentness and fidelity carry-through rules:
+L00003382	- The 2026-04-06 packet-alignment register is historical context only. Final GUI packet regeneration follows the narrowed current reset: live widget text consumes repaired owner docs, and any remaining packet-shape defect inside `Plans/Tools.md#10` must not create duplicate or generalized Final GUI canon.
+L00003383	- `FID-013`: Web and diff cards consume `changeTracking` or its explicit retirement from the Tools owner; GUI text must not regress to stale `change_status` / `change_summary` as the visible contract.
+L00003384	- `FID-029`: Web approval summaries preserve session-pattern semantics in permission and approval cards.
+L00003385	- `FID-008`: Site Reader cards require browser-capability disclosure and no-reuse routing identity; provider fetch cannot reuse PM-native `Reading Site`.
+L00003386	- `FID-009`: Search-then-read citation locality is preserved; final citations come from the actual read path.
+L00003387	- `FID-021`: `progress_event` carry-through includes `tool_use_id`, `operation`, `phase`, `detail`, `pages_completed`, `pages_total`, `elapsed_ms`, `estimated_remaining_ms`, and `cancelled: true`.
+L00003388	- `FID-041`: Planning widgets consume `todowrite` statuses/notes and `todoread` active thread/run scope.
+L00003389	- `FID-040`: `chat.plan_todo_updated` remains the owner-contract definition for durable normalized TODO mutation.
+L00003390	- `FID-043` / `FID-043B`: Question cards preserve `response_kind`, `validation_state`, and the compatibility rule that `allow_other is a deprecated alias`; `allow_other` normalizes to `allow_freeform` and must not become a new canonical field.
+L00003391	- `FID-038`: Queue semantics stay transient, and stale `chat_state:v1` restore residue must not rehydrate queued work across reload or restart.
+L00003392	- `FID-061`: Runtime identity carry-through includes `requested_account_binding`, `operational_identity`, `effective_account_label`, `effective_provider_identity`, and `effective_project_id`; it never revives `requested_persona_id` as GUI identity canon.
+L00003393	
+L00003394	Chat-panel carry-through into promoted widgets includes `activity-card` rendering, `jump-to-latest` badge behavior that re-enables `/auto-follow` when the user returns to the bottom, `/auto-follow` scroll state, `/search/diff` card anatomy, live TODO tracker ownership, and the provider settings layout constraint: provider routing/configuration internals stay OUT of FinalGUISpec while provider-runtime docs remain provisional.
+L00003395	
+L00003396	Final GUI ownership includes chat-visible queue behavior, chat widgets, the sticky plan panel as a live TODO execution tracker, question forms, Agent Config IA, terminal `/open-in-terminal` behavior, and `activity-card` rendering; provider routing/configuration internals stay out of this GUI consumer surface.
+L00003397	
+L00003398	### 15.1 Terminal operation card widget
+L00003399	
+L00003400	This section consumes the linked owner contract and stays aligned with it.
+L00003401	
+L00003402	Core rules:
+L00003403	- Operation cards preserve the three-way rendering distinction across terminal, search, and diff/web cards; card-level status badges use the lifecycle `idle→running→success|error|timeout` while owner runtimes keep their richer internal taxonomies.
+L00003404	- Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy: header, status badge, body, and action row with per-type specialization.
+L00003405	- Terminal promotion and handoff are locked so interactive or long-running work binds to a stable terminal session while chat retains only bounded preview and audit ownership.
+L00003406	- Terminal action canon must preserve the distinct terminal actions and give Rerun in Terminal owned command-table treatment rather than collapsing actions into one normalized target.
+L00003407	- Terminal cards default to a collapsed tool line with inline expand for immediate inspection, explicit open/show actions through `Open in Terminal` / `Show Terminal` reveal controls for the canonical terminal session, and an explicit background/continue-in-terminal action for long-running commands.
+L00003408	- Type-specific primary actions stay distinct: terminal cards expose `Open in Terminal` and `/open-in-terminal`; search cards open or `/focus` the results view `/list`; edit `/diff` cards open the file in the editor with the diff visible.
+L00003409	- Rendering identity remains explicit: one-shot `bash` tool invocations and search tools render inline, while shell-owned live terminal/output surfaces own longer sessions and full `/output`; Chat or Bottom panel (`Terminal/Output`) pop-out triggers detach or re-dock the shell panel without changing session identity.
+L00003410	- Terminal-command approval copy may include sandbox/approval/allowlist context when that helps developer-trust-forward user trust, but terminal-first framing applies only where the owning surface is terminal-centric; chat and terminal must not collapse into one undifferentiated transcript.
+L00003411	- The scope boundary is additive-vs-replacement: `/inline` chat cards, `/command-card` previews, mini-terminal previews, and `/Problems/Ports/Browser` `/linkback` affordances add views into the shell-owned terminal/workflow model rather than minting brand-new pseudo-terminals.
+L00003412	- This keeps terminal-adjacent previews in-scope as bounded chat-owned views while the shell-first runtime remains canonical; out-of-scope and non-canonical alternatives include independent mini-terminal products or inline pseudo-terminals with separate runtime ownership.
+L00003413	- Detached or `/popped-out` terminal windows, `/remoted` or browser-adjacent `/presentation` layers, and terminal-adjacent dev-session views are `/reaffirmed` as presentations of canonical terminal sessions, not competing product models.
+L00003414	
+L00003415	Fields:
+L00003416	- terminal_session_id
+L00003417	- Open in Terminal
+L00003418	- Show Terminal
+L00003419	- Rerun in Terminal
+L00003420	- Detach/Pop-Out
+L00003421	
+L00003422	Rules:
+L00003423	- Collapsed preview: 5 lines
+L00003424	- Expanded preview: 15 lines
+L00003425	- Persists after completion
+L00003426	- status, cwd, command summary, elapsed time, exit code / truncation indicator
+L00003427	- READ-ONLY and non-interactive
+L00003428	- One card per command
+L00003429	- Retries create a new terminal and therefore a new mini terminal card; Rerun in Terminal creates a new card rather than mutating the completed card
+L00003430	- Shell owns interactive state; chat owns preview+audit
+L00003431	- Commands requiring stdin/TTY start Terminal immediately
+L00003432	- Background/watch/server actions create terminal-owned session
+L00003433	- One-shot commands remain chat-inline by default
+L00003434	- Every promoted command card binds to stable terminal session identity
+L00003435	- Large payloads store full data behind refs/blobs
+L00003436	- non-interactive work may promote if it becomes long-running
+L00003437	- attach failure recovery differs for live process, ended process, and inline-only completed command
+L00003438	- `Open in Terminal` and `Show Terminal` must focus the same live session
+L00003439	- after promotion, chat stops owning the full transcript
+L00003440	- inline cards persist across thread reload and re-render from persisted metadata
+L00003441	- search and diff do not stream progressively
+L00003442	
+L00003443	Compatibility/source-lineage disposition: this extract preserves terminal card payload fields, display actions, and behavior fragments in their source order. `Open in Terminal`, `Show Terminal`, `Rerun in Terminal`, and `Detach/Pop-Out` remain display/action tokens, not payload fields solely because they appeared under `Fields:`.
+L00003444	### 15.2 Search result card widget
+L00003445	
+L00003446	
+L00003447	This section consumes the linked owner contract and stays aligned with it.
+L00003448	
+L00003449	ContractRef: ContractName:Plans/storage-plan.md#4.4 Activity transparency payloads, ContractName:Plans/Contracts_V0.md#3.4 Tool-specific payload extensions, ContractName:Plans/Section15_MVP_Promoted_Features_Spec.md#3.18 Built-in Browser and Click-to-Context
+L00003450	
+L00003451	Core rules:
+L00003452	- Answer construction must preserve search-then-read behavior, final citations must come from the actual read path rather than raw search snippets alone, and web activity/provenance docs must use the exact storage/contracts/browser ContractRef targets instead of malformed generic anchors.
+L00003453	- The Firecrawl websearch mapping must preserve provider-specific search behavior and option surface.
+L00003454	
+L00003455	Fields:
+L00003456	- Serper-backed Google-result behavior
+L00003457	- sources
+L00003458	- categories
+L00003459	- optional result scraping behavior in Firecrawl `websearch`
+L00003460	
+L00003461	Rules:
+L00003462	- search-then-read behavior
+L00003463	- final citations come from the actual read path
+L00003464	- raw search snippets alone are not enough provenance for the final answer
+L00003465	- chat may shortlist with search but must read chosen pages before citing them as final evidence
+L00003466	
+L00003467	Compatibility/source-lineage disposition: this extract preserves web/search source tokens. `Serper-backed Google-result behavior`, `sources`, and `categories` are interpreted through Tools/storage/contracts ownership and search-then-read rules, not as a complete GUI-owned schema.
+L00003468	### 15.3 Web and diff operation card widget
+L00003469	
+L00003470	This section consumes the linked owner contract and stays aligned with it.
+L00003471	
+L00003472	Core rules:
+L00003473	- The web routing algorithm must include a capability-unavailable terminal branch with clear setup guidance when no provider supports the requested operation.
+L00003474	- Site Reader canon must require real browser interaction, reserve `Reading Site` for the PM-native Site Reader path, and prevent provider-routed fetch from reusing that reserved identity.
+L00003475	- The Firecrawl webresearch mapping must preserve provider-native no-URL research behavior, navigation/forms/pagination capability, and structured extraction during agent-led research.
+L00003476	- Batch semantics must preserve the explicit false branch for continue_on_error.
+L00003477	- Long-running web operations must preserve the structured progress_event payload and cancellation-with-partial-results contract.
+L00003478	- Inline mini-terminal and operation cards are locked to bounded inline previews, persistent per-command cards, narrative-order placement, and shared card anatomy.
+L00003479	- Operation cards are restricted to stateful, time-bounded lifecycle-bearing operations, exclude other widget families, and use a locked card-level state machine reconciled against the 8-state agent/process taxonomy.
+L00003480	- Message controls are locked to most-recent-user scope, queued-message FIFO semantics, explicit rewind/discard behavior, always-visible code-block copy, mandatory subagent disclosure, and transient queue state that is not restored across reload or restart.
+L00003481	- All web tools share a common output field set that includes provider identity, routing reason, timing, cache status, and standard error or warning fields.
+L00003482	- Activity transparency payloads must preserve adapter-selection and projection fields used for routing and audit disclosure.
+L00003483	- Web activity detail payloads display `adapter_id` examples (e.g. `exa`, `firecrawl`, and `pm_native`); `timestamp` is an ISO 8601 string; `execution_path` may be `pm_site_reader`, `provider_firecrawl_scrape`, or another owner-defined route; and non-fatal `warnings` surface with the activity details.
+L00003484	- The display schema treats `tool_use_id`, `adapter_id`, `adapter_selection_reason`, `timestamp`, `error_code`, `error_message`, `provenance_badge`, and `execution_path` as string fields, `duration_ms` as number, `cached` as boolean, and `warnings` as string[].
+L00003485	- Chat message-stream controls expose a `jump-to-latest` / `jump-to-bottom` to-bottom control with an `unseen-count` badge when the user is away from the bottom, and `/auto-follow` resumes only when the user returns to the bottom.
+L00003486	- Web/search/diff cards preserve distinct card anatomy: `Searching Web` is the activity label for web search or research discovery, `Reading Site` is reserved for native Site Reader, and `/diff` cards plus search cards do not inherit code-block copy affordances.
+L00003487	- Web activity card collapsed labels use the concrete operation: `Searching Web: <query>`, `Fetching Site: <url> (via <provider>)`, `Reading Site: <url>`, `Extracting Site: <url>`, `Researching Web: <task>`, `Crawling Site: <url>`, and `Mapping Site: <url>`; `Reading Site: <url>` is reserved EXCLUSIVELY for the PM-native Site Reader path, while provider-routed or provider-delegated fetch uses `Fetching Site: <url> (via <provider>)`.
+L00003488	- Narrative order is command trigger in assistant narrative, inline operation card (mini terminal/search/diff), then assistant textual summary `/commentary`; cards do not float out of narrative position.
+L00003489	- Web operation cards render completed content only on `/completion`; while running, activity progress text may stream labels such as `Researching Web: <query>` or `Crawling Site: example.com (12/25 pages)` for `/25` page caps, and summary rows use `<operation>: <query/url> — N sources` when a source count is available.
+L00003490	- Web/provider GUI consumers treat `Plans/Tools.md` as the PRIMARY SSOT for `WebAction`, Firecrawl-as-provider routing, `/questionnaire` and TODO carry-through, while FinalGUISpec owns visible card/progress behavior.
+L00003491	- GUI web cards expose structured `operation_input` as the canonical operation input; legacy `web_input` is source-lineage/compatibility input that normalizes before card rendering. TODO projections surfaced with web/activity progress use `pending | in_progress | completed | blocked | skipped`.
+L00003492	- Runtime disclosure fields shown by web cards include `requested_account_binding`, `operational_identity`, `effective_account_label`, `effective_provider_identity`, and `effective_project_id` when present.
+L00003493	- Legacy `/operation-card` references normalize to the operation-card widget family; individual web, terminal, search, and diff card types keep their owner-specific payload contracts.
+L00003494	- Search and diff/web cards do not expose terminal `show terminal` or `detach/pop-out` affordances; only terminal cards expose those actions, while long-running web operations may use `background` state.
+L00003495	- Provider disclosure displays the exact provider class split `account-backed|API-backed|no-key`, surfaces `QuestionItem`-aligned question widgets, and keeps shared widget statuses within `pending|running|completed|failed|cancelled|blocked`.
+L00003496	- Expanded web activity details include operation input, requested/effective runtime delta when relevant, support tier, fallback disclosure when relevant, source count or scope summary, and warning or error text.
+L00003497	- Rate-limit/outage fallback cards show the failed provider and next same-operation provider in the visible activity label; the audit log records the same explanation in `provider_fallback_summary`.
+L00003498	
+L00003499	Fields:
+L00003500	- webresearch
+L00003501	- no-URL natural-language research
+L00003502	- navigation/forms/pagination capability
+L00003503	- structured extraction behavior during provider-native research
+L00003504	- continue_on_error: false
+L00003505	- stop on the first failure
+L00003506	- return completed results plus failure detail
+L00003507	- progress_event
+L00003508	- tool_use_id
+L00003509	- operation
+L00003510	- phase
+L00003511	- detail
+L00003512	- pages_completed
+L00003513	- pages_total
+L00003514	- elapsed_ms
+L00003515	- estimated_remaining_ms
+L00003516	- cancelled: true
+L00003517	- status_badge_state
+L00003518	- `tool_use_id`
+L00003519	- `adapter_id`
+L00003520	- `adapter_selection_reason`
+L00003521	- `duration_ms`
+L00003522	- `timestamp`
+L00003523	- `cached`
+L00003524	- `error_code?`
+L00003525	- `error_message?`
+L00003526	- `warnings?`
+L00003527	- `provenance_badge?`
+L00003528	- requested_adapter_id
+L00003529	- effective_adapter_id
+L00003530	- adapter_selection_reason
+L00003531	- provider_fallback_summary
+L00003532	- warnings_count
+L00003533	- error_code
+L00003534	- projection_freshness
+L00003535	- projection_health
+L00003536	
+L00003537	Rules:
+L00003538	- capability-unavailable terminal branch
+L00003539	- clear setup guidance when no provider supports the requested operation
+L00003540	- Site Reader v1 requires real browser-interaction capability, not static HTTP fetch only
+L00003541	- Reading Site
+L00003542	- provider-routed fetch must not reuse the reserved native Site Reader identity
+L00003543	- Collapsed preview: 5 lines
+L00003544	- Expanded preview: 15 lines
+L00003545	- Persists after completion
+L00003546	- status, cwd, command summary, elapsed time, exit code / truncation indicator
+L00003547	- READ-ONLY and non-interactive
+L00003548	- One card per command
+L00003549	- Retries create a new terminal and therefore a new mini terminal card
+L00003550	- Open in Terminal
+L00003551	- Show Terminal
+L00003552	- Rerun in Terminal
+L00003553	- Detach/Pop-Out
+L00003554	- pending
+L00003555	- pending | in_progress | completed | blocked | skipped
+L00003556	- running
+L00003557	- completed
+L00003558	- failed
+L00003559	- cancelled
+L00003560	- blocked
+L00003561	- starting
+L00003562	- exited
+L00003563	- Stop/Edit/Resend attach ONLY to most recent user-sent message
+L00003564	- discards all later history/work
+L00003565	- FIFO, max 2 queued messages
+L00003566	- queue is transient and not restart-persisted
+L00003567	- Stop does NOT clear the queue
+L00003568	- always-visible copy affordance on fenced code blocks
+L00003569	- queue state is transient and is not restored across reload or restart
+L00003570	- blocked_reason_code
+L00003571	- allowed_action_ids[]
+L00003572	- denial_reason_code
+L00003573	- denial_source
+L00003574	- suggested_recovery_action
+L00003575	- adapter_id
+L00003576	- adapter_unavailable
+L00003577	- badge is always visible
+L00003578	- running output may promote out of inline comfort based on heuristic thresholds
+L00003579	- `blocked` is a card-level state entered from `running` and returned to `running` on unblock
+L00003580	- `disconnected` and `restoring` are agent-session states and surface as card-level `blocked` with `blocked_reason_code`
+L00003581	- Terminal and inline operation-card badge consumers align with `assistant-chat-design.md §13` for command-card states: `starting`, `running`, `exited`, `failed`, `terminated`, `disconnected`, `restoring`, and `attention_required`. Generic workflow states such as `completed`, `cancelled`, or `blocked` may appear on other shared widgets, but terminal command cards must map completion to `exited`, cancellation to `terminated`, and recovery/action-needed cases to `attention_required` or blocked-with-reason as specified by the owning chat contract.
+L00003582	- When the user backgrounds a long-running operation card, the card-state enters `background` state and shows a `backgrounded` badge; completion updates the badge to `completed` or `failed` and notifies the user.
+L00003583	- Card anatomy is per-card-type: compact previews use 5 lines, expanded detail uses a `/15-line` cap, complete-result cards persist after completion, background cards retain `background` state, FIFO message queues remain separate from operation-card state, and terminal retries expose `Rerun in Terminal` as a new card.
+L00003584	- Terminal operation actions preserve `Open in Terminal|Show Terminal|Rerun in Terminal|Detach/Pop-Out` as distinct UI actions over the owning terminal session.
+L00003585	- simple read/grep/glob results remain inline text, not cards
+L00003586	- Stop becomes disabled when a run completes and no next message is queued
+L00003587	- Edit restores content into composer and discards later history/work
+L00003588	- Resend retries the most recent message and discards later history/work
+L00003589	- blocked responses must be machine-actionable through `allowed_action_ids[]`
+L00003590	- error naming aligns to `adapter_unavailable`
+L00003591	- Blocked or unavailable web/provider cards may display exact surfaced reason labels such as `permission_denied`, `network_error`, `provider_unavailable`, `headless_unavailable`, and `timeout`; contract payloads still normalize provider failures through owner-owned error codes, and the card carries `status: "unavailable"`, `blocked_reason_code`, `allowed_action_ids[]`, and audit routing fields for recovery.
+L00003592	
+L00003593	Compatibility/source-lineage disposition: this extract is a token bank split by typed role through Core rules, ContractRefs, and owner docs. Tool operation names, payload keys, card labels, lifecycle states, permission fragments, and behavior rules remain exact source tokens but are not one untyped schema.
+L00003594	### 15.4 Planning panel widget (sticky sidebar)
+L00003595	
+L00003596	This section consumes the linked owner contract and stays aligned with it.
+L00003597	
+L00003598	ContractRef: Plans/assistant-chat-design.md#8.1 Canonical planning model
+L00003599	
+L00003600	Core rules:
+L00003601	- Plan and Deep Plan must both project to a normalized TODO list, with a named Q&A loop before Deep Plan execution and a locked TODO item schema/status set.
+L00003602	- The sticky Plan panel is per thread and is the authoritative TODO tracker. It shows plan title/summary, TODOs in canonical order, status badge per TODO, dependency hints, owner or delegated-executor badge when relevant, and verification hint.
+L00003603	- Legacy optional spellings `notes?` and `order_index?` normalize to canonical `notes` and `order_index`; this intentionally retires the source `?` suffix rather than dropping notes or ordering.
+L00003604	- The sticky Plan panel is a live execution tracker, not a checkbox-only list; inline question forms align to the shared `questionnaire` contract before execution advances.
+L00003605	- Before approval, the Plan panel exposes structural editing controls for TODO items. After approval, the approved/executing plan becomes an execution-tracker view with read-mostly structure while still showing live status changes.
+L00003606	- Inline chat progress is limited to compact milestones such as `Started TODO 2/5: add parser tests`, `Completed TODO 2/5`, and `Blocked TODO 3/5: waiting on permission`; clicking a milestone focuses or opens the sticky Plan panel at that item when possible.
+L00003607	- Completed or blocked plan execution leaves the final TODO states visible in thread and panel history, and returning to Ask mode must not erase the plan/TODO state for that thread.
+L00003608	
+L00003609	Fields:
+L00003610	- Q&A loop
+L00003611	- todo_id
+L00003612	- title
+L00003613	- summary
+L00003614	- status
+L00003615	- dependencies[]
+L00003616	- order_index
+L00003617	- owner_hint
+L00003618	- verification_hint
+L00003619	- notes
+L00003620	- pending | in_progress | completed | blocked | skipped
+L00003621	- superseded
+L00003622	- `superseded` is plan-level only and is not a queue item state
+L00003623	- UI copy must not say `superseded by newer run` unless explicit run-relationship metadata proves derivation, continuation, replacement, or validity lineage; otherwise run history remains chronological-first and the label stays unavailable.
+L00003624	
+L00003625	Labels and values:
+L00003626	- Plan
+L00003627	- Deep Plan
+L00003628	- chat.plan_todo_updated
+L00003629	
+L00003630	Compatibility/source-lineage disposition: this extract preserves TODO payload fields, display labels, and status values. `Q&A loop`, `Plan`, `Deep Plan`, and `chat.plan_todo_updated` keep their typed roles through the planning/chat owner contracts rather than becoming ordinary payload fields.
+L00003631	### 15.5 Question card widget
+L00003632	
+L00003633	This section consumes the linked owner contract and stays aligned with it.
+L00003634	
+L00003635	Core rules:
+L00003636	- Question flows are locked to PM-managed draft state, required visible options plus a freeform path, resumable multi-question drafts, and explicit dismissed or paused behavior instead of fabricated answers.
+L00003637	- Question cards are a reusable Assistant/Interviewer/requirements-builder component family rather than Interview-only wording. They support `single_question` and multi-question `questionnaire` flows, draft navigation, out-of-order completion, final submit, and continuous draft persistence.
+L00003638	- The `question-card` family uses a `question-flow` form for multi-question sets: navigable `/flow` or `/list`, out-of-order answering, edits before final submission, draft state that auto-saves, final submit only when required answers are complete, and exiting or dismissing never auto-submits or performs `auto-submitting` fallback.
+L00003639	- Question cards may include visuals when `/helpful`; visuals may write to question-flow draft state, but inline visuals are not `question-only` and may also serve user-requested interactive artifacts.
+L00003640	- Headless or `HITL`-unavailable paths return `status = "unavailable"` rather than fabricated answers, and subagent `/brainstorming` must consolidate through the top-level question flow instead of spawning independent user prompts.
+L00003641	- Task/subagent/question escalation is consumed from `Plans/orchestrator-subagent-integration.md` (`/orchestrator-subagent-integration.md`); Final GUI question cards align shared question/runtime display without redefining child-run ownership.
+L00003642	- Single-choice + Other is represented by `single_question` plus `allow_freeform`; richer preference collection uses the shared multi-select questionnaire contract when the schema sets `multi_select`.
+L00003643	- Question-card draft persistence is thread-scoped and `/structured`: per-question `draft_value` and partial answers auto-save continuously, restore on `/navigation-return` or `/close`, and expose no manual save control.
+L00003644	
+L00003645	Labels and values:
+L00003646	- questionnaire
+L00003647	- single_question
+L00003648	- unavailable
+L00003649	- dismissed
+L00003650	
+L00003651	Rules:
+L00003652	- NOT via `sendPrompt`
+L00003653	- question visuals write to PM draft state, not `sendPrompt`
+L00003654	- Something else
+L00003655	- Always-visible options
+L00003656	- Drafts auto-save until submit
+L00003657	- Exiting/dismissing does NOT auto-submit
+L00003658	- Thread-scoped draft state
+L00003659	- status: 'dismissed'
+L00003660	- draft
+L00003661	- drafts auto-save continuously
+L00003662	- required questions block final submit
+L00003663	- question cards may include a visual
+L00003664	- users can answer out of order and revise before submit
+L00003665	- dismissing pauses conversation until resume
+L00003666	- `draft → incomplete` = user begins answering any question
+L00003667	- `incomplete → ready_to_submit` = all `required` questions answered
+L00003668	- `ready_to_submit → submitted` = user confirms submit
+L00003669	- `submitted → [terminal]` = no further transitions
+L00003670	
+L00003671	Compatibility/source-lineage disposition: this extract preserves question-flow payload fields, display labels, aliases, and lifecycle rules. `questionnaire`, `single_question`, `unavailable`, `dismissed`, and `sendPrompt` constraints are typed through the question-flow Core rules rather than merged into one schema list.
+L00003672	### 15.6 Mermaid and inline visualizer widgets
+L00003673	
+L00003674	
+L00003675	### 15.6A Visualizer runtime contract
+L00003676	
+L00003677	This section defines the canonical contract for this surface.
+L00003678	
+L00003679	ContractRef: Plans/assistant-chat-design.md#28.2 Inline visualizer bridge
+
+<<< CONTEXT_AFTER canonical_document_lines=3680-3691 >>>
+L00003680	
+L00003681	Core rules:
+L00003682	- Mermaid and inline visualizer behavior is locked to native card rendering, explicit error and fallback disclosure, sandboxing without arbitrary HTML execution, bounded persistence, injected theme tokens, and the exact inline visualizer bridge cross-reference target.
+L00003683	- Native Mermaid remains source-text-first, while richer `HTML/JS` or `/JS` visuals render as sandboxed `visual-module` cards with `/design` tokens, sizing `/auto-height`, an `open-link` bridge, and local `in-module` state only.
+L00003684	- Inline visualizer iframe embeds MUST set `sandbox="allow-scripts"`; the exact minimum attribute is `sandbox='allow-scripts'`. They MUST NOT include `allow-same-origin`, `allow-forms`, `allow-popups`, or `allow-top-navigation`; those tokens are explicitly DENIED, and the widget communicates with PM only through the `postMessage` bridge for all cross-boundary communication.
+L00003685	- Non-iframe Markdown, Mermaid, HTML, and SVG rendering follows the sanitizer baseline in `Plans/assistant-chat-design.md`: standard HTML5 safe subset per DOMPurify `DEFAULT_ALLOWED_TAGS`, approved URL-bearing attributes only, and no raw `<script>`, `<iframe>`, `<object>`, `<embed>`, or `<style>` with external URL references.
+L00003686	- The visualizer host bridge is limited to async-safe `sendPrompt(text: string): void`, `openLink(url: string, target?: "_blank" | "_self"): void`, `copyToClipboard(text: string): Promise<boolean>`, and `requestResize(width?: number, height?: number): void`. `_blank` opens a new tab, `_self` navigation is blocked in sandboxed cards, and resize requests remain host-constrained. For question-flow embedded visual modules, the host omits `sendPrompt` from the bridge and exposes only the narrowed PM-managed question-draft bridge, so visuals cannot bypass PM draft state by queueing chat messages.
+L00003687	- Decision #10 is resolved for the Final GUI consumer: visualizer theme-token injection is locked for MVP as CSS custom properties on the inline `style` attribute of the visualizer container. MVP tokens are `--pm-viz-bg`, `--pm-viz-fg`, `--pm-viz-accent`, `--pm-viz-border`, `--pm-viz-font-family`, and `--pm-viz-font-size`; visualizer fragments MUST use those tokens and hardcoded replacement colors are prohibited.
+L00003688	- Bridge calls preserve exact GUI host semantics: `sendPrompt(text)` queues into the active thread composer outside question-flow contexts; question-flow embedded visuals do not receive `sendPrompt` and write draft answers only through the narrowed question bridge; `openLink(url)` routes through `cmd.browser.open_detached_preview` or the system browser when external; theme injection pushes the CSS custom property bundle on mount and theme change; resize reporting sends `{ height: px }` to the host, which adjusts the visual card height within host constraints.
+L00003689	- PM visual-runtime script loading is closed by default: a `/third-party-library` may execute inside the inline `visual-runtime` only when it is bundled, version-pinned, integrity-recorded, declared in the artifact metadata, and loaded inside the existing sandboxed runtime. Remote CDN scripts, dynamic network import, same-origin escalation, popup/form/top-navigation permissions, and undeclared runtime script injection are not valid MVP paths.
+L00003690	- Generated visual modules render as PM visual cards and follow the stricter MVP allowlist stance: the default allowlist is empty, so external libraries cannot execute unless a versioned allowlist entry exists. Each allowed entry must name the package and version, bundled asset, integrity record, license/security review, performance budget, rendering capability scope, fallback behavior, upgrade/removal policy, and owner approval path. D3, Chart.js, and Three.js are examples only when curated, pinned, bundled, and explicitly allowed; CDN fetches, dynamic network import, and unvetted network requests from within the visual module are prohibited.
+L00003691	- Inline visualizer logging is audit-oriented and bounded: PM records render errors, sandbox violations, bridge messages, export actions, and detached-preview opens as structured activity metadata or refs. These persistence/logging/export expectations must not log arbitrary DOM contents, user secrets, or full visual payloads unless the selected export/evidence profile explicitly permits them.

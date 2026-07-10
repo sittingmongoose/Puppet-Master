@@ -1,0 +1,422 @@
+<<< CONTEXT_BEFORE canonical_document_lines=1496-1507 >>>
+L00001496	  - "Append-after-references drift is a structural owner-doc failure, not a new source of truth."
+L00001497	owner_hints:
+L00001498	  - Plans/Crosswalk.md
+L00001499	  - Plans/Contracts_V0.md
+L00001500	  - Plans/storage-plan.md
+L00001501	  - Plans/Prompt_Pipeline.md
+L00001502	  - Plans/Multi-Account.md
+L00001503	  - Plans/UI_Command_Catalog.md
+L00001504	  - Plans/Glossary.md
+L00001505	  - Plans/Executor_Protocol.md
+L00001506	```
+L00001507	
+
+<<< AUTHORITATIVE_CORE canonical_document_lines=1508-1900 >>>
+L00001508	### C-022 - Storage Project And Surface State Routing
+L00001509	
+L00001510	```yaml
+L00001511	plan_unit_id: C-022
+L00001512	unit_type: requirement
+L00001513	status: accepted
+L00001514	owner_doc: Plans/Crosswalk.md
+L00001515	canonical_text: >-
+L00001516	  Storage and project-state support routes through storage-plan, while
+L00001517	  surface-specific active_subview, selection, branch, filter, document history,
+L00001518	  and worktree focus state remain owner-handled routing identities instead of
+L00001519	  consumer-owned local state.
+L00001520	gui_related: true
+L00001521	gui_classification_reason: This unit governs user-visible surface state such as active subviews, selected repos/worktrees, filters, and document pane selection.
+L00001522	split_recommended: true
+L00001523	split_recommendation_reason: Crosswalk-S0023 is split across multiple routing concerns.
+L00001524	depends_on: [C-021]
+L00001525	unblocks: [C-024, C-030, C-032]
+L00001526	acceptance_criteria:
+L00001527	  - "Project-state and persisted support route through storage-plan."
+L00001528	  - "Surface-specific active_subview, selection, branch, filter, and document state remain owner-handled."
+L00001529	  - "Selection and worktree focus are routing identities, not consumer-owned local state."
+L00001530	validation_surfaces:
+L00001531	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001532	  - python3 scripts/pm-plan-index.py validate
+L00001533	risk_class: surface_state_owner_drift
+L00001534	reasoning_tier: high
+L00001535	context_scope: storage_project_surface_state_routing
+L00001536	implementation_surfaces:
+L00001537	  - Plans/Crosswalk.md
+L00001538	  - Plans/storage-plan.md
+L00001539	  - Plans/FinalGUISpec.md
+L00001540	  - Plans/FileManager.md
+L00001541	node_compile_hint:
+L00001542	  mode: storage_project_surface_state_routing
+L00001543	  create_worknodes: false
+L00001544	source_lineage:
+L00001545	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0023
+L00001546	preserved_exact_tokens:
+L00001547	  - "`orchestrator.project_state.{project_id}`"
+L00001548	  - "`/project-state`"
+L00001549	  - "`active_subview`"
+L00001550	  - "`/selection`"
+L00001551	  - "`/worktree`"
+L00001552	negative_constraints:
+L00001553	  - "Surface-specific state must not become consumer-owned local state when it is a route or focus identity."
+L00001554	owner_hints:
+L00001555	  - Plans/Crosswalk.md
+L00001556	  - Plans/storage-plan.md
+L00001557	  - Plans/FinalGUISpec.md
+L00001558	  - Plans/FileManager.md
+L00001559	```
+L00001560	
+L00001561	### C-023 - Provider Account Persona Model Routing
+L00001562	
+L00001563	```yaml
+L00001564	plan_unit_id: C-023
+L00001565	unit_type: requirement
+L00001566	status: accepted
+L00001567	owner_doc: Plans/Crosswalk.md
+L00001568	canonical_text: >-
+L00001569	  Multi-account switch and pressure behavior routes to Multi-Account; provider
+L00001570	  transport/upstream identity routes to provider owner docs; persona, prompt,
+L00001571	  interview handoff, requested/effective persona names, model selection,
+L00001572	  orchestrator integration, and shell exposure remain split by their owner
+L00001573	  families.
+L00001574	gui_related: false
+L00001575	gui_classification_reason: This unit routes provider/account/persona/model owner families and runtime disclosure.
+L00001576	split_recommended: true
+L00001577	split_recommendation_reason: Crosswalk-S0023 is split across multiple routing concerns.
+L00001578	depends_on: [C-018, C-020, C-021]
+L00001579	unblocks: [C-030]
+L00001580	acceptance_criteria:
+L00001581	  - "Multi-Account owns selection policy, role/account precedence, durable switch-history storage, and pressure joins."
+L00001582	  - "Provider-specific transport-vs-upstream identity routes to provider owner docs."
+L00001583	  - "Persona and model-adjacent routing stays split by owner family."
+L00001584	validation_surfaces:
+L00001585	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001586	  - python3 scripts/pm-plan-index.py validate
+L00001587	risk_class: provider_account_persona_model_owner_drift
+L00001588	reasoning_tier: high
+L00001589	context_scope: provider_account_persona_model_routing
+L00001590	implementation_surfaces:
+L00001591	  - Plans/Crosswalk.md
+L00001592	  - Plans/Multi-Account.md
+L00001593	  - Plans/Provider_OpenCode.md
+L00001594	  - Plans/Personas.md
+L00001595	  - Plans/Prompt_Pipeline.md
+L00001596	  - Plans/interview-subagent-integration.md
+L00001597	  - Plans/Models_System.md
+L00001598	  - Plans/orchestrator-subagent-integration.md
+L00001599	  - Plans/FinalGUISpec.md
+L00001600	node_compile_hint:
+L00001601	  mode: provider_account_persona_model_routing
+L00001602	  create_worknodes: false
+L00001603	source_lineage:
+L00001604	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0023
+L00001605	preserved_exact_tokens:
+L00001606	  - "`requested/effective`"
+L00001607	  - "`preferred-account`"
+L00001608	  - "`effective_account_id`"
+L00001609	  - "`Plans/Provider_OpenCode.md`"
+L00001610	  - "`Plans/Personas.md`"
+L00001611	negative_constraints:
+L00001612	  - "Account and persona/model routing must not collapse into provider-only notes."
+L00001613	owner_hints:
+L00001614	  - Plans/Crosswalk.md
+L00001615	  - Plans/Multi-Account.md
+L00001616	  - Plans/Provider_OpenCode.md
+L00001617	  - Plans/Personas.md
+L00001618	  - Plans/Prompt_Pipeline.md
+L00001619	  - Plans/Models_System.md
+L00001620	```
+L00001621	
+L00001622	### C-024 - Route Open Normalization Boundary
+L00001623	
+L00001624	```yaml
+L00001625	plan_unit_id: C-024
+L00001626	unit_type: requirement
+L00001627	status: accepted
+L00001628	owner_doc: Plans/Crosswalk.md
+L00001629	canonical_text: >-
+L00001630	  Route-target, subject-open, OpenSubject, OpenFile, resume_url, generated
+L00001631	  subject transport, and open-by-identity behavior normalize to the shared
+L00001632	  route/open contract boundary rather than allowing FileManager,
+L00001633	  UI_Command_Catalog, or any surface wrapper command to become the navigation
+L00001634	  owner.
+L00001635	gui_related: true
+L00001636	gui_classification_reason: This unit governs command palette, preview subject, deep links, open-file actions, and cross-surface navigation behavior.
+L00001637	split_recommended: true
+L00001638	split_recommendation_reason: Crosswalk-S0023 is split across multiple routing concerns.
+L00001639	depends_on: [C-006, C-007, C-008, C-009, C-021, C-022]
+L00001640	unblocks: [C-027, C-030, C-032]
+L00001641	acceptance_criteria:
+L00001642	  - "resume_url serializes route identity and is not the canonical navigation primitive."
+L00001643	  - "OpenSubject and OpenFile live inside the same route/open model rather than separate navigation stacks."
+L00001644	  - "FileManager and navigation consumers do not make OpenFile the universal navigation primitive."
+L00001645	validation_surfaces:
+L00001646	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001647	  - python3 scripts/pm-plan-index.py validate
+L00001648	risk_class: route_open_normalization_drift
+L00001649	reasoning_tier: high
+L00001650	context_scope: route_open_normalization_boundary
+L00001651	implementation_surfaces:
+L00001652	  - Plans/Crosswalk.md
+L00001653	  - Plans/Contracts_V0.md
+L00001654	  - Plans/storage-plan.md
+L00001655	  - Plans/FileManager.md
+L00001656	  - Plans/FinalGUISpec.md
+L00001657	  - Plans/UI_Command_Catalog.md
+L00001658	node_compile_hint:
+L00001659	  mode: route_open_normalization_boundary
+L00001660	  create_worknodes: false
+L00001661	source_lineage:
+L00001662	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0023
+L00001663	preserved_exact_tokens:
+L00001664	  - "`route-target`"
+L00001665	  - "`subject-open`"
+L00001666	  - "`resume_url`"
+L00001667	  - "`OpenSubject`"
+L00001668	  - "`OpenFile`"
+L00001669	  - "`/open-by-identity`"
+L00001670	  - "`generated://<artifact_id>`"
+L00001671	negative_constraints:
+L00001672	  - "`FileManager.md` and `/navigation` consumers must not make `OpenFile` the universal navigation primitive."
+L00001673	  - "`resume_url` is only one persisted serialized recovery deep-link transport form, not the hidden canonical navigation primitive."
+L00001674	owner_hints:
+L00001675	  - Plans/Crosswalk.md
+L00001676	  - Plans/Contracts_V0.md
+L00001677	  - Plans/storage-plan.md
+L00001678	  - Plans/FileManager.md
+L00001679	  - Plans/UI_Command_Catalog.md
+L00001680	```
+L00001681	
+L00001682	### C-025 - Source Control Lane Worktree Historical Routing
+L00001683	
+L00001684	```yaml
+L00001685	plan_unit_id: C-025
+L00001686	unit_type: requirement
+L00001687	status: accepted
+L00001688	owner_doc: Plans/Crosswalk.md
+L00001689	canonical_text: >-
+L00001690	  Source Control remains Git worktree-first while Orchestrator remains
+L00001691	  lane/package/seam first; SCM/runtime flows replace tier-bound worktree
+L00001692	  identity with lane/worktree plus execution context, preserve package and
+L00001693	  worktree lineage through cleanup/archive/remove, and keep worktree operations
+L00001694	  as object navigation rather than panel-only state.
+L00001695	gui_related: true
+L00001696	gui_classification_reason: This unit governs Source Control, Orchestrator, history, graph, and cleanup views.
+L00001697	split_recommended: true
+L00001698	split_recommendation_reason: Crosswalk-S0023 is split across multiple routing concerns.
+L00001699	depends_on: [C-010, C-021]
+L00001700	unblocks: [C-026, C-033]
+L00001701	acceptance_criteria:
+L00001702	  - "Source Control remains Git worktree-first while Orchestrator remains lane/package/seam first."
+L00001703	  - "Historical lane/worktree records survive archive, prune, and remove."
+L00001704	  - "SCM/runtime routes carry lane/package/seam context rather than reviving per-tier worktree ownership."
+L00001705	validation_surfaces:
+L00001706	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001707	  - python3 scripts/pm-plan-index.py validate
+L00001708	risk_class: source_control_lane_worktree_historical_drift
+L00001709	reasoning_tier: high
+L00001710	context_scope: source_control_lane_worktree_historical_routing
+L00001711	implementation_surfaces:
+L00001712	  - Plans/Crosswalk.md
+L00001713	  - Plans/WorktreeGitImprovement.md
+L00001714	  - Plans/Orchestrator_Page.md
+L00001715	  - Plans/FinalGUISpec.md
+L00001716	node_compile_hint:
+L00001717	  mode: source_control_lane_worktree_historical_routing
+L00001718	  create_worknodes: false
+L00001719	source_lineage:
+L00001720	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0023
+L00001721	preserved_exact_tokens:
+L00001722	  - "`worktree-first`"
+L00001723	  - "`/package/seam/node-first`"
+L00001724	  - "`/run/package/lane/worktree`"
+L00001725	  - "`archive`"
+L00001726	  - "`prune`"
+L00001727	  - "`remove`"
+L00001728	negative_constraints:
+L00001729	  - "Source Control and Git worktree routes must not degrade into panel-only jumps or tier-bound ownership."
+L00001730	owner_hints:
+L00001731	  - Plans/Crosswalk.md
+L00001732	  - Plans/WorktreeGitImprovement.md
+L00001733	  - Plans/Orchestrator_Page.md
+L00001734	  - Plans/FinalGUISpec.md
+L00001735	```
+L00001736	
+L00001737	### C-026 - Orchestrator Tab IA And Cross Tab Navigation
+L00001738	
+L00001739	```yaml
+L00001740	plan_unit_id: C-026
+L00001741	unit_type: requirement
+L00001742	status: accepted
+L00001743	owner_doc: Plans/Crosswalk.md
+L00001744	canonical_text: >-
+L00001745	  Orchestrator routing preserves tab responsibility, CTA behavior, Usage,
+L00001746	  Evidence, Graph, history, blocked outcomes, provider/model/persona precedence,
+L00001747	  worktree ownership, Tiers retirement, cross-tab deep-linkability, and
+L00001748	  route/filter/select target context without duplicating Source Control or
+L00001749	  reducing navigation to tab switches.
+L00001750	gui_related: true
+L00001751	gui_classification_reason: This unit governs Orchestrator tabs, CTAs, cross-tab navigation, and shell IA.
+L00001752	split_recommended: true
+L00001753	split_recommendation_reason: Crosswalk-S0023 is split across multiple routing concerns.
+L00001754	depends_on: [C-012, C-025]
+L00001755	unblocks: [C-027, C-032, C-033]
+L00001756	acceptance_criteria:
+L00001757	  - "Tier-era UI assumptions route through FinalGUISpec, Orchestrator_Page, and storage-plan for retirement."
+L00001758	  - "Cross-tab routes preserve filter/select target context instead of merely switching tabs."
+L00001759	  - "Progress remains widget-hosting operational tab while native deep-inspection tabs own seams plus graph/evidence/history/ledger."
+L00001760	validation_surfaces:
+L00001761	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001762	  - python3 scripts/pm-plan-index.py validate
+L00001763	risk_class: orchestrator_tab_navigation_drift
+L00001764	reasoning_tier: high
+L00001765	context_scope: orchestrator_tab_ia_cross_tab_navigation
+L00001766	implementation_surfaces:
+L00001767	  - Plans/Crosswalk.md
+L00001768	  - Plans/UI_Command_Catalog.md
+L00001769	  - Plans/orchestrator-subagent-integration.md
+L00001770	  - Plans/storage-plan.md
+L00001771	  - Plans/human-in-the-loop.md
+L00001772	  - Plans/Glossary.md
+L00001773	  - Plans/Orchestrator_Page.md
+L00001774	  - Plans/assistant-chat-design.md
+L00001775	  - Plans/FinalGUISpec.md
+L00001776	node_compile_hint:
+L00001777	  mode: orchestrator_tab_ia_cross_tab_navigation
+L00001778	  create_worknodes: false
+L00001779	source_lineage:
+L00001780	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0023
+L00001781	preserved_exact_tokens:
+L00001782	  - "`CTA`"
+L00001783	  - "`Tiers`"
+L00001784	  - "`/filter/select`"
+L00001785	  - "`Progress`"
+L00001786	  - "`/graph/evidence/history/ledger`"
+L00001787	negative_constraints:
+L00001788	  - "Orchestrator tab ownership must not collapse runtime ownership, page/tab IA, blocked/remediation UX, and graph/evidence/history/usage lineage into one page discussion."
+L00001789	owner_hints:
+L00001790	  - Plans/Crosswalk.md
+L00001791	  - Plans/Orchestrator_Page.md
+L00001792	  - Plans/FinalGUISpec.md
+L00001793	  - Plans/storage-plan.md
+L00001794	```
+L00001795	
+L00001796	### C-027 - Wrapper Commands And Command Palette Route Consumption
+L00001797	
+L00001798	```yaml
+L00001799	plan_unit_id: C-027
+L00001800	unit_type: requirement
+L00001801	status: accepted
+L00001802	owner_doc: Plans/Crosswalk.md
+L00001803	canonical_text: >-
+L00001804	  Wrapper commands, command palette jumps, panel switches, chat/thread
+L00001805	  navigation, show/open actions, and command-specific payloads are route/open
+L00001806	  consumers that normalize into the shared route model instead of becoming a
+L00001807	  second navigation language or a universal navigation primitive.
+L00001808	gui_related: true
+L00001809	gui_classification_reason: This unit governs user-facing commands, palette jumps, panel switches, and show/open actions.
+L00001810	split_recommended: true
+L00001811	split_recommendation_reason: Crosswalk-S0023 is split across multiple routing concerns.
+L00001812	depends_on: [C-024, C-026]
+L00001813	unblocks: [C-029, C-032]
+L00001814	acceptance_criteria:
+L00001815	  - "Wrapper commands remain useful surface verbs but not the universal navigation primitive."
+L00001816	  - "cmd.panel.switch remains panel-centric and too shallow for richer restoration contexts."
+L00001817	  - "Command-specific payloads normalize to the shared route model."
+L00001818	validation_surfaces:
+L00001819	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001820	  - python3 scripts/pm-plan-index.py validate
+L00001821	risk_class: wrapper_command_navigation_drift
+L00001822	reasoning_tier: high
+L00001823	context_scope: wrapper_commands_palette_route_consumption
+L00001824	implementation_surfaces:
+L00001825	  - Plans/Crosswalk.md
+L00001826	  - Plans/UI_Command_Catalog.md
+L00001827	  - Plans/FinalGUISpec.md
+L00001828	  - Plans/assistant-chat-design.md
+L00001829	  - Plans/Contracts_V0.md
+L00001830	node_compile_hint:
+L00001831	  mode: wrapper_commands_palette_route_consumption
+L00001832	  create_worknodes: false
+L00001833	source_lineage:
+L00001834	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0023
+L00001835	preserved_exact_tokens:
+L00001836	  - "`cmd.panel.switch`"
+L00001837	  - "`cmd.chat.open_thread_usage`"
+L00001838	  - "`cmd.artifacts.show_in_usage`"
+L00001839	  - "`cmd.orchestrator.open_in_source_control`"
+L00001840	  - "`cmd.project.open`"
+L00001841	  - "`jump-to-message`"
+L00001842	negative_constraints:
+L00001843	  - "Wrapper commands must not replace shared route/open contract semantics."
+L00001844	owner_hints:
+L00001845	  - Plans/Crosswalk.md
+L00001846	  - Plans/UI_Command_Catalog.md
+L00001847	  - Plans/FinalGUISpec.md
+L00001848	  - Plans/assistant-chat-design.md
+L00001849	  - Plans/Contracts_V0.md
+L00001850	```
+L00001851	
+L00001852	### C-028 - Permissioned Interview Chat Approval Routing
+L00001853	
+L00001854	```yaml
+L00001855	plan_unit_id: C-028
+L00001856	unit_type: requirement
+L00001857	status: accepted
+L00001858	owner_doc: Plans/Crosswalk.md
+L00001859	canonical_text: >-
+L00001860	  Permissioned interview and chat flows route Permissions_System,
+L00001861	  assistant-chat-design, and interview-subagent-integration as the owner set for
+L00001862	  approval, chat, and interview behavior; preview/browser trust_tier must not be
+L00001863	  reused as a generic projection-state term.
+L00001864	gui_related: true
+L00001865	gui_classification_reason: This unit governs approval, chat, interview, preview, and browser user-visible behavior.
+L00001866	split_recommended: true
+L00001867	split_recommendation_reason: Crosswalk-S0023 is split across multiple routing concerns.
+L00001868	depends_on: [C-014, C-016]
+L00001869	unblocks: [C-035]
+L00001870	acceptance_criteria:
+L00001871	  - "Permissioned interview/chat flows route approval, chat, and interview behavior through the named owner docs."
+L00001872	  - "preview/browser trust_tier is not reused as generic projection-state terminology."
+L00001873	validation_surfaces:
+L00001874	  - python3 scripts/pm-plan-migration.py validate --run-dir Plans/.plan_migration/pds-20260611-002-atomize-planunits
+L00001875	  - python3 scripts/pm-plan-index.py validate
+L00001876	risk_class: permissioned_interview_chat_owner_drift
+L00001877	reasoning_tier: high
+L00001878	context_scope: permissioned_interview_chat_approval_routing
+L00001879	implementation_surfaces:
+L00001880	  - Plans/Crosswalk.md
+L00001881	  - Plans/Permissions_System.md
+L00001882	  - Plans/assistant-chat-design.md
+L00001883	  - Plans/interview-subagent-integration.md
+L00001884	node_compile_hint:
+L00001885	  mode: permissioned_interview_chat_approval_routing
+L00001886	  create_worknodes: false
+L00001887	source_lineage:
+L00001888	  - Plans/.plan_migration/pds-20260611-002-atomize-planunits/span_map.jsonl:Crosswalk-S0023
+L00001889	preserved_exact_tokens:
+L00001890	  - "`trust_tier`"
+L00001891	  - "`projection-state`"
+L00001892	negative_constraints:
+L00001893	  - "preview/browser `trust_tier` must not be reused as a generic `projection-state` term."
+L00001894	owner_hints:
+L00001895	  - Plans/Crosswalk.md
+L00001896	  - Plans/Permissions_System.md
+L00001897	  - Plans/assistant-chat-design.md
+L00001898	  - Plans/interview-subagent-integration.md
+L00001899	```
+L00001900	
+
+<<< CONTEXT_AFTER canonical_document_lines=1901-1912 >>>
+L00001901	### C-029 - Execution Command Cleanup And Scheduler Truth
+L00001902	
+L00001903	```yaml
+L00001904	plan_unit_id: C-029
+L00001905	unit_type: requirement
+L00001906	status: accepted
+L00001907	owner_doc: Plans/Crosswalk.md
+L00001908	canonical_text: >-
+L00001909	  Execution and command cleanup stays owner-specific: Executor_Protocol owns
+L00001910	  execution_role, blocked_sequence minting, and startup-recovery scheduler
+L00001911	  handoff; UI_Command_Catalog owns command-family migration; scheduler truth
+L00001912	  must not split among lexicographic, scored, and UI-derived recovery models

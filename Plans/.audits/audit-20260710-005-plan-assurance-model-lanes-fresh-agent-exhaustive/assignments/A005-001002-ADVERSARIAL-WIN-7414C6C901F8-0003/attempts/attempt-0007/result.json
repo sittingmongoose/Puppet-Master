@@ -1,0 +1,695 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001002-ADVERSARIAL-WIN-7414C6C901F8-0003",
+  "attempt_id": "attempt-0007",
+  "task_thread_id": "/root/a005_001002_adversarial_win_0003_attempt_0007_terminal",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "adversarial_negative_space",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/LSPSupport.md",
+    "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c",
+    "core_sha256": "ab1f47a310d2bb239c87f1045aa0bfc84caf289d4f88ffe2c99ac24b6e462ff0",
+    "core_range": [587, 916]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "missing_callers_consumers",
+      "invalid_states_transitions",
+      "concurrency_races",
+      "partial_failure",
+      "recovery_rollback",
+      "authority_boundaries",
+      "privacy_data_lifecycle",
+      "untrusted_inputs",
+      "gui_misleading_states",
+      "offline_network_loss",
+      "scale_limits",
+      "accessibility",
+      "localization",
+      "compatibility_migration",
+      "observability_support",
+      "destructive_actions",
+      "cross_document_seams",
+      "test_falsifiability",
+      "unknown_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "ADV-0001",
+      "item_type": "gap",
+      "title": "Project configuration can select executable LSP commands without a trust boundary",
+      "statement": "The project override can supply server command, environment, and initialization data, but this window does not define whether an untrusted repository may activate those values, what approval is required, or how safe-mode and workspace-trust states suppress execution.",
+      "severity": "critical",
+      "confidence": "high",
+      "gap_kind": "authority_and_untrusted_configuration",
+      "impact": "Opening an untrusted project could cause arbitrary local or remote process execution with inherited authority or inject secrets through environment handling.",
+      "builder_discretion": "Choose the trust UX and policy mechanism, but repository-controlled launch material must not execute before an explicit authority decision.",
+      "feature_keys": ["lsp.config", "lsp.server-launch", "workspace-trust"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 709,
+          "line_end": 709,
+          "exact_quote": "- **Keys:** `lsp.enabled` (bool, default true), `lsp.servers.<id>.disabled` (bool), `lsp.servers.<id>.command` (string array), `lsp.servers.<id>.extensions` (string array), `lsp.servers.<id>.env` (object), `lsp.servers.<id>.initialization` (object). **Decision:** Config namespace is `lsp.servers.<id>.*`; support legacy alias `lsp.<id>.disabled` (read/write maps to `lsp.servers.<id>.disabled`). Align with OpenCode schema for compatibility.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 710,
+          "line_end": 710,
+          "exact_quote": "- **Storage:** App-level in **redb** (or existing config YAML) under a key like `config.lsp`. Project-level override: optional file in project root (e.g. `.puppet-master/lsp.json`) or key under project id in redb.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0002",
+      "item_type": "gap",
+      "title": "Server-command execution is outside the stated FileSafe mutation boundary",
+      "statement": "Workspace edits are routed through FileSafe, but code-lens invocation and other server-advertised commands have no allowlist, capability grant, confirmation rule, or non-file side-effect boundary in this window.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "server_originated_command_authority",
+      "impact": "A compromised or merely surprising language server could trigger builds, tests, network access, terminals, or destructive commands without the file-mutation protections cited for applyEdit.",
+      "builder_discretion": "The command policy may distinguish known-safe commands from approval-required commands, but it must cover non-file effects as well as workspace edits.",
+      "feature_keys": ["lsp.code-lens", "lsp.execute-command", "tool-policy"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 796,
+          "line_end": 796,
+          "exact_quote": "| **8. Code actions and code lens** | codeAction (context menu/lightbulb), codeLens; apply via workspace/applyEdit through FileSafe. | Quick fixes appear and apply correctly; code lens links invoke. |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0003",
+      "item_type": "gap",
+      "title": "Reconnect replay safety and retry ownership are under-specified",
+      "statement": "The window promises pending-request replay when safe while separately limiting SSH to one automatic retry, but it does not define which request classes are replayable, how completed-but-unacknowledged requests are deduplicated, when session epochs advance, or which owner decides that replay is safe.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "reconnect_idempotency_and_recovery",
+      "impact": "Reconnect can duplicate rename, format, code-action, or other mutations, lose requests, or leave the UI and remote workspace disagreeing about completion.",
+      "builder_discretion": "Read-only and mutating requests may use different recovery strategies, but the strategy needs explicit idempotency and acknowledgement rules.",
+      "feature_keys": ["remote-lsp", "ssh-reconnect", "request-replay"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 593,
+          "line_end": 593,
+          "exact_quote": "- if SSH disconnects, all remote LSP servers on that connection are marked `degraded`, reconnect is attempted, servers are re-initialized, and pending requests are replayed when safe",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 598,
+          "line_end": 598,
+          "exact_quote": "- Remote LSP is part of the `remote-mode-project` model, not a `remote-edit-only` feature and not a broad-sweep local editor patch. This seam is research-locked for implementation transfer. `GitHub_Integration.md §C` is the SSH `/ownership` anchor for `/edit/test/remove`, validation `/auth/host-key`, add-existing-project, remote terminal, remote agents, remote `/providers`, and remote runtime execution. `GitHub_Integration.md §C.3-C.4` / `C.3-C.4` is the operational reconnect authority: keep the 30s keepalive, allow one bounded auto-retry (`one-auto-retry` in older notes), then require explicit `Reconnect`.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0004",
+      "item_type": "gap",
+      "title": "Lifecycle state vocabulary contradicts its transition table",
+      "statement": "The declared canonical states include RestartBackoff and ShuttingDown but not Crashed, while the transition chain and table use stopping and crashed and omit a transition model for RestartBackoff. Case and naming also vary. The GUI, persistence, and restart logic therefore do not share one exhaustive state machine.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "invalid_state_machine",
+      "impact": "Implementations and consumers can serialize, display, or branch on different states, producing unreachable recovery paths or misleading status.",
+      "builder_discretion": "The internal and display enums may differ, but an explicit mapping and exhaustive transition table are required.",
+      "feature_keys": ["lsp.lifecycle", "lsp.status", "restart-backoff"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 657,
+          "line_end": 657,
+          "exact_quote": "Canonical user/state names are `Starting`, `Initializing`, `Ready`, `RestartBackoff`, `Degraded`, `ShuttingDown`, and `Stopped`. Only `Ready` emits normal feature traffic; `Starting` and `Initializing` may queue sync work, `RestartBackoff` exposes countdown plus last error, and `Degraded` can mean paused recovery or diagnostics-only / diagnostics-only attachment. Each document is attached once per session, including virtual-doc buffers, and `didClose` is emitted when the final attachment for that `(session, uri)` disappears. The session/model boundary records `/URI` identity so virtual-doc and real-file URI values do not collide.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 661,
+          "line_end": 661,
+          "exact_quote": "States: `stopped → starting → initializing → ready → degraded → stopping → crashed`",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0005",
+      "item_type": "gap",
+      "title": "Diagnostics lack a version and session-epoch acceptance rule",
+      "statement": "Document requests carry freshness keys, but publishDiagnostics is specified as an unconditional cache update. The window does not say how a diagnostic notification is rejected after edit, close/reopen, restart, path remap, or server replacement.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "stale_diagnostic_race",
+      "impact": "Late diagnostics can reappear for closed content or a prior session and be presented to Problems, gutter, Assistant, and verification consumers as current truth.",
+      "builder_discretion": "Use protocol versions when supplied and a session/document freshness policy when they are absent.",
+      "feature_keys": ["lsp.diagnostics", "document-freshness", "problems"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 684,
+          "line_end": 684,
+          "exact_quote": "3. **Server sends publishDiagnostics** → Client receives → Update DiagnosticsCache for that URI → Notify UI (main thread) → Problems tab and gutter update.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 692,
+          "line_end": 692,
+          "exact_quote": "Document identity, freshness, and `/position` conversion are one contract. Before `didClose`, PM cancels in-flight document-scoped requests for `(session, uri)` and clears diagnostics per `(server/session, uri)`. Each document-scoped request carries `session_epoch`, `uri`, `document_version`, and `request_generation` or an equivalent latest-of-class marker; responses apply only for the same live session epoch, same URI, matching current document version, and latest relevant request class. Late replies are discarded in UX but remain visible in trace `/logs`.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0006",
+      "item_type": "gap",
+      "title": "Partial multi-file edits have no rollback or convergence contract",
+      "statement": "Per-file failure reporting is required, but the result states and recovery choices for a partly applied rename, format, or code action are absent: atomicity, rollback eligibility, retry, conflict revalidation, and post-failure diagnostics are not specified.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "partial_failure_without_recovery",
+      "impact": "A failed workspace edit can leave a project semantically inconsistent while UI confirmation and subsequent LSP state imply a single completed operation.",
+      "builder_discretion": "Full atomicity may be impossible across remote files; if so, specify compensating recovery and an explicit mixed-result state.",
+      "feature_keys": ["workspace-edit", "filesafe", "partial-failure"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 604,
+          "line_end": 604,
+          "exact_quote": "- Remote mutation and availability modes are user-visible. Preview-worthy rename, multi-file code-action, and broad format operations require the same safe preview `/confirmation` path as other FileSafe edits; partial workspace-edit failure reports per-file results, and read-only, locked, unavailable, or `/degraded` targets fail with explicit reason copy. Remote effective modes include `full_remote_lsp`, `degraded_remote_diagnostics_only`, and `remote_edit_no_lsp`; unsupported local-LSP-on-remote-paths behavior must not masquerade as `on-remote-paths` correctness.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0007",
+      "item_type": "gap",
+      "title": "Chat virtual documents lack privacy disclosure and deterministic disposal",
+      "statement": "Chat block content is sent to the language server, potentially on a remote host, yet no consent/disclosure, sensitivity rule, redaction boundary, diagnostic cleanup rule, or deterministic in-memory disposal is defined. Retention and eviction are optional examples.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "privacy_and_data_lifecycle",
+      "impact": "Secrets or private conversation content can cross a host boundary and persist in client/server memory or diagnostics longer than the user expects.",
+      "builder_discretion": "The UX may reuse project trust, but remote transmission and retention must be visible and enforceable.",
+      "feature_keys": ["chat-virtual-document", "remote-lsp", "privacy"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 731,
+          "line_end": 731,
+          "exact_quote": "- **Creation:** When the user focuses or hovers over a code block in a Chat message that has a known language id and the project has an LSP server for that language, create a virtual document: assign a URI, set content to the block text, and attach it to the **server for that language and the effective host/root identity for the current project context** (same session that would handle a real file with that extension). If the block maps to a real project file (e.g. \"snippet from src/main.rs\"), use the real file URI instead and do not create a virtual doc.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 733,
+          "line_end": 733,
+          "exact_quote": "- **Lifecycle:** Send `textDocument/didOpen` when the virtual document is \"opened\" (e.g. when the user first hovers or requests definition in that block). Send `textDocument/didClose` when the block is no longer needed: when the user scrolls away from that message, when the message is collapsed, or when the Chat view is closed; or after T seconds idle (e.g. 300 s) if implementing eviction by timeout. Optionally retain a bounded set of recently used virtual docs (e.g. last 5) to avoid repeated didOpen/didClose on quick hover. Do not send `didChange` for virtual docs (blocks are immutable); if the user edits the message and the block content changes, treat as a new block (new opaque_id) and close the old virtual doc.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0008",
+      "item_type": "gap",
+      "title": "Untrusted LSP payloads have no validation or resource bounds",
+      "statement": "The server-to-client path immediately caches diagnostics and updates UI, but this window defines no schema rejection, message-size, item-count, nesting, URI/path, markup sanitization, or backpressure limits for a server process or SSH peer.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "untrusted_protocol_input",
+      "impact": "Malformed or hostile responses can exhaust memory, freeze rendering, inject unsafe markup or links, or project diagnostics onto unauthorized paths.",
+      "builder_discretion": "Exact limits may be configurable, but safe defaults and reject/truncate behavior need acceptance oracles.",
+      "feature_keys": ["lsp-protocol", "diagnostics", "input-validation"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 684,
+          "line_end": 684,
+          "exact_quote": "3. **Server sends publishDiagnostics** → Client receives → Update DiagnosticsCache for that URI → Notify UI (main thread) → Problems tab and gutter update.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0009",
+      "item_type": "gap",
+      "title": "Interactive LSP surfaces have no accessibility contract",
+      "statement": "Problems rows, gutter markers, hover tooltips, completion lists, status, lightbulbs, code lens, and inlay hints are required, but keyboard traversal, focus return, screen-reader names, live announcements, contrast, reduced-motion behavior, and non-hover equivalents are not specified or tested.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "accessibility",
+      "impact": "Core diagnostics, navigation, and editing features may be unusable or misleading for keyboard-only and assistive-technology users.",
+      "builder_discretion": "Platform-native semantics may supply part of the implementation, but observable keyboard and assistive-technology outcomes must be explicit.",
+      "feature_keys": ["lsp.ui", "accessibility", "problems"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 870,
+          "line_end": 870,
+          "exact_quote": "- [ ] Subscribe to textDocument/publishDiagnostics; map to editor underlines and gutter markers; add Problems panel in bottom panel (FinalGUISpec §7.20): table with file, line, message, severity, source; click opens file at line.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 873,
+          "line_end": 873,
+          "exact_quote": "- [ ] Show LSP status in status bar (e.g. \"rust-analyzer: Ready\", \"Initializing...\", \"Error: ...\"). FinalGUISpec §8.1 StatusBar.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0010",
+      "item_type": "gap",
+      "title": "User-visible LSP and outage copy has no localization contract",
+      "statement": "The spec embeds English status and error examples but gives no message-key ownership, interpolation contract, locale-aware formatting, expansion tolerance, or test for translated degraded and failure states.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "localization",
+      "impact": "Critical connection, restart, and mutation-failure explanations can remain untranslated, truncate, or vary across consumers.",
+      "builder_discretion": "Exact wording remains a copy-system decision; stable semantic message identifiers and layout/test constraints are required.",
+      "feature_keys": ["lsp.status", "localization", "remote-errors"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 873,
+          "line_end": 873,
+          "exact_quote": "- [ ] Show LSP status in status bar (e.g. \"rust-analyzer: Ready\", \"Initializing...\", \"Error: ...\"). FinalGUISpec §8.1 StatusBar.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0011",
+      "item_type": "gap",
+      "title": "Workspace-folder overflow is deterministic in name only",
+      "statement": "The cap is fixed and overflow must be deterministic, but root ordering, tie-breaking, replacement when an included file closes, notification to the server, and the observable effective set are not defined. The earlier statement that re-initialization is unnecessary does not state how a server learns later folder membership.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "scale_and_membership_transition",
+      "impact": "Large multi-root projects can silently receive different symbol and diagnostic coverage across runs or keep a stale workspace-folder set.",
+      "builder_discretion": "A stable ranking or per-root-session design is acceptable if its transitions and evidence are specified.",
+      "feature_keys": ["workspace-folders", "multi-root", "scale"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 723,
+          "line_end": 723,
+          "exact_quote": "- **Recommendation:** At initialize, send **only roots that have at least one open document**, capped at **10** roots. If user has no open files, send project root if single-root, else empty list. Reduces startup cost and memory; document in implementation guide. Re-initialize not required when opening a file in a new root; the matching host-aware server session handles that.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 839,
+          "line_end": 839,
+          "exact_quote": "Only roots containing at least one open document are included, up to the cap above. Overflow roots are excluded deterministically and MUST be visible in logs/evidence when exclusion affects behavior.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0012",
+      "item_type": "gap",
+      "title": "Catalog-source deduplication lacks field-conflict precedence",
+      "statement": "The catalog is a deduped union of three data sources, but no stable identity-alias collision algorithm or per-field precedence is given for conflicting commands, capabilities, requirements, support classifications, or deprecation metadata.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "compatibility_and_merge_determinism",
+      "impact": "The same frozen inputs can yield different effective servers, launch commands, and GUI support claims across implementations or catalog updates.",
+      "builder_discretion": "The PM overlay may have final authority, but precedence and conflict evidence must be machine-testable.",
+      "feature_keys": ["server-registry", "catalog-merge", "compatibility"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 776,
+          "line_end": 776,
+          "exact_quote": "- the effective support catalog is the deduped union of Microsoft implementor data, OpenCode catalog data, and Puppet Master overlay metadata",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 779,
+          "line_end": 779,
+          "exact_quote": "- Support scope and support classification stay separate in the `/catalog`: supported-by-registry, default-managed, toolchain-bound `/manual`, experimental `/degraded`, and deprecated or `/replaced` are classification outcomes layered over stable `server_id` identity, not reasons to fork the catalog SSOT. Effective resolution order is catalog base entry, global override, project override, then runtime availability and `/effective-state` evaluation.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0013",
+      "item_type": "gap",
+      "title": "Acceptance criteria do not falsify the high-risk failure paths",
+      "statement": "The phased criteria assert that features appear and stale responses are discarded, but this core has no executable oracle for SSH loss during mutation, partial applyEdit, crash-budget exhaustion, diagnostics after reopen, hostile payload bounds, Unicode position conversion, root overflow, or inaccessible UI.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "test_falsifiability",
+      "impact": "A build can satisfy the listed happy-path checks while violating the document's strongest safety, recovery, identity, and GUI-truth requirements.",
+      "builder_discretion": "Test framework choice is open; fault injection and observable pass/fail outcomes are not.",
+      "feature_keys": ["lsp.acceptance", "fault-injection", "verification"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 793,
+          "line_end": 793,
+          "exact_quote": "| **5. Hover and completion** | textDocument/hover and textDocument/completion; timeout and cancel; tooltip and completion list in editor. | Hover shows type/docs; completion list appears on trigger; stale responses discarded. |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 797,
+          "line_end": 797,
+          "exact_quote": "| **9. Status and fallback** | LSP status in status bar; per-server enable/disable; fallback to heuristic when no server; optional install hint. | Status bar shows server state; disabling server stops LSP for that language; heuristic outline used when LSP off. |",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0014",
+      "item_type": "gap",
+      "title": "File-watch and external-change transitions are named but not specified",
+      "statement": "Remote/local parity claims file-watch and reload coverage, yet the core provides no transition rules for external rename, delete, overwrite, permission change, branch switch, or remote watch loss while a dirty buffer and LSP attachment exist.",
+      "severity": "high",
+      "confidence": "high",
+      "gap_kind": "missing_caller_and_state_transition",
+      "impact": "DocumentStore, session attachment, URI identity, diagnostics, dirty state, and FileSafe can diverge after common filesystem events.",
+      "builder_discretion": "The watcher implementation is open, but conflict states, user choices, and LSP notification ordering need ownership and tests.",
+      "feature_keys": ["file-watch", "document-store", "lsp-sync"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 607,
+          "line_end": 607,
+          "exact_quote": "- Remote/local parity covers save/dirty state, file watches/reload, diff generation and compare targets, LSP execution/fallback, and rich previews `/renderers`; parity means explicit capability state, not hidden local fallback.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0015",
+      "item_type": "gap",
+      "title": "Operational traces lack correlation, retention, and redaction rules",
+      "statement": "The core makes late replies and root exclusion visible in logs/evidence but does not define correlation identifiers across SSH channel, session epoch, request, document, and mutation; nor retention, redaction, sampling, support export, or health metrics.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "observability_and_support",
+      "impact": "Support cannot reliably reconstruct reconnect races or partial edits, while logs may retain source paths, errors, or content without a lifecycle policy.",
+      "builder_discretion": "Telemetry backend is discretionary; correlation and sensitive-data policy are contractual.",
+      "feature_keys": ["lsp.logs", "supportability", "privacy"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 692,
+          "line_end": 692,
+          "exact_quote": "Document identity, freshness, and `/position` conversion are one contract. Before `didClose`, PM cancels in-flight document-scoped requests for `(session, uri)` and clears diagnostics per `(server/session, uri)`. Each document-scoped request carries `session_epoch`, `uri`, `document_version`, and `request_generation` or an equivalent latest-of-class marker; responses apply only for the same live session epoch, same URI, matching current document version, and latest relevant request class. Late replies are discarded in UX but remain visible in trace `/logs`.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0016",
+      "item_type": "unknown",
+      "title": "Referenced owner contracts cannot be seam-verified in this blind window",
+      "statement": "This core delegates SSH, FileManager, storage, FileSafe, Tools, GUI, and decision-policy behavior to other documents. The blind capsule forbids reading them, so whether those owners close the trust, replay, rollback, accessibility, and copy seams is unknown rather than assumed absent.",
+      "severity": "medium",
+      "confidence": "high",
+      "gap_kind": "cross_document_unknown",
+      "impact": "Some reported gaps may be closed elsewhere, or conflicting owner rules may add further gaps; neither result is supportable from this excerpt alone.",
+      "builder_discretion": "None for this audit phase; later seam review must resolve the cited contracts.",
+      "feature_keys": ["cross-document-seam", "contractref"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 852,
+          "line_end": 852,
+          "exact_quote": "ContractRef: ContractName:Plans/FileManager.md, ContractName:Plans/FileSafe.md, ContractName:Plans/Tools.md, ContractName:Plans/FinalGUISpec.md",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0017",
+      "item_type": "explicit_non_gap",
+      "title": "Remote document identity is host-scoped",
+      "statement": "The core explicitly prevents same-path collisions across hosts and rejects the stale local-only session key.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["remote-identity", "path-mapping"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 601,
+          "line_end": 601,
+          "exact_quote": "- The stale local-only phrase `(server_id, root)` is retained only as migration contrast. Live LSP attach/session keys are `(host_id, server_id, root_identity)`, and remote documents use host-scoped `/path-mapping` so a file-local URI on host A cannot collide with the same path on host B.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0018",
+      "item_type": "explicit_non_gap",
+      "title": "Offline and stale remote projections are explicitly labeled",
+      "statement": "The core forbids silent local fallback and requires stale, unavailable, pending-sync, and write-success distinctions for adjacent consumers.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["remote-outage", "gui-truth"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 606,
+          "line_end": 606,
+          "exact_quote": "- Remote outages affect adjacent consumers without redefining them. Prior Search results may remain as stale snapshots, while new queries that need remote round-trips block or show unavailable; Source Control may expose stale status or `/diff` but must not silently fall back to local Git; Problems and LSP diagnostics may remain visible only when marked stale or unavailable; open remote buffers may retain local text and `/offline/pending-sync` state without implying remote write success. Hunk-level `/diff` interaction, fallback-open actions, read-only reasons, and remote LSP disable/defer decisions use the same capability vocabulary.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0019",
+      "item_type": "explicit_non_gap",
+      "title": "File mutations do not bypass FileSafe",
+      "statement": "The apply-edit path explicitly inherits multi-file, destructive-action, approval, tool-policy, and blocked-state handling.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["workspace-edit", "filesafe", "destructive-actions"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 842,
+          "line_end": 842,
+          "exact_quote": "`workspace/applyEdit`, rename, and code-action application use the same FileSafe-backed apply-edit path as other agent mutations.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 844,
+          "line_end": 844,
+          "exact_quote": "- destructive edits use the same safety and approval rules as any other file mutation path",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 845,
+          "line_end": 845,
+          "exact_quote": "- LSP does not bypass FileSafe, tool policy, or blocked-state reporting",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0020",
+      "item_type": "explicit_non_gap",
+      "title": "Unicode position conversion is centralized and negotiated",
+      "statement": "The core defines canonical URI reuse, a shared mapper, 1-based UI versus 0-based protocol boundaries, negotiated encoding, UTF-16 baseline, and a prohibition on handler-local code-unit math.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["position-encoding", "unicode", "document-identity"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 694,
+          "line_end": 694,
+          "exact_quote": "At open time, PM creates one canonical `DocumentUri` per document/host and reuses it consistently. The same physical file must not gain duplicate identities through case, `/slash/drive-letter`, URI spelling, `(session, uri)` pairing, or `/path/position` conversion differences. UI/editor surfaces stay 1-based where already planned; the LSP boundary remains 0-based and uses one position-mapper / position-mapping service backed by `DocumentStore`. `capabilities.positionEncoding` and `position_encoding` are negotiated per session; PM uses compatibility-first position-encoding, keeps UTF-16 as the guaranteed baseline, may prefer `utf-8` only after compatibility proof, and must not hard-code UTF assumptions into hover, `/completion/diagnostics/rename`, diagnostics, rename, or formatting handlers. Conversion uses fast per-line helpers/cache so multi-server correctness, remote `/SSH`, and performance tuning stay protocol-safe.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0021",
+      "item_type": "explicit_non_gap",
+      "title": "Document request ordering and recovery are substantially constrained",
+      "statement": "The core supplies a Ready-state sync barrier, per-session FIFO, latest-of-class cancellation, coalescing, whole-document re-baseline, and session restart when synchronization confidence is lost.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["lsp-sync", "request-ordering", "recovery"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 699,
+          "line_end": 699,
+          "exact_quote": "- Sync events are FIFO per session. A document-scoped request must not leave the queue until the target session is `Ready`, the prior `didOpen`/`didChange` work for that document in that session has flushed, and the document is no longer in pending-sync state.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        },
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 702,
+          "line_end": 702,
+          "exact_quote": "- `didChange` debounce is resetting `/coalescing`, not fixed-window batching. All mutations since the last sent sync for that session/doc become one batch; if incremental confidence is lost, send a whole-document replacement to re-baseline; if confidence is still not trustworthy, restart the session and replay currently attached docs.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    },
+    {
+      "item_id": "ADV-0022",
+      "item_type": "explicit_non_gap",
+      "title": "LSP work cannot block the Slint UI thread",
+      "statement": "The core explicitly isolates protocol I/O on asynchronous tasks and routes updates through the UI event loop.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["lsp-io", "slint", "ui-responsiveness"],
+      "evidence": [
+        {
+          "path": "Plans/LSPSupport.md",
+          "line_start": 688,
+          "line_end": 688,
+          "exact_quote": "All LSP I/O on **async task** (tokio); route UI updates to the Slint event loop (e.g. via `slint::invoke_from_event_loop` or `Weak::upgrade_in_event_loop`). Never block UI on LSP.",
+          "source_sha256": "85edce0f0aafbd82839fca9a59aaebb0f40ad381d63ed7393f8411a68c01f98c"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "missing_callers_consumers",
+      "status": "gap_found",
+      "summary": "External filesystem events are named as parity scope but lack callers, ownership, and transitions for DocumentStore, LSP sessions, diagnostics, and dirty buffers.",
+      "evidence_item_ids": ["ADV-0014"]
+    },
+    {
+      "dimension": "invalid_states_transitions",
+      "status": "gap_found",
+      "summary": "Canonical lifecycle names and the transition table disagree on Crashed, RestartBackoff, ShuttingDown, and stopping.",
+      "evidence_item_ids": ["ADV-0004"]
+    },
+    {
+      "dimension": "concurrency_races",
+      "status": "gap_found",
+      "summary": "Request ordering is strong, but reconnect replay and asynchronous diagnostic notifications remain insufficiently freshness-bound.",
+      "evidence_item_ids": ["ADV-0003", "ADV-0005", "ADV-0021"]
+    },
+    {
+      "dimension": "partial_failure",
+      "status": "gap_found",
+      "summary": "Per-file failure reporting exists, but mixed-result workspace-edit states and convergence behavior are not defined.",
+      "evidence_item_ids": ["ADV-0006", "ADV-0019"]
+    },
+    {
+      "dimension": "recovery_rollback",
+      "status": "gap_found",
+      "summary": "Sync re-baselining is addressed, while reconnect replay and partial-edit rollback or compensation remain open.",
+      "evidence_item_ids": ["ADV-0003", "ADV-0006", "ADV-0021"]
+    },
+    {
+      "dimension": "authority_boundaries",
+      "status": "gap_found",
+      "summary": "FileSafe authority is explicit for workspace edits, but repository-controlled server launch and server-command execution lack equivalent boundaries.",
+      "evidence_item_ids": ["ADV-0001", "ADV-0002", "ADV-0019"]
+    },
+    {
+      "dimension": "privacy_data_lifecycle",
+      "status": "gap_found",
+      "summary": "Chat content transmission, virtual-document retention, diagnostics cleanup, and log retention or redaction are not closed.",
+      "evidence_item_ids": ["ADV-0007", "ADV-0015"]
+    },
+    {
+      "dimension": "untrusted_inputs",
+      "status": "gap_found",
+      "summary": "Project launch configuration, server commands, and protocol payloads lack trust, validation, and bounding contracts.",
+      "evidence_item_ids": ["ADV-0001", "ADV-0002", "ADV-0008"]
+    },
+    {
+      "dimension": "gui_misleading_states",
+      "status": "gap_found",
+      "summary": "Remote stale and offline vocabulary is explicit, but lifecycle-enum contradiction and stale diagnostics can still project false status.",
+      "evidence_item_ids": ["ADV-0004", "ADV-0005", "ADV-0018"]
+    },
+    {
+      "dimension": "offline_network_loss",
+      "status": "gap_found",
+      "summary": "User-visible degraded behavior is well specified, but replay safety after reconnect is not.",
+      "evidence_item_ids": ["ADV-0003", "ADV-0018"]
+    },
+    {
+      "dimension": "scale_limits",
+      "status": "gap_found",
+      "summary": "Workspace-root overflow selection and server-payload bounds are incomplete despite stated caps and async isolation.",
+      "evidence_item_ids": ["ADV-0008", "ADV-0011", "ADV-0022"]
+    },
+    {
+      "dimension": "accessibility",
+      "status": "gap_found",
+      "summary": "Core interactive and status surfaces have no keyboard, focus, assistive-technology, contrast, or non-hover acceptance contract.",
+      "evidence_item_ids": ["ADV-0009"]
+    },
+    {
+      "dimension": "localization",
+      "status": "gap_found",
+      "summary": "English examples are specified without message identifiers, formatting, expansion, or translated-state tests.",
+      "evidence_item_ids": ["ADV-0010"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "gap_found",
+      "summary": "Host-scoped identity and encoding compatibility are explicit, but catalog deduplication and lifecycle-state migration are not deterministic.",
+      "evidence_item_ids": ["ADV-0004", "ADV-0012", "ADV-0017", "ADV-0020"]
+    },
+    {
+      "dimension": "observability_support",
+      "status": "gap_found",
+      "summary": "Some events must be logged, but correlation, metrics, export, retention, sampling, and redaction are unspecified.",
+      "evidence_item_ids": ["ADV-0015"]
+    },
+    {
+      "dimension": "destructive_actions",
+      "status": "gap_found",
+      "summary": "Destructive file edits inherit FileSafe approval, but invoked server commands can have destructive non-file effects outside that contract.",
+      "evidence_item_ids": ["ADV-0002", "ADV-0019"]
+    },
+    {
+      "dimension": "cross_document_seams",
+      "status": "unknown",
+      "summary": "The core delegates key policies to owner documents that this blind phase forbids reading, so seam closure cannot be certified here.",
+      "evidence_item_ids": ["ADV-0016"]
+    },
+    {
+      "dimension": "test_falsifiability",
+      "status": "gap_found",
+      "summary": "Acceptance criteria exercise happy paths but omit executable fault, security, accessibility, Unicode, and recovery oracles.",
+      "evidence_item_ids": ["ADV-0013"]
+    },
+    {
+      "dimension": "unknown_unknowns",
+      "status": "unknown",
+      "summary": "Blindness prevents checking the cited owner contracts and unrelated windows; no closure beyond the assigned core is inferred.",
+      "evidence_item_ids": ["ADV-0016"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}

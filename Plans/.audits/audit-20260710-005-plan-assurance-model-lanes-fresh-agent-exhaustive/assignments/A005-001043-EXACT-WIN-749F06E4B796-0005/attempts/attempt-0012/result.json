@@ -1,0 +1,850 @@
+{
+  "audit_id": "audit-20260710-005-plan-assurance-model-lanes-fresh-agent-exhaustive",
+  "schema_version": "assignment-result-v1",
+  "phase": "blind_document_window_review",
+  "assignment_id": "A005-001043-EXACT-WIN-749F06E4B796-0005",
+  "attempt_id": "attempt-0012",
+  "task_thread_id": "/root/a005_blind_wave_0005_b_dispatcher_epoch_0012/bw5b_a1043",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "xhigh",
+  "role": "exact_behavior",
+  "status": "completed",
+  "source_binding": {
+    "document_path": "Plans/Automated_Testing_System.md",
+    "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467",
+    "core_sha256": "470f715594de24485f0435642bf3c116e2766d62bcc0f4479fb5bda6d0e26fa9",
+    "core_range": [1371, 1722]
+  },
+  "coverage": {
+    "all_core_lines_reviewed": true,
+    "dimensions_checked": [
+      "behavior",
+      "capabilities",
+      "inputs_outputs",
+      "contracts",
+      "states_transitions",
+      "authority",
+      "ownership",
+      "consumers",
+      "gui_truth",
+      "failures_recovery",
+      "security_privacy",
+      "propagation",
+      "operations",
+      "scale_performance",
+      "compatibility_migration",
+      "acceptance_oracles",
+      "builder_discretion",
+      "ambiguity_unknowns"
+    ]
+  },
+  "items": [
+    {
+      "item_id": "A005-001043-E01",
+      "item_type": "behavior",
+      "title": "Manual compaction has distinct reveal and dispatch behavior",
+      "statement": "ATS-017 requires hover to expose usage details, user selection of Compact Now before cmd.chat.compact_context dispatch, direct GUI-click coverage, /compact parity, and a prohibition on hover-only dispatch.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-017", "manual_compaction"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1392,
+          "line_end": 1392,
+          "exact_quote": "  - Tests prove context-circle click does not dispatch until the user chooses Compact Now.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1439,
+          "line_end": 1439,
+          "exact_quote": "  - Do not dispatch compaction from hover alone.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E02",
+      "item_type": "state_transition",
+      "title": "Compaction result and event states are acceptance inputs",
+      "statement": "The acceptance surface explicitly covers started, completed, failed or visible degraded failure, plus already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed command results.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-017", "compaction_states"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1393,
+          "line_end": 1393,
+          "exact_quote": "  - Tests cover already_running, cancelled, no_op, degraded, unavailable, retry_scheduled, completed, and failed result states.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1394,
+          "line_end": 1394,
+          "exact_quote": "  - Failure/degraded compaction produces a visible user-facing state and event contract.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E03",
+      "item_type": "contract",
+      "title": "Manual compaction preserves storage lineage",
+      "statement": "Manual Compact Now alone must not create new cache lineage unless logical run lineage changes, and Prompt Pipeline compaction_immune handling is within the acceptance scope.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-017", "storage_lineage", "compaction_immune"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1395,
+          "line_end": 1395,
+          "exact_quote": "  - Manual Compact Now does not create a new cache lineage unless logical run lineage changes.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-G01",
+      "item_type": "gap",
+      "title": "Compaction parity and recovery transition semantics are not exact",
+      "statement": "The unit names /compact parity, equivalent visible failure/degraded state, and retry_scheduled, but does not define which click/slash outputs must be identical, the allowed equivalent event identity, or the transition and retry oracle for each listed result.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["ATS-017", "compaction_contract"],
+      "gap_kind": "underspecified_state_and_parity_contract",
+      "impact": "Implementations can emit incompatible event/status mappings or claim slash parity while differing on user-visible and retry behavior.",
+      "builder_discretion": "The builder must choose parity dimensions, equivalent degraded-event mapping, and retry transition assertions.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1381,
+          "line_end": 1381,
+          "exact_quote": "  context.compaction.started, context.compaction.completed, and context.compaction.failed or equivalent visible",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1382,
+          "line_end": 1382,
+          "exact_quote": "  failure/degraded state; command-result statuses for already_running, cancelled, no_op, degraded, unavailable,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E04",
+      "item_type": "authority",
+      "title": "DRY defaults and non-DRY authority boundaries are fixed",
+      "statement": "DRY is default enabled, the user may set disabled_by_user, and disabling it cannot weaken explicit instructions, safety, secret handling, source authority, governance, permissions, or source-control hygiene.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-018", "DRY_Method"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1469,
+          "line_end": 1469,
+          "exact_quote": "  - DRY is default-on and user-disableable without weakening non-DRY authority boundaries.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1522,
+          "line_end": 1522,
+          "exact_quote": "  - Do not treat disabled DRY as permission to bypass explicit instructions, safety, secrets, source authority, governance, permissions, or source-control hygiene.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E05",
+      "item_type": "capability",
+      "title": "One Instruction Bundle route serves all named prompt consumers",
+      "statement": "Assistant, Interview, Orchestrator, delegated child-run, document-builder, and code-generation prompt routes must consume one shared Instruction Bundle, without prompt-builder-local DRY duplication.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-018", "Instruction_Bundle"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1471,
+          "line_end": 1471,
+          "exact_quote": "  - All prompt routes consume one shared Instruction Bundle route.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1521,
+          "line_end": 1521,
+          "exact_quote": "  - Do not duplicate DRY prose into prompt builders.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E06",
+      "item_type": "gui_truth",
+      "title": "DRY settings command, values, and explanatory copy are exact",
+      "statement": "The Settings fixture must prove cmd.settings.agent_rules.dry_method_default_guard.set writes only enabled or disabled_by_user and displays the preserved exact help sentence.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-018", "DRY_settings"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1470,
+          "line_end": 1470,
+          "exact_quote": "  - The Settings command and wiring fixture proves the toggle writes only enabled or disabled_by_user and displays the exact explanatory copy.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1518,
+          "line_end": 1518,
+          "exact_quote": "  - \"DRY Method is on by default. Turning it off disables only PM's default reuse-first guard; project/user instructions, safety, secrets, source authority, governance, permissions, and source-control rules still apply.\"",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E07",
+      "item_type": "failure_recovery",
+      "title": "Unresolved DRY owner/source states stay visible",
+      "statement": "Missing, stale, or unresolved owner/source states must be visible and policy-correct; canonical or implementation-changing mutation is expected to block, ask, or produce an open item rather than silently proceed.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-018", "DRY_resolution"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1472,
+          "line_end": 1472,
+          "exact_quote": "  - Missing/stale/unresolved owner-source states are visible and policy-correct.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-G02",
+      "item_type": "gap",
+      "title": "DRY receipt fields and hash contract are absent",
+      "statement": "ATS-018 requires receipt fields and hashes but does not enumerate their names, requiredness, canonical serialization, hash inputs, algorithm, or verification oracle in this authoritative window.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["ATS-018", "DRY_receipt"],
+      "gap_kind": "missing_receipt_schema",
+      "impact": "Independent builders can produce mutually incompatible receipts that all claim conformance.",
+      "builder_discretion": "The builder must invent receipt shape and hashing semantics.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1458,
+          "line_end": 1458,
+          "exact_quote": "  prompt routes, absence of shadow prompt-builder-local DRY prose, receipt fields and hashes, missing/stale rules",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-G03",
+      "item_type": "gap",
+      "title": "DRY unresolved-state policy mapping is ambiguous",
+      "statement": "The unit names block, ask, open-item, and exploratory-caveat behaviors but does not map each missing, stale, or unresolved condition and mutation class to one deterministic response or define recovery after resolution.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["ATS-018", "DRY_policy"],
+      "gap_kind": "underspecified_failure_policy",
+      "impact": "Routes can diverge on whether the same unresolved authority condition blocks, asks, or continues with disclosure.",
+      "builder_discretion": "The builder must select the condition-to-response matrix and post-resolution transition.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1459,
+          "line_end": 1459,
+          "exact_quote": "  visibility, exploratory caveat on unresolved owner/source routes, block/ask/open-item behavior for canonical or",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E08",
+      "item_type": "capability",
+      "title": "ATS discovers, probes, assigns, launches, and evidences containerized hosts",
+      "statement": "ATS-019 covers capability discovery, harness probing, TestStrategy capability/host binding, preflight, assignment, launch, access references, artifacts, evidence, cleanup or retention, and blockers; Compose is primary for specified scenarios but is not the only adapter family.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-019", "containerized_hosts"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1542,
+          "line_end": 1542,
+          "exact_quote": "  Automated Testing consumes containerized hosts through Test Capability Discovery, Test Harness Probe, TestStrategy",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1606,
+          "line_end": 1606,
+          "exact_quote": "  - Do not make Compose the only possible ATS path.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E09",
+      "item_type": "contract",
+      "title": "TestRunReceipt binds execution to host and evidence references",
+      "statement": "The receipt carries host capability/profile/instance/assignment identities, runtime family/context, optional Compose scenario, image/build, port/access URL, preflight, launch, harness probe, cleanup, retain-on-failure, evidence, visual evidence, and blocker data.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-019", "TestRunReceipt"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1547,
+          "line_end": 1547,
+          "exact_quote": "  for non-Compose and runtime-specific hosts. TestRunReceipt proves containerized execution with host_capability_ref,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1550,
+          "line_end": 1550,
+          "exact_quote": "  launch receipt ref, harness probe receipt ref, cleanup receipt ref, retain-on-failure state, evidence refs, visual",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E10",
+      "item_type": "acceptance_oracle",
+      "title": "Container liveness is insufficient for test success",
+      "statement": "Success requires ATS evidence and receipts, a launchability-proving harness probe, and host assignment, preflight, launch/execution, evidence, cleanup/retention or explicit blocker references; human eyeballing and backend container IDs cannot define truth.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-019", "test_success_oracle"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1558,
+          "line_end": 1558,
+          "exact_quote": "  - Test Harness Probe proves selected host profile/scenario launchability before test success can be claimed.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1607,
+          "line_end": 1607,
+          "exact_quote": "  - Do not treat a running container as test completion or success without ATS evidence and receipts.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-G04",
+      "item_type": "gap",
+      "title": "Container host and receipt alternatives lack an exact schema",
+      "statement": "The unit permits host_profile_id or a host requirement shape, and several *_ref or *_id alternatives, without defining the host requirement shape, field types, exclusivity, cardinality, identity equivalence, or conditional requiredness.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["ATS-019", "TestRunReceipt", "TestStrategy"],
+      "gap_kind": "missing_contract_schema",
+      "impact": "Capability matching, host identity, receipt validation, and cross-runtime consumers can disagree while satisfying the prose list.",
+      "builder_discretion": "The builder must choose schema types, one-of rules, required fields, and identity normalization.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1543,
+          "line_end": 1543,
+          "exact_quote": "  required_capability_refs, host_capability_ref, host_profile_id or host requirement shape, host preflight, host",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1548,
+          "line_end": 1548,
+          "exact_quote": "  host_profile_id, host_instance_ref or host_instance_id, host_assignment_ref or host_assignment_id, runtime_family,",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-G05",
+      "item_type": "gap",
+      "title": "Container failure cleanup and retention transitions are incomplete",
+      "statement": "Cleanup/retention disposition, retain-on-failure, and blocker payloads are required concepts, but the authoritative window does not define lifecycle ordering, failure classes, cleanup retry/timeout behavior, retention expiration, terminal states, or whether an explicit blocker substitutes for which missing proof.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["ATS-019", "cleanup_retention"],
+      "gap_kind": "underspecified_failure_recovery_lifecycle",
+      "impact": "Failed runs can leak hosts/artifacts, be retained indefinitely, or receive inconsistent terminal certification.",
+      "builder_discretion": "The builder must invent failure-state transitions, cleanup retry and retention policy, and blocker substitution semantics.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1560,
+          "line_end": 1560,
+          "exact_quote": "  - TestRunReceipt cannot certify success without host assignment, preflight, launch/execution, evidence, cleanup/retention, or explicit blocker refs.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-G06",
+      "item_type": "gap",
+      "title": "Container evidence and access references lack privacy controls",
+      "statement": "ATS-019 requires port/access URL, artifacts/logs, evidence, and visual evidence references but specifies no redaction, credential exclusion, access control, retention sensitivity, or safe logging rule for these potentially secret-bearing surfaces.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["ATS-019", "container_security"],
+      "gap_kind": "missing_security_privacy_contract",
+      "impact": "Receipts or retained failure evidence may expose tokens, credentials, private URLs, application data, or sensitive logs.",
+      "builder_discretion": "The builder must determine redaction, authorization, secret scanning, and protected retention behavior.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1544,
+          "line_end": 1544,
+          "exact_quote": "  assignment, host instance launch, port/access URL refs, artifact/log expectations, evidence refs, visual evidence",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-G07",
+      "item_type": "gap",
+      "title": "Containerized test scale and performance limits are unspecified",
+      "statement": "The unit covers previews, dependency stacks, and full E2E environments but supplies no concurrency limits, resource quotas, scheduling/fairness rules, startup or probe timeouts, evidence-volume limits, or large-suite performance oracle.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["ATS-019", "container_scale"],
+      "gap_kind": "missing_scale_performance_contract",
+      "impact": "Implementations can exhaust host capacity or produce unbounded latency and evidence volume without violating an acceptance criterion.",
+      "builder_discretion": "The builder must choose operational quotas, timeouts, concurrency, and performance thresholds.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1545,
+          "line_end": 1545,
+          "exact_quote": "  refs, cleanup/retention disposition, and blocker payloads. Compose scenarios are the primary ATS path for web app",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1546,
+          "line_end": 1546,
+          "exact_quote": "  preview, dependency stack bring-up, and full E2E, with a broader containerized test host adapter family underneath",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E11",
+      "item_type": "gui_truth",
+      "title": "First-run onboarding and Doctor GUI states have explicit coverage",
+      "statement": "ATS-020 covers a four-screen first-run sequence, accepted copy, skippable setup, paid-provider-before-Free-Models sequencing, compact provider rows, Teacher handoff, limited Planning Wizard landing, and Doctor/Health no-false-green behavior.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-020", "onboarding_gui"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1631,
+          "line_end": 1631,
+          "exact_quote": "  Automated acceptance coverage for the Doctor/onboarding rework includes the first-run four-screen sequence, accepted",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1640,
+          "line_end": 1640,
+          "exact_quote": "gui_classification_reason: Validates user-visible first-run screens, copy, row states, Teacher copy, Health states, and Planning Wizard landing presentation.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E12",
+      "item_type": "state_transition",
+      "title": "Onboarding skip, provider failure, and readiness states are distinct",
+      "statement": "Tests cover completion, skip, provider setup failure, authenticated-but-not-ready, Free Models review/defer, no-provider Teacher behavior, and Set up provider return routing; Skip for now lands in limited setup without making Doctor Ready.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-020", "onboarding_states"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1634,
+          "line_end": 1634,
+          "exact_quote": "  Tests cover setup completion, setup skip, provider setup failure, auth/logged-in-but-not-ready state, Free Models review",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1645,
+          "line_end": 1645,
+          "exact_quote": "  - Tests verify `Skip for now` opens Planning Wizard in limited setup state and does not mark Health/Doctor Ready.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E13",
+      "item_type": "authority",
+      "title": "Readiness requires owner proof, not connection labels",
+      "statement": "Connected or Logged in is not authority to declare Ready; the tests must preserve separate authentication and owner-readiness truth and must not hide critical blockers for visual simplicity.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-020", "readiness_authority"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1647,
+          "line_end": 1647,
+          "exact_quote": "  - Tests verify `Connected` does not collapse logged-in/auth success into Ready without owner readiness proof.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1707,
+          "line_end": 1707,
+          "exact_quote": "  - Do not hide critical blockers just to make onboarding look simpler.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E14",
+      "item_type": "contract",
+      "title": "Onboarding setup state excludes sensitive raw material",
+      "statement": "The structured onboarding_setup_state must contain the accepted minimum fields while excluding raw transcripts, credentials, secrets, and raw diagnostics.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-020", "onboarding_setup_state"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1649,
+          "line_end": 1649,
+          "exact_quote": "  - Tests verify onboarding_setup_state contains the accepted minimum fields and excludes raw transcripts, credentials, secrets, and raw diagnostics.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E15",
+      "item_type": "failure_recovery",
+      "title": "Degraded infrastructure remains visible and FileSafe fails closed",
+      "statement": "Transient MCP/server failures cannot silently remove GUI/Doctor rows, and FileSafe initialization/readiness must follow fail-closed owner canon rather than stale graceful-degradation language.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-020", "Doctor", "FileSafe"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1636,
+          "line_end": 1636,
+          "exact_quote": "  also proves MCP/server degraded or unavailable rows remain visible in GUI/Doctor surfaces rather than being silently",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1710,
+          "line_end": 1710,
+          "exact_quote": "  - Do not allow stale FileSafe graceful-degradation wording to permit disabled guards as Ready.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E16",
+      "item_type": "explicit_non_gap",
+      "title": "Fee models is an exact acceptance token",
+      "statement": "Although the phrase may appear anomalous, the authoritative unit explicitly requires the exact `Fee models` token, so a builder should not silently correct it in this acceptance surface.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-020", "exact_copy"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1646,
+          "line_end": 1646,
+          "exact_quote": "  - Tests verify the exact `Fee models` token and Free Models appear only after the paid-provider prompt and do not use recommendation/coding-strength language.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-G08",
+      "item_type": "gap",
+      "title": "Onboarding sequence and setup-state minimum fields are not enumerated",
+      "statement": "ATS-020 demands the accepted four-screen order and accepted minimum onboarding_setup_state fields, but this window does not enumerate the four screens in order or list the minimum fields and their types/requiredness.",
+      "severity": "high",
+      "confidence": "high",
+      "feature_keys": ["ATS-020", "onboarding_contract"],
+      "gap_kind": "missing_gui_sequence_and_state_schema",
+      "impact": "A test suite cannot derive a deterministic screen-order oracle or validate setup-state completeness from this unit alone.",
+      "builder_discretion": "The builder must source or invent the ordered screen model and onboarding_setup_state schema.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1644,
+          "line_end": 1644,
+          "exact_quote": "  - Tests verify the accepted screen order and exact first-run copy/action labels.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1649,
+          "line_end": 1649,
+          "exact_quote": "  - Tests verify onboarding_setup_state contains the accepted minimum fields and excludes raw transcripts, credentials, secrets, and raw diagnostics.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-G09",
+      "item_type": "gap",
+      "title": "Doctor transient-failure recovery behavior is not specified",
+      "statement": "The unit requires degraded or unavailable rows to remain visible after transient failure, but it does not define probing cadence, recovery transitions, stale-state labeling, user retry behavior, or the proof that returns a row from degraded to Ready.",
+      "severity": "medium",
+      "confidence": "high",
+      "feature_keys": ["ATS-020", "Doctor_recovery"],
+      "gap_kind": "underspecified_recovery_contract",
+      "impact": "Interfaces can remain permanently stale, flap, or return to Ready without consistent owner proof.",
+      "builder_discretion": "The builder must choose retry, stale-state, and recovery-proof semantics.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1637,
+          "line_end": 1637,
+          "exact_quote": "  hidden after transient failure, and FileSafe initialization/readiness follows fail-closed owner canon rather than stale",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E17",
+      "item_type": "consumer",
+      "title": "Owner, dependencies, unblocks, and implementation consumers are declared",
+      "statement": "All four PlanUnits are owned by Automated_Testing_System; each exposes depends_on/unblocks metadata and names future test or schema implementation surfaces, while ATS-019 specifically unblocks EP-109, RAP-042, and F3-410.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["ATS-017", "ATS-018", "ATS-019", "ATS-020"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1555,
+          "line_end": 1555,
+          "exact_quote": "unblocks: [EP-109, RAP-042, F3-410]",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1660,
+          "line_end": 1660,
+          "exact_quote": "  - Plans/Automated_Testing_System.md",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E18",
+      "item_type": "contract",
+      "title": "Compilation does not authorize executable build artifacts",
+      "statement": "The addenda and node hints keep these requirements in plan/acceptance scope: they do not create WorkNodes, NodeSeeds, queues, implementation files, runtime dispatch, generated governance artifacts, production tasks, or a governance seal.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["compile_boundary"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1532,
+          "line_end": 1532,
+          "exact_quote": "This addendum compiles containerized-host testing adapter and receipt requirements. It does not create WorkNodes, NodeSeeds, executable queues, implementation files, runtime dispatch, generated governance artifacts, or production build tasks.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1664,
+          "line_end": 1664,
+          "exact_quote": "  create_worknodes: false",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E19",
+      "item_type": "explicit_non_gap",
+      "title": "Test harness implementation remains intentionally future-facing",
+      "statement": "The units specify future fixture suites and implementation surfaces rather than executable WorkNodes; framework selection and test-harness mechanics remain builder discretion within the explicit no-worknode boundary.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["builder_discretion", "future_tests"],
+      "builder_discretion": "Builders may choose fixture framework and harness mechanics, but not relax the enumerated acceptance behavior or compile boundary.",
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1563,
+          "line_end": 1563,
+          "exact_quote": "  - future containerized-host TestRunReceipt schema fixtures",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1653,
+          "line_end": 1653,
+          "exact_quote": "  - future first-run onboarding GUI acceptance fixture suite",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    },
+    {
+      "item_id": "A005-001043-E20",
+      "item_type": "contract",
+      "title": "Compatibility and migration constraints reject stale ownership and single-backend truth",
+      "statement": "Compaction must not revive Plans/newfeatures.md as a live owner, DRY prose must not remain shadowed in prompt builders, container ATS must support non-Compose/runtime-specific hosts, and ATS truth must not bind to backend container IDs.",
+      "severity": "none",
+      "confidence": "high",
+      "feature_keys": ["compatibility_migration"],
+      "evidence": [
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1440,
+          "line_end": 1440,
+          "exact_quote": "  - Do not revive Plans/newfeatures.md as a live owner for compaction.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        },
+        {
+          "path": "Plans/Automated_Testing_System.md",
+          "line_start": 1609,
+          "line_end": 1609,
+          "exact_quote": "  - Do not bind ATS truth to backend container ids.",
+          "source_sha256": "0b4f3de3038366fd021ea32775313d8e728f279f7873af2436dd119ed603b467"
+        }
+      ]
+    }
+  ],
+  "dimension_assessments": [
+    {
+      "dimension": "behavior",
+      "status": "addressed",
+      "summary": "Manual compaction, DRY routing, container-host testing, and onboarding behaviors are explicitly enumerated.",
+      "evidence_item_ids": ["A005-001043-E01", "A005-001043-E04", "A005-001043-E08", "A005-001043-E11"]
+    },
+    {
+      "dimension": "capabilities",
+      "status": "addressed",
+      "summary": "Shared prompt routing, container discovery/probe/launch, and GUI acceptance capabilities are named.",
+      "evidence_item_ids": ["A005-001043-E05", "A005-001043-E08", "A005-001043-E11"]
+    },
+    {
+      "dimension": "inputs_outputs",
+      "status": "gap_found",
+      "summary": "Named statuses, commands, TestRunReceipt data, and onboarding state establish inputs/outputs, but exact receipt and state schemas are incomplete.",
+      "evidence_item_ids": ["A005-001043-E02", "A005-001043-E06", "A005-001043-E09", "A005-001043-E14", "A005-001043-G02", "A005-001043-G04", "A005-001043-G08"]
+    },
+    {
+      "dimension": "contracts",
+      "status": "gap_found",
+      "summary": "Several strong contracts exist, but DRY receipts, host alternatives, onboarding state, parity, and recovery mappings lack exact schemas.",
+      "evidence_item_ids": ["A005-001043-E03", "A005-001043-E09", "A005-001043-E14", "A005-001043-G01", "A005-001043-G02", "A005-001043-G04", "A005-001043-G08"]
+    },
+    {
+      "dimension": "states_transitions",
+      "status": "gap_found",
+      "summary": "Compaction, DRY, container, and onboarding states are named, while retry, cleanup/retention, and transient recovery transitions remain incomplete.",
+      "evidence_item_ids": ["A005-001043-E02", "A005-001043-E07", "A005-001043-E12", "A005-001043-G01", "A005-001043-G03", "A005-001043-G05", "A005-001043-G09"]
+    },
+    {
+      "dimension": "authority",
+      "status": "addressed",
+      "summary": "Non-DRY authority boundaries and owner-readiness proof are explicit and cannot be weakened by user-visible convenience states.",
+      "evidence_item_ids": ["A005-001043-E04", "A005-001043-E13"]
+    },
+    {
+      "dimension": "ownership",
+      "status": "addressed",
+      "summary": "Owner docs, owner hints, source lineage, and implementation surfaces identify planning and implementation ownership.",
+      "evidence_item_ids": ["A005-001043-E17", "A005-001043-E18"]
+    },
+    {
+      "dimension": "consumers",
+      "status": "addressed",
+      "summary": "Prompt routes, GUI/Doctor surfaces, container adapters, dependencies, and downstream unblocks identify consumers.",
+      "evidence_item_ids": ["A005-001043-E05", "A005-001043-E08", "A005-001043-E11", "A005-001043-E17"]
+    },
+    {
+      "dimension": "gui_truth",
+      "status": "gap_found",
+      "summary": "Compaction, DRY Settings, onboarding, Teacher, and Doctor GUI truth is substantial, but the ordered four-screen oracle is absent from this window.",
+      "evidence_item_ids": ["A005-001043-E01", "A005-001043-E06", "A005-001043-E11", "A005-001043-E13", "A005-001043-E16", "A005-001043-G08"]
+    },
+    {
+      "dimension": "failures_recovery",
+      "status": "gap_found",
+      "summary": "Visible degraded states and fail-closed rules are specified, but deterministic recovery, cleanup, retry, and retention transitions are not.",
+      "evidence_item_ids": ["A005-001043-E02", "A005-001043-E07", "A005-001043-E15", "A005-001043-G01", "A005-001043-G03", "A005-001043-G05", "A005-001043-G09"]
+    },
+    {
+      "dimension": "security_privacy",
+      "status": "gap_found",
+      "summary": "DRY authority and onboarding sensitive-data exclusions are explicit, but container access, log, visual, and retained evidence protections are absent.",
+      "evidence_item_ids": ["A005-001043-E04", "A005-001043-E14", "A005-001043-G06"]
+    },
+    {
+      "dimension": "propagation",
+      "status": "addressed",
+      "summary": "Dependencies, downstream unblocks, shared routes, owner hints, compile boundaries, and compatibility constraints express propagation.",
+      "evidence_item_ids": ["A005-001043-E05", "A005-001043-E17", "A005-001043-E18", "A005-001043-E20"]
+    },
+    {
+      "dimension": "operations",
+      "status": "gap_found",
+      "summary": "Preflight, launch, evidence, cleanup, and retention are operationally named, but lifecycle policy, quotas, and timeouts are unresolved.",
+      "evidence_item_ids": ["A005-001043-E08", "A005-001043-E09", "A005-001043-E10", "A005-001043-G05", "A005-001043-G07"]
+    },
+    {
+      "dimension": "scale_performance",
+      "status": "gap_found",
+      "summary": "No measurable concurrency, quota, latency, timeout, or evidence-volume contract is supplied for containerized previews, stacks, or E2E runs.",
+      "evidence_item_ids": ["A005-001043-G07"]
+    },
+    {
+      "dimension": "compatibility_migration",
+      "status": "addressed",
+      "summary": "Stale owners and shadow prose remain non-authoritative, Compose is not exclusive, and backend container IDs cannot define ATS truth.",
+      "evidence_item_ids": ["A005-001043-E20"]
+    },
+    {
+      "dimension": "acceptance_oracles",
+      "status": "gap_found",
+      "summary": "The units enumerate many direct oracles, but missing receipt schemas, screen sequence, and recovery mappings prevent fully deterministic acceptance.",
+      "evidence_item_ids": ["A005-001043-E02", "A005-001043-E06", "A005-001043-E10", "A005-001043-E13", "A005-001043-E16", "A005-001043-G02", "A005-001043-G04", "A005-001043-G08"]
+    },
+    {
+      "dimension": "builder_discretion",
+      "status": "gap_found",
+      "summary": "Fixture framework choice is intentionally open, but several consequential contract, recovery, privacy, and scale choices are also left to builders.",
+      "evidence_item_ids": ["A005-001043-E19", "A005-001043-G01", "A005-001043-G02", "A005-001043-G03", "A005-001043-G04", "A005-001043-G05", "A005-001043-G06", "A005-001043-G07", "A005-001043-G08", "A005-001043-G09"]
+    },
+    {
+      "dimension": "ambiguity_unknowns",
+      "status": "gap_found",
+      "summary": "Material unknowns remain in parity, DRY receipt/policy, container schema/lifecycle/security/scale, and onboarding schema/recovery.",
+      "evidence_item_ids": ["A005-001043-G01", "A005-001043-G02", "A005-001043-G03", "A005-001043-G04", "A005-001043-G05", "A005-001043-G06", "A005-001043-G07", "A005-001043-G08", "A005-001043-G09"]
+    }
+  ],
+  "self_attestation": {
+    "no_prior_audit_access": true,
+    "no_peer_result_access": true,
+    "no_unrelated_source_access": true,
+    "no_canonical_writes": true,
+    "terminal_after_submission": true
+  }
+}
